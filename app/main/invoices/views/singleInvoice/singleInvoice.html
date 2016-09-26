@@ -482,7 +482,7 @@
                         </div>
                     </md-card-content>
                     <div class="text-center m-t-20">
-                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
+                        <button ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments" type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
                         <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="print_pdf()"><span class="ng-scope">Download</span></button>
                     </div>
                 </md-card>

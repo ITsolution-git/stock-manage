@@ -233,11 +233,8 @@
 
             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(result) 
             {
-                $("#ajax_loader").hide();
-                /*if(result.data.amt.balance_due < result.data.amt.total_payments){
-                    $scope.pay.cashAmount = null;    
-                }*/
                 amount.cashAmount = null;
+                amount.cashAmount = '';
                 if(result.data.success=='1')
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
@@ -245,10 +242,12 @@
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
                     });
+                    $("#ajax_loader").hide();
                     notifyService.notify('success',"Payment added Successfully");
                 }
                 else
                 {
+                    $("#ajax_loader").hide();
                     notifyService.notify('error',"Payment not added");
                 }
             });
@@ -443,7 +442,7 @@
                 combine_array.invoice_id = invoice_id.value;
                 $http.post('api/public/payment/refundTransaction',combine_array).success(function(result) 
                 {
-                    $("#ajax_loader").hide();
+                    
                     if(result.data.success=='1')
                     {
                         var vm = this;
@@ -464,23 +463,26 @@
 
                                     $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
                                     {
+                                        $("#ajax_loader").hide();
                                         $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
                                         $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
-
                                     });
                                 });
                             }
                             else
                             {
                                 //notifyService.notify('error',resultUpdate.data.message);
+                                $("#ajax_loader").hide();
                                 notifyService.notify('error',"Refund Transaction Failed. Please try again after a few hours.");
                             }
 
                         });
+                        $("#ajax_loader").hide();
                         notifyService.notify('success', "Record Deleted Successfully!");
                     }
                     else
                     {
+                        $("#ajax_loader").hide();
                         notifyService.notify('error',result.data.message);
                     }
                 });
@@ -493,7 +495,6 @@
 
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                 {
-                    $("#ajax_loader").hide();
                     if(result.data.success=='1')
                     {
                        $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
@@ -506,14 +507,14 @@
                             {
                                 $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
-
+                                $("#ajax_loader").hide();
                             });
                         });
-
-                       notifyService.notify('success', "Record Deleted Successfully!");
+                        notifyService.notify('success', "Record Deleted Successfully!");
                     }
                     else
                     {
+                        $("#ajax_loader").hide();
                         notifyService.notify('error',result.data.message);
                     }
                 });
