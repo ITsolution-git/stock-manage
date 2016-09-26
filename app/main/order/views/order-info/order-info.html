@@ -67,7 +67,7 @@
                                 <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-show="order.invoice_id > 0" ng-click="printPdf()">
                                     PRINT
                                 </md-button>
-                                <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-click="checkDesign()" ng-show="allow_access==1 && order.order_number == '' && order.is_complete == '0'">
+                                <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " ng-click="checkDesign()" ng-show="allow_access==1">
                                     ASSIGN/SPLIT AFFILIATE
                                 </md-button>
                             </div>
@@ -122,7 +122,7 @@
                                             <span class="column-title marginLeft-58">Status</span>
                                         </div>
                                     </th> -->
-                                    <th class="secondary-text" ng-show="order.order_number == '' && order.is_complete == '0' && allow_access==1">
+                                    <th class="secondary-text" ng-show="allow_access==1">
 
                                     </th>
                                 </tr>
@@ -137,7 +137,7 @@
                                         <md-slider flex ng-model="design.statusValue" min="0" max="255" aria-label="blue" id="blue-slider" class="md-primary blue-color mdsliderHeight">
                                         </md-slider>
                                     </td>  -->
-                            <td class="text-right" ng-show="order.order_number == '' && order.is_complete == '0' && allow_access==1"> 
+                            <td class="text-right" ng-show="allow_access==1"> 
                             <md-menu>
                                 <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                     <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -164,7 +164,7 @@
                         </table>
                         </div>
                         <div class="flex-20 m-t-20 right-20 layout-padding pull-right">
-                            <div ng-show="order.order_number == '' && order.is_complete == '0' " >
+                            <div>
                             <md-button class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right" ng-click="vm.openaddDesignDialog($event,0)" ng-show="allow_access==1">
                                 ADD NEW
                             </md-button>
@@ -346,7 +346,7 @@
 
                 <div class="content box-layout-2">
                     <div class="m-b-30">
-                        <md-card class="m-b-20" ng-class="{'disable-click': order.order_number != '' || order.is_complete == '1'}">
+                        <md-card class="m-b-20" ng-class="{'disable-click': allow_access == 0}">
                     <md-card-title>
                         <md-card-title-text class="stokkup-title-h4 m-b-20 light-300">
                             Order Info
@@ -547,7 +547,9 @@
                     </md-card-content>
                 </md-card>
                 <div class="text-center m-t-20">
-                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)" ng-show="allow_access==1">Approve Order</md-button>
+                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)" ng-show="allow_access==1 && order.invoice_id == 0">Approve Order</md-button>
+
+                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)" ng-show="allow_access==1 && order.invoice_id > 0">Re-Approve Order</md-button>
                 </div>
             </div>
         </div>
