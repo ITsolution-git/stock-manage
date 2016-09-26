@@ -99,10 +99,13 @@ class LoginController extends Controller {
                     $token = $this->login->getToken(10);
                     $token .= $token.time();
                     DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'date'=>date('Y-m-d H:i:s')]);
-                    
                     $company = $this->common->CompanyService($result[0]->id);
+                    $result[0]->profile_photo = (empty($result[0]->profile_photo))? '': UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo;
 
-                    //echo "<pre>"; print_r($company); echo "</pre>"; die;
+
+                    
+
+                    //echo "<pre>"; print_r($result); echo "</pre>"; die;
                     Session::put('username',$result[0]->user_name);
                     Session::put('password', md5($password));
                     Session::put('useremail', $result[0]->email);
@@ -114,6 +117,7 @@ class LoginController extends Controller {
                     Session::put('login_id', $loginid);
                     Session::put('company_id',  $company[0]->company_id);
                     Session::put('company_name',  $company[0]->company_name);
+                    Session::put('profile_photo',  $result[0]->profile_photo);
                     
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
@@ -126,6 +130,7 @@ class LoginController extends Controller {
                     $session['token'] = $token;
                     $session['company_id'] = $company[0]->company_id;
                     $session['company_name'] = $company[0]->company_name;
+                    $session['profile_photo'] = $result[0]->profile_photo;
                     
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
@@ -205,6 +210,7 @@ class LoginController extends Controller {
                               "email" => Session::get("useremail"),
                               "role_session"=>Session::get("role_slug"),
                               "company_id"=>Session::get("company_id"),
+                              "profile_photo"=>Session::get("profile_photo"),
                               "token"=>$token
                               );
         } else {

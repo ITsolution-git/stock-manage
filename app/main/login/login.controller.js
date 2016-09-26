@@ -56,6 +56,8 @@
                                    sessionService.set('password',result.data.records.password);
                                    sessionService.set('company_id',result.data.records.company_id);
                                    sessionService.set('company',result.data.records.company);
+                                   sessionService.set('profile_photo',result.data.records.profile_photo);
+                                   
                                    var data = {"status": "success", "message": "Login Successfully, Please wait..."}
                                    notifyService.notify(data.status, data.message);
                                    
