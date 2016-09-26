@@ -144,7 +144,7 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['settings','order','invoices','purchaseOrder','customProduct','admin','client','vendor','settings.userManagement','app.settings.companyDetails'];
+				var ret_array = ['settings','invoices','purchaseOrder','customProduct','admin','client','vendor','settings.userManagement','app.settings.companyDetails'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
