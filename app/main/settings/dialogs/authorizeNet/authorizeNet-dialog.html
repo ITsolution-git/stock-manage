@@ -4,7 +4,7 @@
         <md-toolbar class="md-accent md-hue-2">
         <div class="md-toolbar-tools" layout="row" layout-align="space-between">
             <span class="title">AUTHORIZE.NET API INTEGRATION</span>
-            <md-button  ng-click="closeDialog()">
+            <md-button  ng-click="closeDialog()" class="close-stokkup-dialog">
             <span>Cancel</span>
             </md-button>
         </div>
@@ -35,9 +35,9 @@
             </div>
             </md-card-content>
         </div>
-        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'authorize_detail','id',params.id,'authorize')">
-        SAVE
-        </md-button>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'authorize_detail','id',params.id,'authorize')">SAVE</md-button>
+        </md-dialog-actions>
     </div>
 </form>
 </md-dialog>
