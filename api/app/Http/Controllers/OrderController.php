@@ -2345,15 +2345,29 @@ class OrderController extends Controller {
               $id = $this->common->InsertRecords('payment_history',$orderData);
           }
 
-          $retArray = DB::table('payment_history as p')
+          $pmt_data = $this->common->GetTableRecords('payment_history',array('order_id' => $order_id, 'is_delete' => '1'),array());
+          //print_r($pmt_data);
+          //echo count($pmt_data);
+          //exit;
+          if(count($pmt_data)>0){
+              $retArray = DB::table('payment_history as p')
               ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
               ->leftJoin('orders as o','o.id','=',"p.order_id")
               ->where('p.order_id','=',$order_id)
               ->where('p.is_delete','=',1)
               ->get();
 
-          $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
-          $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+              $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
+              $balance_due = round($balance_due, 2);
+              $totalAmount = round($retArray[0]->totalAmount, 2);
+          }else{
+              $amt_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
+              $balance_due = round($amt_data[0]->grand_total,2);
+              $totalAmount = "0.00";
+          }
+
+          
+          $amt=array('total_payments' => $totalAmount, 'balance_due' => $balance_due);
 
           $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 

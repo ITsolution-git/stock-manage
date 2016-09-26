@@ -649,12 +649,12 @@ class PaymentController extends Controller {
           $time = strtotime($data['orderArray']->created_date);
           $curtime = time();
         
-          if(($curtime-$time) > 86400) {     //86400 seconds
+          //if(($curtime-$time) > 86400) {     //86400 seconds
             //echo "Link expired";
-            $payment_flag=array('payment_flag' => '1');
-            $this->common->UpdateTableRecords('link_to_pay',array('session_link' => $token),$payment_flag);
-            $data['orderArray']->link_status=1;
-          }else{
+            //$payment_flag=array('payment_flag' => '1');
+            //$this->common->UpdateTableRecords('link_to_pay',array('session_link' => $token),$payment_flag);
+            //$data['orderArray']->link_status=1;
+          //}else{
 
             $user_data = DB::table('orders as o')
             ->select('s.sales_name', 's.sales_email' , 's.sales_phone', 's.sales_web', 'u.name' , 'u.email' , 'u.phone')
@@ -670,7 +670,7 @@ class PaymentController extends Controller {
             $data['orderArray']->account_name=$user_data[0]->name;
             $data['orderArray']->account_email=$user_data[0]->email;
             $data['orderArray']->account_phone=$user_data[0]->phone;
-          }
+          //}
         }
         return view('auth.payment',$data)->render();
     }
