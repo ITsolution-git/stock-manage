@@ -185,6 +185,7 @@
                         $scope.company.city = 'XXXXXX';
                         $scope.company.state = 'AL';
                         $scope.company.zip = '00000';
+                        $scope.company.amount = $scope.allData.order_data[0].balance_due;
                     }
                     else{
                         var data = {"status": "error", "message": "Please try with any other saved card or new credit card."}
@@ -233,6 +234,10 @@
             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(result) 
             {
                 $("#ajax_loader").hide();
+                /*if(result.data.amt.balance_due < result.data.amt.total_payments){
+                    $scope.pay.cashAmount = null;    
+                }*/
+                amount.cashAmount = null;
                 if(result.data.success=='1')
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
@@ -240,12 +245,10 @@
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
                     });
-                    $scope.pay.cashAmount = null;
                     notifyService.notify('success',"Payment added Successfully");
                 }
                 else
                 {
-                    $scope.pay.cashAmount = null;
                     notifyService.notify('error',"Payment not added");
                 }
             });
