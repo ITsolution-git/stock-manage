@@ -11,27 +11,10 @@
         <div layout="column"  flex="100">
            <div layout="row">
               
-              <div layout="column" flex="25">
-              <label>Thread color</label>
-                  <md-autocomplete
-                      ng-disabled="isDisabled"
-                      md-no-cache="noCache"
-                      md-selected-item="color_screen.thread_display"
-                      md-search-text-change="color_screen.thread_display"
-                      md-search-text="allcolor.color_name"
-                      md-selected-item-change=""
-                      md-items="item in querySearch(allcolor.color_name)"
-                      md-item-text="item.name"
-                      md-min-length="1"
-                      ng-click=""
-                      ng-blur=""
-                      <md-item-template>
-                          <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
-                      </md-item-template>
-                      <md-not-found>
-                          No Color found.
-                      </md-not-found>
-                  </md-autocomplete>
+            <div layout="column" flex="25">
+              <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                  <input placeholder="Pantone/Thread Color" name="thread_color" ng-model="color_screen.thread_color" >
+              </md-input-container>
             </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
