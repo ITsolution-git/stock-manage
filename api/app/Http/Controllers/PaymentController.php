@@ -628,7 +628,7 @@ class PaymentController extends Controller {
         //$payment_data = $this->common->GetTableRecords('link_to_pay',array('session_link' => $token));
 
         $payment_data = DB::table('link_to_pay as lp')
-            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'lp.balance_amount', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id')
+            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'o.balance_due', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id')
             ->leftJoin('orders as o','o.id','=',"lp.order_id")
             ->leftJoin('invoice as i','i.order_id','=',"o.id")
             ->leftJoin('client as c','c.client_id','=',"o.client_id")
