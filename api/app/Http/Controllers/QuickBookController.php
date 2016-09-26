@@ -437,7 +437,7 @@ class QuickBookController extends Controller
         }*/
     }
 
-    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid,$payment,$orderId){
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid,$payment,$orderId,$quickbook_id){
       
 
          $IPP = new \QuickBooks_IPP($this->QBO_DSN);
@@ -463,10 +463,15 @@ class QuickBookController extends Controller
 
         $InvoiceService = new \QuickBooks_IPP_Service_Invoice();
 
+
+        if($quickbook_id > 0) {
+            $retr = $InvoiceService->delete($this->context, $this->realm, $quickbook_id);
+        }
+        
+
         $Invoice = new \QuickBooks_IPP_Object_Invoice();
 
          $Invoice->setDocNumber('INV-' . $orderId);
-
          
          $Invoice->setTxnDate(date('Y-m-d'));
         
@@ -1071,6 +1076,8 @@ class QuickBookController extends Controller
             ->get();
         return $retArray;
     }
+
+
 
 
 }

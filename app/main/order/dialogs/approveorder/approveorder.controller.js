@@ -108,7 +108,7 @@
                         $mdDialog.hide();
                         $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
 
-                         if($scope.invoice == true && $scope.qb == true && $scope.qb_invoice_id == 0) {
+                         if($scope.invoice == true && $scope.qb == true) {
 
                             var combine_array_id = {};
                                 combine_array_id.id = $stateParams.id;
@@ -116,6 +116,7 @@
                                 combine_array_id.client_id = client_id;
                                 combine_array_id.invoice_id = $scope.invoice_id;
                                 combine_array_id.payment = $scope.payment_terms;
+                                combine_array_id.quickbook_id = $scope.qb_invoice_id;
                                 
                                $("#ajax_loader").show();
                                
@@ -140,7 +141,7 @@
                 });
             }
 
-            if($scope.invoice == true && $scope.qb == true && $scope.qb_invoice_id == 0) {
+            if($scope.invoice == true && $scope.qb == true) {
 
                
 
@@ -155,6 +156,7 @@
                     combine_array_id.client_id = client_id;
                     combine_array_id.invoice_id = $scope.invoice_id;
                     combine_array_id.payment = $scope.payment_terms;
+                    combine_array_id.quickbook_id = $scope.qb_invoice_id;
                     
                    $("#ajax_loader").show();
                    

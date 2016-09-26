@@ -547,7 +547,7 @@
                     </md-card-content>
                 </md-card>
                 <div class="text-center m-t-20">
-                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)" ng-show="allow_access==1 && order.invoice_id == 0">Approve Order</md-button>
+                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)" ng-show="allow_access==1 && order.invoice_id <= 0">Approve Order</md-button>
 
                     <md-button class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" ng-click="vm.openApproveOrderDialog(event,order.order_number,order.sns_shipping,order.client_id)" ng-show="allow_access==1 && order.invoice_id > 0">Re-Approve Order</md-button>
                 </div>
