@@ -557,14 +557,18 @@ class Company extends Model {
 
       return $result;
     }
-     public function getUpsAPI($company_id)
+     public function getUpsAPI($company_id,$where=array())
     {
         $result = DB::table('api_link_table as alt')
             ->select('ad.*')
             ->Join('ups_detail as ad','ad.link_id','=','alt.id')
             ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",UPS_ID)
-            ->get();
+            ->where("alt.api_id","=",UPS_ID);
+            if(!empty($where))
+            {
+              $result = $result->where($where);
+            }
+            $result = $result->get();
         return $result;
     }
     public function InsertUpsAPI($company_id)
@@ -619,14 +623,18 @@ class Company extends Model {
        $link_id = DB::getPdo()->lastInsertId();
        $result  = DB::table('fedex_detail')->insert(array("link_id"=>$link_id));
     }
-    public function getFedexAPI($company_id)
+    public function getFedexAPI($company_id,$where=array())
     {
         $result = DB::table('api_link_table as alt')
             ->select('fd.*')
             ->Join('fedex_detail as fd','fd.link_id','=','alt.id')
             ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=","5")
-            ->get();
+            ->where("alt.api_id","=","5");
+            if(!empty($where))
+            {
+              $result = $result->where($where);
+            }
+            $result = $result->get();
         return $result;
     }
     public function getColors($post)

@@ -139,12 +139,15 @@
             }
 
             $("#ajax_loader").show();
-            $http.post('api/public/shipping/checkAddressValid',$scope.shipping).success(function(result) {
+            var combine_array = {};
+            combine_array.shipping = $scope.shipping;
+            combine_array.shippingBoxes = $scope.shippingBoxes;
+            $http.post('api/public/shipping/checkAddressValid',combine_array).success(function(result) {
 
                 $("#ajax_loader").hide();
                 if(result.data.success == '1')
                 {
-                    $scope.submitForm(result.data.data);
+                    $scope.getShippingOverview();
                 }
                 else
                 {
@@ -230,6 +233,24 @@
                 $("#ajax_loader").hide();
                 $state.go('app.shipping.boxingdetail',{id: $stateParams.id});
             });
+        }
+
+        $scope.viewLabelPDF = function()
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/vewLabelPDF';
+            form.method = 'post';
+            form.target = '_blank';
+            form.style.display = 'none';
+
+            var shipping_id = document.createElement('input');
+            shipping_id.name = 'shipping_id';
+            shipping_id.setAttribute('value', $scope.shipping_id);
+            form.appendChild(shipping_id);
+
+            document.body.appendChild(form);
+            form.submit();
         }
     }
 })();
