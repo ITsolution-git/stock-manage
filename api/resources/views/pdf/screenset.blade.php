@@ -82,7 +82,7 @@
               <td align="center"><?php echo $key+1; ?></td>
               <td align="center"><?php echo $value->inq; ?></td>
               <td align="center"><?php echo $value->color_name; ?></td>
-              <td align="center"><?php echo $value->pantone; ?></td>
+              <td align="center"><?php echo $value->thread_color; ?></td>
             </tr>
             <?php } ?>
           </table>
