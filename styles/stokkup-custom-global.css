@@ -1388,6 +1388,9 @@ md-tabs.stokkup-invoice-tabs {
     display: inline-table;
     vertical-align: middle; }
 
+.stokkup-invoice-tabs .md-tab {
+  font-size: 14px; }
+
 .invoice-single-design {
   width: 100%;
   float: left; }
