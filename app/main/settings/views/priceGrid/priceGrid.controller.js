@@ -10,6 +10,18 @@
     /** @ngInject */
     function PriceGridController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,AllConstant,notifyService)
     {
+
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM')
+        {
+            $scope.allow_access = 1; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
         var originatorEv;
         var vm = this ;
         $scope.company_id = sessionService.get('company_id');

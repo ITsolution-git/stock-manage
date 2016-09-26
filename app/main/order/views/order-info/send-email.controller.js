@@ -10,7 +10,7 @@
     /** @ngInject */
     function openEmailController(client_id,order_id,paid,balance,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
-
+        
            function get_company_data_selected(id)
          {
             var companyData = {};
@@ -23,6 +23,7 @@
                 {
                     $scope.allCompany =result.data.records;
                     $scope.email =sessionService.get('email');
+                    $scope.subject = 'Order: '+order_id+' from '+sessionService.get('company_name');
                 } 
                 else
                 {
@@ -50,9 +51,15 @@
         get_company_data_selected(client_id)
 
 
-        $scope.sendMail = function (email,mailMessage) {
+        $scope.sendMail = function (email,mailMessage,subject) {
             if(email == '') {
                   var data = {"status": "error", "message": "Email should not be blank"}
+                  notifyService.notify(data.status, data.message);
+                  return false;
+            } 
+
+            if(subject == '') {
+                  var data = {"status": "error", "message": "Subject should not be blank"}
                   notifyService.notify(data.status, data.message);
                   return false;
             } 
@@ -67,6 +74,7 @@
             combine_array.invoice_id = $scope.invoice.id;
             combine_array.paid = paid;
             combine_array.balance = balance;
+            combine_array.subject = subject;
 
             //$("#ajax_loader").show();
              

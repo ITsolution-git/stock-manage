@@ -38,7 +38,7 @@
                                             </th> 
                                             <th class="secondary-text">
                                                 <div class="table-header text-center">
-                                                    <span class="column-title">Main Location</span>
+                                                    <span class="column-title">Main Address</span>
                                                 </div>
                                             </th>  
                                             <th></th>                                               
@@ -63,17 +63,17 @@
                                                     <md-menu-content width="4">
                                                         <md-menu-item  ng-click="openEditPopup('settings/views/integrations/popup_address.html',location,$event,'company_address')">
                                                             <md-button>
-                                                                Edit Location
+                                                                Edit Address
                                                             </md-button>
                                                         </md-menu-item>
                                                         <md-menu-item ng-click="UpdateTableField('is_main',0,'company_address','company_id',location.company_id,'is_main',location.id,'id')">
                                                             <md-button>
-                                                                Set as main Location
+                                                                Set as main Address
                                                             </md-button>
                                                         </md-menu-item>
                                                         <md-menu-item  ng-click="UpdateTableField('is_deleted',0,'company_address','id',location.id,'remove_address',location.is_main)">
                                                             <md-button>
-                                                                Delete Location
+                                                                Delete Address
                                                             </md-button>
                                                         </md-menu-item>
                                                     </md-menu-content>

@@ -249,6 +249,8 @@
                                 <!-- Pay By Credit Card-->
                                 <md-tab label="Pay By Credit Card">
                                     <div layout="row">
+                                <md-tab label="Pay By Credit Card" ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments">
+                                    <div layout="row" flex=100 class="p-15">
                                         <div class="box-layout-2">
                                            <div layout="row">
                                                <div layout="column" flex="45" class="m-r-30 p-20">
@@ -273,7 +275,7 @@
                                                         <md-input-container flex="100" class="margin-0 m-b-20" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                             <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
                                                         </md-input-container>
-                                                        <md-input-container flex="100" class="margin-0">
+                                                        <md-input-container flex="100" class="margin-0" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                             <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
                                                         </md-input-container>
                                                         <div class="box-zerospace" ng-show="company.savedCard == 0 || company.savedCard == null">
@@ -358,17 +360,26 @@
                                            <div layout="row" class="pull-right pl-20 box-zerospace">
                                                 <div layout="row">
                                                     <div flex=100 class="pull-right">
+                                           <div layout="row" class="box-layout-2" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                <div flex=100 class="pull-right m-r-30">
                                                     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
                                                         <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20 text-uppercase" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Pay</span></button>
                                                     </md-dialog-actions>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div layout="row" class="box-layout-2" ng-hide="company.savedCard == 0 || company.savedCard == null">
+                                                <div flex=100 class="pull-right m-r-30">
+                                                    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                                        <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20 text-uppercase" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Collect Money</span></button>
+                                                    </md-dialog-actions>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div> 
                                 </md-tab>
                                 <!-----------------Pay By Cash-------------------->
-                                <md-tab label="Pay By Cash">
+                                <md-tab label="Pay By Cash" ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments">
                                     <div layout="row" flex=100>
                                         <div class="box-zerospace">
                                             <div class="p-30">
@@ -483,17 +494,4 @@
             </div>
         </div>              
     </div><!--Inner full box ends here -->
-
-
-
-
-
-
-
-
-
-    
-    
-    <!-- Tejas -->
-   
 </div>
