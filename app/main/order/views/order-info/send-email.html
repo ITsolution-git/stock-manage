@@ -12,6 +12,16 @@
            <!--  <div layout="column" layout-wrap="nowrap" class="order-add-modal m-b-20 email-from-box" layout-padding>
                 <span class="stokkup-title-h4 email-heads">From : {{email}}</span>
             </div> -->
+
+            <div layout="column" layout-wrap="nowrap" class="order-add-modal m-t-15 m-b-20" layout-padding>
+                <md-input-container class="first-box">
+                    <label for="mailadd">Subject<span class="stokkup-req-fields">*</span></label>
+                    <input  id="mailadd" ng-model="subject">
+                    
+                </md-input-container>
+            </div>
+
+
             <div layout="column" layout-wrap="nowrap" class="order-add-modal m-t-15 m-b-20" layout-padding>
                 <md-input-container class="first-box">
                     <label for="mailadd">Email Address<span class="stokkup-req-fields">*</span></label>
@@ -29,7 +39,7 @@
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
                     <!-- <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
-                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="sendMail(allCompany[0].billing_email,mailMessage)">send</md-button>
+                    <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="sendMail(allCompany[0].billing_email,mailMessage,subject)">send</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
