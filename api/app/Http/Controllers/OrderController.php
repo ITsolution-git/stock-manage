@@ -2336,30 +2336,32 @@ class OrderController extends Controller {
         $qb_id = $qb_data[0]->qb_id;
         $order_id = $qb_data[0]->order_id;
 
-        if(isset($post['amount'])){
-          $amount=round($post['amount'],2);
-          $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $amount,'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
+        if(isset($post['invoice_id'])){
 
-          $id = $this->common->InsertRecords('payment_history',$orderData);
-        
+          if(isset($post['amount'])){
+              $amount=round($post['amount'],2);
+              $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $amount,'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
 
-        $retArray = DB::table('payment_history as p')
-            ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
-            ->leftJoin('orders as o','o.id','=',"p.order_id")
-            ->where('p.order_id','=',$order_id)
-            ->where('p.is_delete','=',1)
-            ->get();
+              $id = $this->common->InsertRecords('payment_history',$orderData);
+          }
 
-        $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
-        $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+          $retArray = DB::table('payment_history as p')
+              ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
+              ->leftJoin('orders as o','o.id','=',"p.order_id")
+              ->where('p.order_id','=',$order_id)
+              ->where('p.is_delete','=',1)
+              ->get();
 
-        $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+          $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
+          $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
 
-        $data = array("success"=>1,'amt' =>$amt);
-        return response()->json(['data'=>$data]);
+          $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+
+          $data = array("success"=>1,'amt' =>$amt);
+          return response()->json(['data'=>$data]);
       }else{
-        $data = array("success"=>0,'message' =>"Payment could not be made.");
-        return response()->json(['data'=>$data]);
+          $data = array("success"=>0,'message' =>"Payment could not be made.");
+          return response()->json(['data'=>$data]);
       }
     }
 

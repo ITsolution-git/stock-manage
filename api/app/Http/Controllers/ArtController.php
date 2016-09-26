@@ -280,7 +280,7 @@ class ArtController extends Controller {
                 foreach ($screen_colorpopup as $key => $value) 
                 {
                     $screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $color_array[$value->color_name]:'';
-                    $screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
+                   // $screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
                 }
             }
             if(count($screen_garments)>0)
@@ -348,7 +348,7 @@ class ArtController extends Controller {
                     foreach ($getColors as $value) 
                     {
                         $value->color_display_name = $color_array[$value->color_name];
-                        $value->thread_display_name = !empty($value->thread_color)? $color_array[$value->thread_color]:'';
+                        $value->thread_color = !empty($value->thread_color)? $value->thread_color:'';
                     }
                 }
             
@@ -387,10 +387,10 @@ class ArtController extends Controller {
                     $value->mokup_image_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
                     $value->mokup_logo_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_logo);
 
-                    if(!empty($value->thread_color))
+                   /* if(!empty($value->thread_color))
                     {
                         $value->thread_display = $color_array[$value->thread_color];
-                    }
+                    }*/
                 }
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'allcolors'=>$allcolors);            
             }

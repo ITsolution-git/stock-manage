@@ -55,6 +55,7 @@
 
             $scope.GetAllApi = function ()
             {
+                $("#ajax_loader").show();
                 var CheckArray = {};
                 CheckArray.company_id = $scope.company_id;
                 $http.post('api/public/admin/company/GetAllApi',CheckArray).success(function(result) 

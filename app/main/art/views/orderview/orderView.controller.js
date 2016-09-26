@@ -162,15 +162,14 @@
                                     if( !angular.isUndefined(id))
                                     {
                                         $('#remove_color').val('');
-                                        $scope.initial_add_color.push({id:id,color_name:color_name,thread_id:'',inq:''});
+                                        $scope.initial_add_color.push({id:id,color_name:color_name,thread_color:'',inq:''});
                                     }
                                     //console.log($scope.initial_add_color);
                                 }
-                                $scope.add_thread = function(thread_id,thread_color,key)
+                                $scope.add_thread = function(thread_color,key)
                                 {
-                                    if( !angular.isUndefined(key) && !angular.isUndefined(thread_id) && !angular.isUndefined(thread_color))
+                                    if( !angular.isUndefined(key) && !angular.isUndefined(thread_color))
                                     {
-                                        $scope.initial_add_color[key].thread_id = thread_id;
                                         $scope.initial_add_color[key].thread_color = thread_color;
                                     }
                                 }
@@ -179,13 +178,6 @@
                                     if( !angular.isUndefined(key) && !angular.isUndefined(inq))
                                     {
                                         $scope.initial_add_color[key].inq = inq;
-                                    }
-                                }
-                                $scope.change_thread = function(id,key)
-                                {
-                                    if( !angular.isUndefined(key) && !angular.isUndefined(id))
-                                    {
-                                        $scope.getColors[key].thread_color = id;
                                     }
                                 }
                                 $scope.CreateScreenset = function(alldata)

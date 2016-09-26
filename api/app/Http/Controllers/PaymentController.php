@@ -235,9 +235,9 @@ class PaymentController extends Controller {
                             $requestNew->setProfile($customerprofile);
                             $controller = new AnetController\CreateCustomerProfileController($requestNew);
                             if($envConst==1){
-                                $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
+                                $responseProfile = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::PRODUCTION);
                             }else{
-                                $response = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
+                                $responseProfile = $controller->executeWithApiResponse( \net\authorize\api\constants\ANetEnvironment::SANDBOX);
                             }
                       
                             if (($responseProfile != null) && ($responseProfile->getMessages()->getResultCode() == "Ok") )

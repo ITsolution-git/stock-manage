@@ -1,81 +1,94 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="header "  layout="column" >
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back" ui-sref="app.invoices">BACK TO INVOICE</a>
+<div class="order-info-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview m-b-30">
+        <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+                INV-{{allData.order_data[0].id}}
+            </div>
+            <div class="pull-right right-search-box">
+                <a class="pull-right common-header-links" ui-sref="app.invoices">BACK TO INVOICE</a>
+            </div>
         </div>
     </div>
-    <div layout="row" class="pd10-R">
-        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">INV-{{allData.order_data[0].id}}</span></div></div>
-    </div>
-    <!-- Tejas -->
-    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15 mrg15-T" >
-        <div layout="row">
-            <div layout="column" flex="40">
-                <img src="{{allData.company_data[0].photo}}" title="Company Logo" alt="Company Logo" height="150" width="150" />
+
+    <div class="inner-full-box">
+        <div class="order-information m-b-30 pad0 white-bg" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <div layout="column" flex="25" class="invoice-orderimg">
+                <img src="{{allData.company_data[0].photo}}" title="Company Logo" alt="Company Logo"  />
             </div>
-            <div layout="column" flex="40">
+
+            <div layout="column" flex="50">
                 <div class="font-14 mrg5-B text-bold text-bold-center">{{allData.company_data[0].name}}</div>
                 <div class="font-14 text-bold-center">Address</div>
                 <div class="gray-text mrg5-B text-bold-center">{{allData.company_data[0].prime_address1}}<br>{{allData.company_data[0].prime_address_city}}, {{allData.company_data[0].prime_address_state}} {{allData.company_data[0].prime_address_zip}}<br><span ng-if="allData.company_data[0].phone != ''">P: {{allData.company_data[0].phone}}</span></div>
                 <div class="font-14 text-bold-center">Website</div>
-                <div class="text-center"><a href="http://www.culturestudio.net" target="_blank" title="" class="gray-text">{{allData.company_data[0].url}}</a></div>
+                <div class="text-center"><a href="http://www.culturestudio.net" target="_blank" title="" class="common-header-links">{{allData.company_data[0].url}}</a></div>
             </div>
-            <div layout="column" flex="40">
+
+            <div layout="column" flex="25">
                 <div class="font-14 mrg5-B text-bold-right">Order Acknowledgement # {{allData.order_data[0].id}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Created on: {{allData.invoice_data[0].created_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Due Date: {{allData.invoice_data[0].payment_due_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Job Name: {{allData.order_data[0].name}}</div>
+                
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Order Status</label>
                     <md-select ng-model="allData.order_data[0].approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',allData.order_data[0].approval_id,allData.order_data[0].id)" >
                         <md-option ng-selected="allData.order_data[0].approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                     </md-select>
                 </md-input-container>
-            </div>            
+            </div>
         </div>
 
-        <div class="ms-responsive-table-wrapper">
-            <table id="billtoShipto" class="mrg20-T" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td>
-                        <table class="border-col">
-                            <tr>
-                                <td class="no-border width-50 pad-0"><img src="assets/images/etc/bill.png" alt="BILL TO" title="BILL TO"></td>
-                                <td class="no-border pad10-T v-TOP">
-                                    <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
-                                    <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_billing == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td>
-                        <table class="border-col">
-                            <tr>
-                                <td class="no-border width-50 pad-0"><img src="assets/images/etc/ship.png" alt="SHIP TO" title="SHIP TO"></td>
-                                <td class="no-border pad10-T v-TOP">
-                                    <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
-                                    <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_shipping == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
-                                </td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <h2 class="mrg20-T">Shipping Detail</h2>
-        <div class="ms-responsive-table-wrapper">
-            <table class="simple hover simple-tbl1">
-                <thead>
+        <div class="order-design-block box-zerospace m-b-30 white-bg p-20">
+            <div class="ms-responsive-table-wrapper stockkup-content-table-container">
+                <table id="billtoShipto" class="mrg20-T" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th class="secondary-text" width="15%">Order ID</th>
-                        <th class="secondary-text" width="20%">Estimated Shipping Date</th>
-                        <th class="secondary-text text-center" width="15%">Payment Status</th>
-                        <th class="secondary-text text-center" width="15%">Shipment Method</th>
-                        <th class="secondary-text text-center" width="20%">In Hands By</th>
+                        <td>
+                            <table class="border-col">
+                                <tr>
+                                    <td class="no-border width-50 pad-0"><img src="assets/images/etc/bill.png" alt="BILL TO" title="BILL TO"></td>
+                                    <td class="no-border pad10-T v-TOP">
+                                        <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
+                                        <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_billing == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <table class="border-col">
+                                <tr>
+                                    <td class="no-border width-50 pad-0"><img src="assets/images/etc/ship.png" alt="SHIP TO" title="SHIP TO"></td>
+                                    <td class="no-border pad10-T v-TOP">
+                                        <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
+                                        <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_shipping == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="order-design-block box-zerospace m-b-30">
+            <div class="title box-title">
+                <div class="flex-100 m-b-20" flex="100">
+                <span class="stokkup-title-h4 light-300">Shipping Detail</span>
+                </div>
+            </div>    
+            <div class="ms-responsive-table-wrapper stockkup-content-table-container white-bg">
+                <table class="simple hover simple-tbl1">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text" width="15%">Order ID</th>
+                            <th class="secondary-text" width="20%">Estimated Shipping Date</th>
+                            <th class="secondary-text text-center" width="15%">Payment Status</th>
+                            <th class="secondary-text text-center" width="15%">Shipment Method</th>
+                            <th class="secondary-text text-center" width="20%">In Hands By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                     <tr ng-repeat="shipping in allData.shipping_detail">
                         <td>{{allData.order_data[0].id}}</td>
                         <td>{{shipping.shipping_by}}</td>
@@ -85,127 +98,133 @@
                         <td class="text-center" ng-if="shipping.shipping_type_id == 2">FEDEX</td>
                         <td class="text-center">{{shipping.in_hands_by}}</td>
                     </tr>                    
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>           
         </div>
-        <div ng-repeat="design in allData.all_design">
-        <!-- design1 -->
-            <h2 class="mrg40-T">Design: {{design.design_name}}</h2>
-            <div class="ms-responsive-table-wrapper">
-                <table class="simple hover simple-tbl1">
-                    <thead>
-                        <tr>
-                            <th class="secondary-text text-bold" width="25%">Position</th>
-                            <th class="secondary-text text-bold" width="15%">Type</th>
-                            <th class="secondary-text text-center text-bold" width="25%">Qty</th>
-                            <th class="secondary-text text-center text-bold" width="15%">Price</th>
-                            <th class="secondary-text text-center text-bold" width="20%">Image</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="position in design.positions.order_design_position">
-                            <td height="72">{{position.position_name}}</td>
-                            <td>{{position.placement_type_name}}</td>
-                            <td class="text-center">{{position.qnty}}</td>
-                            <td class="text-center">{{position.total_price | currency : $ : 2}}</td>
-                            <td class="text-center" ng-if="position.position_image != ''"><img src="{{position.position_image}}" title="Position Image" alt="Position Image" height="40" width="40" /></td>
-                            <td class="text-center" ng-if="position.position_image == ''"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
 
-            <div class="ms-responsive-table-wrapper">
-                <table class="simple hover simple-tbl1">
-                    <thead>
-                        <tr>
-                            <th class="secondary-text text-bold" width="40%">Garment/Item Description</th>
-                            <th class="secondary-text text-center text-bold" width="10%">Color</th>
-                            <th class="secondary-text text-center text-bold" width="20%">Size/Quantities</th>
-                            <th class="secondary-text text-center text-bold" width="10%">Qty</th>
-                            <th class="secondary-text text-center text-bold" width="10%">Unit Price</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr ng-repeat="product in design.products">
-                            <td>{{product.product_name}}</td>
-                            <td class="text-center">{{product.color_name}}</td>
-                            <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
-                            <td class="text-center">{{product.total_qnty}}</td>
-                            <td class="text-center">{{product.total_price | currency : $ : 2}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="order-design-block box-zerospace">
+            <div ng-repeat="design in allData.all_design" class="invoice-single-design">
+            <div class="title box-title">
+                <div class="flex-100 m-b-20" flex="100">
+                <span class="stokkup-title-h4 light-300">Design: {{design.design_name}}</span>
+                </div>
+            </div> 
+                <div class="ms-responsive-table-wrapper stockkup-content-table-container white-bg">
+                    <table class="simple hover simple-tbl1">
+                        <thead>
+                            <tr>
+                                <th class="secondary-text text-bold" width="25%">Position</th>
+                                <th class="secondary-text text-bold" width="15%">Type</th>
+                                <th class="secondary-text text-center text-bold" width="25%">Qty</th>
+                                <th class="secondary-text text-center text-bold" width="15%">Price</th>
+                                <th class="secondary-text text-center text-bold" width="20%">Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="position in design.positions.order_design_position">
+                                <td height="72">{{position.position_name}}</td>
+                                <td>{{position.placement_type_name}}</td>
+                                <td class="text-center">{{position.qnty}}</td>
+                                <td class="text-center">{{position.total_price | currency : $ : 2}}</td>
+                                <td class="text-center" ng-if="position.position_image != ''"><img src="{{position.position_image}}" title="Position Image" alt="Position Image" height="40" width="40" /></td>
+                                <td class="text-center" ng-if="position.position_image == ''"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-            <div layout="row">
-                <div layout="column" flex="50">
+                <div class="ms-responsive-table-wrapper stockkup-content-table-container white-bg">
+                    <table class="simple hover simple-tbl1">
+                        <thead>
+                            <tr>
+                                <th class="secondary-text text-bold" width="40%">Garment/Item Description</th>
+                                <th class="secondary-text text-center text-bold" width="10%">Color</th>
+                                <th class="secondary-text text-center text-bold" width="20%">Size/Quantities</th>
+                                <th class="secondary-text text-center text-bold" width="10%">Qty</th>
+                                <th class="secondary-text text-center text-bold" width="10%">Unit Price</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr ng-repeat="product in design.products">
+                                <td>{{product.product_name}}</td>
+                                <td class="text-center">{{product.color_name}}</td>
+                                <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
+                                <td class="text-center">{{product.total_qnty}}</td>
+                                <td class="text-center">{{product.total_price | currency : $ : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div layout="column" flex="50" class="box-zerospace white-bg m-b-30">
                     <md-card class="mrg10">
-                        <md-card-content class="recap">
-                            <div ng-repeat="position in design.positions.order_design_position">
-                                <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding"><b>Position : </b></div>
-                                    <span class="ng-binding">{{position.position_name}}</span>
-                                </div>
-                                <div ng-if="position.discharge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding">Discharge Ink @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].discharge | currency : $ : 2}}</span>
-                                </div>
-
-                                <div ng-if="position.foil_qnty > 0"  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding">Foil @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].foil | currency : $ : 2}}</span>
-                                </div>
-
-                                <div ng-if="position.ink_charge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding">Ink Charge @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].ink_changes | currency : $ : 2}}</span>
-                                </div>
-
-                                <div ng-if="position.number_on_dark_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding"># on Dark @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_dark | currency : $ : 2}}</span>
-                                </div>
-
-                                <div ng-if="position.number_on_light_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding"># on Light @ </div>
-                                    <span class="ng-binding">{{allData.price_grid_data[0].number_on_light | currency : $ : 2}}</span>
-                                </div>
+                    <md-card-content class="recap">
+                        <div ng-repeat="position in design.positions.order_design_position">
+                            <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Position :</div>
+                                <span class="ng-binding global-heading-style">{{position.position_name}}</span>
                             </div>
-                            <div>&nbsp;</div>
-                        </md-card-content>
+                            <div ng-if="position.discharge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Discharge Ink @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].discharge | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.foil_qnty > 0"  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Foil @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].foil | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.ink_charge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Ink Charge @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].ink_changes | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.number_on_dark_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style"># on Dark @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].number_on_dark | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.number_on_light_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style"># on Light @ </div>
+                                <span class="ng-binding  global-heading-style">{{allData.price_grid_data[0].number_on_light | currency : $ : 2}}</span>
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
+                    </md-card-content>
                     </md-card>
                 </div>
-                <div layout="column" flex="50">
+
+                <div layout="column" flex="50" class="box-zerospace white-bg m-b-30">
                     <md-card class="mrg10">
                         <md-card-content class="recap">
                             <div ng-repeat="product in design.products">
                                 <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding"><b>Product : </b></div>
-                                    <span class="ng-binding">{{product.product_name}}</span>
+                                    <div class="ng-binding global-text-style"><b>Product : </b></div>
+                                    <span class="ng-binding global-heading-style">{{product.product_name}}</span>
                                 </div>
                                 <div ng-repeat="oitem in product.order_items" ng-if="oitem.selected > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding">{{oitem.item}}</div>
-                                    <span class="ng-binding">{{oitem.charge | currency : $ : 2}}</span>
+                                    <div class="ng-binding global-text-style">{{oitem.item}}</div>
+                                    <span class="ng-binding global-heading-style">{{oitem.charge | currency : $ : 2}}</span>
                                 </div>
                             </div>
                             <div>&nbsp;</div>
                         </md-card-content>
                     </md-card>
                 </div>
-            </div>
+            </div><!--repeat design box ends here -->
         </div>
-    </div>
 
-    <div layout="row">
-        <div layout="column" flex="75" class="md-whiteframe-4dp mrg15-R h100">
-            <div ng-cloak>
-                <md-content class="">
-                            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+        <div class="box-layout-2">
+            <div flex="70" layout="column" class="right-20 pull-left box-layout-2">
+                <div class="full-row pull-left">
+                    <div ng-cloak class="box-zerospace" layout="row">
+                        <md-content class="box-zerospace">
+                        <md-tabs md-dynamic-height md-border-bottom class="custom-struct-2 stokkup-invoice-tabs box-layout-2">
                                 <!--Payment History Tab-->
                                 <md-tab label="Payment History">
                                     <div layout="row" flex=100 class="p-30">
-                                    <div class="ms-responsive-table-wrapper box-zerospace">
+                                    <div class="ms-responsive-table-wrapper">
                                         <table class="simple hover simple-tbl1">
                                             <thead>
                                                 <tr>
@@ -228,14 +247,14 @@
                                     </div>                   
                                 </md-tab>
                                 <!-- Pay By Credit Card-->
-                                <md-tab label="Pay By Credit Card">
+                                <md-tab label="Pay By Credit Card" ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments">
                                     <div layout="row" flex=100 class="p-15">
                                         <div class="box-layout-2">
                                            <div layout="row">
-                                               <div layout="column" flex="45" class="m-r-30 layout-padding">
-                                                    <div class="title">
-                                                        <span class="basicInfoStyle p-b-20">Credit Card Information</span>
-                                                        <md-select class="m-t-20 m-b-0 p-b-10" placeholder="Saved Credit Cards" ng-change="getStoredProfile(company.savedCard)" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
+                                               <div layout="column" flex="45" class="m-r-30 p-20">
+                                                    <div class="title pull-left box-zerospace pb-20 stokkup-title-h4">
+                                                        Credit Card Information</div>
+                                                        <md-select class="m-t-20 m-b-0 p-b-20" placeholder="Saved Credit Cards" ng-change="getStoredProfile(company.savedCard)" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
                                                             <md-option value="0">
                                                                 Saved Credit Cards
                                                             </md-option>
@@ -244,7 +263,6 @@
                                                             </md-option>
                                                         </md-select>
                                                         <input type="hidden" ng-model="company.cppdid">
-                                                    </div>
                                                     <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                                                         <md-input-container flex="50" class="margin-0 m-b-20" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                              <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
@@ -255,10 +273,10 @@
                                                         <md-input-container flex="100" class="margin-0 m-b-20" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                             <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
                                                         </md-input-container>
-                                                        <md-input-container flex="100" class="margin-0">
+                                                        <md-input-container flex="100" class="margin-0" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                             <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
                                                         </md-input-container>
-                                                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                        <div class="box-zerospace" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                             <md-input-container flex="35">
                                                                 <md-select ng-model="company.expMonth" placeholder="MM">
                                                                     <md-option value="0">MM</md-option>
@@ -306,9 +324,9 @@
                                                     </div>
                                                </div>
                                                
-                                               <div layout="column" flex="45" class="layout-padding" ng-show="company.savedCard == 0 || company.savedCard == null">
-                                                    <div class="title"><span class="basicInfoStyle p-b-20">Billing Address</span></div>
-                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                               <div layout="column" flex="45" class="p-20" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                    <div class="title pull-left box-zerospace pb-20 stokkup-title-h4">Billing Address</div>
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="pt-20">
                                                         <md-input-container flex="75" class="margin-0">
                                                             <input placeholder="Street Address" name="Street Address" ng-model="company.street">
                                                         </md-input-container>
@@ -316,7 +334,7 @@
                                                             <input placeholder="Suite" name="Suite" ng-model="company.suite">
                                                         </md-input-container>
                                                     </div>
-                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="pt-20">
                                                         <md-input-container flex="100" class="margin-0 m-b-20">
                                                             <input placeholder="City" name="City" ng-model="company.city">
                                                         </md-input-container>
@@ -335,27 +353,35 @@
                                                         </md-input-container>
                                                     </div>
                                                     <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
-                                               </div>
-                                           </div>
-                                           <div layout="row" class="box-layout-2">
+                                                </div>
+                                            </div>
+                                            <div layout="row" class="box-layout-2" ng-show="company.savedCard == 0 || company.savedCard == null">
                                                 <div flex=100 class="pull-right m-r-30">
                                                     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
                                                         <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20 text-uppercase" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Pay</span></button>
                                                     </md-dialog-actions>
                                                 </div>
                                             </div>
+                                            
+                                            <div layout="row" class="box-layout-2" ng-hide="company.savedCard == 0 || company.savedCard == null">
+                                                <div flex=100 class="pull-right m-r-30">
+                                                    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                                        <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20 text-uppercase" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Collect Money</span></button>
+                                                    </md-dialog-actions>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div> 
+                                    </div>     
                                 </md-tab>
                                 <!-----------------Pay By Cash-------------------->
-                                <md-tab label="Pay By Cash">
+                                <md-tab label="Pay By Cash" ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments">
                                     <div layout="row" flex=100>
                                         <div class="box-zerospace">
                                             <div class="p-30">
                                            <div>
-                                                    <div class="title"><span class="basicInfoStyle">Amount Paid</span></div>
+                                                    <div class="title pb-20"><span class="stokkup-title-h4">Amount Paid</span></div>
                                                     <div layout="row">
-                                                        <md-input-container flex=40 class="margin-0 m-b-20">
+                                                        <md-input-container flex=30 class="margin-0 m-b-20">
                                                              <input placeholder="$" name="$" only-number ng-model="pay.cashAmount">
                                                         </md-input-container>
                                                     </div>
@@ -369,100 +395,98 @@
                                         </div>
                                     </div>
                                 </md-tab>
-                            </md-tabs>
+                        </md-tabs>
                         </md-content>
+                    </div>
+                </div>
+            </div>       
+            <div class="side-bar orderscreen-rightbar invoice-rightbar pull-right" flex="30" layout="column">
+                <md-card class="m-b-30">
+                    <md-card-title-text class="text-left stokkup-title-h4 m-b-20 light-300">
+                        Order Recap
+                    </md-card-title-text>
+                
+                    <md-card-content class="recap">
+                       <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Screens</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].screen_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Press Setup</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].press_setup_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Digitize</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].digitize_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Art Work</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].artwork_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Seperations</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].separations_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Rush</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].rush_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Distribution</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].distribution_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Shipping</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].shipping_charge | currency : $ : 2}}</span> 
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Discount</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].discount | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Order Total</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].order_total | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Tax Rate</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].tax_rate}}(%)</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Tax</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].tax | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Grand Total</div>
+                            <span class="ng-binding global-heading-style red-highlight">{{allData.order_data[0].grand_total | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Total Payments</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].total_payments | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Balance Due</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].balance_due | currency : $ : 2}}</span>
+                        </div>
+                    </md-card-content>
+                    <div class="text-center m-t-20">
+                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
+                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="print_pdf()"><span class="ng-scope">Download</span></button>
+                    </div>
+                </md-card>
             </div>
-        </div>
-        <div class="m-r-15 side-bar h100" flex="25" layout="column">
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text class="text-left">Order Recap</md-card-title-text>
-                </md-card-title>
-                <md-card-content class="recap pd0">
-                   <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Screens</div>
-                        <span class="ng-binding">{{allData.order_data[0].screen_charge | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Press Setup</div>
-                        <span class="ng-binding">{{allData.order_data[0].press_setup_charge | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Digitize</div>
-                        <span class="ng-binding">{{allData.order_data[0].digitize_charge | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Art Work</div>
-                        <span class="ng-binding">{{allData.order_data[0].artwork_charge | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Seperations</div>
-                        <span class="ng-binding">{{allData.order_data[0].separations_charge | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Rush</div>
-                        <span class="ng-binding">{{allData.order_data[0].rush_charge | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Distribution</div>
-                        <span class="ng-binding">{{allData.order_data[0].distribution_charge | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Shipping</div>
-                        <span class="ng-binding">{{allData.order_data[0].shipping_charge | currency : $ : 2}}</span> 
-                    </div>
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Discount</div>
-                        <span class="ng-binding">{{allData.order_data[0].discount | currency : $ : 2}}</span>
-                    </div>
-
-                    <!--<div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Lines Total</div>
-                        <span class="ng-binding">${{allData.order_data[0].order_line_total}}</span>
-                    </div>-->
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Order Total</div>
-                        <span class="ng-binding">{{allData.order_data[0].order_total | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax Rate</div>
-                        <span class="ng-binding">{{allData.order_data[0].tax_rate}}(%)</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax</div>
-                        <span class="ng-binding">{{allData.order_data[0].tax | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Grand Total</div>
-                        <span class="ng-binding">{{allData.order_data[0].grand_total | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">{{allData.order_data[0].total_payments | currency : $ : 2}}</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Balance Due</div>
-                        <span class="ng-binding">{{allData.order_data[0].balance_due | currency : $ : 2}}</span>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </div>
-    </div>
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg15-T">
-        <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
-        <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Link to Pay" ng-click="print_pdf()"><span class="ng-scope">Download</span></button>
-    </md-dialog-actions>
+        </div>              
+    </div><!--Inner full box ends here -->
 </div>
