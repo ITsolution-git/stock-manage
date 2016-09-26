@@ -25,7 +25,7 @@ class Account extends Model {
         return $admindata;
     }
     public function InsertCompanyData($post)
-    {
+    { 
     	$result = DB::table('users')->insert($post);
 
         $id = DB::getPdo()->lastInsertId();
@@ -38,7 +38,7 @@ class Account extends Model {
     	$admindata = DB::table('users as usr')
         				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
                          ->leftJoin('staff as staff', 'staff.user_id', '=', 'usr.id')
-        				 ->select('staff.*','usr.name','usr.user_name','usr.email','usr.remember_token','usr.status','usr.id','usr.role_id')
+        				 ->select('staff.*','usr.name','usr.user_name','usr.profile_photo','usr.email','usr.remember_token','usr.status','usr.id','usr.role_id','staff.id as staff_id')
         				 ->where('usr.id','=',$id)
         				 ->where('usr.is_delete','=','1')
                          ->where('usr.parent_id','=',$parent_id)

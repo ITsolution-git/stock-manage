@@ -24,10 +24,19 @@
     if($state.current.url=='/userProfile')
     {
         $scope.profile_id = $scope.user_id;
+        $scope.allow_access = 1;
     }
     else
     {
         $scope.profile_id = $scope.company_id;
+        if($scope.role_slug=='CA')
+        {
+            $scope.allow_access = 1;
+        }
+        else
+        {
+            $scope.allow_access = 0;
+        }
     }
     
 
@@ -87,7 +96,7 @@
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
         //console.log(Object.keys(validation).length);
-        if($scope.role_slug!='CA')
+        if($scope.allow_access=='0')
         {
             notifyService.notify('error','You have no rights to Edit.');
             return false;
@@ -142,7 +151,7 @@
             }
             else
             {
-                notifyService.notify('error', result.data.message);
+               //notifyService.notify('error', result.data.message);
             }
         });
     }                          
