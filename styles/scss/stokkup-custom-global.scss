@@ -1765,4 +1765,34 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 .approve-box md-select md-select-value .md-text{
 	font-size:14px;
 }
+.orderscreen-rightbar.invoice-rightbar{
+	max-width:25%;
+}
+
+md-tabs.stokkup-invoice-tabs{
+	z-index:0;
+	md-tabs-wrapper{
+		width:$full-width;
+	}
+}
+.invoice-orderimg{
+	max-height:120px;
+	overflow:hidden;
+	display:table-cell;
+	text-align:center;
+	img{
+	max-width: 100px;
+    height: auto;
+    width: auto;
+    max-height: 100px;
+    float: none;
+    margin: 0 auto;
+	display:inline-table;
+	vertical-align:middle;
+	}
+}
+.invoice-single-design{
+	width:$full-width;
+	float:$left;
+}
 /*css for invoice inner page ends here */
