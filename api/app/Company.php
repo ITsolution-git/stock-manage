@@ -29,9 +29,9 @@ class Company extends Model {
         }
 
         $admindata = DB::table('users as usr')
-        				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
-        				 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
-        				 ->where('usr.is_delete','=','1')
+                 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
+                 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
+                 ->where('usr.is_delete','=','1')
                  ->where('rol.slug','=','CA')
                  ->where('usr.parent_id','=','1');
                  if($search != '')               
@@ -68,7 +68,7 @@ class Company extends Model {
  
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
       $string = $this->login->getString(6);
-    	$result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
+      $result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
        $user_array = $post;
       
       $post['prime_address1']       = !empty($post['prime_address1'])?$post['prime_address1']:'';
@@ -318,7 +318,7 @@ class Company extends Model {
         
 // Code for Default Misc data End
 
-    	return $companyid ;
+      return $companyid ;
     }
 
     public function makeFolder($companyid){
@@ -450,13 +450,13 @@ class Company extends Model {
     public function GetCompanybyId($id,$company_id)
     { 
       $whereConditions = ['usr.id' => $id,'usr.is_delete' => '1'];
-    	$admindata = DB::table('users as usr')
-        				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
+      $admindata = DB::table('users as usr')
+                 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
                  ->leftJoin('staff as st', 'usr.id', '=', 'st.user_id')
                  ->leftJoin('state as state', 'state.id', '=', 'st.prime_address_state')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.cron_runtime','st.id as staff_id','st.prime_phone_main','state.name as state_name')
-        				 ->where($whereConditions)
-        				 ->get();
+                 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.cron_runtime','st.id as staff_id','st.prime_phone_main','state.name as state_name')
+                 ->where($whereConditions)
+                 ->get();
         return $admindata;
     }
     public function SaveCompanyData($post)
@@ -475,17 +475,17 @@ class Company extends Model {
     }
     public function DeleteCompanyData($id)
     {
-    	if(!empty($id))
-    	{
-      		DB::table('users')->where('id','=',$id)->update(array("is_delete" => '0'));
-      		DB::table('users')->where('parent_id','=',$id)->update(array("is_delete" => '0'));
+      if(!empty($id))
+      {
+          DB::table('users')->where('id','=',$id)->update(array("is_delete" => '0'));
+          DB::table('users')->where('parent_id','=',$id)->update(array("is_delete" => '0'));
           DB::table('staff')->where('user_id','=',$id)->update(array("is_delete" => '0'));
-      		return 1;
-    	}
-    	else
-    	{
-    		  return false;
-    	}
+          return 1;
+      }
+      else
+      {
+          return false;
+      }
     }
     public function getCompanyInfo($company_id)
     {

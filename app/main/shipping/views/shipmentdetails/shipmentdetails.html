@@ -84,21 +84,13 @@
                                 <div layout="column" flex="50" class="mrg10-R mrg15-T" ng-show="shipping.shipping_type_id == 1">
                                     <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="mrg6-TB" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
                                         <md-option>Shipping Method</md-option>
-
-
-                                        <md-option value="UPS Next Day Air Early" ng-selected="shipping.shipping_method == 'UPS Next Day Air Early'">UPS Next Day Air Early</md-option>
-
-                                        <md-option value="UPS Next Day Air" ng-selected="shipping.shipping_method == 'UPS Next Day Air'">UPS Next Day Air</md-option>
-
-                                        <md-option value="Next Business Day" ng-selected="shipping.shipping_method == 'Next Business Day'">Next Business Day</md-option>
-
-                                        <md-option value="UPS Next Day Air Saver" ng-selected="shipping.shipping_method == 'UPS Next Day Air Saver'">UPS Next Day Air Saver</md-option>
-
-                                        <md-option value="UPS 2nd Day Air A.M." ng-selected="shipping.shipping_method == 'UPS 2nd Day Air A.M.'">UPS 2nd Day Air A.M.</md-option>
-
-                                        <md-option value="UPS 2nd Day Air" ng-selected="shipping.shipping_method == 'UPS 2nd Day Air'">UPS 2nd Day Air</md-option>
-                                        <md-option value="UPS 3 Day Select" ng-selected="shipping.shipping_method == 'UPS 3 Day Select'">UPS 3 Day Select</md-option>
-                                        <md-option value="UPS Ground" ng-selected="shipping.shipping_method == 'UPS Ground'">UPS Ground</md-option>
+                                        <md-option value="14" ng-selected="shipping.shipping_method == '14'">UPS Next Day Air Early</md-option>
+                                        <md-option value="01" ng-selected="shipping.shipping_method == '01'">UPS Next Day Air</md-option>
+                                        <md-option value="13" ng-selected="shipping.shipping_method == '13'">UPS Next Day Air Saver</md-option>
+                                        <md-option value="59" ng-selected="shipping.shipping_method == '59'">UPS 2nd Day Air A.M.</md-option>
+                                        <md-option value="02" ng-selected="shipping.shipping_method == '02'">UPS 2nd Day Air</md-option>
+                                        <md-option value="12" ng-selected="shipping.shipping_method == '12'">UPS 3 Day Select</md-option>
+                                        <md-option value="03" ng-selected="shipping.shipping_method == '03'">UPS Ground</md-option>
                                     </md-select>
                                 </div>
 
@@ -106,21 +98,13 @@
                                 <div layout="column" flex="50" class="mrg10-R mrg15-T" ng-show="shipping.shipping_type_id == 2">
                                     <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="mrg6-TB" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
                                         <md-option>Shipping Method</md-option>
-
-
-                                        <md-option value="FedEx First Overnight" ng-selected="shipping.shipping_method == 'FedEx First Overnight'">FedEx First Overnight</md-option>
-
-                                        <md-option value="FedEx Priority Overnight" ng-selected="shipping.shipping_method == 'FedEx Priority Overnight'">FedEx Priority Overnight</md-option>
-
-                                        <md-option value="FedEx Standard Overnight" ng-selected="shipping.shipping_method == 'FedEx Standard Overnight'">FedEx Standard Overnight</md-option>
-
-                                        <md-option value="FedEx 2Day" ng-selected="shipping.shipping_method == 'FedEx 2Day'">FedEx 2Day</md-option>
-
-                                        <md-option value="FedEx Express Saver" ng-selected="shipping.shipping_method == 'FedEx Express Saver'">FedEx Express Saver</md-option>
-
-                                        <md-option value="FedEx Ground" ng-selected="shipping.shipping_method == 'FedEx Ground'">FedEx Ground</md-option>
-                                        <md-option value="FedEx Home Delivery" ng-selected="shipping.shipping_method == 'FedEx Home Delivery'">FedEx Home Delivery</md-option>
-                                       
+                                        <md-option value="FIRST_OVERNIGHT" ng-selected="shipping.shipping_method == 'FIRST_OVERNIGHT'">FedEx First Overnight</md-option>
+                                        <md-option value="PRIORITY_OVERNIGHT" ng-selected="shipping.shipping_method == 'PRIORITY_OVERNIGHT'">FedEx Priority Overnight</md-option>
+                                        <md-option value="STANDARD_OVERNIGHT" ng-selected="shipping.shipping_method == 'STANDARD_OVERNIGHT'">FedEx Standard Overnight</md-option>
+                                        <md-option value="FEDEX_2_DAY" ng-selected="shipping.shipping_method == 'FEDEX_2_DAY'">FedEx 2Day</md-option>
+                                        <md-option value="FEDEX_EXPRESS_SAVER" ng-selected="shipping.shipping_method == 'FEDEX_EXPRESS_SAVER'">FedEx Express Saver</md-option>
+                                        <md-option value="FEDEX_GROUND" ng-selected="shipping.shipping_method == 'FEDEX_GROUND'">FedEx Ground</md-option>
+                                        <md-option value="GROUND_HOME_DELIVERY" ng-selected="shipping.shipping_method == 'GROUND_HOME_DELIVERY'">FedEx Home Delivery</md-option>
                                     </md-select>
                                 </div>
 
