@@ -5,7 +5,7 @@
             COMPANY PRICE GRIDS
         </div>
             <div class="pull-right right-search-box">
-                <form name="uploadPricecsv" id="uploadPricecsv" action="api/public/admin/uploadPricingCSV" method="post" enctype="multipart/form-data" target="_self" class="width-auto">
+                <form name="uploadPricecsv" id="uploadPricecsv" action="api/public/admin/uploadPricingCSV" method="post" enctype="multipart/form-data" target="_self" class="width-auto" ng-show="allow_access==1">
                     <div class="stokkup-custom-btn1 stokkup-blue-btn flex-40 pull-right m-l-10">
                         <input type="file" name="import_file" id="file" class="upload" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <md-tooltip md-direction="bottom">Upload Excel File</md-tooltip>
