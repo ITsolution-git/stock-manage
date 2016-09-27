@@ -4,8 +4,8 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">{{product_name}}</span>
-                <md-button  ng-click="vm.closeDialog()">
-                    <span>Cancel</span>
+                <md-button  ng-click="vm.closeDialog()" class="close-stokkup-dialog">
+                    <span>CLOSE</span>
                 </md-button>
             </div>
         </md-toolbar>
@@ -124,7 +124,6 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
             <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes,warehouse)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
         </md-dialog-actions>
     </form>
