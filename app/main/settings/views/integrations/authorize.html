@@ -34,6 +34,9 @@
 	                        <span>{{authorize.transactionkey}}</span>
 	                        <div class="h5 text-semibold">API secretkey</div>
 	                        <span>{{authorize.secretkey}}</span>
+							<div class="h5 text-semibold">Test Mode</div>
+	                        <span ng-if="authorize.is_live==1">Yes</span>
+	                        <span ng-if="authorize.is_live==0">No</span>
 	                    </md-card-content>
 	                </md-card>
 	            </div>
