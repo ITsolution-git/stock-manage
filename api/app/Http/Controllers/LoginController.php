@@ -100,7 +100,8 @@ class LoginController extends Controller {
                     $token .= $token.time();
                     DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'date'=>date('Y-m-d H:i:s')]);
                     $company = $this->common->CompanyService($result[0]->id);
-                    $result[0]->profile_photo = (empty($result[0]->profile_photo))? '': UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo;
+ 
+                    $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
 
 
                     
