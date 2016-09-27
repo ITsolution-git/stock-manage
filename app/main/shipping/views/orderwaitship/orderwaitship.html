@@ -1,18 +1,28 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="simple-table-container md-whiteframe-4dp m-t-20 m-b-20 m-r-15 pd15" >
-        <table class="tbl-typ2">
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=60>
+              Ship Order #{{order_id}}
+            </div>
+        </div>
+    </div>
+    <div class="inner-full-box">
+    <table class="tbl-typ2 mt-20">
             <tr>
                 <td>
-                    <div class="header-typ1">Ship Order #{{order_id}}</div>
                     <div layout="row" class="pd10">
                         <div flex="30" layout="column" class="order-container">
-                            <div class="header-typ3">Distribution Addresses</div>
+                            <div class="row mb-20">
+                            <div class="row pt-10 pb-20"><span class="stokkup-title-h4">Distribution Addresses</span></div>
                             <md-input-container class="md-block m-0">
                                 <input ng-model="productSearch" placeholder="Search Locations" ng-change="getShippingAddress()">
                             </md-input-container>
-                            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="vm.openaddAddressDialog($event)">Create New Location</md-button>
+                            <md-button class="stokkup-custom-btn1 stokkup-blue-btn mt-10" ng-click="vm.openaddAddressDialog($event)">Create New Location</md-button>
+                            </div>
 
-                            <div class="header-typ3">Locations Products Allocated To</div>
+
+                            <div class="row mb-20">
+                            <div class="stokkup-title-h4">Locations Products Allocated To</div>
                             <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in assignAddresses" ng-click="getProductByAddress(addrss)">
                                 <div layout="column" flex="80">
                                     <div class="font-12"><b>{{ addrss.description }}</b></div>
@@ -24,7 +34,10 @@
                                     <span class="icon icon-arrow-right font-18 mrg35-T"></span>
                                 </div>
                             </div>
-                            <div class="header-typ3">Other Locations</div>
+                            </div>
+
+                            <div class="row mb-20">
+                            <div class="stokkup-title-h4">Other Locations</div>
                             <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in unAssignAddresses" ng-click="getProductByAddress(addrss)">
                                 <div layout="column" flex="80">
                                     <div class="font-12"><b>{{ addrss.description }}</b></div>
@@ -36,23 +49,19 @@
                                     <span class="icon icon-arrow-right font-18 mrg35-T"></span>
                                 </div>
                             </div>
+                            </div>
                         </div>
                         <div flex="35" layout="column" class="orderwait-midsection">
-                            <div class="header-typ3 pd15-LR">
                                 <div layout="row">
-                                    <div layout="column" flex="70">Order Items</div>
-                                    <!-- <div layout="column" flex="30">
-                                        <md-checkbox aria-label="Select All" class="font-12 f-black" aria-label="Select All">Select All</md-checkbox>
-                                    </div> -->
+                                    <div class="row pt-10 pb-20"><span class="stokkup-title-h4" flex=70>Order Items</span></div>
                                 </div>
-                            </div>
-                            <div class="order-container pd15-LR" ms-scroll>
+                            <div class="order-container shipping-page-order pd15-LR" ms-scroll>
                                 <div class="box-typ3" ng-repeat="item in assignedItems">
                                     <div layout="row" flex="100" class="demo-select-all-checkboxes">
                                         <!-- <div layout="column" flex="10" class="align-M align-self-C">
                                             <md-checkbox aria-label="Select"></md-checkbox>
                                         </div> -->
-                                        <div layout="column" flex="90">
+                                        <div layout="column" flex="100">
                                             <div layout-wrap="" layout="row" class="layout-wrap layout-row m-b-30">
                                                 <div class="trans-box">
                                                     <div>Size Group</div>
@@ -94,11 +103,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div flex="35" layout="column">
                         <div class="mrg10-L order-container" ms-scroll>
-                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-                                <button ng-show="unshippedProducts.length > 0" type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Next" ng-click="addAllProducts()"><span class="ng-scope">Add All</span></button>
-                            </md-dialog-actions>
-                            <div class="header-typ3">Shipment Items</div>
+                            <div class="row pt-10 pb-20">
+                                <div flex=50 class="pull-left">
+                                    <span class="stokkup-title-h4">Shipment Items</span>
+                                </div>
+                                <div flex=50 class="pull-right">
+                                    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                        <a ng-show="unshippedProducts.length > 0" class="pull-right common-header-links" aria-label="Next" ng-click="addAllProducts()">Add All</a>
+                                    </md-dialog-actions>
+                                </div>
+                            </div>
                             <div class="box-typ3" ng-repeat="product in unshippedProducts">
                                 <div layout="row" flex="100">
                                     <div layout="colum" flex="10" class="align-M align-self-C text-center">
@@ -147,12 +163,14 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
                     </div>
                 </td>
             </tr>
-        </table>
-    </div>
+    </table>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn" aria-label="Next" ng-click="shippingDetails()"><span class="ng-scope">Next</span></button>
-    </md-dialog-actions>
+            <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mb-30" aria-label="Next" ng-click="shippingDetails()"><span class="ng-scope">Next</span></button>
+        </md-dialog-actions>
+    </div>
+        
 </div>
