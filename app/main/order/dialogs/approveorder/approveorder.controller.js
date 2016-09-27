@@ -74,6 +74,7 @@
                     {
                         notifyService.notify('success',result.data.message);
                         $mdDialog.hide();
+                        return false;
                     }
                     else
                     {
