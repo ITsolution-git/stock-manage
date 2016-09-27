@@ -29,12 +29,15 @@
 				<span style="text-align:center;margin:0;"><a href="{{$company_data[0]->url}}" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
 			</td>
 			<td>
+
 				<span style="font-weight:bold;text-align:right;">Order Acknowledgement # {{$order_data[0]->id}}</span><br>
 				<?php if(!empty($invoice_data)) {?>
 					<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span><br>
 					<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span><br>
 				<?php } ?>
 				<span style="font-weight:bold;text-align:right;">Job Name: {{$order_data[0]->name}}</span>
+				<span style="font-weight:bold;text-align:right;">Customer PO: {{$order_data[0]->custom_po}}</span>
+
 			</td>
 		</tr>
 	</table><br><br>
