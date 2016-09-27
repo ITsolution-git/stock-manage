@@ -1400,6 +1400,22 @@ md-tabs.stokkup-invoice-tabs {
   font-weight: 300;
   color: #8d93a0; }
 
+.notable-border.tbl-typ2 td, .notable-border {
+  border: none; }
+
 /*css for invoice inner page ends here */
+.shipping-details-left {
+  width: 38%;
+  float: left; }
+
+.shipping-details-right {
+  width: 62%;
+  float: left; }
+
+.tbl-scroll-cntnr {
+  max-height: 610px; }
+
+.mt-2 {
+  margin-top: 2px; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
