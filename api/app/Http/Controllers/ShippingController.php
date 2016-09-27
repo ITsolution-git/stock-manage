@@ -722,7 +722,6 @@ class ShippingController extends Controller {
 
         foreach ($boxes as $box) {
             $box->boxItems = $this->shipping->getBoxItems($box->id);
-            $total_box_qnty += $box->boxed_qnty;
             $shippingBoxes[$box->id] = $box;
         }
 
@@ -742,7 +741,7 @@ class ShippingController extends Controller {
                         'success' => 1, 
                         'message' => GET_RECORDS,
                         'shippingBoxes' => $shippingBoxes,
-                        'total_box_qnty' => $total_box_qnty
+                        'total_box_qnty' => count($shippingBoxes)
                     );
 
         return response()->json(["data" => $response]);
@@ -935,7 +934,6 @@ class ShippingController extends Controller {
         else
         {
             $company_detail = $this->common->getCompanyDetail($post['shipping']['company_id']);
-            print_r($company_detail);exit;
 
             if($post['shipping']['shipping_type_id'] == '2')
             {
@@ -958,14 +956,13 @@ class ShippingController extends Controller {
 
                     $shipment = new \RocketShipIt\Shipment('fedex');
 
-                    /*$shipment->setParameter('shipper', $company_detail[0]->name);
-                    $shipment->setParameter('shipContact', $company_detail[0]->user_name);
-                    $shipment->setParameter('shipAddr1', $post['shipping']['client_company']);
-                    $shipment->setParameter('shipAddr2', $post['shipping']['client_company']);
-                    $shipment->setParameter('shipCity', $post['shipping']['client_company']);
-                    $shipment->setParameter('shipState', $post['shipping']['client_company']);
-                    $shipment->setParameter('shipCode', $post['shipping']['client_company']);
-                    $shipment->setParameter('shipPhone', $post['shipping']['client_company']);*/
+                    $shipment->setParameter('shipper', $company_detail[0]->name);
+                    $shipment->setParameter('shipContact', $company_detail[0]->first_name." ".$company_detail[0]->last_name);
+                    $shipment->setParameter('shipAddr1', $company_detail[0]->prime_address1);
+                    $shipment->setParameter('shipCity', $company_detail[0]->prime_address_city);
+                    $shipment->setParameter('shipState', $company_detail[0]->prime_address_state);
+                    $shipment->setParameter('shipCode', $company_detail[0]->prime_address_zip);
+                    $shipment->setParameter('shipPhone', $company_detail[0]->phone);
 
                     $shipment->setParameter('toCompany', $post['shipping']['client_company']);
                     $shipment->setParameter('toName', $post['shipping']['description']);
@@ -1039,6 +1036,14 @@ class ShippingController extends Controller {
                 }
 
                 $shipment = new \RocketShipIt\Shipment('UPS');
+
+                $shipment->setParameter('shipper', $company_detail[0]->name);
+                $shipment->setParameter('shipContact', $company_detail[0]->first_name." ".$company_detail[0]->last_name);
+                $shipment->setParameter('shipAddr1', $company_detail[0]->prime_address1);
+                $shipment->setParameter('shipCity', $company_detail[0]->prime_address_city);
+                $shipment->setParameter('shipState', $company_detail[0]->prime_address_state);
+                $shipment->setParameter('shipCode', $company_detail[0]->prime_address_zip);
+                $shipment->setParameter('shipPhone', $company_detail[0]->phone);
 
                 $shipment->setParameter('toCompany', $post['shipping']['description']);
                 $shipment->setParameter('toPhone', $post['shipping']['phone']);

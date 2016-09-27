@@ -132,13 +132,13 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr ng-repeat="data in row.shipping_data">
-                                                                <td>{{data.shipping_id}}</td>
+                                                                <td>{{data.id}}</td>
                                                                 <td>{{row.name}}</td>
                                                                 <td ng-if="data.shipping_by != '0000-00-00'">{{ data.shipping_by | date:"M/d/yyyy" }}</td>
                                                                 <td ng-if="data.shipping_by == '0000-00-00'"></td>
                                                                 <td ng-if="data.in_hands_by != '0000-00-00'">{{ data.in_hands_by | date:"M/d/yyyy" }}</td>
                                                                 <td ng-if="data.in_hands_by == '0000-00-00'"></td>
-                                                                <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.shipping_id})"><a>SHIPMENT OVERVIEW</a></td>
+                                                                <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.id})"><a>SHIPMENT OVERVIEW</a></td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
