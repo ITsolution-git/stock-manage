@@ -1803,4 +1803,22 @@ md-tabs.stokkup-invoice-tabs{
 	font-weight:$font-weight-300;
 	color:$gray-shade4;
 }
+.notable-border.tbl-typ2 td, .notable-border{
+	border:$nofloat;
+}
 /*css for invoice inner page ends here */
+
+.shipping-details-left{
+	width:38%;
+	float:left;
+}
+.shipping-details-right{
+	width:62%;
+	float:left;
+}
+.tbl-scroll-cntnr{
+	max-height:610px;
+}
+.mt-2{
+	margin-top:2px;
+}
