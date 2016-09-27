@@ -10,16 +10,31 @@
                         <div class="title" layout-padding><span class="basicInfoStyle">BASIC INFORMATION</span></div>   
                         
                         <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                            <md-input-container style="margin-left: 10px;" flex="40">
-                                <input placeholder="First Name" ng-model="company.first_name" name="first_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            <md-input-container class="mrg10-L" flex="40">
+                                <input placeholder="First Name" ng-model="company.first_name" name="first_name" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.first_name.$error)' }" >
+                                <div ng-messages="user_profile.first_name.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                            </div>
                             </md-input-container>
-                            <md-input-container flex="40">
-                                <input placeholder="Last Name" ng-model="company.last_name" name="last_name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                            <md-input-container flex="40" class="mrg10-R">
+                                <input placeholder="Last Name" ng-model="company.last_name" name="last_name" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.last_name.$error)' }" >
+                                <div ng-messages="user_profile.last_name.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                            </div>
                             </md-input-container>
                         </div>
 
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Display Name" name="name" ng-model="company.name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }">
+                            <input placeholder="Display Name" name="name" ng-model="company.name" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'\',user_profile.name.$error)' }">
+                            <div ng-messages="user_profile.name.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                            </div>
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
