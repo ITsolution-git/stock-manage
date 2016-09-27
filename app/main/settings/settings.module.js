@@ -35,7 +35,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                        return sessionService.AccessService('ALL','true');
                     },
                 },
                 url  : '/userProfile',

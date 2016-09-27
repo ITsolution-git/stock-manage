@@ -57,9 +57,11 @@
 			});
 		}	
 
-		function AccessService(arr_role,access)
+		function AccessService(arr_role,access,refresh)
 		{
-				$http.get('api/public/auth/session').success(function(result) 
+				var pass_array={refresh:refresh};
+
+				$http.post('api/public/auth/session',pass_array).success(function(result) 
                 {  
 	           		
 	                if(result.data.success=='1')
