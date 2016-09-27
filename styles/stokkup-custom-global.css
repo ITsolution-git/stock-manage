@@ -1395,6 +1395,11 @@ md-tabs.stokkup-invoice-tabs {
   width: 100%;
   float: left; }
 
+.global-text {
+  font-size: 13px;
+  font-weight: 300;
+  color: #8d93a0; }
+
 /*css for invoice inner page ends here */
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
