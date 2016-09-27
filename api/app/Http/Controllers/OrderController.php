@@ -2322,7 +2322,7 @@ class OrderController extends Controller {
            $setDate  = date('Y-m-d');
          }
          
-        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate);
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment']);
         $id = $this->common->InsertRecords('invoice',$orderData);
 
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
@@ -2350,9 +2350,7 @@ class OrderController extends Controller {
           }
 
           $pmt_data = $this->common->GetTableRecords('payment_history',array('order_id' => $order_id, 'is_delete' => '1'),array());
-          //print_r($pmt_data);
-          //echo count($pmt_data);
-          //exit;
+
           if(count($pmt_data)>0){
               $retArray = DB::table('payment_history as p')
               ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
@@ -2387,26 +2385,38 @@ class OrderController extends Controller {
       $post = Input::all();
 
       $retArray = DB::table('invoice as p')
-            ->select('p.order_id', 'o.balance_due')
+            ->select('p.order_id', 'o.balance_due', 'p.payment_terms')
             ->leftJoin('orders as o','o.id','=',"p.order_id")
             ->where('p.id','=',$post['invoice_id'])
             ->get();
-        
+
+        $pmtTerm=$retArray[0]->payment_terms;
+
         $date = date_create();
         //echo date_timestamp_get($date);
         $length = 25;
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
 
-        $orderData = array('order_id' => $retArray[0]->order_id,'balance_amount' => $retArray[0]->balance_due , 'session_link' => $session_link);
+        $orderData = array('order_id' => $retArray[0]->order_id, 'session_link' => $session_link);
 
         $id = $this->common->InsertRecords('link_to_pay',$orderData);
-        
 
         $session_link="http://".$_SERVER['SERVER_NAME']."/api/public/invoice/linktopay/".$session_link;
         
-
         $data = array("success"=>1,'session_link' =>$session_link);
+
+        if($pmtTerm==1){
+            $date = date_create();
+            $session_another_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
+
+            $orderData = array('order_id' => $retArray[0]->order_id, 'session_link' => $session_another_link);
+
+            $id = $this->common->InsertRecords('link_to_pay',$orderData);
+
+            $session_another_link="http://".$_SERVER['SERVER_NAME']."/api/public/invoice/linktopay/".$session_another_link;
+            $data['session_another_link'] = $session_another_link;
+        }
         return response()->json(['data'=>$data]);
     }
 
