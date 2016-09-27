@@ -49,7 +49,7 @@
     </tr>
     <tr>
       <td>Brand Coordinator : {{Session::get('name')}}</td>
-      <td>Client PO# : {{$company->order_name}}</td>
+      <td>Client PO# : {{$company->custom_po}}</td>
     </tr>
     <tr>
       <td>In Hands Date: {{$company->in_hands_by}}</td>
@@ -190,7 +190,7 @@
     </tr>
     <tr>
       <td>Brand Coordinator : {{Session::get('name')}}</td>
-      <td>Client PO# : {{$company->order_name}}</td>
+      <td>Client PO# : {{$company->custom_po}}</td>
     </tr>
     <tr>
       <td>In Hands Date: {{$company->in_hands_by}}</td>
