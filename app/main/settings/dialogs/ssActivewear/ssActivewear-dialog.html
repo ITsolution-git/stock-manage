@@ -4,8 +4,8 @@
         <md-toolbar class="md-accent md-hue-2">
                 <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                     <span class="title">S&S API INTEGRATION</span>
-                    <md-button  ng-click="closeDialog()">
-                        <span>Cancel</span>
+                    <md-button  ng-click="closeDialog()" class="close-stokkup-dialog">
+                        <span>close</span>
                     </md-button>
                 </div>
         </md-toolbar>
@@ -37,9 +37,11 @@
                 </div>
             </md-card-content>
         </div>
-        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ss_detail','id',params.id,'sns')">
+        <md-dialog-actions layout="row" layout-align="end center">
+        <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ss_detail','id',params.id,'sns')">
                 SAVE
         </md-button>
+    </md-dialog-actions>
     </div>
 </form>
 </md-dialog>

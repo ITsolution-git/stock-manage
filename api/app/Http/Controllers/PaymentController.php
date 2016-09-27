@@ -628,7 +628,7 @@ class PaymentController extends Controller {
         //$payment_data = $this->common->GetTableRecords('link_to_pay',array('session_link' => $token));
 
         $payment_data = DB::table('link_to_pay as lp')
-            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'lp.balance_amount', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id')
+            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'o.balance_due', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id')
             ->leftJoin('orders as o','o.id','=',"lp.order_id")
             ->leftJoin('invoice as i','i.order_id','=',"o.id")
             ->leftJoin('client as c','c.client_id','=',"o.client_id")
@@ -649,12 +649,12 @@ class PaymentController extends Controller {
           $time = strtotime($data['orderArray']->created_date);
           $curtime = time();
         
-          if(($curtime-$time) > 86400) {     //86400 seconds
+          //if(($curtime-$time) > 86400) {     //86400 seconds
             //echo "Link expired";
-            $payment_flag=array('payment_flag' => '1');
-            $this->common->UpdateTableRecords('link_to_pay',array('session_link' => $token),$payment_flag);
-            $data['orderArray']->link_status=1;
-          }else{
+            //$payment_flag=array('payment_flag' => '1');
+            //$this->common->UpdateTableRecords('link_to_pay',array('session_link' => $token),$payment_flag);
+            //$data['orderArray']->link_status=1;
+          //}else{
 
             $user_data = DB::table('orders as o')
             ->select('s.sales_name', 's.sales_email' , 's.sales_phone', 's.sales_web', 'u.name' , 'u.email' , 'u.phone')
@@ -670,7 +670,7 @@ class PaymentController extends Controller {
             $data['orderArray']->account_name=$user_data[0]->name;
             $data['orderArray']->account_email=$user_data[0]->email;
             $data['orderArray']->account_phone=$user_data[0]->phone;
-          }
+          //}
         }
         return view('auth.payment',$data)->render();
     }

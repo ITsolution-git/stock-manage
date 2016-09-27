@@ -125,9 +125,10 @@ $this->common = $common;
 			{
 				if(empty($getData[0]->staff_id))
 				{
-					$getData[0]->staff_id = $this->common->InsertRecords('staff',array('user_id'=>$id,'is_delete'=>1));
+					$getData[0]->staff_id = $this->common->InsertRecords('staff',array('user_id'=>$id,'is_delete'=>1,'created_date'=>"2016-07-07 07:07:07"));
 				}
-			$getData[0]->company_url_photo = UPLOAD_PATH.$id."/staff/".$getData[0]->staff_id."/".$getData[0]->photo;
+			$getData[0]->company_url_photo = UPLOAD_PATH.$company_id."/staff/".$getData[0]->staff_id."/".$getData[0]->photo;
+			$getData[0]->profile_url_photo = UPLOAD_PATH.$company_id."/staff/".$getData[0]->id."/".$getData[0]->profile_photo;
 			$count = count($getData);
 			if($count>0)
 				{

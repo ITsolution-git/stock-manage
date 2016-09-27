@@ -284,7 +284,7 @@ Route::post('shipping/getShippingBoxes', 'ShippingController@getShippingBoxes');
 Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverview');
 Route::post('shipping/createLabel', 'ShippingController@createLabel');
 Route::post('shipping/checkAddressValid', 'ShippingController@checkAddressValid');
-
+Route::post('shipping/vewLabelPDF', 'ShippingController@vewLabelPDF');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
