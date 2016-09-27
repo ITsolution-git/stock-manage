@@ -272,6 +272,11 @@
                                     $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
                                         if(result.data.success=='1')
                                         {
+                                            // IF PROFILE IMAGE CHANGED, SET API CALL.
+                                            if(params.column_name=="profile_photo")
+                                            {
+                                                sessionService.AccessService('ALL','true','1');
+                                            }
                                             notifyService.notify("success", result.data.message);
                                             $mdDialog.hide();
                                         }

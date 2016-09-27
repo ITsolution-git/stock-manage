@@ -180,25 +180,22 @@ class LoginController extends Controller {
      *
      * @return Response
      */
-    public function check_session($token=0) {
+    public function check_session() 
+    {
+        $data = Input::all();
 
-/*        if(!empty($token))
-        {
-            $result = $this->login->check_session($token);
-            if(count($result)>0)
+            if(!empty($data['refresh']) && $data['refresh']==1)
             {
-                $response = array('success' => 1, 'message' => "session there",'records'=>$result[0]);
-             //   $response = array('success' => 1, 'message' =>"session there",);
+                Session::put('profile_photo', '');
+                $result = $this->common->GetTableRecords('users',array('id' => Session::get("user_id")),array());
+                $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.Session::get("company_id")."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.Session::get("company_id")."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
+
+                Session::put('profile_photo',  $result[0]->profile_photo);
+                $session['profile_photo'] = $result[0]->profile_photo;
+
+                //echo "<pre>"; print_r($result); echo "</pre>"; die;
             }
-            else
-            {
-                 $response = array('success' => 0, 'message' => NO_RECORDS);
-            }
-        }
-        else
-        {
-            $response = array('success' => 0, 'message' => LOGIN_WRONG);
-        }*/
+
             if (!empty(Session::get("useremail"))) {
                 //$result = $this->common->CompanyService(Session::get("user_id"));
             $response = array('success' => 1, 
@@ -211,8 +208,7 @@ class LoginController extends Controller {
                               "email" => Session::get("useremail"),
                               "role_session"=>Session::get("role_slug"),
                               "company_id"=>Session::get("company_id"),
-                              "profile_photo"=>Session::get("profile_photo"),
-                              "token"=>$token
+                              "profile_photo"=>Session::get("profile_photo")
                               );
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
