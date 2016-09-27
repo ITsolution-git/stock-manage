@@ -50,6 +50,7 @@
                 remove('password');
                 remove('company_id');
                 remove('company');
+                remove('profile_photo');
                 $state.go('app.login');
 			},function(response) {
 				notifyService.notify('error',response.data.message);
@@ -71,6 +72,7 @@
 	                    set('name',result.data.name);
 	                    set('role_title',result.data.role_title);
 	                    set('login_id',result.data.login_id);
+	                    set('profile_photo',result.data.profile_photo);
 
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);

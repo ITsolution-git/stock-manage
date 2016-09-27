@@ -12,10 +12,7 @@
         var vm = this;
 
         $scope.shipping_id = $stateParams.id;
-        if($scope.shipping_id == ''){
-             $state.go('app.shipping');
-             return false;
-        }
+
         var company_id = sessionService.get('company_id');
 
         $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
