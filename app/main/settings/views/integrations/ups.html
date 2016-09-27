@@ -30,6 +30,9 @@
 	                        <span>{{ups.password}}</span>
 	                        <div class="h5 text-semibold">Account Number</div>
 	                        <span>{{ups.account_number}}</span>
+							<div class="h5 text-semibold">Test Mode</div>
+	                        <span ng-if="ups.is_live==1">Yes</span>
+	                        <span ng-if="ups.is_live==0">No</span>		                        
 	                    </md-card-content>
 	                </md-card>
 	            </div>
