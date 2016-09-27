@@ -86,13 +86,31 @@
         sessionService.destroy();
         return false;
     }
-    function DashboardController(sessionService)
+    function DashboardController(sessionService,$scope,$http)
     {
         var vm = this;
         //console.log(sessionService.get('company_name'));
         vm.company_name = sessionService.get('company_name');
         vm.role_slug = sessionService.get('role_slug');
         vm.name = sessionService.get('name');
+
+
+        var data = {company_id :sessionService.get('company_id')};
+
+        var company_id = document.createElement('input');
+        company_id.name = 'company_id';
+        company_id.setAttribute('value', sessionService.get('company_id'));
+
+        var combine_array_id = {};
+        combine_array_id.company_id = company_id.value;
+        //$("#ajax_loader").show();
+
+        $http.post('api/public/invoice/getNoQuickbook',combine_array_id).success(function(result){
+            if(result.data.success == '1') {
+              $scope.noqbinvoice=result.data.allData[0].totalInvoice;
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {

@@ -369,3 +369,4 @@ Route::get('invoice/getInvoicePayment/{invoice_id}/{company_id}/{type}', 'Invoic
 Route::get('invoice/getInvoiceCards/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceCards');
 Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');
 Route::post('invoice/getPaymentCard', 'InvoiceController@getPaymentCard');
+Route::post('invoice/getNoQuickbook', 'InvoiceController@getNoQuickbook');

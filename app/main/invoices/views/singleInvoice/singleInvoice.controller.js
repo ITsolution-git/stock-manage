@@ -32,16 +32,16 @@
             $scope.siData = result.data.allData;
         });
 
-        $http.get('api/public/invoice/getInvoicePayment/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+        /*$http.get('api/public/invoice/getInvoicePayment/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
             if(result123.data.success == '0') {
                     $state.go('app.invoices');
             }else{
                 //$scope.spData = result123.data.allData[0];
                 //alert(result123.data.allData[0].first_name+' : '+result123.data.allData[0].last_name+' : '+result123.data.allData[0].credit_card);
-                $scope.company = result123.data.allData[0];
+                //$scope.company = result123.data.allData[0];
             }
-        });
+        });*/
 
         $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
