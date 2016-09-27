@@ -5,29 +5,30 @@
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Fedex API INTEGRATION</span>
                 <md-button    ng-click="closeDialog()" class="close-stokkup-dialog">
-                    <span>Cancel</span>
+                    <span>close</span>
                 </md-button>
             </div>
         </md-toolbar>
     <div ng-cloak>
     <md-card-content layout="column" class="box-shadow-0">
-        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
+        <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start">
                 <div layout="column"  flex="100">
 
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                    <md-input-container class="md-block first-box settings-margin-0 mb-20">
                         <input placeholder="Key *" name="key" class="stop" ng-model="params.key">
                     </md-input-container>
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                    <md-input-container class="md-block first-box settings-margin-0 mb-20">
                         <input placeholder="Password" type="password" name="password"  ng-model="params.password" >
                     </md-input-container>
 
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                    <md-input-container class="md-block first-box settings-margin-0 mb-20">
                         <input placeholder="Account Number" type="text" name="account_number"ng-model="params.account_number" >
                     </md-input-container>
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                    <md-input-container class="md-block first-box settings-margin-0 mb-20">
                         <input placeholder="Meter Number" type="text" name="meter_number" ng-model="params.meter_number" >
                     </md-input-container>
-                    <md-input-container layout="row">
+                    <div layout-padding class="mt-5">
+                    <md-input-container layout="row" class="margin-0 box-zerospace p-0">
                         <label class="selectbox-label">Test Mode</label>
                         <md-select name="is_live" ng-model="params.is_live" flex="100" >
                             <md-option ng-selected="params.is_live==1" value="1">
@@ -37,7 +38,8 @@
                                 No
                             </md-option>
                         </md-select>
-                    </md-input-container>                    
+                    </md-input-container>
+                    </div>                  
                 </div>
                 </div>
             </md-card-content>

@@ -4,8 +4,8 @@
             <md-toolbar class="md-accent md-hue-2">
                 <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                     <span class="title">UPS API INTEGRATION</span>
-                    <md-button    ng-click="closeDialog()">
-                        <span>Cancel</span>
+                    <md-button    ng-click="closeDialog()" class="close-stokkup-dialog">
+                        <span>close</span>
                     </md-button>
                 </div>
             </md-toolbar>
@@ -13,19 +13,20 @@
                 <md-card-content layout="column" class="box-shadow-0">
                     <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
                         <div layout="column"  flex="100">
-                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <md-input-container class="md-block first-box settings-margin-0 margin-0 mb-20">
                                 <input placeholder="License Key" name="api" class="stop"  ng-model="params.api" >
                             </md-input-container>
-                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <md-input-container class="md-block first-box settings-margin-0 mb-20">
                                 <input placeholder="Access UserName *" type="text" name="username" ng-model="params.username" >
                             </md-input-container>
-                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <md-input-container class="md-block first-box settings-margin-0 mb-20">
                                 <input placeholder="Account Password" type="password" name="password"   ng-model="params.password" >
                             </md-input-container>
-                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <md-input-container class="md-block first-box settings-margin-0 mb-20">
                                 <input placeholder="Account Number" name="account_number" class="stop"  ng-model="params.account_number">
                             </md-input-container>
-                            <md-input-container layout="row">
+                            <div layout-padding class="mt-5">
+                            <md-input-container layout="row" class="margin-0 box-zerospace p-0">
                                 <label class="selectbox-label">Test Mode</label>
                                 <md-select name="is_live" ng-model="params.is_live" flex="100" >
                                     <md-option ng-selected="params.is_live==1" value="1">
@@ -36,13 +37,16 @@
                                     </md-option>
                                 </md-select>
                             </md-input-container>
+                            </div>
                         </div>
                     </div>
                 </md-card-content>
             </div>
-            <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ups_detail','id',params.id,'ups')">
+            <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ups_detail','id',params.id,'ups')">
                 SAVE
             </md-button>
+        </md-dialog-actions>
         </div>
     </form>
 </md-dialog>
