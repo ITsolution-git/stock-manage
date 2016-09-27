@@ -23,12 +23,12 @@
                             <input placeholder="API Password" type="password" name="password" ng-model="params.password"  >
                         </md-input-container>
                         <md-input-container layout="row">
-                            <label class="selectbox-label">Test Mode</label>
-                            <md-select name="test_mode" ng-model="params.test_mode" flex="100" >
-                                <md-option ng-selected="params.test_mode==1" value="1">
+                            <label class="selectbox-label">Is Live</label>
+                            <md-select name="is_live" ng-model="params.is_live" flex="100" >
+                                <md-option ng-selected="params.is_live==1" value="1">
                                     Yes
                                 </md-option>
-                                <md-option ng-selected="params.test_mode==0" value="0">
+                                <md-option ng-selected="params.is_live==0" value="0">
                                     No
                                 </md-option>
                             </md-select>

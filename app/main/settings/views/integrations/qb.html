@@ -27,7 +27,13 @@
 	                        <span>{{qb.consumer_key}}</span>
 	                        <div class="h5 text-semibold">Consumer Secret Key</div>
 	                        <span>{{qb.consumer_secret_key}}</span>
+	                        <div class="h5 text-semibold">Is Live</div>
+	                        <span ng-if="qb.is_sandbox==1">Yes</span>
+	                        <span ng-if="qb.is_sandbox==0">No</span>
 	                    </md-card-content>
+
+
+	                    
 				    <span class="ml-10" ng-show="qb.consumer_key !='' && qb.consumer_secret_key !=''"><connect-to-quickbooks /></span>
 			        <span>
 			            <md-button ng-show="qb.ss =='0' && qb.consumer_key !='' && qb.consumer_secret_key !=''" class="md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple" ng-click="vm.qbActivewearSetup($event,qb.id)" >Setup</md-button>
