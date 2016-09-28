@@ -18,8 +18,13 @@
                     $state.go('app.invoices');
                 } 
 
-
             $scope.allData = result.data.allData;
+            if(result.data.allData.order_data[0].grand_total > result.data.allData.order_data[0].total_payments){
+                $scope.showPaymentDetails = true;
+            }else{
+                $scope.showPaymentDetails = false;
+            }
+
             $scope.brand_coordinator = sessionService.get('role_title');
         });
 
@@ -239,6 +244,11 @@
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
+                    if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                        $scope.showPaymentDetails = true;
+                    }else{
+                        $scope.showPaymentDetails = false;
+                    }
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
                     });
@@ -372,6 +382,11 @@
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
+                    if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                        $scope.showPaymentDetails = true;
+                    }else{
+                        $scope.showPaymentDetails = false;
+                    }
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
                         $scope.siData = resultData.data.allData;
                     });
@@ -466,6 +481,11 @@
                                         $("#ajax_loader").hide();
                                         $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
                                         $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
+                                        if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                                            $scope.showPaymentDetails = true;
+                                        }else{
+                                            $scope.showPaymentDetails = false;
+                                        }
                                     });
                                 });
                             }
@@ -507,6 +527,11 @@
                             {
                                 $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
+                                if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                                    $scope.showPaymentDetails = true;
+                                }else{
+                                    $scope.showPaymentDetails = false;
+                                }
                                 $("#ajax_loader").hide();
                             });
                         });
