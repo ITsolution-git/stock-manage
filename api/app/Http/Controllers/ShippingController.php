@@ -291,19 +291,21 @@ class ShippingController extends Controller {
                 }
                 else
                 {
+                    //print_r($value);exit;
                     $remaining_qty = $value['qnty'] % $value['max_pack'];
                     $div2 = $value['qnty'] / $value['max_pack'];
                     $main_qty = ceil($div2);
+//                    print_r($main_qty);exit;
 
                     for ($i=1; $i <= $main_qty; $i++) {
-                        if($i == $main_qty)
+/*                        if($i == $main_qty)
                         {
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $remaining_qty);
                         }
                         else
-                        {
+                        {*/
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
-                        }
+                        //}
                         $id = $this->common->InsertRecords('shipping_box',$insert_data);
                         $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
