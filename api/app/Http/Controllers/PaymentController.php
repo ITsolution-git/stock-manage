@@ -628,7 +628,7 @@ class PaymentController extends Controller {
         //$payment_data = $this->common->GetTableRecords('link_to_pay',array('session_link' => $token));
 
         $payment_data = DB::table('link_to_pay as lp')
-            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'o.balance_due', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id')
+            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'o.balance_due', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id', 'i.payment_terms')
             ->leftJoin('orders as o','o.id','=',"lp.order_id")
             ->leftJoin('invoice as i','i.order_id','=',"o.id")
             ->leftJoin('client as c','c.client_id','=',"o.client_id")
@@ -648,6 +648,16 @@ class PaymentController extends Controller {
           $data['stateArray'] = $this->common->GetTableRecords('state',array());
           $time = strtotime($data['orderArray']->created_date);
           $curtime = time();
+
+          if($data['orderArray']->payment_terms == 1){
+                $data['orderArray']->payment_terms = '50% upfront and 50% on shipping';
+          }else if($data['orderArray']->payment_terms == 100){
+                $data['orderArray']->payment_terms = '100% on Shipping';
+          }else if($data['orderArray']->payment_terms == 15){
+                $data['orderArray']->payment_terms = 'Net 15';
+          }else if($data['orderArray']->payment_terms == 30){
+                $data['orderArray']->payment_terms = 'Net 30';
+          }
         
           //if(($curtime-$time) > 86400) {     //86400 seconds
             //echo "Link expired";
