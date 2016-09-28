@@ -10,17 +10,17 @@
             </div>
             </md-toolbar>
             <div ng-cloak>
-                <md-card-content layout="column" class="box-shadow-0">
-                <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start">
-                    <div layout="column"  flex="100">
-                        <md-input-container class="md-block first-box settings-margin-0 mb-20">
+                <md-dialog-content ms-scroll>
+                <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
+                    <div layout="column"  flex="100" class="p-0 pt-15">
+                        <md-input-container class="md-block">
                         <input placeholder="Consumer Key" name="consumer_key" ng-model="params.consumer_key">
                         </md-input-container>
-                        <md-input-container class="md-block first-box settings-margin-0 mb-20">
+                        <md-input-container class="md-block">
                         <input placeholder="Consumer Secret Key" name="consumer_secret_key" ng-model="params.consumer_secret_key" >
                         </md-input-container>
-                        <div layout-padding class="mt-5">
-                        <md-input-container class="margin-0 box-zerospace p-0">
+                        
+                        <md-input-container>
                             <label class="selectbox-label">Test Mode</label>
                             <md-select name="is_sandbox" ng-model="params.is_sandbox" flex="100" >
                                 <md-option ng-selected="params.is_sandbox==1" value="1">
@@ -31,10 +31,10 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
-                        </div>
+                        
                     </div>
                 </div>
-                </md-card-content>
+                </md-dialog-content>
             </div>
             <md-dialog-actions layout="row" layout-align="end center">
                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'quickbook_detail','id',params.id,'quickbook')">

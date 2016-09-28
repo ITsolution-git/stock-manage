@@ -906,13 +906,13 @@ md-button.on {
   color: #fff;
 }
 
-.ssActivewearDialog {
+/*.ssActivewearDialog {
   width: 25% !important ;
 }
 
 .authorizeNetDialog {
   width: 30% !important ;
-}
+}*/
 
 .btn-width-100 {
   width: 100% ;
@@ -1187,7 +1187,12 @@ span.k-picker-wrap.k-state-border-down {
 }
 
  md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
-      padding-left: 0; }
+      padding-left: 0; 
+      -moz-transition:all ease-in-out 0.2s;
+      -webkit-transition:all ease-in-out 0.2s;
+      -ms-transition:all ease-in-out 0.2s;
+      -o-transition:all ease-in-out 0.2s;
+      transition:all ease-in-out 0.2s;}
 
 .m-b-45{
   margin-bottom:45px;
