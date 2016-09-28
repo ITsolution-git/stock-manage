@@ -163,6 +163,7 @@ class Art extends Model {
 					->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
 					->Join('misc_type as mt', 'mt.id', '=', 'odp.position_id')
 					->where('ord.is_delete','=','1')
+					->where('od.is_delete','=','1')
 					->where('odp.is_delete','=','1')
 					->where('ord.is_complete','=','1')
 			        ->where('ord.company_id','=',$post['company_id']);
@@ -397,6 +398,8 @@ class Art extends Model {
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
 				->where('or.id','=',$order_id)
 				->where('or.company_id','=',$company_id)
+				->where('odp.is_delete','=','1')
+				->where('od.is_delete','=','1')
 				->where('ass.screen_active','=','1')
 				->orderBy('ass.screen_order','asc')
 				->orderBy('acol.head_location','asc')
@@ -428,9 +431,9 @@ class Art extends Model {
 
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
-		$query = DB::table('artjob_screencolors as acol')
+		$query = DB::table('artjob_screensets as ass')
 				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','ass.mokup_logo','acol.*','acol.id as color_id','col.name as color_name','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color')
-				->leftjoin('artjob_screensets as ass','acol.screen_id','=','ass.id')
+				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
 				->join('order_design as od','od.id','=','odp.design_id')
 				->leftjoin('design_product as dp','dp.design_id','=','od.id')

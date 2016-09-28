@@ -247,7 +247,7 @@
                                     </div>                   
                                 </md-tab>
                                 <!-- Pay By Credit Card-->
-                                <md-tab label="Pay By Credit Card" ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments">
+                                <md-tab label="Pay By Credit Card" ng-disabled="!showPaymentDetails">
                                     <div layout="row" flex=100 class="p-15">
                                         <div class="box-layout-2">
                                            <div layout="row">
@@ -374,7 +374,7 @@
                                     </div>     
                                 </md-tab>
                                 <!-----------------Pay By Cash-------------------->
-                                <md-tab label="Pay By Cash" ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments">
+                                <md-tab label="Pay By Cash" ng-disabled="!showPaymentDetails">
                                     <div layout="row" flex=100>
                                         <div class="box-zerospace">
                                             <div class="p-30">
@@ -482,7 +482,7 @@
                         </div>
                     </md-card-content>
                     <div class="text-center m-t-20">
-                        <button ng-if="allData.order_data[0].grand_total > allData.order_data[0].total_payments" type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
+                        <button ng-show="showPaymentDetails" type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
                         <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="print_pdf()"><span class="ng-scope">Download</span></button>
                     </div>
                 </md-card>

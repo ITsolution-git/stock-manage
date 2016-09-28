@@ -291,19 +291,21 @@ class ShippingController extends Controller {
                 }
                 else
                 {
+                    //print_r($value);exit;
                     $remaining_qty = $value['qnty'] % $value['max_pack'];
                     $div2 = $value['qnty'] / $value['max_pack'];
                     $main_qty = ceil($div2);
+//                    print_r($main_qty);exit;
 
                     for ($i=1; $i <= $main_qty; $i++) {
-                        if($i == $main_qty)
+/*                        if($i == $main_qty)
                         {
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $remaining_qty);
                         }
                         else
-                        {
+                        {*/
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
-                        }
+                        //}
                         $id = $this->common->InsertRecords('shipping_box',$insert_data);
                         $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
@@ -679,6 +681,7 @@ class ShippingController extends Controller {
 
         $assignAddresses = array();
         $unAssignAddresses = array();
+        $shipping_id = 0;
 
         foreach ($allAddress as $address) {
             
@@ -696,6 +699,11 @@ class ShippingController extends Controller {
                 $shipping = $this->common->GetTableRecords('product_address_mapping',array('address_id' => $address->id,'order_id' => $post['id']),array());
                 $address->shipping_id = $shipping[0]->shipping_id;
                 $assignAddresses[] = $address;
+
+                if($post['address_id'] == $address->id)
+                {
+                    $shipping_id = $address->shipping_id;
+                }
             }
             else
             {
@@ -704,10 +712,11 @@ class ShippingController extends Controller {
         }
 
         $response = array(
-                        'success' => 1, 
+                        'success' => 1,
                         'message' => GET_RECORDS,
                         'assignAddresses' => $assignAddresses,
-                        'unAssignAddresses' => $unAssignAddresses
+                        'unAssignAddresses' => $unAssignAddresses,
+                        'shipping_id' => $shipping_id
                     );
         return response()->json(["data" => $response]);
     }
