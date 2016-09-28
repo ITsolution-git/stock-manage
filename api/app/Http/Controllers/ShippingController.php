@@ -681,6 +681,7 @@ class ShippingController extends Controller {
 
         $assignAddresses = array();
         $unAssignAddresses = array();
+        $shipping_id = 0;
 
         foreach ($allAddress as $address) {
             
@@ -698,6 +699,11 @@ class ShippingController extends Controller {
                 $shipping = $this->common->GetTableRecords('product_address_mapping',array('address_id' => $address->id,'order_id' => $post['id']),array());
                 $address->shipping_id = $shipping[0]->shipping_id;
                 $assignAddresses[] = $address;
+
+                if($post['address_id'] == $address->id)
+                {
+                    $shipping_id = $address->shipping_id;
+                }
             }
             else
             {
@@ -706,10 +712,11 @@ class ShippingController extends Controller {
         }
 
         $response = array(
-                        'success' => 1, 
+                        'success' => 1,
                         'message' => GET_RECORDS,
                         'assignAddresses' => $assignAddresses,
-                        'unAssignAddresses' => $unAssignAddresses
+                        'unAssignAddresses' => $unAssignAddresses,
+                        'shipping_id' => $shipping_id
                     );
         return response()->json(["data" => $response]);
     }

@@ -97,12 +97,14 @@
             combine_array.client_id = $scope.order.client_id;
             combine_array.id = $scope.order.id;
             combine_array.search = $scope.productSearch;
+            combine_array.address_id = $scope.address_id;
             
             $http.post('api/public/shipping/getShippingAddress',combine_array).success(function(result, status, headers, config) {
                 
                 if(result.data.success == '1') {
                     $scope.assignAddresses = result.data.assignAddresses;
                     $scope.unAssignAddresses = result.data.unAssignAddresses;
+                    $scope.shipping_id = result.data.shipping_id;
                 }
             });
         }
@@ -160,15 +162,15 @@
 
         $scope.shippingDetails = function()
         {
-            if($scope.shipping_id == 0 || $scope.shipping_id == undefined)
-            {
-                var data = {"status": "error", "message": "Please select allocated address"}
-                notifyService.notify(data.status, data.message);
-                return false;
-            }
             if($scope.assignedItems.length == 0)
             {
                 var data = {"status": "error", "message": "Please assign product to address"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if($scope.shipping_id == 0 || $scope.shipping_id == undefined)
+            {
+                var data = {"status": "error", "message": "Please select allocated address"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
