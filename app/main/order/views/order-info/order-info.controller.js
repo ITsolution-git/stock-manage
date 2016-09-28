@@ -395,7 +395,7 @@
 
        $scope.createPO = function() {
             
-            var permission = confirm("Please make sure that once you create PO, it can't be changed. You also would not be able to add new and edit existing Designs and Products.");
+            var permission = confirm("Do you want to create PO ?");
 
             if(permission == true){
 
