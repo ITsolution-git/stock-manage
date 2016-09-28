@@ -28,8 +28,8 @@
 	                        <div class="h5 text-semibold">Consumer Secret Key</div>
 	                        <span>{{qb.consumer_secret_key}}</span>
 	                        <div class="h5 text-semibold">Test Mode</div>
-	                        <span ng-if="qb.is_sandbox==1">Yes</span>
-	                        <span ng-if="qb.is_sandbox==0">No</span>
+	                        <span ng-if="qb.is_sandbox==1">No</span>
+	                        <span ng-if="qb.is_sandbox==0">Yes</span>
 	                    </md-card-content>
 				    <span class="mt-20" ng-show="qb.consumer_key !='' && qb.consumer_secret_key !=''"><connect-to-quickbooks /></span>
 			        <span>
