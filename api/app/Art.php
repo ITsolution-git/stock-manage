@@ -431,9 +431,9 @@ class Art extends Model {
 
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
-		$query = DB::table('artjob_screencolors as acol')
+		$query = DB::table('artjob_screensets as ass')
 				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','ass.mokup_logo','acol.*','acol.id as color_id','col.name as color_name','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color')
-				->leftjoin('artjob_screensets as ass','acol.screen_id','=','ass.id')
+				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
 				->join('order_design as od','od.id','=','odp.design_id')
 				->leftjoin('design_product as dp','dp.design_id','=','od.id')
