@@ -10,8 +10,9 @@
             </div>
         </md-toolbar>
 
-        <div ng-cloak>
+        
            <md-dialog-content ms-scroll>
+            <div ng-cloak>
             <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
                 <div layout="column"  flex="100" class="p-0 pt-15">
                     <md-input-container class="md-block">
@@ -45,8 +46,9 @@
                     </md-input-container>
                 </div>
               </div>  
+            </div>  
             </md-dialog-content>
-        </div>
+        
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'authorize_detail','id',params.id,'authorize')">SAVE</md-button>
         </md-dialog-actions>

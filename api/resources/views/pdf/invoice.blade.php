@@ -35,7 +35,7 @@
 					<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span><br>
 					<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span><br>
 				<?php } ?>
-				<span style="font-weight:bold;text-align:right;">Job Name: {{$order_data[0]->name}}</span>
+				<span style="font-weight:bold;text-align:right;">Job Name: {{$order_data[0]->name}}</span><br>
 				<span style="font-weight:bold;text-align:right;">Customer PO: {{$order_data[0]->custom_po}}</span>
 
 			</td>

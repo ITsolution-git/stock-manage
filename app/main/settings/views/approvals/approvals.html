@@ -58,15 +58,14 @@
                     <thead tasty-thead></thead>
                    <tbody >
                         <tr ng-repeat="order in rows">
-                            <td class="">{{order.order_id}}</td>
+                            <td class="" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
                             <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
                             <td ng-if="order.created_date == '0000-00-00'"></td>
                             <td class="">{{order.sales_total | currency : $ : 2}}</td>
                             <td class="">{{order.name}}</td>
-                            <td ng-if="order.order_sns_status == ''">Pending</td>
-                            <td ng-if="order.order_sns_status != ''">Approved</td>
+                           
                             <td ng-if="order.order_sns_status == ''"><span class="stokkup-custom-btn1 stokkup-blue-btn md-button margin-0" ng-click="approveOrder(order.order_id,order.sns_shipping)">Approve</span></td>
-                            <td ng-if="order.order_sns_status != ''"><span></span></td>
+                            <td ng-if="order.order_sns_status != ''"><span class="stokkup-custom-btn1 stokkup-blue-btn md-button margin-0" ng-click="approveOrder(order.order_id,order.sns_shipping)">Re-Approve</span></td>
                         </tr>
                     </tbody> 
                 </table>
