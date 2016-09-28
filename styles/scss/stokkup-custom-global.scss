@@ -626,6 +626,9 @@ md-dialog{
 					&.md-default-theme.md-input-invalid .md-input, &.md-input-invalid .md-input{
 						border-color:$red-border;
 					}
+					&.md-default-theme.md-input-focused.md-input, &.md-input-focused .md-input{
+						border-color:$stokkup-table-footer-txtcolor;
+					}
 					.md-input{
 						border-bottom-width:$input-fields-border-size;
 						border-bottom-color:$input-fields-border-color;
