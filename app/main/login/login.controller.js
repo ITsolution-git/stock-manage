@@ -105,9 +105,19 @@
         combine_array_id.company_id = company_id.value;
         //$("#ajax_loader").show();
 
+        // Orders not send to Quickbooks
         $http.post('api/public/invoice/getNoQuickbook',combine_array_id).success(function(result){
             if(result.data.success == '1') {
               $scope.noqbinvoice=result.data.allData[0].totalInvoice;
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
+
+        // Sales Closed
+        $http.post('api/public/invoice/getSalesClosed',combine_array_id).success(function(resultSalesClosed){
+            if(resultSalesClosed.data.success == '1') {
+              $scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
+              $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];
             }
             /*$scope.brand_coordinator = sessionService.get('role_title');*/
         });
