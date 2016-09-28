@@ -163,6 +163,7 @@ class Art extends Model {
 					->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
 					->Join('misc_type as mt', 'mt.id', '=', 'odp.position_id')
 					->where('ord.is_delete','=','1')
+					->where('od.is_delete','=','1')
 					->where('odp.is_delete','=','1')
 					->where('ord.is_complete','=','1')
 			        ->where('ord.company_id','=',$post['company_id']);
@@ -397,6 +398,8 @@ class Art extends Model {
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
 				->where('or.id','=',$order_id)
 				->where('or.company_id','=',$company_id)
+				->where('odp.is_delete','=','1')
+				->where('od.is_delete','=','1')
 				->where('ass.screen_active','=','1')
 				->orderBy('ass.screen_order','asc')
 				->orderBy('acol.head_location','asc')
