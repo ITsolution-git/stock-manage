@@ -2,30 +2,31 @@
 <div class="client-profile-page">
 <md-toolbar class="md-accent md-hue-2">
     <div class="md-toolbar-tools" layout="row" layout-align="space-between"> <span class="title">Screen Sets Details</span>
-        <md-button  ng-click="closeDialog()"> <span>Cancel</span> </md-button>
+        <md-button  ng-click="closeDialog()" class="close-stokkup-dialog"> <span>close</span> </md-button>
     </div>
 </md-toolbar>
+
 <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
-    <div layout="row" layout-wrap="nowrap" id="addAffiliateDialog" layout-padding layout-align="space-between start">
+    <md-dialog-content layout="column">
+    <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="pd-25 margin-0">
         <div layout="column"  flex="60">
            <div layout="row">
                <div layout="column" flex="35">
-                   <md-input-container flex=30 class="m-b-20 m-t-25">
-                        <div>Position </div>
-                        <span class="chrome-weight font-14">{{details_screenset[0].value}}</span>
+                   <md-input-container flex=30 class="margin-0">
+                        <div class="global-labels">Position </div>
+                        <span class="global-texts">{{details_screenset[0].value}}</span>
                     </md-input-container>
                </div>
                <div layout="column" flex="35">
-                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <div>Color count</div>
-                        <span class="chrome-weight font-14">{{details_screenset[0].color_stitch_count}}</span>
+                   <md-input-container class="margin-0">
+                        <div class="global-labels">Color count</div>
+                        <span class="global-texts">{{details_screenset[0].color_stitch_count}}</span>
                     </md-input-container>
                </div>
                <div layout="column" flex="35">
-                   <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <div>No of Screen</div>
-                        <span class="chrome-weight font-14">{{details_screenset[0].screen_total}}</span>
+                   <md-input-container class="margin-0">
+                        <div class="global-labels">No of Screen</div>
+                        <span class="global-texts">{{details_screenset[0].screen_total}}</span>
                     </md-input-container>
                </div>
            </div>
@@ -57,44 +58,39 @@
                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
                         <input placeholder="Height" name="screen_height" valid-number ng-model="details_screenset[0].screen_height">
                     </md-input-container>
-               </div>
-               
+               </div>  
            </div>
         </div>
         <div layout="column" flex="40">
-                  <md-autocomplete
-                      md-input-id="remove_color"
-                      ng-disabled="isDisabled"
-                      md-no-cache="noCache"
-                      md-selected-item=""
-                      md-search-text-change=""
-                      md-search-text="allcolor.color_name"
-                      md-selected-item-change="add_color(item.id,item.name,'color_name')"
-                      md-items="item in querySearch(allcolor.color_name)"
-                      md-item-text="item.name"
-                      md-min-length="1"
-                      ng-click=""
-                      ng-blur=""
-                      <md-item-template>
-                          <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
-                      </md-item-template>
-                      <md-not-found>
-                          No Color found.
-                      </md-not-found>
-                  </md-autocomplete>
-
-            
-
-            <table width="100%" class="size-attribute">
+          <md-autocomplete
+              md-input-id="remove_color"
+              ng-disabled="isDisabled"
+              md-no-cache="noCache"
+              md-selected-item=""
+              md-search-text-change=""
+              md-search-text="allcolor.color_name"
+              md-selected-item-change="add_color(item.id,item.name,'color_name')"
+              md-items="item in querySearch(allcolor.color_name)"
+              md-item-text="item.name"
+              md-min-length="1"
+              ng-click=""
+              ng-blur=""
+              <md-item-template>
+                  <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+              </md-item-template>
+              <md-not-found>
+                  No Color found.
+              </md-not-found>
+          </md-autocomplete>
+          <table width="100%" class="size-attribute">
                   <tr>
                      <th width="40%">Color</th>
                      <th width="30%"> Pantone </th>
                      <th width="20%">Ink Type</th>
                      <th width="10%"></th>
                   </tr>
-
                   <tr ng-repeat="(key,sc) in initial_add_color">
-                    <td width="40%"><span class="gray-text">{{sc.color_name}}</span></td>
+                    <td width="40%"><span class="global-text">{{sc.color_name}}</span></td>
                     <td width="30%">   
                           <md-input-container class="md-block first-box settings-margin-0">
                               <input aria-label="true" name="thread_color" ng-model="sc.thread_color" ui-event="{ change : 'add_thread($event.target.value,key)' }">
@@ -107,9 +103,8 @@
                       </td>
                       <td width="10%"><a href="#" ng-click="remove_added($index)" class="icon icon-close f-red mrg10-L"></a></td>
                   </tr>
-
                   <tr ng-repeat="(key,sc) in getColors">
-                    <td width="40%"><span class="gray-text">{{sc.color_display_name}}</span></td>
+                    <td width="40%"><span class="global-text">{{sc.color_display_name}}</span></td>
                     <td width="30%">    
                          <md-input-container class="md-block first-box settings-margin-0">
                               <input   aria-label="true" name="thread_color" ng-model="sc.thread_color">
@@ -122,20 +117,13 @@
                       </td>
                       <td width="10%"><a href="#" ng-click="remove_selected($index,sc.id)" class="icon icon-close f-red mrg10-L"></a></td>
                   </tr>
-            </table>  
-
-      
-
-
-              </div>
-            </div>
-            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" ng-click="CreateScreenset(details_screenset[0])" aria-label="Save"><span class="ng-scope" >Save</span></button>
-      </md-dialog-actions>
+          </table>  
         </div>
     </div>
+    </md-dialog-content>
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">    
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" ng-click="CreateScreenset(details_screenset[0])" aria-label="Save"><span class="ng-scope" >Save</span></button>
+    </md-dialog-actions>
 </div>
-
-
+</div>
 </md-dialog>
