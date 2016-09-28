@@ -2058,10 +2058,9 @@ class OrderController extends Controller {
      {
         $post = Input::all();
 
-       
-        
+      
         if($post['sns_shipping'] == '') {
-            $post['sns_shipping'] = '1';
+            $post['sns_shipping'] = 1;
         }
         
         $result_company = $this->client->getStaffDetail($post['company_id']);
