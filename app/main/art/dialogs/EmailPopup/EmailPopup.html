@@ -3,22 +3,23 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Art Approval</span>
-                <md-button  ng-click="closeDialog()">
-                    <span>Cancel</span>
+                <md-button  ng-click="closeDialog()" class="close-stokkup-dialog">
+                    <span>close</span>
                 </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
-            <div layout="column" layout-wrap="nowrap" class="order-add-modal " layout-padding>
-               
-                <md-input-container class="first-box">
+            <div layout="column" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
+               <div layout="column"  flex="100" class="box-zerospace p-0 pt-15">
+                <md-input-container class="md-block">
                     <input placeholder="Client Billing Email(Use comma separate for multiple.)" ng-model="mail">
                 </md-input-container>
+                </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button class="md-accent md-raised " ng-click="printPdf('0','')">Create Approval</md-button>
-            <md-button class="md-accent md-raised " ng-click="printPdf('1',mail)">Send to client</md-button>
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('0','')">Create Approval</md-button>
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('1',mail)">Send to client</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>
