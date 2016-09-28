@@ -1740,7 +1740,6 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 		border:$nofloat !important;
 		md-select-value{
 			border:$nofloat !important;
-			color:$app-green !important;
 			font-weight:14px;
 			font-weight:$font-weight-700;
 			width:130px;
@@ -1750,7 +1749,6 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 			font-weight:$font-weight-700;
 			}
 			.fa{
-				color:$app-green;
 				font-size:21px;
 				position:$pos-relative;
 				top:5px;
@@ -1758,6 +1756,18 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 			}
 		}
 	}
+}
+#select_container_5 md-select-menu md-content md-option#select_option_2 .md-text{
+	color:$app-green !important;
+}
+#select_container_5 md-select-menu md-content md-option#select_option_3 .md-text{
+	color:$red-highlight !important;	
+}
+.approve-box #select_4.approvelabel #select_value_label_1 .md-text{
+	color:$app-green;
+}
+.approve-box #select_4 #select_value_label_1 .md-text{
+	color:$red-highlight;
 }
 .approve-box .md-select-value .md-select-icon::after{
 	top:7px;
