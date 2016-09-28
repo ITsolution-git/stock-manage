@@ -502,7 +502,7 @@ class Purchase extends Model {
 	}
 	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po')
 	{
-		$check = DB::table('purchase_order')
+		/*$check = DB::table('purchase_order')
 				->select('*')
 				->where('order_id','=',$order_id)
 				->where('vendor_id','=',$vendor_id)
@@ -514,11 +514,12 @@ class Purchase extends Model {
 			return 0 ;
 		}
 		else 
-		{
-			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type));
+		{*/
+			
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1));
 			$id = DB::getPdo()->lastInsertId();
         	return $id;	
-		}		
+		//}		
 
 	}
 	public function insert_purchase_order_line($post,$po_id)
