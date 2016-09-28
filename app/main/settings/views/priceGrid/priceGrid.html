@@ -4,16 +4,16 @@
         <div class="table-title-text" flex=20>
             COMPANY PRICE GRIDS
         </div>
-            <div class="pull-right right-search-box">
+            <div class="order-modal-title mrg25-L" layout="row" layout-align="center center" flex="35">
                 <form name="uploadPricecsv" id="uploadPricecsv" action="api/public/admin/uploadPricingCSV" method="post" enctype="multipart/form-data" target="_self" class="width-auto" ng-show="allow_access==1">
-                    <div class="stokkup-custom-btn1 stokkup-blue-btn flex-40 pull-right m-l-10">
+                    <div class="fileUpload">
                         <input type="file" name="import_file" id="file" class="upload" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <md-tooltip md-direction="bottom">Upload Excel File</md-tooltip>
                         <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
                         <span>Upload Excel</span>
                     </div>
-                     <a href="#" class="stokkup-custom-btn1 stokkup-blue-btn pull-right m-r-10" ng-click="submitPriceForm()">
-                        <span class="icon icon-upload text-white"></span>
+                     <a href="#" class="btn-typ-submit" ng-click="submitPriceForm()">
+                        <span class="icon icon-upload"></span>
                     </a> 
                <!--  <button class="btn btn-primary">Import File</button> -->
                </form> 

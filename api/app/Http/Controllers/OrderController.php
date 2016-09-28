@@ -2057,6 +2057,8 @@ class OrderController extends Controller {
     public function snsOrder()
      {
         $post = Input::all();
+
+       
         
         if($post['sns_shipping'] == '') {
             $post['sns_shipping'] = '1';
@@ -2095,6 +2097,7 @@ class OrderController extends Controller {
 
             $order_main_array = array("shippingAddress" => $shippingAddress,
                                           "shippingMethod"=> $post['sns_shipping'],
+                                          "poNumber" => $post['id'],
                                           "emailConfirmation"=> $result_company[0]->email,
                                           "testOrder"=> true,
                                           "lines" =>  $lines);
@@ -2180,6 +2183,9 @@ class OrderController extends Controller {
             $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
             return response()->json(["data" => $data_record]);
         }
+
+
+
 
         if($result['main']['qid'] == 0) {
           
@@ -2428,6 +2434,27 @@ class OrderController extends Controller {
       $result = $this->order->GetAllClientsLowerCase($post);
       
         $data = array("success"=>1,"message"=>"Success",'records' => $result);
+        return response()->json(['data'=>$data]);
+    }
+
+
+    public function updateInvoicePayment()
+    {
+        $post = Input::all();
+
+         if($post['payment'] == '15') {
+            $setDate  = date('Y-m-d', strtotime("+15 days"));
+
+         } else if($post['payment'] == '30') {
+            $setDate  = date('Y-m-d', strtotime("+30 days"));
+
+         } else {
+           $setDate  = date('Y-m-d');
+         }
+         
+        $this->common->UpdateTableRecords('invoice',array('id' => $post['invoice_id']),array('payment_due_date' => $setDate,'payment_terms' => $post['payment']));
+
+        $data = array("success"=>1,"message"=>UPDATE_RECORD,"invoice_id" => $post['invoice_id']);
         return response()->json(['data'=>$data]);
     }
 

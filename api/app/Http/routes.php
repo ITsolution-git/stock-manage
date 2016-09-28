@@ -250,6 +250,7 @@ Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
 Route::post('order/GetAllClientsLowerCase', 'OrderController@GetAllClientsLowerCase');
 Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
 Route::post('payment/refundTransaction', 'PaymentController@refundTransaction');
+Route::post('order/updateInvoicePayment', 'OrderController@updateInvoicePayment');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');

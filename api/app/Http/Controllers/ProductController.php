@@ -275,6 +275,7 @@ public function create_dir($dir_path) {
 
         $all_data = json_decode($result);
 
+
         if(empty($all_data))
         {
             $data_record = array("success"=>0,"message"=>"This product is no longer exists");
@@ -287,13 +288,33 @@ public function create_dir($dir_path) {
         if($data['design_id'] != 0) {
             $allDetail = $this->product->getPurchaseDetail($data['design_product_id']);
         }
-        
 
+        
+         
         foreach($all_data as $key => $data) {
 
-
+         
          
         $color_data = $this->common->getColorId($data->colorName);
+
+        if(empty($color_data))
+        {
+            $color_name = array(
+                'name'=>$data->colorName,
+                'color_code'=>$data->colorCode,
+                'color_swatch_image'=>$data->colorSwatchImage,
+                'color_swatch_text_color'=>$data->colorSwatchTextColor,
+                'color_front_image'=>$data->colorFrontImage,
+                'color_side_image'=>$data->colorSideImage,
+                'color_back_image'=>$data->colorBackImage,
+                'color1'=>$data->color1,
+                'color2'=>$data->color2,
+                'company_id' => 0
+                );
+            $result_color = $this->common->InsertRecords('color',$color_name);
+            $color_data = $this->common->getColorId($data->colorName);
+
+        }
 
             if(!empty($color_data))
             {

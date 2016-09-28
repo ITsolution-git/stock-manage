@@ -53,10 +53,10 @@
 
                 
 
-                if(order_number != '') {
+                /*if(order_number != '') {
                     notifyService.notify('error','You have already posted order to S&S');
                     return false;
-                }
+                }*/
 
                 var combine_array_id = {};
                 combine_array_id.id = $stateParams.id;
@@ -140,6 +140,30 @@
                         }
                     }
                 });
+            }
+
+
+            if($scope.invoice == true && $scope.invoice_id > 0)
+            {
+
+                 if($scope.payment_terms ==  undefined) {
+                    notifyService.notify('error','Please select Payment Terms for creating invoice');
+                    return false;
+                }
+               
+                var combine_array = {};
+                combine_array.order_id = $stateParams.id;
+                combine_array.payment = $scope.payment_terms;
+                combine_array.invoice_id = $scope.invoice_id;
+                
+                $("#ajax_loader").show();
+               
+                $http.post('api/public/order/updateInvoicePayment',combine_array).success(function(result) 
+                {
+                    $("#ajax_loader").hide();
+                   
+                });
+               
             }
 
             if($scope.invoice == true && $scope.qb == true) {
