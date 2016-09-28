@@ -2081,7 +2081,7 @@ class OrderController extends Controller {
             "address" => $result_company[0]->prime_address1,
             "city" => $result_company[0]->prime_address_city,
             "state"=> $result_company[0]->code,
-            "zip"=> $result_company[0]->prime_address_zip,
+            "zip"=> trim($result_company[0]->prime_address_zip),
             "residential"=> true);
 
         $lines = array();
