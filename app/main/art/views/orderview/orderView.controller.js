@@ -10,7 +10,7 @@
     function orderViewController($document,  $state,$window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
         var vm = this;
-        vm.createNewScreen = createNewScreen;
+        //vm.createNewScreen = createNewScreen;
         vm.generateArtForm = generateArtForm;
         //vm.openClientEmailPopup = openClientEmailPopup;
         $scope.company_id = sessionService.get('company_id');
@@ -100,30 +100,34 @@
 
 
 
-        function createNewScreen(ev, position_id) {
+        $scope.createNewScreen =function (ev, position_id) {
             if($scope.allow_access==0){return false;}
             $mdDialog.show({
                 controller: function ($scope, params,position_id)
                             {
                                 //alert(position_id);
                                 $scope.params = params;
-                                $http.get('api/public/art/GetScreenset_detail/'+position_id).success(function(result) 
-                                {
-                                    if(result.data.success == '1') 
+                                $scope.position_id
+                                $scope.GetDetail =function () {
+                                    $http.get('api/public/art/GetScreenset_detail/'+position_id).success(function(result) 
                                     {
-                                        $scope.details_screenset = result.data.records;
-                                        $scope.getColors = result.data.getColors;
-                                        $scope.screen_allcolors = result.data.allcolors;
-                                        $scope.simulateQuery = false;
-                                        $scope.isDisabled    = false;
-                                        $scope.states        = loadAll();
-                                        $scope.querySearch   = querySearch;
-                                    }
-                                    else
-                                    {
-                                        notifyService.notify('error',result.data.message);
-                                    }
-                                });
+                                        if(result.data.success == '1') 
+                                        {
+                                            $scope.details_screenset = result.data.records;
+                                            $scope.getColors = result.data.getColors;
+                                            $scope.screen_allcolors = result.data.allcolors;
+                                            $scope.simulateQuery = false;
+                                            $scope.isDisabled    = false;
+                                            $scope.states        = loadAll();
+                                            $scope.querySearch   = querySearch;
+                                        }
+                                        else
+                                        {
+                                            notifyService.notify('error',result.data.message);
+                                        }
+                                    });
+                                }
+                                $scope.GetDetail();
                                 function querySearch (query) 
                                 {
                                     var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states, deferred;
@@ -201,6 +205,66 @@
                                 $scope.remove_added = function(index)
                                 {
                                     $scope.initial_add_color.splice(index,1);
+                                }
+                                $scope.check_savedata = function (flag)
+                                {
+                                    if(flag==1)
+                                    {
+                                        $("#check_alert").hide();
+                                        $("#check_confirm").show();
+                                    }
+                                    else
+                                    {
+                                        $("#check_confirm").hide();
+                                        $("#check_alert").show();
+                                    }
+                                }
+                                $scope.AddNewColor= function(position_id,company_id,color_name)
+                                {
+                                        //console.log(color_name);
+                                        $mdDialog.show({
+                                                 controller: function ($scope, position_id,company_id,color_name,params)
+                                                    {
+                                                        $scope.child = params;
+                                                        $scope.params = {};
+                                                        $scope.params.name = color_name;
+                                                        $scope.hidepopup = function() 
+                                                        {
+                                                            $mdDialog.hide();
+                                                            $scope.child.createNewScreen(ev, position_id);
+                                                            
+                                                        } 
+                                                        $scope.InsertTableData = function(insert_data,extra,cond)
+                                                        {
+                                                            $("#ajax_loader").show();
+                                                            var InserArray = {};        // INSERT RECORD ARRAY
+                                                            InserArray.data = insert_data;
+                                                            InserArray.table ='color';
+                                                            InserArray.data.company_id=company_id; 
+                                                            $http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
+                                                            { 
+                                                                if(result.data.success=='1')
+                                                                {   notifyService.notify('success',result.data.message); 
+                                                                    //$scope.GetDetail();
+                                                                    $mdDialog.hide();
+                                                                    $scope.child.createNewScreen(ev, position_id);
+                                                                }
+                                                                else
+                                                                { notifyService.notify('error',result.data.message); }
+                                                                $("#ajax_loader").hide();
+                                                            });
+                                                        }
+                                                    },
+                                                templateUrl: 'app/main/art/dialogs/createScreen/AddNewColor.html',
+                                                clickOutsideToClose: true,
+                                                locals: {
+                                                    position_id:position_id,
+                                                    company_id:company_id,
+                                                    color_name:color_name,
+                                                    params: $scope.params
+                                                }
+                                        });
+                                   
                                 }
 
                                 $scope.screen_id_removed = [];
