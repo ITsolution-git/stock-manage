@@ -167,7 +167,7 @@
                
             }
 
-            if($scope.invoice == true && $scope.qb == true) {
+            if($scope.invoice == true && $scope.qb == true && $scope.invoice_id > 0) {
 
                
 
