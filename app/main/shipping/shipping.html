@@ -6,29 +6,37 @@
                     <div class="table-title white-bg bottom-shadow" flex=100 layout="row" layout-align="space-between center">
                     <div class="table-title-text" class="cursor-p">Shipping</div>
                         <div class="pull-right right-search-box srch-small">
-                            <div class="search-block pull-right">
+                            <div class="search-block pull-right" ng-show="currentTab == 'wait'" ng-controller="shippingController">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                   <label class="top-srch-label"></label>
+                                    <input ng-model="name" placeholder="Search Shipping..." ui-event="{ change : 'search($event)' }">
+                                </md-input-container>
+                            </div>
+                            <div class="search-block pull-right" ng-show="currentTab == 'progress'" ng-controller="shippingProgressController">
                                 <md-input-container class="md-block" flex-gt-sm>
                                    <label class="top-srch-label">Search Shipping...</label>
                                     <input ng-model="name" ui-event="{ change : 'search($event)' }">
                                 </md-input-container>
-                                <!-- <md-input-container class="md-block" flex-gt-sm>
-                                    <label class="top-srch-label">Search Clients...</label>
-                                    <input type="text" ng-model="name" ui-event="{change : 'search($event)'}" />
-                                </md-input-container> -->
+                            </div>
+                            <div class="search-block pull-right" ng-show="currentTab == 'shipped'" ng-controller="shippingShippedController">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                   <label class="top-srch-label">Search Shipping...</label>
+                                    <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                                </md-input-container>
                             </div> 
                         </div>
                     </div>
                     <!---Order Waiting to Ship Tab-->
                     <md-tab label="Orders Waiting to Ship" ng-click="getTab('wait')">
                         <div ng-controller="shippingController" class="fixe-top-tabs">
-                            <!-- <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                <div class="search-block pd15-L" flex=25>
+                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                <!-- <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
-                                </div>
-                            </div> -->
+                                </div> -->
+                            </div>
                             <div class="ms-responsive-table-wrapper">
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
                                     <table class="dataTable row-border">
@@ -38,7 +46,8 @@
                                                 <td>{{ wait.id}}</td>
                                                 <td>{{ wait.client_company}}</td>
                                                 <td>0/{{ wait.total}}</td>
-                                                <td class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.id})"><a>SHIP</a></td>
+                                                <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.id})"><a>SHIP</a></td>
+                                                <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
                                             </tr>                    
                                         </tbody>
                                     </table>
@@ -76,7 +85,8 @@
                                                 <td>{{ progress.id}}</td>
                                                 <td>{{ progress.client_company}}</td>
                                                 <td>{{ progress.distributed}}/{{ progress.total}}</td>
-                                                <td class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:progress.id})"><a>SHIP</a></td>
+                                                <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:progress.id})"><a>SHIP</a></td>
+                                                <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
                                             </tr>                    
                                         </tbody>
                                     </table>
@@ -122,7 +132,7 @@
                                             </tr>
                                             <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
                                                 <td colspan="8" class="collpas">
-                                                    <table class="dataTable row-border hover" >
+                                                    <table class="dataTable row-border hover">
                                                         <thead>
                                                             <th>Shipping Id</th>
                                                             <th>Job Name</th>

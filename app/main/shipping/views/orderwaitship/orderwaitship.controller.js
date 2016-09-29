@@ -15,10 +15,20 @@
         $scope.shipping_id = 0;
         $scope.productSearch = '';
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
         var combine_array_id = {};
         combine_array_id.id = $stateParams.id;
 
-        if($stateParams.id == ''){
+        if($stateParams.id == '' || $scope.allow_access == '0'){
              $state.go('app.shipping');
              return false;
         }

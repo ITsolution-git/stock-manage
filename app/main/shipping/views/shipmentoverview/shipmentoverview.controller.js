@@ -11,6 +11,16 @@
     {
         var vm = this;
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
         $scope.shipping_id = $stateParams.id;
 
         var company_id = sessionService.get('company_id');
@@ -178,7 +188,7 @@
             form.submit();*/
         }
 
-        $scope.print_pdf = function(image)
+        $scope.print_pdf = function(method)
         {
             if($scope.shippingBoxes.length == 0)
             {

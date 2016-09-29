@@ -12,9 +12,19 @@
         var vm = this;
         $scope.shipping_id = $stateParams.id;
 
-        if($scope.shipping_id == ''){
-             $state.go('app.shipping');
-             return false;
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+        if($scope.shipping_id == '' || $scope.allow_access == '0') {
+            $state.go('app.shipping');
+            return false;
         }
 
         $scope.box_items = [];

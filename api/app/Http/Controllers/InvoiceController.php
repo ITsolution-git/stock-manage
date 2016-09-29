@@ -407,4 +407,36 @@ class InvoiceController extends Controller {
         );
         return response()->json(["data" => $response]);
     }
+
+    public function getSalesClosed(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.grand_total) as totalSales'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->totalSales=round($retArray[0]->totalSales, 2);
+        $tempFigure=explode(".", $retArray[0]->totalSales);
+        $retArray[0]->totalSales=$tempFigure;
+        //$retArray[0]->totalSales=str_replace('.', '<sup>', $retArray[0]->totalSales).'</sup>';
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
 }

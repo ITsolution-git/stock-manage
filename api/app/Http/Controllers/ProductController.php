@@ -971,7 +971,7 @@ public function create_dir($dir_path) {
 
     }
 
-     public function deleteAddProduct()
+    public function deleteAddProduct()
     {
         $post = Input::all();
        
@@ -981,6 +981,7 @@ public function create_dir($dir_path) {
             
             $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['product_id']),array('is_delete' => '0'));
             $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['design_id'],'product_id' => $post['product_id']));
+            //$this->common->DeleteTableRecords('order_item_mapping',array('design_id' => $post['design_id'],'product_id' => $post['product_id']));
             $order_data = $this->order->getOrderByDesign($post['design_id']);
 
             $message = DELETE_RECORD;

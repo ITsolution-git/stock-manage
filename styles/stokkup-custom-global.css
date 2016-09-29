@@ -955,6 +955,7 @@ md-card-content.custom-desc-box span {
     width: 100%;
     margin: 0 auto; }
     .shipping-custom-tab md-tabs-wrapper md-tab-data {
+      position: absolute;
       z-index: 1;
       opacity: 1; }
 
@@ -1343,7 +1344,6 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
   border: none !important; }
   .approve-box md-select md-select-value {
     border: none !important;
-    color: #3eb74f !important;
     font-weight: 14px;
     font-weight: 700;
     width: 130px; }
@@ -1352,11 +1352,22 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
       font-weight: 14px;
       font-weight: 700; }
     .approve-box md-select md-select-value .fa {
-      color: #3eb74f;
       font-size: 21px;
       position: relative;
       top: 5px;
       margin-right: 12px; }
+
+#select_container_5 md-select-menu md-content md-option#select_option_2 .md-text {
+  color: #3eb74f !important; }
+
+#select_container_5 md-select-menu md-content md-option#select_option_3 .md-text {
+  color: #ed1c24 !important; }
+
+.approve-box #select_4.approvelabel #select_value_label_1 .md-text {
+  color: #3eb74f; }
+
+.approve-box #select_4 #select_value_label_1 .md-text {
+  color: #ed1c24; }
 
 .approve-box .md-select-value .md-select-icon::after {
   top: 7px; }

@@ -27,6 +27,7 @@ class Shipping extends Model {
                         ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
                         ->select($listArray)
                         ->where('o.is_complete','=','1')
+                        ->where('po.is_active','=','1')
                         ->where('o.company_id','=',$post['company_id']);
                         if($post['type'] == 'wait')
                         {
