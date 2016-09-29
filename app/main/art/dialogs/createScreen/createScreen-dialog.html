@@ -78,8 +78,12 @@
                       <md-item-template>
                           <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
                       </md-item-template>
-                      <md-not-found>
-                          No Color found.
+                      <md-not-found >
+                          <b id="check_alert">No Color found <a ng-click="check_savedata(1)" >Create a new Color!</a></b>
+                          <b id="check_confirm" style="display: none;">Please save changes first, do you want to contunue? 
+                            <a ng-click="AddNewColor(details_screenset[0].id,details_screenset[0].company_id,allcolor.color_name)" >Yes</a> | 
+                            <a ng-click="check_savedata(0)" >No</a>
+                          </b>
                       </md-not-found>
                   </md-autocomplete>
 
