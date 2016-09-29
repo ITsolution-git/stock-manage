@@ -114,6 +114,13 @@ class PaymentController extends Controller {
                 $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
                 $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
 
+                if($retArrayPmt[0]->grand_total > $retArrayPmt[0]->totalAmount){
+                    $amt['is_paid'] = '0';
+                }else{
+                    $amt['is_paid'] = '1';
+                    $amt['approval_id']=2885;
+                }
+
                 $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 
                 $data = array("success"=>1,'amt' =>$amt);
@@ -188,6 +195,13 @@ class PaymentController extends Controller {
 
                     $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
                     $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+
+                    if($retArrayPmt[0]->grand_total > $retArrayPmt[0]->totalAmount){
+                        $amt['is_paid'] = '0';
+                    }else{
+                        $amt['is_paid'] = '1';
+                        $amt['approval_id']=2885;
+                    }
 
                     $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 

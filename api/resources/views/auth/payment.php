@@ -150,7 +150,7 @@
     <?php
     if(isset($orderArray->payment_terms)){
     ?>
-        <h4 class="stokkup-title-h4">Payment Terms: $<?php echo $orderArray->payment_terms ?></h4>
+        <h4 class="stokkup-title-h4">Payment Terms: <?php echo $orderArray->payment_terms ?></h4>
     <?php
     }
     ?>
