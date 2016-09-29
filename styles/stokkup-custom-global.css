@@ -1443,4 +1443,11 @@ md-tabs.stokkup-invoice-tabs {
 .search-block .md-input-has-value label.top-srch-label {
   display: none; }
 
+.po-right-approve-box {
+  width: 23%;
+  float: left; }
+
+.po-selectbox md-select-value {
+  border: none !important; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
