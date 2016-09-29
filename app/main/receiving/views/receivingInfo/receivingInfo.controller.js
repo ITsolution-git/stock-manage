@@ -23,7 +23,7 @@
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='SU' )
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
         {
             $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
         }

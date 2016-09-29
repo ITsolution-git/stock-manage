@@ -9,6 +9,18 @@
     /** @ngInject */
     function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
             
@@ -383,7 +395,7 @@
 
        $scope.createPO = function() {
             
-            var permission = confirm("Please make sure that once you create PO, it can't be changed. You also would not be able to add new and edit existing Designs and Products.");
+            var permission = confirm("Do you want to create PO ?");
 
             if(permission == true){
 

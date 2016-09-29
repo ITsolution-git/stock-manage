@@ -4,42 +4,46 @@
         <md-toolbar class="md-accent md-hue-2">
                 <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                     <span class="title">S&S API INTEGRATION</span>
-                    <md-button  ng-click="closeDialog()">
-                        <span>Cancel</span>
+                    <md-button  ng-click="closeDialog()" class="close-stokkup-dialog">
+                        <span>close</span>
                     </md-button>
                 </div>
         </md-toolbar>
         <div ng-cloak>
-            <md-card-content layout="column" class="box-shadow-0">
-                <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
-                    <div layout="column"  flex="100">
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+            <md-dialog-content ms-scroll>
+                <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
+                    <div layout="column"  flex="100" class="p-0 pt-15">
+                        <md-input-container class="md-block">
                             <input placeholder="Username *" name="username" ng-model="params.username" >
                         </md-input-container>
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <md-input-container class="md-block">
                             <input placeholder="API Key" name="api_key" ng-model="params.api_key" >
                         </md-input-container>
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                        <md-input-container class="md-block">
                             <input placeholder="API Password" type="password" name="password" ng-model="params.password"  >
                         </md-input-container>
+                        
                         <md-input-container layout="row">
-                            <label class="selectbox-label">Test Mode</label>
-                            <md-select name="test_mode" ng-model="params.test_mode" flex="100" >
-                                <md-option ng-selected="params.test_mode==1" value="1">
+                        <label class="selectbox-label">Test Mode</label>
+                            <md-select name="is_live" ng-model="params.is_live" flex="100" >
+                                <md-option ng-selected="params.is_live==1" value="1">
                                     Yes
                                 </md-option>
-                                <md-option ng-selected="params.test_mode==0" value="0">
+                                <md-option ng-selected="params.is_live==0" value="0">
                                     No
                                 </md-option>
                             </md-select>
                         </md-input-container>
+                       
                     </div>
                 </div>
-            </md-card-content>
+            </md-dialog-content>
         </div>
-        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ss_detail','id',params.id,'sns')">
+        <md-dialog-actions layout="row" layout-align="end center">
+        <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ss_detail','id',params.id,'sns')">
                 SAVE
         </md-button>
+    </md-dialog-actions>
     </div>
 </form>
 </md-dialog>

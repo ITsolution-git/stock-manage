@@ -56,6 +56,8 @@
                                    sessionService.set('password',result.data.records.password);
                                    sessionService.set('company_id',result.data.records.company_id);
                                    sessionService.set('company',result.data.records.company);
+                                   sessionService.set('profile_photo',result.data.records.profile_photo);
+                                   
                                    var data = {"status": "success", "message": "Login Successfully, Please wait..."}
                                    notifyService.notify(data.status, data.message);
                                    
@@ -84,13 +86,52 @@
         sessionService.destroy();
         return false;
     }
-    function DashboardController(sessionService)
+    function DashboardController(sessionService,$scope,$http)
     {
         var vm = this;
         //console.log(sessionService.get('company_name'));
         vm.company_name = sessionService.get('company_name');
         vm.role_slug = sessionService.get('role_slug');
         vm.name = sessionService.get('name');
+
+
+        var data = {company_id :sessionService.get('company_id')};
+
+        var company_id = document.createElement('input');
+        company_id.name = 'company_id';
+        company_id.setAttribute('value', sessionService.get('company_id'));
+
+        var combine_array_id = {};
+        combine_array_id.company_id = company_id.value;
+        //$("#ajax_loader").show();
+
+        // Orders not send to Quickbooks
+        $http.post('api/public/invoice/getNoQuickbook',combine_array_id).success(function(result){
+            if(result.data.success == '1') {
+              $scope.noqbinvoice=result.data.allData[0].totalInvoice;
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
+
+        // Sales Closed
+        $http.post('api/public/invoice/getSalesClosed',combine_array_id).success(function(resultSalesClosed){
+            if(resultSalesClosed.data.success == '1') {
+              $scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
+              $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
+
+        // Orders with Balances
+        $http.post('api/public/invoice/getUnpaid',combine_array_id).success(function(resultUnpaid){
+            if(resultUnpaid.data.success == '1') {
+              $scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
+              $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];
+              $scope.unpaidTotal=resultUnpaid.data.allData[0].totalInvoice;
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
+
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {

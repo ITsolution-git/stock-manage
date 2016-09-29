@@ -123,8 +123,9 @@ class OrderController extends Controller {
                         3=>array('key' => 'order.approval_id', 'name' => 'Approval'),
                         4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
                         5=>array('key' => 'null', 'name' => 'Sales Rep', 'sortable' => false),
-                        6=>array('key' => 'order.date_shipped', 'name' => 'Ship Date'),
-                        7=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false)
+                        6=>array('key' => 'users.name', 'name' => 'Account Manager', 'sortable' => false),
+                        7=>array('key' => 'order.date_shipped', 'name' => 'Ship Date'),
+                        8=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false)
                         );
 
         if(empty($records))
@@ -1057,6 +1058,8 @@ class OrderController extends Controller {
         $email = trim($post['email']);
         $fromemail = trim($post['from_email']);
         $email_array = explode(",",$email);
+        $subject = $post['subject'];
+
 
         if(!isset($post['mailMessage'])){
           $post['mailMessage'] = '';
@@ -1108,9 +1111,9 @@ class OrderController extends Controller {
 
         foreach ($email_array as $email)
         {
-            Mail::send('emails.invoice', ['email'=>$email,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($file_path,$email)
+            Mail::send('emails.invoice', ['subject'=>$subject,'email'=>$email,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($subject,$file_path,$email)
             {
-                 $message->to($email)->subject('Invoice PDF');
+                 $message->to($email)->subject($subject);
                  $message->attach($file_path);
             });                
         }
@@ -2055,14 +2058,16 @@ class OrderController extends Controller {
     public function snsOrder()
      {
         $post = Input::all();
-        
+
+      
         if($post['sns_shipping'] == '') {
-            $post['sns_shipping'] = '1';
+            $post['sns_shipping'] = 1;
         }
         
         $result_company = $this->client->getStaffDetail($post['company_id']);
 
         $result_order = $this->product->getSnsProductDetail($post['id']);
+        
        
         if(empty($result_order))
         {
@@ -2077,7 +2082,7 @@ class OrderController extends Controller {
             "address" => $result_company[0]->prime_address1,
             "city" => $result_company[0]->prime_address_city,
             "state"=> $result_company[0]->code,
-            "zip"=> $result_company[0]->prime_address_zip,
+            "zip"=> trim($result_company[0]->prime_address_zip),
             "residential"=> true);
 
         $lines = array();
@@ -2092,6 +2097,7 @@ class OrderController extends Controller {
 
             $order_main_array = array("shippingAddress" => $shippingAddress,
                                           "shippingMethod"=> $post['sns_shipping'],
+                                          "poNumber" => $post['id'],
                                           "emailConfirmation"=> $result_company[0]->email,
                                           "testOrder"=> true,
                                           "lines" =>  $lines);
@@ -2155,6 +2161,10 @@ class OrderController extends Controller {
      public function addInvoice()
      {
         $post = Input::all();
+
+        if(!isset($post['quickbook_id'])){
+          $post['quickbook_id'] = 0;
+        }
         
 
         $result = $this->client->GetclientDetail($post['client_id']);
@@ -2174,11 +2184,14 @@ class OrderController extends Controller {
             return response()->json(["data" => $data_record]);
         }
 
+
+
+
         if($result['main']['qid'] == 0) {
           
           $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
           $this->common->UpdateTableRecords('client',array('client_id' => $post['client_id']),array('qid' => $result_quickbook));
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment'],$post['id']);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result_quickbook,$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment'],$post['id'],$post['quickbook_id']);
           
           
           if($result_quickbook_invoice == '1') {
@@ -2192,7 +2205,7 @@ class OrderController extends Controller {
 
         } else {
           
-          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment'],$post['id']);
+          $result_quickbook_invoice = app('App\Http\Controllers\QuickBookController')->addInvoice($result_order,$result_charges,$result['main']['qid'],$result_qbProductId,$post['invoice_id'],$other_charges,$price_grid,$post['payment'],$post['id'],$post['quickbook_id']);
           
           if($result_quickbook_invoice == '1') {
             $data_record = array("success"=>1,"message"=>"Invoice Generated Successfully");
@@ -2316,7 +2329,7 @@ class OrderController extends Controller {
            $setDate  = date('Y-m-d');
          }
          
-        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate);
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment']);
         $id = $this->common->InsertRecords('invoice',$orderData);
 
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
@@ -2334,30 +2347,49 @@ class OrderController extends Controller {
         $qb_id = $qb_data[0]->qb_id;
         $order_id = $qb_data[0]->order_id;
 
-        if(isset($post['amount'])){
-          $amount=round($post['amount'],2);
-          $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $amount,'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
+        if(isset($post['invoice_id'])){
 
-          $id = $this->common->InsertRecords('payment_history',$orderData);
-        
+          if(isset($post['amount'])){
+              $amount=round($post['amount'],2);
+              $orderData = array('qb_id' => $qb_id,'order_id' => $order_id,'payment_amount' => $amount,'payment_date' => date('Y-m-d'), 'payment_method' => 'Cash','authorized_TransId' => '','authorized_AuthCode' => '','qb_payment_id' => '', 'qb_web_reference' => '');
 
-        $retArray = DB::table('payment_history as p')
-            ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
-            ->leftJoin('orders as o','o.id','=',"p.order_id")
-            ->where('p.order_id','=',$order_id)
-            ->where('p.is_delete','=',1)
-            ->get();
+              $id = $this->common->InsertRecords('payment_history',$orderData);
+          }
 
-        $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
-        $amt=array('total_payments' => round($retArray[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
+          $pmt_data = $this->common->GetTableRecords('payment_history',array('order_id' => $order_id, 'is_delete' => '1'),array());
 
-        $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+          if(count($pmt_data)>0){
+              $retArray = DB::table('payment_history as p')
+              ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
+              ->leftJoin('orders as o','o.id','=',"p.order_id")
+              ->where('p.order_id','=',$order_id)
+              ->where('p.is_delete','=',1)
+              ->get();
 
-        $data = array("success"=>1,'amt' =>$amt);
-        return response()->json(['data'=>$data]);
+              $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
+              $balance_due = round($balance_due, 2);
+              $totalAmount = round($retArray[0]->totalAmount, 2);
+
+              if($retArray[0]->grand_total > $retArray[0]->totalAmount){
+                  $amt=array('is_paid' => '0');
+              }else{
+                  $amt=array('is_paid' => '1', 'approval_id' => 2885);
+              }
+          }else{
+              $amt_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
+              $balance_due = round($amt_data[0]->grand_total,2);
+              $totalAmount = "0.00";
+          }
+          $amt['total_payments'] = $totalAmount;
+          $amt['balance_due'] = $balance_due;
+
+          $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
+
+          $data = array("success"=>1,'amt' =>$amt);
+          return response()->json(['data'=>$data]);
       }else{
-        $data = array("success"=>0,'message' =>"Payment could not be made.");
-        return response()->json(['data'=>$data]);
+          $data = array("success"=>0,'message' =>"Payment could not be made.");
+          return response()->json(['data'=>$data]);
       }
     }
 
@@ -2365,26 +2397,38 @@ class OrderController extends Controller {
       $post = Input::all();
 
       $retArray = DB::table('invoice as p')
-            ->select('p.order_id', 'o.balance_due')
+            ->select('p.order_id', 'o.balance_due', 'p.payment_terms')
             ->leftJoin('orders as o','o.id','=',"p.order_id")
             ->where('p.id','=',$post['invoice_id'])
             ->get();
-        
+
+        $pmtTerm=$retArray[0]->payment_terms;
+
         $date = date_create();
         //echo date_timestamp_get($date);
         $length = 25;
         $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         $session_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
 
-        $orderData = array('order_id' => $retArray[0]->order_id,'balance_amount' => $retArray[0]->balance_due , 'session_link' => $session_link);
+        $orderData = array('order_id' => $retArray[0]->order_id, 'session_link' => $session_link);
 
         $id = $this->common->InsertRecords('link_to_pay',$orderData);
-        
 
         $session_link="http://".$_SERVER['SERVER_NAME']."/api/public/invoice/linktopay/".$session_link;
         
-
         $data = array("success"=>1,'session_link' =>$session_link);
+
+        if($pmtTerm==1){
+            $date = date_create();
+            $session_another_link = substr( str_shuffle( $chars ), 0, $length ).date_timestamp_get($date);
+
+            $orderData = array('order_id' => $retArray[0]->order_id, 'session_link' => $session_another_link);
+
+            $id = $this->common->InsertRecords('link_to_pay',$orderData);
+
+            $session_another_link="http://".$_SERVER['SERVER_NAME']."/api/public/invoice/linktopay/".$session_another_link;
+            $data['session_another_link'] = $session_another_link;
+        }
         return response()->json(['data'=>$data]);
     }
 
@@ -2395,6 +2439,27 @@ class OrderController extends Controller {
       $result = $this->order->GetAllClientsLowerCase($post);
       
         $data = array("success"=>1,"message"=>"Success",'records' => $result);
+        return response()->json(['data'=>$data]);
+    }
+
+
+    public function updateInvoicePayment()
+    {
+        $post = Input::all();
+
+         if($post['payment'] == '15') {
+            $setDate  = date('Y-m-d', strtotime("+15 days"));
+
+         } else if($post['payment'] == '30') {
+            $setDate  = date('Y-m-d', strtotime("+30 days"));
+
+         } else {
+           $setDate  = date('Y-m-d');
+         }
+         
+        $this->common->UpdateTableRecords('invoice',array('id' => $post['invoice_id']),array('payment_due_date' => $setDate,'payment_terms' => $post['payment']));
+
+        $data = array("success"=>1,"message"=>UPDATE_RECORD,"invoice_id" => $post['invoice_id']);
         return response()->json(['data'=>$data]);
     }
 

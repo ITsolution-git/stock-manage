@@ -41,8 +41,7 @@
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">
-                        $45,789 <sup>00</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{salesClosed1 | currency : $ : 0}}<sup>{{salesClosed2}}</sup></div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box">
@@ -168,8 +167,8 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">
-                        45</span>
+                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} | {{unpaid1 | currency : $ : 0}}<sup>{{unpaid2}}</sup></span>
+
                     </div>
                     </md-card-content>
                 </md-card>
@@ -194,8 +193,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">
-                        89</span></div>                                 
+                        <div class="center-num"><span class="num-style1 text-center">{{noqbinvoice}}</span></div>
                     </md-card-content>
                 </md-card>
             </div>

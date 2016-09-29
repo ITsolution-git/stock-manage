@@ -163,6 +163,7 @@ class Art extends Model {
 					->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
 					->Join('misc_type as mt', 'mt.id', '=', 'odp.position_id')
 					->where('ord.is_delete','=','1')
+					->where('od.is_delete','=','1')
 					->where('odp.is_delete','=','1')
 					->where('ord.is_complete','=','1')
 			        ->where('ord.company_id','=',$post['company_id']);
@@ -212,7 +213,7 @@ class Art extends Model {
     public function GetScreenset_detail($position_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'ord.id as order_id','od.id as design_id','odp.color_stitch_count','mt.value','ass.*')
+				->select(DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'ord.id as order_id','od.id as design_id','odp.color_stitch_count','mt.value','ass.*','ord.company_id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
 				->join('order_design as od','odp.design_id','=','od.id')
 				->join('orders as ord','ord.id','=','od.order_id')
@@ -239,7 +240,7 @@ class Art extends Model {
     	{
     		foreach ($post['add_screen_color'] as $key=>$value) 
     		{
-    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'thread_color'=>$value['thread_id'],'inq'=>$value['inq'],'head_location'=>$key+1));
+    			$result = $this->common->InsertRecords('artjob_screencolors',array("screen_id"=>$alldata['id'],'color_name'=>$value['id'],'thread_color'=>$value['thread_color'],'inq'=>$value['inq'],'head_location'=>$key+1));
     			$sort=$key+1;
     		}
     	}
@@ -279,14 +280,6 @@ class Art extends Model {
     }
     public function UpdateColorScreen($post)
     {
-    	if(!empty($post['thread_display']['id']))
-    	{
-    		$post['thread_color'] = $post['thread_display']['id'];
-    	}
-    	else if(empty($post['thread_display']))
-    	{
-    		$post['thread_color'] ='';
-    	}
 
     	$result = DB::table('artjob_screencolors')
     				->where('id','=',$post['id'])
@@ -391,7 +384,7 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col1.name as pantone','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen')
+				->select('or.name as order_name','or.custom_po','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','ass.mokup_logo','ass.screen_height','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen')
 				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
@@ -401,11 +394,12 @@ class Art extends Model {
 				->join('art as art','art.order_id','=','or.id')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->leftjoin('color as col','col.id','=','acol.color_name')
-				->leftjoin('color as col1','col1.id','=','acol.thread_color')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
 				->where('or.id','=',$order_id)
 				->where('or.company_id','=',$company_id)
+				->where('odp.is_delete','=','1')
+				->where('od.is_delete','=','1')
 				->where('ass.screen_active','=','1')
 				->orderBy('ass.screen_order','asc')
 				->orderBy('acol.head_location','asc')
@@ -437,9 +431,9 @@ class Art extends Model {
 
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
-		$query = DB::table('artjob_screencolors as acol')
-				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','ass.mokup_logo','acol.*','acol.id as color_id','col.name as color_name','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color','col2.name as pantone')
-				->leftjoin('artjob_screensets as ass','acol.screen_id','=','ass.id')
+		$query = DB::table('artjob_screensets as ass')
+				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','ass.mokup_logo','acol.*','acol.id as color_id','col.name as color_name','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color')
+				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
 				->join('order_design as od','od.id','=','odp.design_id')
 				->leftjoin('design_product as dp','dp.design_id','=','od.id')
@@ -447,7 +441,6 @@ class Art extends Model {
 				->leftjoin('purchase_detail as pdtl','pdtl.design_id','=','od.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftjoin('color as col','col.id','=','acol.color_name')
-				->leftjoin('color as col2','col2.id','=','acol.thread_color')
 				->leftjoin('color as col1','col1.id','=','pdtl.color_id')
 				->join('users as usr','usr.id','=','or.company_id')
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')

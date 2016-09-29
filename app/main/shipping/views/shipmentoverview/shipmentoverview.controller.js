@@ -11,7 +11,18 @@
     {
         var vm = this;
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
         $scope.shipping_id = $stateParams.id;
+
         var company_id = sessionService.get('company_id');
 
         $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
@@ -32,6 +43,7 @@
             var combine_array = {};
             combine_array.shipping_id = $scope.shipping_id;
             combine_array.company_id = company_id;
+
 
             $http.post('api/public/shipping/getShippingOverview',combine_array).success(function(result) {
 
@@ -68,6 +80,10 @@
                     if($scope.shipping.shipping_status == '3') {
                         $scope.shipping.shipping_status_name = 'Shipped';
                     }
+                } else {
+
+                    $state.go('app.shipping');
+                    return false;
                 }
             });
         }
@@ -139,12 +155,15 @@
             }
 
             $("#ajax_loader").show();
-            $http.post('api/public/shipping/checkAddressValid',$scope.shipping).success(function(result) {
+            var combine_array = {};
+            combine_array.shipping = $scope.shipping;
+            combine_array.shippingBoxes = $scope.shippingBoxes;
+            $http.post('api/public/shipping/checkAddressValid',combine_array).success(function(result) {
 
                 $("#ajax_loader").hide();
                 if(result.data.success == '1')
                 {
-                    $scope.submitForm(result.data.data);
+                    $scope.getShippingOverview();
                 }
                 else
                 {
@@ -169,7 +188,7 @@
             form.submit();*/
         }
 
-        $scope.print_pdf = function(image)
+        $scope.print_pdf = function(method)
         {
             if($scope.shippingBoxes.length == 0)
             {
@@ -230,6 +249,24 @@
                 $("#ajax_loader").hide();
                 $state.go('app.shipping.boxingdetail',{id: $stateParams.id});
             });
+        }
+
+        $scope.viewLabelPDF = function()
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/vewLabelPDF';
+            form.method = 'post';
+            form.target = '_blank';
+            form.style.display = 'none';
+
+            var shipping_id = document.createElement('input');
+            shipping_id.name = 'shipping_id';
+            shipping_id.setAttribute('value', $scope.shipping_id);
+            form.appendChild(shipping_id);
+
+            document.body.appendChild(form);
+            form.submit();
         }
     }
 })();

@@ -263,7 +263,7 @@ class Purchase extends Model {
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','cl.billing_email','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','cl.billing_email','po.vendor_instruction','po.vendor_charge','ord.name as order_name','ord.custom_po','c.name as product_color','pd.sku','pd.size','pd.qnty',
 						DB::raw('(select count(*) from purchase_notes where po_id=po.po_id) as total_note'),'po.po_id',
 						'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
@@ -502,7 +502,7 @@ class Purchase extends Model {
 	}
 	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po')
 	{
-		$check = DB::table('purchase_order')
+		/*$check = DB::table('purchase_order')
 				->select('*')
 				->where('order_id','=',$order_id)
 				->where('vendor_id','=',$vendor_id)
@@ -514,11 +514,12 @@ class Purchase extends Model {
 			return 0 ;
 		}
 		else 
-		{
-			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type));
+		{*/
+			
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1));
 			$id = DB::getPdo()->lastInsertId();
         	return $id;	
-		}		
+		//}		
 
 	}
 	public function insert_purchase_order_line($post,$po_id)

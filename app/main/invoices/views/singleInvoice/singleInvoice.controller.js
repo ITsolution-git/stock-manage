@@ -18,8 +18,13 @@
                     $state.go('app.invoices');
                 } 
 
-
             $scope.allData = result.data.allData;
+            if(result.data.allData.order_data[0].grand_total > result.data.allData.order_data[0].total_payments){
+                $scope.showPaymentDetails = true;
+            }else{
+                $scope.showPaymentDetails = false;
+            }
+
             $scope.brand_coordinator = sessionService.get('role_title');
         });
 
@@ -32,16 +37,16 @@
             $scope.siData = result.data.allData;
         });
 
-        $http.get('api/public/invoice/getInvoicePayment/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+        /*$http.get('api/public/invoice/getInvoicePayment/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
             if(result123.data.success == '0') {
                     $state.go('app.invoices');
             }else{
                 //$scope.spData = result123.data.allData[0];
                 //alert(result123.data.allData[0].first_name+' : '+result123.data.allData[0].last_name+' : '+result123.data.allData[0].credit_card);
-                $scope.company = result123.data.allData[0];
+                //$scope.company = result123.data.allData[0];
             }
-        });
+        });*/
 
         $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
@@ -185,6 +190,7 @@
                         $scope.company.city = 'XXXXXX';
                         $scope.company.state = 'AL';
                         $scope.company.zip = '00000';
+                        $scope.company.amount = $scope.allData.order_data[0].balance_due;
                     }
                     else{
                         var data = {"status": "error", "message": "Please try with any other saved card or new credit card."}
@@ -232,20 +238,27 @@
 
             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(result) 
             {
-                $("#ajax_loader").hide();
+                amount.cashAmount = null;
+                amount.cashAmount = '';
                 if(result.data.success=='1')
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
+                    if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                        $scope.showPaymentDetails = true;
+                    }else{
+                        $scope.showPaymentDetails = false;
+                        $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
+                    }
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
                     });
-                    $scope.pay.cashAmount = null;
+                    $("#ajax_loader").hide();
                     notifyService.notify('success',"Payment added Successfully");
                 }
                 else
                 {
-                    $scope.pay.cashAmount = null;
+                    $("#ajax_loader").hide();
                     notifyService.notify('error',"Payment not added");
                 }
             });
@@ -370,6 +383,12 @@
                 {
                     $scope.allData.order_data[0].total_payments = result.data.amt.total_payments;
                     $scope.allData.order_data[0].balance_due = result.data.amt.balance_due;
+                    if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                        $scope.showPaymentDetails = true;
+                    }else{
+                        $scope.showPaymentDetails = false;
+                        $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
+                    }
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
                         $scope.siData = resultData.data.allData;
                     });
@@ -440,7 +459,7 @@
                 combine_array.invoice_id = invoice_id.value;
                 $http.post('api/public/payment/refundTransaction',combine_array).success(function(result) 
                 {
-                    $("#ajax_loader").hide();
+                    
                     if(result.data.success=='1')
                     {
                         var vm = this;
@@ -461,23 +480,45 @@
 
                                     $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
                                     {
+                                        $("#ajax_loader").hide();
                                         $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
                                         $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
-
+                                        if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                                            $scope.showPaymentDetails = true;
+                                            if($scope.allData.order_data[0].approval_id == 2885){
+                                                var UpdateArray = {};
+                                                UpdateArray.table ='orders';
+                                                UpdateArray.data = {approval_id:2491};
+                                                UpdateArray.cond = {id:$scope.allData.order_data[0].id};
+                                                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
+                                                {
+                                                    if(resultUpdateStatus.data.success=='1')
+                                                    {
+                                                        $scope.allData.order_data[0].approval_id = 2491;
+                                                    }
+                                                });
+                                            }
+                                        }else{
+                                            $scope.showPaymentDetails = false;
+                                            $scope.allData.order_data[0].approval_id = resultUpdate.data.amt.approval_id;
+                                        }
                                     });
                                 });
                             }
                             else
                             {
                                 //notifyService.notify('error',resultUpdate.data.message);
+                                $("#ajax_loader").hide();
                                 notifyService.notify('error',"Refund Transaction Failed. Please try again after a few hours.");
                             }
 
                         });
+                        $("#ajax_loader").hide();
                         notifyService.notify('success', "Record Deleted Successfully!");
                     }
                     else
                     {
+                        $("#ajax_loader").hide();
                         notifyService.notify('error',result.data.message);
                     }
                 });
@@ -490,7 +531,6 @@
 
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                 {
-                    $("#ajax_loader").hide();
                     if(result.data.success=='1')
                     {
                        $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
@@ -503,14 +543,32 @@
                             {
                                 $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
-
+                                if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
+                                    $scope.showPaymentDetails = true;
+                                    if($scope.allData.order_data[0].approval_id == 2885){
+                                        var UpdateArray = {};
+                                        UpdateArray.table ='orders';
+                                        UpdateArray.data = {approval_id:2491};
+                                        UpdateArray.cond = {id:$scope.allData.order_data[0].id};
+                                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
+                                        {
+                                            if(resultUpdateStatus.data.success=='1')
+                                            {
+                                                $scope.allData.order_data[0].approval_id = 2491;
+                                            }
+                                        });
+                                    }
+                                }else{
+                                    $scope.showPaymentDetails = false;
+                                }
+                                $("#ajax_loader").hide();
                             });
                         });
-
-                       notifyService.notify('success', "Record Deleted Successfully!");
+                        notifyService.notify('success', "Record Deleted Successfully!");
                     }
                     else
                     {
+                        $("#ajax_loader").hide();
                         notifyService.notify('error',result.data.message);
                     }
                 });

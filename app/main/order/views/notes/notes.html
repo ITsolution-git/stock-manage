@@ -29,7 +29,7 @@
                         <tbody >
                             <tr ng-repeat="(key,note) in rows">
                                 <td class="">{{note.note}}</td>
-                                <td><a class="font-12" class="cursor-p" ng-click="openaddNoteDialog($event,'editOrderNote',note)">Edit</a></td> 
+                                <td><a class="font-12" class="cursor-p" ng-click="openaddNoteDialog($event,'editOrderNote',note)" ng-show="allow_access==1">Edit</a></td> 
                                 
                             </tr>
                         </tbody> 

@@ -29,8 +29,8 @@
 	                        <div class="h5 text-semibold">API Password</div>
 	                        <span>{{sns.password}}</span>
 	                        <div class="h5 text-semibold">Test Mode</div>
-	                        <span ng-if="sns.test_mode==1">Yes</span>
-	                        <span ng-if="sns.test_mode==0">No</span>
+	                        <span ng-if="sns.is_live==1">NO</span>
+	                        <span ng-if="sns.is_live==0">Yes</span>
 	                    </md-card-content>
 	                </md-card>
 	            </div>

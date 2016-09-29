@@ -74,10 +74,12 @@
                     {
                         notifyService.notify('success',result.data.message);
                         $mdDialog.hide();
+                        return false;
                     }
                     else
                     {
                         notifyService.notify('error',result.data.message);
+                        $mdDialog.hide();
                         return false;
                     }
                 });
@@ -95,11 +97,11 @@
                 combine_array.order_id = $stateParams.id;
                 combine_array.payment = $scope.payment_terms;
                 
-                $("#ajax_loader").show();
+                
                
                 $http.post('api/public/order/createInvoice',combine_array).success(function(result) 
                 {
-                    $("#ajax_loader").hide();
+                    
                     if(result.data.success=='1')
                     {
                         $scope.invoice_id = result.data.invoice_id;
@@ -108,7 +110,7 @@
                         $mdDialog.hide();
                         $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
 
-                         if($scope.invoice == true && $scope.qb == true && $scope.qb_invoice_id == 0) {
+                         if($scope.invoice == true && $scope.qb == true) {
 
                             var combine_array_id = {};
                                 combine_array_id.id = $stateParams.id;
@@ -116,19 +118,20 @@
                                 combine_array_id.client_id = client_id;
                                 combine_array_id.invoice_id = $scope.invoice_id;
                                 combine_array_id.payment = $scope.payment_terms;
+                                combine_array_id.quickbook_id = $scope.qb_invoice_id;
                                 
                                $("#ajax_loader").show();
                                
                                  $http.post('api/public/order/addInvoice',combine_array_id).success(function(result) 
                                 {
-                                  $("#ajax_loader").hide();
-
+                                  
                                    if(result.data.success=='0') {
                                       notifyService.notify('error',result.data.message);
                                     }
 
                                     $mdDialog.hide();
                                     $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                                    $("#ajax_loader").hide();
                                   
                                 });
                         } else {
@@ -140,7 +143,31 @@
                 });
             }
 
-            if($scope.invoice == true && $scope.qb == true && $scope.qb_invoice_id == 0) {
+
+            if($scope.invoice == true && $scope.invoice_id > 0)
+            {
+
+                 if($scope.payment_terms ==  undefined) {
+                    notifyService.notify('error','Please select Payment Terms for creating invoice');
+                    return false;
+                }
+               
+                var combine_array = {};
+                combine_array.order_id = $stateParams.id;
+                combine_array.payment = $scope.payment_terms;
+                combine_array.invoice_id = $scope.invoice_id;
+                
+                
+               
+                $http.post('api/public/order/updateInvoicePayment',combine_array).success(function(result) 
+                {
+                   
+                   
+                });
+               
+            }
+
+            if($scope.invoice == true && $scope.qb == true && $scope.invoice_id > 0) {
 
                
 
@@ -155,19 +182,20 @@
                     combine_array_id.client_id = client_id;
                     combine_array_id.invoice_id = $scope.invoice_id;
                     combine_array_id.payment = $scope.payment_terms;
+                    combine_array_id.quickbook_id = $scope.qb_invoice_id;
                     
                    $("#ajax_loader").show();
                    
                      $http.post('api/public/order/addInvoice',combine_array_id).success(function(result) 
                     {
-                      $("#ajax_loader").hide();
-
+                     
                        if(result.data.success=='0') {
                           notifyService.notify('error',result.data.message);
                         }
 
                         $mdDialog.hide();
                         $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                         $("#ajax_loader").hide();
                       
                     });
             }

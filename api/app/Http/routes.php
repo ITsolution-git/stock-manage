@@ -24,7 +24,7 @@ Route::post('admin/login', 'LoginController@loginverify');
 Route::post('admin/forgot_password', 'LoginController@forgot_password');
 Route::post('admin/check_user_password', 'LoginController@check_user_password');
 Route::post('admin/change_password', 'LoginController@change_password');
-Route::get('auth/session', 'LoginController@check_session');
+Route::post('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 
 // COMPANY ROUTERS
@@ -39,11 +39,8 @@ Route::get('admin/company/getCompanyInfo/{company_id}', 'CompanyController@getCo
 Route::get('admin/company/getAffiliate/{company_id}/{affiliate_id}', 'CompanyController@getAffiliate');
 Route::post('admin/company/addAffilite', 'CompanyController@addAffilite');
 Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
-Route::get('admin/company/getAuthorizeAPI/{company_id}', 'CompanyController@getAuthorizeAPI');
-Route::get('admin/company/getUpsAPI/{company_id}', 'CompanyController@getUpsAPI');
-Route::get('admin/company/getSnsAPI/{company_id}', 'CompanyController@getSnsAPI');
-Route::get('admin/company/getQBAPI/{company_id}', 'CompanyController@getQBAPI');
-Route::get('admin/company/getFedexAPI/{company_id}', 'CompanyController@getFedexAPI');
+Route::post('admin/company/GetAllApi', 'CompanyController@GetAllApi');
+
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
@@ -253,6 +250,7 @@ Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
 Route::post('order/GetAllClientsLowerCase', 'OrderController@GetAllClientsLowerCase');
 Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
 Route::post('payment/refundTransaction', 'PaymentController@refundTransaction');
+Route::post('order/updateInvoicePayment', 'OrderController@updateInvoicePayment');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
@@ -287,7 +285,7 @@ Route::post('shipping/getShippingBoxes', 'ShippingController@getShippingBoxes');
 Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverview');
 Route::post('shipping/createLabel', 'ShippingController@createLabel');
 Route::post('shipping/checkAddressValid', 'ShippingController@checkAddressValid');
-
+Route::post('shipping/vewLabelPDF', 'ShippingController@vewLabelPDF');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
@@ -372,3 +370,6 @@ Route::get('invoice/getInvoicePayment/{invoice_id}/{company_id}/{type}', 'Invoic
 Route::get('invoice/getInvoiceCards/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceCards');
 Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');
 Route::post('invoice/getPaymentCard', 'InvoiceController@getPaymentCard');
+Route::post('invoice/getNoQuickbook', 'InvoiceController@getNoQuickbook');
+Route::post('invoice/getSalesClosed', 'InvoiceController@getSalesClosed');
+Route::post('invoice/getUnpaid', 'InvoiceController@getUnpaid');
