@@ -2369,14 +2369,19 @@ class OrderController extends Controller {
               $balance_due = $retArray[0]->grand_total - $retArray[0]->totalAmount;
               $balance_due = round($balance_due, 2);
               $totalAmount = round($retArray[0]->totalAmount, 2);
+
+              if($retArray[0]->grand_total > $retArray[0]->totalAmount){
+                  $amt=array('is_paid' => '0');
+              }else{
+                  $amt=array('is_paid' => '1', 'approval_id' => 2885);
+              }
           }else{
               $amt_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());
               $balance_due = round($amt_data[0]->grand_total,2);
               $totalAmount = "0.00";
           }
-
-          
-          $amt=array('total_payments' => $totalAmount, 'balance_due' => $balance_due);
+          $amt['total_payments'] = $totalAmount;
+          $amt['balance_due'] = $balance_due;
 
           $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
 

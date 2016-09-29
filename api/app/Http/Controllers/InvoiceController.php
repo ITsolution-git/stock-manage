@@ -439,4 +439,37 @@ class InvoiceController extends Controller {
         );
         return response()->json(["data" => $response]);
     }
+
+    public function getUnpaid(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.balance_due) as totalUnpaid'), DB::raw('COUNT(i.id) as totalInvoice') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.is_paid','=','0')
+            ->where('o.grand_total','>','o.total_payments')
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->totalUnpaid=round($retArray[0]->totalUnpaid, 2);
+        $tempFigure=explode(".", $retArray[0]->totalUnpaid);
+        $retArray[0]->totalUnpaid=$tempFigure;
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
 }

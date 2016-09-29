@@ -80,7 +80,6 @@ class Shipping extends Model {
                     $shipping_data = DB::table('shipping as s')
                                         //->leftJoin('shipping_box as sb', 'sb.shipping_id', '=', 's.id')
                                         ->where('s.order_id','=',$shipping->id)
-                                        ->GroupBy('s.order_id')
                                         ->get();
                     
                     if(empty($shipping_data))
