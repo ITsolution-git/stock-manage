@@ -12,8 +12,9 @@
     </div>
         
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
-
-            <div class="info-order inner-full-box m-b-45">
+            <div class="inner-full-box">
+                <div flex=75 class="pull-left box-zerospace">
+                    <div class="info-order  m-b-45">
                 <div class="title box-title m-b-20"><span class="stokkup-title-h4">Information</span></div>
                 <md-card layout="row">
                     <md-card-content flex="100" layout="column">
@@ -48,7 +49,7 @@
                             </div>
                         </div>
                     </md-card-content>
-                    <div layout-align="end start" ng-if="po_data.complete==0" flex="5" layout="row">
+                    <div layout-align="end start"  flex="5" layout="row">
                         <md-menu>
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -63,20 +64,23 @@
                         </md-menu>
                     </div>
                 </md-card>
-            </div>
-
-            <div class="inner-full-box">
+                    </div>
+                </div>
+            
+                <div class="pull-left ml-20 po-right-approve-box">
+                    <div class="">
                 <div class="title box-title m-b-20"><span class="stokkup-title-h4">Order Status</span></div>
                 <div class="full-box md-default-theme white-bg layout-padding">
                     <div flex="25" layout="column" class="trans-box">
-                        <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="select-width stokkup-select-box1" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
+                        <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="po-selectbox select-width stokkup-select-box1" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
                             <md-option ng-selected="po_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                         </md-select>
                     </div>
                 </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview transparent-bg" >
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="title box-title"><span class="stokkup-title-h4">Products</span></div>
@@ -102,7 +106,7 @@
                         <td>{{ line_item.product_color}}</td>
                         <td>{{ line_item.qnty_ordered}} / {{ line_item.qnty_purchased}}</td>
                         <td>${{ line_item.unit_price}}</td>
-                        <td ng-if="po_data.complete==0"><a class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
+                        <td><a class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
                     </tr>
                 </tbody> 
             </table>
@@ -134,7 +138,7 @@
                 <md-card-title-text class="stokkup-title-h4">
                     Dropship Instructions
                 </md-card-title-text>
-                <div ng-if="po_data.complete==0">
+                <div>
                     <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
                 </div>
             </md-card-title>
@@ -182,18 +186,18 @@
                 </div>
 
                 <!-- LOCK PO -->
-                <div flex="10" ng-if="po_data.complete==1">
+                <div flex="10">
                     <span class="small-headings mr-20">Vendor Ship Charge:</span>
                     <span class="small-results">${{ po_data.vendor_charge}}</span>
                 </div>
 
                 <!-- LOCK PO -->
-                <div flex="10" title="click to change" ng-if="po_data.complete==0" class="cursor-p" ng-click="changeVendorcharge(po_data.vendor_charge)">
+                <!-- <div flex="10" title="click to change" ng-if="po_data.complete==0" class="cursor-p" ng-click="changeVendorcharge(po_data.vendor_charge)">
                     <span class="small-headings mr-20 ">Vendor Ship Charge</span>
                 </div>
                 <div flex="8" class="cursor-p" ng-if="po_data.complete==0" title="click to change" ng-click="changeVendorcharge(po_data.vendor_charge)">
                     <span class="small-results">${{ po_data.vendor_charge}}</span>
-                </div>
+                </div> -->
                 <div flex="10">
                     <span class="small-headings mr-20">Total Amount</span>
                     <span class="small-results">${{ order_total.total_amount}}</span>

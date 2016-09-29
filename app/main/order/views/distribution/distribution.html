@@ -100,7 +100,7 @@
                             <div class="text-center"> <span class="font-18">Location</span></div>
                         </md-card-content>
                         <md-divider ></md-divider>
-                        <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                        <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding ng-show="allow_access==1">
                             <a ng-click="vm.openaddAddressDialog($event)">Add New</a>
                         </div>
                     </md-card>
@@ -119,7 +119,7 @@
                                         <!-- <md-button  class="bg-grey bg-green right-m-0 " >
                                             DISTRIBUTE EVENLY
                                         </md-button> -->
-                                        <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" >
+                                        <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" ng-show="allow_access==1">
                                             ADD NEW LOCATION
                                         </md-button>
                                     </div>
@@ -164,7 +164,7 @@
                                         <!-- <md-button  class="bg-grey bg-green right-m-0 " >
                                             DISTRIBUTE EVENLY
                                         </md-button> -->
-                                        <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" >
+                                        <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" ng-show="allow_access==1">
                                             ADD NEW LOCATION
                                         </md-button>
                                     </div>

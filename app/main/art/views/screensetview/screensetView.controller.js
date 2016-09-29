@@ -90,39 +90,6 @@
                                     $scope.params = params;
                                     $scope.color_screen = colordata;
                                     //console.log($scope.color_screen); 
-                                    $scope.screen_allcolors = $scope.params.screen_allcolors;
-                                    $scope.simulateQuery = false;
-                                    $scope.isDisabled    = false;
-                                    $scope.states        = loadAll();
-                                    $scope.querySearch   = querySearch;
-                          
-                                    function querySearch (query) 
-                                    {
-                                        var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states, deferred;
-                                        if ($scope.simulateQuery) 
-                                        {
-                                            deferred = $q.defer();
-                                            $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-                                            return deferred.promise;
-                                        } 
-                                        else 
-                                        {
-                                            return results;
-                                        }
-                                    }
-                                    function loadAll() 
-                                    {
-                                        var allStates = $scope.screen_allcolors;
-                                        return allStates;
-                                    }
-                                    function createFilterFor(query) 
-                                    {
-                                        var lowercaseQuery = angular.lowercase(query);
-                                        return function filterFn(state) 
-                                        {
-                                            return (state.name.indexOf(lowercaseQuery) === 0);
-                                        };
-                                    }
                                     $scope.closeDialog = function() 
                                     {
                                         $mdDialog.hide();

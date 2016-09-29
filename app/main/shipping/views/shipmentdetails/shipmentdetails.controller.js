@@ -9,6 +9,23 @@
     /** @ngInject */
     function shipmentController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+        $scope.role_slug = sessionService.get('role_slug');
+        
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+        if($stateParams.id == '' || $scope.allow_access == '0'){
+            $state.go('app.shipping');
+            return false;
+        }
+
+        
         var vm = this;
 
         var combine_array_id = {};
@@ -22,7 +39,8 @@
                 $scope.shipping = result.data.records[0];
             }
             else {
-                $scope.shippingItems = [];
+                  $state.go('app.shipping');
+                     return false;
             }
         });
 

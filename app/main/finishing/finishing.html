@@ -34,7 +34,7 @@
                                 &nbsp;
                             </td>
                             <td>
-                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.order_id)" >
+                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.order_id)" ng-disabled="allow_access == '0'">
                                     <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                 </md-select>
                             </td>
@@ -63,8 +63,8 @@
                                             <td class="cursor-p">{{finishing.end_time}}</td>
                                             <td class="cursor-p">{{finishing.est}}</td>
                                             <td>
-                                                <md-input-container flex=30 class="m-b-20 m-t-25">
-                                                    <md-select ng-model="finishing.status" aria-label="r1" ng-change="changeStatus(finishing)">
+                                                <md-input-container flex=30 class="margin-0">
+                                                    <md-select ng-model="finishing.status" aria-label="r1" ng-change="changeStatus(finishing)" ng-disabled="allow_access == '0'">
                                                       <md-option ng-selected="{{finishing.status==1}}" value="1">
                                                         Yes
                                                        </md-option>
@@ -74,7 +74,8 @@
                                                     </md-select>                                
                                                 </md-input-container>
                                             </td>
-                                            <td class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">EDIT</a></td>
+                                            <td ng-show="allow_access == '1'" class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">EDIT</a></td>
+                                            <td ng-show="allow_access == '0'" class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">VIEW</a></td>
                                         </tr>
                                     </tbody>
                                 </table>

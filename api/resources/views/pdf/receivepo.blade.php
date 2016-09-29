@@ -48,7 +48,7 @@
     </tr>
     <tr>
       <td>Brand Coordinator : {{Session::get('name')}}</td>
-      <td  align="right">Client PO# : {{$company->po_id}}</td>
+      <td  align="right">Client PO# : {{$company->custom_po}}</td>
     </tr>
     
   </table>
@@ -83,10 +83,10 @@
     <?php } ?>
 	<hr style="border:1px solid #000;">
     <tr>
-    	<td  colspan="2">Order Total: <b><?php echo (!empty($value_main['total_product']))?$value_main['total_product']:''; ?></b></td>
-    	<td  colspan="2">Order Received: <b><?php echo (!empty($value_main['total_received']))?$value_main['total_received']:''; ?></b></td>
+    	<td >Order Total: <b><?php echo (!empty($value_main['total_product']))?$value_main['total_product']:''; ?></b></td>
+    	<td  colspan="3">Order Received: <b><?php echo (!empty($value_main['total_received']))?$value_main['total_received']:''; ?></b></td>
     	<td  colspan="2">Order Defectives: <b><?php echo (!empty($value_main['total_defective']))?$value_main['total_defective']:''; ?></b></td>
-    	<td  colspan="2">Order Remaining: <b><?php echo (!empty($value_main['total_remains']))?$value_main['total_remains']:''; ?></b></td>
+    	<td  colspan="2">Order Summary: <b><?php echo (!empty($value_main['total_remains']))?$value_main['total_remains']:''; ?></b></td>
     </tr>
 
 <?php 

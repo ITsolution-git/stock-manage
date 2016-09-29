@@ -63,7 +63,7 @@
             <!-- approval status block -->
             <div flex="24" class="padding-30 white-bg text-center boxes-borderstyle approve-box">
                 <!-- <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div> -->
-                <md-select ng-model="ScreenSets[0].approval" ng-change="UpdateTableField(ScreenSets[0].approval)" aria-label="Approval Status">
+                <md-select ng-model="ScreenSets[0].approval" ng-change="UpdateTableField(ScreenSets[0].approval)" ng-class="{approvelabel : ScreenSets[0].approval==1}" aria-label="Approval Status">
                     <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}"><i class="fa fa-check-circle-o"></i>Approved</md-option>
                     <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}"><i class="fa fa-exclamation"></i>Pending</md-option>
                 </md-select>
@@ -92,7 +92,7 @@
                                                 <div class="trans-outer screenset-view">
                                                     <div class="trans-box">
                                                         <div>Pantone/Thread Color</div>
-                                                        <span class="chrome-weight font-14">{{ colorsinf.thread_display}}</span>
+                                                        <span class="chrome-weight font-14">{{ colorsinf.thread_color}}</span>
                                                     </div>
                                                     <div class="trans-box">
                                                         <div>Mesh/Thread Count</div>
@@ -177,9 +177,11 @@
             </md-card-content>
         </md-card>
         <md-card class="m-b-20 m-l-20" style="height: 50% !important;" flex="30">
-            <md-card-title>
-                <md-card-title-text class="text-left">Notes</md-card-title-text>
-            </md-card-title>
+            <md-card-header layout-align="space-between center">
+                <md-card-header-text>
+                <span class="md-title">Notes</span>
+                </md-card-header-text>
+            </md-card-header>    
             <md-card-content  layout="column" layout-padding class="min-height" layout-align="start center">
                 <div layout="row" layout-wrap flex="60" class="width-text">
                     <span class="font-50 mrg-auto">{{ScreenSets[0].note_total}}</span>
