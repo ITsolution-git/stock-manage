@@ -1293,6 +1293,7 @@ md-card-content{
 		width:100%;
 		margin:0 auto;
 		md-tab-data{
+			position:$pos-absolute;
 			z-index:1;
 			opacity:1;
 		}
