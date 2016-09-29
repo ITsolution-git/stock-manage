@@ -548,6 +548,7 @@ table.dataTable tbody tr:nth-child(even){
 	@extend .noborder-radius;
 }
 .stokkup-custom-btn1{
+	text-transform:uppercase;
 	&.md-button{
 		@extend .border-radius-half;
 	}
@@ -1835,4 +1836,10 @@ md-tabs.stokkup-invoice-tabs{
 }
 .mt-2{
 	margin-top:2px;
+}
+.right-custom-box{
+	width:48%;
+}
+.stokkup-invoice-tabs md-tab-item.md-disabled{
+	opacity:0 !important;
 }

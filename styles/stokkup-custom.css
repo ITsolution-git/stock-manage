@@ -1125,7 +1125,7 @@ ul[dnd-list] .dndPlaceholder {
 
 .text-bold {
   font-weight: bold !important;
-  color: #000 !important;
+/*  color: #000 !important;*/
 }
 .text-bold-center {
   font-weight: bold;
