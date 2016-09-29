@@ -1440,4 +1440,7 @@ md-tabs.stokkup-invoice-tabs {
 .stokkup-invoice-tabs md-tab-item.md-disabled {
   opacity: 0 !important; }
 
+.search-block .md-input-has-value label.top-srch-label {
+  display: none; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
