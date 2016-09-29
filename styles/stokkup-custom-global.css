@@ -374,6 +374,9 @@ table.dataTable tbody tr:nth-child(even) {
 
 /*global table elements css */
 /*global dialog box starts here */
+.stokkup-custom-btn1 {
+  text-transform: uppercase; }
+
 .dialog-shadow, md-dialog.task-dialog {
   -moz-box-shadow: 0 0 3px rgba(37, 41, 50, 0.1);
   -webkit-box-shadow: 0 0 3px rgba(37, 41, 50, 0.1);
@@ -1430,5 +1433,11 @@ md-tabs.stokkup-invoice-tabs {
 
 .mt-2 {
   margin-top: 2px; }
+
+.right-custom-box {
+  width: 48%; }
+
+.stokkup-invoice-tabs md-tab-item.md-disabled {
+  opacity: 0 !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
