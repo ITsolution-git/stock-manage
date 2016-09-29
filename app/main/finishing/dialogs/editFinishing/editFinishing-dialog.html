@@ -8,7 +8,7 @@
                     </md-button>
                 </div>
         </md-toolbar>
-        <div ng-cloak>
+        <div ng-cloak ng-class="{'disable-click': allow_access == 0}">
             <md-card-content layout="column" class="box-shadow-0">
                 <div layout="row" layout-wrap="nowrap" id="editFinishing" layout-padding layout-align="space-between start">
                     <div layout="column"  flex="100">
@@ -62,7 +62,7 @@
                 </div>
             </md-card-content>
         </div>
-        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="editFinishing()">
+        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="editFinishing()" ng-show="allow_access == 1">
                 SAVE
         </md-button>
     </div>

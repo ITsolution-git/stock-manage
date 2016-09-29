@@ -13,6 +13,17 @@
         vm.searchQuery = "";
         $scope.currentTab = 'wait';
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+
         $scope.company_id = sessionService.get('company_id');
 
         $scope.init = {
