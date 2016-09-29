@@ -121,6 +121,17 @@
             }
             /*$scope.brand_coordinator = sessionService.get('role_title');*/
         });
+
+        // Orders with Balances
+        $http.post('api/public/invoice/getUnpaid',combine_array_id).success(function(resultUnpaid){
+            if(resultUnpaid.data.success == '1') {
+              $scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
+              $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];
+              $scope.unpaidTotal=resultUnpaid.data.allData[0].totalInvoice;
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
+
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {

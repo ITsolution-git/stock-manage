@@ -372,3 +372,4 @@ Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');
 Route::post('invoice/getPaymentCard', 'InvoiceController@getPaymentCard');
 Route::post('invoice/getNoQuickbook', 'InvoiceController@getNoQuickbook');
 Route::post('invoice/getSalesClosed', 'InvoiceController@getSalesClosed');
+Route::post('invoice/getUnpaid', 'InvoiceController@getUnpaid');

@@ -248,6 +248,7 @@
                         $scope.showPaymentDetails = true;
                     }else{
                         $scope.showPaymentDetails = false;
+                        $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
                     }
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
@@ -386,6 +387,7 @@
                         $scope.showPaymentDetails = true;
                     }else{
                         $scope.showPaymentDetails = false;
+                        $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
                     }
                     $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
                         $scope.siData = resultData.data.allData;
@@ -483,8 +485,22 @@
                                         $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                         if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                             $scope.showPaymentDetails = true;
+                                            if($scope.allData.order_data[0].approval_id == 2885){
+                                                var UpdateArray = {};
+                                                UpdateArray.table ='orders';
+                                                UpdateArray.data = {approval_id:2491};
+                                                UpdateArray.cond = {id:$scope.allData.order_data[0].id};
+                                                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
+                                                {
+                                                    if(resultUpdateStatus.data.success=='1')
+                                                    {
+                                                        $scope.allData.order_data[0].approval_id = 2491;
+                                                    }
+                                                });
+                                            }
                                         }else{
                                             $scope.showPaymentDetails = false;
+                                            $scope.allData.order_data[0].approval_id = resultUpdate.data.amt.approval_id;
                                         }
                                     });
                                 });
@@ -529,6 +545,19 @@
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                 if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                     $scope.showPaymentDetails = true;
+                                    if($scope.allData.order_data[0].approval_id == 2885){
+                                        var UpdateArray = {};
+                                        UpdateArray.table ='orders';
+                                        UpdateArray.data = {approval_id:2491};
+                                        UpdateArray.cond = {id:$scope.allData.order_data[0].id};
+                                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
+                                        {
+                                            if(resultUpdateStatus.data.success=='1')
+                                            {
+                                                $scope.allData.order_data[0].approval_id = 2491;
+                                            }
+                                        });
+                                    }
                                 }else{
                                     $scope.showPaymentDetails = false;
                                 }
