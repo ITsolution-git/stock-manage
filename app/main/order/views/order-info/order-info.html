@@ -18,7 +18,7 @@
                 <div class="title box-title m-b-20"><span class="stokkup-title-h4 light-300">Information</span></div>
                 <md-card layout="row">
                     <md-card-content layout="column" class="pos-relative box-zerospace">
-                        <div layout="row" layout-wrap>
+                        <div layout="row" layout-wrap flex=70>
                             <div class="trans-box">
                                 <div>Sales</div>
                                 <span class="font-14 chrome-weight">{{order.sales_name}}</span>
@@ -59,9 +59,9 @@
                         </div>
                            
                     </md-card-content>
-                        <div layout-align="end start"  flex="30" layout="row">
+                        <div flex=25 class="right-20 layout-padding pull-right">
                             <!--4 buttons panel -->
-                            <div class="right-20 m-t-20 m-b-20">
+                            <div class="">
                                 <md-button  class="pull-right full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns" ng-click="calculateAll(order_id,company_id)"  ng-show="allow_access==1">
                                 CONFIRM PRICING
                                 </md-button>
