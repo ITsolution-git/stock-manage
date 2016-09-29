@@ -1,0 +1,34 @@
+<md-dialog class=" add-note edit-note task-dialog designadd-dialog" aria-label="New order">
+    <form name="color_form" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Add New Color</span>
+                <md-button  ng-click="hidepopup()">
+                    Close
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                <md-input-container class="md-block m-b-10 p-b-10" flex-gt-sm>
+                    <label class="font-14 color-b-grey">Color Name</label>
+                    <input placeholder="" required ng-model="params.name">
+                    ﻿﻿<div ng-messages="color_form.name.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                         </div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block m-b-10 p-b-10" flex-gt-sm>
+                    <label class="font-14 color-b-grey">Color Code</label>
+                    <input placeholder="" ng-model="params.color_code">
+                </md-input-container>
+
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <!-- <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
+            <md-button class="md-accent md-raised " ng-disabled="color_form.$invalid || color_form.$pristine" ng-click="InsertTableData(params,'Newcolor')">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

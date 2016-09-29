@@ -15,21 +15,18 @@ $full-width:100%;
 $zero:0;
 $auto:auto;
 $center:center;
-$white-color:#fff;
 $left:left;
 $right:right;
-$red-highlight:#ed1c24;
 $pos-relative:relative;
 $pos-absolute:absolute;
+
+/*All color variables starts here */
+$white-color:#fff;
+$red-highlight:#ed1c24;
 $usermenu-color:#2c3038;
 $usermenu-txtcolor:#9fa1a7;
 $datatable-bg:#f6f7f8;
 $datatable-text-color:#6e7584;
-$datatable-heading-size:14px;
-$datatable-content-size:13px;
-$stokkup-h4-size:18px;
-$datatable-heading-fontweight:600;
-$datatable-content-fontweight:400;
 $datatable-alternaterow-color:#fdfdfe;
 $stokkup-table-footer-bg:#e0e1e3;
 $stokkup-table-footer-txtcolor:#252932;
@@ -40,13 +37,9 @@ $secondary-blue:#6288dc;
 $blue-shade3:#4773d6;
 $gray-shade3:#ededed;
 $gray-shade4:#8d93a0;
-$thirty:30px;
 $blue-shade4:#0b5c93;
-$inner-heading-size:20px;
 $tab-color:#a5a6a9;
 $tab-active-color:#252932;
-$xs-font-size:12px;
-$font-size-mid:20px;
 $md-iconbtn-color:#a8a9ad;
 $blue-shade-btn:#4773d6;
 $green-txt:#39b54a;
@@ -54,25 +47,36 @@ $disable-btn-txt-color:#cdcfd3;
 $tabs-border-color:#e3e3e3;
 $box-border-color:#eeeeee;
 $app-green:#3eb74f;
-/*global variables ends here */
-
-/*global popup style starts here */
-$popup-heading-font-size:16px;
 $popup-header-bg:#252932;
-$popup-header-height:60px;
-$popup-header-spacing:$zero 30px;
 $input-fields-border-color:#d3d4d6;
-$input-fields-border-size:2px;
-$red-border:#de0000;
-/*global popup style ends here */
 $page-title-color:#252932;
-$page-title-size:20px;
-$toolbar-height:70px;
 $topbar-bgcolor:#252932;
 $sidenav-bg:#303440;
 $sidenav-color:#9fa1a7;
-$sidenav-lineheight:40px;
 $teal-green:#26b999;
+$red-border:#de0000;
+/*All color variables ends here */
+
+$datatable-heading-size:14px;
+$datatable-content-size:13px;
+$stokkup-h4-size:18px;
+$datatable-heading-fontweight:600;
+$datatable-content-fontweight:400;
+$thirty:30px;
+$inner-heading-size:20px;
+$xs-font-size:12px;
+$font-size-mid:20px;
+
+/*global variables ends here */
+
+$popup-heading-font-size:16px;
+$popup-header-height:60px;
+$popup-header-spacing:$zero 30px;
+$input-fields-border-size:2px;
+$page-title-size:20px;
+$toolbar-height:70px;
+$sidenav-lineheight:40px;
+
 @mixin generaltablespacing($maintablemargin, $maintablepadding){
 	margin:$maintablemargin;
 	padding:$maintablepadding;
@@ -544,6 +548,7 @@ table.dataTable tbody tr:nth-child(even){
 	@extend .noborder-radius;
 }
 .stokkup-custom-btn1{
+	text-transform:uppercase;
 	&.md-button{
 		@extend .border-radius-half;
 	}
@@ -621,6 +626,9 @@ md-dialog{
 					}
 					&.md-default-theme.md-input-invalid .md-input, &.md-input-invalid .md-input{
 						border-color:$red-border;
+					}
+					&.md-default-theme.md-input-focused.md-input, &.md-input-focused .md-input{
+						border-color:$stokkup-table-footer-txtcolor;
 					}
 					.md-input{
 						border-bottom-width:$input-fields-border-size;
@@ -1286,6 +1294,7 @@ md-card-content{
 		width:100%;
 		margin:0 auto;
 		md-tab-data{
+			position:$pos-absolute;
 			z-index:1;
 			opacity:1;
 		}
@@ -1733,7 +1742,6 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 		border:$nofloat !important;
 		md-select-value{
 			border:$nofloat !important;
-			color:$app-green !important;
 			font-weight:14px;
 			font-weight:$font-weight-700;
 			width:130px;
@@ -1743,7 +1751,6 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 			font-weight:$font-weight-700;
 			}
 			.fa{
-				color:$app-green;
 				font-size:21px;
 				position:$pos-relative;
 				top:5px;
@@ -1751,6 +1758,18 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 			}
 		}
 	}
+}
+#select_container_5 md-select-menu md-content md-option#select_option_2 .md-text{
+	color:$app-green !important;
+}
+#select_container_5 md-select-menu md-content md-option#select_option_3 .md-text{
+	color:$red-highlight !important;	
+}
+.approve-box md-select.approvelabel md-select-value .md-text{
+	color:$app-green;
+}
+.approve-box md-select md-select-value .md-text{
+	color:$red-highlight;
 }
 .approve-box .md-select-value .md-select-icon::after{
 	top:7px;
@@ -1761,4 +1780,76 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 .approve-box md-select md-select-value .md-text{
 	font-size:14px;
 }
+.orderscreen-rightbar.invoice-rightbar{
+	max-width:28%;
+}
+
+md-tabs.stokkup-invoice-tabs{
+	z-index:0;
+	md-tabs-wrapper{
+		width:$full-width;
+	}
+}
+.invoice-orderimg{
+	max-height:120px;
+	overflow:hidden;
+	display:table-cell;
+	text-align:center;
+	img{
+	max-width: 100px;
+    height: auto;
+    width: auto;
+    max-height: 100px;
+    float: none;
+    margin: 0 auto;
+	display:inline-table;
+	vertical-align:middle;
+	}
+}
+.stokkup-invoice-tabs .md-tab{
+	font-size:14px;
+}
+.invoice-single-design{
+	width:$full-width;
+	float:$left;
+}
+.global-text{
+	font-size:$datatable-content-size;
+	font-weight:$font-weight-300;
+	color:$gray-shade4;
+}
+.notable-border.tbl-typ2 td, .notable-border{
+	border:$nofloat;
+}
 /*css for invoice inner page ends here */
+
+.shipping-details-left{
+	width:38%;
+	float:left;
+}
+.shipping-details-right{
+	width:62%;
+	float:left;
+}
+.tbl-scroll-cntnr{
+	max-height:610px;
+}
+.mt-2{
+	margin-top:2px;
+}
+.right-custom-box{
+	width:48%;
+}
+.stokkup-invoice-tabs md-tab-item.md-disabled{
+	opacity:0 !important;
+}
+.search-block .md-input-has-value label.top-srch-label{
+	display:$nofloat;
+}
+.po-right-approve-box{
+	width:23%;
+	float:$left;
+}
+.po-selectbox md-select-value{
+	border:$nofloat !Important;
+}

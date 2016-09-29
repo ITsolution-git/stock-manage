@@ -7,7 +7,7 @@
         .controller('ToolbarController', ToolbarController);
 
     /** @ngInject */
-    function ToolbarController($rootScope, $mdSidenav, $translate, $mdToast,sessionService)
+    function ToolbarController($rootScope, $mdSidenav, $translate, $mdToast,sessionService,$scope,notifyService,$state, $http,AllConstant)
     {
         var vm = this;
         //console.log(sessionService.get('name'));
@@ -15,6 +15,14 @@
         vm.role_title= sessionService.get('role_title');
         vm.company = sessionService.get('company_name');
         vm.role_slug = sessionService.get('role_slug');
+        $scope.company_id =sessionService.get("company_id");
+        $scope.user_id = sessionService.get("user_id");
+        $scope.profile_photo = sessionService.get("profile_photo");
+
+
+
+
+
         // Data
         $rootScope.global = {
             search: ''

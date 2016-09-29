@@ -12,7 +12,15 @@
                     <label class="selectbox-label">Name</label>
                        <input placeholder="Name" flex="100" ng-model="order_data.name" required>
                     </md-input-container>
-                </div>    
+                </div>  
+
+
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                    <label class="selectbox-label">Customer PO</label>
+                       <input  flex="100" ng-model="order_data.custom_po">
+                    </md-input-container>
+                </div>   
 
                 <div layout="column" layout-wrap="nowrap">
                     <md-input-container layout="row">

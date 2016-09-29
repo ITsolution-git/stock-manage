@@ -24,11 +24,12 @@ class Order extends Model {
         $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['company_id'],'order.parent_order_id' => '0'];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.name,order.created_date,order.approved_date,order.date_shipped,
-                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name')];
+                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name,users.name as account_manager')];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
                          ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
+                         ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
                          ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                          ->select($listArray)
                          ->where($whereConditions);
@@ -39,6 +40,7 @@ class Order extends Model {
                           {
                               $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('sales.sales_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('users.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
                           });
@@ -542,7 +544,7 @@ public function saveColorSize($post)
     public function orderDetailInfo($data) {
       
         $whereConditions = ['is_delete' => "1",'id' => $data['id'],'company_id' => $data['company_id']];
-        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping','date_start','date_shipped','in_hands_by','approval_id','client_id','contact_main_id'];
+        $listArray = ['sales_id','is_blind','account_manager_id','price_id','company_id','name','sns_shipping','date_start','date_shipped','in_hands_by','approval_id','client_id','contact_main_id','custom_po'];
 
         $orderDetailData = DB::table('orders')
                          ->select($listArray)
@@ -630,7 +632,7 @@ public function saveColorSize($post)
     }
     public function getDesignTotal($order_id)
     {
-        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1'];
+        $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1','dp.is_delete' => '1'];
         $listArray = [DB::raw('SUM(dp.sales_total) as total')];
         $qntyData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp','dp.design_id','=','od.id')

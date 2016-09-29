@@ -3,9 +3,9 @@
 /*----------------------------------------------------------------*/
 /*  Variables
 /*----------------------------------------------------------------*/
+/*All color variables starts here */
+/*All color variables ends here */
 /*global variables ends here */
-/*global popup style starts here */
-/*global popup style ends here */
 /*genera css */
 .ease-animations, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
   -moz-transition: all ease-in-out 0.2s;
@@ -374,6 +374,9 @@ table.dataTable tbody tr:nth-child(even) {
 
 /*global table elements css */
 /*global dialog box starts here */
+.stokkup-custom-btn1 {
+  text-transform: uppercase; }
+
 .dialog-shadow, md-dialog.task-dialog {
   -moz-box-shadow: 0 0 3px rgba(37, 41, 50, 0.1);
   -webkit-box-shadow: 0 0 3px rgba(37, 41, 50, 0.1);
@@ -429,6 +432,8 @@ md-dialog.task-dialog {
             padding-left: 0; }
         md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-default-theme.md-input-invalid .md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-default-theme.md-input-invalid md-select .md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-input-invalid .md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-input-invalid md-select .md-select-value {
           border-color: #de0000; }
+        md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-default-theme.md-input-focused.md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select md-input-container.md-default-theme.md-input-focused.md-select-value, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-input-focused .md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container.md-input-focused md-select .md-select-value {
+          border-color: #252932; }
         md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container .md-input, md-dialog.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value {
           border-bottom-width: 2px;
           border-bottom-color: #d3d4d6;
@@ -953,6 +958,7 @@ md-card-content.custom-desc-box span {
     width: 100%;
     margin: 0 auto; }
     .shipping-custom-tab md-tabs-wrapper md-tab-data {
+      position: absolute;
       z-index: 1;
       opacity: 1; }
 
@@ -1341,7 +1347,6 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
   border: none !important; }
   .approve-box md-select md-select-value {
     border: none !important;
-    color: #3eb74f !important;
     font-weight: 14px;
     font-weight: 700;
     width: 130px; }
@@ -1350,11 +1355,22 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
       font-weight: 14px;
       font-weight: 700; }
     .approve-box md-select md-select-value .fa {
-      color: #3eb74f;
       font-size: 21px;
       position: relative;
       top: 5px;
       margin-right: 12px; }
+
+#select_container_5 md-select-menu md-content md-option#select_option_2 .md-text {
+  color: #3eb74f !important; }
+
+#select_container_5 md-select-menu md-content md-option#select_option_3 .md-text {
+  color: #ed1c24 !important; }
+
+.approve-box md-select.approvelabel md-select-value .md-text {
+  color: #3eb74f; }
+
+.approve-box md-select md-select-value .md-text {
+  color: #ed1c24; }
 
 .approve-box .md-select-value .md-select-icon::after {
   top: 7px; }
@@ -1365,6 +1381,73 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
 .approve-box md-select md-select-value .md-text {
   font-size: 14px; }
 
+.orderscreen-rightbar.invoice-rightbar {
+  max-width: 28%; }
+
+md-tabs.stokkup-invoice-tabs {
+  z-index: 0; }
+  md-tabs.stokkup-invoice-tabs md-tabs-wrapper {
+    width: 100%; }
+
+.invoice-orderimg {
+  max-height: 120px;
+  overflow: hidden;
+  display: table-cell;
+  text-align: center; }
+  .invoice-orderimg img {
+    max-width: 100px;
+    height: auto;
+    width: auto;
+    max-height: 100px;
+    float: none;
+    margin: 0 auto;
+    display: inline-table;
+    vertical-align: middle; }
+
+.stokkup-invoice-tabs .md-tab {
+  font-size: 14px; }
+
+.invoice-single-design {
+  width: 100%;
+  float: left; }
+
+.global-text {
+  font-size: 13px;
+  font-weight: 300;
+  color: #8d93a0; }
+
+.notable-border.tbl-typ2 td, .notable-border {
+  border: none; }
+
 /*css for invoice inner page ends here */
+.shipping-details-left {
+  width: 38%;
+  float: left; }
+
+.shipping-details-right {
+  width: 62%;
+  float: left; }
+
+.tbl-scroll-cntnr {
+  max-height: 610px; }
+
+.mt-2 {
+  margin-top: 2px; }
+
+.right-custom-box {
+  width: 48%; }
+
+.stokkup-invoice-tabs md-tab-item.md-disabled {
+  opacity: 0 !important; }
+
+.search-block .md-input-has-value label.top-srch-label {
+  display: none; }
+
+.po-right-approve-box {
+  width: 23%;
+  float: left; }
+
+.po-selectbox md-select-value {
+  border: none !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

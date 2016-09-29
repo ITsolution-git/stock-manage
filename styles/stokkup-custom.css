@@ -688,7 +688,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .loader,
 .loader:before,
 .loader:after {
-    background: #4773d6;
+    background: #9fa1a7;
     -webkit-animation: load1 1s infinite ease-in-out;
     animation: load1 1s infinite ease-in-out;
     width: 1em;
@@ -724,11 +724,11 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     0%,
     80%,
     100% {
-        box-shadow: 0 0 #4773d6;
+        box-shadow: 0 0 #9fa1a7;
         height: 4em;
     }
     40% {
-        box-shadow: 0 -2em #4773d6;
+        box-shadow: 0 -2em #9fa1a7;
         height: 5em;
     }
 }
@@ -736,11 +736,11 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     0%,
     80%,
     100% {
-        box-shadow: 0 0 #4773d6;
+        box-shadow: 0 0 #9fa1a7;
         height: 4em;
     }
     40% {
-        box-shadow: 0 -2em #4773d6;
+        box-shadow: 0 -2em #9fa1a7;
         height: 5em;
     }
 
@@ -906,13 +906,13 @@ md-button.on {
   color: #fff;
 }
 
-.ssActivewearDialog {
+/*.ssActivewearDialog {
   width: 25% !important ;
 }
 
 .authorizeNetDialog {
   width: 30% !important ;
-}
+}*/
 
 .btn-width-100 {
   width: 100% ;
@@ -1125,7 +1125,7 @@ ul[dnd-list] .dndPlaceholder {
 
 .text-bold {
   font-weight: bold !important;
-  color: #000 !important;
+/*  color: #000 !important;*/
 }
 .text-bold-center {
   font-weight: bold;
@@ -1187,7 +1187,12 @@ span.k-picker-wrap.k-state-border-down {
 }
 
  md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
-      padding-left: 0; }
+      padding-left: 0; 
+      -moz-transition:all ease-in-out 0.2s;
+      -webkit-transition:all ease-in-out 0.2s;
+      -ms-transition:all ease-in-out 0.2s;
+      -o-transition:all ease-in-out 0.2s;
+      transition:all ease-in-out 0.2s;}
 
 .m-b-45{
   margin-bottom:45px;

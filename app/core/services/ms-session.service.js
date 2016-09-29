@@ -50,15 +50,18 @@
                 remove('password');
                 remove('company_id');
                 remove('company');
+                remove('profile_photo');
                 $state.go('app.login');
 			},function(response) {
 				notifyService.notify('error',response.data.message);
 			});
 		}	
 
-		function AccessService(arr_role,access)
+		function AccessService(arr_role,access,refresh)
 		{
-				$http.get('api/public/auth/session').success(function(result) 
+				var pass_array={refresh:refresh};
+
+				$http.post('api/public/auth/session',pass_array).success(function(result) 
                 {  
 	           		
 	                if(result.data.success=='1')
@@ -71,6 +74,7 @@
 	                    set('name',result.data.name);
 	                    set('role_title',result.data.role_title);
 	                    set('login_id',result.data.login_id);
+	                    set('profile_photo',result.data.profile_photo);
 
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);
@@ -144,7 +148,7 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['settings','order','invoices','purchaseOrder','customProduct','admin','client','vendor','settings.userManagement','app.settings.companyDetails'];
+				var ret_array = ['settings','invoices','purchaseOrder','customProduct','admin','client','vendor','settings.userManagement','app.settings.companyDetails'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
@@ -218,6 +222,9 @@
                 		if(extra=='client_contact'){InserArray.data.client_id=$scope.all_scope.client_id;}
                 		if(extra=='client_notes'){InserArray.data.client_id=$scope.all_scope.client_id; InserArray.data.user_id=$scope.all_scope.login_id;InserArray.data.created_date=AllConstant.currentdate;}
                 		if(extra=='client_distaddress'){InserArray.data.client_id=$scope.all_scope.client_id;}
+                		if(extra=='company_address'){InserArray.data.company_id=$scope.all_scope.company_id;}
+                		if(extra=='Newcolor'){InserArray.data.company_id=$scope.all_scope.company_id; InserArray.data.status=1; InserArray.data.is_delete=1; InserArray.data.is_sns=1;}
+                		
                 		//=============== SPECIAL CONDITIONS ==============
 
                 		//console.log(InserArray); return false;
@@ -385,6 +392,7 @@
                 		if(extra=='client_address'){ delete UpdateArray.data.id;delete UpdateArray.data.address_type;delete UpdateArray.data.state_name; }
                 		if(extra=='client_notes'){ delete UpdateArray.data.note_id; delete UpdateArray.data.name; delete UpdateArray.data.created_date;}
                 		if(extra=='client_distaddress'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
+                		if(extra=='company_address'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
                 		//=============== SPECIAL CONDITIONS ==============
 
                 		//console.log(UpdateArray); return false;

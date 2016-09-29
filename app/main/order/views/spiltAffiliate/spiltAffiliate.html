@@ -94,7 +94,7 @@
                         Affiliates
                     </div>
                     <div class="pull-right">
-                        <span class="pull-right stokkup-custom-btn1 stokkup-blue-btn md-button margin-0" ng-click="openaddSplitAffiliateDialog($event)">ADD AFFILIATE</span>
+                        <span ng-show="allow_access==1" class="pull-right stokkup-custom-btn1 stokkup-blue-btn md-button margin-0" ng-click="openaddSplitAffiliateDialog($event)">ADD AFFILIATE</span>
                     </div>
                 </div>
                 <div layout="column" layout-align="space-between" class="full-row-center white-bg affiliate-block-space" ng-repeat="row in spiltOrderList">

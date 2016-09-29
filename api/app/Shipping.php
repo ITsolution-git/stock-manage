@@ -27,6 +27,7 @@ class Shipping extends Model {
                         ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
                         ->select($listArray)
                         ->where('o.is_complete','=','1')
+                        ->where('po.is_active','=','1')
                         ->where('o.company_id','=',$post['company_id']);
                         if($post['type'] == 'wait')
                         {
@@ -77,9 +78,8 @@ class Shipping extends Model {
                 foreach ($shippingData as $shipping)
                 {
                     $shipping_data = DB::table('shipping as s')
-                                        ->leftJoin('shipping_box as sb', 'sb.shipping_id', '=', 's.id')
+                                        //->leftJoin('shipping_box as sb', 'sb.shipping_id', '=', 's.id')
                                         ->where('s.order_id','=',$shipping->id)
-                                        ->GroupBy('s.order_id')
                                         ->get();
                     
                     if(empty($shipping_data))
@@ -234,8 +234,7 @@ class Shipping extends Model {
                         
                         ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
                         ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                        ->leftJoin('product_address_mapping as pam','pam.order_id','=','o.id')
-                        ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                        ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
 
 
                         ->select($listArray)

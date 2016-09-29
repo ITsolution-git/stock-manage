@@ -53,7 +53,7 @@
             <tr>
               <td align="center">{{$key+1}}</td>
               <td align="center">{{$value->color_name}}</td>
-              <td align="center">{{$value->pantone}}</td>
+              <td align="center">{{$value->thread_color}}</td>
               <td align="center">{{$value->inq}}</td>
               <td align="center">{{$value->squeegee}}</td>
               <td align="center">{{$value->stroke}}</td>

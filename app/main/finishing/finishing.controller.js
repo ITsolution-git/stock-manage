@@ -7,10 +7,21 @@
 
     /** @ngInject */
     function FinishingController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
+        
         var vm = this;
-         vm.searchQuery = "";
+        vm.searchQuery = "";
 
-         this.condition = '';
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+        this.condition = '';
 
         this.conditions = ('Yes No').split(' ').map(function (state) { return { abbrev: state }; });
         

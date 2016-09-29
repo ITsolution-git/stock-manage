@@ -10,6 +10,7 @@ use App\Shipping;
 use App\Common;
 use App\Distribution;
 use App\Api;
+use App\Company;
 
 use App\Order;
 use DB;
@@ -20,12 +21,13 @@ use Request;
 use PDF;
 class ShippingController extends Controller { 
 
-    public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order,Api $api) 
+    public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order,Api $api,Company $company) 
     {
         $this->shipping = $shipping;
         $this->distribution = $distribution;
         $this->common = $common;
         $this->api = $api;
+        $this->company = $company;
     }
 
     public function addressValidate()
@@ -211,6 +213,8 @@ class ShippingController extends Controller {
         $data = Input::all();
 
         $result = $this->shipping->shippingDetail($data);
+        
+
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if(!empty($result['shippingBoxes']))
@@ -223,7 +227,7 @@ class ShippingController extends Controller {
             }
         }
 
-        if (count($result) > 0) {
+        if (count($result['shipping']) > 0) {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
@@ -287,19 +291,21 @@ class ShippingController extends Controller {
                 }
                 else
                 {
+                    //print_r($value);exit;
                     $remaining_qty = $value['qnty'] % $value['max_pack'];
                     $div2 = $value['qnty'] / $value['max_pack'];
                     $main_qty = ceil($div2);
+//                    print_r($main_qty);exit;
 
                     for ($i=1; $i <= $main_qty; $i++) {
-                        if($i == $main_qty)
+/*                        if($i == $main_qty)
                         {
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $remaining_qty);
                         }
                         else
-                        {
+                        {*/
                             $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
-                        }
+                        //}
                         $id = $this->common->InsertRecords('shipping_box',$insert_data);
                         $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
@@ -569,7 +575,7 @@ class ShippingController extends Controller {
         $post = Input::all();
 
         foreach ($post['products'] as $product) {
-            
+
             $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
             if(!empty($shipping_data)) {
@@ -578,12 +584,13 @@ class ShippingController extends Controller {
 
                 if(empty($product_address_data))
                 {
-                    $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                    //$shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                    $shipping_id = $shipping_data[0]->shipping_id;
                     $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $product['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
                 }
                 else
                 {
-                    $product_address_id = $shipping_data[0]->id;
+                    $product_address_id = $product_address_data[0]->id;
                 }
 
                 $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id']),array());
@@ -629,12 +636,13 @@ class ShippingController extends Controller {
 
             if(empty($product_address_data))
             {
-                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                //$shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                $shipping_id = $shipping_data[0]->shipping_id;
                 $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product']['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
             }
             else
             {
-                $product_address_id = $shipping_data[0]->id;
+                $product_address_id = $product_address_data[0]->id;
             }
 
             $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id']),array());
@@ -675,6 +683,7 @@ class ShippingController extends Controller {
 
         $assignAddresses = array();
         $unAssignAddresses = array();
+        $shipping_id = 0;
 
         foreach ($allAddress as $address) {
             
@@ -692,6 +701,11 @@ class ShippingController extends Controller {
                 $shipping = $this->common->GetTableRecords('product_address_mapping',array('address_id' => $address->id,'order_id' => $post['id']),array());
                 $address->shipping_id = $shipping[0]->shipping_id;
                 $assignAddresses[] = $address;
+
+                if($post['address_id'] == $address->id)
+                {
+                    $shipping_id = $address->shipping_id;
+                }
             }
             else
             {
@@ -700,10 +714,11 @@ class ShippingController extends Controller {
         }
 
         $response = array(
-                        'success' => 1, 
+                        'success' => 1,
                         'message' => GET_RECORDS,
                         'assignAddresses' => $assignAddresses,
-                        'unAssignAddresses' => $unAssignAddresses
+                        'unAssignAddresses' => $unAssignAddresses,
+                        'shipping_id' => $shipping_id
                     );
         return response()->json(["data" => $response]);
     }
@@ -718,16 +733,26 @@ class ShippingController extends Controller {
 
         foreach ($boxes as $box) {
             $box->boxItems = $this->shipping->getBoxItems($box->id);
-            $total_box_qnty += $box->boxed_qnty;
             $shippingBoxes[$box->id] = $box;
         }
+
+         if(empty($shippingBoxes))
+            {
+                  $response = array(
+                        'success' => 0, 
+                        'message' => "No Records Found",
+                        'shippingBoxes' => '',
+                        'total_box_qnty' => ''
+                    ); 
+                   return response()->json(["data" => $response]);
+            }
 
 
         $response = array(
                         'success' => 1, 
                         'message' => GET_RECORDS,
                         'shippingBoxes' => $shippingBoxes,
-                        'total_box_qnty' => $total_box_qnty
+                        'total_box_qnty' => count($shippingBoxes)
                     );
 
         return response()->json(["data" => $response]);
@@ -739,6 +764,20 @@ class ShippingController extends Controller {
         $data['overview'] = 1;
 
         $result = $this->shipping->shippingDetail($data);
+       
+
+         if(empty($result['shipping']))
+            {
+                  $response = array(
+                        'success' => 0, 
+                        'message' => "No Records Found",
+                        'shippingBoxes' => '',
+                        'records' => '',
+                        'shippingItems' => ''
+                    ); 
+                   return response()->json(["data" => $response]);
+            }
+
 
         $boxes = $this->shipping->getShippingBoxes($data);
 
@@ -773,10 +812,10 @@ class ShippingController extends Controller {
             $shipment->setParameter('toState', $shipping->code);
             $shipment->setParameter('toCode', $shipping->zipcode);
 
-            $result_api = $this->api->getApiCredential($shipping->company_id,'api.fedex','fedex_detail',array('is_active'=>1));
+            $result_api = $this->company->getApiDetail('5','fedex_detail',$shipping->company_id,array('is_active'=>1));
             if(empty($result_api))
             {
-                $result_api = $this->api->getApiCredential($shipping->company_id,'api.fedex','fedex_detail',array('is_live'=>'0'));
+                $result_api = $this->company->getApiDetail('5','fedex_detail',$shipping->company_id,array('is_live'=>'0'));
             }
             
             $shipment->setParameter('key', $result_api[0]->key);
@@ -797,10 +836,10 @@ class ShippingController extends Controller {
             $shipment->setParameter('toState', $shipping->code);
             $shipment->setParameter('toCode', $shipping->zipcode);
 
-            $result_api = $this->api->getApiCredential($shipping->company_id,'api.ups','ups_detail',array('is_active'=>1));
+            $result_api = $this->company->getApiDetail('2','ups_detail',$shipping->company_id,array('is_active'=>1));
             if(empty($result_api))
             {
-                $result_api = $this->api->getApiCredential($shipping->company_id,'api.ups','ups_detail',array('is_live'=>'0'));
+                $result_api = $this->company->getApiDetail('2','ups_detail',$shipping->company_id,array('is_live'=>'0'));
             }
             
             $shipment->setParameter('license', $result_api[0]->api);
@@ -852,27 +891,27 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
-        if($post['shipping_type_id'] == 'Fedex')
+        if($post['shipping']['shipping_type_id'] == '2')
         {
             $av = new \RocketShipIt\AddressValidate('FedEx');
 
-            $av->setParameter('toAddr1', $post['address']);
-            $av->setParameter('toAddr2', $post['address2']);
-            $av->setParameter('toCity', $post['city']);
-            $av->setParameter('toState', $post['code']);
-            $av->setParameter('toCode', $post['zipcode']);
+            $av->setParameter('toAddr1', $post['shipping']['address']);
+            $av->setParameter('toAddr2', $post['shipping']['address2']);
+            $av->setParameter('toCity', $post['shipping']['city']);
+            $av->setParameter('toState', $post['shipping']['code']);
+            $av->setParameter('toCode', $post['shipping']['zipcode']);
         }
         else
         {
             $av = new \RocketShipIt\AddressValidate('UPS');
 
-            $av->setParameter('toCompany', $post['description']);
-            $av->setParameter('toPhone', $post['phone']);
-            $av->setParameter('toAddr1', $post['address']);
-            $av->setParameter('toAddr2', $post['address2']);
-            $av->setParameter('toCity', $post['city']);
-            $av->setParameter('toState', $post['code']);
-            $av->setParameter('toCode', $post['zipcode']);
+            $av->setParameter('toCompany', $post['shipping']['description']);
+            $av->setParameter('toPhone', $post['shipping']['phone']);
+            $av->setParameter('toAddr1', $post['shipping']['address']);
+            $av->setParameter('toAddr2', $post['shipping']['address2']);
+            $av->setParameter('toCity', $post['shipping']['city']);
+            $av->setParameter('toState', $post['shipping']['code']);
+            $av->setParameter('toCode', $post['shipping']['zipcode']);
         }
 
         $response = $av->validate();
@@ -905,99 +944,147 @@ class ShippingController extends Controller {
         }
         else
         {
-            if($post['shipping_type_id'] == 'Fedex')
+            $company_detail = $this->common->getCompanyDetail($post['shipping']['company_id']);
+
+            if($post['shipping']['shipping_type_id'] == '2')
             {
-                $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail',array('is_active'=>1));
+                $result_api = $this->company->getApiDetail('5','fedex_detail',$post['shipping']['company_id']);
+
                 if(empty($result_api))
                 {
-                    $result_api = $this->api->getApiCredential($post['company_id'],'api.fedex','fedex_detail',array('is_live'=>'0'));
-                }
-
-                $shipment = new \RocketShipIt\Shipment('fedex');
-
-                $shipment->setParameter('toCompany', $post['client_company']);
-                $shipment->setParameter('toName', $post['description']);
-                $shipment->setParameter('toPhone', $post['phone']);
-                $shipment->setParameter('toAddr1', $post['address'].' '.$post['address2']);
-                $shipment->setParameter('toCity', $post['city']);
-                $shipment->setParameter('toState', $post['code']);
-                $shipment->setParameter('toCode', $post['zipcode']);
-
-                $shipment->setParameter('length', '5');
-                $shipment->setParameter('width', '5');
-                $shipment->setParameter('height', '5');
-                $shipment->setParameter('weight','5');
-
-                $shipment->setParameter('key', $result_api[0]->key);
-                $shipment->setParameter('password', $result_api[0]->password);
-                $shipment->setParameter('accountNumber', $result_api[0]->account_number);
-
-                $response = $shipment->submitShipment();
-
-                if(isset($response) && isset($response['error']))
-                {
-                    $response = array(
+                     $response = array(
                         'success' => 0,
-                        'message' => $response['error']
+                        'message' => 'Please enter Fedex credentials'
                     );
                     return response()->json(["data" => $response]);
                 }
 
-                $trackingNumber = '';
-                $charges = 0;
+                $count = 1;
+                $total_fedex_charge = 0;
+                $main_tracking_number = '';
+                
+                foreach ($post['shippingBoxes'] as $box) {
 
-                if(isset($response['trk_main']))
-                {
-                    $trackingNumber = $response['trk_main'];
-                    $charges = $response['charges'];
+                    $shipment = new \RocketShipIt\Shipment('fedex');
 
-                    //$this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
+                    $shipment->setParameter('shipper', $company_detail[0]->name);
+                    $shipment->setParameter('shipContact', $company_detail[0]->first_name." ".$company_detail[0]->last_name);
+                    $shipment->setParameter('shipAddr1', $company_detail[0]->prime_address1);
+                    $shipment->setParameter('shipCity', $company_detail[0]->prime_address_city);
+                    $shipment->setParameter('shipState', $company_detail[0]->prime_address_state);
+                    $shipment->setParameter('shipCode', $company_detail[0]->prime_address_zip);
+                    $shipment->setParameter('shipPhone', $company_detail[0]->phone);
+
+                    $shipment->setParameter('toCompany', $post['shipping']['client_company']);
+                    $shipment->setParameter('toName', $post['shipping']['description']);
+                    $shipment->setParameter('toPhone', $post['shipping']['phone']);
+                    $shipment->setParameter('toAddr1', $post['shipping']['address'].' '.$post['shipping']['address2']);
+                    $shipment->setParameter('toCity', $post['shipping']['city']);
+                    $shipment->setParameter('toState', $post['shipping']['code']);
+                    $shipment->setParameter('toCode', $post['shipping']['zipcode']);
+
+                    /*if($result_api[0]->is_live == '1')
+                    {
+                        $shipment->setParameter('debugMode', '0');
+                    }*/
+
+                    $shipment->setParameter('length', '5');
+                    $shipment->setParameter('width', '5');
+                    $shipment->setParameter('height', '5');
+                    $shipment->setParameter('weight','5');
+                    $shipment->setParameter('service', $post['shipping']['shipping_method']);
+
+                    $shipment->setParameter('key', $result_api[0]->key);
+                    $shipment->setParameter('password', $result_api[0]->password);
+                    $shipment->setParameter('accountNumber', $result_api[0]->account_number);
+//                    $shipment->setParameter('sequenceNumber', $count);
+
+                    $response = $shipment->submitShipment();
+
+                    if(isset($response) && isset($response['error']))
+                    {
+                        $response = array(
+                            'success' => 0,
+                            'message' => $response['error']
+                        );
+                        return response()->json(["data" => $response]);
+                    }
+
+                    $trackingNumber = '';
+
+                    $total_fedex_charge += $response['charges'];
+                    $main_tracking_number = $response['trk_main'];
 
                     foreach ($response['pkgs'] as $package) {
+                        
                         $label = $package['label_img'];
-
-                        $response = array(
-                            'success' => 1,
-                            'message' => '',
-                            'data' => $label
-                        );
-
-                        return response()->json(["data" => $response]);
-
-                        //header('Content-Type: application/force-download');
-                        //echo base64_decode($label);
-                        //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
+                        $this->common->UpdateTableRecords('shipping_box',array('id' => $box['id']),array('tracking_number' => $package['pkg_trk_num'],'label_image' => $label));
                     }
+
+                    $count++;
                 }
+                $this->common->UpdateTableRecords('shipping',array('id' => $post['shipping']['shipping_id']),array('cost_to_ship' => $total_fedex_charge,'tracking_number'=>$main_tracking_number));
+
+                $response = array(
+                        'success' => 1,
+                        'message' => '',
+                        'total_charges' => $total_fedex_charge
+                    );
+
+                return response()->json(["data" => $response]);
             }
             else
             {
-                $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail',array('is_active'=>1));
+                $result_api = $this->company->getApiDetail('2','ups_detail',$post['shipping']['company_id']);
+
                 if(empty($result_api))
                 {
-                    $result_api = $this->api->getApiCredential($post['company_id'],'api.ups','ups_detail',array('is_live'=>'0'));
+                     $response = array(
+                        'success' => 0,
+                        'message' => 'Please enter UPS credentials'
+                    );
+                    return response()->json(["data" => $response]);
                 }
+
                 $shipment = new \RocketShipIt\Shipment('UPS');
 
-                $shipment->setParameter('toCompany', $post['description']);
-                $shipment->setParameter('toPhone', $post['phone']);
-                $shipment->setParameter('toAddr1', $post['address'].' '.$post['address2']);
-                $shipment->setParameter('toCity', $post['city']);
-                $shipment->setParameter('toState', $post['code']);
-                $shipment->setParameter('toCode', $post['zipcode']);
+                $shipment->setParameter('shipper', $company_detail[0]->name);
+                $shipment->setParameter('shipContact', $company_detail[0]->first_name." ".$company_detail[0]->last_name);
+                $shipment->setParameter('shipAddr1', $company_detail[0]->prime_address1);
+                $shipment->setParameter('shipCity', $company_detail[0]->prime_address_city);
+                $shipment->setParameter('shipState', $company_detail[0]->prime_address_state);
+                $shipment->setParameter('shipCode', $company_detail[0]->prime_address_zip);
+                $shipment->setParameter('shipPhone', $company_detail[0]->phone);
+
+                $shipment->setParameter('toCompany', $post['shipping']['description']);
+                $shipment->setParameter('toPhone', $post['shipping']['phone']);
+                $shipment->setParameter('toAddr1', $post['shipping']['address'].' '.$post['shipping']['address2']);
+                $shipment->setParameter('toCity', $post['shipping']['city']);
+                $shipment->setParameter('toState', $post['shipping']['code']);
+                $shipment->setParameter('toCode', $post['shipping']['zipcode']);
 
                 $shipment->setParameter('license', $result_api[0]->api);
                 $shipment->setParameter('username', $result_api[0]->username);
                 $shipment->setParameter('password', $result_api[0]->password);
                 $shipment->setParameter('accountNumber', $result_api[0]->account_number);
 
-                $package = new \RocketShipIt\Package('UPS');
-                $package->setParameter('length','5');
-                $package->setParameter('width','5');
-                $package->setParameter('height','5');
-                $package->setParameter('weight','5');
+                /*if($result_api[0]->is_live == '1')
+                {
+                    $shipment->setParameter('debugMode', '0');
+                }*/
 
-                $shipment->addPackageToShipment($package);
+                $shipment->setParameter('service', $post['shipping']['shipping_method']);
+
+                $count = 1;
+                foreach ($post['shippingBoxes'] as $box) {
+                    $package = new \RocketShipIt\Package('UPS');
+                    $package->setParameter('length','5');
+                    $package->setParameter('width','5');
+                    $package->setParameter('height','5');
+                    $package->setParameter('weight','5');
+
+                    $shipment->addPackageToShipment($package);
+                }
 
                 $response = $shipment->submitShipment();
 
@@ -1010,33 +1097,41 @@ class ShippingController extends Controller {
                     return response()->json(["data" => $response]);
                 }
 
-                $trackingNumber = '';
-                $charges = 0;
+                $total_charges = 0;
 
-                if(isset($response['trk_main']))
-                {
-                    $trackingNumber = $response['trk_main'];
-                    $charges = $response['charges'];
+                foreach ($response['pkgs'] as $key=>$package) {
+                    
+                    $label = $package['label_img'];
+                    $trackingNumber = $package['pkg_trk_num'];
 
-                    //$this->common->UpdateTableRecords('shipping',array('id' => $shipping->shipping_id),array('tracking_number' => $trackingNumber,'cost_to_ship' => $charges,'date_shipped' => date('Y-m-d')));
+                    $this->common->UpdateTableRecords('shipping_box',array('id' => $post['shippingBoxes'][$key]['id']),array('tracking_number' => $trackingNumber,'label_image' => $label));
 
-                    foreach ($response['pkgs'] as $package) {
-                        $label = $package['label_img'];
-
-                        $response = array(
-                            'success' => 1,
-                            'message' => '',
-                            'data' => $label
-                        );
-
-                        return response()->json(["data" => $response]);
-
-                        //header('Content-Type: application/force-download');
-                        //echo base64_decode($label);
-                        //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
-                    }
+                    //header('Content-Type: application/force-download');
+                    //echo base64_decode($label);
+                    //echo '<img style="width:350px;" src="data:image/png;base64,'.$label.'" />';
                 }
+
+                $this->common->UpdateTableRecords('shipping',array('id' => $post['shipping']['shipping_id']),array('cost_to_ship' => $response['charges'],'tracking_number'=>$response['trk_main']));
+
+                $response = array(
+                        'success' => 1,
+                        'message' => '',
+                        'total_charges' => $response['charges']
+                    );
+
+                return response()->json(["data" => $response]);
             }
         }
+    }
+
+    public function vewLabelPDF()
+    {
+        $post = Input::all();
+
+        $shipping['boxes'] = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $post['shipping_id']));
+        
+        PDF::AddPage('P','A4');
+        PDF::writeHTML(view('pdf.api_label',$shipping)->render());
+        PDF::Output('api_label.pdf');
     }
 }

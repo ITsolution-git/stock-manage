@@ -40,37 +40,34 @@
                 $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
             }
 
+             // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
+            var state = {};
+            state.table ='state';
+
+            $http.post('api/public/common/GetTableRecords',state).success(function(result) 
+            {   
+                if(result.data.success=='1')
+                {   
+                    $scope.states_all = result.data.records;
+                }
+            });
+
+
             $scope.GetAllApi = function ()
             {
-                $http.get('api/public/admin/company/getSnsAPI/'+$scope.company_id).success(function(result) 
+                $("#ajax_loader").show();
+                var CheckArray = {};
+                CheckArray.company_id = $scope.company_id;
+                $http.post('api/public/admin/company/GetAllApi',CheckArray).success(function(result) 
                 {   
                     if(result.data.success=='1')
                     {
-                        $scope.sns = result.data.data[0];
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
-                 $http.get('api/public/admin/company/getAuthorizeAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.authorize = result.data.data[0];
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
-                $http.get('api/public/admin/company/getUpsAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.ups = result.data.data[0];
+                        $scope.sns = result.data.data.sns;
+                        $scope.authorize = result.data.data.authorize;
+                        $scope.qb = result.data.data.qb;
+                        $scope.fedex = result.data.data.fedex;
+                        $scope.ups = result.data.data.ups;
+                        $scope.location_data = result.data.data.location;
                     }
                     else
                     {
@@ -79,34 +76,7 @@
                     $("#ajax_loader").hide();
                 });
 
-                $http.get('api/public/admin/company/getQBAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.qb = result.data.data[0];
-
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
-                $http.get('api/public/admin/company/getFedexAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.fedex = result.data.data[0];
-
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
             }
-
             $scope.GetAllApi();
 
             $scope.cancel = function () {
@@ -120,7 +90,81 @@
             {
                 $mdDialog.hide();
             }
+        
+//======================
+﻿        // DYNAMIC POPUP FOR INSERT RECORDS
+        $scope.openInsertPopup = function(path,ev,table)
+        {
+            var insert_params = {company_id:$scope.company_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
+        }
+        // DYNAMIC POPUP FOR UPDATE RECORDS
+        $scope.openEditPopup = function(path,param,ev,table)
+        {
+            var edit_params = {data:param}; // REQUIRED PARAMETERS
+            sessionService.openEditPopup($scope,path,edit_params,table);
+        }
+        // RETURN FUNCTION FROM POPUP.
+        $scope.returnFunction = function()
+        {
+            $scope.GetAllApi();
+        }
+//======================
+
+            // ============= UPDATE TABLE RECORD WITH CONDITION ============= // 
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
             
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+
+            if(param==1)
+            {
+                notifyService.notify('error','Please select another Main Location first !');
+                return false;
+            }
+            if(extra=='remove_address')
+            {
+                var permission = confirm("Are you sure to delete this Record ?");
+                if (permission == true) 
+                {
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success', "Record Updated Successfully!");
+                    if(extra=='is_main') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                    {
+                        $scope.UpdateTableField('is_main','1',table_name,'id',param,'','');
+                    }
+                    $scope.GetAllApi();
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+                
+            });
+        }
+
+
             $scope.OpenForm = function (ev, all_data,path)
             {
                 $("#ajax_loader").show();
