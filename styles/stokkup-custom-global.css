@@ -955,6 +955,7 @@ md-card-content.custom-desc-box span {
     width: 100%;
     margin: 0 auto; }
     .shipping-custom-tab md-tabs-wrapper md-tab-data {
+      position: absolute;
       z-index: 1;
       opacity: 1; }
 
