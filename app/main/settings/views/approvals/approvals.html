@@ -58,7 +58,7 @@
                     <thead tasty-thead></thead>
                    <tbody >
                         <tr ng-repeat="order in rows">
-                            <td class="" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
+                            <td class="cursor-p" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
                             <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
                             <td ng-if="order.created_date == '0000-00-00'"></td>
                             <td class="">{{order.sales_total | currency : $ : 2}}</td>

@@ -575,7 +575,7 @@ class ShippingController extends Controller {
         $post = Input::all();
 
         foreach ($post['products'] as $product) {
-            
+
             $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
             if(!empty($shipping_data)) {
@@ -584,12 +584,13 @@ class ShippingController extends Controller {
 
                 if(empty($product_address_data))
                 {
-                    $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                    //$shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                    $shipping_id = $shipping_data[0]->shipping_id;
                     $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $product['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
                 }
                 else
                 {
-                    $product_address_id = $shipping_data[0]->id;
+                    $product_address_id = $product_address_data[0]->id;
                 }
 
                 $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id']),array());
@@ -635,12 +636,13 @@ class ShippingController extends Controller {
 
             if(empty($product_address_data))
             {
-                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                //$shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                $shipping_id = $shipping_data[0]->shipping_id;
                 $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product']['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
             }
             else
             {
-                $product_address_id = $shipping_data[0]->id;
+                $product_address_id = $product_address_data[0]->id;
             }
 
             $product_data = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id']),array());
