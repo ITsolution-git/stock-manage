@@ -882,25 +882,6 @@ class QuickBookController extends Controller
                  $Invoice->setCustomerRef($customerRef);
          }
 
-        
-
-
-         
-         /*$Line = new \QuickBooks_IPP_Object_Line();
-         $Line->setDetailType('SalesItemLineDetail');
-         $Line->setAmount(12.95 * 2);
-         $Line->setDescription('Test description goes here.');
-
-         $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-         $SalesItemLineDetail->setItemRef('8');
-         $SalesItemLineDetail->setUnitPrice(12.95);
-         $SalesItemLineDetail->setQty(2);
-
-         $Line->addSalesItemLineDetail($SalesItemLineDetail);
-
-         $Invoice->addLine($Line);
-
-         $Invoice->setCustomerRef($customerRef);*/
 
 
         if ($resp = $InvoiceService->add($this->context, $this->realm, $Invoice))
@@ -908,16 +889,18 @@ class QuickBookController extends Controller
             $qb_invoice_id =  $this->getId($resp);
              $this->common->UpdateTableRecords('invoice',array('id' => $invoice_id),array('qb_id' => $qb_invoice_id));
 
-           // $data_record = array("success"=>1,"message"=>"Success");
+             if($quickbook_id > 0) {
+                     $this->common->UpdateTableRecords('payment_history',array('order_id' => $orderId),array('qb_id' => $qb_invoice_id,'qb_flag' => 0));
+             }
+
+           
             return 1; 
         }
         else
         {
-
-          //  $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
-           // return response()->json(["data" => $data_record]);
+          
             return 0; 
-           // print($InvoiceService->lastError());
+          
         }
     }
 
