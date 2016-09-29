@@ -157,7 +157,7 @@
                     </table>
                 </div>
 
-                <div layout="column" flex="50" class="box-zerospace white-bg m-b-30">
+                <div layout="column" flex="50" class="box-zerospace m-b-30 mr-20 mt-30 white-bg">
                     <md-card class="mrg10">
                     <md-card-content class="recap">
                         <div ng-repeat="position in design.positions.order_design_position">
@@ -195,13 +195,13 @@
                     </md-card>
                 </div>
 
-                <div layout="column" flex="50" class="box-zerospace white-bg m-b-30">
+                <div layout="column" class="box-zerospace m-b-30 mt-30 right-custom-box white-bg">
                     <md-card class="mrg10">
                         <md-card-content class="recap">
                             <div ng-repeat="product in design.products">
                                 <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                                    <div class="ng-binding global-text-style"><b>Product : </b></div>
-                                    <span class="ng-binding global-heading-style">{{product.product_name}}</span>
+                                    <div class="ng-binding global-heading-style"><b>Product :</b></div>
+                                    <span class="ng-binding global-text-style">{{product.product_name}}</span>
                                 </div>
                                 <div ng-repeat="oitem in product.order_items" ng-if="oitem.selected > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding global-text-style">{{oitem.item}}</div>
@@ -224,7 +224,7 @@
                                 <!--Payment History Tab-->
                                 <md-tab label="Payment History">
                                     <div layout="row" flex=100 class="p-30">
-                                    <div class="ms-responsive-table-wrapper">
+                                    <div class="ms-responsive-table-wrapper box-zerospace">
                                         <table class="simple hover simple-tbl1">
                                             <thead>
                                                 <tr>
