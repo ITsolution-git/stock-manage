@@ -62,27 +62,32 @@
            </div>
         </div>
         <div layout="column" flex="40">
-          <md-autocomplete
-              md-input-id="remove_color"
-              ng-disabled="isDisabled"
-              md-no-cache="noCache"
-              md-selected-item=""
-              md-search-text-change=""
-              md-search-text="allcolor.color_name"
-              md-selected-item-change="add_color(item.id,item.name,'color_name')"
-              md-items="item in querySearch(allcolor.color_name)"
-              md-item-text="item.name"
-              md-min-length="1"
-              ng-click=""
-              ng-blur=""
-              <md-item-template>
-                  <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
-              </md-item-template>
-              <md-not-found>
-                  No Color found.
-              </md-not-found>
-          </md-autocomplete>
-          <table width="100%" class="size-attribute">
+                  <md-autocomplete
+                      md-input-id="remove_color"
+                      ng-disabled="isDisabled"
+                      md-no-cache="noCache"
+                      md-selected-item=""
+                      md-search-text-change=""
+                      md-search-text="allcolor.color_name"
+                      md-selected-item-change="add_color(item.id,item.name,'color_name')"
+                      md-items="item in querySearch(allcolor.color_name)"
+                      md-item-text="item.name"
+                      md-min-length="1"
+                      ng-click=""
+                      ng-blur=""
+                      <md-item-template>
+                          <span md-highlight-text="allcolor.id" md-highlight-flags="^i">{{item.name}}</span>
+                      </md-item-template>
+                      <md-not-found >
+                          <b id="check_alert">No Color found <a ng-click="check_savedata(1)" >Create a new Color!</a></b>
+                          <b id="check_confirm" style="display: none;">Please save changes first, do you want to contunue? 
+                            <a ng-click="AddNewColor(details_screenset[0].id,details_screenset[0].company_id,allcolor.color_name)" >Yes</a> | 
+                            <a ng-click="check_savedata(0)" >No</a>
+                          </b>
+                      </md-not-found>
+                  </md-autocomplete>
+
+            <table width="100%" class="size-attribute">
                   <tr>
                      <th width="40%">Color</th>
                      <th width="30%"> Pantone </th>
