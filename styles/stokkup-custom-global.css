@@ -1366,10 +1366,10 @@ md-dialog.task-dialog md-dialog-content.email-dialog {
 #select_container_5 md-select-menu md-content md-option#select_option_3 .md-text {
   color: #ed1c24 !important; }
 
-.approve-box #select_4.approvelabel #select_value_label_1 .md-text {
+.approve-box md-select.approvelabel md-select-value .md-text {
   color: #3eb74f; }
 
-.approve-box #select_4 #select_value_label_1 .md-text {
+.approve-box md-select md-select-value .md-text {
   color: #ed1c24; }
 
 .approve-box .md-select-value .md-select-icon::after {
