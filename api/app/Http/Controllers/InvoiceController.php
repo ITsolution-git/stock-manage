@@ -472,4 +472,81 @@ class InvoiceController extends Controller {
         );
         return response()->json(["data" => $response]);
     }
+
+    public function getAverageOrders(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        // Fetching average amount of order per invoiced
+        $retArray = DB::table('invoice as i')
+            ->select(DB::raw('AVG(o.grand_total) as avgOrderAmount'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->avgOrderAmount=round($retArray[0]->avgOrderAmount, 2);
+        $tempFigure=explode(".", $retArray[0]->avgOrderAmount);
+        $retArray[0]->avgOrderAmount=$tempFigure;
+
+        // Fetching average number of items per invoiced
+        $order_design_data = DB::table('invoice as i')
+            ->select('od.id as design_id', 'o.id as order_id')
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('order_design as od','od.order_id','=','o.id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('od.status','=','1')
+            ->where('od.is_delete','=','1')
+            ->get();
+
+        $size_data = array();
+        $order_design = array();
+        $orderIDs = array();
+        $total_unit = 0;
+
+        foreach ($order_design_data as $design)
+        {
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->design_id,'is_delete' => '1'),array());
+
+            $total_qnty = 0;
+            foreach ($size_data as $size)
+            {
+                $total_qnty += $size->qnty;
+            }
+            $total_unit += $total_qnty;
+
+            $design->size_data = $size_data;
+            $design->total_qnty = $total_qnty;
+            $orderIDs[]=$design->order_id;
+
+            //$order_design['all_design'][] = $design;
+        }
+
+        if($total_unit > 0)
+        {
+            $order_design['total_unit'] = $total_unit;
+        }
+
+        $countOrders = count(array_unique($orderIDs));
+
+        $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,2);
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
 }
