@@ -12,8 +12,9 @@
     </div>
         
         <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
-
-            <div class="info-order inner-full-box m-b-45">
+            <div class="inner-full-box">
+                <div flex=75 class="pull-left box-zerospace">
+                    <div class="info-order  m-b-45">
                 <div class="title box-title m-b-20"><span class="stokkup-title-h4">Information</span></div>
                 <md-card layout="row">
                     <md-card-content flex="100" layout="column">
@@ -63,20 +64,23 @@
                         </md-menu>
                     </div>
                 </md-card>
-            </div>
-
-            <div class="inner-full-box">
+                    </div>
+                </div>
+            
+                <div class="pull-left ml-20 po-right-approve-box">
+                    <div class="">
                 <div class="title box-title m-b-20"><span class="stokkup-title-h4">Order Status</span></div>
                 <div class="full-box md-default-theme white-bg layout-padding">
                     <div flex="25" layout="column" class="trans-box">
-                        <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="select-width stokkup-select-box1" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
+                        <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="po-selectbox select-width stokkup-select-box1" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
                             <md-option ng-selected="po_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                         </md-select>
                     </div>
                 </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview transparent-bg" >
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="title box-title"><span class="stokkup-title-h4">Products</span></div>
