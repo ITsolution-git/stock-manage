@@ -1765,10 +1765,10 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 #select_container_5 md-select-menu md-content md-option#select_option_3 .md-text{
 	color:$red-highlight !important;	
 }
-.approve-box #select_4.approvelabel #select_value_label_1 .md-text{
+.approve-box md-select.approvelabel md-select-value .md-text{
 	color:$app-green;
 }
-.approve-box #select_4 #select_value_label_1 .md-text{
+.approve-box md-select md-select-value .md-text{
 	color:$red-highlight;
 }
 .approve-box .md-select-value .md-select-icon::after{
@@ -1842,4 +1842,14 @@ md-tabs.stokkup-invoice-tabs{
 }
 .stokkup-invoice-tabs md-tab-item.md-disabled{
 	opacity:0 !important;
+}
+.search-block .md-input-has-value label.top-srch-label{
+	display:$nofloat;
+}
+.po-right-approve-box{
+	width:23%;
+	float:$left;
+}
+.po-selectbox md-select-value{
+	border:$nofloat !Important;
 }

@@ -348,7 +348,7 @@ class ClientController extends Controller {
 
 			if(count($result)>0)
 			{
-				$CompanyUsers = $this->common->GetCompanyUsers($post['company_id']);
+				$CompanyUsers = $this->common->getBrandCordinator($post['company_id']);
 				$StaffList = $this->common->getStaffList($post['company_id']);
 				$ArrCleintType=$this->common->TypeList('company');
 				$AddrTypeData = $this->common->GetMicType('address_type',$post['company_id']);
