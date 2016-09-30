@@ -104,7 +104,9 @@ Route::post('admin/downloadPricegridCSV', 'SettingController@downloadPricegridCS
 Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
 Route::get('admin/uploadSnsCSV', 'SettingController@uploadSnsCSV');
 Route::post('admin/downloadPriceGridExcel', 'SettingController@downloadPriceGridExcel');
-Route::post('admin/getApprovalOrders', 'SettingController@getApprovalOrders');
+Route::post('admin/getApprovedOrders', 'SettingController@getApprovedOrders');
+Route::post('admin/getPendingOrders', 'SettingController@getPendingOrders');
+Route::post('admin/getDeniedOrders', 'SettingController@getDeniedOrders');
 
 // ADMIN MISC ROUTERS
 Route::post('admin/miscSave', 'MiscController@miscSave');
