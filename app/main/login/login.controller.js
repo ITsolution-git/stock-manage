@@ -137,7 +137,8 @@
             if(resultAverageOrder.data.success == '1') {
               $scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
               $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
-              $scope.avgItems=resultAverageOrder.data.allData[0].avgOrderItems;
+              $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
+              $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];
             }
             /*$scope.brand_coordinator = sessionService.get('role_title');*/
         });

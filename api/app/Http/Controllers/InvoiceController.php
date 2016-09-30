@@ -542,6 +542,9 @@ class InvoiceController extends Controller {
 
         $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,2);
 
+        $tempAvg=explode(".", $retArray[0]->avgOrderItems);
+        $retArray[0]->avgOrderItems=$tempAvg;
+
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
