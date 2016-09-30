@@ -79,7 +79,7 @@
                             <md-button aria-label="ID Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
-                            <md-menu-content width="4"  ng-click="vm.editCompanyInfo($event,'tax_form')">
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'tax_form')">
                                 <md-menu-item>
                                     <md-button>
                                         Edit
@@ -89,8 +89,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">
-                        $129<sup>53</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}} |Amount {{avgAmount1 | currency : $ : 0}}<sup>{{avgAmount2}}</sup></div>
                     </md-card-content>
                 </md-card>
             </div>

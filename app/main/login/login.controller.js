@@ -132,6 +132,16 @@
             /*$scope.brand_coordinator = sessionService.get('role_title');*/
         });
 
+        // Average Orders
+        $http.post('api/public/invoice/getAverageOrders',combine_array_id).success(function(resultAverageOrder){
+            if(resultAverageOrder.data.success == '1') {
+              $scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
+              $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
+              $scope.avgItems=resultAverageOrder.data.allData[0].avgOrderItems;
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
+
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
