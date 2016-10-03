@@ -51,6 +51,7 @@
                 remove('company_id');
                 remove('company');
                 remove('profile_photo');
+                remove('token');
                 $state.go('app.login');
 			},function(response) {
 				notifyService.notify('error',response.data.message);
@@ -75,7 +76,8 @@
 	                    set('role_title',result.data.role_title);
 	                    set('login_id',result.data.login_id);
 	                    set('profile_photo',result.data.profile_photo);
-
+	                    set('token',result.data.token);
+	                    
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);
 	                    //console.log(arr_role+"--"+access); 
