@@ -1,99 +1,94 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20">
-    <div class="header "  layout="column">
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <h2 flex="4" class="font-500">Shipment Overview {{shipping.name}} #{{shipping.order_id}} for Company: {{shipping.client_company}}</h2>
-            <!-- <md-input-container md-no-float class="md-block" flex="3">
-                <input aria-label="Client Name">
-            </md-input-container> -->
-        </div>
-        <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="100">
-                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
-                <md-card layout="row">
-                    <md-card-content flex="100" layout="column">
-                        <div layout="row" layout-wrap class="mrg10-B">
-                            <div layout="column" flex="20">
-                                <div>Order ID</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.order_id }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Order Name</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.name }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Shipping By</div>
-                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.date_shipped != '0000-00-00'">{{ shipping.date_shipped | date:"M/d/yyyy" }}</span>
-                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.date_shipped == '0000-00-00'"></span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>In Hand By</div>
-                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.in_hands_by != '0000-00-00'">{{ shipping.in_hands_by | date:"M/d/yyyy" }}</span>
-                                <span class="font-14 chrome-weight gray-text" ng-if="shipping.in_hands_by == '0000-00-00'"></span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Status</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.approval }}</span>
-                            </div>
-                        </div>
-                        <div layout="row" class="mrg10-B">
-                            <div layout="column" flex="20">
-                                <div>Shipping Status</div>
-                               <span class="font-14 chrome-weight gray-text">{{ shipping.shipping_status_name}}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Location</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.description }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Box Type</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.boxing_type }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Shipping Type</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.shipping_type_name }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Shipping Cost</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.cost_to_ship | currency : $ : 2}}</span>
-                            </div>
-                        </div>
-                        <div layout="row">
-                            <div layout="column" flex="20">
-                                <div>Client ID</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.client_id }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Client Name</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.client_company }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Fully Shipped</div>
-                                <span class="font-14 chrome-weight gray-text">{{ shipping.distributed }}/{{ shipping.total }}</span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Date Shipped</div>
-                                <span class="font-14 chrome-weight gray-text"></span>
-                            </div>
-                            <div layout="column" flex="20">
-                                <div>Tracking Number</div>
-                                <span class="font-14 chrome-weight gray-text">{{shipping.tracking_number}}</span>
-                            </div>
-                        </div>
-                        <div layout-align="end" layout="row" ng-show="allow_access==1">
-                            <a ui-sref="app.shipping.shipmentdetails({id: shipping.shipping_id})">EDIT</a>
-                        </div>
-                    </md-card-content>
-                </md-card>
+<div class="order-info-page company-po-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview m-b-30">
+        <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+              Shipment Overview {{shipping.name}} #{{shipping.order_id}} for Company: {{shipping.client_company}}
             </div>
         </div>
-    </div>
-    <div  layout="row" class="margin">
-        <div flex="100" layout="column" class="">
-            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
-                <div class="pd15-LR mrg15-T" layout="row" layout-align="space-between center">
-                    <div class="table-title-text h2 text-semibold">Products Allocated to {{shipping.description}}</div>
-                </div>
-                <div class="ms-responsive-table-wrapper tbl-scroll-cntnr" ms-scroll>
+        <!--inner full box starts here -->
+        <div class="inner-full-box">
+            <div class="info-order mt-30" flex="100">
+            <div class="title m-b-20"><span class="stokkup-title-h4">Information</span></div>
+            <md-card layout="row">
+                <md-card-content flex="100" layout="column" class="p-30">
+                    <div layout="row" layout-wrap class="mrg10-B">
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Order ID</div>
+                            <span class="global-text">{{ shipping.order_id }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Order Name</div>
+                            <span class="global-text">{{ shipping.name }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Shipping By</div>
+                            <span class="global-text" ng-if="shipping.date_shipped != '0000-00-00'">{{ shipping.date_shipped | date:"M/d/yyyy" }}</span>
+                            <span class="global-text" ng-if="shipping.date_shipped == '0000-00-00'"></span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">In Hand By</div>
+                            <span class="global-text" ng-if="shipping.in_hands_by != '0000-00-00'">{{ shipping.in_hands_by | date:"M/d/yyyy" }}</span>
+                            <span class="global-text" ng-if="shipping.in_hands_by == '0000-00-00'"></span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Status</div>
+                            <span class="global-text">{{ shipping.approval }}</span>
+                        </div>
+                    </div>
+                    <div layout="row" class="mrg10-B">
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Shipping Status</div>
+                           <span class="global-text">{{ shipping.shipping_status_name}}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Location</div>
+                            <span class="global-text">{{ shipping.description }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Box Type</div>
+                            <span class="global-text">{{ shipping.boxing_type }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Shipping Type</div>
+                            <span class="global-text">{{ shipping.shipping_type_name }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Shipping Cost</div>
+                            <span class="global-text">{{ shipping.cost_to_ship | currency : $ : 2}}</span>
+                        </div>
+                    </div>
+                    <div layout="row">
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Client ID</div>
+                            <span class="global-text">{{ shipping.client_id }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Client Name</div>
+                            <span class="global-text">{{ shipping.client_company }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Fully Shipped</div>
+                            <span class="global-text">{{ shipping.distributed }}/{{ shipping.total }}</span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Date Shipped</div>
+                            <span class="global-text"></span>
+                        </div>
+                        <div layout="column" flex="20">
+                            <div class="global-labels">Tracking Number</div>
+                            <span class="global-text">{{shipping.tracking_number}}</span>
+                        </div>
+                    </div>
+                    <div layout-align="end" layout="row" ng-show="allow_access==1">
+                        <a ui-sref="app.shipping.shipmentdetails({id: shipping.shipping_id})">EDIT</a>
+                    </div>
+                </md-card-content>
+            </md-card>
+            </div>
+
+            <div class="box-zerospace mt-30">
+                <h4 class="stokkup-title-h4 m-b-20">Products Allocated to {{shipping.description}}</h4>
+                <div class="ms-responsive-table-wrapper tbl-scroll-cntnr white-bg m-b-30" ms-scroll>
                     <table class="simple hover simple-tbl1">
                         <thead>
                             <tr>
@@ -114,15 +109,10 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div  layout="row" class="margin">
-        <div flex="100" layout="column" class="">
-            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
-                <div class="pd15-LR mrg15-T" layout="row" layout-align="space-between center">
-                    <div class="table-title-text h2 text-semibold">Boxed Shipments</div>
-                </div>
-                <div class="ms-responsive-table-wrapper tbl-scroll-cntnr" ms-scroll>
+
+            <div class="box-zerospace m-b-30">
+                <h4 class="stokkup-title-h4 m-b-20">Boxed Shipments</h4>
+                <div class="ms-responsive-table-wrapper tbl-scroll-cntnr white-bg" ms-scroll>
                     <table class="simple hover simple-tbl1">
                         <thead>
                             <tr>
@@ -141,35 +131,22 @@
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    <div  layout="row" class="margin">
-        <div flex="100" layout="column" class="">
-            <div class="simple-table-container md-whiteframe-4dp m-b-20" >
-                <div class="pd15-LR mrg15-T" layout="row" layout-align="space-between center">
-                    <div class="table-title-text h2 text-semibold">Printing Option</div>
-                </div>
-                <div layout="row" flex="100" class="pd15-TLR">
-                    <div layout="column" flex="25">
-                        <!-- <md-checkbox aria-label="Select All" aria-label="Select All">Manifest</md-checkbox> -->
-                        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="print_pdf('manifest')"><span class="ng-scope">Packing slip</span></button>
-                    </div>
-                    <div layout="column" flex="25">
-                        <!-- <md-checkbox aria-label="Select All" aria-label="Select All">Shipping Report</md-checkbox> -->
-                        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="print_pdf('report')"><span class="ng-scope">Carton Label</span></button>
-                    </div>
-                    <div layout="column" flex="25">
-                        <!-- <md-checkbox aria-label="Select All" aria-label="Select All" ng-model="shipping_label">Shipping Label</md-checkbox> -->
-                        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="print_pdf('label')"><span class="ng-scope">Shipping Label</span></button>
-                    </div>
-                </div>
+
+            <div class="box-zerospace m-b-30">
+                <h4 class="stokkup-title-h4 m-b-20">Printing Option</h4>
+                <div layout-align="end center" layout="row" class="white-bg p-30 pull-right box-zerospace">
+                    <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="print_pdf('manifest')"><span class="ng-scope">Packing slip</span></button>
+                    <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="print_pdf('report')"><span class="ng-scope">Carton Label</span></button>
+                    <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="print_pdf('label')"><span class="ng-scope">Shipping Label</span></button>
+                </div>    
             </div>
+            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace pull-right mb-20" ng-show="allow_access==1">
+                <button aria-label="Back" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" type="button" ui-sref="app.shipping.boxingdetail({id:shipping_id})"><span class="ng-scope">Back</span></button>
+                <button ui-sref="app.shipping.shipmentdetails({id:shipping_id})" type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Save" ng-show="shippingBoxes.length == '0'"><span class="ng-scope">Create Boxes</span></button>
+                <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number != ''" type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="printLAbel()"><span class="ng-scope">Confirm & Print</span></button>
+                <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number == ''" type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="viewLabelPDF()"><span class="ng-scope">Print Label</span></button>
+            </md-dialog-actions>
         </div>
-    </div>
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row" ng-show="allow_access==1">
-        <button aria-label="Back" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.boxingdetail({id:shipping_id})"><span class="ng-scope">Back</span></button>
-        <button ui-sref="app.shipping.shipmentdetails({id:shipping_id})" type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save" ng-show="shippingBoxes.length == '0'"><span class="ng-scope">Create Boxes</span></button>
-        <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number != ''" type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="printLAbel()"><span class="ng-scope">Confirm & Print</span></button>
-        <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number == ''" type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Print" ng-click="viewLabelPDF()"><span class="ng-scope">Print Label</span></button>
-    </md-dialog-actions>
-</div>
+        <!--inner full box ends here -->
+    </div><!--simple table container box ends here -->
+</div><!--shippment overview ends here -->
