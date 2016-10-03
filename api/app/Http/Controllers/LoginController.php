@@ -96,14 +96,13 @@ class LoginController extends Controller {
                 else
                 {
                     $session = array();
-                    $token = $this->login->getToken(10);
-                    $token .= $token.time();
-                    DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'date'=>date('Y-m-d H:i:s')]);
+                    $token = $this->login->getToken(10); // RANDOM STRING+CURRENT_TIMESTAMP
+
                     $company = $this->common->CompanyService($result[0]->id);
- 
+
                     $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
 
-
+                    DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'company_id'=>$company[0]->company_id,'date'=>date('Y-m-d H:i:s')]);
                     
 
                     //echo "<pre>"; print_r($result); echo "</pre>"; die;
@@ -119,6 +118,7 @@ class LoginController extends Controller {
                     Session::put('company_id',  $company[0]->company_id);
                     Session::put('company_name',  $company[0]->company_name);
                     Session::put('profile_photo',  $result[0]->profile_photo);
+                    Session::put('token',  $token);
                     
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
@@ -208,7 +208,8 @@ class LoginController extends Controller {
                               "email" => Session::get("useremail"),
                               "role_session"=>Session::get("role_slug"),
                               "company_id"=>Session::get("company_id"),
-                              "profile_photo"=>Session::get("profile_photo")
+                              "profile_photo"=>Session::get("profile_photo"),
+                              "token"=>Session::get("token")
                               );
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
