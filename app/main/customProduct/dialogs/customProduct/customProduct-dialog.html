@@ -38,6 +38,7 @@
                                     <th width="30%">Color</th>
                                     <th width="35%">Size</th>
                                     <th width="15%">Price</th>
+                                    <th width="15%">Image</th>
                                     <th width="20%" class="text-center">
                                         <a href="#" class="add-attributes" ui-event="{ click : 'addcolorsize(productId,0,0)'}"><span class="icon icon-plus"></span></a>
                                     </th>
@@ -67,6 +68,17 @@
                                         </div>
                                        
                                     </td>
+                                    <td> 
+                                        <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('color_image','custom_image','product_color_size',colorsdata.color_image_url_photo,'id',colorsdata.id,colorsdata.color_image,keyColor)">
+                                             <div class="text-right pad0 close-icon">
+                                                <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'color_image','custom_image','product_color_size',colorsdata.color_image,'id',colorsdata.id,keyColor); "></md-icon>
+                                            </div> 
+
+                                            <img  ng-if="colorsdata.color_image" ng-src="{{colorsdata.color_image_url_photo}}" class="popup-image" />
+                                            <img  ng-if="colorsdata.color_image == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+
+                                        </div>
+                                   </td>
                                     <td class="text-center">
                                         <a href="#" class="remove-size remove-attrribute" ng-click="removeColorSize(productId,keyColor,0)"><span class="icon icon-close"></span></a>
                                     </td>
@@ -80,17 +92,15 @@
 
                     <md-card-content flex="50" layout="column">
 
-                        <div flex="24" class="border-grey div-height img-container-product cursor-p" layout-padding ng-click="ImagePopup('product_image','products','products',product_image_url,'id',productId,product_image)">
+                       <!--  <div flex="24" class="border-grey div-height img-container-product cursor-p" layout-padding ng-click="ImagePopup('product_image','products','products',product_image_url,'id',productId,product_image)">
                                  <div class="text-right pad0 close-icon">
                                     <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'product_image','products','products',product_image,'id',productId,key); "></md-icon>
                                 </div> 
                                 <img  ng-if="product_image" ng-src="{{product_image_url}}" class="product-popup-image" />
                                 <img  ng-if="product_image == ''" ng-src="{{NoImage}}" alt="No Image" class="product-popup-image" />
-                            </div>
+                            </div> -->
 
                             <div class="float-right">
-
-                               
 
                                 <md-button type="button"  class="bg-blue float-right m-t-10" ng-click="cancel()" aria-label="cancel">
                                         Cancel
@@ -98,7 +108,7 @@
 
                                 </div>
 
-                    </md-card-content>
+                    </md-card-content> 
 
                       
                       
