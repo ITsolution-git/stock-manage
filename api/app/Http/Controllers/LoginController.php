@@ -102,6 +102,8 @@ class LoginController extends Controller {
 
                     $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
 
+                    $company[0]->company_id = (empty($company[0]->company_id))?0:$company[0]->company_id;
+                    //echo "<pre>"; print_r($company); echo "</pre>"; die;
                     DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'company_id'=>$company[0]->company_id,'date'=>date('Y-m-d H:i:s')]);
                     
 
