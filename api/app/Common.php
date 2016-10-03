@@ -216,6 +216,10 @@ class Common extends Model {
                 
             }
         }
+        if(isset($data['order_sns_status']))
+        {
+            $data['updated_date'] = CURRENT_DATETIME;
+        }
         
         $result = DB::table($table);
         if(count($cond)>0)

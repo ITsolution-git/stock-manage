@@ -6,138 +6,144 @@
                     <div class="table-title-text" flex=20>
                         S&amp;S Orders
                     </div>
-                    <div class="pull-right right-search-box">
-                        <!-- <div class="client-modal-title pull-right" ng-if="role_slug=='CA' || role_slug=='AM' || role_slug=='FM' || role_slug=='PU'">
+                    <!-- <div class="pull-right right-search-box">
+                        <div class="client-modal-title pull-right" ng-if="role_slug=='CA' || role_slug=='AM' || role_slug=='FM' || role_slug=='PU'">
                             <span class="cursor-p stokkup-btn-style1" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
-                        </div> -->
+                        </div>
                         <div class="search-block pull-right">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label class="top-srch-label">Search Orders...</label>
                                 <input type="text" ng-model="name" ui-event="{change : 'search($event)'}" />
                             </md-input-container>
                         </div> 
-                    </div>
+                    </div> -->
                 </div>
-                <md-tab label="Approved Orders" ng-click="getTab()">
-                    <div ng-controller="approvalsController" class="fixe-top-tabs">
-                        <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                <!-- <div class="search-block pd15-L" flex=25>
+                <div ng-controller="approvalsController">
+                    <md-tab label="Approved Orders" ng-click="getTab()">
+                        <div class="fixe-top-tabs">
+                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
-                                </div> -->
-                        </div>
-                        <div class=" ms-responsive-table-wrapper" ng-show="success==1">
-                            <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                </div>
+                            </div>
+                            <div class=" ms-responsive-table-wrapper" ng-show="success==1">
+                                <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                    <table class="dataTable row-border">
+                                        <thead tasty-thead></thead>
+                                       <tbody >
+                                            <tr ng-repeat="order in rows">
+                                                <td class="cursor-p" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
+                                                <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="order.created_date == '0000-00-00'"></td>
+                                                <td class="">{{order.sales_total | currency : $ : 2}}</td>
+                                                <td class="">{{order.name}}</td>
+                                                <td class="">{{order.order_number}}</td>
+                                            </tr>
+                                        </tbody> 
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                            </div>
+                            <div  class="ms-responsive-table-wrapper" ng-show="success==0">
                                 <table class="dataTable row-border">
-                                    <thead tasty-thead></thead>
-                                   <tbody >
-                                        <tr ng-repeat="order in rows">
-                                            <td class="cursor-p" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
-                                            <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
-                                            <td ng-if="order.created_date == '0000-00-00'"></td>
-                                            <td class="">{{order.sales_total | currency : $ : 2}}</td>
-                                            <td class="">{{order.name}}</td>
-                                            <td class="">{{order.order_number}}</td>
+                                    <thead>
+                                        <tr>
+                                            <th>No Records Found</th>
                                         </tr>
-                                    </tbody> 
+                                    </thead>
                                 </table>
-                                <div tasty-pagination class="tasty-page"></div>
                             </div>
                         </div>
-                        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-                            <table class="dataTable row-border">
-                                <thead>
-                                    <tr>
-                                        <th>No Records Found</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </md-tab>
-                <md-tab label="Pending Orders" ng-click="getTab()">
-                    <div ng-controller="pendingController" class="fixe-top-tabs">
-                        <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                <!-- <div class="search-block pd15-L" flex=25>
+                    </md-tab>
+                </div>
+                <div ng-controller="pendingController">
+                    <md-tab label="Pending Orders" ng-click="getTab()">
+                        <div class="fixe-top-tabs">
+                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
-                                </div> -->
-                        </div>
-                        <div class=" ms-responsive-table-wrapper" ng-show="success==1">
-                            <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                </div>
+                            </div>
+                            <div class=" ms-responsive-table-wrapper" ng-show="success==1">
+                                <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                    <table class="dataTable row-border">
+                                        <thead tasty-thead></thead>
+                                       <tbody >
+                                            <tr ng-repeat="order in rows">
+                                                <td class="cursor-p" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
+                                                <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="order.created_date == '0000-00-00'"></td>
+                                                <td class="">{{order.sales_total | currency : $ : 2}}</td>
+                                                <td>
+                                                    <md-select aria-label="status" ng-model="order_sns_status" flex="50" class="margin-0 select-width font-16 font-weight" ng-change="approveOrder(order.order_id,order.sns_shipping,order_sns_status)">
+                                                        <md-option value="approve">Approve</md-option>
+                                                        <md-option value="deny">Deny</md-option>
+                                                    </md-select>
+                                                </td>
+                                            </tr>
+                                        </tbody> 
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                            </div>
+                            <div  class="ms-responsive-table-wrapper" ng-show="success==0">
                                 <table class="dataTable row-border">
-                                    <thead tasty-thead></thead>
-                                   <tbody >
-                                        <tr ng-repeat="order in rows">
-                                            <td class="cursor-p" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
-                                            <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
-                                            <td ng-if="order.created_date == '0000-00-00'"></td>
-                                            <td class="">{{order.sales_total | currency : $ : 2}}</td>
-                                            <td>
-                                                <md-select aria-label="status" ng-model="order_sns_status" flex="50" class="margin-0 select-width font-16 font-weight" ng-change="approveOrder(order.order_id,order.sns_shipping,order_sns_status)">
-                                                    <md-option value="approve">Approve</md-option>
-                                                    <md-option value="deny">Deny</md-option>
-                                                </md-select>
-                                            </td>
+                                    <thead>
+                                        <tr>
+                                            <th>No Records Found</th>
                                         </tr>
-                                    </tbody> 
+                                    </thead>
                                 </table>
-                                <div tasty-pagination class="tasty-page"></div>
                             </div>
                         </div>
-                        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-                            <table class="dataTable row-border">
-                                <thead>
-                                    <tr>
-                                        <th>No Records Found</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </md-tab>
-                <md-tab label="Denied Orders" ng-click="getTab()">
-                    <div ng-controller="deniedController" class="fixe-top-tabs">
-                        <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                <!-- <div class="search-block pd15-L" flex=25>
+                    </md-tab>
+                </div>
+                <div ng-controller="deniedController">
+                    <md-tab label="Denied Orders" ng-click="getTab()">
+                        <div class="fixe-top-tabs">
+                            <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                <div class="search-block pd15-L" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
                                         <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
-                                </div> -->
-                        </div>
-                        <div class=" ms-responsive-table-wrapper" ng-show="success==1">
-                            <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                </div>
+                            </div>
+                            <div class=" ms-responsive-table-wrapper" ng-show="success==1">
+                                <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                    <table class="dataTable row-border">
+                                        <thead tasty-thead></thead>
+                                       <tbody >
+                                            <tr ng-repeat="order in rows">
+                                                <td class="cursor-p" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
+                                                <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="order.created_date == '0000-00-00'"></td>
+                                                <td class="">{{order.sales_total | currency : $ : 2}}</td>
+                                                <td class="">Denied</td>
+                                            </tr>
+                                        </tbody> 
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                            </div>
+                            <div  class="ms-responsive-table-wrapper" ng-show="success==0">
                                 <table class="dataTable row-border">
-                                    <thead tasty-thead></thead>
-                                   <tbody >
-                                        <tr ng-repeat="order in rows">
-                                            <td class="cursor-p" ui-sref="app.order.order-info({id:order.order_id})">{{order.order_id}}</td>
-                                            <td ng-if="order.created_date != '0000-00-00'">{{order.created_date | date:"M/d/yyyy"}}</td>
-                                            <td ng-if="order.created_date == '0000-00-00'"></td>
-                                            <td class="">{{order.sales_total | currency : $ : 2}}</td>
-                                            <td class="">Denied</td>
+                                    <thead>
+                                        <tr>
+                                            <th>No Records Found</th>
                                         </tr>
-                                    </tbody> 
+                                    </thead>
                                 </table>
-                                <div tasty-pagination class="tasty-page"></div>
                             </div>
                         </div>
-                        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-                            <table class="dataTable row-border">
-                                <thead>
-                                    <tr>
-                                        <th>No Records Found</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-                </md-tab>
+                    </md-tab>
+                </div>
             </md-tabs>
         </md-content>
     </div>
