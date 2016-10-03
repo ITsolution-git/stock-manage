@@ -143,6 +143,24 @@
             /*$scope.brand_coordinator = sessionService.get('role_title');*/
         });
 
+        // Latest Orders
+        $http.post('api/public/invoice/getLatestOrders',combine_array_id).success(function(resultLatestOrders){
+            if(resultLatestOrders.data.success == '1') {
+              $scope.latestOrders=resultLatestOrders.data.allData;
+            }
+
+        });
+
+        // Estimates
+        $http.post('api/public/invoice/getEstimates',combine_array_id).success(function(resultEstimated){
+            if(resultEstimated.data.success == '1') {
+              $scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
+              $scope.estimated2=resultEstimated.data.allData[0].totalEstimated[1];
+              $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
+            }
+            /*$scope.brand_coordinator = sessionService.get('role_title');*/
+        });
+
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
