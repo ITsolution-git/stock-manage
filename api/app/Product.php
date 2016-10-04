@@ -622,7 +622,7 @@ class Product extends Model {
     {
        
         $whereConditions = ['p.product_id' => $post['id'],'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
-        $listArray = ['p.id','p.product_id','p.customer_price','p.color_id','p.size_id','c.name as color','pz.name as sizeName'];
+        $listArray = ['p.id','p.product_id','p.customer_price','p.color_id','p.size_id','c.name as color','pz.name as sizeName','p.color_image'];
 
         $productColorSizeData = DB::table('product_color_size as p')
                          ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
@@ -653,6 +653,9 @@ class Product extends Model {
             } 
          
           $all_array[$alldata->color_id]['color_name'] = $alldata->color;
+          $all_array[$alldata->color_id]['id'] = $alldata->id;
+          $all_array[$alldata->color_id]['color_image'] = $alldata->color_image;
+          $all_array[$alldata->color_id]['color_image_url_photo'] = (!empty($alldata->color_image))?UPLOAD_PATH.$post['company_id'].'/custom_image/'.$alldata->id."/".$alldata->color_image:'';
           $all_array[$alldata->color_id]['size_data'][] = $alldata;
         }
 

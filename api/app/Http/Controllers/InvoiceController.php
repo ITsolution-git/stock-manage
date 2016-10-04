@@ -552,4 +552,70 @@ class InvoiceController extends Controller {
         );
         return response()->json(["data" => $response]);
     }
+
+    public function getLatestOrders(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        $retArray = DB::table('invoice as i')
+            ->select('i.id as invoice_id', 'o.id as order_id', 'i.qb_id as quickbook_id', 'c.client_company', 'o.grand_total')
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.is_delete','=','1')
+            ->orderBy('i.created_date','desc')
+            ->take(5)
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getEstimates(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.is_paid','=','0')
+            ->where('o.grand_total','>','o.total_payments')
+            ->where('o.approval_id','=',2477)
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->totalEstimated=round($retArray[0]->totalEstimated, 2);
+        $tempFigure=explode(".", $retArray[0]->totalEstimated);
+        $retArray[0]->totalEstimated=$tempFigure;
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
 }

@@ -57,6 +57,7 @@
                                    sessionService.set('company_id',result.data.records.company_id);
                                    sessionService.set('company',result.data.records.company);
                                    sessionService.set('profile_photo',result.data.records.profile_photo);
+                                   sessionService.set('token',result.data.records.token);
                                    
                                    var data = {"status": "success", "message": "Login Successfully, Please wait..."}
                                    notifyService.notify(data.status, data.message);
@@ -105,44 +106,63 @@
         combine_array_id.company_id = company_id.value;
         //$("#ajax_loader").show();
 
-        // Orders not send to Quickbooks
-        $http.post('api/public/invoice/getNoQuickbook',combine_array_id).success(function(result){
-            if(result.data.success == '1') {
-              $scope.noqbinvoice=result.data.allData[0].totalInvoice;
-            }
-            /*$scope.brand_coordinator = sessionService.get('role_title');*/
-        });
+        if(vm.role_slug != 'SA'){
+            // Orders not send to Quickbooks
+            $http.post('api/public/invoice/getNoQuickbook',combine_array_id).success(function(result){
+                if(result.data.success == '1') {
+                  $scope.noqbinvoice=result.data.allData[0].totalInvoice;
+                }
+                /*$scope.brand_coordinator = sessionService.get('role_title');*/
+            });
 
-        // Sales Closed
-        $http.post('api/public/invoice/getSalesClosed',combine_array_id).success(function(resultSalesClosed){
-            if(resultSalesClosed.data.success == '1') {
-              $scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
-              $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];
-            }
-            /*$scope.brand_coordinator = sessionService.get('role_title');*/
-        });
+            // Sales Closed
+            $http.post('api/public/invoice/getSalesClosed',combine_array_id).success(function(resultSalesClosed){
+                if(resultSalesClosed.data.success == '1') {
+                  $scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
+                  $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];
+                }
+                /*$scope.brand_coordinator = sessionService.get('role_title');*/
+            });
 
-        // Orders with Balances
-        $http.post('api/public/invoice/getUnpaid',combine_array_id).success(function(resultUnpaid){
-            if(resultUnpaid.data.success == '1') {
-              $scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
-              $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];
-              $scope.unpaidTotal=resultUnpaid.data.allData[0].totalInvoice;
-            }
-            /*$scope.brand_coordinator = sessionService.get('role_title');*/
-        });
+            // Orders with Balances
+            $http.post('api/public/invoice/getUnpaid',combine_array_id).success(function(resultUnpaid){
+                if(resultUnpaid.data.success == '1') {
+                  $scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
+                  $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];
+                  $scope.unpaidTotal=resultUnpaid.data.allData[0].totalInvoice;
+                }
+                /*$scope.brand_coordinator = sessionService.get('role_title');*/
+            });
 
-        // Average Orders
-        $http.post('api/public/invoice/getAverageOrders',combine_array_id).success(function(resultAverageOrder){
-            if(resultAverageOrder.data.success == '1') {
-              $scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
-              $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
-              $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
-              $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];
-            }
-            /*$scope.brand_coordinator = sessionService.get('role_title');*/
-        });
+            // Average Orders
+            $http.post('api/public/invoice/getAverageOrders',combine_array_id).success(function(resultAverageOrder){
+                if(resultAverageOrder.data.success == '1') {
+                  $scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
+                  $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
+                  $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
+                  $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];
+                }
+                /*$scope.brand_coordinator = sessionService.get('role_title');*/
+            });
 
+            // Latest Orders
+            $http.post('api/public/invoice/getLatestOrders',combine_array_id).success(function(resultLatestOrders){
+                if(resultLatestOrders.data.success == '1') {
+                  $scope.latestOrders=resultLatestOrders.data.allData;
+                }
+
+            });
+
+            // Estimates
+            $http.post('api/public/invoice/getEstimates',combine_array_id).success(function(resultEstimated){
+                if(resultEstimated.data.success == '1') {
+                  $scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
+                  $scope.estimated2=resultEstimated.data.allData[0].totalEstimated[1];
+                  $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
+                }
+                /*$scope.brand_coordinator = sessionService.get('role_title');*/
+            }); 
+        }
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {

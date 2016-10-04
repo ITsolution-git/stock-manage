@@ -376,3 +376,5 @@ Route::post('invoice/getNoQuickbook', 'InvoiceController@getNoQuickbook');
 Route::post('invoice/getSalesClosed', 'InvoiceController@getSalesClosed');
 Route::post('invoice/getUnpaid', 'InvoiceController@getUnpaid');
 Route::post('invoice/getAverageOrders', 'InvoiceController@getAverageOrders');
+Route::post('invoice/getLatestOrders', 'InvoiceController@getLatestOrders');
+Route::post('invoice/getEstimates', 'InvoiceController@getEstimates');

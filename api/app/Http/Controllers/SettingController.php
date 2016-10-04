@@ -982,10 +982,10 @@ class SettingController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'o.id';
+            $post['sorts']['sortBy'] = 'o.updated_date';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
         $post['type'] = 'approved';
 
@@ -1001,7 +1001,7 @@ class SettingController extends Controller {
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
                         2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => 'u.name', 'name' => 'Name'),
-                        4=>array('key' => '', 'name' => 'Order Number'),
+                        4=>array('key' => '', 'name' => 'S&S Order Number'),
                         5=>array('key' => 'null', 'name' => '', 'sortable' => false)
                         );
 
@@ -1028,10 +1028,10 @@ class SettingController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'o.id';
+            $post['sorts']['sortBy'] = 'o.updated_date';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
         $post['type'] = 'pending';
 
@@ -1073,10 +1073,10 @@ class SettingController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'o.id';
+            $post['sorts']['sortBy'] = 'o.updated_date';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
         $post['type'] = 'denied';
 
