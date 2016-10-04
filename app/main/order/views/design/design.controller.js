@@ -359,7 +359,7 @@
            
         
         
-        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
+        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,product_name,description,vendor_name)
         {
             /*if($scope.order_design_position.length == '0')
             {
@@ -390,7 +390,9 @@
                     color_id:color_id,
                     vendor_id:vendor_id,
                     is_supply:is_supply,
-                    size_group_id:size_group_id,
+                    product_name:product_name,
+                    description:description,
+                    vendor_name:vendor_name,
                     event: ev
                 },
                 onRemoving : $scope.designProductData

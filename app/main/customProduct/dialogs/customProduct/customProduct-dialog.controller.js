@@ -77,10 +77,10 @@
             }
 
 
+/*
 
-
-      /*      // ============= UPLOAD IMAGE ============= // 
-        $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
+           // ============= UPLOAD IMAGE ============= // 
+        $scope.ImagePopupMain = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
         {
 
                 $scope.column_name=column_name;
@@ -160,7 +160,7 @@
         };
 
 
-         $scope.deleteImage=function(e,column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
+         $scope.deleteImageMain=function(e,column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value)
          {
             
               if(default_image == '') {
@@ -204,10 +204,10 @@
             }
 
           e.stopPropagation(); // Stop event from bubbling up
-        }
+        }*/
 
 
-*/
+
 
 
   // ============= UPLOAD IMAGE ============= // 

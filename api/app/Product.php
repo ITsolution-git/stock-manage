@@ -433,35 +433,11 @@ class Product extends Model {
     public function designProduct($data) {
 
      
-        /*$whereConditions = ['pd.is_delete' => "1",'dp.is_delete' => "1",'dp.design_id' => $data['id']];
-        $listArray = ['dp.*','pd.*','c.name as colorName'];
-
-        $designDetailData = DB::table('design_product as dp')
-                         
-                         ->leftJoin('purchase_detail as pd','dp.design_id','=', 'pd.design_id')
-                         ->leftJoin('color as c','pd.color_id','=', 'c.id')
-                         ->select($listArray)
-                         ->where($whereConditions)
-                         ->get();
-
-        $combine_array = array();
-        
-        $combine_array['design_product'] = $designDetailData;
-        
-        if($designDetailData) {
-            $combine_array['product_id'] = $designDetailData[0]->product_id;
-            $combine_array['design_id'] = $designDetailData[0]->design_id;
-            $combine_array['colorName'] = $designDetailData[0]->colorName;
-            $combine_array['colorId'] = $designDetailData[0]->color_id;
-            $combine_array['is_supply'] = $designDetailData[0]->is_supply;
-        }
-
-        return $combine_array;*/
         $where = ['od.id' => $data['id'],'dp.is_delete' => '1'];
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse'];
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse','c.color_front_image'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
@@ -509,7 +485,8 @@ class Product extends Model {
                 $total_product += $product->total_qnty;
 
                 if($product->vendor_id >1){
-                    $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
+                   // $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
+                    $product->product_image_view = UPLOAD_PATH.$product->company_id."/custom_image/".$product->color_id."/".$product->color_front_image;
                 } else {
                     $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
                 }
@@ -638,7 +615,7 @@ class Product extends Model {
     {
        
         $whereConditions = ['p.product_id' => $post['id'],'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
-        $listArray = ['p.id','p.product_id','p.customer_price','p.color_id','p.size_id','c.name as color','pz.name as sizeName','p.color_image'];
+        $listArray = ['p.id','p.product_id','p.customer_price','p.color_id','p.size_id','c.name as color','pz.name as sizeName','c.color_front_image','c.id as color_id'];
 
         $productColorSizeData = DB::table('product_color_size as p')
                          ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
@@ -664,14 +641,14 @@ class Product extends Model {
             if (!empty($allDetail)) {
                      
                     if(isset($allDetail[$alldata->color_id][$alldata->sizeName])){
-                        $alldata->qnty = $allDetail[$alldata->color_id][$alldata->sizeName];
+                        $alldata->qnty = (int)$allDetail[$alldata->color_id][$alldata->sizeName];
                     }
             } 
          
           $all_array[$alldata->color_id]['color_name'] = $alldata->color;
           $all_array[$alldata->color_id]['id'] = $alldata->id;
-          $all_array[$alldata->color_id]['color_image'] = $alldata->color_image;
-          $all_array[$alldata->color_id]['color_image_url_photo'] = (!empty($alldata->color_image))?UPLOAD_PATH.$post['company_id'].'/custom_image/'.$alldata->id."/".$alldata->color_image:'';
+          $all_array[$alldata->color_id]['color_front_image'] = $alldata->color_front_image;
+          $all_array[$alldata->color_id]['color_front_image_url_photo'] = (!empty($alldata->color_front_image))?UPLOAD_PATH.$post['company_id'].'/custom_image/'.$alldata->color_id."/".$alldata->color_front_image:'';
           $all_array[$alldata->color_id]['size_data'][] = $alldata;
         }
 
