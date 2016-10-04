@@ -158,9 +158,9 @@
 
                                 <img ng-if="product.vendor_id == '1'" ng-src="https://www.ssactivewear.com/{{product.product_image}}" class="popup-image" ng-click="openSearchProductViewDialog($event,product.id,product.product_image,product.description,product.vendor_name,'Add',product.name,'nocolor',0,'IL')"><md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
 
-                                <img ng-if="product.vendor_id > '1' && product.product_image =='' " ng-src="{{NoImage}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0,product.vendor_id,0)">
+                                <img ng-if="product.vendor_id > '1' && product.product_image =='' " ng-src="{{NoImage}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0,product.vendor_id,0,product.name,product.description,product.vendor_name)">
                            
-                                <img ng-if="product.vendor_id > '1' && product.product_image !='' " ng-src="{{product_base_path}}{{product.id}}/{{product.product_image}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0,product.vendor_id,0)">
+                                <img ng-if="product.vendor_id > '1' && product.product_image !='' " ng-src="{{product_base_path}}{{product.id}}/{{product.product_image}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0,product.vendor_id,0,product.name,product.description,product.vendor_name)">
                                 <md-tooltip md-direction="bottom">{{product.name}}</md-tooltip>
 
 

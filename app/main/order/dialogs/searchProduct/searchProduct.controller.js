@@ -168,7 +168,7 @@
             });
         }
 
-        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
+        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,product_name,description,vendor_name)
         {
             var check_data = {};
             check_data.design_id = $stateParams.id;
@@ -196,7 +196,9 @@
                             color_id:color_id,
                             is_supply:is_supply,
                             vendor_id: $scope.vendor_id,
-                            size_group_id:size_group_id,
+                            product_name:product_name,
+                            description:description,
+                            vendor_name:vendor_name,
                             event: ev
                         },
                         onRemoving : $scope.reloadPage

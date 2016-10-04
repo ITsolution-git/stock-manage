@@ -69,13 +69,13 @@
                                        
                                     </td>
                                     <td> 
-                                        <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('color_image','custom_image','product_color_size',colorsdata.color_image_url_photo,'id',colorsdata.id,colorsdata.color_image,keyColor)">
+                                        <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('color_front_image','custom_image','color',colorsdata.color_front_image_url_photo,'id',keyColor,colorsdata.color_front_image,keyColor)">
                                              <div class="text-right pad0 close-icon">
-                                                <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'color_image','custom_image','product_color_size',colorsdata.color_image,'id',colorsdata.id,keyColor); "></md-icon>
+                                                <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'color_front_image','custom_image','color',colorsdata.color_front_image,'id',keyColor,keyColor); "></md-icon>
                                             </div> 
 
-                                            <img  ng-if="colorsdata.color_image" ng-src="{{colorsdata.color_image_url_photo}}" class="popup-image" />
-                                            <img  ng-if="colorsdata.color_image == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+                                            <img  ng-if="colorsdata.color_front_image" ng-src="{{colorsdata.color_front_image_url_photo}}" class="popup-image" />
+                                            <img  ng-if="colorsdata.color_front_image == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
 
                                         </div>
                                    </td>
@@ -92,13 +92,13 @@
 
                     <md-card-content flex="50" layout="column">
 
-                       <!--  <div flex="24" class="border-grey div-height img-container-product cursor-p" layout-padding ng-click="ImagePopup('product_image','products','products',product_image_url,'id',productId,product_image)">
+                       <!-- <div flex="24" class="border-grey div-height img-container-product cursor-p" layout-padding ng-click="ImagePopupMain('product_image','products','products',product_image_url,'id',productId,product_image)">
                                  <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'product_image','products','products',product_image,'id',productId,key); "></md-icon>
+                                    <md-icon md-font-icon="icon-close" ng-click="deleteImageMain($event,'product_image','products','products',product_image,'id',productId,key); "></md-icon>
                                 </div> 
                                 <img  ng-if="product_image" ng-src="{{product_image_url}}" class="product-popup-image" />
                                 <img  ng-if="product_image == ''" ng-src="{{NoImage}}" alt="No Image" class="product-popup-image" />
-                            </div> -->
+                            </div>  -->
 
                             <div class="float-right">
 

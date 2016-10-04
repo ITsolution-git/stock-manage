@@ -385,7 +385,7 @@
                                     </md-button>
                                 </md-menu-item>
                                 <md-menu-item ng-show="product.vendor_id > 1">
-                                    <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply,product.design_product_id,product.vendor_id,product.size_group_id)">
+                                    <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply,product.design_product_id,product.vendor_id,product.product_name,product.description,product.name_company)">
                                         Edit
                                     </md-button>
                                 </md-menu-item>
@@ -399,10 +399,17 @@
                 <div class="box-content" layout="column" >
                     <div layout="row " layout-align="space-between" class="p-b-20">
                         <div layout="row" layout-align="space-between start" flex="35">
-                            <div class="ad-product-img md-whiteframe-1dp">
+                            <div class="ad-product-img md-whiteframe-1dp" ng-show="product.vendor_id > 0">
+                                <img ng-if="product.color_front_image != ''" src="{{product.product_image_view}}" class="popup-image">
+                                <img ng-if="product.color_front_image == ''" src="{{NoImage}}" class="popup-image">
+                            </div>
+
+                            <div class="ad-product-img md-whiteframe-1dp" ng-show="product.vendor_id == 0">
                                 <img ng-if="product.product_image != ''" src="{{product.product_image_view}}" class="popup-image">
                                 <img ng-if="product.product_image == ''" src="{{NoImage}}" class="popup-image">
-                            </div>  
+                            </div>
+
+
                             <div layout="column">
                                 <div class="h4" ng-show="product.vendor_id > 0">Vendor</div>
                                 <div class="h5 p-b-10">{{product.name_company}}</div>
