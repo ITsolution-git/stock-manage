@@ -104,7 +104,7 @@
             notifyService.notify('error','You have no rights to Edit.');
             return false;
         }
-        if(field_value!='.' && !angular.isUndefined(validation) && Object.keys(validation).length>0 )
+        if(!angular.isUndefined(validation) && Object.keys(validation).length>0 )
         {
             notifyService.notify('error','Please enter valid Input.');
             return false;
