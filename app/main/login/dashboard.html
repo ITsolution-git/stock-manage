@@ -23,10 +23,17 @@
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
                         <div class="center-num"><span class="num-style1 text-center">
-                        123 <span class="dash-btwn-txt">sales <br />totalling</span>$45,789 <sup>00</sup></div>
+                        123 <!-- <span class="dash-btwn-txt">sales <br />totalling</span>$45,789 <sup>00</sup> --></div>
                 </md-card-content>
                 <div class="dash-footer-box">
-                    Filter by Sales Member
+                    <span class="global-labels">Filter by</span>
+                    <div class="dash-footer-filter">
+                        <md-select aria-label="Filter By" ng-model="orderfilterbox" class="global-labels">
+                            <md-option value="0" selected>sales Member</md-option>
+                            <md-option value="1">User</md-option>
+                            <md-option value="2">admin</md-option>
+                        </md-select>
+                    </div>    
                 </div>
                 <!-- <md-divider ></md-divider> -->
                 
@@ -36,8 +43,8 @@
                     <md-card-title-text class="md-title">
                         Sales Closed
                     </md-card-title-text>
-                    <div ng-if="po_data.complete==0">
-                        <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
+                    <div>
+                        <a class="common-header-links">EDIT</a>
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
@@ -45,7 +52,14 @@
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box">
-                    Sales closed by Sales Member
+                    <span class="global-labels">Sales closed by</span>
+                    <div class="dash-footer-filter">
+                        <md-select aria-label="Filter By" ng-model="salesclosed" class="global-labels">
+                            <md-option value="0" selected>sales Member</md-option>
+                            <md-option value="1">User</md-option>
+                            <md-option value="2">admin</md-option>
+                        </md-select>
+                    </div>    
                 </div>
             </md-card>
             <md-card class="box-3 bottom-shadow lastbox">
@@ -57,14 +71,32 @@
                         <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
                     </div>
                 </md-card-title>
-                <md-card-content class="center-num-box box-zerospace">
+                <md-card-content class="center-num-box box-zerospace dashboard-cards">
                         <div class="center-num"><span class="num-style1 text-center">{{estimatedTotal}} | {{estimated1 | currency : $ : 0}}<sup>{{estimated2}}</sup></span>
                         <span class="dash-btwn-txt comp-report-txt">Estimates | Revenue</span>
                         </div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
-                <div class="dash-footer-box">
-                    Date | Filter by User
+                <div class="dash-footer-box text-center">
+                    <div flex=35 class="box-zerospace">
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="estdate" class="global-labels">
+                                <md-option value="0" selected>Dates</md-option>
+                                <md-option value="1">Today</md-option>
+                                <md-option value="2">Weekly</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                    <div flex=65 class="box-zerospace">
+                        <span class="global-labels">Filter by</span>
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="estfilter" class="global-labels">
+                                <md-option value="0" selected>sales Member</md-option>
+                                <md-option value="1">User</md-option>
+                                <md-option value="2">admin</md-option>
+                            </md-select>
+                        </div>
+                    </div>
                 </div>
             </md-card>
         </div>
@@ -72,21 +104,21 @@
             <md-card class="box-3 firstbox bottom-shadow">
                 <md-card-title>
                     <md-card-title-text class="md-title">
-                        Comparison Report
+                        Yearly Gross Compare
                     </md-card-title-text>
                     <div ng-if="po_data.complete==0">
                         <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
                     </div>
                 </md-card-title>
-                <md-card-content class="center-num-box box-zerospace">
+                <md-card-content class="center-num-box box-zerospace dashboard-cards">
                         <div class="center-num"><span class="num-style1 text-center">
                         $98,345 <sup>00</sup><span class="dash-btwn-txt green-txt"><i class="fa fa-caret-up"></i> 14%</span>
                         <span class="dash-btwn-txt comp-report-txt">$89,678 Jan 2015</span>
                     </div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
-                <div class="dash-footer-box">
-                    Jan 2016 compared with Jan 2015
+                <div class="dash-footer-alternate-box">
+                    &nbsp;
                 </div>
             </md-card>
             <md-card class="box-3 bottom-shadow">
@@ -98,15 +130,31 @@
                        <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
                     </div>
                 </md-card-title>
-                <md-card-content class="center-num-box box-zerospace">
+                <md-card-content class="center-num-box box-zerospace dashboard-cards">
                         <div class="center-num"><span class="num-style1 text-center">Items {{avgItems1}}<sup>{{avgItems2}}</sup> |Amount {{avgAmount1 | currency : $ : 0}}<sup>{{avgAmount2}}</sup></div>
                 </md-card-content>
-
-                <div class="dash-footer-box">
-                    Sales made by
-                </div>
                 <!-- <md-divider ></md-divider> -->
-                
+                <div class="dash-footer-box text-center">
+                    <div flex=35 class="box-zerospace">
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="estdate" class="global-labels">
+                                <md-option value="0" selected>Dates</md-option>
+                                <md-option value="1">Today</md-option>
+                                <md-option value="2">Weekly</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                    <div flex=65 class="box-zerospace">
+                        <span class="global-labels">Filter by</span>
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="estfilter" class="global-labels">
+                                <md-option value="0" selected>sales Member</md-option>
+                                <md-option value="1">User</md-option>
+                                <md-option value="2">admin</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                </div>
             </md-card>
             
             <md-card class="box-3 bottom-shadow lastbox">
@@ -120,10 +168,11 @@
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
                     <div class="center-num">
-                        <span ng-repeat="newOrders in latestOrders" class="dash-btwn-txt comp-report-txt">
-                            {{newOrders.order_id}} | {{newOrders.client_company}} | {{newOrders.grand_total | currency : $ : 2}}
-                        </span>
-                        
+                        <div ng-repeat="newOrders in latestOrders" class="dash-btwn-txt comp-report-txt dash-latest-order layout-padding">
+                            <div flex=20 class="box-zerospace text-left global-labels">{{newOrders.order_id}}</div>
+                            <div flex=50 class="box-zerospace text-left">{{newOrders.client_company}}</div>
+                            <div flex=30 class="box-zerospace text-right">{{newOrders.grand_total | currency : $ : 2}}</div>
+                        </div>
                     </div>
                 </md-card-content>
                 <div class="dash-footer-alternate-box">
@@ -131,7 +180,7 @@
                 </div>
             </md-card>
         </div>
-        <div layout="row" layout-wrap="nowrap" class="inner-full-box top-30 last-row layout-wrap layout-row">
+        <div layout="row" layout-wrap="nowrap" class="inner-full-box top-30 mb-30 last-row layout-wrap layout-row">
             <div flex-xs flex-gt-xs="25" layout="column">
                 <md-card class="bottom-shadow md-default-theme firstbox">
                     <md-card-header layout-align="space-between center">
