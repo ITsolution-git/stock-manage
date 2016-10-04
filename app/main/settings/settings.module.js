@@ -83,11 +83,12 @@
                 url  : '/companyProfile',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/main/settings/views/companyProfile/companyProfile.html',
-                        controller : 'UserProfileController as vm'
+                        templateUrl: 'app/main/settings/views/companyProfile/company.html',
+                        controller : 'CompanyProfileController as vm'
                     }
                 }
-            }).state('app.settings.companyDetails', {
+            })
+            /*.state('app.settings.companyDetails', {
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
@@ -100,11 +101,12 @@
                 url  : '/companyDetails',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/main/settings/views/companyDetails/companyDetails.html',
-                        controller : 'CompanyDetailsController as vm'
+                        templateUrl: 'app/main/settings/views/companyDetails/comany.html',
+                        controller : 'CompanyProfileController as vm'
                     }
                 }
-            }).state('app.settings.userManagement', {
+            })*/
+            .state('app.settings.userManagement', {
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
@@ -274,14 +276,14 @@
             class      : 'navigation-dashboards project-dashboard',
             weight     : 2
         });
-
+/*
         msNavigationServiceProvider.saveItem('fuse.settings.companyDetails', {
             title      : 'Company Details',
             state      : 'app.settings.companyDetails',
             stateParams: {'id': 3},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 3
-        });
+        });*/
 
         msNavigationServiceProvider.saveItem('fuse.settings.userManagement', {
             title      : 'User Management',
