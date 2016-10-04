@@ -130,25 +130,3 @@
       };
     });
 
-app.directive('dontFill', function() {
-
-  return {
-
-    restrict: 'A',
-
-    link: function link(scope, el, attrs) {
-      // password fields need one of the same type above it (firefox)
-      var type = el.attr('type') || 'text';
-      // chrome tries to act smart by guessing on the name.. so replicate a shadow name
-      var name = el.attr('name') || '';
-      var shadowName = name + '_shadow';
-      // trick the browsers to fill this innocent silhouette
-      var shadowEl = angular.element('<input type="' + type + '" name="' + shadowName + '" style="display: none">');
-
-      // insert before
-      el.parent()[0].insertBefore(shadowEl[0], el[0]);
-    }
-
-  };
-
-});
