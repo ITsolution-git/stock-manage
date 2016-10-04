@@ -96,8 +96,8 @@
     // COMPANY EDIT TIME CALL
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
-        //console.log(field_name); console.log(field_value);
-        //console.log(Object.keys(validation).length);
+        console.log(field_name); console.log(field_value);
+        console.log(Object.keys(validation).length);
         
         if($scope.allow_access=='0')
         {
