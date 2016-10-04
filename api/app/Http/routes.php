@@ -378,3 +378,5 @@ Route::post('invoice/getUnpaid', 'InvoiceController@getUnpaid');
 Route::post('invoice/getAverageOrders', 'InvoiceController@getAverageOrders');
 Route::post('invoice/getLatestOrders', 'InvoiceController@getLatestOrders');
 Route::post('invoice/getEstimates', 'InvoiceController@getEstimates');
+Route::post('invoice/getComparison', 'InvoiceController@getComparison');
+Route::post('invoice/getSalesPersons', 'InvoiceController@getSalesPersons');

@@ -378,6 +378,37 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+    public function getSalesPersons(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        $retArray = DB::table('sales as s')
+            ->select('s.sales_name', 's.id as sales_id')
+            ->leftJoin('users as u','u.id','=','s.company_id')
+            //->leftJoin('orders as o','o.sales_id','=','s.id')
+            //->leftJoin('client as c','c.client_id','=','o.client_id')
+            //->leftJoin('users as u1','u1.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('s.sales_delete','=','1')
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
     public function getNoQuickbook(){
         $post = Input::all();
         $client_id=$post['company_id'];
@@ -476,15 +507,27 @@ class InvoiceController extends Controller {
     public function getAverageOrders(){
         $post = Input::all();
         $client_id=$post['company_id'];
-        
+
         // Fetching average amount of order per invoiced
-        $retArray = DB::table('invoice as i')
+        if(isset($post['sales_id'])){
+            $sales_id=$post['sales_id'];
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('AVG(o.grand_total) as avgOrderAmount'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.sales_id','=',$sales_id)
+            ->get();
+        }else{
+            $retArray = DB::table('invoice as i')
             ->select(DB::raw('AVG(o.grand_total) as avgOrderAmount'))
             ->leftJoin('orders as o','o.id','=','i.order_id')
             ->leftJoin('client as c','c.client_id','=','o.client_id')
             ->leftJoin('users as u','u.id','=','c.company_id')
             ->where('u.id','=',$client_id)
             ->get();
+        }
 
         if(empty($retArray))
         {
@@ -499,7 +542,21 @@ class InvoiceController extends Controller {
         $retArray[0]->avgOrderAmount=$tempFigure;
 
         // Fetching average number of items per invoiced
-        $order_design_data = DB::table('invoice as i')
+        if(isset($post['sales_id'])){
+            $sales_id=$post['sales_id'];
+            $order_design_data = DB::table('invoice as i')
+            ->select('od.id as design_id', 'o.id as order_id')
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('order_design as od','od.order_id','=','o.id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.sales_id','=',$sales_id)
+            ->where('od.status','=','1')
+            ->where('od.is_delete','=','1')
+            ->get();
+        }else{
+            $order_design_data = DB::table('invoice as i')
             ->select('od.id as design_id', 'o.id as order_id')
             ->leftJoin('orders as o','o.id','=','i.order_id')
             ->leftJoin('order_design as od','od.order_id','=','o.id')
@@ -509,41 +566,46 @@ class InvoiceController extends Controller {
             ->where('od.status','=','1')
             ->where('od.is_delete','=','1')
             ->get();
+        }
 
-        $size_data = array();
-        $order_design = array();
-        $orderIDs = array();
-        $total_unit = 0;
-
-        foreach ($order_design_data as $design)
+        if(!empty($order_design_data))
         {
-            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->design_id,'is_delete' => '1'),array());
+            $size_data = array();
+            $order_design = array();
+            $orderIDs = array();
+            $total_unit = 0;
 
-            $total_qnty = 0;
-            foreach ($size_data as $size)
+            foreach ($order_design_data as $design)
             {
-                $total_qnty += $size->qnty;
+                $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->design_id,'is_delete' => '1'),array());
+
+                $total_qnty = 0;
+                foreach ($size_data as $size)
+                {
+                    $total_qnty += $size->qnty;
+                }
+                $total_unit += $total_qnty;
+
+                $design->size_data = $size_data;
+                $design->total_qnty = $total_qnty;
+                $orderIDs[]=$design->order_id;
+
+                //$order_design['all_design'][] = $design;
             }
-            $total_unit += $total_qnty;
 
-            $design->size_data = $size_data;
-            $design->total_qnty = $total_qnty;
-            $orderIDs[]=$design->order_id;
+            if($total_unit > 0)
+            {
+                $order_design['total_unit'] = $total_unit;
 
-            //$order_design['all_design'][] = $design;
+                $countOrders = count(array_unique($orderIDs));
+
+                $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,2);
+
+                $tempAvg=explode(".", $retArray[0]->avgOrderItems);
+                $retArray[0]->avgOrderItems=$tempAvg;
+            }
         }
-
-        if($total_unit > 0)
-        {
-            $order_design['total_unit'] = $total_unit;
-        }
-
-        $countOrders = count(array_unique($orderIDs));
-
-        $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,2);
-
-        $tempAvg=explode(".", $retArray[0]->avgOrderItems);
-        $retArray[0]->avgOrderItems=$tempAvg;
+        
 
         $response = array(
             'success' => 1, 
@@ -611,6 +673,69 @@ class InvoiceController extends Controller {
         $retArray[0]->totalEstimated=round($retArray[0]->totalEstimated, 2);
         $tempFigure=explode(".", $retArray[0]->totalEstimated);
         $retArray[0]->totalEstimated=$tempFigure;
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getComparison(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        $year1=$post['comparisonPeriod1'];
+        $year2=$post['comparisonPeriod2'];
+        
+        $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            //->where(YEAR('i.created_date'),'=',YEAR(CURDATE()))
+            ->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())'))
+            //->whereRaw('YEAR(i.created_date)' <= 'YEAR(CURDATE()')
+            ->get();
+
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $amountCurrent=round($retArray[0]->totalEstimated, 2);
+        $tempFigure=explode(".", $amountCurrent);
+        $retArray[0]->totalEstimated=$tempFigure;
+
+        $retArrayPrevious = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.grand_total) as totalEstimatedPrevious'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where(DB::raw('YEAR(i.created_date)'), '=',$year2)
+            ->get();
+
+        /*if(empty($retArrayPrevious))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }*/
+        if(!empty($retArrayPrevious)){
+            $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 2);
+            $amountPrevious='207512.46';
+            //$tempFigure=explode(".", $amountPrevious);
+            $retArray[0]->totalEstimatedPrevious=$amountPrevious;
+            $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),2)-100;    
+        }
+
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
