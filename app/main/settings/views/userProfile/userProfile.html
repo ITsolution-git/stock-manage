@@ -51,7 +51,7 @@
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                                <input placeholder="Phone Number" name="prime_phone_main" required ng-pattern="valid_phone"  ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.prime_phone_main.$error)' }">
+                                <input autocomplete="company.prime_phone_main" placeholder="Phone Number" name="prime_phone_main" required ng-pattern="valid_phone"  ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.prime_phone_main.$error)' }">
                                 <div ng-messages="user_profile.prime_phone_main.$error" role="alert" multiple>
                                     <div ng-message="required">
                                         <span>This field is required</span>
