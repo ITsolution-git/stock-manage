@@ -4,7 +4,7 @@
         </div>
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-order" flex="100">
-                <form name="user_profile" autocomplete="on">
+                <form name="user_profile" autocomplete="off">
                 <md-card layout="row">
                     <md-card-content flex="70" layout="column">
                         <div class="title" layout-padding><span class="basicInfoStyle">BASIC INFORMATION</span></div>   
@@ -51,7 +51,7 @@
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                                <input  autocomplete="off" placeholder="Phone Number" name="prime_phone_main" required ng-pattern="valid_phone"  ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.prime_phone_main.$error)' }">
+                                <input  autocomplete="off" type="text" dont_fill placeholder="Phone Number" name="prime_phone_main" required ng-pattern="valid_phone"  ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.prime_phone_main.$error)' }">
                                 <div ng-messages="user_profile.prime_phone_main.$error" role="alert" multiple>
                                     <div ng-message="required">
                                         <span>This field is required</span>
