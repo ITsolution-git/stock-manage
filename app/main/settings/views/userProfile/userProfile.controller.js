@@ -12,6 +12,7 @@
     function UserProfileController($window, $timeout,$filter,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
         $scope.NoImage = AllConstant.NoImage;
+        $scope.valid_phone = AllConstant.VALID_PHONE;
       var vm = this;
 
     vm.openChangePasswordialog = openChangePasswordialog;
@@ -95,7 +96,7 @@
     // COMPANY EDIT TIME CALL
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
-        console.log(field_name); console.log(field_value);
+        //console.log(field_name); console.log(field_value);
         //console.log(Object.keys(validation).length);
         
         if($scope.allow_access=='0')
@@ -103,7 +104,7 @@
             notifyService.notify('error','You have no rights to Edit.');
             return false;
         }
-        if(!angular.isUndefined(validation) && Object.keys(validation).length>0 && field_value!='.')
+        if(field_value!='.' && !angular.isUndefined(validation) && Object.keys(validation).length>0 )
         {
             notifyService.notify('error','Please enter valid Input.');
             return false;

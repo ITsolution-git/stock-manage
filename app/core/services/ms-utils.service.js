@@ -324,7 +324,8 @@ core.factory('AllConstant', AllConstant);
                   NoDocument: base_path+'api/public/images/nodocument.png',
                   currentdate : $filter('date')(new Date(), 'yyyy-MM-dd'),
                   base_path:base_path,
-                  NO_ACCESS:'Sorry, You have no permission.'
+                  NO_ACCESS:'Sorry, You have no permission.',
+                  VALID_PHONE:/^\d{10}$/ // PHONE VALIDATION PATTERN
                 }
             return constatnt;
         }
