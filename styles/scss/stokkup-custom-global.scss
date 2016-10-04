@@ -1324,6 +1324,7 @@ md-card-content{
 		margin:0 auto;
 		text-align:center;
 		width:95%;
+		top:15px;
 	}
 	&.green-txt{
 		color:$green-txt;
@@ -1363,6 +1364,9 @@ md-card-content{
 		}
 		md-card-content{
 			padding-top:$zero;
+			&.dashboard-cards{
+				padding-bottom:$zero;
+			}
 		}
 	}
 }
@@ -1852,4 +1856,32 @@ md-tabs.stokkup-invoice-tabs{
 }
 .po-selectbox md-select-value{
 	border:$nofloat !Important;
+}
+.dash-footer-filter{
+	width:auto;
+	float:$nofloat;
+	display:inline-block;
+	md-select{
+		margin:$zero;
+		md-select-value{
+			border:$nofloat !important;
+			padding:$zero;
+			min-height:5px;
+			min-width:5px;
+			top:-2px;
+			font-size:$font-size-text;
+			line-height:$popup-heading-font-size;
+			text-transform:capitalize;
+			.md-select-icon{
+				width:10px;
+			}
+		}
+	}
+}
+.dash-footer-filter md-option .md-text{
+	text-transform:capitalize;
+}
+.dash-btwn-txt.comp-report-txt.dash-latest-order{
+	padding:$zero;
+	width:$full-width;
 }
