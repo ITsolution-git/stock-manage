@@ -416,7 +416,7 @@
         {
             if($scope.vendor_id > 0)
             {
-                var data = {'productSearch': $scope.productSearch,'vendor_id': $scope.vendor_id, 'vendors': $scope.allVendors};
+                var data = {'productSearch': $scope.productSearch,'vendor_id': $scope.vendor_id, 'vendors': $scope.allVendors, 'client_id': $scope.order.client_id};
 
                 $mdDialog.show({
                     controller: 'SearchProductController',

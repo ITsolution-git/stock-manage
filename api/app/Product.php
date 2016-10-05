@@ -81,72 +81,64 @@ class Product extends Model {
 
         DB::statement('SET GLOBAL group_concat_max_len = 1000000');
 
-        /*if(isset($data['where']['search']))
-        {*/
-            if(isset($data['where']['search']))
-            {
-                $search = $data['where']['search'];
+        if(isset($data['where']['search']))
+        {
+            $search = $data['where']['search'];
 
-                $brand = DB::table('brand')
-                        ->select(DB::raw('GROUP_CONCAT(id) as brand_id'))
-                        ->where('brand_name', 'LIKE', '%'.$search.'%')
-                        ->get();
+            $brand = DB::table('brand')
+                    ->select(DB::raw('GROUP_CONCAT(id) as brand_id'))
+                    ->where('brand_name', 'LIKE', '%'.$search.'%')
+                    ->get();
 
-                if($brand[0]->brand_id == '')
-                {
-                    $brand = array();
-                }
-            }
-            else
+            if($brand[0]->brand_id == '')
             {
-                $search = '';
                 $brand = array();
             }
+        }
+        else
+        {
+            $search = '';
+            $brand = array();
+        }
 
+        $sql = DB::table('products')
+                ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                ->leftJoin('client_product_supplied','products.id','=',DB::raw("client_product_supplied.product_id AND client_product_supplied.client_id = ".$data['where']['client_id']));
 
-            if(is_numeric($search) && $data['where']['vendor_id'] == 1)
-            {
-                 $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->orWhere('id','=',$search)
-                        ->orWhere('name', 'LIKE', '%'.$search.'%')
-                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
-                        ->get();
-            }
-            else if($data['where']['vendor_id'] == 1 && count($brand)>0)
-            {
-                $brand_id_array = explode(",",$brand[0]->brand_id);
+        if(is_numeric($search) && $data['where']['vendor_id'] == 1)
+        {
+            $sql = $sql->orWhere('id','=',$search)
+            ->orWhere('name', 'LIKE', '%'.$search.'%');
+        }
+        else if($data['where']['vendor_id'] == 1 && count($brand)>0)
+        {
+            $brand_id_array = explode(",",$brand[0]->brand_id);
 
-                $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->where('vendor_id' , '=', $data['where']['vendor_id']);
-                        if($search != '')
-                            {
-                            $sql = $sql->Where(function($query) use($search)
-                            {
-                                $query->orWhere('name', 'LIKE', '%'.$search.'%');
-                            });
-                        }
-                        $sql = $sql->orWhereIn('brand_id' ,$brand_id_array)
-                        ->get();
-            }
-            else
+            if($search != '')
             {
-                $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'));
-                        if($search != '')
-                        {
-                            $sql = $sql->where('name', 'LIKE', '%'.$search.'%');
-                        }
-                        $sql = $sql->where('vendor_id' , '=', $data['where']['vendor_id'])
-                        ->get();
+                $sql = $sql->Where(function($query) use($search)
+                {
+                    $query->orWhere('name', 'LIKE', '%'.$search.'%');
+                });
             }
+        }
+        else
+        {
+            if($search != '')
+            {
+                $sql = $sql->where('name', 'LIKE', '%'.$search.'%');
+            }
+        }
 
-            if(count($sql)>0)
-            {
-                $product_id_array = explode(",",$sql[0]->products);
-            }
-        //}
+        $sql = $sql->where('vendor_id' , '=', $data['where']['vendor_id'])
+                ->where('client_product_supplied.product_id','=',NULL)
+                ->get();
+
+        if(count($sql)>0)
+        {
+            $product_id_array = explode(",",$sql[0]->products);
+        }
+
         if(isset($data['where']['category_id']) && !empty($data['where']['category_id']))
         {
             $category_id_array = $data['where']['category_id'];
