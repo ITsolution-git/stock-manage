@@ -1,130 +1,99 @@
-<div class="main-design-page m-r-15 m-l-20 m-b-20">
-    <div class="header"  layout="column">
-        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
-        </div>
+<div class="order-info-page stockkup-content-table-container transparent-bg">
+    <div class="simple-table-container stokkup-main-tableview transparent-bg">
+       
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-order" flex="100">
                 <form name="copmpany_profile">
-                <md-card layout="row" flex="100" class="layout-wrap">
-                  
+                    <md-card layout="row" flex="100" class="layout-wrap transparent-bg">
+                        <md-card-content class="custom-pro-boxmain white-bg" layout="column">
+                            
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Product Name"  ng-model="productName"  ui-event="{ change : 'updateProduct(\'name\',productId,productName,\'products\',\'id\')' }" >
+                            </md-input-container>
 
-                    <md-card-content flex="50" layout="column">
-                        
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Product Name"  ng-model="productName"  ui-event="{ change : 'updateProduct(\'name\',productId,productName,\'products\',\'id\')' }" >
-                        </md-input-container>
+                            <md-input-container class="md-block first-box settings-margin-0">
+                                <textarea placeholder="Description" aria-label="description" ng-model="product_description"  rows="5" md-select-on-focus  ui-event="{ change : 'updateProduct(\'description\',productId,product_description,\'products\',\'id\')' }"></textarea>
+                            </md-input-container>
 
-                        <md-input-container class="md-block first-box settings-margin-0">
-                            <textarea placeholder="Description" aria-label="description" ng-model="product_description"  rows="5" md-select-on-focus  ui-event="{ change : 'updateProduct(\'description\',productId,product_description,\'products\',\'id\')' }"></textarea>
-                        </md-input-container>
+                             <md-input-container class="md-block first-box settings-margin-0">
+                                <label>Vendor</label>
+                                <md-select ng-model="vendor_id"   ng-change="updateProduct('vendor_id',productId,vendor_id,'products','id')">
 
-                         <md-input-container class="md-block first-box settings-margin-0">
-                            <label>Vendor</label>
-                            <md-select ng-model="vendor_id"   ng-change="updateProduct('vendor_id',productId,vendor_id,'products','id')">
+                                 <md-option  value="-1" >Add Vendor  </md-option>
 
-                             <md-option  value="-1" >Add Vendor  </md-option>
-
-                                <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-if="vendor.id != 1" ng-selected="{{vendor_id==vendor.id}}">
-                                   
-                                    {{vendor.name_company}}
-                                   
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-
-                        <div class="attribute-box">
-                            <table class="tbl-typ1">
-                                <tr>
-                                    <th width="30%">Color</th>
-                                    <th width="35%">Size</th>
-                                    <th width="15%">Price</th>
-                                    <th width="15%">Image</th>
-                                    <th width="20%" class="text-center">
-                                        <a href="#" class="add-attributes" ui-event="{ click : 'addcolorsize(productId,0,0)'}"><span class="icon icon-plus"></span></a>
-                                    </th>
-                                </tr>
-                                <tr ng-repeat="(keyColor,colorsdata) in productColorSize">
-                                    <td class="align-T">
-                                        <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                            <input type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="colorsdata.color_name" ui-event="{ change : 'updateProduct(\'name\',keyColor,colorsdata.color_name,\'color\',\'id\')' }">
-                                        </md-input-container>
-                                    </td>
-                                    <td>
-                                        <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
-                                            <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
-                                                <input type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.sizeName" ui-event="{ change : 'updateProduct(\'name\',all_size.size_id,all_size.sizeName,\'product_size\',\'id\')' }">
-                                                <a href="#" class="add-size" ng-click="addcolorsize(productId,all_size.color_id,0)" ng-show="key==0"><span class="icon icon-plus"></span></a>
-                                                <a href="#" class="remove-size" ng-click="removeColorSize(productId,all_size.color_id,all_size.size_id)" ng-show="key!=0"><span class="icon icon-close"></span></a>
-                                            </md-input-container>
-                                        </div>
+                                    <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-if="vendor.id != 1" ng-selected="{{vendor_id==vendor.id}}">
                                        
-                                    </td>
-
-                                     <td>
-                                        <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
-                                            <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
-                                                <input valid-number type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="customer_price" aria-invalid="false" ng-model="all_size.customer_price" ui-event="{ change : 'updateProduct(\'customer_price\',all_size.id,all_size.customer_price,\'product_color_size\',\'id\')' }">
-                                            </md-input-container>
-                                        </div>
+                                        {{vendor.name_company}}
                                        
-                                    </td>
-                                    <td> 
-                                        <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('color_front_image','custom_image','color',colorsdata.color_front_image_url_photo,'id',keyColor,colorsdata.color_front_image,keyColor)">
-                                             <div class="text-right pad0 close-icon">
-                                                <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'color_front_image','custom_image','color',colorsdata.color_front_image,'id',keyColor,keyColor); "></md-icon>
-                                            </div> 
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
 
-                                            <img  ng-if="colorsdata.color_front_image" ng-src="{{colorsdata.color_front_image_url_photo}}" class="popup-image" />
-                                            <img  ng-if="colorsdata.color_front_image == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+                            <div class="attribute-box">
+                                <table class="tbl-typ1">
+                                    <tr>
+                                        <th flex=15>Color</th>
+                                        <th flex=15>Size</th>
+                                        <th flex=15>Price</th>
+                                        <th flex=30>Image</th>
+                                        <th class="text-center" flex=15>
+                                            <a href="#" class="add-attributes" ui-event="{ click : 'addcolorsize(productId,0,0)'}"><span class="icon icon-plus"></span></a>
+                                        </th>
+                                    </tr>
+                                    <tr ng-repeat="(keyColor,colorsdata) in productColorSize">
+                                        <td class="">
+                                            <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
+                                                <input type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="colorsdata.color_name" ui-event="{ change : 'updateProduct(\'name\',keyColor,colorsdata.color_name,\'color\',\'id\')' }">
+                                            </md-input-container>
+                                        </td>
+                                        <td>
+                                            <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
+                                                <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
+                                                    <div flex=75 class="box-zerospace">
+                                                        <input type="text" required="" class="text-center size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.sizeName" ui-event="{ change : 'updateProduct(\'name\',all_size.size_id,all_size.sizeName,\'product_size\',\'id\')' }">
+                                                    </div>
+                                                    <div flex=25 class="box-zerospace">
+                                                        <a href="#" class="add-size" ng-click="addcolorsize(productId,all_size.color_id,0)" ng-show="key==0"><span class="icon icon-plus"></span></a>
+                                                        <a href="#" class="remove-size" ng-click="removeColorSize(productId,all_size.color_id,all_size.size_id)" ng-show="key!=0"><span class="icon icon-close"></span></a>
+                                                    </div>
+                                                </md-input-container>
+                                            </div>
+                                           
+                                        </td>
 
-                                        </div>
-                                   </td>
-                                    <td class="text-center">
-                                        <a href="#" class="remove-size remove-attrribute" ng-click="removeColorSize(productId,keyColor,0)"><span class="icon icon-close"></span></a>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                
-                        
-                    </md-card-content>
+                                         <td>
+                                            <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
+                                                <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
+                                                    <input valid-number type="text" required="" class="size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="customer_price" aria-invalid="false" ng-model="all_size.customer_price" ui-event="{ change : 'updateProduct(\'customer_price\',all_size.id,all_size.customer_price,\'product_color_size\',\'id\')' }">
+                                                </md-input-container>
+                                            </div>
+                                           
+                                        </td>
+                                        <td> 
+                                            <div class="border-grey img-container cursor-p p-20 custom-pro-imgmain" ng-click="ImagePopup('color_front_image','custom_image','color',colorsdata.color_front_image_url_photo,'id',keyColor,colorsdata.color_front_image,keyColor)">
+                                                 <div class="text-right pad0 close-icon">
+                                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'color_front_image','custom_image','color',colorsdata.color_front_image,'id',keyColor,keyColor); "></md-icon>
+                                                </div> 
 
+                                                <img  ng-if="colorsdata.color_front_image" ng-src="{{colorsdata.color_front_image_url_photo}}" class="custom-pro-img" />
+                                                <img  ng-if="colorsdata.color_front_image == ''" ng-src="{{NoImage}}" alt="No Image" class="custom-pro-img" />
 
-                    <md-card-content flex="50" layout="column">
-
-                       <!-- <div flex="24" class="border-grey div-height img-container-product cursor-p" layout-padding ng-click="ImagePopupMain('product_image','products','products',product_image_url,'id',productId,product_image)">
-                                 <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImageMain($event,'product_image','products','products',product_image,'id',productId,key); "></md-icon>
-                                </div> 
-                                <img  ng-if="product_image" ng-src="{{product_image_url}}" class="product-popup-image" />
-                                <img  ng-if="product_image == ''" ng-src="{{NoImage}}" alt="No Image" class="product-popup-image" />
-                            </div>  -->
-
+                                            </div>
+                                       </td>
+                                        <td class="text-center">
+                                            <a href="#" class="remove-size remove-attrribute" ng-click="removeColorSize(productId,keyColor,0)"><span class="icon icon-close"></span></a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                             <div class="float-right">
-
-                                <md-button type="button"  class="bg-blue float-right m-t-10" ng-click="cancel()" aria-label="cancel">
+                                <md-button type="button"  class="stokkup-blue-btn stokkup-custom-btn1 m-t-20" ng-click="cancel()" aria-label="cancel">
                                         Cancel
-                                    </md-button>
-
-                                </div>
-
-                    </md-card-content> 
-
-                      
-                      
-
-                    
-                     
-
-                    
-            </md-card>
-
-           
-
-            </form>
-        </div>
-                    </md-card-content>
-                </md-card>
+                                </md-button>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </form>
             </div>
         </div>
     </div>
