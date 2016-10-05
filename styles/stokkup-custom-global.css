@@ -1478,4 +1478,18 @@ md-tabs.stokkup-invoice-tabs {
   padding: 0;
   width: 100%; }
 
+.order-design-packbox .card-box {
+  padding: 10px; }
+
+.design-pro-desc ul {
+  margin: 0;
+  padding: 0 10px; }
+  .design-pro-desc ul li {
+    margin-bottom: 8px; }
+
+.design-positions textarea {
+  padding-top: 15px;
+  max-height: 121px !important;
+  overflow-y: scroll; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
