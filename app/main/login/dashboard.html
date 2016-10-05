@@ -54,10 +54,9 @@
                 <div class="dash-footer-box">
                     <span class="global-labels">Sales closed by</span>
                     <div class="dash-footer-filter">
-                        <md-select aria-label="Filter By" ng-model="salesclosed" class="global-labels">
-                            <md-option value="0" selected>sales Member</md-option>
-                            <md-option value="1">User</md-option>
-                            <md-option value="2">admin</md-option>
+                        <md-select aria-label="Filter By" ng-model="closedSalesMan" ng-change="getSalesClosedSalesMan(closedSalesMan)" class="global-labels">
+                            <md-option value="0" selected>Sales Member</md-option>
+                            <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                         </md-select>
                     </div>    
                 </div>
@@ -80,20 +79,21 @@
                 <div class="dash-footer-box text-center">
                     <div flex=35 class="box-zerospace">
                         <div class="dash-footer-filter">
-                            <md-select aria-label="Filter By" ng-model="estdate" class="global-labels">
-                                <md-option value="0" selected>Dates</md-option>
+                            <md-select aria-label="Filter By" ng-model="estimatesDuration" ng-change="getEstimatesSalesMan(estimatesDuration,estimatesPersonName)" class="global-labels">
+                                <md-option value="0" selected>All Time</md-option>
                                 <md-option value="1">Today</md-option>
-                                <md-option value="2">Weekly</md-option>
+                                <md-option value="2">Last Week</md-option>
+                                <md-option value="3">Last Month</md-option>
+                                <md-option value="4">Last Year</md-option>
                             </md-select>
                         </div>
                     </div>
                     <div flex=65 class="box-zerospace">
-                        <span class="global-labels">Filter by</span>
+                        <span class="global-labels">Estimates by</span>
                         <div class="dash-footer-filter">
-                            <md-select aria-label="Filter By" ng-model="estfilter" class="global-labels">
-                                <md-option value="0" selected>sales Member</md-option>
-                                <md-option value="1">User</md-option>
-                                <md-option value="2">admin</md-option>
+                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" ng-change="getEstimatesSalesMan(estimatesDuration,estimatesPersonName)" class="global-labels">
+                                <md-option value="0" selected>Sales Member</md-option>
+                                <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                             </md-select>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                     <div class="center-num">
                         <span class="num-style1 text-center">{{estimatedCurrent1 | currency : $ : 0}}<sup>{{estimatedCurrent2}}</sup></span>
                         <span class="dash-btwn-txt green-txt"><i class="fa fa-caret-up"></i> {{estimatedComparisonPercent}}%</span>
-                        <span class="dash-btwn-txt comp-report-txt">{{estimatedPrevious | currency : $ : 2}} Jan {{estimatedComparisonPeriod}}</span>
+                        <span class="dash-btwn-txt comp-report-txt">{{estimatedPrevious | currency : $ : 2}} : Year - {{estimatedComparisonPeriod}}</span>
                     </div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
@@ -132,11 +132,11 @@
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems1}}<sup>{{avgItems2}}</sup> |Amount {{avgAmount1 | currency : $ : 0}}<sup>{{avgAmount2}}</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems1}}<sup ng-show="avgItems2 != '0'">{{avgItems2}}</sup> |Amount {{avgAmount1 | currency : $ : 0}}<sup>{{avgAmount2}}</sup></div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box text-center">
-                    <div flex=35 class="box-zerospace">
+                    <!--<div flex=35 class="box-zerospace">
                         <div class="dash-footer-filter">
                             <md-select aria-label="Filter By" ng-model="estdate" class="global-labels">
                                 <md-option value="0" selected>Dates</md-option>
@@ -144,11 +144,11 @@
                                 <md-option value="2">Weekly</md-option>
                             </md-select>
                         </div>
-                    </div>
-                    <div flex=65 class="box-zerospace">
+                    </div>-->
+                    <div flex=100 class="box-zerospace">
                         <span class="global-labels">Filter by</span>
                         <div class="dash-footer-filter">
-                            <md-select aria-label="Filter By" ng-model="salesPersonName" ng-change="getAverageOrdersSalesMan(salesPersonName)" class="global-labels">
+                            <md-select aria-label="Filter By" ng-model="averagePersonName" ng-change="getAverageOrdersSalesMan(averagePersonName)" class="global-labels">
                                 <md-option value="0" selected>Sales Member</md-option>
                                 <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                             </md-select>
