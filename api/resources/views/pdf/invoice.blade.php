@@ -9,7 +9,7 @@
 <body>
 	<table id="header" style="width:100%">
 		<tr>
-			<td>
+			<td width="20%">
 			<?php if(!empty($company_data[0]->photo))
 			{?>
 				<img src="{{$company_data[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
@@ -21,23 +21,20 @@
 			<?php
 			}
 			?>
-			<td>
-				<span style="text-align:center;margin:0;font-weight:bold;">{{$company_data[0]->name}}</span>
-				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address1}}</span>
-				<span style="text-align:center;margin:0;">{{$company_data[0]->prime_address_city}}, {{$company_data[0]->prime_address_state}} {{$company_data[0]->prime_address_zip}}</span>
-				<span style="text-align:center;margin:0;">P: {{$company_data[0]->phone}}</span><br>
-				<span style="text-align:center;margin:0;"><a href="{{$company_data[0]->url}}" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
+			<td width="40%">
+				<span style="text-align:left;margin:0;font-weight:bold;">{{$company_data[0]->name}}</span>
+				<span style="text-align:left;margin:0;">{{$company_data[0]->prime_address1}}</span>
+				<span style="text-align:left;margin:0;">{{$company_data[0]->prime_address_city}}, {{$company_data[0]->prime_address_state}} {{$company_data[0]->prime_address_zip}}</span>
+				<span style="text-align:left;margin:0;">P: {{$company_data[0]->phone}}</span><br>
+				<span style="text-align:left;margin:0;"><a href="{{$company_data[0]->url}}" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a></span>
 			</td>
-			<td>
+			<td width="40%">
 
 				<span style="font-weight:bold;text-align:right;">Order Acknowledgement # {{$order_data[0]->id}}</span><br>
 				<?php if(!empty($invoice_data)) {?>
 					<span style="font-weight:bold;text-align:right;">Created on : {{$invoice_data[0]->created_date}}</span><br>
-					<span style="font-weight:bold;text-align:right;">Due Date : {{$invoice_data[0]->payment_due_date}}</span><br>
 				<?php } ?>
 				<span style="font-weight:bold;text-align:right;">Job Name: {{$order_data[0]->name}}</span><br>
-				<span style="font-weight:bold;text-align:right;">Customer PO: {{$order_data[0]->custom_po}}</span>
-
 			</td>
 		</tr>
 	</table><br><br>
