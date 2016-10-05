@@ -197,16 +197,18 @@ class Product extends Model {
 
         if(empty($data['fields']))
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
         }
         else
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
         }
         
 
         $orderData = DB::table('products as p')
                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                        ->leftJoin('product_color_size as pcs', 'p.id', '=', 'pcs.product_id')
+                        ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
                         ->select($listArray)
                         ->where('p.vendor_id' , '=', $data['where']['vendor_id'])
                         ->whereIn('p.id',$product_id_array)
