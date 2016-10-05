@@ -16,6 +16,7 @@
         $scope.size = true;
         $scope.NoImage = AllConstant.NoImage;
         $scope.product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/products/';
+        $scope.custom_product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/custom_image/';
 
         
         $scope.init = {

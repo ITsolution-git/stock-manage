@@ -66,17 +66,39 @@
                /* $scope.product_image_display_main = $scope.product_image_url;
                 $scope.product_image_main = result.data.product_image;*/
 
-                $scope.product_image_url = $scope.productColorSize[color_id].color_front_image_url_photo;
-                $scope.product_image = $scope.productColorSize[color_id].color_front_image;
+                if(color_id == 0) {
+                     var firstKey;
+                     $.each($scope.productColorSize, function (key, val) {
+                            firstKey = key;
+                            return false;
+                        });
+                   color_id = firstKey;
+                   $scope.color_id = firstKey;
+                }
 
+                if ($scope.productColorSize[color_id] == "undefined" || $scope.productColorSize[color_id] == null) {
 
-                if(operation == 'Add') {
+                     $scope.product_image_url = $scope.NoImage;
+                     $scope.product_image = '';
+                     $scope.sizeAll ='';
+
+                } else {
+
+                     $scope.product_image_url = $scope.productColorSize[color_id].color_front_image_url_photo;
+                      $scope.product_image = $scope.productColorSize[color_id].color_front_image;
+                      $scope.sizeAll =$scope.productColorSize[color_id].size_data;
+                      $scope.changeColor(color_id,$scope.product_image_url,$scope.product_image);
+                }
+
+            
+
+                /*if(operation == 'Add') {
                     $scope.color_id = '0';
                     $scope.sizeAll = {}
                 } else {
                     $scope.sizeAll =$scope.productColorSize[color_id].size_data;
                     $scope.changeColor(color_id,$scope.product_image_url,$scope.product_image);
-                }
+                }*/
             });
         }
 
