@@ -33,11 +33,13 @@
           'search': '',
           'category_id':'',
           'color_id':'',
-          'size_id':''
+          'size_id':'',
+          'client_id': ''
         };
 
         $scope.filterBy.vendor_id = $scope.vendor_id;
         $scope.filterBy.search = $scope.productSearch;
+        $scope.filterBy.client_id = data.client_id;
 
         $scope.filterBy.category_id = [];
         $scope.filterBy.color_id = [];
