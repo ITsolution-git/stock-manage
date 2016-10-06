@@ -38,6 +38,16 @@
             $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
         }
 
+          var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+
+
         // INTIAL CALL TO RETRIVE ALL SCREENSET DATA
         $scope.GetOrderScreenSet = function() 
         {
@@ -89,6 +99,7 @@
                                     //alert(position_id);
                                     $scope.params = params;
                                     $scope.color_screen = colordata;
+                                    $scope.ink_array = params.miscData.art_type;
                                     //console.log($scope.color_screen); 
                                     $scope.closeDialog = function() 
                                     {

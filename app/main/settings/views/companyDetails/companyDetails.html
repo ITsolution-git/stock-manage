@@ -1,12 +1,13 @@
-<div class="main-design-page m-r-15 m-l-20 m-b-20">
+<div class="main-design-page">
     <div class="header"  layout="column">
-        
-        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
-            <div class="info-order" flex="100"  ng-class="{'disable-click': role_slug != 'CA' && role_slug != 'FM'}">
-                
-                <md-card layout="row">
+
+        <div class="inner-full-box top-30">
+            <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+                <div class="info-order" flex="100" ng-class="{'disable-click': role_slug != 'CA' && role_slug != 'FM'  }">
+                    <form name="copmpany_profile">
+                    <md-card layout="row">
                     
-                    <md-card-content flex="50" layout="column">
+                    <md-card-content flex="70" layout="column"  >
                         
                         <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
                             <div class="table-title-text h2 text-semibold" flex=40>
@@ -93,12 +94,13 @@
                         <label class="margin-left-15 pad-top-25"> How large is your team?</label>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
                             <input placeholder="Numbers of team members" ng-model="company_data.team" name="team" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }">
-                        </div> 
+                            </md-input-container>
+                        
 
-
-                    </md-card-content>
-                    
-                </md-card>
+                        </md-card-content> 
+                    </md-card>
+                    </form>
+                </div>   
             </div>
         </div>
     </div>

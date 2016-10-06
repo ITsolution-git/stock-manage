@@ -3,6 +3,9 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Information</span>
+                 <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
+                </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll class="m-t-20">
@@ -158,7 +161,6 @@
             
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent dialog-cancel-global">Cancel</md-button>
             <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised dialog-submit-global" ng-disabled="orderInfoForm.$invalid">Save</md-button>
         </md-dialog-actions>
     </form>

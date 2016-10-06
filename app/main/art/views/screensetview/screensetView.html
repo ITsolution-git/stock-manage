@@ -104,7 +104,7 @@
                                                     </div>
                                                     <div class="trans-box">
                                                         <div>Ink Type</div>
-                                                        <span class="chrome-weight font-14">{{colorsinf.inq}}</span>
+                                                        <span class="chrome-weight font-14">{{colorsinf.ink_value}}</span>
                                                     </div>
                                                     <div class="trans-box">
                                                         <div>Head Location</div>
@@ -157,22 +157,22 @@
                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                 </md-button>
                 <md-menu-content width="4">
-                <md-menu-item ng-click="ImagePopup('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_logo,ScreenSets[0].order_id)" >
+                <md-menu-item ng-click="ImagePopup('image_1','order_design_position','order_design_position',ScreenSets[0].mokup_logo_url,'id',ScreenSets[0].positions,ScreenSets[0].image_1,ScreenSets[0].positions)" >
                 <md-button>
-                    Change Logo
+                    Change Image
                 </md-button>
                 </md-menu-item>
 
-                <md-menu-item ng-click="deleteImage('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo,'id',ScreenSets[0].screen_id,ScreenSets[0].order_id)">
+                <md-menu-item ng-click="deleteImage('image_1','order_design_position','order_design_position',ScreenSets[0].image_1,'id',ScreenSets[0].positions,ScreenSets[0].positions)">
                 <md-button>
-                    Remove Logo
+                    Remove Image
                 </md-button>
                 </md-menu-item>
 
                 </md-menu-content>
                 </md-menu>
             </md-card-header>
-            <md-card-content ng-click="ImagePopup('mokup_logo','art','artjob_screensets',ScreenSets[0].mokup_logo_url,'id',ScreenSets[0].screen_id,ScreenSets[0].mokup_logo,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
+            <md-card-content ng-click="ImagePopup('image_1','order_design_position','order_design_position',ScreenSets[0].mokup_logo_url,'id',ScreenSets[0].positions,ScreenSets[0].image_1,ScreenSets[0].positions)" layout="column" layout-padding class="min-height">
                 <img  ng-src="{{ScreenSets[0].mokup_logo_url}}" alt=""  class="popup-image"/>
             </md-card-content>
         </md-card>

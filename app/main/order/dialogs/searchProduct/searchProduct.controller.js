@@ -16,6 +16,7 @@
         $scope.size = true;
         $scope.NoImage = AllConstant.NoImage;
         $scope.product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/products/';
+        $scope.custom_product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/custom_image/';
 
         
         $scope.init = {
@@ -33,11 +34,13 @@
           'search': '',
           'category_id':'',
           'color_id':'',
-          'size_id':''
+          'size_id':'',
+          'client_id': ''
         };
 
         $scope.filterBy.vendor_id = $scope.vendor_id;
         $scope.filterBy.search = $scope.productSearch;
+        $scope.filterBy.client_id = data.client_id;
 
         $scope.filterBy.category_id = [];
         $scope.filterBy.color_id = [];
@@ -168,7 +171,7 @@
             });
         }
 
-        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
+        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,product_name,description,vendor_name)
         {
             var check_data = {};
             check_data.design_id = $stateParams.id;
@@ -196,7 +199,9 @@
                             color_id:color_id,
                             is_supply:is_supply,
                             vendor_id: $scope.vendor_id,
-                            size_group_id:size_group_id,
+                            product_name:product_name,
+                            description:description,
+                            vendor_name:vendor_name,
                             event: ev
                         },
                         onRemoving : $scope.reloadPage

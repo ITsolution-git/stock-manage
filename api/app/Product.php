@@ -79,58 +79,66 @@ class Product extends Model {
     {
         $product_id_array=array();
 
+        DB::statement('SET GLOBAL group_concat_max_len = 1000000');
+
         if(isset($data['where']['search']))
         {
             $search = $data['where']['search'];
 
-             $brand = DB::table('brand')
-                        ->select(DB::raw('GROUP_CONCAT(id) as brand_id'))
-                        ->where('brand_name', 'LIKE', '%'.$search.'%')
-                        ->get();
+            $brand = DB::table('brand')
+                    ->select(DB::raw('GROUP_CONCAT(id) as brand_id'))
+                    ->where('brand_name', 'LIKE', '%'.$search.'%')
+                    ->get();
 
             if($brand[0]->brand_id == '')
             {
                 $brand = array();
             }
+        }
+        else
+        {
+            $search = '';
+            $brand = array();
+        }
 
+        $sql = DB::table('products')
+                ->select(DB::raw('GROUP_CONCAT(id) as products'))
+                ->leftJoin('client_product_supplied','products.id','=',DB::raw("client_product_supplied.product_id AND client_product_supplied.client_id = ".$data['where']['client_id']));
 
-            if(is_numeric($search) && $data['where']['vendor_id'] == 1)
-            {
-                 $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->orWhere('id','=',$search)
-                        ->orWhere('name', 'LIKE', '%'.$search.'%')
-                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
-                        ->get();
-            }
-            else if($data['where']['vendor_id'] == 1 && count($brand)>0)
-            {
-                $brand_id_array = explode(",",$brand[0]->brand_id);
+        if(is_numeric($search) && $data['where']['vendor_id'] == 1)
+        {
+            $sql = $sql->orWhere('id','=',$search)
+            ->orWhere('name', 'LIKE', '%'.$search.'%');
+        }
+        else if($data['where']['vendor_id'] == 1 && count($brand)>0)
+        {
+            $brand_id_array = explode(",",$brand[0]->brand_id);
 
-                $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->where('vendor_id' , '=', $data['where']['vendor_id']);
-                        $sql = $sql->Where(function($query) use($search)
-                        {
-                            $query->orWhere('name', 'LIKE', '%'.$search.'%');
-                        });
-                        $sql = $sql->orWhereIn('brand_id' ,$brand_id_array)
-                        ->get();
-            }
-            else
+            if($search != '')
             {
-                $sql = DB::table('products')
-                        ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                        ->where('name', 'LIKE', '%'.$search.'%')
-                        ->where('vendor_id' , '=', $data['where']['vendor_id'])
-                        ->get();
-            }
-            
-            if(count($sql)>0)
-            {
-                $product_id_array = explode(",",$sql[0]->products);
+                $sql = $sql->Where(function($query) use($search)
+                {
+                    $query->orWhere('name', 'LIKE', '%'.$search.'%');
+                });
             }
         }
+        else
+        {
+            if($search != '')
+            {
+                $sql = $sql->where('name', 'LIKE', '%'.$search.'%');
+            }
+        }
+
+        $sql = $sql->where('vendor_id' , '=', $data['where']['vendor_id'])
+                ->where('client_product_supplied.product_id','=',NULL)
+                ->get();
+
+        if(count($sql)>0)
+        {
+            $product_id_array = explode(",",$sql[0]->products);
+        }
+
         if(isset($data['where']['category_id']) && !empty($data['where']['category_id']))
         {
             $category_id_array = $data['where']['category_id'];
@@ -189,16 +197,18 @@ class Product extends Model {
 
         if(empty($data['fields']))
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
         }
         else
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
         }
         
 
         $orderData = DB::table('products as p')
                         ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
+                        ->leftJoin('product_color_size as pcs', 'p.id', '=', 'pcs.product_id')
+                        ->leftJoin('color as c', 'pcs.color_id', '=', 'c.id')
                         ->select($listArray)
                         ->where('p.vendor_id' , '=', $data['where']['vendor_id'])
                         ->whereIn('p.id',$product_id_array)
@@ -417,35 +427,11 @@ class Product extends Model {
     public function designProduct($data) {
 
      
-        /*$whereConditions = ['pd.is_delete' => "1",'dp.is_delete' => "1",'dp.design_id' => $data['id']];
-        $listArray = ['dp.*','pd.*','c.name as colorName'];
-
-        $designDetailData = DB::table('design_product as dp')
-                         
-                         ->leftJoin('purchase_detail as pd','dp.design_id','=', 'pd.design_id')
-                         ->leftJoin('color as c','pd.color_id','=', 'c.id')
-                         ->select($listArray)
-                         ->where($whereConditions)
-                         ->get();
-
-        $combine_array = array();
-        
-        $combine_array['design_product'] = $designDetailData;
-        
-        if($designDetailData) {
-            $combine_array['product_id'] = $designDetailData[0]->product_id;
-            $combine_array['design_id'] = $designDetailData[0]->design_id;
-            $combine_array['colorName'] = $designDetailData[0]->colorName;
-            $combine_array['colorId'] = $designDetailData[0]->color_id;
-            $combine_array['is_supply'] = $designDetailData[0]->is_supply;
-        }
-
-        return $combine_array;*/
         $where = ['od.id' => $data['id'],'dp.is_delete' => '1'];
 
         $listArray = ['p.id','p.name as product_name','p.description','p.product_image','dp.avg_garment_cost','dp.avg_garment_price','dp.print_charges','dp.markup',
                         'dp.markup_default','dp.override','dp.override_diff','dp.sales_total','dp.total_line_charge','dp.is_supply','dp.is_calculate','v.name_company',
-                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse'];
+                        'c.name as color_name','dp.id as design_product_id','c.id as color_id','p.vendor_id','dp.design_id','p.company_id','od.order_id','dp.size_group_id','dp.warehouse','c.color_front_image'];
 
         $productData = DB::table('order_design as od')
                          ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
@@ -493,7 +479,8 @@ class Product extends Model {
                 $total_product += $product->total_qnty;
 
                 if($product->vendor_id >1){
-                    $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
+                   // $product->product_image_view = UPLOAD_PATH.$product->company_id."/products/".$product->id."/".$product->product_image;
+                    $product->product_image_view = UPLOAD_PATH.$product->company_id."/custom_image/".$product->color_id."/".$product->color_front_image;
                 } else {
                     $product->product_image_view = "https://www.ssactivewear.com/".$product->product_image;
                 }
@@ -622,7 +609,7 @@ class Product extends Model {
     {
        
         $whereConditions = ['p.product_id' => $post['id'],'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
-        $listArray = ['p.id','p.product_id','p.customer_price','p.color_id','p.size_id','c.name as color','pz.name as sizeName'];
+        $listArray = ['p.id','p.product_id','p.customer_price','p.color_id','p.size_id','c.name as color','pz.name as sizeName','c.color_front_image','c.id as color_id'];
 
         $productColorSizeData = DB::table('product_color_size as p')
                          ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
@@ -648,11 +635,14 @@ class Product extends Model {
             if (!empty($allDetail)) {
                      
                     if(isset($allDetail[$alldata->color_id][$alldata->sizeName])){
-                        $alldata->qnty = $allDetail[$alldata->color_id][$alldata->sizeName];
+                        $alldata->qnty = (int)$allDetail[$alldata->color_id][$alldata->sizeName];
                     }
             } 
          
           $all_array[$alldata->color_id]['color_name'] = $alldata->color;
+          $all_array[$alldata->color_id]['id'] = $alldata->id;
+          $all_array[$alldata->color_id]['color_front_image'] = $alldata->color_front_image;
+          $all_array[$alldata->color_id]['color_front_image_url_photo'] = (!empty($alldata->color_front_image))?UPLOAD_PATH.$post['company_id'].'/custom_image/'.$alldata->color_id."/".$alldata->color_front_image:'';
           $all_array[$alldata->color_id]['size_data'][] = $alldata;
         }
 

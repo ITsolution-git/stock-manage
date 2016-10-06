@@ -1,582 +1,554 @@
-<div class="main-design-page m-r-15 m-l-20 m-b-20">
-    <div class="header"  layout="column">
-        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
-            <a class="link-back cursor-p" ui-sref="app.order.order-info({id:designInforamtion.order_id})">BACK TO ORDER INFO</a>
-            <h1 flex="4">Design Name - {{designInforamtion.design_name}} Job - #{{order_id}}</h1>
+<div class="order-info-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview m-b-30">
+        <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+                Design Name - {{designInforamtion.design_name}} Job - #{{order_id}}
+            </div>
+            <div class="pull-right right-search-box">
+                <a class="pull-right common-header-links" ui-sref="app.order.order-info({id:designInforamtion.order_id})">BACK TO ORDER INFO</a>
+            </div>
         </div>
-        <div class="text-right">
-            <md-button  class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="confirmPricing()" ng-show="allow_access==1">
+    </div>
+
+    <!--inner full box starts here -->
+    <div class="inner-full-box">
+        <div class="box-zerospace mb-20 text-right" layout="row">
+            <div class="full-row">
+                <md-button  class="stokkup-custom-btn1 stokkup-blue-btn md-button margin-0" ng-click="confirmPricing()" ng-show="allow_access==1">
                 Confirm Pricing
-            </md-button>
-        </div>
-       <!--  <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
-            <div class="info-order" flex="100">
-                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
-                <md-card layout="row">
-                    <md-card-content flex="80" layout="column">
-                        <div layout="row" layout-wrap>
-                            <div class="trans-box">
-                                <div>Positions Count</div>
-                                <span>{{designInforamtion.colors_count}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>In Hand By</div>
-                                <span>{{designInforamtion.hands_date}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Start Date</div>
-                                <span>{{designInforamtion.start_date}}</span>
-                            </div>
-                           
-                            <div class="trans-box">
-                                <div>Shipped Date</div>
-                                <span>{{designInforamtion.shipping_date}}</span>
-                            </div>
-                        </div>
-                    </md-card-content>
-                </md-card>
-            </div>
-        </div> -->
-
-
-        <div class="design-positions md-whiteframe-1dp m-b-20" layout="column" layout-align="start" layout-padding>
-            <div class="title" ><span class="h2 text-semibold">Positions</span></div>
-            <div class="design-positions-box border-grey m-b-20" layout="column" layout-align="start" ng-repeat="(key,order_design_position) in order_design_position">
-                <div class="box-toolbar" layout="row" layout-align="end center">
-                    <div flex="90" layout-align="start center" class="box-zerospace">
-                        <!-- <span class="h2 text-semibold">{{order_design_position.position_header_name}}</span> -->
-                        <div layout-wrap class="box-zerospace">
-                            <div class="trans-box order-designname pull-left">
-                                <div>Position:</div>
-                                <span class="font-14 chrome-weight">{{order_design_position.position_header_name}}</span>
-                            </div>
-
-                            <div class="trans-box order-designname pull-left">
-                                <div>Type:</div>
-                                <span class="font-14 chrome-weight">{{order_design_position.placement_header_name}}</span>
-                            </div>
-
-                            <div class="trans-box order-designname pull-left">
-                                <div>Quantity:</div>
-                                <span class="font-14 chrome-weight">{{order_design_position.qnty_header_name}}</span>
-                            </div>
-
-                            <div class="trans-box order-designname pull-left">
-                                <div>Price:</div>
-                                <span class="font-14 chrome-weight">{{order_design_position.total_price | currency : $ : 2}}</span>
-                            </div>
-
-                            <div class="trans-box order-designname pull-left">
-                                <div>Screen Fees:</div>
-                                <span class="font-14 chrome-weight">{{order_design_position.total_screen_fees | currency : $ : 2}}</span>
-                            </div>
-
-                            <div class="trans-box order-designname pull-left">
-                                <div>Color Count:</div>
-                                <span class="font-14 chrome-weight">{{order_design_position.color_stitch_count}}</span>
-                            </div>
-
-                            <div class="trans-box order-designname pull-left">
-                                <div>Design Name:</div>
-                                <span class="font-14 chrome-weight">{{designInforamtion.design_name}}</span>
-                            </div>
-                        </div>
-                        <div class="box-zerospace white-bg">
-                            <div class="pull-left right-20 box-zerospace">
-                                <table class="simple-table layout-padding row-border box-zerospace">
-                                    <tbody>
-                                            <tr>
-                                                <td class="design-intable">
-                                                    <span class="stokkup-title-h4 light-300">Next Tier:</span>  
-                                                </td>
-                                                <td class="design-intable"><b>Screent Print: </b>{{order_design_position.screen_print_charge | currency : $ : 2}}</td>
-                                                <td class="design-intable"><b>Embroidery: </b>{{order_design_position.embroidery_charge | currency : $ : 2}}</td>
-                                                <td class="design-intable"><b>Direct To Garment: </b>{{order_design_position.direct_to_garment_charge | currency : $ : 2}}</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="design-intable">
-                                                    <span class="stokkup-title-h4 light-300"></span>  
-                                                </td>
-                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.screen_print_charge_qnty}}</td>
-                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.embroidery_charge_qnty}}</td>
-                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.direct_to_garment_charge_qnty}}</td>
-                                            </tr>
-                                             <tr>
-                                                <td class="design-intable">
-                                                    <span class="stokkup-title-h4 light-300"></span>  
-                                                </td>
-                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.screen_print_charge2 | currency : $ : 2}}</td>
-                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.embroidery_charge2 | currency : $ : 2}}</td>
-                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.direct_to_garment_charge2 | currency : $ : 2}}</td>
-                                            </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                  <div flex="10" layout-align="end center" layout="row">
-                    <button  ng-click="position1.expanded = !position1.expanded">
-                        <md-icon ng-if="position1.expanded" md-font-icon="icon-minus"></md-icon>
-                        <md-icon ng-if="!position1.expanded" md-font-icon="icon-plus"></md-icon>
-                    </button>
-                     <md-menu ng-show="allow_access==1">
-                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                        </md-button>
-                        <md-menu-content width="4">
-                            <md-menu-item>
-                                <md-button ng-click="UpdateTableField('is_delete','0','order_design_position','id',order_design_position.id)">
-                                    Delete
-                                </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu> 
-                   </div>
-                </div>
-                <div ng-if="position1.expanded" class="box-content" layout="column" layout-padding ng-class="{'disable-click': allow_access==0}">
-                    <div layout="row" class="postion-details" layout-align="space between">
-                        <div flex="20">
-                            <md-input-container class="width100">
-                                <label>Position</label>
-                                <md-select ng-model="order_design_position.position_id" ng-change="updateDesignPosition('position_id',order_design_position.id,order_design_position.position_id,'order_design_position','id',key)" >
-                                    <md-option   ng-repeat="misc_pos in miscData.position" value="{{misc_pos.id}}">
-                                        {{misc_pos.value}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                        <div flex="20" >
-                            <md-input-container class="width100">
-                                <label>Placement Type</label>
-                                <md-select ng-model="order_design_position.placement_type" ng-change="updateDesignPosition('placement_type',order_design_position.id,order_design_position.placement_type,'order_design_position','id',key)">
-                                    <md-option  ng-repeat="misc_placement in miscData.placement_type" value="{{misc_placement.id}}">
-                                        {{misc_placement.value}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                        <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
-                              
-                           
-                            <md-input-container class="width100">
-
-                                <label>DtG Size</label>
-                                <md-select ng-model="order_design_position.dtg_size" ng-change="updateDesignPosition('dtg_size',order_design_position.id,order_design_position.dtg_size,'order_design_position','id',key)">
-                                    <md-option  ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value="{{misc_dtgsize.id}}">
-                                        {{misc_dtgsize.value}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                        <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
-                            <md-input-container class="width100">
-                                <label>DtG on </label>
-                                <md-select ng-model="order_design_position.dtg_on" ng-change="updateDesignPosition('dtg_on',order_design_position.id,order_design_position.dtg_on,'order_design_position','id',key)">
-                                    <md-option  ng-repeat="misc_dtg_on in miscData.direct_to_garment" value="{{misc_dtg_on.id}}">
-                                        {{misc_dtg_on.value}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </div>
-                    </div>
-                    <div layout="row" layout-align="space-between">
-                        <div layout="column" flex="20" layout-align="space between">
-                            <div >
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Description</label>
-                                    <input ng-model="order_design_position.description"  ui-event="{ change : 'updateDesignPosition(\'description\',order_design_position.id,order_design_position.description,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                                <md-input-container class="md-block">
-                                    <label>Notes</label>
-                                    <textarea ng-model="order_design_position.note"  rows="5" md-select-on-focus  ui-event="{ change : 'updateDesignPosition(\'note\',order_design_position.id,order_design_position.note,\'order_design_position\',\'id\',key)' }"></textarea>
-                                </md-input-container>
-                            </div>
-                        </div>
-                        <div layout="row" flex="73" layout-align="spacebetween start" layout-wrap>
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Stitch/Color Count</label>
-                                    <input ng-model="order_design_position.color_stitch_count" valid-number ui-event="{ change : 'updateDesignPosition(\'color_stitch_count\',order_design_position.id,order_design_position.color_stitch_count,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div>
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Foil</label>
-                                    <input ng-model="order_design_position.foil_qnty" valid-number   ui-event="{ change : 'updateDesignPosition(\'foil_qnty\',order_design_position.id,order_design_position.foil_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div>
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Numer On Dark</label>
-                                    <input ng-model="order_design_position.number_on_dark_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'number_on_dark_qnty\',order_design_position.id,order_design_position.number_on_dark_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div>
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Oversize Screen(s)</label>
-                                    <input ng-model="order_design_position.oversize_screens_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'oversize_screens_qnty\',order_design_position.id,order_design_position.oversize_screens_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div> 
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Qnty</label>
-                                    <input ng-model="order_design_position.qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'qnty\',order_design_position.id,order_design_position.qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div> 
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Ink Change</label>
-                                    <input ng-model="order_design_position.ink_charge_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'ink_charge_qnty\',order_design_position.id,order_design_position.ink_charge_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div> 
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Number on Light</label>
-                                    <input ng-model="order_design_position.number_on_light_qnty" valid-number ui-event="{ change : 'updateDesignPosition(\'number_on_light_qnty\',order_design_position.id,order_design_position.number_on_light_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div> 
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Press Setup</label>
-                                    <input ng-model="order_design_position.press_setup_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'press_setup_qnty\',order_design_position.id,order_design_position.press_setup_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div> 
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Discharge</label>
-                                    <input ng-model="order_design_position.discharge_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'discharge_qnty\',order_design_position.id,order_design_position.discharge_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div>
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Speciality</label>
-                                    <input ng-model="order_design_position.speciality_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'speciality_qnty\',order_design_position.id,order_design_position.speciality_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div>
-                           <!--  <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Oversize</label>
-                                    <input ng-model="order_design_position.oversize" valid-number  ui-event="{ change : 'updateDesignPosition(\'oversize\',order_design_position.id,order_design_position.oversize,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div> -->
-                            <div flex="25" class="pad-r">
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Screen Fee</label>
-                                    <input ng-model="order_design_position.screen_fees_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'screen_fees_qnty\',order_design_position.id,order_design_position.screen_fees_qnty,\'order_design_position\',\'id\',key)' }">
-                                </md-input-container>
-                            </div>
-                        </div>
-                    </div>
-                    <div layout="column">
-                        <div class=""><h3>Upload Artwork</h3></div>
-                        <div layout="row" layout-align="space between" layout-wrap>
-                           
-                           <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_1','order_design_position','order_design_position',order_design_position.image_1_url_photo,'id',order_design_position.id,order_design_position.image_1,key)">
-                                 <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_1','order_design_position','order_design_position',order_design_position.image_1,'id',order_design_position.id,key); "></md-icon>
-                                </div> 
-
-                                <img  ng-if="order_design_position.image_1" ng-src="{{order_design_position.image_1_url_photo}}" class="popup-image" />
-                                <img  ng-if="order_design_position.image_1 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
-
-                            </div>
-
-                            <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_2','order_design_position','order_design_position',order_design_position.image_2_url_photo,'id',order_design_position.id,order_design_position.image_2,key)">
-                               <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_2','order_design_position','order_design_position',order_design_position.image_2,'id',order_design_position.id,key);"></md-icon>
-                                </div> 
-
-                               <img  ng-if="order_design_position.image_2" ng-src="{{order_design_position.image_2_url_photo}}" class="popup-image" />
-                               <img  ng-if="order_design_position.image_2 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
-
-                            </div>
-
-                            <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_3','order_design_position','order_design_position',order_design_position.image_3_url_photo,'id',order_design_position.id,order_design_position.image_3,key)">
-                              <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_3','order_design_position','order_design_position',order_design_position.image_3,'id',order_design_position.id,key);"></md-icon>
-                                </div> 
-
-                                <img  ng-if="order_design_position.image_3" ng-src="{{order_design_position.image_3_url_photo}}" class="popup-image" />
-                                <img  ng-if="order_design_position.image_3 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
-                            </div>
-
-
-                            <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_4','order_design_position','order_design_position',order_design_position.image_4_url_photo,'id',order_design_position.id,order_design_position.image_4,key)">
-                                 <div class="text-right pad0 close-icon">
-                                    <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_4','order_design_position','order_design_position',order_design_position.image_4,'id',order_design_position.id,key)"></md-icon>
-                                </div> 
-
-                                <img  ng-if="order_design_position.image_4" ng-src="{{order_design_position.image_4_url_photo}}" class="popup-image" />
-                                <img  ng-if="order_design_position.image_4 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="text-right" ng-show="position_array_count != designInforamtion.colors_count && allow_access==1">
-                <md-button  class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="openPositionDialog($event,designInforamtion.order_id,order_design_position[0].qnty)">
-                            ADD New Position
-                        </md-button>
-            </div>
-            <div class="design-positions-box">
+                </md-button>
             </div>
         </div>
 
-        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding ng-show="allow_access==1">
+        <div class="box-zerospace mb-30">
+            <div class="design-positions" layout="column" layout-align="start">
+            <h4 class="stokkup-title-h4 m-b-20">Positions</h4>
+                <div class="design-positions-box white-bg m-b-20" layout="column" layout-align="start" ng-repeat="(key,order_design_position) in order_design_position">
+                    <div class="box-toolbar" layout="row" layout-align="end center">
+                        <div flex="90" layout-align="start center" class="box-zerospace">
+                            <!-- <span class="h2 text-semibold">{{order_design_position.position_header_name}}</span> -->
+                            <div layout-wrap class="box-zerospace">
+                                <div class="trans-box order-designname pull-left">
+                                    <div>Position:</div>
+                                    <span class="font-14 chrome-weight">{{order_design_position.position_header_name}}</span>
+                                </div>
 
-            <div class="title">
-                <span class="h2 text-semibold">Product</span>&nbsp;<span class="font-10 grey-color"></span>
-                <span class="float-right"><a target="_blank" class="cursor-p" ui-sref="app.settings.price-info({ id: price_id })">GO TO PRICEGRID</a></span>
-            </div>
-            <div layout="row" flex="100">
-                <div layout="column" flex="20" class="mrg15-R">
-                    <md-input-container class="md-block" flex="25">
-                        <label>Vendor</label>
-                        <md-select ng-model="vendor_id" ng-change="checkVendor()">
-                            <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-if="vendor.total > 0">
-                                {{vendor.name_company}} ({{vendor.total}})
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-                </div>
-                <div layout="column" flex="20" class="mrg15-R">
-                    <md-input-container class="md-block">
-                        <label>Search</label>
-                        <input ng-model="productSearch" ng-change="checkValid()">
-                    </md-input-container>
-                </div>
-                <div layout="column" flex="5"><md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button" ng-click="openSearchProductDialog($event)" ng-disabled="productSearch == ''">Search</md-button></div>
+                                <div class="trans-box order-designname pull-left">
+                                    <div>Type:</div>
+                                    <span class="font-14 chrome-weight">{{order_design_position.placement_header_name}}</span>
+                                </div>
 
-                 <!--  <div class="h2 text-semibold flex-55"><span class="float-right" ng-class="{'f-red': total_product != order_design_position[0].qnty}">PRODUCTS QUANTITY : {{total_product}}</span></div> -->
+                                <div class="trans-box order-designname pull-left">
+                                    <div>Quantity:</div>
+                                    <span class="font-14 chrome-weight">{{order_design_position.qnty_header_name}}</span>
+                                </div>
 
-                   <div class="h2 text-semibold flex-55"><span class="float-right">PRODUCTS QUANTITY : {{total_product}}</span></div>
+                                <div class="trans-box order-designname pull-left">
+                                    <div>Price:</div>
+                                    <span class="font-14 chrome-weight">{{order_design_position.total_price | currency : $ : 2}}</span>
+                                </div>
 
+                                <div class="trans-box order-designname pull-left">
+                                    <div>Screen Fees:</div>
+                                    <span class="font-14 chrome-weight">{{order_design_position.total_screen_fees | currency : $ : 2}}</span>
+                                </div>
 
-            </div>
-           
-        </div>
-        <md-divider></md-divider>
-        <div class="design-product md-whiteframe-1dp" layout="column" layout-align="start" layout-padding>
-            <div class="title"><span class="h2 text-semibold">Added Products</span></div>
-            <div class="design-positions-box border-grey p-l-20 " layout="column" layout-align="start" ng-repeat="product in productData"> 
-                <div layout="row" layout-align="space-between center" class="margin-bootom15">
-                    <div layout="column" >
-                        <div class="h4">Product Name</div>
-                        <div class="h5" ng-if="product.supplied > 0"><b>{{product.product_name}}</b></div>
-                        <div class="h5" ng-if="product.supplied == '0'">{{product.product_name}}</div>
-                    </div>
-                    <div class="box-toolbar" layout="row" >
-                        <button  ng-click="product.expanded = !product.expanded">
-                            <md-icon ng-if="product.expanded" md-font-icon="icon-plus"></md-icon>
-                            <md-icon ng-if="!product.expanded" md-font-icon="icon-minus"></md-icon>
+                                <div class="trans-box order-designname pull-left">
+                                    <div>Color Count:</div>
+                                    <span class="font-14 chrome-weight">{{order_design_position.color_stitch_count}}</span>
+                                </div>
+
+                                <div class="trans-box order-designname pull-left">
+                                    <div>Design Name:</div>
+                                    <span class="font-14 chrome-weight">{{designInforamtion.design_name}}</span>
+                                </div>
+                            </div>
+                            <div class="box-zerospace white-bg">
+                                <div class="pull-left right-20 box-zerospace">
+                                    <table class="simple-table layout-padding row-border box-zerospace">
+                                        <tbody>
+                                                <tr>
+                                                    <td class="design-intable">
+                                                        <span class="stokkup-title-h4 light-300">Next Tier:</span>  
+                                                    </td>
+                                                    <td class="design-intable"><b>Screent Print: </b>{{order_design_position.screen_print_charge | currency : $ : 2}}</td>
+                                                    <td class="design-intable"><b>Embroidery: </b>{{order_design_position.embroidery_charge | currency : $ : 2}}</td>
+                                                    <td class="design-intable"><b>Direct To Garment: </b>{{order_design_position.direct_to_garment_charge | currency : $ : 2}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="design-intable">
+                                                        <span class="stokkup-title-h4 light-300"></span>  
+                                                    </td>
+                                                    <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.screen_print_charge_qnty}}</td>
+                                                    <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.embroidery_charge_qnty}}</td>
+                                                    <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.direct_to_garment_charge_qnty}}</td>
+                                                </tr>
+                                                 <tr>
+                                                    <td class="design-intable">
+                                                        <span class="stokkup-title-h4 light-300"></span>  
+                                                    </td>
+                                                    <td class="design-intable"><b>Difference: </b>{{order_design_position.screen_print_charge2 | currency : $ : 2}}</td>
+                                                    <td class="design-intable"><b>Difference: </b>{{order_design_position.embroidery_charge2 | currency : $ : 2}}</td>
+                                                    <td class="design-intable"><b>Difference: </b>{{order_design_position.direct_to_garment_charge2 | currency : $ : 2}}</td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                      <div flex="10" layout-align="end center" layout="row">
+                        <button  ng-click="position1.expanded = !position1.expanded">
+                            <md-icon ng-if="position1.expanded" md-font-icon="icon-minus"></md-icon>
+                            <md-icon ng-if="!position1.expanded" md-font-icon="icon-plus"></md-icon>
                         </button>
-                        <md-menu ng-show="allow_access==1">
+                         <md-menu ng-show="allow_access==1">
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
-                            <md-menu-content width="4" ng-show="product.is_calculate == 1">
-                                <md-menu-item ng-show="product.vendor_id == 1">
-                                    <md-button ng-click="openSearchProductViewDialogView($event,product.id,product.product_image,product.description,product.name_company,'Edit',product.product_name,product.color_name,product.design_product_id,product.size_group_id,product.warehouse)">
-                                        Edit
-                                    </md-button>
-                                </md-menu-item>
-                                <md-menu-item ng-show="product.vendor_id > 1">
-                                    <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply,product.design_product_id,product.vendor_id,product.size_group_id)">
-                                        Edit
-                                    </md-button>
-                                </md-menu-item>
+                            <md-menu-content width="4">
                                 <md-menu-item>
-                                    <md-button ng-click="deleteAddProduct(product.id)">Delete</md-button>
+                                    <md-button ng-click="UpdateTableField('is_delete','0','order_design_position','id',order_design_position.id)">
+                                        Delete
+                                    </md-button>
                                 </md-menu-item>
                             </md-menu-content>
-                        </md-menu>
+                        </md-menu> 
+                       </div>
+                    </div>
+                    <div ng-if="position1.expanded" class="box-content" layout="column" layout-padding ng-class="{'disable-click': allow_access==0}">
+                        <div layout="row" class="postion-details" layout-align="space between">
+                            <div flex="20">
+                                <md-input-container class="width100">
+                                    <label>Position</label>
+                                    <md-select ng-model="order_design_position.position_id" ng-change="updateDesignPosition('position_id',order_design_position.id,order_design_position.position_id,'order_design_position','id',key)" >
+                                        <md-option   ng-repeat="misc_pos in miscData.position" value="{{misc_pos.id}}">
+                                            {{misc_pos.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div flex="20" >
+                                <md-input-container class="width100">
+                                    <label>Placement Type</label>
+                                    <md-select ng-model="order_design_position.placement_type" ng-change="updateDesignPosition('placement_type',order_design_position.id,order_design_position.placement_type,'order_design_position','id',key)">
+                                        <md-option  ng-repeat="misc_placement in miscData.placement_type" value="{{misc_placement.id}}">
+                                            {{misc_placement.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
+                                  
+                               
+                                <md-input-container class="width100">
+
+                                    <label>DtG Size</label>
+                                    <md-select ng-model="order_design_position.dtg_size" ng-change="updateDesignPosition('dtg_size',order_design_position.id,order_design_position.dtg_size,'order_design_position','id',key)">
+                                        <md-option  ng-repeat="misc_dtgsize in miscData.dir_to_garment_sz" value="{{misc_dtgsize.id}}">
+                                            {{misc_dtgsize.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                            <div flex="20" ng-class="{'disable-click': miscData.placement_type[order_design_position.placement_type].slug != 46}">
+                                <md-input-container class="width100">
+                                    <label>DtG on </label>
+                                    <md-select ng-model="order_design_position.dtg_on" ng-change="updateDesignPosition('dtg_on',order_design_position.id,order_design_position.dtg_on,'order_design_position','id',key)">
+                                        <md-option  ng-repeat="misc_dtg_on in miscData.direct_to_garment" value="{{misc_dtg_on.id}}">
+                                            {{misc_dtg_on.value}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                            </div>
+                        </div>
+                        <div layout="row" layout-align="space-between">
+                            <div layout="column" flex="20" layout-align="space between">
+                                <div >
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Description</label>
+                                        <input ng-model="order_design_position.description"  ui-event="{ change : 'updateDesignPosition(\'description\',order_design_position.id,order_design_position.description,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                    <md-input-container class="md-block">
+                                        <label>Notes</label>
+                                        <textarea ng-model="order_design_position.note"  rows="5" md-select-on-focus  ui-event="{ change : 'updateDesignPosition(\'note\',order_design_position.id,order_design_position.note,\'order_design_position\',\'id\',key)' }"></textarea>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="73" layout-align="spacebetween start" layout-wrap>
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Stitch/Color Count</label>
+                                        <input ng-model="order_design_position.color_stitch_count" valid-number ui-event="{ change : 'updateDesignPosition(\'color_stitch_count\',order_design_position.id,order_design_position.color_stitch_count,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div>
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Foil</label>
+                                        <input ng-model="order_design_position.foil_qnty" valid-number   ui-event="{ change : 'updateDesignPosition(\'foil_qnty\',order_design_position.id,order_design_position.foil_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div>
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Numer On Dark</label>
+                                        <input ng-model="order_design_position.number_on_dark_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'number_on_dark_qnty\',order_design_position.id,order_design_position.number_on_dark_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div>
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Oversize Screen(s)</label>
+                                        <input ng-model="order_design_position.oversize_screens_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'oversize_screens_qnty\',order_design_position.id,order_design_position.oversize_screens_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div> 
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Qnty</label>
+                                        <input ng-model="order_design_position.qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'qnty\',order_design_position.id,order_design_position.qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div> 
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Ink Change</label>
+                                        <input ng-model="order_design_position.ink_charge_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'ink_charge_qnty\',order_design_position.id,order_design_position.ink_charge_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div> 
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Number on Light</label>
+                                        <input ng-model="order_design_position.number_on_light_qnty" valid-number ui-event="{ change : 'updateDesignPosition(\'number_on_light_qnty\',order_design_position.id,order_design_position.number_on_light_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div> 
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Press Setup</label>
+                                        <input ng-model="order_design_position.press_setup_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'press_setup_qnty\',order_design_position.id,order_design_position.press_setup_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div> 
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Discharge</label>
+                                        <input ng-model="order_design_position.discharge_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'discharge_qnty\',order_design_position.id,order_design_position.discharge_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div>
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Speciality</label>
+                                        <input ng-model="order_design_position.speciality_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'speciality_qnty\',order_design_position.id,order_design_position.speciality_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div>
+                               <!--  <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Oversize</label>
+                                        <input ng-model="order_design_position.oversize" valid-number  ui-event="{ change : 'updateDesignPosition(\'oversize\',order_design_position.id,order_design_position.oversize,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div> -->
+                                <div flex="25" class="pad-r">
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label>Screen Fee</label>
+                                        <input ng-model="order_design_position.screen_fees_qnty" valid-number  ui-event="{ change : 'updateDesignPosition(\'screen_fees_qnty\',order_design_position.id,order_design_position.screen_fees_qnty,\'order_design_position\',\'id\',key)' }">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                        </div>
+                        <div layout="column">
+                            <div class=""><h3>Upload Artwork</h3></div>
+                            <div layout="row" layout-align="space between" layout-wrap>
+                               
+                               <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_1','order_design_position','order_design_position',order_design_position.image_1_url_photo,'id',order_design_position.id,order_design_position.image_1,key)">
+                                     <div class="text-right pad0 close-icon">
+                                        <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_1','order_design_position','order_design_position',order_design_position.image_1,'id',order_design_position.id,key); "></md-icon>
+                                    </div> 
+
+                                    <img  ng-if="order_design_position.image_1" ng-src="{{order_design_position.image_1_url_photo}}" class="popup-image" />
+                                    <img  ng-if="order_design_position.image_1 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+
+                                </div>
+
+                                <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_2','order_design_position','order_design_position',order_design_position.image_2_url_photo,'id',order_design_position.id,order_design_position.image_2,key)">
+                                   <div class="text-right pad0 close-icon">
+                                        <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_2','order_design_position','order_design_position',order_design_position.image_2,'id',order_design_position.id,key);"></md-icon>
+                                    </div> 
+
+                                   <img  ng-if="order_design_position.image_2" ng-src="{{order_design_position.image_2_url_photo}}" class="popup-image" />
+                                   <img  ng-if="order_design_position.image_2 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+
+                                </div>
+
+                                <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_3','order_design_position','order_design_position',order_design_position.image_3_url_photo,'id',order_design_position.id,order_design_position.image_3,key)">
+                                  <div class="text-right pad0 close-icon">
+                                        <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_3','order_design_position','order_design_position',order_design_position.image_3,'id',order_design_position.id,key);"></md-icon>
+                                    </div> 
+
+                                    <img  ng-if="order_design_position.image_3" ng-src="{{order_design_position.image_3_url_photo}}" class="popup-image" />
+                                    <img  ng-if="order_design_position.image_3 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+                                </div>
+
+
+                                <div flex="24" class="border-grey div-height img-container cursor-p" layout-padding ng-click="ImagePopup('image_4','order_design_position','order_design_position',order_design_position.image_4_url_photo,'id',order_design_position.id,order_design_position.image_4,key)">
+                                     <div class="text-right pad0 close-icon">
+                                        <md-icon md-font-icon="icon-close" ng-click="deleteImage($event,'image_4','order_design_position','order_design_position',order_design_position.image_4,'id',order_design_position.id,key)"></md-icon>
+                                    </div> 
+
+                                    <img  ng-if="order_design_position.image_4" ng-src="{{order_design_position.image_4_url_photo}}" class="popup-image" />
+                                    <img  ng-if="order_design_position.image_4 == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" />
+
+                                </div>
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="box-content" layout="column" >
-                    <div layout="row " layout-align="space-between" class="p-b-20">
-                        <div layout="row" layout-align="space-between start" flex="35">
-                            <div class="ad-product-img md-whiteframe-1dp">
-                                <img ng-if="product.product_image != ''" src="{{product.product_image_view}}" class="popup-image">
-                                <img ng-if="product.product_image == ''" src="{{NoImage}}" class="popup-image">
-                            </div>  
-                            <div layout="column">
-                                <div class="h4" ng-show="product.vendor_id > 0">Vendor</div>
-                                <div class="h5 p-b-10">{{product.name_company}}</div>
-                                <div class="h4">Item Number</div>
-                                <div class="h5">{{product.id}}</div>
-                                <div class="h4">Color</div>
-                                <div class="h5">{{product.color_name}}</div>
-                            </div>  
-                        </div>    
-                         <div layout="row" flex="55">
-                            <div layout="column" flex="100">
-                                <div class="h4 p-b-10">Size / Quantity</div>
-                                <div layout="row" layout-wrap>
-                                    <div class="box-typ2" flex="20" ng-repeat="(key,DesignProductData) in product.sizeData">
-                                        <table width="100%">
-                                            <tr>
-                                                <td width="70%" class="text-right color font-12">
-                                                    {{DesignProductData.size}} :
-                                                </td>
-                                                <td width="30%" class="text-semibold font-12">
-                                                    {{DesignProductData.qnty}}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </div>
-                                <!-- <div layout="row">
-                                    <div layout="column" flex="20" ng-repeat="(key,DesignProductData) in designProduct">
-                                        <div class="h4 color font-19">{{DesignProductData.size}}</div>
-                                        <div class="h4 text-semibold font-19">{{DesignProductData.qnty}}</div>
-                                    </div>
-                                </div> -->
-                            </div>    
-                        </div>
+                <div class="text-right" ng-show="position_array_count != designInforamtion.colors_count && allow_access==1">
+                <md-button  class="stokkup-custom-btn1 stokkup-blue-btn md-button margin-0" ng-click="openPositionDialog($event,designInforamtion.order_id,order_design_position[0].qnty)">
+                            ADD New Position
+                        </md-button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="box-zerospace mb-30">
+            <div class="design-product" layout="column" layout-align="start" ng-show="allow_access==1">
+                <div class="box-zerospace m-b-20">
+                    <h4 class="stokkup-title-h4 pull-left box-zerospace" flex=60>Product</h4>
+                    <span class="pull-right box-zerospace text-right" flex=40><a target="_blank" class="common-header-links" ui-sref="app.settings.price-info({ id: price_id })">GO TO PRICEGRID</a></span>
+                </div>
+                    <div layout="row" flex="100" class="box-zerospace white-bg p-20">
+                    <div layout="column" flex="20" class="mrg15-R">
+                        <md-input-container class="md-block margin-0" flex="25">
+                            <label>Vendor</label>
+                            <md-select ng-model="vendor_id" ng-change="checkVendor()">
+                                <md-option  ng-repeat="vendor in allVendors" value="{{vendor.id}}" ng-if="vendor.total > 0">
+                                    {{vendor.name_company}} ({{vendor.total}})
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
                     </div>
-                    <div ng-if="!product.expanded" layout="row" layout-align="space-between start" >
-                        <div layout="row" layout-align="space-between start" flex="20">
-                            <div layout="column">
-                                <div class="h4 p-b-10">Description</div>
-                                <p ng-bind-html="product.description"></p>
-                                
-                            </div>   
+                    <div layout="column" flex="20" class="mrg15-R">
+                        <md-input-container class="md-block margin-0">
+                            <label>Search</label>
+                            <input ng-model="productSearch" ng-change="checkValid()">
+                        </md-input-container>
+                    </div>
+                    <div layout="column"><md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button margin-0" ng-click="openSearchProductDialog($event)">Search</md-button></div>
+                    <div class="h2 text-semibold flex-55"><span class="float-right">PRODUCTS QUANTITY : {{total_product}}</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="box-zerospace mb-30">
+            <div class="design-product" layout="column" layout-align="start">
+                <h4 class="stokkup-title-h4 m-b-20">Added Products</h4>
+                <div class="design-positions-box" layout="column" layout-align="start" ng-repeat="product in productData">
+                    <div class="box-zerospace white-bg p-30 mb-10">
+                        <div layout="row" layout-align="space-between center">
+                            <div layout="column" >
+                            <h4 class="stokkup-title-h4">Product Name</h4>
+                            <div class="mt-5 mb-25" ng-if="product.supplied > 0"><span class="global-labels">{{product.product_name}}</span></div>
+                            <div class="mt-5 mb-25" ng-if="product.supplied == '0'"><span class="global-labels">{{product.product_name}}</span></div>
+                            </div>
+                            <div class="box-toolbar" layout="row" >
+                            <button  ng-click="product.expanded = !product.expanded">
+                                <md-icon ng-if="product.expanded" md-font-icon="icon-plus"></md-icon>
+                                <md-icon ng-if="!product.expanded" md-font-icon="icon-minus"></md-icon>
+                            </button>
+                            <md-menu ng-show="allow_access==1">
+                                <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="4" ng-show="product.is_calculate == 1">
+                                    <md-menu-item ng-show="product.vendor_id == 1">
+                                        <md-button ng-click="openSearchProductViewDialogView($event,product.id,product.product_image,product.description,product.name_company,'Edit',product.product_name,product.color_name,product.design_product_id,product.size_group_id,product.warehouse)">
+                                            Edit
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item ng-show="product.vendor_id > 1">
+                                        <md-button ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Edit',product.color_id,product.is_supply,product.design_product_id,product.vendor_id,product.product_name,product.description,product.name_company)">
+                                            Edit
+                                        </md-button>
+                                    </md-menu-item>
+                                    <md-menu-item>
+                                        <md-button ng-click="deleteAddProduct(product.id)">Delete</md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                            </div>
                         </div>
-                        <div layout="row" flex="80"  layout-align="space-between start" layout-padding>
-                          <!--   <div layout="column" flex="10">
-                                <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
-                            </div> -->
-                            <div layout="column" flex="35">
-                                <div layout="row" layout-align="space-between start" class="p-b-10">
-                                    <div class="h4">Average Garment Cost</div>
-                                    <div class="h5 font-14 ">{{product.avg_garment_cost | currency : $ : 2}}</div>
+                        <div class="box-content" layout="column" >
+                            <div layout="row " layout-align="space-between" class="p-b-20">
+                            <div layout="row" layout-align="space-between start" flex="45">
+                                <div class="ad-product-img md-whiteframe-1dp" ng-show="product.vendor_id > 0">
+                                    <img ng-if="product.color_front_image != ''" src="{{product.product_image_view}}" class="popup-image">
+                                    <img ng-if="product.color_front_image == ''" src="{{NoImage}}" class="popup-image">
                                 </div>
-                                <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': allow_access==0}">
-                                    <div class="h4">Markup Default {{product.markup_default}}%</div>
-                                    <div class="h5 font-14">
-                                        <div class="form-cntnr">
-                                            <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
-                                                <input aria-label="Markup Default" ng-model="product.markup" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_markup(product.id)' }" ng-disabled="product.is_calculate == 0">
-                                            <div class="md-errors-spacer"></div></md-input-container>
-                                         </div>
+
+                                <div class="ad-product-img md-whiteframe-1dp" ng-show="product.vendor_id == 0">
+                                    <img ng-if="product.product_image != ''" src="{{product.product_image_view}}" class="popup-image">
+                                    <img ng-if="product.product_image == ''" src="{{NoImage}}" class="popup-image">
+                                </div>
+
+                             
+                                <div layout="column" class="layout-wrap flex-50 pull-left m-l-30 m-t-10">
+                                    <div class="h4 global-labels" ng-show="product.vendor_id > 0">Vendor</div>
+                                    <div class="h5 global-text m-b-20">{{product.name_company}}</div>
+                                    <div class="h4 global-labels">Item Number</div>
+                                    <div class="h5 global-text m-b-20">{{product.id}}</div>
+                                    <div class="h4 global-labels">Color</div>
+                                    <div class="h5 global-text m-b-20">{{product.color_name}}</div>
+                                </div>  
+                            </div>    
+                            <div layout="row" flex="55">
+                                <div layout="column" flex="100">
+                                    <div class="global-labels mb-10">Size / Quantity</div>
+                                    <div layout="row" layout-wrap>
+                                        <div class="box-typ2" flex="20" ng-repeat="(key,DesignProductData) in product.sizeData">
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="70%" class="text-right color font-12">
+                                                        {{DesignProductData.size}} :
+                                                    </td>
+                                                    <td width="30%" class="text-semibold font-12">
+                                                        {{DesignProductData.qnty}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                                <div layout="row" layout-align="space-between start" class="">
-                                    <div class="h4">Average Garment Price</div>
-                                    <div class="h5 font-14">{{product.avg_garment_price | currency : $ : 2}}</div>
-                                </div>
-                                <div layout="row" layout-align="space-between start" class="">
-                                    <div class="h5">&nbsp;</div>
-                                </div>
-                                <div layout="row" layout-align="space-between start" class="">
-                                    <div class="h4">Print Charges</div>
-                                    <div class="h5 font-14">{{product.print_charges | currency : $ : 2}}</div>
-                                </div>
-                                <div layout="row" layout-align="space-between start" class="">
-                                    <div class="h5">&nbsp;</div>
-                                </div>
-                                <!-- <div layout="row" layout-align="space-between start" class="p-b-10">
-                                    <div class="h4">Total Line Charge</div>
-                                    <div class="h5 font-14">${{product.total_line_charge}}</div>
+                                    <!-- <div layout="row">
+                                        <div layout="column" flex="20" ng-repeat="(key,DesignProductData) in designProduct">
+                                            <div class="h4 color font-19">{{DesignProductData.size}}</div>
+                                            <div class="h4 text-semibold font-19">{{DesignProductData.qnty}}</div>
+                                        </div>
+                                    </div> -->
+                                </div>    
+                            </div>
+                            </div>
+                            <div ng-if="!product.expanded" layout="row" layout-align="space-between start" >
+                            <div layout="row" layout-align="space-between start" flex="20">
+                                <div layout="column">
+                                    <div class="h4 stokkup-title-h4 mb-10">Description</div>
+                                    <div class="design-pro-desc" ng-bind-html="product.description"></div>
+                                    
+                                </div>   
+                            </div>
+                            <div layout="row" flex="80"  layout-align="space-between start" layout-padding>
+                              <!--   <div layout="column" flex="10">
+                                    <md-icon md-menu-origin md-font-icon="icon-tshirt-crew" class="t-shirt"></md-icon>
                                 </div> -->
-                            </div> 
-                            <div layout="column" flex="35">
-                                <div layout="column" class="pd15-LR">
-                                    <div layout="row" layout-align="space-between start" class="p-b-10">
-                                        <div class="h4">Markup %</div>
-                                        <div class="h5 font-14">{{product.markup}}%</div>
+                                <div layout="column" flex="35">
+                                    <div layout="row" layout-align="space-between start" class="mb-10">
+                                        <div class="global-labels">Average Garment Cost</div>
+                                        <div class="global-text">{{product.avg_garment_cost | currency : $ : 2}}</div>
                                     </div>
-                                    <div layout="row" layout-align="space-between start" class="p-b-10" ng-class="{'disable-click': allow_access==0}">
-                                        <div class="h4">Overide</div>
-                                        <div class="h5 font-14">
+                                    <div layout="row" layout-align="space-between start" class="mb-10" ng-class="{'disable-click': allow_access==0}">
+                                        <div class="global-labels">Markup Default {{product.markup_default}}%</div>
+                                        <div class="global-text">
                                             <div class="form-cntnr">
                                                 <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
-                                                    <input aria-label="Override" ng-model="product.override" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_override(product.id)' }" ng-disabled="product.is_calculate == 0">
+                                                    <input aria-label="Markup Default" ng-model="product.markup" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_markup(product.id)' }" ng-disabled="product.is_calculate == 0">
                                                 <div class="md-errors-spacer"></div></md-input-container>
+                                             </div>
+                                        </div>
+                                    </div>
+                                    <div layout="row" layout-align="space-between start" class="mb-10">
+                                        <div class="global-labels">Average Garment Price</div>
+                                        <div class="global-text">{{product.avg_garment_price | currency : $ : 2}}</div>
+                                    </div>
+                                    
+                                    <div layout="row" layout-align="space-between start" class="mb-10">
+                                        <div class="global-labels">Print Charges</div>
+                                        <div class="global-text">{{product.print_charges | currency : $ : 2}}</div>
+                                    </div>
+                                    
+                                    <!-- <div layout="row" layout-align="space-between start" class="p-b-10">
+                                        <div class="h4">Total Line Charge</div>
+                                        <div class="h5 font-14">${{product.total_line_charge}}</div>
+                                    </div> -->
+                                </div> 
+                                <div layout="column" flex="35">
+                                    <div layout="column" class="pd15-LR">
+                                        <div layout="row" layout-align="space-between start" class="mb-10">
+                                            <div class="global-labels">Markup %</div>
+                                            <div class="global-text">{{product.markup}}%</div>
+                                        </div>
+                                        <div layout="row" layout-align="space-between start" class="mb-10" ng-class="{'disable-click': allow_access==0}">
+                                            <div class="global-labels">Overide</div>
+                                            <div class="global-text">
+                                                <div class="form-cntnr">
+                                                    <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
+                                                        <input aria-label="Override" ng-model="product.override" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'update_override(product.id)' }" ng-disabled="product.is_calculate == 0">
+                                                    <div class="md-errors-spacer"></div></md-input-container>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div layout="row" layout-align="space-between start" class="p-b-10">
-                                        <div class="h4">Per Item</div>
-                                        <div class="h5 font-14">{{product.total_line_charge | currency : $ : 2}}</div>
-                                    </div>
-                                    <div layout="row" layout-align="space-between start" class="p-b-10">
-                                        <div class="h4">Sale Total</div>
-                                        <div class="h5 font-14">{{product.sales_total | currency : $ : 2}}</div>
-                                    </div>
-                                    <div layout="row" layout-align="space-between start" class="p-b-10">
-                                        <div class="h4"></div>
-                                        <div class="h5 font-14"></div>
-                                    </div>
-                                    <div layout="row" layout-align="space-between start" class="p-b-10">
-                                        <div class="h4">Total Quantity</div>
-                                        <div class="h5 font-14">{{product.total_qnty}}</div>
+                                        <div layout="row" layout-align="space-between start" class="mb-10">
+                                            <div class="global-labels">Per Item</div>
+                                            <div class="global-text">{{product.total_line_charge | currency : $ : 2}}</div>
+                                        </div>
+                                        <div layout="row" layout-align="space-between start" class="mb-10">
+                                            <div class="global-labels">Sale Total</div>
+                                            <div class="global-text">{{product.sales_total | currency : $ : 2}}</div>
+                                        </div>
+                                        
+                                        <div layout="row" layout-align="space-between start" class="mb-10">
+                                            <div class="global-labels">Total Quantity</div>
+                                            <div class="global-text">{{product.total_qnty}}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div layout="column" flex="25">
-                                <!-- <md-card class="m-b-20 newbox-typ" ng-show="order_number == '' && is_complete == '0' "> -->
-                                <md-card class="m-b-20 newbox-typ packing-info-box" ng-show="allow_access==1">
-                                    <md-card-title>
-                                        <md-card-title-text>
-                                            Packing Information
-                                        </md-card-title-text>
-                                    </md-card-title>
-                                    <md-card-content class="pad0 package-height scrollable" ms-scroll>
-                                        <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product)">
-                                            <div>{{order_item.item}}</div>
-                                            <span>{{order_item.charge | currency : $ : 2}}</span>
-                                        </div>
-                                    </md-card-content>
-                                </md-card>
+                                <div layout="column" flex="30">
+                                    <!-- <md-card class="m-b-20 newbox-typ" ng-show="order_number == '' && is_complete == '0' "> -->
+                                    <md-card class="m-b-20 newbox-typ packing-info-box" ng-show="allow_access==1">
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                <span class="global-labels text-center">Packing Information</span>
+                                            </md-card-title-text>
+                                        </md-card-title>
+                                        <md-card-content class="pad0 package-height scrollable order-design-packbox" ms-scroll>
+                                            <div class="card-box cursor-p hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}" ng-click="assign_item(order_item.selected,order_item.item,order_item.charge,order_item.id,product)">
+                                                <div>{{order_item.item}}</div>
+                                                <span>{{order_item.charge | currency : $ : 2}}</span>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
 
-                                <md-card class="m-b-20 newbox-typ packing-info-box" ng-show="allow_access==0 ">
-                                    <md-card-title>
-                                        <md-card-title-text>
-                                            Packing Information
-                                        </md-card-title-text>
-                                    </md-card-title>
-                                    <md-card-content class="pad0 package-height scrollable" ms-scroll>
-                                        <div class="card-box  hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}">
-                                            <div>{{order_item.item}}</div>
-                                            <span>${{order_item.charge}}</span>
-                                        </div>
-                                    </md-card-content>
-                                </md-card> 
+                                    <md-card class="m-b-20 newbox-typ packing-info-box" ng-show="allow_access==0 ">
+                                        <md-card-title>
+                                            <md-card-title-text>
+                                                Packing Information
+                                            </md-card-title-text>
+                                        </md-card-title>
+                                        <md-card-content class="pad0 package-height scrollable order-design-packbox" ms-scroll>
+                                            <div class="card-box  hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}">
+                                                <div>{{order_item.item}}</div>
+                                                <span>${{order_item.charge}}</span>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card> 
 
+                                </div>
+                            </div>  
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
-<!--             <div class="text-right">
-                <md-button  class="bg-grey md-raised" ng-click="addPosition()">
-                ADD New Product
-                </md-button>
-            </div> -->
         </div>
     </div>
-    <md-dialog-actions layout="row" layout-align="end center" class="m-b-20 m-t-20">
-            <!-- <md-button ui-sref="app.order.order-info({id:designInforamtion.order_id})" class="md-primary md-hue-1 md-accent ">Back</md-button> -->
-           <!--  <md-button class="md-accent md-raised">Next</md-button> -->
-        </md-dialog-actions>
+    <!--inner full box ends here -->
 </div>
+
 <div class="footer border-t-grey" layout-padding layout="row">
-    <div flex="15"><span>Total Quantity</span></div>
-    <div flex="15"><span>{{total_product}}</span></div>
-    <div flex="15"><span>Screen Charges</span></div>
-    <div flex="15"><span>{{total_screen_fees | currency : $ : 2}}</span></div>
-    <div flex="15"><span>Product Charges</span></div>
-    <div flex="15"><span>{{total_price | currency : $ : 2}}</span></div>
-    <div flex="15"><span>Order Design</span></div>
-    <div flex="15"><span>{{ order.order_line_total | currency : $ : 2}}</span></div>
-    <div flex="15"><span>Order Charges</span></div>
-    <div flex="15"><span>{{ order.order_charges_total | currency : $ : 2}}</span></div>
-    <div flex="15"><span>Grand Total</span></div>
-    <div flex="15"><span>{{ order.order_total | currency : $ : 2}}</span></div>
+    <div flex="15"><span class="global-labels">Total Quantity</span></div>
+    <div flex="15"><span class="global-text">{{total_product}}</span></div>
+    <div flex="15"><span class="global-labels">Screen Charges</span></div>
+    <div flex="15"><span class="global-text">{{total_screen_fees | currency : $ : 2}}</span></div>
+    <div flex="15"><span class="global-labels">Product Charges</span></div>
+    <div flex="15"><span class="global-text">{{total_price | currency : $ : 2}}</span></div>
+    <div flex="15"><span class="global-labels">Order Design</span></div>
+    <div flex="15"><span class="global-text">{{ order.order_line_total | currency : $ : 2}}</span></div>
+    <div flex="15"><span class="global-labels">Order Charges</span></div>
+    <div flex="15"><span class="global-text">{{ order.order_charges_total | currency : $ : 2}}</span></div>
+    <div flex="15"><span class="global-labels">Grand Total</span></div>
+    <div flex="15"><span class="global-text">{{ order.order_total | currency : $ : 2}}</span></div>
 </div>

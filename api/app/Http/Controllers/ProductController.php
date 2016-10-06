@@ -204,6 +204,7 @@ public function create_dir($dir_path) {
         $whereData = array();
         
         $whereData['vendor_id'] = $post['filter']['vendor_id'];
+        $whereData['client_id'] = $post['filter']['client_id'];
 
         if($post['filter']['vendor_id'] != '')
         {
@@ -433,12 +434,29 @@ public function create_dir($dir_path) {
 
         $post = Input::all();
 
+
         $post['created_date']=date('Y-m-d');
 
         /*$record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
         $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));*/
 
         $result = $this->product->addProduct($post);
+
+        $order_data = $this->order->getOrderByDesign($post['id']);
+
+        if($post['is_supply'] == 1)
+        {
+            $client_supplied_data = $this->common->GetTableRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
+
+            if(empty($client_supplied_data))
+            {
+                $this->common->InsertRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
+            }
+        }
+        else
+        {
+            $this->common->DeleteTableRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
+        }
 
         $return = 1;
         $return = $this->orderCalculation($post['id']);
@@ -906,7 +924,33 @@ public function create_dir($dir_path) {
         }
 
         $order_total = $design_product_total + $order_charges_total + $item_shipping_charge - $order_data[0]->discount;
-        $tax = $order_total * $order_data[0]->tax_rate/100;
+
+        if($order_data[0]->tax_rate > 0)
+        {
+            $tax = $order_total * $order_data[0]->tax_rate/100;
+            $tax_rate = $order_data[0]->tax_rate;
+        }
+        else
+        {
+            $client_data = $this->common->GetTableRecords('client',array('client_id' => $order_data[0]->client_id));
+            if($client_data[0]->tax_rate > 0)
+            {
+                $tax = $order_total * $client_data[0]->tax_rate/100;
+                $tax_rate = $client_data[0]->tax_rate;
+            }
+            else
+            {
+                $company_data = $this->common->GetTableRecords('staff',array('user_id' => $order_data[0]->company_id));
+                $tax = $order_total * $company_data[0]->tax_rate/100;
+                $tax_rate = $company_data[0]->tax_rate;
+            }
+        }
+
+        if($tax == '')
+        {
+            $tax = 0;
+            $tax_rate = 0;
+        }
         $grand_total = $order_total + $tax;
         $balance_due = $grand_total - $order_data[0]->total_payments;
 
@@ -917,6 +961,7 @@ public function create_dir($dir_path) {
                                 'order_total' => round($order_total,2),
                                 'item_ship_charge' => round($item_shipping_charge,2),
                                 'tax' => round($tax,2),
+                                'tax_rate' => $tax_rate,
                                 'grand_total' => round($grand_total,2),
                                 'balance_due' => round($balance_due,2),
                                 'order_charges_total' => round($order_charges_total,2)
@@ -941,24 +986,7 @@ public function create_dir($dir_path) {
            return response()->json(["data" => $response]);
         }
 
-/*        if($result['product_id']) {
 
-            $productArray = ['id' => $result['product_id']];
-            $result_product = $this->product->productDetail($productArray);
-            $calculate_data = $this->common->GetTableRecords('design_product',array('design_id' => $result['design_id'],'is_delete' => '1'),array());
-       }*/
-       
-      
-/*            $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'records' => $result['design_product'],
-                                'productData' => $result_product,
-                                'calculate_data' => $calculate_data,
-                                'colorName' => $result['colorName'],
-                                'colorId' => $result['colorId'],
-                                'is_supply' => $result['is_supply']
-                                );*/
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
