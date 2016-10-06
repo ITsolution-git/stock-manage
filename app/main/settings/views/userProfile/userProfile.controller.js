@@ -12,6 +12,7 @@
     function UserProfileController($window, $timeout,$filter,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
         $scope.NoImage = AllConstant.NoImage;
+        $scope.valid_phone = AllConstant.VALID_PHONE;
       var vm = this;
 
     vm.openChangePasswordialog = openChangePasswordialog;
@@ -20,50 +21,11 @@
     $scope.user_id = sessionService.get("user_id");
     $scope.role_slug = sessionService.get('role_slug');
 
-    //console.log($state.current.url);
-    if($state.current.url=='/userProfile')
-    {
-        $scope.profile_id = $scope.user_id;
-        $scope.allow_access = 1;
-    }
-    else
-    {
-        $scope.profile_id = $scope.company_id;
-        if($scope.role_slug=='CA')
-        {
-            $scope.allow_access = 1;
-        }
-        else
-        {
-            $scope.allow_access = 0;
-        }
-    }
+
+    $scope.profile_id = $scope.user_id;
+    $scope.allow_access = 1;
+   
     
-
-
-        $scope.cancel = function () {
-            $mdDialog.hide();
-        };
-        
-
-       $http.get('api/public/client/SelectionData/'+$scope.company_id).success(function(Response) 
-        {   
-            if(Response.data.success=='1')
-            {   
-                $scope.states_all   = Response.data.result.state;
-                $scope.AllPriceGrid = Response.data.result.AllPriceGrid;
-            }
-        });
-
-
-        /**
-         * Close dialog
-         */
-        function closeDialog()
-        {
-            $mdDialog.hide();
-        }
-
 
     //console.log($scope.app.company_roleid);
       // GET ADMIN ROLE LIST
@@ -95,7 +57,9 @@
     // COMPANY EDIT TIME CALL
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
-        //console.log(Object.keys(validation).length);
+        console.log(field_name); console.log(field_value);
+        console.log(Object.keys(validation).length);
+        
         if($scope.allow_access=='0')
         {
             notifyService.notify('error','You have no rights to Edit.');
@@ -311,52 +275,7 @@
                 }
 
         };
-
-           $scope.qbClientSetup = function(){
-
-                $("#ajax_loader").show();
-                var companyId = {};
-
-                companyId ={company_id :sessionService.get('company_id')};
-
-                $http.post('api/public/common/AddEditClient',companyId).success(function(result) {
-                    $("#ajax_loader").hide();
-                            if(result != '0')
-                            {
-                                notifyService.notify('success',"Client Sync successfully");   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',"Please connect to quickbook first");
-                            }
-
-                           
-
-                           });
-            }
-
-            $scope.qbUpdateInovice = function(){
-                $("#ajax_loader").show();
-                var company_id = {};
-
-                company_id ={company_id :sessionService.get('company_id')};
-
-                $http.post('api/public/qbo/updateInvoicePayment',company_id).success(function(result) {
-                $("#ajax_loader").hide();
-                    if(result.data.success=='1')
-                    {
-                        notifyService.notify('success', result.data.message);
-                    }
-                    else if(result.data.success=='2')
-                    {
-                        notifyService.notify('error', result.data.message);
-                    }
-                    else
-                    {
-                        notifyService.notify('error',"Please connect to quickbook first");
-                    }
-                   });
-            }
+          
 
     }
 })();

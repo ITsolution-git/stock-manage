@@ -74,26 +74,26 @@
       <td width="26%"><?php echo (!empty($value->product_name))?$value->product_name:''; ?></td>
       <td width="10%" align="center"><?php echo (!empty($value->size))?$value->size:''; ?></td>
       <td width="10%" align="center"><?php echo (!empty($value->product_color))?$value->product_color:''; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->qnty_ordered))?$value->qnty_ordered:''; ?></td>
-      <td width="12%" align="center"><?php echo (!empty($value->qnty_purchased))?$value->qnty_purchased:''; ?></td>
-      <td width="12%" align="center"><?php echo (!empty($value->short))?$value->short:''; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->unit_price))?$value->unit_price:''; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->line_total))?$value->line_total:''; ?></td>
+      <td width="10%" align="center"><?php echo (!empty($value->qnty_ordered))?$value->qnty_ordered:0; ?></td>
+      <td width="12%" align="center"><?php echo (!empty($value->qnty_purchased))?$value->qnty_purchased:0; ?></td>
+      <td width="12%" align="center"><?php echo (!empty($value->short))?$value->short:0; ?></td>
+      <td width="10%" align="center"><?php echo (!empty($value->unit_price))?"$".$value->unit_price:0; ?></td>
+      <td width="10%" align="center"><?php echo (!empty($value->line_total))?"$".$value->line_total:0; ?></td>
     </tr>
     <?php } ?>
 	<hr style="border:1px solid #000;">
     <tr>
-    	<td >Order Total: <b><?php echo (!empty($value_main['total_product']))?$value_main['total_product']:''; ?></b></td>
-    	<td  colspan="3">Order Received: <b><?php echo (!empty($value_main['total_received']))?$value_main['total_received']:''; ?></b></td>
-    	<td  colspan="2">Order Defectives: <b><?php echo (!empty($value_main['total_defective']))?$value_main['total_defective']:''; ?></b></td>
-    	<td  colspan="2">Order Summary: <b><?php echo (!empty($value_main['total_remains']))?$value_main['total_remains']:''; ?></b></td>
+    	<td >Order Total: <b><?php echo (!empty($value_main['total_product']))?$value_main['total_product']:0; ?></b></td>
+    	<td  colspan="3">Order Received: <b><?php echo (!empty($value_main['total_received']))?$value_main['total_received']:0; ?></b></td>
+    	<td  colspan="2">Order Defectives: <b><?php echo (!empty($value_main['total_defective']))?$value_main['total_defective']:0; ?></b></td>
+    	<td  colspan="2">Summary: <b><?php echo (!empty($value_main['total_remains']))?$value_main['total_remains']:0; ?></b></td>
     </tr>
 
 <?php 
 }
 ?>
 <hr style="border:1px solid #000;">
-<?php if(!empty($company->total_invoice)){ echo '<p style="float:right"> <b>Total </b> : '.$company->total_invoice.'</p>'; } ?>
+<?php if(!empty($company->total_invoice)){ echo '<p style="float:right"> <b>Total </b> : $'.$company->total_invoice.'</p>'; } ?>
  </table>
 <!--   <hr style="border:1px solid #000;">
 

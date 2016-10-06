@@ -35,7 +35,14 @@
                </div>
                <div layout="column" flex="25">
                    <md-input-container class="md-block">
-                        <input placeholder="Ink Type" name="inq" ng-model="color_screen.inq" >
+                        <md-select placeholder="Ink Type" ng-model="color_screen.inq" aria-label="Approval Status">
+                            <md-option value="">
+                              Ink Type
+                            </md-option>
+                            <md-option ng-repeat="ink_val in ink_array" ng-selected="{{color_screen.inq==ink_val.id}}" value="{{ink_val.id}}">
+                                {{ink_val.value}}
+                            </md-option>
+                        </md-select>
                     </md-input-container>
                </div>
                <div layout="column" flex="25">

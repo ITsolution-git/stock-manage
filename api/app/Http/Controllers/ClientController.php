@@ -854,6 +854,46 @@ public function saveTaxDoc()
         return response()->json(['data'=>$data]);
     }
 
+    public function setin_destribution()
+    {
+    	$post = Input::all();
+    	if(!empty($post['client_id']) && !empty($post['company_id']) && !empty($post['location']))
+        {
+        	$get_location  = $post['location']; 
+        	$check_location = $this->common->GetTableRecords('client_distaddress',array('location_id'=>$get_location['id']),array());
+        	
+        	//echo "<pre>"; print_r($check_location); echo "</pre>"; die;
+        	$set_data = array('client_id'=>$post['client_id'],
+        					  'location_id'=>$get_location['id'],
+        					  'address'=>$get_location['address'],
+        					  'address2'=>$get_location['street'],
+        					  'city'=>$get_location['city'],
+        					  'state'=>$get_location['state'],
+        					  'zipcode'=>$get_location['postal_code'],
+        					  'country'=>'USA'        					  
+        					  );
+
+        	if(count($check_location)>0)
+        	{
+        		$this->common->UpdateTableRecords('client_distaddress',array('location_id'=>$get_location['id']),$set_data);
+        	}
+        	else
+        	{
+        		$this->common->InsertRecords('client_distaddress',$set_data);
+        	}
+        	$message = UPDATE_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
 
 
  } 

@@ -856,7 +856,12 @@ public function saveColorSize($post)
 
     public function getApprovalOrders($post)
     {
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping')];
+        $search = '';
+        if(isset($post['filter']['name'])) {
+          $search = $post['filter']['name'];
+        }
+
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping,o.order_number,o.updated_date')];
 
         $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $post['company_id']];
         $orderData = DB::table('orders as o')
@@ -866,8 +871,30 @@ public function saveColorSize($post)
                           ->leftJoin('vendors as v', 'p.vendor_id', '=', 'v.id')
                           ->leftJoin('users as u', 'u.id', '=', 'o.approved_by')
                           ->select($listArray)
-                          ->where($where)
-                          ->GroupBy('o.id')
+                          ->where($where);
+                          if($search != '')
+                          {
+                            $orderData = $orderData->Where(function($query) use($search)
+                            {
+                                $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                      ->orWhere('o.order_number', 'LIKE', '%'.$search.'%')
+                                      ->orWhere('u.name', 'LIKE', '%'.$search.'%');
+                            });
+                          }
+                          if($post['type'] == 'denied')
+                          {
+                            $orderData = $orderData->where('o.order_sns_status','=','denied');
+                          }
+                          if($post['type'] == 'approved')
+                          {
+                            $orderData = $orderData->where('o.order_number','!=','');
+                          }
+                          if($post['type'] == 'pending')
+                          {
+                            $orderData = $orderData->where('o.order_number','=','')
+                                          ->where('o.order_sns_status','=','');
+                          }
+                          $orderData = $orderData->GroupBy('o.id')
                           ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                           ->skip($post['start'])
                           ->take($post['range'])

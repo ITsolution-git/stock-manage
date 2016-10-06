@@ -80,7 +80,7 @@
                       </md-item-template>
                       <md-not-found >
                           <b id="check_alert">No Color found <a ng-click="check_savedata(1)" >Create a new Color!</a></b>
-                          <b id="check_confirm" style="display: none;">Please save changes first, do you want to contunue? 
+                          <b id="check_confirm" style="display: none;">Save first, or contunue? 
                             <a ng-click="AddNewColor(details_screenset[0].id,details_screenset[0].company_id,allcolor.color_name)" >Yes</a> | 
                             <a ng-click="check_savedata(0)" >No</a>
                           </b>
@@ -103,7 +103,14 @@
                      </td>
                      <td width="20%">
                           <md-input-container class="md-block first-box settings-margin-0">
-                              <input  aria-label="true" name="inq" ng-model="sc.inq" ui-event="{ change : 'add_inq($event.target.value,key)' }">
+                              <md-select ng-model="sc.inq" ng-change="add_inq($event.target.value,key)" aria-label="Approval Status">
+                                <md-option value="">
+                                  Ink Type
+                                </md-option>
+                                <md-option ng-repeat="ink_val in ink_array" ng-selected="{{sc.inq==ink_val.id}}" value="{{ink_val.id}}">
+                                    {{ink_val.value}}
+                                </md-option>
+                            </md-select>
                           </md-input-container>
                       </td>
                       <td width="10%"><a href="#" ng-click="remove_added($index)" class="icon icon-close f-red mrg10-L"></a></td>
@@ -117,7 +124,14 @@
                       </td>
                       <td width="20%">
                           <md-input-container class="md-block first-box settings-margin-0">
-                              <input aria-label="true" name="inq" ng-model="sc.inq" >
+                            <md-select ng-model="sc.inq" aria-label="Approval Status">
+                                <md-option value="">
+                                  Ink Type
+                                </md-option>
+                                <md-option ng-repeat="ink_val in ink_array" ng-selected="{{sc.inq==ink_val.id}}" value="{{ink_val.id}}">
+                                    {{ink_val.value}}
+                                </md-option>
+                            </md-select>
                           </md-input-container>
                       </td>
                       <td width="10%"><a href="#" ng-click="remove_selected($index,sc.id)" class="icon icon-close f-red mrg10-L"></a></td>
