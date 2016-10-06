@@ -290,8 +290,7 @@ class Client extends Model {
                       'account_manager'=>$post['account_manager'],
                       'billing_email'=>$post['billing_email'],
                       'company_phone'=>$post['company_phone'],
-                      'company_url'=>$post['company_url'],
-                      'client_desposition'=>$post['misc_id']
+                      'company_url'=>$post['company_url']
                       ));
       return $result;
    }
