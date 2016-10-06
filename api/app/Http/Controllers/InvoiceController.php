@@ -765,9 +765,12 @@ class InvoiceController extends Controller {
         }*/
         if(!empty($retArrayPrevious)){
             $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 2);
-            //$tempFigure=explode(".", $amountPrevious);
             $retArray[0]->totalEstimatedPrevious=$amountPrevious;
-            $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),2)-100;    
+            if($amountPrevious!='0.00'){
+                $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),2)-100;    
+            }else{
+                $retArray[0]->percentDifference = 0;
+            }
         }
 
         $response = array(
