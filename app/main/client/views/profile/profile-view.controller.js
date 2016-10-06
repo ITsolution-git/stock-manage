@@ -117,6 +117,23 @@
             open_popup(ev,params,'CompanyInfo',popup_page);
         }
 
+        $scope.setin_destribution = function (location)
+        {
+            $scope.dist_array = {client_id:$scope.client_id,company_id:$scope.company_id,location:location};
+            $http.post('api/public/client/setin_destribution',$scope.dist_array).success(function(result) 
+            {
+                if(result.data.success == '1') 
+                {
+                    $scope.getClientProfile();
+                    notifyService.notify('success',result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+            });
+        }
+
         $scope.getDocument = function (ev,id)
         {
             $http.get('api/public/client/getDocumentDetailbyId/'+id+'/'+$scope.company_id).success(function(result) 
