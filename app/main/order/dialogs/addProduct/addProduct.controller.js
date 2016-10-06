@@ -8,12 +8,17 @@
 
     /** @ngInject */
 
-    function AddProductController(product_id,operation,design_id,color_id,is_supply,size_group_id,vendor_id,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout,AllConstant)
+    function AddProductController(product_id,operation,design_id,color_id,is_supply,vendor_id,product_name,description,vendor_name,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout,AllConstant)
     {
         var vm = this;
         $scope.product_id = product_id;
         $scope.NoImage = AllConstant.NoImage;
         $scope.vendor_id = vendor_id;
+        $scope.product_name = product_name;
+        $scope.description = description;
+        $scope.vendor_name = vendor_name;
+        
+        
 
         $scope.operation = operation;
         var companyData = {};
@@ -54,23 +59,79 @@
 
                 $scope.productId =result.data.product_id;
                 $scope.productColorSize =result.data.productColorSizeData;
-                $scope.product_image_url =result.data.product_image_url;
-                $scope.product_image =result.data.product_image;
+             //   $scope.product_image_url =result.data.product_image_url;
+             //   $scope.product_image =result.data.product_image;
 
-                if(operation == 'Add') {
+
+               /* $scope.product_image_display_main = $scope.product_image_url;
+                $scope.product_image_main = result.data.product_image;*/
+
+                if(color_id == 0) {
+                     var firstKey;
+                     $.each($scope.productColorSize, function (key, val) {
+                            firstKey = key;
+                            return false;
+                        });
+                   color_id = firstKey;
+                   $scope.color_id = firstKey;
+                }
+
+                if ($scope.productColorSize[color_id] == "undefined" || $scope.productColorSize[color_id] == null) {
+
+                     $scope.product_image_url = $scope.NoImage;
+                     $scope.product_image = '';
+                     $scope.sizeAll ='';
+
+                } else {
+
+                     $scope.product_image_url = $scope.productColorSize[color_id].color_front_image_url_photo;
+                      $scope.product_image = $scope.productColorSize[color_id].color_front_image;
+                      $scope.sizeAll =$scope.productColorSize[color_id].size_data;
+                      $scope.changeColor(color_id,$scope.product_image_url,$scope.product_image);
+                }
+
+            
+
+                /*if(operation == 'Add') {
                     $scope.color_id = '0';
                     $scope.sizeAll = {}
                 } else {
                     $scope.sizeAll =$scope.productColorSize[color_id].size_data;
-                    $scope.changeColor(color_id);
-                }
+                    $scope.changeColor(color_id,$scope.product_image_url,$scope.product_image);
+                }*/
             });
         }
-        $scope.changeColor = function(color_id)
+
+     /*   $scope.changeModelImage = function(modelImage,color_front_image)
         {
+            $scope.modelDisplay = '';
+           
+            if(modelImage != '') {
+                     $scope.product_image_url = modelImage;
+                     $scope.product_image = color_front_image;
+                } else {
+                    $scope.product_image_url = $scope.NoImage;
+                    $scope.product_image = color_front_image;
+                }
+
+        }*/
+
+
+        $scope.changeColor = function(color_id,imageUrl,color_front_image)
+        {
+            $scope.color_id = color_id;
+           // $scope.modelDisplay = 'display';
             $scope.sizeAll = {}
             if(color_id != 0){
                 $scope.sizeAll =$scope.productColorSize[color_id].size_data;
+                if(imageUrl != '') {
+                     $scope.product_image_url = imageUrl;
+                     $scope.product_image = color_front_image;
+                } else {
+                    $scope.product_image_url = $scope.NoImage;
+                    $scope.product_image = color_front_image;
+                }
+               
             }
         }
 
@@ -85,7 +146,7 @@
             }
         }
 
-       $scope.addProduct = function (productData,product_id,is_supply,size_group_id)
+       $scope.addProduct = function (productData,product_id,is_supply)
        {
             if(product_id == undefined) {
                 var data = {"status": "error", "message": "Please select product"}
@@ -105,7 +166,6 @@
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;
             combine_array_id.is_supply = is_supply;
-            combine_array_id.size_group_id = size_group_id;
             combine_array_id.action = operation;
 
             $scope.execute = 0;
@@ -144,10 +204,7 @@
 
             $scope.product_id = product_id;
             $scope.color_id = color_id;
-            $scope.size_group_id = size_group_id;
-
-
-
+          
             $scope.is_supply = false;
             if(is_supply == 1) {
                 $scope.is_supply = true;

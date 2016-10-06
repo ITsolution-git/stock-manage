@@ -350,12 +350,21 @@ class Company extends Model {
          $dir_path_vendor = base_path() . "/public/uploads/". $companyid.'/vendor'; 
          $dir_path_pdf = base_path() . "/public/uploads/". $companyid.'/pdf'; 
          $dir_path_purchase = base_path() . "/public/uploads/". $companyid.'/purchase';
+         $dir_path_custom_image= base_path() . "/public/uploads/". $companyid.'/custom_image';
 
           $old_umask = umask(0);
 
             if (!file_exists($dir_path_pdf)) {
            
               mkdir($dir_path_pdf, 0777);
+            
+            } else {
+                exec("chmod $dir_path 0777");
+            }
+
+            if (!file_exists($dir_path_custom_image)) {
+           
+              mkdir($dir_path_custom_image, 0777);
             
             } else {
                 exec("chmod $dir_path 0777");

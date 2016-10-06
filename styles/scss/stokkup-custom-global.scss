@@ -1324,6 +1324,7 @@ md-card-content{
 		margin:0 auto;
 		text-align:center;
 		width:95%;
+		top:15px;
 	}
 	&.green-txt{
 		color:$green-txt;
@@ -1363,6 +1364,9 @@ md-card-content{
 		}
 		md-card-content{
 			padding-top:$zero;
+			&.dashboard-cards{
+				padding-bottom:$zero;
+			}
 		}
 	}
 }
@@ -1852,4 +1856,78 @@ md-tabs.stokkup-invoice-tabs{
 }
 .po-selectbox md-select-value{
 	border:$nofloat !Important;
+}
+.dash-footer-filter{
+	width:auto;
+	float:$nofloat;
+	display:inline-block;
+	md-select{
+		margin:$zero;
+		md-select-value{
+			border:$nofloat !important;
+			padding:$zero;
+			min-height:5px;
+			min-width:5px;
+			top:-2px;
+			font-size:$font-size-text;
+			line-height:$popup-heading-font-size;
+			text-transform:capitalize;
+			.md-select-icon{
+				width:10px;
+			}
+		}
+	}
+}
+.dash-footer-filter md-option .md-text{
+	text-transform:capitalize;
+}
+.dash-btwn-txt.comp-report-txt.dash-latest-order{
+	padding:$zero;
+	width:$full-width;
+}
+.order-design-packbox .card-box{
+	padding:10px;
+}
+.design-pro-desc ul{
+	margin:$zero;
+	padding:$zero 10px;
+	li{
+		margin-bottom:8px;
+	}
+}
+.design-positions textarea{
+	padding-top:15px;
+	max-height:121px !important;
+	overflow-y:scroll;
+}
+.custom-pro-boxmain{
+	float:$nofloat;
+	width:60%;
+	display:table;
+	padding:20px;
+	margin:10px auto;
+}
+.custom-pro-img{
+	max-height:200px;
+	width:auto;
+	float:$nofloat;
+	margin:$zero auto;
+	display:table;
+	text-align:center;
+}
+.tbl-typ1 th{
+	background-color:$secondary-blue;
+}
+.custom-pro-boxmain .custom-pro-imgmain .icon-close{
+	background-color:#fff;
+	-moz-border-radius:50px;
+	-webkit-border-radius:50px;
+	-ms-border-radius:50px;
+	-o-border-radius:50px;
+	border-radius:50px;
+	-moz-box-shadow:0 0 1px rgba(0,0,0,0.4);
+	-webkit-box-shadow:0 0 1px rgba(0,0,0,0.4);
+	-ms-box-shadow:0 0 1px rgba(0,0,0,0.4);
+	-o-box-shadow:0 0 1px rgba(0,0,0,0.4);
+	box-shadow:0 0 1px rgba(0,0,0,0.4);
 }

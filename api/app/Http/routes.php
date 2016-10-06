@@ -104,7 +104,9 @@ Route::post('admin/downloadPricegridCSV', 'SettingController@downloadPricegridCS
 Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
 Route::get('admin/uploadSnsCSV', 'SettingController@uploadSnsCSV');
 Route::post('admin/downloadPriceGridExcel', 'SettingController@downloadPriceGridExcel');
-Route::post('admin/getApprovalOrders', 'SettingController@getApprovalOrders');
+Route::post('admin/getApprovedOrders', 'SettingController@getApprovedOrders');
+Route::post('admin/getPendingOrders', 'SettingController@getPendingOrders');
+Route::post('admin/getDeniedOrders', 'SettingController@getDeniedOrders');
 
 // ADMIN MISC ROUTERS
 Route::post('admin/miscSave', 'MiscController@miscSave');
@@ -166,6 +168,7 @@ Route::post('client/saveDoc', 'ClientController@saveDoc');
 Route::get('client/deleteClientDoc/{id}', 'ClientController@deleteClientDoc');
 Route::get('client/SelectionData/{id}', 'ClientController@SelectionData');
 Route::post('client/saveTaxDoc', 'ClientController@saveTaxDoc');
+Route::post('client/setin_destribution', 'ClientController@setin_destribution');
 
 
 Route::get('client/GetNoteDetails/{id}', 'ClientController@GetNoteDetails');
@@ -373,3 +376,8 @@ Route::post('invoice/getPaymentCard', 'InvoiceController@getPaymentCard');
 Route::post('invoice/getNoQuickbook', 'InvoiceController@getNoQuickbook');
 Route::post('invoice/getSalesClosed', 'InvoiceController@getSalesClosed');
 Route::post('invoice/getUnpaid', 'InvoiceController@getUnpaid');
+Route::post('invoice/getAverageOrders', 'InvoiceController@getAverageOrders');
+Route::post('invoice/getLatestOrders', 'InvoiceController@getLatestOrders');
+Route::post('invoice/getEstimates', 'InvoiceController@getEstimates');
+Route::post('invoice/getComparison', 'InvoiceController@getComparison');
+Route::post('invoice/getSalesPersons', 'InvoiceController@getSalesPersons');

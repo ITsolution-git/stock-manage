@@ -107,6 +107,7 @@
                             {
                                 //alert(position_id);
                                 $scope.params = params;
+                                $scope.ink_array = params.miscData.art_type;
                                 $scope.position_id
                                 $scope.GetDetail =function () {
                                     $http.get('api/public/art/GetScreenset_detail/'+position_id).success(function(result) 
