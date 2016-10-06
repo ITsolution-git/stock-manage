@@ -443,13 +443,25 @@ class InvoiceController extends Controller {
         $post = Input::all();
         $client_id=$post['company_id'];
         
-        $retArray = DB::table('invoice as i')
+        if(isset($post['sales_id']) && $post['sales_id']!=0){
+            $sales_id=$post['sales_id'];
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.grand_total) as totalSales'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.sales_id','=',$sales_id)
+            ->get();
+        }else{
+            $retArray = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.grand_total) as totalSales'))
             ->leftJoin('orders as o','o.id','=','i.order_id')
             ->leftJoin('client as c','c.client_id','=','o.client_id')
             ->leftJoin('users as u','u.id','=','c.company_id')
             ->where('u.id','=',$client_id)
             ->get();
+        }
 
         if(empty($retArray))
         {
@@ -462,7 +474,6 @@ class InvoiceController extends Controller {
         $retArray[0]->totalSales=round($retArray[0]->totalSales, 2);
         $tempFigure=explode(".", $retArray[0]->totalSales);
         $retArray[0]->totalSales=$tempFigure;
-        //$retArray[0]->totalSales=str_replace('.', '<sup>', $retArray[0]->totalSales).'</sup>';
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
@@ -509,7 +520,7 @@ class InvoiceController extends Controller {
         $client_id=$post['company_id'];
 
         // Fetching average amount of order per invoiced
-        if(isset($post['sales_id'])){
+        if(isset($post['sales_id']) && $post['sales_id']!=0){
             $sales_id=$post['sales_id'];
             $retArray = DB::table('invoice as i')
             ->select(DB::raw('AVG(o.grand_total) as avgOrderAmount'))
@@ -542,7 +553,7 @@ class InvoiceController extends Controller {
         $retArray[0]->avgOrderAmount=$tempFigure;
 
         // Fetching average number of items per invoiced
-        if(isset($post['sales_id'])){
+        if(isset($post['sales_id']) && $post['sales_id']!=0){
             $sales_id=$post['sales_id'];
             $order_design_data = DB::table('invoice as i')
             ->select('od.id as design_id', 'o.id as order_id')
@@ -585,27 +596,21 @@ class InvoiceController extends Controller {
                     $total_qnty += $size->qnty;
                 }
                 $total_unit += $total_qnty;
-
                 $design->size_data = $size_data;
                 $design->total_qnty = $total_qnty;
                 $orderIDs[]=$design->order_id;
-
                 //$order_design['all_design'][] = $design;
             }
 
             if($total_unit > 0)
             {
                 $order_design['total_unit'] = $total_unit;
-
                 $countOrders = count(array_unique($orderIDs));
-
                 $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,2);
-
                 $tempAvg=explode(".", $retArray[0]->avgOrderItems);
                 $retArray[0]->avgOrderItems=$tempAvg;
             }
         }
-        
 
         $response = array(
             'success' => 1, 
@@ -650,8 +655,37 @@ class InvoiceController extends Controller {
     public function getEstimates(){
         $post = Input::all();
         $client_id=$post['company_id'];
-        
-        $retArray = DB::table('invoice as i')
+
+        if( (isset($post['sales_id']) && $post['sales_id']!=0) || (isset($post['duration']) && $post['duration']!=0) ){
+            $sales_id=$post['sales_id'];
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id);
+
+            if(isset($post['sales_id']) && $post['sales_id']!=0){
+                $retArray = $retArray->where('o.sales_id','=',$sales_id);
+            }
+
+            if(isset($post['duration']) && $post['duration']!=0){
+                if($post['duration']=='1'){
+                    $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
+                }else if($post['duration']=='2'){
+                    $duration='';
+                }else if($post['duration']=='3'){
+                    $duration='';
+                }else if($post['duration']=='4'){
+                    $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
+                }
+            }
+            $retArray = $retArray->where('o.is_paid','=','0')
+            ->where('o.grand_total','>','o.total_payments')
+            ->where('o.approval_id','=',2477)
+            ->get();
+        }else{
+            $retArray = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
             ->leftJoin('orders as o','o.id','=','i.order_id')
             ->leftJoin('client as c','c.client_id','=','o.client_id')
@@ -660,7 +694,8 @@ class InvoiceController extends Controller {
             ->where('o.is_paid','=','0')
             ->where('o.grand_total','>','o.total_payments')
             ->where('o.approval_id','=',2477)
-            ->get();
+            ->get();    
+        }
 
         if(empty($retArray))
         {
@@ -730,7 +765,6 @@ class InvoiceController extends Controller {
         }*/
         if(!empty($retArrayPrevious)){
             $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 2);
-            $amountPrevious='207512.46';
             //$tempFigure=explode(".", $amountPrevious);
             $retArray[0]->totalEstimatedPrevious=$amountPrevious;
             $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),2)-100;    
