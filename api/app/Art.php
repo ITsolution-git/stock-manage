@@ -207,7 +207,7 @@ class Art extends Model {
         return $returnData;
     }
     
-    //ARTDETAIL PAGE SCREEN SETS LISTING.
+    //ARTDETAIL PAGE SCREEN SETS LISTING. XXXXXX
     public function GetScreenset_detail($position_id)
     {
     	$query = DB::table('artjob_screensets as ass')
@@ -264,12 +264,13 @@ class Art extends Model {
     public function GetscreenColor($screen_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*')
+				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*','mt.value as ink_value')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
+				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
 				->where('ass.id','=',$screen_id)
 				->groupby('acol.id')
 				->orderBy('acol.head_location','asc')
@@ -383,7 +384,7 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.custom_po','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen')
+				->select('or.name as order_name','or.custom_po','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq')
 				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
@@ -395,6 +396,7 @@ class Art extends Model {
 				->leftjoin('color as col','col.id','=','acol.color_name')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
+				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
 				->where('or.id','=',$order_id)
 				->where('or.company_id','=',$company_id)
 				->where('odp.is_delete','=','1')
@@ -431,7 +433,7 @@ class Art extends Model {
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','col.name as color_name','ass.positions','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color')
+				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','col.name as color_name','ass.positions','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
 				->join('order_design as od','od.id','=','odp.design_id')
@@ -443,6 +445,7 @@ class Art extends Model {
 				->leftjoin('color as col1','col1.id','=','pdtl.color_id')
 				->join('users as usr','usr.id','=','or.company_id')
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')
+				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
 				->where('ass.id','=',$screen_id)
 				->where('or.company_id','=',$company_id)
 				/*->where('acol.is_complete','=','1')*/
