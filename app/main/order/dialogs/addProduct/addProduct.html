@@ -25,8 +25,8 @@
 
                      <div layout="row" flex="100" layout-wrap="nowrap" layout-align="start start">
 
-                     <div ng-repeat="(keyColor,colorsdata) in productColorSize"   flex="25" class="{{color_id == keyColor ? 'active-color' : 'deactivate-color'}}"> 
-                        <div class="md-whiteframe-1dp image-space"  layout="row" layout-align="center center" ng-click="changeColor(keyColor,colorsdata.color_front_image_url_photo,colorsdata.color_front_image)">
+                     <div ng-repeat="(keyColor,colorsdata) in productColorSize"   flex="30" class="{{color_id == keyColor ? 'active-color' : 'deactivate-color'}}"> 
+                        <div class="md-whiteframe-1dp cursor-p height-50"  layout="row" layout-align="center center" ng-click="changeColor(keyColor,colorsdata.color_front_image_url_photo,colorsdata.color_front_image)">
                         <img  ng-if="colorsdata.color_front_image" ng-src="{{colorsdata.color_front_image_url_photo}}" class="popup-image" /><md-tooltip md-direction="bottom">{{colorsdata.color_name}}</md-tooltip></img>
                         <img  ng-if="colorsdata.color_front_image == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" /><md-tooltip md-direction="bottom">{{colorsdata.color_name}}</md-tooltip></img>
                         </div>

@@ -50,7 +50,7 @@
                                             <div class="size-attribute" ng-repeat="(key,all_size) in colorsdata.size_data">
                                                 <md-input-container flex="100" class="display-block md-icon-float flex-100 md-default-theme md-input-invalid">
                                                     <div flex=75 class="box-zerospace">
-                                                        <input type="text" required="" class="text-center size-txtbox ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.sizeName" ui-event="{ change : 'updateProduct(\'name\',all_size.size_id,all_size.sizeName,\'product_size\',\'id\')' }">
+                                                        <input type="text" required="" class="size-txtbox bdr-1-B ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Size" aria-invalid="false" ng-model="all_size.sizeName" ui-event="{ change : 'updateProduct(\'name\',all_size.size_id,all_size.sizeName,\'product_size\',\'id\')' }">
                                                     </div>
                                                     <div flex=25 class="box-zerospace">
                                                         <a href="#" class="add-size" ng-click="addcolorsize(productId,all_size.color_id,0)" ng-show="key==0"><span class="icon icon-plus"></span></a>
