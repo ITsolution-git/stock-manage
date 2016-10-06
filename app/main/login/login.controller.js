@@ -127,13 +127,14 @@
                 }
             });*/
             // Estimates with sales man filtering
-            $scope.getEstimatesSalesMan = function(duration,sales_id){
+            $scope.getEstimatesSalesMan = function(){
                 //if(sales_id != 0){
+                  if($scope.estimatesPersonName != undefined && $scope.estimatesDuration != undefined) {
                   $("#ajax_loader").show();
                   var combineEstimates = {};
                   combineEstimates.company_id = company_id.value;
-                  combineEstimates.sales_id = sales_id;
-                  combineEstimates.duration = duration;
+                  combineEstimates.sales_id = $scope.estimatesPersonName;
+                  combineEstimates.duration = $scope.estimatesDuration;
                   $http.post('api/public/invoice/getEstimates',combineEstimates).success(function(resultEstimated){
                       if(resultEstimated.data.success == '1') {
                         $("#ajax_loader").hide();
@@ -142,6 +143,7 @@
                         $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
                       }
                   });
+                }
                 //}
             }
 

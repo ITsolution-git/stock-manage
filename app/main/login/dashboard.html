@@ -43,9 +43,9 @@
                     <md-card-title-text class="md-title">
                         Sales Closed
                     </md-card-title-text>
-                    <div>
+                    <!--<div>
                         <a class="common-header-links">EDIT</a>
-                    </div>
+                    </div>-->
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
                         <div class="center-num"><span class="num-style1 text-center">{{salesClosed1 | currency : $ : 0}}<sup>{{salesClosed2}}</sup></div>
@@ -79,7 +79,7 @@
                 <div class="dash-footer-box text-center">
                     <div flex=35 class="box-zerospace">
                         <div class="dash-footer-filter">
-                            <md-select aria-label="Filter By" ng-model="estimatesDuration" ng-change="getEstimatesSalesMan(estimatesDuration,estimatesPersonName)" class="global-labels">
+                            <md-select aria-label="Filter By" ng-model="estimatesDuration" ng-change="getEstimatesSalesMan()" class="global-labels">
                                 <md-option value="0" selected>All Time</md-option>
                                 <md-option value="1">Today</md-option>
                                 <md-option value="2">Last Week</md-option>
@@ -91,7 +91,7 @@
                     <div flex=65 class="box-zerospace">
                         <span class="global-labels">Estimates by</span>
                         <div class="dash-footer-filter">
-                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" ng-change="getEstimatesSalesMan(estimatesDuration,estimatesPersonName)" class="global-labels">
+                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" ng-change="getEstimatesSalesMan()" class="global-labels">
                                 <md-option value="0" selected>Sales Member</md-option>
                                 <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                             </md-select>
