@@ -168,6 +168,7 @@ Route::post('client/saveDoc', 'ClientController@saveDoc');
 Route::get('client/deleteClientDoc/{id}', 'ClientController@deleteClientDoc');
 Route::get('client/SelectionData/{id}', 'ClientController@SelectionData');
 Route::post('client/saveTaxDoc', 'ClientController@saveTaxDoc');
+Route::post('client/setin_destribution', 'ClientController@setin_destribution');
 
 
 Route::get('client/GetNoteDetails/{id}', 'ClientController@GetNoteDetails');
