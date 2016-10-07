@@ -64,11 +64,11 @@
                                         <tr>
                                             <th width="35%" class="pd5">Inventory</th>
                                             <th width="40%" class="pd5">Quantity</th>
-                                            <th width="25%" class="pd5">Price</th>
+                                            <th width="25%" class="pd5" ng-show="!is_supply">Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes">
+                                        <tr ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes" ng-if="!is_supply">
                                             <td class="pd5">
                                                 <table width="100%">
                                                     <tr>
@@ -86,6 +86,27 @@
                                             </td>
                                             <td>{{sizedata.customerPrice}}</td>
                                         </tr>
+
+
+                                        <tr ng-repeat="(key,sizedata) in AllProductDetail[colorName].sizes" ng-if="is_supply">
+                                            <td class="pd5">
+                                                <table width="100%">
+                                                    <tr>
+                                                        <td width="70%" class="text-right color font-12">{{sizedata.sizeName}}</td>
+                                                     
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td class="pd5">
+                                                <md-input-container class="md-block" flex-gt-sm >
+                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,1)">
+                                                </md-input-container>
+
+                                            </td>
+                                            
+                                        </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
