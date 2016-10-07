@@ -254,6 +254,51 @@
                 }
                 /*$scope.brand_coordinator = sessionService.get('role_title');*/
             });
+
+            // Orders to be shipped
+            var combineUnshipped = {};
+            combineUnshipped.company_id = company_id.value;
+            $http.post('api/public/invoice/getUnshipped',combineUnshipped).success(function(resultUnshipped){
+                if(resultUnshipped.data.success == '1') {
+                  $scope.unshipped=resultUnshipped.data.allData[0].totalUnshipped;
+                  //$scope.unshipped2=resultUnshipped.data.allData[0].totalUnpaid[1];
+                  $scope.unshippedTotal=resultUnshipped.data.allData[0].totalInvoice;
+                }
+            });
+
+            // Numbers of Orders in Production
+            /*var combineProduction = {};
+            combineProduction.company_id = company_id.value;
+            $http.post('api/public/invoice/getProduction',combineProduction).success(function(resultProduction){
+                if(resultProduction.data.success == '1') {
+                  $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
+                }
+            });*/
+
+            // Numbers of Orders in Production with sales man filtering
+            $scope.getProductionSalesMan = function(sales_id){
+                //if(sales_id != 0){
+                  $("#ajax_loader").show();
+                  var combineProduction = {};
+                  combineProduction.company_id = company_id.value;
+                  combineProduction.sales_id = $scope.productionPersonName;
+                  $http.post('api/public/invoice/getProduction',combineProduction).success(function(resultProduction){
+                  if(resultProduction.data.success == '1') {
+                      $("#ajax_loader").hide();
+                      $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
+                  }
+                });
+              //}
+            }
+
+            // On Time In Full
+            var combineFullShipped = {};
+            combineFullShipped.company_id = company_id.value;
+            $http.post('api/public/invoice/getFullShipped',combineFullShipped).success(function(resultFullShipped){
+                if(resultFullShipped.data.success == '1') {
+                  $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
+                }
+            });
         }
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
