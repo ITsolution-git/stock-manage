@@ -463,7 +463,7 @@ class Company extends Model {
                  ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
                  ->leftJoin('staff as st', 'usr.id', '=', 'st.user_id')
                  ->leftJoin('state as state', 'state.id', '=', 'st.prime_address_state')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.profile_photo','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.first_name','st.last_name','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.cron_runtime','st.id as staff_id','st.prime_phone_main','state.name as state_name')
+        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.profile_photo','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.first_name','st.last_name','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.cron_runtime','st.id as staff_id','st.prime_phone_main','st.gross_year','state.name as state_name')
         				 ->where($whereConditions)
         				 ->get();
         return $admindata;

@@ -14,9 +14,9 @@
 
         $scope.NoImage = AllConstant.NoImage;
         $scope.valid_phone = AllConstant.VALID_PHONE;
+        $scope.currentyear = AllConstant.currentyear;
 
-
-   
+    
     $scope.company_id =sessionService.get("company_id");
     $scope.user_id = sessionService.get("user_id");
     $scope.role_slug = sessionService.get('role_slug');
@@ -49,7 +49,13 @@
             }
         });
 
+       $scope.YearRange ={};
+       for(var i=$scope.currentyear; i>1970; i--)
+       {
+            $scope.YearRange[i] = i;
+       }
 
+       //console.log($scope.YearRange);
         /**
          * Close dialog
          */
