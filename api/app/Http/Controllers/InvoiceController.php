@@ -137,9 +137,12 @@ class InvoiceController extends Controller {
                 $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
             }
 
-            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+            $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
+            $order_data_all = $this->order->orderDetail($order_array);
+            $order_data =  $order_data_all['order'];           
 
+//            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
              if(empty($order_data))
             {
 
@@ -155,6 +158,8 @@ class InvoiceController extends Controller {
             $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
             $retutn_arr['invoice_data'] = array();
         }
+
+
 
 
         $retutn_arr['company_data'] = $this->common->getCompanyDetail($company_id);
@@ -220,6 +225,7 @@ class InvoiceController extends Controller {
                 $design->products = array();
             }
         }
+        
 
         $retutn_arr['all_design'] = $all_design;
 
@@ -227,6 +233,8 @@ class InvoiceController extends Controller {
         {
             return $retutn_arr;
         }
+
+
 
         $response = array(
                                 'success' => 1, 

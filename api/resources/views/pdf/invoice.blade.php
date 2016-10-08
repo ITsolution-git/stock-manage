@@ -93,17 +93,28 @@
 	{ ?>
 		<table id="details" cellspacing="0" cellpadding="0" style="width:100%">
 			<tr>
-                <th width="15%" style="border:none;font-weight:bold;text-align:center;">Order<br>ID</th>
+<!--                 <th width="15%" style="border:none;font-weight:bold;text-align:center;">Order<br>ID</th>
                 <th width="25%" style="border:none;font-weight:bold;text-align:center;">Estimated Shipping Date</th>
                 <th width="20%" style="border:none;font-weight:bold;text-align:center;">Payment<br>Status</th>
                 <th width="20%" style="border:none;font-weight:bold;text-align:center;">Shipment<br>Method</th>
                 <th width="20%" style="border:none;font-weight:bold;text-align:center;">In Hands<br>By</th>
+ -->
+
+                 <th width="10%" style="border:none;font-weight:bold;text-align:center;">Client<br>PO</th>
+                 <th width="15%" style="border:none;font-weight:bold;text-align:center;">Account <br>Manager</th>
+                 <th width="15%" style="border:none;font-weight:bold;text-align:center;">Terms</th>
+                 <th width="15%" style="border:none;font-weight:bold;text-align:center;">Ship <br>Via</th>
+                <th width="15%" style="border:none;font-weight:bold;text-align:center;">Estimated Shipping Date</th>
+                
+                
+                <th width="15%" style="border:none;font-weight:bold;text-align:center;">In Hands<br>By</th>
+                <th width="15%" style="border:none;font-weight:bold;text-align:center;">Payment<br> Date</th>
             </tr>
 			@foreach ($shipping_detail as $shipping)
 			<tr>
-				<td style="border:1px solid #000;padding-left:5px;"> {{$order_data[0]->id}}</td>
-				<td style="border:1px solid #000;padding-left:5px;"> {{$shipping->shipping_by}}</td>
-				<td style="border:1px solid #000;padding-left:5px;"> Pending</td>
+				<td style="border:1px solid #000;padding-left:5px;"> {{$order_data[0]->custom_po}}</td>
+				<td style="border:1px solid #000;padding-left:5px;"> {{$order_data[0]->name}}</td>
+				<td style="border:1px solid #000;padding-left:5px;"></td>
 				<td style="border:1px solid #000;padding-left:5px;">
 					<?php if($shipping->shipping_type_id == 1) {?>
 						 UPS
@@ -115,7 +126,9 @@
 						
 					<?php } ?>
 				</td>
+				<td style="border:1px solid #000;padding-left:5px;"> {{$shipping->shipping_by}}</td>
 				<td style="border:1px solid #000;padding-left:5px;"> {{$shipping->in_hands_by}}</td>
+				<td style="border:1px solid #000;padding-left:5px;"> {{$invoice_data[0]->payment_due_date}}</td>
 			</tr>
 			@endforeach
 		</table><br><br>
@@ -179,7 +192,7 @@
                 <td style="border:1px solid #000"> {{$product->color_name}}</td>
                 <td style="border:1px solid #000">
                 	@foreach ($product->sizeData as $size)
-                		 {{$size->size}}:({{$size->qnty}})&nbsp;
+                		 {{$size->size}}-{{$size->qnty}}&nbsp;
                 	@endforeach
                 </td>
                 <td style="border:1px solid #000"> {{$product->total_qnty}}</td>
