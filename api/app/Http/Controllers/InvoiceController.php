@@ -216,6 +216,19 @@ class InvoiceController extends Controller {
             $data = array('company_id' => $company_id,'id' => $design->id);
             $design->positions = $this->order->getDesignPositionDetail($data);
             $productData = $this->product->designProduct($data);
+
+
+            
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
+            
+            $total_product_qnty = 0;
+            foreach ($size_data as $size) {
+                $total_product_qnty += $size->qnty;
+               
+            }
+            
+            $design->total_product_qnty = $total_product_qnty;
+
             
             if(!empty($productData['productData'])) {
                 $design->products = $productData['productData'];    
@@ -225,7 +238,7 @@ class InvoiceController extends Controller {
                 $design->products = array();
             }
         }
-        
+        //print_r($all_design);exit;
 
         $retutn_arr['all_design'] = $all_design;
 

@@ -199,7 +199,15 @@
                 <td style="border:1px solid #000"> $<?php echo number_format($product->total_price,2) ?></td>
 			</tr>
 			@endforeach
+			<tr>
+				<td>&nbsp;</td>
+				<td>&nbsp;</td>
+				<td style="border:none;text-align:right;font-weight:bold;">Total Qty </td>
+				<td style="border:1px solid #000">{{$design->total_product_qnty}}</td>
+				<td>&nbsp;</td>
+			</tr>
 		</table><br><br>
+		
 		@endforeach
 	<?php 
 	}
