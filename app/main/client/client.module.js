@@ -32,7 +32,7 @@
                     checksession : function (sessionService)
                     {
                         
-                       return sessionService.AccessService('AT','false');
+                       return sessionService.AccessService('ALL','true');
                     },
                 },
                 url    : '/list',
@@ -48,7 +48,7 @@
                 resolve: {
                         checksession : function (sessionService,$stateParams,$state)
                         {
-                           return sessionService.AccessService('AT','false');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/profile/:id',
