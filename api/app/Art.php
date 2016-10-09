@@ -433,19 +433,22 @@ class Art extends Model {
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.id as order_id','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','col.name as color_name','ass.positions','usr.name as companyname','p.name as product_name','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq')
+				->select('or.name as order_name','or.company_id','or.balance_due','or.shipping_by','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq',
+					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"))
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
 				->join('order_design as od','od.id','=','odp.design_id')
 				->leftjoin('design_product as dp','dp.design_id','=','od.id')
 				->leftjoin('products as p','dp.product_id','=','p.id')
-				->leftjoin('purchase_detail as pdtl','pdtl.design_id','=','od.id')
+				->leftjoin('purchase_detail as pdtl','pdtl.design_product_id','=','dp.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftjoin('color as col','col.id','=','acol.color_name')
 				->leftjoin('color as col1','col1.id','=','pdtl.color_id')
 				->join('users as usr','usr.id','=','or.company_id')
+				->leftjoin('users as usr1','usr1.id','=','or.account_manager_id')
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
+				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->where('ass.id','=',$screen_id)
 				->where('or.company_id','=',$company_id)
 				/*->where('acol.is_complete','=','1')*/
@@ -459,18 +462,26 @@ class Art extends Model {
 				->get();
 				$color = array();
 				$size = array();
+				//echo "<pre>"; print_r($query); echo "</pre>"; die;
 			foreach ($query as $key=>$value) 
 			{
+
 				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
 				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/order_design_position/'.$value->positions."/",$value->image_1);
 				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
 
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$color[$value->color_id] = $value;
-				$size[$value->size] = $value;
+
+				$size[$value->product_id]['product_name']= $value->product_name;
+				$size[$value->product_id]['product_color'] = $value->product_color;
+				$size[$value->product_id]['product_id'] = $value->product_id;
+				$size[$value->product_id]['summary'][$value->size]= $value->qnty;
+				$size[$value->product_id]['total_product'] = $value->total_product;
+			
 			}
 		$color = array_values($color);
-		$size = array_values($size);
+		//	$size = array_values($size);
 		$pass = array('color'=>$color,'size'=>$size);
 		return $pass;
 	}
