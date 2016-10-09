@@ -20,8 +20,18 @@
               {{$color[0]->order_name}}<br>
               {{$color[0]->client_company}}
           </td>
-          <td align="left" width="20%">
-              Shipping Address
+          <td align="right"  style="height:100px;border:1px solid #000;border-radius:15px;width:50%;">
+               <table style="width:100%; padding: 10px;">
+               <tr>
+                <td style="width:30px;padding:0;border:none;"><img src="" alt="BILL TO" title="BILL TO"></td>
+                <td style="vertical-align: top;padding: 10px 0 0 20px;border:none;">
+               
+                 <label style="">
+                 Address here
+                 </label>
+                </td>
+               </tr>
+              </table>
           </td>
     	</tr>
     </table>
@@ -29,20 +39,20 @@
   <table style="margin-top:15px;">
   
     <tr>
-      <td align="center">Client P</td>
-      <td align="center">Account Manager</td>
-      <td align="center"> Term</td>
-      <td align="center">Ship Via</td>
-      <td align="center"> Ship Date</td>
-      <td align="center">  Hands Date</td>
-      <td align="center"> Payment Due</td>
+      <td align="center"><b>Client P</b></td>
+      <td align="center"><b>Account Manager</b></td>
+      <td align="center"><b> Term</b></td>
+      <td align="center"><b>Ship Via</b></td>
+      <td align="center"><b> Ship Date</b></td>
+      <td align="center"><b>  Hands Date</b></td>
+      <td align="center"><b> Payment Due</b></td>
     </tr>
      <tr>
       <td align="center" border="1">{{$color[0]->custom_po}}</td>
       <td align="center" border="1">{{$color[0]->account_manager}}</td>
       <td align="center" border="1"> </td>
       <td align="center" border="1"></td>
-      <td align="center" border="1"> {{$color[0]->shipping_by}}</td>
+      <td align="center" border="1"> {{$color[0]->date_shipped}}</td>
       <td align="center" border="1">  {{$color[0]->in_hands_by}}</td>
       <td align="center" border="1"> {{$color[0]->balance_due}}</td>
     </tr>
@@ -78,7 +88,22 @@
   </tr>
   </table>
 
-
+<table style="margin-top:15px;">
+    <tr>
+      <td width="10%" align="center" style="height:20px;border:1px solid #000;border-radius:15px;"></td>
+      <td width="10%" align="center" style="height:20px;border:1px solid #000;border-radius:15px;"></td>
+      <td width="10%" align="center" style="height:20px;border:1px solid #000;border-radius:15px;"></td>
+      <td width="10%" align="center" style="height:20px;border:1px solid #000;border-radius:15px;"></td>
+      <td width="10%" align="center" style="height:20px;border:1px solid #000;border-radius:15px;"></td>
+    </tr>
+    <tr>
+      <td width="10%" align="center" >Prod Mgr</td>
+      <td width="10%" align="center">Press Lead</td>
+      <td width="10%" align="center">Belt</td>
+      <td width="10%" align="center">QC</td>
+      <td width="10%" align="center">Ship/Pack</td>
+    </tr>
+</table>
 
   <table style="margin-top:15px;">
   	<!-- <tr>
@@ -96,26 +121,35 @@
 
     		</table>
     	</td>
-    	<td width="70%" style="border: 1px solid #000;">
+    	<td width="70%" >
           <table>
            
             <tr style="font-weight: 12px">
               <td align="center"><b>#POS</b></td>
               <td align="center"><b>COLOR</b></td>
+            <?php if($color[0]->placement_type!='45') { ?>
               <td align="center"><b>PANTONE</b></td>
               <td align="center"><b>INK TYPE</b></td>
               <td align="center"><b>SQUEEGEE</b></td>
               <td align="center"><b>STROKE</b></td>
+            <?php } else { ?>
+              <td align="center"><b>COLOR CODE</b></td>
+            <?php } ?>
             </tr>
              
         <?php foreach($color as $key=>$value) {?>    
             <tr>
               <td align="center" border="1">{{$key+1}}</td>
               <td align="center" border="1">{{$value->color_name}}</td>
+            <?php if($color[0]->placement_type!='45') { ?>
               <td align="center" border="1">{{$value->thread_color}}</td>
               <td align="center" border="1">{{$value->inq}}</td>
               <td align="center" border="1">{{$value->squeegee}}</td>
               <td align="center" border="1">{{$value->stroke}}</td>
+            <?php } else { ?>
+                <td align="center" border="1">{{$value->color_code}}</td>
+            <?php } ?>
+
             </tr>
         <?php } ?>
           </table>

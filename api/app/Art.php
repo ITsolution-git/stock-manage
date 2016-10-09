@@ -433,7 +433,7 @@ class Art extends Model {
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','or.balance_due','or.shipping_by','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq',
+				->select('or.name as order_name','or.company_id','or.balance_due','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','col.color_code','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq','mt1.slug as placement_type',
 					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"))
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
@@ -448,6 +448,7 @@ class Art extends Model {
 				->leftjoin('users as usr1','usr1.id','=','or.account_manager_id')
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
+				->leftJoin('misc_type as mt1','mt1.id','=','odp.placement_type')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->where('ass.id','=',$screen_id)
 				->where('or.company_id','=',$company_id)
@@ -471,6 +472,7 @@ class Art extends Model {
 				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
 
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
+				$value->date_shipped  = (!empty($value->date_shipped)&& $value->date_shipped!='0000-00-00')?date("m/d/Y",strtotime($value->date_shipped)):'';
 				$color[$value->color_id] = $value;
 
 				$size[$value->product_id]['product_name']= $value->product_name;
