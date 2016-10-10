@@ -272,7 +272,7 @@ class InvoiceController extends Controller {
         
 
         $retutn_arr['all_design'] = $all_design;
-       
+        
 
         if($type == 1)
         {
