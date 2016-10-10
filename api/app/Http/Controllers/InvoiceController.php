@@ -849,7 +849,7 @@ class InvoiceController extends Controller {
             ->leftJoin('client as c','c.client_id','=','o.client_id')
             ->leftJoin('users as u','u.id','=','c.company_id')
             ->where('u.id','=',$client_id)
-            ->where('o.date_shipped','=>','s.fully_shipped');
+            ->where('o.date_shipped','>','s.fully_shipped');
 
             if($post['duration']=='1'){
                 $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
@@ -860,7 +860,6 @@ class InvoiceController extends Controller {
             }else if($post['duration']=='4'){
                 $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
             }
-
             $retArray = $retArray->where('s.shipping_status','=','2')
             ->get();
         }else{
@@ -871,7 +870,7 @@ class InvoiceController extends Controller {
             ->leftJoin('client as c','c.client_id','=','o.client_id')
             ->leftJoin('users as u','u.id','=','c.company_id')
             ->where('u.id','=',$client_id)
-            ->where('o.date_shipped','=>','s.fully_shipped')
+            ->where('o.date_shipped','>','s.fully_shipped')
             ->where('s.shipping_status','=','2')
             ->get();    
         }
@@ -886,7 +885,7 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->totalUnshipped=round($retArray[0]->totalUnshipped, 0);
+        $retArray[0]->totalShipped=round($retArray[0]->totalShipped, 0);
         /*$tempFigure=explode(".", $retArray[0]->totalUnpaid);
         $retArray[0]->totalUnpaid=$tempFigure;*/
         $response = array(

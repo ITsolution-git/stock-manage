@@ -281,7 +281,7 @@
                   $("#ajax_loader").show();
                   var combineProduction = {};
                   combineProduction.company_id = company_id.value;
-                  combineProduction.sales_id = $scope.productionPersonName;
+                  combineProduction.sales_id = sales_id;
                   $http.post('api/public/invoice/getProduction',combineProduction).success(function(resultProduction){
                   if(resultProduction.data.success == '1') {
                       $("#ajax_loader").hide();
@@ -291,14 +291,29 @@
               //}
             }
 
+            $scope.getFullOrdersDuration = function(duration){
+                //if(sales_id != 0){
+                  $("#ajax_loader").show();
+                  var combineFullShipped = {};
+                  combineFullShipped.company_id = company_id.value;
+                  combineFullShipped.duration = duration;
+                  $http.post('api/public/invoice/getFullShipped',combineFullShipped).success(function(resultFullShipped){
+                    if(resultFullShipped.data.success == '1') {
+                      $("#ajax_loader").hide();
+                      $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
+                    }
+                  });
+              //}
+            }
+
             // On Time In Full
-            var combineFullShipped = {};
+            /*var combineFullShipped = {};
             combineFullShipped.company_id = company_id.value;
             $http.post('api/public/invoice/getFullShipped',combineFullShipped).success(function(resultFullShipped){
                 if(resultFullShipped.data.success == '1') {
                   $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
                 }
-            });
+            });*/
         }
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
