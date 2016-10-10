@@ -151,7 +151,7 @@
               <thead>
                 <tr>
                   <th align="left" valign="top" width="15%" style="border:1px solid #000000;"><strong> Size</strong></th>
-                  <th align="left" valign="top" width="15%" style="border:1px solid #000000;"><strong> Group</strong></th>
+                  <!-- <th align="left" valign="top" width="15%" style="border:1px solid #000000;"><strong> Group</strong></th> -->
                   <th align="left" valign="top" width="20%" style="border:1px solid #000000;"><strong> Color</strong></th>
                   <th align="left" valign="top" width="40%" style="border:1px solid #000000;"><strong> Description</strong></th>
                   <th align="right" valign="top" width="10%" style="border:1px solid #000000;"><strong> Qnty&nbsp;&nbsp;</strong></th>
@@ -161,7 +161,7 @@
                 @foreach ($shipping_boxes as $box)
                 <tr>
                   <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;"> {{$box->size}}</td>
-                  <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
+                  <!-- <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td> -->
                   <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->color_name}}</td>
                   <td align="left" valign="top" class="brdrBox" width="40%" style="border:1px solid #000000;"> {{$box->product_name}}</td>
                   <td align="right" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"> {{$box->boxed_qnty}}&nbsp;&nbsp;&nbsp;</td>
@@ -209,10 +209,6 @@
         </table>
       </td>
     </tr>
-
-
-
-    
 </table>
 </body>
 </html>
