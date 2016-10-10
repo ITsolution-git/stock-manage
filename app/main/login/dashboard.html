@@ -46,7 +46,7 @@
                     </div>-->
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{salesClosed1 | currency : $ : 0}}<sup>{{salesClosed2}}</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{salesClosed | currency : $ : 0}}</div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box">
@@ -65,11 +65,11 @@
                         Estimates
                     </md-card-title-text>
                     <div ng-if="po_data.complete==0">
-                        <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
+                        <a class="common-header-links">EDIT</a>
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">{{estimatedTotal}} | {{estimated1 | currency : $ : 0}}<sup>{{estimated2}}</sup></span>
+                        <div class="center-num"><span class="num-style1 text-center">{{estimatedTotal}} | {{estimated | currency : $ : 0}}</span>
                         <span class="dash-btwn-txt comp-report-txt">Estimates | Revenue</span>
                         </div>
                 </md-card-content>
@@ -107,9 +107,9 @@
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
                     <div class="center-num">
-                        <span class="num-style1 text-center">{{estimatedCurrent1 | currency : $ : 0}}<sup>{{estimatedCurrent2}}</sup></span>
+                        <span class="num-style1 text-center">{{estimatedCurrent | currency : $ : 0}}</span>
                         <span class="dash-btwn-txt green-txt"><i class="fa fa-caret-up"></i> {{estimatedComparisonPercent}}%</span>
-                        <span class="dash-btwn-txt comp-report-txt">{{estimatedPrevious | currency : $ : 2}} : Year - {{estimatedComparisonPeriod}}</span>
+                        <span class="dash-btwn-txt comp-report-txt">{{estimatedPrevious | currency : $ : 0}} : Year - {{estimatedComparisonPeriod}}</span>
                     </div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
@@ -127,7 +127,7 @@
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems1}}<sup ng-show="avgItems2 != '0'">{{avgItems2}}</sup> |Amount {{avgAmount1 | currency : $ : 0}}<sup>{{avgAmount2}}</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}} |Amount {{avgAmount | currency : $ : 0}}</div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box text-center">
@@ -234,7 +234,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} | {{unpaid1 | currency : $ : 0}}<sup>{{unpaid2}}</sup></span></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} | {{unpaid | currency : $ : 0}}</span></div>
                     </md-card-content>
                 </md-card>
             </div>

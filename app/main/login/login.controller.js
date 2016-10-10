@@ -134,8 +134,9 @@
                   $http.post('api/public/invoice/getEstimates',combineEstimates).success(function(resultEstimated){
                       if(resultEstimated.data.success == '1') {
                         $("#ajax_loader").hide();
-                        $scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
-                        $scope.estimated2=resultEstimated.data.allData[0].totalEstimated[1];
+                        $scope.estimated=resultEstimated.data.allData[0].totalEstimated;
+                        /*$scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
+                        $scope.estimated2=resultEstimated.data.allData[0].totalEstimated[1];*/
                         $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
                       }
                   });
@@ -166,7 +167,14 @@
                   $http.post('api/public/invoice/getAverageOrders',combineAverageOrders).success(function(resultAverageOrder){
                       if(resultAverageOrder.data.success == '1'){
                           $("#ajax_loader").hide();
-                          $scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
+                          $scope.avgAmount=resultAverageOrder.data.allData[0].avgOrderAmount;
+                          if(resultAverageOrder.data.allData[0].avgOrderItems){
+                              $scope.avgItems=resultAverageOrder.data.allData[0].avgOrderItems;
+                          }else{
+                              $scope.avgItems=0;
+                          }
+
+                          /*$scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
                           $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
                           if(resultAverageOrder.data.allData[0].avgOrderItems){
                               $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
@@ -174,7 +182,7 @@
                           }else{
                               $scope.avgItems1=0;
                               $scope.avgItems2=0;
-                          }
+                          }*/
                       }
                   });
                 //}
@@ -199,8 +207,9 @@
                     $http.post('api/public/invoice/getSalesClosed',combineSalesClosed).success(function(resultSalesClosed){
                         if(resultSalesClosed.data.success == '1') {
                             $("#ajax_loader").hide();
-                            $scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
-                            $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];
+                            $scope.salesClosed=resultSalesClosed.data.allData[0].totalSales;
+                            /*$scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
+                            $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];*/
                         }
                     });
                 //}
@@ -220,8 +229,9 @@
             combineUnpaid.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getUnpaid',combineUnpaid).success(function(resultUnpaid){
                 if(resultUnpaid.data.success == '1') {
-                  $scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
-                  $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];
+                  $scope.unpaid=resultUnpaid.data.allData[0].totalUnpaid;
+                  /*$scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
+                  $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];*/
                   $scope.unpaidTotal=resultUnpaid.data.allData[0].totalInvoice;
                 }
             });
@@ -242,8 +252,9 @@
             combineComparison.comparisonPeriod2 = '2015';
             $http.post('api/public/invoice/getComparison',combineComparison).success(function(resultComparison){
                 if(resultComparison.data.success == '1') {
-                  $scope.estimatedCurrent1=resultComparison.data.allData[0].totalEstimated[0];
-                  $scope.estimatedCurrent2=resultComparison.data.allData[0].totalEstimated[1];
+                  $scope.estimatedCurrent=resultComparison.data.allData[0].totalEstimated;
+                  /*$scope.estimatedCurrent1=resultComparison.data.allData[0].totalEstimated[0];
+                  $scope.estimatedCurrent2=resultComparison.data.allData[0].totalEstimated[1];*/
                   $scope.estimatedPrevious=resultComparison.data.allData[0].totalEstimatedPrevious;
                   $scope.estimatedComparisonPeriod=combineComparison.comparisonPeriod2;
                   $scope.estimatedComparisonPercent=resultComparison.data.allData[0].percentDifference;
