@@ -24,7 +24,7 @@
         }
         else
         {
-            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+            $scope.allow_access = 1; // CAN BE EDIT BY ANYONE
         }
 
         /* TESTY PAGINATION */     

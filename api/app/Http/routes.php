@@ -381,3 +381,6 @@ Route::post('invoice/getLatestOrders', 'InvoiceController@getLatestOrders');
 Route::post('invoice/getEstimates', 'InvoiceController@getEstimates');
 Route::post('invoice/getComparison', 'InvoiceController@getComparison');
 Route::post('invoice/getSalesPersons', 'InvoiceController@getSalesPersons');
+Route::post('invoice/getUnshipped', 'InvoiceController@getUnshipped');
+Route::post('invoice/getProduction', 'InvoiceController@getProduction');
+Route::post('invoice/getFullShipped', 'InvoiceController@getFullShipped');

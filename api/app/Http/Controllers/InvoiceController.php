@@ -694,9 +694,9 @@ class InvoiceController extends Controller {
                 if($post['duration']=='1'){
                     $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
                 }else if($post['duration']=='2'){
-                    $duration='';
+                    $retArray = $retArray->where(DB::raw('WEEK(i.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
                 }else if($post['duration']=='3'){
-                    $duration='';
+                    $retArray = $retArray->where(DB::raw('MONTH(i.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
                 }else if($post['duration']=='4'){
                     $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
                 }
@@ -792,6 +792,144 @@ class InvoiceController extends Controller {
             }else{
                 $retArray[0]->percentDifference = 0;
             }
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getUnshipped(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.balance_due) as totalUnshipped'), DB::raw('COUNT(i.id) as totalInvoice') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('shipping as s','s.order_id','=','o.id')   
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('s.shipping_status','=','1')
+            ->where('o.is_paid','=','0')
+            ->where('o.grand_total','>','o.total_payments')
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->totalUnshipped=round($retArray[0]->totalUnshipped, 0);
+        /*$tempFigure=explode(".", $retArray[0]->totalUnpaid);
+        $retArray[0]->totalUnpaid=$tempFigure;*/
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+    
+    public function getFullShipped(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+
+        if((isset($post['duration']) && $post['duration']!=0)){
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('COUNT(i.id) as totalShipped') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('shipping as s','s.order_id','=','o.id')   
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.date_shipped','=>','s.fully_shipped');
+
+            if($post['duration']=='1'){
+                $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
+            }else if($post['duration']=='2'){
+                $retArray = $retArray->where(DB::raw('WEEK(i.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
+            }else if($post['duration']=='3'){
+                $retArray = $retArray->where(DB::raw('MONTH(i.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
+            }else if($post['duration']=='4'){
+                $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
+            }
+
+            $retArray = $retArray->where('s.shipping_status','=','2')
+            ->get();
+        }else{
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('COUNT(i.id) as totalShipped') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('shipping as s','s.order_id','=','o.id')   
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.date_shipped','=>','s.fully_shipped')
+            ->where('s.shipping_status','=','2')
+            ->get();    
+        }
+
+        
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->totalUnshipped=round($retArray[0]->totalUnshipped, 0);
+        /*$tempFigure=explode(".", $retArray[0]->totalUnpaid);
+        $retArray[0]->totalUnpaid=$tempFigure;*/
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getProduction(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+
+        if((isset($post['sales_id']) && $post['sales_id']!=0)){
+            $sales_id=$post['sales_id'];
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('COUNT(i.id) as totalProduction'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.sales_id','=',$sales_id)
+            ->where('o.approval_id','=',2483)
+            ->get();
+        }else{
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('COUNT(i.id) as totalProduction'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.approval_id','=',2483)
+            ->get();    
+        }
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
         }
 
         $response = array(
