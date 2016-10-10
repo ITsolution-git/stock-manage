@@ -98,16 +98,12 @@
 
         var data = {company_id :sessionService.get('company_id')};
 
-        var company_id = document.createElement('input');
-        company_id.name = 'company_id';
-        company_id.setAttribute('value', sessionService.get('company_id'));
-
         //$("#ajax_loader").show();
 
         if(vm.role_slug != 'SA'){
             // Fetch Sales Persons for Filtering
             var combineSalesPersons = {};
-            combineSalesPersons.company_id = company_id.value;
+            combineSalesPersons.company_id = sessionService.get('company_id');
 
             $http.post('api/public/invoice/getSalesPersons',combineSalesPersons).success(function(resultSales){
                 if(resultSales.data.success == '1') {
@@ -118,7 +114,7 @@
 
             // Estimates
             /*var combineEstimates = {};
-            combineEstimates.company_id = company_id.value;
+            combineEstimates.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getEstimates',combineEstimates).success(function(resultEstimated){
                 if(resultEstimated.data.success == '1') {
                   $scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
@@ -132,7 +128,7 @@
                   if($scope.estimatesPersonName != undefined && $scope.estimatesDuration != undefined) {
                   $("#ajax_loader").show();
                   var combineEstimates = {};
-                  combineEstimates.company_id = company_id.value;
+                  combineEstimates.company_id = sessionService.get('company_id');
                   combineEstimates.sales_id = $scope.estimatesPersonName;
                   combineEstimates.duration = $scope.estimatesDuration;
                   $http.post('api/public/invoice/getEstimates',combineEstimates).success(function(resultEstimated){
@@ -149,7 +145,7 @@
 
             // Average Orders
             /*var combineAverageOrders = {};
-            combineAverageOrders.company_id = company_id.value;
+            combineAverageOrders.company_id = sessionService.get('company_id');
 
             $http.post('api/public/invoice/getAverageOrders',combineAverageOrders).success(function(resultAverageOrder){
                 if(resultAverageOrder.data.success == '1') {
@@ -164,7 +160,7 @@
                 //if(sales_id != 0){
                   $("#ajax_loader").show();
                   var combineAverageOrders = {};
-                  combineAverageOrders.company_id = company_id.value;
+                  combineAverageOrders.company_id = sessionService.get('company_id');
                   combineAverageOrders.sales_id = sales_id;
 
                   $http.post('api/public/invoice/getAverageOrders',combineAverageOrders).success(function(resultAverageOrder){
@@ -186,7 +182,7 @@
 
             // Sales Closed
             /*var combineSalesClosed = {};
-            combineSalesClosed.company_id = company_id.value;
+            combineSalesClosed.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getSalesClosed',combineSalesClosed).success(function(resultSalesClosed){
                 if(resultSalesClosed.data.success == '1') {
                   $scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
@@ -198,7 +194,7 @@
                 //if(sales_id != 0){
                     $("#ajax_loader").show();
                     var combineSalesClosed = {};
-                    combineSalesClosed.company_id = company_id.value;
+                    combineSalesClosed.company_id = sessionService.get('company_id');
                     combineSalesClosed.sales_id = sales_id;
                     $http.post('api/public/invoice/getSalesClosed',combineSalesClosed).success(function(resultSalesClosed){
                         if(resultSalesClosed.data.success == '1') {
@@ -212,7 +208,7 @@
 
             // Orders not send to Quickbooks
             var combineNoQuickbook = {};
-            combineNoQuickbook.company_id = company_id.value;
+            combineNoQuickbook.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getNoQuickbook',combineNoQuickbook).success(function(result){
                 if(result.data.success == '1') {
                   $scope.noqbinvoice=result.data.allData[0].totalInvoice;
@@ -221,7 +217,7 @@
 
             // Orders with Balances
             var combineUnpaid = {};
-            combineUnpaid.company_id = company_id.value;
+            combineUnpaid.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getUnpaid',combineUnpaid).success(function(resultUnpaid){
                 if(resultUnpaid.data.success == '1') {
                   $scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
@@ -232,7 +228,7 @@
 
             // Latest Orders
             var combineLatestOrders = {};
-            combineLatestOrders.company_id = company_id.value;
+            combineLatestOrders.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getLatestOrders',combineLatestOrders).success(function(resultLatestOrders){
                 if(resultLatestOrders.data.success == '1') {
                   $scope.latestOrders=resultLatestOrders.data.allData;
@@ -241,7 +237,7 @@
 
             // Comparison Report: Today, Last Week, Last Month, Last Year
             var combineComparison = {};
-            combineComparison.company_id = company_id.value;
+            combineComparison.company_id = sessionService.get('company_id');
             combineComparison.comparisonPeriod1 = 'currentYear';
             combineComparison.comparisonPeriod2 = '2015';
             $http.post('api/public/invoice/getComparison',combineComparison).success(function(resultComparison){
@@ -257,7 +253,7 @@
 
             // Orders to be shipped
             var combineUnshipped = {};
-            combineUnshipped.company_id = company_id.value;
+            combineUnshipped.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getUnshipped',combineUnshipped).success(function(resultUnshipped){
                 if(resultUnshipped.data.success == '1') {
                   $scope.unshipped=resultUnshipped.data.allData[0].totalUnshipped;
@@ -268,7 +264,7 @@
 
             // Numbers of Orders in Production
             /*var combineProduction = {};
-            combineProduction.company_id = company_id.value;
+            combineProduction.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getProduction',combineProduction).success(function(resultProduction){
                 if(resultProduction.data.success == '1') {
                   $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
@@ -280,7 +276,7 @@
                 //if(sales_id != 0){
                   $("#ajax_loader").show();
                   var combineProduction = {};
-                  combineProduction.company_id = company_id.value;
+                  combineProduction.company_id = sessionService.get('company_id');
                   combineProduction.sales_id = sales_id;
                   $http.post('api/public/invoice/getProduction',combineProduction).success(function(resultProduction){
                   if(resultProduction.data.success == '1') {
@@ -295,7 +291,7 @@
                 //if(sales_id != 0){
                   $("#ajax_loader").show();
                   var combineFullShipped = {};
-                  combineFullShipped.company_id = company_id.value;
+                  combineFullShipped.company_id = sessionService.get('company_id');
                   combineFullShipped.duration = duration;
                   $http.post('api/public/invoice/getFullShipped',combineFullShipped).success(function(resultFullShipped){
                     if(resultFullShipped.data.success == '1') {
@@ -308,7 +304,7 @@
 
             // On Time In Full
             /*var combineFullShipped = {};
-            combineFullShipped.company_id = company_id.value;
+            combineFullShipped.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getFullShipped',combineFullShipped).success(function(resultFullShipped){
                 if(resultFullShipped.data.success == '1') {
                   $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
