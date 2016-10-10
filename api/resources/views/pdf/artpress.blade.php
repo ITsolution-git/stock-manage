@@ -39,7 +39,7 @@
   <table style="margin-top:15px;">
   
     <tr>
-      <td align="center"><b>Client P</b></td>
+      <td align="center"><b>Client PO</b></td>
       <td align="center"><b>Account Manager</b></td>
       <td align="center"><b> Term</b></td>
       <td align="center"><b>Ship Via</b></td>
@@ -53,8 +53,8 @@
       <td align="center" border="1"> </td>
       <td align="center" border="1"></td>
       <td align="center" border="1"> {{$color[0]->date_shipped}}</td>
-      <td align="center" border="1">  {{$color[0]->in_hands_by}}</td>
-      <td align="center" border="1"> {{$color[0]->balance_due}}</td>
+      <td align="center" border="1"> {{$color[0]->in_hands_by}}</td>
+      <td align="center" border="1"> <?php echo number_format((float)$color[0]->balance_due, 2, '.', ''); ?></td>
     </tr>
  
   </table>
