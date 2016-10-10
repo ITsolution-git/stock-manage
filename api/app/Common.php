@@ -220,7 +220,23 @@ class Common extends Model {
         {
             $data['updated_date'] = CURRENT_DATETIME;
         }
-        
+        if(isset($data['shipping_by']))
+        {
+            $data['shipping_by'] = date("Y-m-d", strtotime($data['shipping_by']));
+        }
+        if(isset($data['in_hands_by']))
+        {
+            $data['in_hands_by'] = date("Y-m-d", strtotime($data['in_hands_by']));
+        }
+        if(isset($data['date_shipped']))
+        {
+            $data['date_shipped'] = date("Y-m-d", strtotime($data['date_shipped']));
+        }
+        if(isset($data['fully_shipped']))
+        {
+            $data['fully_shipped'] = date("Y-m-d", strtotime($data['fully_shipped']));
+        }
+
         $result = DB::table($table);
         if(count($cond)>0)
         {
