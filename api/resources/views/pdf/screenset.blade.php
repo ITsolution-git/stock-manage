@@ -68,15 +68,48 @@
  
   </table><br><br>
 
+  <table style="margin-top:15px;">
+  
+    <tr>
+      <td align="center" width="33%"><b>Garments / Item description</b></td>
+      <td align="center" width="10%"><b>color</b></td>
+      <td align="center" width="40%"><b>Sizes/ Quantities</b></td>
+      <td align="center" width="7%"><b>Qty</b></td>
+      <td align="center" width="10%"><b>Unit Price</b></td>
+    </tr>
+
+ <?php
+  $total  =0;
+  foreach($pdf_product as $key=>$value) {?>
+  <tr>
+    <td width="33%" border="1">{{$value['product_name']}}</td>
+    <td align="center" width="10%" border="1">{{$value['product_color']}}</td>
+    <td align="left" width="40%" border="1">
+    <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>
+      {{$key_col}}-{{$val_col}}  
+    <?php } ?>  
+    </td>
+    <td align="center" width="7%" border="1">{{$value['total_product']}}</td> 
+    <td align="center" width="10%" border="1">{{$value['price']}}</td>
+  </tr>
+  <?php $total +=$value['total_product']; } ?>
+
+  <tr>
+      <td colspan="3" ></td>
+      <td align="center" border="1"> <?php echo $total; ?></td>
+      <td ></td>
+  </tr>
+  </table>
+  <br><br>
 
 <?php foreach($data as $key_main=>$value_main)
 { 
   ?>
   <table style="margin-top:15px;">
-    <!-- <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
-      <td><?php //echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
-      <td>w:<?php //echo $value_main[0][0]->screen_width; ?> X h:<?php //echo $value_main[0][0]->screen_height; ?></td>
-    </tr> -->
+     <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
+      <td colspan="2"><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
+      <!-- <td>w:<?php //echo $value_main[0][0]->screen_width; ?> X h:<?php //echo $value_main[0][0]->screen_height; ?></td> -->
+    </tr> 
     <tr>
       <td width="40%">
         <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; " >
@@ -157,58 +190,3 @@
 }
 ?>
 
-<div style="page-break-before: always;"></div>
-         <table class="header">
-      <tr>
-          <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
-          <td align="left" width="40%">
-             Job# {{$company->order_id}}<br>
-             Job Name: {{$company->order_name}}<br>
-             Client: {{$company->client_company}}
-          </td>
-          <td align="left"  width="40%" style="height:100px;border:1px solid #000;border-radius:15px;">
-              <table >
-              <tr><td></td></tr>
-                 <tr>
-                      <td align="left">
-                          <b>SHIP TO :</b>
-                      </td>
-                 </tr>
-                 <tr>
-                  <td align="left">
-                      {{$company->street}} {{$company->address}}
-                  </td>
-                  </tr>
-                  <tr>
-                    <td align="left">
-                        {{$company->city}}, {{$company->state_name}} {{$company->postal_code}}
-                    </td>
-                 </tr>
-              </table>
-          </td>
-      </tr>
-    </table><br><br>
-  
-<table>
-<tr><td align="center"><b>Mockup Image</b></td></tr>
-  <?php /*foreach($data as $key=>$value){*/ ?>
-    <tr>
-      <td align="center"><img src="<?php echo $company->mokup_image; ?>" style="width: 600px; height: 615px;"  ></td>
-    </tr>
-   <?php /*}*/ ?>
-</table>
-  <table style="margin-top: 20px;">
-    <tr>
-      <td><b>Culture Contact : {{$company->f_name}} {{$company->l_name}}</b></td>
-      <td>Job Name : {{$company->order_name}}</td>
-    </tr>
-    <tr>
-      <td>Brand Coordinator : {{Session::get('name')}}</td>
-      <td>Client PO# : {{$company->custom_po}}</td>
-    </tr>
-    <tr>
-      <td>In Hands Date: {{$company->in_hands_by}}</td>
-    </tr>
-  </table>
-</body>
-</html>
