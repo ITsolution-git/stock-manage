@@ -214,6 +214,26 @@ class ShippingController extends Controller {
 
         $result = $this->shipping->shippingDetail($data);
         
+        if($result['shipping'][0]->shipping_by != '0000-00-00' && $result['shipping'][0]->shipping_by != '') {
+            $result['shipping'][0]->shipping_by = date("n/d/Y", strtotime($result['shipping'][0]->shipping_by));
+        } else {
+            $result['shipping'][0]->shipping_by = '';
+        }
+        if($result['shipping'][0]->in_hands_by != '0000-00-00' && $result['shipping'][0]->in_hands_by != '') {
+            $result['shipping'][0]->in_hands_by = date("n/d/Y", strtotime($result['shipping'][0]->in_hands_by));
+        } else {
+            $result['shipping'][0]->shipping_by = '';
+        }
+        if($result['shipping'][0]->date_shipped != '0000-00-00' && $result['shipping'][0]->date_shipped != '') {
+            $result['shipping'][0]->date_shipped = date("n/d/Y", strtotime($result['shipping'][0]->date_shipped));
+        } else {
+            $result['shipping'][0]->date_shipped = '';
+        }
+        if($result['shipping'][0]->fully_shipped != '0000-00-00' && $result['shipping'][0]->fully_shipped != '') {
+            $result['shipping'][0]->fully_shipped = date("n/d/Y", strtotime($result['shipping'][0]->fully_shipped));
+        } else {
+            $result['shipping'][0]->fully_shipped = '';
+        }
 
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
@@ -764,20 +784,33 @@ class ShippingController extends Controller {
         $data['overview'] = 1;
 
         $result = $this->shipping->shippingDetail($data);
-       
+        
+        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
+        {
+            $result['shipping'][0]->shipping_status = 1;
+        }
+        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 2;
+        }
+        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 3;
+        }
 
-         if(empty($result['shipping']))
-            {
-                  $response = array(
-                        'success' => 0, 
-                        'message' => "No Records Found",
-                        'shippingBoxes' => '',
-                        'records' => '',
-                        'shippingItems' => ''
-                    ); 
-                   return response()->json(["data" => $response]);
-            }
+        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
 
+        if(empty($result['shipping']))
+        {
+              $response = array(
+                    'success' => 0, 
+                    'message' => "No Records Found",
+                    'shippingBoxes' => '',
+                    'records' => '',
+                    'shippingItems' => ''
+                ); 
+               return response()->json(["data" => $response]);
+        }
 
         $boxes = $this->shipping->getShippingBoxes($data);
 
