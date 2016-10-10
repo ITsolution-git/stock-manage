@@ -196,7 +196,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">89 {{fullshippedTotal}}</div>
+                        <div class="center-num"><span class="num-style1 text-center">{{fullshippedTotal}}</div>
                     </md-card-content>
                     <div class="dash-footer-box text-center">
                         <div flex=100 class="box-zerospace">
@@ -221,7 +221,7 @@
                             <span class="md-title">Orders with Balances</span>
                         </md-card-header-text>
                         <md-menu>
-                            <md-button aria-label="Rate Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                            <md-button aria-label="Rate Options" class="md-icon-button">
                                 <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
                             </md-button>
                             <md-menu-content width="4">
@@ -245,7 +245,7 @@
                             <span class="md-title">Orders not send to Quickbooks</span>
                         </md-card-header-text>
                         <md-menu>
-                            <md-button aria-label="Tax Exempt Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                            <md-button aria-label="Tax Exempt Options" class="md-icon-button">
                                 <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
                             </md-button>
                             <md-menu-content width="4">
@@ -269,7 +269,7 @@
                             <span class="md-title">Orders to be shipped</span>
                         </md-card-header-text>
                         <md-menu>
-                            <md-button aria-label="Document Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                            <md-button aria-label="Document Options" class="md-icon-button">
                                 <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
                             </md-button>
                             <md-menu-content width="4">
