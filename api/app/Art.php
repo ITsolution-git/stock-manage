@@ -434,7 +434,7 @@ class Art extends Model {
 	{
 		$query = DB::table('artjob_screensets as ass')
 				->select('or.name as order_name','or.company_id','or.balance_due','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','col.color_code','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq','mt1.slug as placement_type',
-					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"))
+					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"),'ca.address','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
 				->join('order_design as od','od.id','=','odp.design_id')
@@ -450,6 +450,8 @@ class Art extends Model {
 				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
 				->leftJoin('misc_type as mt1','mt1.id','=','odp.placement_type')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
+				->leftJoin('client_address as ca','cl.client_id','=',DB::raw("ca.client_id AND ca.address_shipping = '1' "))
+				->leftJoin('state as st','st.id','=',"ca.state")
 				->where('ass.id','=',$screen_id)
 				->where('or.company_id','=',$company_id)
 				/*->where('acol.is_complete','=','1')*/

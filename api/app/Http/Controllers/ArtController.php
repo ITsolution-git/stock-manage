@@ -534,7 +534,7 @@ class ArtController extends Controller {
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
                 else { exec("chmod $file_path 0777"); }
-                
+               
                 PDF::AddPage('P','A4');
                 PDF::writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size']))->render());
            
