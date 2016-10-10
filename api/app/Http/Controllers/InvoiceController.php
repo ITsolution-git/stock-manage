@@ -524,9 +524,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->totalSales=round($retArray[0]->totalSales, 2);
-        $tempFigure=explode(".", $retArray[0]->totalSales);
-        $retArray[0]->totalSales=$tempFigure;
+        $retArray[0]->totalSales=round($retArray[0]->totalSales, 0);
+        //$tempFigure=explode(".", $retArray[0]->totalSales);
+        //$retArray[0]->totalSales=$tempFigure;
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
@@ -557,9 +557,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->totalUnpaid=round($retArray[0]->totalUnpaid, 2);
-        $tempFigure=explode(".", $retArray[0]->totalUnpaid);
-        $retArray[0]->totalUnpaid=$tempFigure;
+        $retArray[0]->totalUnpaid=round($retArray[0]->totalUnpaid, 0);
+        //$tempFigure=explode(".", $retArray[0]->totalUnpaid);
+        //$retArray[0]->totalUnpaid=$tempFigure;
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
@@ -601,9 +601,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->avgOrderAmount=round($retArray[0]->avgOrderAmount, 2);
-        $tempFigure=explode(".", $retArray[0]->avgOrderAmount);
-        $retArray[0]->avgOrderAmount=$tempFigure;
+        $retArray[0]->avgOrderAmount=round($retArray[0]->avgOrderAmount, 0);
+        //$tempFigure=explode(".", $retArray[0]->avgOrderAmount);
+        //$retArray[0]->avgOrderAmount=$tempFigure;
 
         // Fetching average number of items per invoiced
         if(isset($post['sales_id']) && $post['sales_id']!=0){
@@ -659,9 +659,9 @@ class InvoiceController extends Controller {
             {
                 $order_design['total_unit'] = $total_unit;
                 $countOrders = count(array_unique($orderIDs));
-                $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,2);
-                $tempAvg=explode(".", $retArray[0]->avgOrderItems);
-                $retArray[0]->avgOrderItems=$tempAvg;
+                $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,0);
+                //$tempAvg=explode(".", $retArray[0]->avgOrderItems);
+                //$retArray[0]->avgOrderItems=$tempAvg;
             }
         }
 
@@ -758,9 +758,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->totalEstimated=round($retArray[0]->totalEstimated, 2);
-        $tempFigure=explode(".", $retArray[0]->totalEstimated);
-        $retArray[0]->totalEstimated=$tempFigure;
+        $retArray[0]->totalEstimated=round($retArray[0]->totalEstimated, 0);
+        //$tempFigure=explode(".", $retArray[0]->totalEstimated);
+        //$retArray[0]->totalEstimated=$tempFigure;
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
@@ -795,9 +795,10 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $amountCurrent=round($retArray[0]->totalEstimated, 2);
-        $tempFigure=explode(".", $amountCurrent);
-        $retArray[0]->totalEstimated=$tempFigure;
+        $amountCurrent=round($retArray[0]->totalEstimated, 0);
+        //$tempFigure=explode(".", $amountCurrent);
+        //$retArray[0]->totalEstimated=$tempFigure;
+        $retArray[0]->totalEstimated=$amountCurrent;
 
         $retArrayPrevious = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.grand_total) as totalEstimatedPrevious'))
@@ -817,10 +818,10 @@ class InvoiceController extends Controller {
            return response()->json(["data" => $response]);
         }*/
         if(!empty($retArrayPrevious)){
-            $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 2);
+            $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 0);
             $retArray[0]->totalEstimatedPrevious=$amountPrevious;
             if($amountPrevious!='0.00'){
-                $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),2)-100;    
+                $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),0)-100;    
             }else{
                 $retArray[0]->percentDifference = 0;
             }
