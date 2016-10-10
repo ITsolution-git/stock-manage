@@ -89,8 +89,7 @@
 	  </tr>
  </table><br><br>
 
-	<?php if(!empty($shipping_detail))
-	{ ?>
+	
 		<table id="details" cellspacing="0" cellpadding="0" style="width:100%">
 			<tr>
 <!--                 <th width="15%" style="border:none;font-weight:bold;text-align:center;">Order<br>ID</th>
@@ -110,30 +109,22 @@
                 <th width="15%" style="border:none;font-weight:bold;text-align:center;">In Hands<br>By</th>
                 <th width="15%" style="border:none;font-weight:bold;text-align:center;">Payment<br> Date</th>
             </tr>
-			@foreach ($shipping_detail as $shipping)
+			
 			<tr>
 				<td style="border:1px solid #000;padding-left:5px;"> {{$order_data[0]->custom_po}}</td>
 				<td style="border:1px solid #000;padding-left:5px;"> {{$order_data[0]->name}}</td>
-				<td style="border:1px solid #000;padding-left:5px;"></td>
+				<td style="border:1px solid #000;padding-left:5px;">{{$invoice_data[0]->payment_terms}}</td>
 				<td style="border:1px solid #000;padding-left:5px;">
-					<?php if($shipping->shipping_type_id == 1) {?>
-						 UPS
-					<?php } ?>
-					<?php if($shipping->shipping_type_id == 2) {?>
-						 FEDEX
-					<?php } ?>
-					<?php if($shipping->shipping_type_id == 0) {?>
-						
-					<?php } ?>
+					
 				</td>
-				<td style="border:1px solid #000;padding-left:5px;"> {{$shipping->shipping_by}}</td>
-				<td style="border:1px solid #000;padding-left:5px;"> {{$shipping->in_hands_by}}</td>
+				<td style="border:1px solid #000;padding-left:5px;"> {{$order_data[0]->date_shipped}}</td>
+				<td style="border:1px solid #000;padding-left:5px;"> {{$order_data[0]->in_hands_by}}</td>
 				<td style="border:1px solid #000;padding-left:5px;"> {{$invoice_data[0]->payment_due_date}}</td>
 			</tr>
-			@endforeach
+			
 		</table><br><br>
 	<?php 
-	}
+	
 	if(!empty($all_design))
 	{
 	?>

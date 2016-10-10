@@ -136,11 +136,35 @@ class InvoiceController extends Controller {
             {
                 $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
             }
+         
+
+            if($retutn_arr['invoice_data'][0]->payment_terms == '1')
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = '50% upfront and 50% on shipping';
+
+            } else if($retutn_arr['invoice_data'][0]->payment_terms == '100')
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = '100% on Shipping';
+            } else if($retutn_arr['invoice_data'][0]->payment_terms == '15')
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = 'Net 15';
+
+            } else if($retutn_arr['invoice_data'][0]->payment_terms == '30')
+
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = 'Net 30';
+            } else {
+                $retutn_arr['invoice_data'][0]->payment_terms = 'No Terms';
+            }
+
+           
+            
 
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
-            $order_data =  $order_data_all['order'];           
+            $order_data =  $order_data_all['order']; 
+
 
 //            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
              if(empty($order_data))
@@ -155,7 +179,14 @@ class InvoiceController extends Controller {
         }
         else
         {
-            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+            //$order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+
+            $order_array = array('id'=>$order_id,'company_id' => $company_id);
+
+            $order_data_all = $this->order->orderDetail($order_array);
+            $order_data =  $order_data_all['order']; 
+
+
             $retutn_arr['invoice_data'] = array();
         }
 
@@ -238,9 +269,10 @@ class InvoiceController extends Controller {
                 $design->products = array();
             }
         }
-        //print_r($all_design);exit;
+        
 
         $retutn_arr['all_design'] = $all_design;
+       
 
         if($type == 1)
         {
