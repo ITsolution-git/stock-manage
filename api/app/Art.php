@@ -381,6 +381,33 @@ class Art extends Model {
     	}
     return $array;
 	}
+	public function getArtApprovalProducts($order_id,$company_id)
+	{
+		$query = DB::table('orders as or')
+					->select('or.name as order_name','or.company_id','or.balance_due','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','p.name as product_name','pdtl.product_id','pdtl.size','pdtl.qnty','col.name as product_color','pdtl.price',
+					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"))
+					->join('order_design as od','od.order_id','=','or.id')
+					->leftjoin('design_product as dp','dp.design_id','=','od.id')
+					->leftjoin('products as p','dp.product_id','=','p.id')
+					->leftjoin('purchase_detail as pdtl','pdtl.design_product_id','=','dp.id')	
+					->leftjoin('color as col','col.id','=','pdtl.color_id')
+					->where('or.id','=',$order_id)
+					->where('or.company_id','=',$company_id)
+					->where('od.is_delete','=','1')		
+					->where('dp.is_delete','=','1')
+					->get();
+				$product = array();
+				foreach ($query as $key=>$value) 
+				{
+					$product[$value->product_id]['product_name']= $value->product_name;
+					$product[$value->product_id]['product_color'] = $value->product_color;
+					$product[$value->product_id]['product_id'] = $value->product_id;
+					$product[$value->product_id]['summary'][$value->size]= $value->qnty;
+					$product[$value->product_id]['total_product'] = $value->total_product;
+					$product[$value->product_id]['price'] = $value->price;
+				}
+		return $product;
+	}
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
