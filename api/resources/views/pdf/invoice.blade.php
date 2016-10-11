@@ -50,7 +50,7 @@
                         <td width="48%" style="vertical-align:middle; border:1px solid #000; border-radius:20px; position:relative; height:100px;">
                         	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         		<tr>
-                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="http://localhost.stokkup.com/assets/images/etc/bill.png" title="" alt="" height="100"></td>
+                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/bill.png"  title="" alt="" height="100"></td>
                         			<td valign="middle" style="width:80%; height:100px; font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
@@ -69,7 +69,7 @@
                         <td width="48%" style="vertical-align:middle; border:1px solid #000; border-radius:20px; position:relative; height:100px;">
                         	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         		<tr>
-                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="http://localhost.stokkup.com/assets/images/etc/ship.png" title="" alt="" height="100"></td>
+                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png"   title="" alt="" height="100"></td>
                         			<td valign="middle" style="width:80%; height:100px; font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
@@ -309,7 +309,7 @@
     </table>
     <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:15px; border-collapse:collapse;">
         <tr>
-            <td><img src="http://localhost.stokkup.com/assets/images/etc/footer-1.png" title="" alt=""></td>
+            <td><img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt=""></td>
         </tr>
     </table>
 </body>
