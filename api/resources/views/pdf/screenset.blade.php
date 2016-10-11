@@ -109,7 +109,7 @@
   ?>
   <table>
      <tr>
-      <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
+      <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?></td>
       <!-- <td>w:<?php //echo $value_main[0][0]->screen_width; ?> X h:<?php //echo $value_main[0][0]->screen_height; ?></td> -->
     </tr> 
     <tr>
@@ -210,4 +210,73 @@ foreach($data as $key_main=>$value_main)
     }
 ?>
 
+</table>
+<div style="page-break-before: always;"></div>
+
+<table>
+    <tr>
+      <td width="50%" class="font-bold align-left">PLACEMENT</td>
+      <td width="50%" class="font-bold align-right">ARTIST:</td>
+    </tr>
+  </table>
+<table>
+  <tr>
+    <?php 
+    $t_count = 1;
+    foreach($data as $key_main=>$value_main)
+    { 
+    ?>
+        <td width="22%" class="font-bold line-height"> <?php echo $value_main[0][0]->position_name; ?> : <?php echo $value_main[0][0]->line_per_inch; ?> </td>
+        <td width="1%"></td>  
+         <?php if($t_count%4==0){ ?>
+            </tr></table>
+            <table><tr>
+        <?php } ?>
+
+    <?php $t_count++;  } ?>
+  </tr>
+</table>
+<br>
+<hr style="border:1px solid #000;">
+<br>
+<span class="font-bold line-height">  FRAME SIZE </span><br>
+<table>
+  <tr>
+    <?php 
+    $t_count = 1;
+    foreach($data as $key_main=>$value_main)
+    { 
+    ?>
+        <td width="22%" class="font-bold line-height"> <?php echo $value_main[0][0]->position_name." Frame"; ?> : <?php echo $value_main[0][0]->frame_size; ?> </td>
+        <td width="1%"></td>  
+         <?php if($t_count%4==0){ ?>
+            </tr></table>
+            <table><tr>
+        <?php } ?>
+
+    <?php $t_count++;  } ?>
+  </tr>
+</table>
+<br>
+<hr style="border:1px solid #000;">
+<br>
+
+<table>
+  <tr>
+    <?php foreach($options as $key_img=>$img_val)
+    { ?>
+    <td width="10%" height="20">
+        <img src="{{SITE_HOST}}/assets/images/etc/{{$key_img}}.png" title="Culture Studio"alt="Culture Studio">
+    </td>
+    <?php } ?>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <td>
+        <img src="{{$company->mokup_image}}" title="Culture Studio" height="525" width="535" alt="Culture Studio">
+    </td>
+  </tr>
 </table>
