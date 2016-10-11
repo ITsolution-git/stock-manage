@@ -11,6 +11,8 @@
   .align-center{ text-align:center;}
   .line-height{line-height:20px;}
   .font-bold{font-weight:bold;}
+  .border-w{border:1px solid #fff; }
+  .border-b{border:1px solid #000; }
 </style>
 </head>
 <body style="padding:0; margin:0">
@@ -22,7 +24,7 @@
              Job Name: {{$color[0]->order_name}}<br>
              Client: {{$color[0]->client_company}}
           </td>
-          <td width="40%" style="vertical-align:middle; border:1px solid #000; border-radius:20px; position:relative; height:100px;">
+          <td width="40%" class="border-b" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
               <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
@@ -42,7 +44,7 @@
           </td>
     	</tr>
     </table><br>
-    <hr style="border:1px solid #000;">
+    <hr class="border-b">
     <br>
 
      <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
@@ -56,13 +58,13 @@
               <th width="15%" class="align-left font-bold" height="15">Payment Due</th>
           </tr>
           <tr>
-              <td height="20" class="align-left line-height" style="border:1px solid #000; ">&nbsp;&nbsp;{{$color[0]->custom_po}}</td>
-              <td height="20" class="align-left line-height" style="border:1px solid #000; ">&nbsp;&nbsp;{{$color[0]->account_manager}}</td>
-              <td height="20" class="align-left line-height" style="border:1px solid #000; "></td>
-              <td height="20" class="align-left line-height" style="border:1px solid #000; ">&nbsp;&nbsp;</td>
-              <td height="20" class="align-left line-height" style="border:1px solid #000; ">&nbsp;&nbsp;{{$color[0]->date_shipped}}</td>
-              <td height="20" class="align-left line-height" style="border:1px solid #000; ">&nbsp;&nbsp;{{$color[0]->in_hands_by}}</td>
-              <td height="20" class="align-left line-height" style="border:1px solid #000; ">&nbsp;&nbsp;{{$color[0]->payment_due_date}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->custom_po}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->account_manager}}</td>
+              <td height="20" class="align-left line-height border-b"></td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->date_shipped}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->in_hands_by}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->payment_due_date}}</td>
           </tr>
       </table>
   
@@ -84,46 +86,46 @@
                           if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";}
                     ?>
                     <tr style="background-color:<?php echo $color_bg; ?>;" >
-                        <td height="20" class="align-left line-height"  style="border:1px solid #000;  ">&nbsp;&nbsp;{{$value['product_name']}}</td>
-                        <td height="20" class="align-left line-height" style="border:1px solid #000;  ">&nbsp;&nbsp;{{$value['product_color']}}</td>
-                        <td height="20" class="align-left line-height" style="border:1px solid #000;  ">
+                        <td height="20" class="align-left line-height border-b" >&nbsp;&nbsp;{{$value['product_name']}}</td>
+                        <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$value['product_color']}}</td>
+                        <td height="20" class="align-left line-height border-b">
                           <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>
                             {{$key_col}}-{{$val_col}}&nbsp;&nbsp;  
                           <?php } ?>  
                         </td>
-                        <td height="20" class="align-left  line-height" style="border:1px solid #000;  ">&nbsp;&nbsp;40</td>
+                        <td height="20" class="align-left  line-height border-b" >&nbsp;&nbsp;40</td>
                         <?php $total +=$value['total_product']; ?>
                     </tr>
                      <?php $count++; } // LOOP END?>
                     <tr>
-                        <td height="20"  class="align-right font-bold" colspan="3" style="border:1px solid #fff; border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
-                        <td height="20" class="align-left" style="border:1px solid #000; ">&nbsp;&nbsp;<?php echo $total; ?></td>
-                        <td height="20" class="align-left" style="border:1px solid #fff; ">&nbsp;</td>
+                        <td height="20"  class="align-right font-bold border-w" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
+                        <td height="20" class="align-left border-b">&nbsp;&nbsp;<?php echo $total; ?></td>
+                        <td height="20" class="align-left border-w" >&nbsp;</td>
                     </tr>
                 </table>
 <br><br>
 <table style="margin-top:15px;">
     <tr>
-      <td width="10%" class="align-center" style="height:20px;border:1px solid #000;"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
       <td width="2%"></td>
-      <td width="10%" class="align-center" style="height:20px;border:1px solid #000;"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
       <td width="2%"></td>
-      <td width="10%" class="align-center" style="height:20px;border:1px solid #000;"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
       <td width="2%"></td>
-      <td width="10%" class="align-center" style="height:20px;border:1px solid #000;"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
       <td width="2%"></td>
-      <td width="10%" class="align-center" style="height:20px;border:1px solid #000;"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
     </tr>
     <tr>
-      <td width="10%" class="align-right font-bold" style="border:1px solid #fff;" >Prod Mgr</td>
+      <td width="10%" class="align-center font-bold border-w"  >Prod Mgr</td>
       <td width="2%"></td>
-      <td width="10%" class="align-right font-bold" style="border:1px solid #fff;">Press Lead</td>
+      <td width="10%" class="align-center font-bold border-w" >Press Lead</td>
       <td width="2%"></td>
-      <td width="10%" class="align-right font-bold" style="border:1px solid #fff;">Belt</td>
+      <td width="10%" class="align-center font-bold border-w" >Belt</td>
       <td width="2%"></td>
-      <td width="10%" class="align-right font-bold" style="border:1px solid #fff;">QC</td>
+      <td width="10%" class="align-center font-bold border-w" >QC</td>
       <td width="2%"></td>
-      <td width="10%" class="align-right font-bold" style="border:1px solid #fff;">Ship/Pack</td>
+      <td width="10%" class="align-center font-bold border-w" >Ship/Pack</td>
     </tr>
 </table>
 <br><br>
@@ -147,15 +149,15 @@
           <table>
            
             <tr style="font-weight: 12px">
-              <td class="align-center" style=" font-weight:bold"><b>#POS</b></td>
-              <td class="align-center" style=" font-weight:bold"><b>COLOR</b></td>
+              <td class="align-center font-bold" ><b>#POS</b></td>
+              <td class="align-center font-bold" ><b>COLOR</b></td>
             <?php if($color[0]->placement_type!='45') { ?>
-              <td class="align-center" style=" font-weight:bold"><b>PANTONE</b></td>
-              <td class="align-center" style=" font-weight:bold"><b>INK TYPE</b></td>
-              <td class="align-center" style=" font-weight:bold"><b>SQUEEGEE</b></td>
-              <td class="align-center" style=" font-weight:bold"><b>STROKE</b></td>
+              <td class="align-center font-bold" ><b>PANTONE</b></td>
+              <td class="align-center font-bold" ><b>INK TYPE</b></td>
+              <td class="align-center font-bold" ><b>SQUEEGEE</b></td>
+              <td class="align-center font-bold" ><b>STROKE</b></td>
             <?php } else { ?>
-              <td class="align-center" style=" font-weight:bold"><b>COLOR CODE</b></td>
+              <td class="align-center font-bold"><b>COLOR CODE</b></td>
             <?php } ?>
             </tr>
              
