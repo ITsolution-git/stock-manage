@@ -471,8 +471,9 @@ class ArtController extends Controller {
         // echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
         if(count($screenArray)>0)
         {
+            $options = $screenArray->options;
             $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
-            //echo "<pre>"; print_r($pdf_product); echo "</pre>"; die;
+            //echo "<pre>"; print_r($options); echo "</pre>"; die;
 
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
             
@@ -488,7 +489,7 @@ class ArtController extends Controller {
 
 
                 PDF::AddPage('P','A4');
-                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product))->render());
+                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
            
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;

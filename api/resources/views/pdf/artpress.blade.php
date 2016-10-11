@@ -138,7 +138,7 @@
        <td width="70%" class="align-center" style="border: 1px solid #000;">PRESS SETUP</td>
     </tr> -->
     <tr style="margin-top: 20px;"> 
-    	<td width="30%" style="border: 1px solid #000;"> 
+    	<td width="30%"> 
     		<table>
     			
     			<tr><td class="align-center"><img src="{{$color[0]->mokup_logo}}" title="Culture Studio" height="300" width="300" alt="Culture Studio"></td></tr>
