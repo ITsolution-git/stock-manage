@@ -85,21 +85,21 @@
               if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";}
         ?>
         <tr style="background-color:<?php echo $color_bg; ?>;" >
-            <td height="20" class="align-left line-height border-b" >&nbsp;&nbsp;{{$value['product_name']}}</td>
-            <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$value['product_color']}}</td>
-            <td height="20" class="align-left line-height border-b">
+            <td class="align-left line-height border-b" >&nbsp;&nbsp;{{$value['product_name']}}</td>
+            <td class="align-left line-height border-b">&nbsp;&nbsp;{{$value['product_color']}}</td>
+            <td class="align-left line-height border-b">
               <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>
                 {{$key_col}}-{{$val_col}}&nbsp;&nbsp;  
               <?php } ?>  
             </td>
-            <td height="20" class="align-left  line-height border-b" >&nbsp;&nbsp;40</td>
+            <td class="align-left  line-height border-b" >&nbsp;&nbsp;40</td>
             <?php $total +=$value['total_product']; ?>
         </tr>
          <?php $count++; } // LOOP END?>
         <tr>
-            <td height="20"  class="align-right font-bold border-w" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
-            <td height="20" class="align-left border-b">&nbsp;&nbsp;<?php echo $total; ?></td>
-            <td height="20" class="align-left border-w" >&nbsp;</td>
+            <td class="align-right font-bold line-height" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
+            <td class="align-left border-b line-height">&nbsp;&nbsp;<?php echo $total; ?></td>
+            
         </tr>
     </table>
   <br><br>
@@ -114,7 +114,7 @@
     </tr> 
     <tr>
       <td width="40%">
-        <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; " >
+        <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; width:130px;" >
       </td>
       <td width="60%">
           <table border="1">
@@ -134,21 +134,8 @@
       </td>
     </tr>
   </table>
-
-  <?php  if(!empty($value_main[1])) {?>
-    <table>
-          <tr>
-              <td align="left"><b>Notes</b></td>
-          </tr>
-        <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
-          <tr>
-              <td align="left"><?php echo $not_value ?></td>
-          </tr>
-        <?php } ?>
-    </table>
-  <?php } ?>
+<br><br>
   
-
   <!-- <hr style="border:1px solid #000;"> -->
 
 <?php  if(($key_main+1)%3==0 && ($key_main+1)!=count($data))
@@ -189,24 +176,30 @@
 ?>
 <br><br>
 <hr style="border:1px solid #000;">
+<table>
+    <tr>
+        <td align="left"><b>Notes</b></td>
+    </tr>
 <?php  
 foreach($data as $key_main=>$value_main)
-{ 
-if(!empty($value_main[1])) 
+{ ?>
+
+
+
+<?php  if(!empty($value_main[1])) 
   {
 ?>
-    <table>
-          <tr>
-              <td align="left"><b>Notes</b></td>
-          </tr>
+    
+          
         <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
           <tr>
               <td align="left"><?php echo $not_value ?></td>
           </tr>
         <?php } ?>
-    </table>
+    
 <?php 
   }  
     }
 ?>
 
+</table>
