@@ -1,113 +1,115 @@
-
+<!DOCTYPE html>
 <html>
 <head>
-<style>
-    @page { margin: 180px 50px; }
-    #header { position: fixed; left: 0px; top: -180px; right: 0px; height: 150px; background-color: orange; text-align: center; }
-    #footer { position: fixed; left: 0px; bottom: -180px; right: 0px; height: 150px; background-color: lightblue; }
-    #footer .page:after { content: counter(page, upper-roman); }
-    #header_logo{width: 120px; height:100px;}
-    
-  </style>
-  <title>Order Info</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <title>Orders Print</title>
+<style type="text/css">
+  body{font-size:9px;}
+  .align-left{ text-align:left;}
+  .align-right{ text-align:right;}
+  .align-center{ text-align:center;}
+  .line-height{line-height:20px;}
+  .font-bold{font-weight:bold;}
+  .border-w{border:1px solid #fff; }
+  .border-b{border:1px solid #000; }
+</style>
 </head>
-
-<body>
+<body style="padding:0; margin:0">
 
     <table class="header">
       <tr>
           <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
-          <td align="left" width="40%">
+          <td align="left" width="40%" class="font-bold">
              Job# {{$company->order_id}}<br>
              Job Name: {{$company->order_name}}<br>
              Client: {{$company->client_company}}
           </td>
-          <td align="left"  width="40%" style="height:100px;border:1px solid #000;border-radius:15px;">
-              <table >
-              <tr><td></td></tr>
-                 <tr>
-                      <td align="left">
-                          <b>SHIP TO :</b>
-                      </td>
-                 </tr>
-                 <tr>
-                  <td align="left">
-                      {{$company->street}} {{$company->address}}
+          <td width="40%" class="border-b" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
+              <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
+                  <td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                    <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td height="15">&nbsp;</td>
+                      </tr>
+                      <tr><td class="font-bold">{{$company->street}} {{$company->address}}<br>{{$company->city}}, {{$company->state_name}} {{$company->postal_code}}</td></tr>
+                      <tr>
+                        <td height="15">&nbsp;</td>
+                      </tr>
+                    </table>
                   </td>
-                  </tr>
-                  <tr>
-                    <td align="left">
-                        {{$company->city}}, {{$company->state_name}} {{$company->postal_code}}
-                    </td>
-                 </tr>
+                </tr>
               </table>
           </td>
       </tr>
     </table><br><br>
-
-    <table style="margin-top:15px;">
+    
+    <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+          <tr>
+              <th width="10%" class="align-left font-bold" height="15">Client PO</th>
+              <th width="20%" class="align-left font-bold" height="15">Account Manager</th>
+              <th width="10%" class="align-left font-bold" height="15">Terms</th>
+              <th width="15%" class="align-left font-bold" height="15">Ship Via</th>
+              <th width="15%" class="align-left font-bold" height="15">Ship Date</th>
+              <th width="15%" class="align-left font-bold" height="15">In Hands Date</th>
+              <th width="15%" class="align-left font-bold" height="15">Payment Due</th>
+          </tr>
+          <tr>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$company->custom_po}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$company->account_manager }}</td>
+              <td height="20" class="align-left line-height border-b"></td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$company->date_shipped}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$company->in_hands_by}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$company->payment_due_date}}</td>
+          </tr>
+      </table>
   
-    <tr>
-      <td align="center"><b>Client PO</b></td>
-      <td align="center"><b>Account Manager</b></td>
-      <td align="center"><b>Term</b></td>
-      <td align="center"><b>Ship Via</b></td>
-      <td align="center"><b>Ship Date</b></td>
-      <td align="center"><b>Hands Date</b></td>
-      <td align="center"><b>Payment Due</b></td>
-    </tr>
-     <tr>
-      <td align="center" border="1">{{$company->custom_po}}</td>
-      <td align="center" border="1">{{$company->account_manager}}</td>
-      <td align="center" border="1"> </td>
-      <td align="center" border="1"></td>
-      <td align="center" border="1"> {{$company->date_shipped}}</td>
-      <td align="center" border="1"> {{$company->in_hands_by}}</td>
-      <td align="center" border="1"> $<?php echo round($company->balance_due, 2); ?></td>
-    </tr>
- 
-  </table><br><br>
+  <br><br>
 
-  <table style="margin-top:15px;">
-  
-    <tr>
-      <td align="center" width="33%"><b>Garments / Item description</b></td>
-      <td align="center" width="10%"><b>color</b></td>
-      <td align="center" width="40%"><b>Sizes/ Quantities</b></td>
-      <td align="center" width="7%"><b>Qty</b></td>
-      <td align="center" width="10%"><b>Unit Price</b></td>
-    </tr>
-
- <?php
-  $total  =0;
-  foreach($pdf_product as $key=>$value) {?>
-  <tr>
-    <td width="33%" border="1">{{$value['product_name']}}</td>
-    <td align="center" width="10%" border="1">{{$value['product_color']}}</td>
-    <td align="left" width="40%" border="1">
-    <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>
-      {{$key_col}}-{{$val_col}}  
-    <?php } ?>  
-    </td>
-    <td align="center" width="7%" border="1">{{$value['total_product']}}</td> 
-    <td align="center" width="10%" border="1">{{$value['price']}}</td>
-  </tr>
-  <?php $total +=$value['total_product']; } ?>
-
-  <tr>
-      <td colspan="3" ></td>
-      <td align="center" border="1"> <?php echo $total; ?></td>
-      <td ></td>
-  </tr>
-  </table>
+    <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+        <tr>
+            <th width="40%" class="align-left font-bold" height="15">Garment/Item Description</th>
+            <th width="15%" class="align-left font-bold" height="15">Color</th>
+            <th width="37%" class="align-left font-bold" height="15">Size/Quantities</th>
+            <th width="8%"  class="align-left font-bold" height="15">Qty</th>
+            
+        </tr>
+        <?php
+            $total  =0;
+            $count=1;
+            foreach($pdf_product as $key=>$value) 
+            {
+              if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";}
+        ?>
+        <tr style="background-color:<?php echo $color_bg; ?>;" >
+            <td height="20" class="align-left line-height border-b" >&nbsp;&nbsp;{{$value['product_name']}}</td>
+            <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$value['product_color']}}</td>
+            <td height="20" class="align-left line-height border-b">
+              <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>
+                {{$key_col}}-{{$val_col}}&nbsp;&nbsp;  
+              <?php } ?>  
+            </td>
+            <td height="20" class="align-left  line-height border-b" >&nbsp;&nbsp;40</td>
+            <?php $total +=$value['total_product']; ?>
+        </tr>
+         <?php $count++; } // LOOP END?>
+        <tr>
+            <td height="20"  class="align-right font-bold border-w" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
+            <td height="20" class="align-left border-b">&nbsp;&nbsp;<?php echo $total; ?></td>
+            <td height="20" class="align-left border-w" >&nbsp;</td>
+        </tr>
+    </table>
   <br><br>
 
 <?php foreach($data as $key_main=>$value_main)
 { 
   ?>
-  <table style="margin-top:15px;">
-     <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
-      <td colspan="2"><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
+  <table>
+     <tr>
+      <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
       <!-- <td>w:<?php //echo $value_main[0][0]->screen_width; ?> X h:<?php //echo $value_main[0][0]->screen_height; ?></td> -->
     </tr> 
     <tr>
@@ -115,22 +117,20 @@
         <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; " >
       </td>
       <td width="60%">
-      
           <table border="1">
             <tr>
-              <td align="center"><b>Color</b></td>
-              <td align="center"><b>Pantone</b></td>
-              <td align="center"><b>Ink Type</b></td>
+              <td class="line-height" align="center"><b>Color</b></td>
+              <td class="line-height" align="center"><b>Pantone</b></td>
+              <td class="line-height" align="center"><b>Ink Type</b></td>
             </tr>
             <?php foreach($value_main[0] as $key=>$value){ ?>
             <tr>
-              <td align="center"><?php echo $value->color_name; ?></td>
-              <td align="center"><?php echo $value->thread_color; ?></td>
-              <td align="center"><?php echo $value->inq; ?></td>
+              <td class="line-height" align="center"><?php echo $value->color_name; ?></td>
+              <td class="line-height" align="center"><?php echo $value->thread_color; ?></td>
+              <td class="line-height" align="center"><?php echo $value->inq; ?></td>
             </tr>
             <?php } ?>
           </table>
-          
       </td>
     </tr>
   </table>
@@ -154,32 +154,30 @@
 <?php  if(($key_main+1)%3==0 && ($key_main+1)!=count($data))
 { ?>
 <div style="page-break-before: always;"></div>
-  <table class="header">
+      <table class="header">
       <tr>
           <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
-          <td align="left" width="40%">
+          <td align="left" width="40%" class="font-bold">
              Job# {{$company->order_id}}<br>
              Job Name: {{$company->order_name}}<br>
              Client: {{$company->client_company}}
           </td>
-          <td align="left"  width="40%" style="height:100px;border:1px solid #000;border-radius:15px;">
-              <table >
-              <tr><td></td></tr>
-                 <tr>
-                      <td align="left">
-                          <b>SHIP TO :</b>
-                      </td>
-                 </tr>
-                 <tr>
-                  <td align="left">
-                      {{$company->street}} {{$company->address}}
+          <td width="40%" class="border-b" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
+              <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
+                  <td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                    <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td height="15">&nbsp;</td>
+                      </tr>
+                      <tr><td class="font-bold">{{$company->street}} {{$company->address}}<br>{{$company->city}}, {{$company->state_name}} {{$company->postal_code}}</td></tr>
+                      <tr>
+                        <td height="15">&nbsp;</td>
+                      </tr>
+                    </table>
                   </td>
-                  </tr>
-                  <tr>
-                    <td align="left">
-                        {{$company->city}}, {{$company->state_name}} {{$company->postal_code}}
-                    </td>
-                 </tr>
+                </tr>
               </table>
           </td>
       </tr>
@@ -188,5 +186,27 @@
 }
 
 }
+?>
+<br><br>
+<hr style="border:1px solid #000;">
+<?php  
+foreach($data as $key_main=>$value_main)
+{ 
+if(!empty($value_main[1])) 
+  {
+?>
+    <table>
+          <tr>
+              <td align="left"><b>Notes</b></td>
+          </tr>
+        <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
+          <tr>
+              <td align="left"><?php echo $not_value ?></td>
+          </tr>
+        <?php } ?>
+    </table>
+<?php 
+  }  
+    }
 ?>
 
