@@ -230,7 +230,7 @@ foreach($data as $key_main=>$value_main)
         <td width="1%"></td>  
          <?php if($t_count%4==0){ ?>
             </tr></table>
-            <table><tr>
+            <table><tr><td width="1%"></td>
         <?php } ?>
 
     <?php $t_count++;  } ?>
@@ -251,7 +251,7 @@ foreach($data as $key_main=>$value_main)
         <td width="1%"></td>  
          <?php if($t_count%4==0){ ?>
             </tr></table>
-            <table><tr>
+            <table><tr><td width="1%"></td>
         <?php } ?>
 
     <?php $t_count++;  } ?>
