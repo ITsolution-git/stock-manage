@@ -471,7 +471,7 @@ class ArtController extends Controller {
         // echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
         if(count($screenArray)>0)
         {
-            $options = $screenArray->options;
+            $options = !empty($screenArray->options)?$screenArray->options:array();
             $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
             //echo "<pre>"; print_r($options); echo "</pre>"; die;
 

@@ -93,7 +93,7 @@
                             {{$key_col}}-{{$val_col}}&nbsp;&nbsp;  
                           <?php } ?>  
                         </td>
-                        <td height="20" class="align-left  line-height border-b" >&nbsp;&nbsp;40</td>
+                        <td height="20" class="align-left  line-height border-b" >&nbsp;&nbsp;{{$value['total_product']}}</td>
                         <?php $total +=$value['total_product']; ?>
                     </tr>
                      <?php $count++; } // LOOP END?>
