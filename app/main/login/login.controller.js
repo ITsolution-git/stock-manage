@@ -249,14 +249,14 @@
             var combineComparison = {};
             combineComparison.company_id = sessionService.get('company_id');
             combineComparison.comparisonPeriod1 = 'currentYear';
-            combineComparison.comparisonPeriod2 = '2015';
+            //combineComparison.comparisonPeriod2 = '2015';
             $http.post('api/public/invoice/getComparison',combineComparison).success(function(resultComparison){
                 if(resultComparison.data.success == '1') {
                   $scope.estimatedCurrent=resultComparison.data.allData[0].totalEstimated;
                   /*$scope.estimatedCurrent1=resultComparison.data.allData[0].totalEstimated[0];
                   $scope.estimatedCurrent2=resultComparison.data.allData[0].totalEstimated[1];*/
                   $scope.estimatedPrevious=resultComparison.data.allData[0].totalEstimatedPrevious;
-                  $scope.estimatedComparisonPeriod=combineComparison.comparisonPeriod2;
+                  $scope.estimatedComparisonPeriod=resultComparison.data.allData[0].year2;
                   $scope.estimatedComparisonPercent=resultComparison.data.allData[0].percentDifference;
                 }
                 /*$scope.brand_coordinator = sessionService.get('role_title');*/

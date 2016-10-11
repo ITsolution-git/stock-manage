@@ -797,8 +797,9 @@ class InvoiceController extends Controller {
     public function getComparison(){
         $post = Input::all();
         $client_id=$post['company_id'];
+        $companyYear = $this->common->GetTableRecords('staff',array('user_id' => $client_id, 'status'=>'1'),array(),0,0,'gross_year');
         $year1=$post['comparisonPeriod1'];
-        $year2=$post['comparisonPeriod2'];
+        $year2=$companyYear[0]->gross_year;
         
         $retArray = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.grand_total) as totalEstimated'))
@@ -820,9 +821,17 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
+<<<<<<< HEAD
         $amountCurrent=round($retArray[0]->totalEstimated, 2);
         $tempFigure=explode(".", $amountCurrent);
         $retArray[0]->totalEstimated=$tempFigure;
+=======
+        $amountCurrent=round($retArray[0]->totalEstimated, 0);
+        //$tempFigure=explode(".", $amountCurrent);
+        //$retArray[0]->totalEstimated=$tempFigure;
+        $retArray[0]->totalEstimated=$amountCurrent;
+        $retArray[0]->year2=$year2;
+>>>>>>> fuse_qa
 
         $retArrayPrevious = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.grand_total) as totalEstimatedPrevious'))
