@@ -260,7 +260,8 @@ foreach($data as $key_main=>$value_main)
 <br>
 <hr style="border:1px solid #000;">
 <br>
-
+<?php if(!empty($options) && count($options)>0) {
+?>
 <table>
   <tr>
     <?php foreach($options as $key_img=>$img_val)
@@ -271,7 +272,7 @@ foreach($data as $key_main=>$value_main)
     <?php } ?>
   </tr>
 </table>
-
+<?php } ?>
 
 <table>
   <tr>
