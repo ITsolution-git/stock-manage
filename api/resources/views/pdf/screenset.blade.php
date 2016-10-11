@@ -120,14 +120,22 @@
           <table border="1">
             <tr>
               <td class="line-height" align="center"><b>Color</b></td>
+              <?php if($value_main[0][0]->placement_type!='45') { ?>
               <td class="line-height" align="center"><b>Pantone</b></td>
               <td class="line-height" align="center"><b>Ink Type</b></td>
+              <?php } else { ?>
+              <td class="line-height" align="center"><b>COLOR CODE</b></td>
+              <?php } ?>
             </tr>
             <?php foreach($value_main[0] as $key=>$value){ ?>
             <tr>
               <td class="line-height" align="center"><?php echo $value->color_name; ?></td>
+              <?php if($value_main[0][0]->placement_type!='45') { ?>
               <td class="line-height" align="center"><?php echo $value->thread_color; ?></td>
               <td class="line-height" align="center"><?php echo $value->inq; ?></td>
+              <?php } else { ?>
+              <td class="line-height" align="center"><?php echo $value->inq; ?></td>
+              <?php } ?>
             </tr>
             <?php } ?>
           </table>

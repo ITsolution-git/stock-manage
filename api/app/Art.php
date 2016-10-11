@@ -413,7 +413,7 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','ca.street','ca.city','st.code as state_name','ca.postal_code')
+				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','mt1.slug as placement_type','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
@@ -428,6 +428,7 @@ class Art extends Model {
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
 				->leftJoin('client_address as ca','cl.client_id','=',DB::raw("ca.client_id AND ca.address_shipping = '1' "))
 				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
+				->leftJoin('misc_type as mt1','mt1.id','=','odp.placement_type')
 				->leftJoin('state as st','st.id','=',"ca.state")
 				->leftjoin('invoice as inv','inv.order_id','=','or.id')
 				->where('or.id','=',$order_id)
