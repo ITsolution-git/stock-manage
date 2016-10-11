@@ -381,13 +381,41 @@ class Art extends Model {
     	}
     return $array;
 	}
+	public function getArtApprovalProducts($order_id,$company_id)
+	{
+		$query = DB::table('orders as or')
+					->select('or.name as order_name','or.company_id','or.balance_due','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','p.name as product_name','pdtl.product_id','pdtl.size','pdtl.qnty','col.name as product_color','pdtl.price',
+					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"))
+					->join('order_design as od','od.order_id','=','or.id')
+					->leftjoin('design_product as dp','dp.design_id','=','od.id')
+					->leftjoin('products as p','dp.product_id','=','p.id')
+					->leftjoin('purchase_detail as pdtl','pdtl.design_product_id','=','dp.id')	
+					->leftjoin('color as col','col.id','=','pdtl.color_id')
+					->where('or.id','=',$order_id)
+					->where('or.company_id','=',$company_id)
+					->where('od.is_delete','=','1')		
+					->where('dp.is_delete','=','1')
+					->get();
+				$product = array();
+				foreach ($query as $key=>$value) 
+				{
+					$product[$value->product_id]['product_name']= $value->product_name;
+					$product[$value->product_id]['product_color'] = $value->product_color;
+					$product[$value->product_id]['product_id'] = $value->product_id;
+					$product[$value->product_id]['summary'][$value->size]= $value->qnty;
+					$product[$value->product_id]['total_product'] = $value->total_product;
+					$product[$value->product_id]['price'] = $value->price;
+				}
+		return $product;
+	}
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.custom_po','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq')
+				->select('or.name as order_name','or.custom_po','or.balance_due','or.date_shipped','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
+				->leftjoin('users as usr1','usr1.id','=','or.account_manager_id')
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
 				->join('order_design as od','od.id','=','odp.design_id')
@@ -396,7 +424,9 @@ class Art extends Model {
 				->leftjoin('color as col','col.id','=','acol.color_name')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
+				->leftJoin('client_address as ca','cl.client_id','=',DB::raw("ca.client_id AND ca.address_shipping = '1' "))
 				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
+				->leftJoin('state as st','st.id','=',"ca.state")
 				->where('or.id','=',$order_id)
 				->where('or.company_id','=',$company_id)
 				->where('odp.is_delete','=','1')
@@ -414,6 +444,7 @@ class Art extends Model {
 				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
 
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
+				$value->date_shipped  = (!empty($value->date_shipped)&& $value->date_shipped!='0000-00-00')?date("m/d/Y",strtotime($value->date_shipped)):'';
 				$transfer[$value->screen_id]['colors'][$value->id] = $value;
 
 				if(!empty($value->note_id))

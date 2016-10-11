@@ -87,7 +87,7 @@
                 <tr>
                   <th align="left" valign="top" width="10%" style="border:1px solid #000000;font-weight:bold;"> No.</th>
                   <th align="center" valign="top" width="8%" style="border:1px solid #000000;font-weight:bold;"> Size</th>
-                  <th align="left" valign="top" width="15%" style="border:1px solid #000000;font-weight:bold;"> Group</th>
+                  <!-- <th align="left" valign="top" width="15%" style="border:1px solid #000000;font-weight:bold;"> Group</th> -->
                   <th align="left" valign="top" width="15%" style="border:1px solid #000000;font-weight:bold;"> Color</th>
                   <th align="left" valign="top" width="30%" style="border:1px solid #000000;font-weight:bold;"> Description</th>
                   <th align="left" valign="top" width="8%" style="border:1px solid #000000;font-weight:bold;"> Defect</th>
@@ -100,7 +100,7 @@
                 <tr>
                   <td align="left" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;">&nbsp;{{$box->id}}</td>
                   <td align="center" valign="top" class="brdrBox" width="8%" style="border:1px solid #000000;">&nbsp;{{$box->size}}</td>
-                  <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;">&nbsp;{{$box->size_group_name}}</td>
+                  <!-- <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;">&nbsp;{{$box->size_group_name}}</td> -->
                   <td align="left" valign="top" class="brdrBox" width="15%" style="border:1px solid #000000;">&nbsp;{{$box->color_name}}</td>
                   <td align="left" valign="top" class="brdrBox" width="30%" style="border:1px solid #000000;">&nbsp;{{$box->product_name}}</td>
                   <td align="left" valign="top" class="brdrBox" width="8%" style="border:1px solid #000000;">&nbsp;{{$box->md}}</td>

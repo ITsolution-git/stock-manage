@@ -13,76 +13,120 @@
 </head>
 
 <body>
-  <table >
-    <tr >
-      <td width="30%">
-          <table>
-              <tr><td><b>{{$company->companyname}}</b></td></tr>
-              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
-                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
-                  </td>
-              </tr>
-              <tr>
-                  <td>P: {{$company->prime_phone_main}}</td>
-              </tr>
-              <tr>
-                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
-              </tr>
-          </table>
-      </td>
-        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td width="30%">
-          <table>
-              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
-              <tr><td align="right">{{$company->design_name}}</td></tr>
-              <tr><td align="right">{{$company->client_company}}</td></tr>
-              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
-          </table>
-      </td>
-    </tr>
-  </table>
 
-  <table style="font-weight:400;margin-top:20px;">
+    <table class="header">
+      <tr>
+          <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
+          <td align="left" width="40%">
+             Job# {{$company->order_id}}<br>
+             Job Name: {{$company->order_name}}<br>
+             Client: {{$company->client_company}}
+          </td>
+          <td align="left"  width="40%" style="height:100px;border:1px solid #000;border-radius:15px;">
+              <table >
+              <tr><td></td></tr>
+                 <tr>
+                      <td align="left">
+                          <b>SHIP TO :</b>
+                      </td>
+                 </tr>
+                 <tr>
+                  <td align="left">
+                      {{$company->street}} {{$company->address}}
+                  </td>
+                  </tr>
+                  <tr>
+                    <td align="left">
+                        {{$company->city}}, {{$company->state_name}} {{$company->postal_code}}
+                    </td>
+                 </tr>
+              </table>
+          </td>
+      </tr>
+    </table><br><br>
+
+    <table style="margin-top:15px;">
+  
     <tr>
-      <td>Culture Contact : {{$company->f_name}} {{$company->l_name}}</td>
-      <td>Job Name : {{$company->order_name}}</td>
+      <td align="center"><b>Client PO</b></td>
+      <td align="center"><b>Account Manager</b></td>
+      <td align="center"><b>Term</b></td>
+      <td align="center"><b>Ship Via</b></td>
+      <td align="center"><b>Ship Date</b></td>
+      <td align="center"><b>Hands Date</b></td>
+      <td align="center"><b>Payment Due</b></td>
     </tr>
+     <tr>
+      <td align="center" border="1">{{$company->custom_po}}</td>
+      <td align="center" border="1">{{$company->account_manager}}</td>
+      <td align="center" border="1"> </td>
+      <td align="center" border="1"></td>
+      <td align="center" border="1"> {{$company->date_shipped}}</td>
+      <td align="center" border="1"> {{$company->in_hands_by}}</td>
+      <td align="center" border="1"> $<?php echo round($company->balance_due, 2); ?></td>
+    </tr>
+ 
+  </table><br><br>
+
+  <table style="margin-top:15px;">
+  
     <tr>
-      <td>Brand Coordinator : {{Session::get('name')}}</td>
-      <td>Client PO# : {{$company->custom_po}}</td>
+      <td align="center" width="33%"><b>Garments / Item description</b></td>
+      <td align="center" width="10%"><b>color</b></td>
+      <td align="center" width="40%"><b>Sizes/ Quantities</b></td>
+      <td align="center" width="7%"><b>Qty</b></td>
+      <td align="center" width="10%"><b>Unit Price</b></td>
     </tr>
-    <tr>
-      <td>In Hands Date: {{$company->in_hands_by}}</td>
-    </tr>
+
+ <?php
+  $total  =0;
+  foreach($pdf_product as $key=>$value) {?>
+  <tr>
+    <td width="33%" border="1">{{$value['product_name']}}</td>
+    <td align="center" width="10%" border="1">{{$value['product_color']}}</td>
+    <td align="left" width="40%" border="1">
+    <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>
+      {{$key_col}}-{{$val_col}}  
+    <?php } ?>  
+    </td>
+    <td align="center" width="7%" border="1">{{$value['total_product']}}</td> 
+    <td align="center" width="10%" border="1">{{$value['price']}}</td>
+  </tr>
+  <?php $total +=$value['total_product']; } ?>
+
+  <tr>
+      <td colspan="3" ></td>
+      <td align="center" border="1"> <?php echo $total; ?></td>
+      <td ></td>
+  </tr>
   </table>
-  <hr style="border:1px solid #000;">
+  <br><br>
+
 <?php foreach($data as $key_main=>$value_main)
 { 
   ?>
   <table style="margin-top:15px;">
-    <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
-      <td><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
-      <td>w:<?php echo $value_main[0][0]->screen_width; ?> X h:<?php echo $value_main[0][0]->screen_height; ?></td>
-    </tr>
+     <tr style="font-weight:100;font-size:15px; margin-bottom:5px;">
+      <td colspan="2"><?php echo (!empty($value_main[0][0]->screen_set))?$value_main[0][0]->screen_set:''; ?></td>
+      <!-- <td>w:<?php //echo $value_main[0][0]->screen_width; ?> X h:<?php //echo $value_main[0][0]->screen_height; ?></td> -->
+    </tr> 
     <tr>
-      <td>
-        <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; width:120px" >
+      <td width="40%">
+        <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; " >
       </td>
-      <td>
+      <td width="60%">
       
           <table border="1">
             <tr>
-              <td align="center"><b>H</b></td>
-              <td align="center"><b>Ink Type</b></td>
               <td align="center"><b>Color</b></td>
               <td align="center"><b>Pantone</b></td>
+              <td align="center"><b>Ink Type</b></td>
             </tr>
             <?php foreach($value_main[0] as $key=>$value){ ?>
             <tr>
-              <td align="center"><?php echo $key+1; ?></td>
-              <td align="center"><?php echo $value->inq; ?></td>
               <td align="center"><?php echo $value->color_name; ?></td>
               <td align="center"><?php echo $value->thread_color; ?></td>
+              <td align="center"><?php echo $value->inq; ?></td>
             </tr>
             <?php } ?>
           </table>
@@ -105,96 +149,44 @@
   <?php } ?>
   
 
-  <hr style="border:1px solid #000;">
+  <!-- <hr style="border:1px solid #000;"> -->
 
 <?php  if(($key_main+1)%3==0 && ($key_main+1)!=count($data))
 { ?>
 <div style="page-break-before: always;"></div>
-   <table >
-    <tr >
-      <td width="30%">
-          <table>
-              <tr><td><b>{{$company->companyname}}</b></td></tr>
-              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
-                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
+  <table class="header">
+      <tr>
+          <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
+          <td align="left" width="40%">
+             Job# {{$company->order_id}}<br>
+             Job Name: {{$company->order_name}}<br>
+             Client: {{$company->client_company}}
+          </td>
+          <td align="left"  width="40%" style="height:100px;border:1px solid #000;border-radius:15px;">
+              <table >
+              <tr><td></td></tr>
+                 <tr>
+                      <td align="left">
+                          <b>SHIP TO :</b>
+                      </td>
+                 </tr>
+                 <tr>
+                  <td align="left">
+                      {{$company->street}} {{$company->address}}
                   </td>
-              </tr>
-              <tr>
-                  <td>P: {{$company->prime_phone_main}}</td>
-              </tr>
-              <tr>
-                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
-              </tr>
-          </table>
-      </td>
-        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td width="30%">
-          <table>
-              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
-              <tr><td align="right">{{$company->design_name}}</td></tr>
-              <tr><td align="right">{{$company->client_company}}</td></tr>
-              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
-          </table>
-      </td>
-    </tr>
-  </table>
-<hr style="border:1px solid #000;">
+                  </tr>
+                  <tr>
+                    <td align="left">
+                        {{$company->city}}, {{$company->state_name}} {{$company->postal_code}}
+                    </td>
+                 </tr>
+              </table>
+          </td>
+      </tr>
+    </table><br><br>
 <?php 
 }
 
 }
 ?>
 
-<div style="page-break-before: always;"></div>
-     <table >
-    <tr >
-      <td width="30%">
-          <table>
-              <tr><td><b>{{$company->companyname}}</b></td></tr>
-              <tr><td>{{$company->prime_address1}} {{$company->prime_address_street}}
-                      {{$company->prime_address_city}}, {{$company->prime_address_state}} {{$company->prime_address_zip}}
-                  </td>
-              </tr>
-              <tr>
-                  <td>P: {{$company->prime_phone_main}}</td>
-              </tr>
-              <tr>
-                  <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
-              </tr>
-          </table>
-      </td>
-        <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
-      <td width="30%">
-          <table>
-              <tr><td align="right"><b>Art Approval Job #{{$company->order_id}}</b></td></tr>
-              <tr><td align="right">{{$company->design_name}}</td></tr>
-              <tr><td align="right">{{$company->client_company}}</td></tr>
-              <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
-          </table>
-      </td>
-    </tr>
-  </table>
-  <hr style="border:1px solid #000;">
-<table>
-<tr><td align="center"><b>Mockup Image</b></td></tr>
-  <?php /*foreach($data as $key=>$value){*/ ?>
-    <tr>
-      <td align="center"><img src="<?php echo $company->mokup_image; ?>" style="width: 600px; height: 615px;"  ></td>
-    </tr>
-   <?php /*}*/ ?>
-</table>
-  <table style="margin-top: 20px;">
-    <tr>
-      <td><b>Culture Contact : {{$company->f_name}} {{$company->l_name}}</b></td>
-      <td>Job Name : {{$company->order_name}}</td>
-    </tr>
-    <tr>
-      <td>Brand Coordinator : {{Session::get('name')}}</td>
-      <td>Client PO# : {{$company->custom_po}}</td>
-    </tr>
-    <tr>
-      <td>In Hands Date: {{$company->in_hands_by}}</td>
-    </tr>
-  </table>
-</body>
-</html>

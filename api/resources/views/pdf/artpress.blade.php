@@ -24,6 +24,11 @@
               <table >
               <tr><td></td></tr>
                  <tr>
+                      <td align="left">
+                          <b>SHIP TO :</b>
+                      </td>
+                 </tr>              
+                 <tr>
                   <td align="left">
                       {{$color[0]->street}} {{$color[0]->address}}
                      
@@ -59,7 +64,7 @@
       <td align="center" border="1"></td>
       <td align="center" border="1"> {{$color[0]->date_shipped}}</td>
       <td align="center" border="1"> {{$color[0]->in_hands_by}}</td>
-      <td align="center" border="1"> <?php echo round($color[0]->balance_due, 2); ?></td>
+      <td align="center" border="1"> $<?php echo round($color[0]->balance_due, 2); ?></td>
     </tr>
  
   </table><br><br>
@@ -121,8 +126,8 @@
     <tr style="margin-top: 20px;"> 
     	<td width="30%" style="border: 1px solid #000;"> 
     		<table>
-    			<tr><td align="center">Screenset Image</td></tr>
-    			<tr><td align="center"><img src="{{$color[0]->mokup_logo}}" title="Culture Studio" height="150" width="150" alt="Culture Studio"></td></tr>
+    			
+    			<tr><td align="center"><img src="{{$color[0]->mokup_logo}}" title="Culture Studio" height="300" width="300" alt="Culture Studio"></td></tr>
 
     		</table>
     	</td>
@@ -161,7 +166,8 @@
       </td>
     </tr>
     <tr>
-      <td colspan="8">Note: {{$color[0]->note}}</td>
+    <br><br>
+      <td colspan="8"><b>Note:</b> {{$color[0]->note}}</td>
     </tr>
   
   </table>
