@@ -163,9 +163,13 @@ class Common extends Model {
 
         return $id;
     }
-    public function GetTableRecords($table,$cond,$notcond=array(),$sort=0,$sortBy=0)
+    public function GetTableRecords($table,$cond,$notcond=array(),$sort=0,$sortBy=0,$select='')
     {
         $result = DB::table($table);
+        if(!empty($select))
+        {
+            $result =$result ->select($select);
+        }
         if(count($cond)>0)
         {
             foreach ($cond as $key => $value) 
