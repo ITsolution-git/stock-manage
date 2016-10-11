@@ -516,9 +516,11 @@ class Art extends Model {
 				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/order_design_position/'.$value->positions."/",$value->image_1);
 				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
 
+				$value->payment_due_date  = (!empty($value->payment_due_date)&& $value->payment_due_date!='0000-00-00')?date("m/d/Y",strtotime($value->payment_due_date)):'';
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$value->date_shipped  = (!empty($value->date_shipped)&& $value->date_shipped!='0000-00-00')?date("m/d/Y",strtotime($value->date_shipped)):'';
 				$color[$value->color_id] = $value;
+				
 
 				$size[$value->product_id]['product_name']= $value->product_name;
 				$size[$value->product_id]['product_color'] = $value->product_color;
