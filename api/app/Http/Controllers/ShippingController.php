@@ -235,6 +235,21 @@ class ShippingController extends Controller {
             $result['shipping'][0]->fully_shipped = '';
         }
 
+        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
+        {
+            $result['shipping'][0]->shipping_status = 1;
+        }
+        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 2;
+        }
+        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 3;
+        }
+
+        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
+
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if(!empty($result['shippingBoxes']))
@@ -463,7 +478,7 @@ class ShippingController extends Controller {
         $total_spoil = 0;
 
 
-         $color_all_data = array();
+        $color_all_data = array();
         foreach ($shipping_boxes as $row) {
 
             $color_all_data[$row->color_name][$row->size] = $row->size;
@@ -474,51 +489,27 @@ class ShippingController extends Controller {
             $actual_total += $row->actual;
             $total_md += $row->md;
             $total_spoil += $row->spoil;
-           
         }
-      
-       /*
-        foreach ($shipping_boxes as $row) {
 
-            if($row->size == 'XS') {
-                $xs_qnty += $row->qnty;
-            }
-            else if($row->size == 'S') {
-                $s_qnty += $row->qnty;
-            }
-            else if($row->size == 'M') {
-                $m_qnty += $row->qnty;
-            }
-            else if($row->size == 'L') {
-                $l_qnty += $row->qnty;
-            }
-            else if($row->size == 'XL') {
-                $xl_qnty += $row->qnty;
-            }
-            else if($row->size == '2XL') {
-                $xxl_qnty += $row->qnty;
-            }
-            else if($row->size == '3XL') {
-                $xxxl_qnty += $row->qnty;
-            }
+        $total_product_qnty = 0;
 
-           
-        }*/
+        foreach ($shipping['shipping_items'] as $items) {
+            
+            $items->sizes = $this->shipping->getItemsByProductAddress($items->product_address_id);
+            $items->total_size_qnty = 0;
+            foreach ($items->sizes as $sizedata) {
+                $items->total_size_qnty += $sizedata->qnty;
+            }
+            $total_product_qnty += $items->total_size_qnty;
+        }
 
         $other_data['total_box'] = count($shipping_boxes);
         $other_data['total_pieces'] = $actual_total;
 
-       /* $other_data['xs_qnty'] = $xs_qnty;
-        $other_data['s_qnty'] = $s_qnty;
-        $other_data['m_qnty'] = $m_qnty;
-        $other_data['l_qnty'] = $l_qnty;
-        $other_data['xl_qnty'] = $xl_qnty;
-        $other_data['2xl_qnty'] = $xxl_qnty;
-        $other_data['3xl_qnty'] = $xxxl_qnty;*/
-
         $other_data['total_qnty'] = $total_qnty;
         $other_data['total_md'] = $total_md;
         $other_data['total_spoil'] = $total_spoil;
+        $other_data['total_product_qnty'] = $total_product_qnty;
 
         $shipping['shipping_boxes'] = $shipping_boxes;
         $shipping['other_data'] = $other_data;
@@ -526,11 +517,9 @@ class ShippingController extends Controller {
 
         if($post['print_type'] == 'manifest')
         {
-        
             PDF::AddPage('P','A4');
             PDF::writeHTML(view('pdf.shipping_manifest',$shipping)->render());
             PDF::Output('shipping_manifest.pdf');
-
         }
         else if($post['print_type'] == 'report')
         {
