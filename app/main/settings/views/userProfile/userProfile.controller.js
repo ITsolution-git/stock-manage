@@ -19,11 +19,20 @@
     
     $scope.company_id =sessionService.get("company_id");
     $scope.user_id = sessionService.get("user_id");
-    $scope.role_slug = sessionService.get('role_slug');
 
+    // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+    $scope.role_slug = sessionService.get('role_slug');
+    if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM')
+    {
+        $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+    }
+    else
+    {
+        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+    }
 
     $scope.profile_id = $scope.user_id;
-    $scope.allow_access = 1;
+
    
     
 
@@ -142,6 +151,11 @@
 
         function openChangePasswordialog(ev, settings)
         {
+            if($scope.allow_access=='0')
+            {
+                notifyService.notify('error','You have no rights to Edit.');
+                return false;
+            }
             $("#ajax_loader").show();
             $mdDialog.show({
 
@@ -192,7 +206,11 @@
         // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,is_drag,drag_image) 
         {
-
+                if($scope.allow_access=='0')
+                {
+                    //notifyService.notify('error','You have no rights to Edit.');
+                    return false;
+                }
                 $scope.column_name=column_name;
                 $scope.table_name=table_name;
                 $scope.folder_name=folder_name;
