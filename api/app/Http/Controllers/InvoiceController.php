@@ -734,15 +734,18 @@ public function getNoQuickbook(){
         $post = Input::all();
         $client_id=$post['company_id'];
 
+        $estimate = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimate_id=$estimate[0]->id;
+        
+        $retArray = DB::table('invoice as i')
+        ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
+        ->leftJoin('orders as o','o.id','=','i.order_id')
+        ->leftJoin('client as c','c.client_id','=','o.client_id')
+        ->leftJoin('users as u','u.id','=','c.company_id')
+        ->where('u.id','=',$client_id);
+
         if( (isset($post['sales_id']) && $post['sales_id']!=0) || (isset($post['duration']) && $post['duration']!=0) ){
             $sales_id=$post['sales_id'];
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id);
-
             if(isset($post['sales_id']) && $post['sales_id']!=0){
                 $retArray = $retArray->where('o.sales_id','=',$sales_id);
             }
@@ -758,22 +761,11 @@ public function getNoQuickbook(){
                     $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
                 }
             }
-            $retArray = $retArray->where('o.is_paid','=','0')
-            ->where('o.grand_total','>','o.total_payments')
-            ->where('o.approval_id','=',2477)
-            ->get();
-        }else{
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.is_paid','=','0')
-            ->where('o.grand_total','>','o.total_payments')
-            ->where('o.approval_id','=',2477)
-            ->get();    
         }
+        $retArray = $retArray->where('o.is_paid','=','0')
+        ->where('o.grand_total','>','o.total_payments')
+        ->where('o.approval_id','=',$estimate_id)
+        ->get();
 
         if(empty($retArray))
         {
@@ -959,28 +951,23 @@ public function getNoQuickbook(){
     public function getProduction(){
         $post = Input::all();
         $client_id=$post['company_id'];
+        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
+        $production_id=$production[0]->id;
 
-        if((isset($post['sales_id']) && $post['sales_id']!=0)){
+        $retArray = DB::table('invoice as i')
+        ->select(DB::raw('COUNT(i.id) as totalProduction'))
+        ->leftJoin('orders as o','o.id','=','i.order_id')
+        ->leftJoin('client as c','c.client_id','=','o.client_id')
+        ->leftJoin('users as u','u.id','=','c.company_id')
+        ->where('u.id','=',$client_id);
+
+        if(isset($post['sales_id']) && $post['sales_id']!=0){
             $sales_id=$post['sales_id'];
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('COUNT(i.id) as totalProduction'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.sales_id','=',$sales_id)
-            ->where('o.approval_id','=',2483)
-            ->get();
-        }else{
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('COUNT(i.id) as totalProduction'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.approval_id','=',2483)
-            ->get();    
+            $retArray = $retArray->where('o.sales_id','=',$sales_id);
         }
+
+        $retArray = $retArray->where('o.approval_id','=',$production_id)
+        ->get();
 
         if(empty($retArray))
         {
