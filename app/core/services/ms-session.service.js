@@ -150,12 +150,12 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['invoices','purchaseOrder','customProduct','admin','client','vendor','app.settings.companyDetails'];
+				var ret_array = ['invoices','purchaseOrder','customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
 			{
-				var ret_array = ['invoices','purchaseOrder','customProduct','admin','app.settings.companyDetails'];
+				var ret_array = ['invoices','purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid'];
 				hide_menu(ret_array);
 			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')

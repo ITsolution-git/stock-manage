@@ -23,7 +23,7 @@
     $scope.company_name = sessionService.get('company_name');
     
 
-
+    //console.log($scope.role_slug);
     $scope.profile_id = $scope.company_id;
     if($scope.role_slug=='CA')
     {

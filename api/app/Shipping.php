@@ -222,7 +222,7 @@ class Shipping extends Model {
 
         $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number',
                         's.boxing_type','s.shipping_by','s.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code','s.shipping_method','s.shipping_status',
-                        'o.date_shipped','o.in_hands_by',DB::raw('SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
+                        'o.date_shipped','o.in_hands_by',DB::raw('SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total'),'o.custom_po','s.shipping_note'];
        
         $shippingData = DB::table('shipping as s')
                         ->leftJoin('orders as o','s.order_id','=','o.id')
@@ -252,7 +252,7 @@ class Shipping extends Model {
 
         $shippingItems = DB::select("SELECT mt.value as misc_value,p.name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total, 
                                     (pol.qnty_purchased - pol.short) - pd.remaining_qnty as qnty,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id ,pd.boxed_qnty,
-                                    pd.remaining_to_box,pd.max_pack,pd.hoody,pam.shipping_id
+                                    pd.remaining_to_box,pd.max_pack,pd.hoody,pam.shipping_id,pd.design_product_id
                                 FROM product_address_mapping as pam 
                                 LEFT JOIN product_address_size_mapping as pas ON pam.id = pas.product_address_id 
                                 LEFT JOIN purchase_detail as pd ON pas.purchase_detail_id = pd.id 
@@ -416,6 +416,57 @@ class Shipping extends Model {
                 ->where($where)
                 ->get();
 
+        return $result;
+    }
+
+    public function getItemsByProductAddress($product_address_id)
+    {
+        $shippingItems = DB::select("SELECT 
+                                    (pol.qnty_purchased - pol.short) - pd.remaining_qnty as qnty,pd.size
+                                FROM product_address_mapping as pam 
+                                LEFT JOIN product_address_size_mapping as pas ON pam.id = pas.product_address_id 
+                                LEFT JOIN purchase_detail as pd ON pas.purchase_detail_id = pd.id 
+                                LEFT JOIN purchase_order_line as pol ON pd.id = pol.purchase_detail 
+                                LEFT JOIN design_product as dp ON pd.design_product_id = dp.id
+                                LEFT JOIN products as p ON dp.product_id = p.id
+                                LEFT JOIN misc_type as mt ON dp.size_group_id = mt.id
+                                LEFT JOIN color as c ON pd.color_id = c.id
+                                WHERE pas.product_address_id = '".$product_address_id."'
+                                GROUP BY pd.id ");
+
+        return $shippingItems;
+    }
+
+    public function getshippedProductsByOrder($order_id)
+    {
+        $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pas.distributed_qnty','pas.product_address_id'];
+        $where = ['pam.order_id' => $order_id];
+
+        $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                    ->leftJoin('purchase_detail as pd','pas.purchase_detail_id','=','pd.id')
+                    ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
+                    ->leftJoin('products as p','pd.product_id','=','p.id')
+                    ->leftJoin('misc_type as mt','dp.size_group_id','=','mt.id')
+                    ->leftJoin('color as c','pd.color_id','=','c.id')
+                    ->select($listArr)
+                    ->where($where)
+                    ->GroupBy('p.id')
+                    ->get();
+        
+        return $result;
+    }
+
+    public function getShipToAddress($address_id)
+    {
+        $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('client_distaddress as cd','pam.address_id','=','cd.id')
+                    ->leftJoin('state as st','cd.state','=','st.id')
+                    ->select('cd.*','st.code')
+                    ->where('pam.address_id','=',$address_id)
+                    ->GroupBy('cd.id')
+                    ->get();
+        
         return $result;
     }
 }

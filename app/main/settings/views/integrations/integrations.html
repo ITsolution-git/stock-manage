@@ -15,19 +15,19 @@
                         <!-----------------Company Info Tab-------------------->
                         
 
-                        <md-tab label="QuickBook">
+                        <md-tab label="QuickBook" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
                             <div ng-include src="'app/main/settings/views/integrations/qb.html'"></div>
                         </md-tab>
-                        <md-tab label="S&S">
+                        <md-tab label="S&S" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
                             <div ng-include src="'app/main/settings/views/integrations/sns.html'"></div>
                         </md-tab>
-                        <md-tab label="Authorize">
+                        <md-tab label="Authorize" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
                             <div ng-include src="'app/main/settings/views/integrations/authorize.html'"></div>
                         </md-tab>
-                        <md-tab label="Ups">
+                        <md-tab label="Ups" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
                             <div ng-include src="'app/main/settings/views/integrations/ups.html'"></div>
                         </md-tab>
-                        <md-tab label="Fedex">
+                        <md-tab label="Fedex" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
                             <div ng-include src="'app/main/settings/views/integrations/fedex.html'"></div>
                         </md-tab>
                         <md-tab label="Shipping Address">
