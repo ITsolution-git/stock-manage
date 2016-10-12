@@ -603,7 +603,7 @@ class ShippingController extends Controller {
         }
         else if($post['print_type'] == 'label')
         {
-            PDF::AddPage('P','A4');
+            PDF::AddPage('L','A5');
             PDF::writeHTML(view('pdf.shipping_label',$shipping)->render());
             PDF::Output('shipping_label.pdf');
         }
