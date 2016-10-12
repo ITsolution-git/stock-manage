@@ -25,8 +25,8 @@
              Job Name: {{$company->order_name}}<br>
              Client: {{$company->client_company}}
           </td>
-          <td width="40%" class="border-b" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
-              <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+          <td width="40%"  style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
+              <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
                   <td valign="middle" style="width:80%; height:100px; font-size:10px;">
@@ -71,10 +71,11 @@
 
     <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
         <tr>
-            <th width="40%" class="align-left font-bold" height="15">Garment/Item Description</th>
+            <th width="35%" class="align-left font-bold" height="15">Garment/Item Description</th>
             <th width="15%" class="align-left font-bold" height="15">Color</th>
-            <th width="37%" class="align-left font-bold" height="15">Size/Quantities</th>
+            <th width="33%" class="align-left font-bold" height="15">Size/Quantities</th>
             <th width="8%"  class="align-left font-bold" height="15">Qty</th>
+            <th width="8%"  class="align-left font-bold" height="15">Unit Price</th>
             
         </tr>
         <?php
@@ -94,11 +95,13 @@
             </td>
             <td class="align-left  line-height border-b" >&nbsp;&nbsp;{{$value['total_product']}}</td>
             <?php $total +=$value['total_product']; ?>
+            <td class="align-left  line-height border-b" >&nbsp;&nbsp;{{$value['price']}}</td>
         </tr>
          <?php $count++; } // LOOP END?>
         <tr>
             <td class="align-right font-bold line-height" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
             <td class="align-left border-b line-height">&nbsp;&nbsp;<?php echo $total; ?></td>
+            <td class="">&nbsp;&nbsp;</td>
             
         </tr>
     </table>
@@ -157,8 +160,8 @@
              Job Name: {{$company->order_name}}<br>
              Client: {{$company->client_company}}
           </td>
-          <td width="40%" class="border-b" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
-              <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+          <td width="40%"  style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
+              <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
                   <td valign="middle" style="width:80%; height:100px; font-size:10px;">
