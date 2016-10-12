@@ -147,7 +147,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('AT,SU','false');
+                        return sessionService.AccessService('ALL','true');
                     }
                 },
                 url  : '/integrations',
