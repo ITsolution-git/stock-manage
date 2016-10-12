@@ -116,9 +116,13 @@ class PaymentController extends Controller {
 
                 if($retArrayPmt[0]->grand_total > $retArrayPmt[0]->totalAmount){
                     $amt['is_paid'] = '0';
+                    $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $company_id, 'slug'=>568),array(),0,0,'id');
+                  $paid_id=$paid[0]->id;
                 }else{
                     $amt['is_paid'] = '1';
-                    $amt['approval_id']=2885;
+                    $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>568),array(),0,0,'id');
+                    $paid_id=$paid[0]->id;
+                    $amt['approval_id']=$paid_id;
                 }
 
                 $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);
@@ -200,7 +204,9 @@ class PaymentController extends Controller {
                         $amt['is_paid'] = '0';
                     }else{
                         $amt['is_paid'] = '1';
-                        $amt['approval_id']=2885;
+                        $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>568),array(),0,0,'id');
+                        $paid_id=$paid[0]->id;
+                        $amt['approval_id']=$paid_id;
                     }
 
                     $this->common->UpdateTableRecords('orders',array('id' => $order_id),$amt);

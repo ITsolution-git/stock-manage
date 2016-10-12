@@ -235,6 +235,7 @@
             var combine_array_id = {};
             combine_array_id.amount = amount.cashAmount;
             combine_array_id.invoice_id = invoice_id.value;
+            combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(result) 
             {
@@ -477,6 +478,7 @@
 
                                     var combine_array_id = {};
                                     combine_array_id.invoice_id = $stateParams.id;
+                                    combine_array_id.company_id = sessionService.get('company_id');
 
                                     $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
                                     {
@@ -486,6 +488,7 @@
                                         if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                             $scope.showPaymentDetails = true;
                                             if($scope.allData.order_data[0].approval_id == 2885){
+
                                                 var UpdateArray = {};
                                                 UpdateArray.table ='orders';
                                                 UpdateArray.data = {approval_id:2491};
@@ -538,6 +541,7 @@
 
                             var combine_array_id = {};
                             combine_array_id.invoice_id = $stateParams.id;
+                            combine_array_id.company_id = sessionService.get('company_id');
 
                             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
                             {
