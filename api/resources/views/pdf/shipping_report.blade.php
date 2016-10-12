@@ -87,9 +87,9 @@
                         ?>
                     @endforeach
                     <tr>
-                        <td height="20" colspan="3" style="border:1px solid #fff; border-right:1px solid #000; line-height:20px; font-size:9px; text-align:right; font-weight:bold">Total Qty&nbsp;&nbsp;</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$other_data['total_product_qnty']}}</td>
-                        <td height="20" style="border:1px solid #fff; text-align:left; font-size:9px;">&nbsp;</td>
+                        <td height="10" colspan="3" style="border:1px solid #fff; border-right:1px solid #000;font-size:9px; text-align:right; font-weight:bold">Total Qty&nbsp;&nbsp;</td>
+                        <td height="10" style="border:1px solid #000; text-align:left; font-size:9px;">&nbsp;&nbsp;{{$other_data['total_product_qnty']}}</td>
+                        <td height="10" style="border:1px solid #fff; text-align:left; font-size:9px;">&nbsp;</td>
                     </tr>
                 </table>
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;border-bottom:3px solid #000000;">
@@ -218,13 +218,23 @@
                         ?>
                     @endforeach
                     <tr>
-                        <td height="20" colspan="5" style="border:1px solid #fff; border-right:1px solid #000; line-height:20px; font-size:9px; text-align:right; font-weight:bold">Total Qty&nbsp;&nbsp;</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$shipping->other_data['total_qnty']}}</td>
-                        <td height="20" style="border:1px solid #fff; text-align:left; font-size:9px;">&nbsp;</td>
+                        <td height="10" colspan="5" style="border:1px solid #fff; border-right:1px solid #000; line-height:20px; font-size:9px; text-align:right; font-weight:bold">Total Qty&nbsp;&nbsp;</td>
+                        <td height="10" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$shipping->other_data['total_qnty']}}</td>
+                        <td height="10" style="border:1px solid #fff; text-align:left; font-size:9px;">&nbsp;</td>
+                    </tr>
+                </table>
+                <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td height="15" style="font-family: arial; font-size:12px; border-collapse:collapse; font-weight:bold;">Notes:{{$shipping->shipping_note}}</td>
                     </tr>
                 </table>
                 @endforeach
             </td>
+        </tr>
+    </table>
+    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+        <tr>
+            <td height="15">&nbsp;</td>
         </tr>
     </table>
     <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:15px; border-collapse:collapse;">
