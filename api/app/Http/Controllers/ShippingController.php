@@ -520,11 +520,14 @@ class ShippingController extends Controller {
                 if($row->shipping_type_id == 1) {
                     $row->shipping_type = 'UPS';
                 }
-                if($row->shipping_type_id == 2) {
+                else if($row->shipping_type_id == 2) {
                     $row->shipping_type = 'FEDEX';
                 }
-                if($row->shipping_type_id == 3) {
+                else if($row->shipping_type_id == 3) {
                     $row->shipping_type = 'Local Messanger';
+                }
+                else {
+                    $row->shipping_type = '';   
                 }
 
                 $other_data['total_box'] = count($row->shipping_boxes);

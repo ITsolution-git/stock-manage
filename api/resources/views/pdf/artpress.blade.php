@@ -24,8 +24,8 @@
              Job Name: {{$color[0]->order_name}}<br>
              Client: {{$color[0]->client_company}}
           </td>
-          <td width="40%" class="border-b" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
-              <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+          <td width="40%"  style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
+              <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                   <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
                   <td valign="middle" style="width:80%; height:100px; font-size:10px;">
@@ -98,9 +98,8 @@
                     </tr>
                      <?php $count++; } // LOOP END?>
                     <tr>
-                        <td height="20"  class="align-right font-bold border-w" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
-                        <td height="20" class="align-left border-b">&nbsp;&nbsp;<?php echo $total; ?></td>
-                        <td height="20" class="align-left border-w" >&nbsp;</td>
+                      <td class="align-right font-bold line-height" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
+                      <td class="align-left border-b line-height">&nbsp;&nbsp;<?php echo $total; ?></td>
                     </tr>
                 </table>
 <br><br>
