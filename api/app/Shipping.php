@@ -436,4 +436,37 @@ class Shipping extends Model {
 
         return $shippingItems;
     }
+
+    public function getshippedProductsByOrder($order_id)
+    {
+        $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pas.distributed_qnty','pas.product_address_id'];
+        $where = ['pam.order_id' => $order_id];
+
+        $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                    ->leftJoin('purchase_detail as pd','pas.purchase_detail_id','=','pd.id')
+                    ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
+                    ->leftJoin('products as p','pd.product_id','=','p.id')
+                    ->leftJoin('misc_type as mt','dp.size_group_id','=','mt.id')
+                    ->leftJoin('color as c','pd.color_id','=','c.id')
+                    ->select($listArr)
+                    ->where($where)
+                    ->GroupBy('p.id')
+                    ->get();
+        
+        return $result;
+    }
+
+    public function getShipToAddress($address_id)
+    {
+        $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('client_distaddress as cd','pam.address_id','=','cd.id')
+                    ->leftJoin('state as st','cd.state','=','st.id')
+                    ->select('cd.*','st.code')
+                    ->where('pam.address_id','=',$address_id)
+                    ->GroupBy('cd.id')
+                    ->get();
+        
+        return $result;
+    }
 }
