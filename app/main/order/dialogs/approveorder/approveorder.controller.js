@@ -96,6 +96,8 @@
                 var combine_array = {};
                 combine_array.order_id = $stateParams.id;
                 combine_array.payment = $scope.payment_terms;
+                 combine_array.company_id = sessionService.get('company_id');
+
                 
                 
                
@@ -156,6 +158,7 @@
                 combine_array.order_id = $stateParams.id;
                 combine_array.payment = $scope.payment_terms;
                 combine_array.invoice_id = $scope.invoice_id;
+                combine_array.company_id = sessionService.get('company_id');
                 
                 
                
