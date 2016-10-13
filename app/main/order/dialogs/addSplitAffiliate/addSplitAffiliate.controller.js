@@ -70,17 +70,27 @@
 
         $scope.calculateAffiliate = function()
         {
-            if($scope.affiliate > 0)
+            if($scope.design_product_id == '0')
             {
-                var affiliate_data = {};
-                affiliate_data ={'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizeData':$scope.sizes}
-                $http.post('api/public/affiliate/affiliateCalculation',affiliate_data).success(function(result) {
-                    if(result.success == '1')
-                    {
-                        $scope.affiliate_invoice = result.affiliate_invoice;
-                        $scope.finalCalcualtion();
-                    }
-                });
+                var data = {"status": "error", "message": "Please select product"}
+                notifyService.notify(data.status, data.message);
+                $scope.affiliate = 0;
+                return false;
+            }
+            else
+            {
+                if($scope.affiliate > 0)
+                {
+                    var affiliate_data = {};
+                    affiliate_data ={'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizeData':$scope.sizes}
+                    $http.post('api/public/affiliate/affiliateCalculation',affiliate_data).success(function(result) {
+                        if(result.success == '1')
+                        {
+                            $scope.affiliate_invoice = result.affiliate_invoice;
+                            $scope.finalCalcualtion();
+                        }
+                    });
+                }
             }
         }
 

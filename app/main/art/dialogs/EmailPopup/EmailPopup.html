@@ -1,25 +1,69 @@
-<md-dialog class="task-dialog order-dialog" aria-label="New order">
-    <form name="orderForm" class="md-inline-form" novalidate>
-        <md-toolbar class="md-accent md-hue-2">
-            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">Art Approval</span>
-                <md-button  ng-click="closeDialog()" class="close-stokkup-dialog">
-                    <span>close</span>
-                </md-button>
-            </div>
-        </md-toolbar>
-        <md-dialog-content ms-scroll>
+<md-dialog class="task-dialog addAffiliateDialog" >
+<form name="artApproval">
+<div class="client-profile-page">
+<md-toolbar class="md-accent md-hue-2">
+    <div class="md-toolbar-tools" layout="row" layout-align="space-between"> <span class="title">Elements to Generate on Art Approval Form</span>
+        <md-button  ng-click="closeDialog()"> <span>CLOSE</span> </md-button>
+    </div>
+</md-toolbar>
+<div ng-cloak>
+    <md-card-content layout="column" class="box-shadow-0">
+        <div layout="row" layout-padding flex="100">
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 1" ng-model="options.photo_approval">Photo Approval</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 2" ng-model="options.speciality_ink">Specialty Links</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 3" ng-model="options.boards">Use 10" Boards</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 4" ng-model="options.seps">Separations</md-checkbox>
+          </div>
+        </div>
+        <div layout="row" layout-padding flex="100">
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 5" ng-model="options.ref_photo">Reference Photo</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 6" ng-model="options.print_signoff">1st Print Sign Off</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 7" ng-model="options.multiple_screensets">Multiple Screen Sets</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 8" ng-model="options.distressing">Distressing</md-checkbox>
+          </div>
+        </div>
+        <div layout="row" layout-padding flex="100">
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 9" ng-model="options.ink_change">Ink Change</md-checkbox>
+          </div>
+          <div flex="25" layout="column">
+            <md-checkbox aria-label="Checkbox 10" ng-model="options.inside_tag">Inside Tag</md-checkbox>
+          </div>
+        </div>
+    </md-card-content>
+</div>
+ <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
                <div layout="column"  flex="100" class="box-zerospace p-0 pt-15">
                 <md-input-container class="md-block">
-                    <input placeholder="Client Billing Email(Use comma separate for multiple.)" ng-model="mail">
+                    <input placeholder="Client Billing Email(Use comma separate for multiple.)" required="" ng-model="mail">
+                    <div ng-messages="artApproval.mail.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                     </div> 
                 </md-input-container>
                 </div>
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('0','')">Create Approval</md-button>
-            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('1',mail)">Send to client</md-button>
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('0','',options)">Create Approval</md-button>
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('1',mail,options)" ng-disabled="artApproval.$invalid || artApproval.$pristine">Send to client</md-button>
         </md-dialog-actions>
-    </form>
+</div>
+</form>
 </md-dialog>

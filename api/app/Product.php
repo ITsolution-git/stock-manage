@@ -79,7 +79,8 @@ class Product extends Model {
     {
         $product_id_array=array();
 
-        DB::statement('SET GLOBAL group_concat_max_len = 1000000');
+        //DB::statement('SET GLOBAL group_concat_max_len = 1000000');
+        DB::statement('SET group_concat_max_len = 1000000');
 
         if(isset($data['where']['search']))
         {

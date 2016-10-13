@@ -2,7 +2,7 @@
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
         </div>
-        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex ng-class="{'disable-click': allow_access == '0'}">
             <div class="info-order" flex="100">
                 <form name="user_profile">
                 <md-card layout="row">
@@ -68,7 +68,7 @@
                         <!--<div class="title" layout-padding>
                             <span class="basicInfoStyle">CHANGE PASSWORD</span>
                         </div> -->
-                        <div class="title" layout-padding>
+                        <div class="title" layout-padding  ng-show="allow_access==1">
                             <button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" ng-click="vm.openChangePasswordialog($event)" >
                                 CHANGE PASSWORD
                             </button>

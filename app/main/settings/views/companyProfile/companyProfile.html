@@ -66,14 +66,25 @@
                             </md-input-container>
 
                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                <md-input-container  style="margin-left: 10px;" flex="30" >
+                                <md-input-container  flex="25" >
                                     <input placeholder="Tax Rate" ng-model="company.tax_rate" valid-number  name="tax_rate" ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
                                 </md-input-container>
-                                <md-input-container  flex="30" >
+                                <md-input-container  flex="25" >
                                      <input placeholder="Oversize Value" ng-model="company.oversize_value" valid-number name="oversize_value"  ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
                                 </md-input-container>
-                                <md-input-container  flex="30" >
+                                <md-input-container  flex="25" >
                                      <input placeholder="QB Cron Time" ng-model="company.cron_runtime" valid-number name="cron_runtime"  ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                                </md-input-container>
+                                <md-input-container flex="25" class="m-b-20">
+                                    <label>Gross Year</label>
+                                    <md-select ng-model="company.gross_year" ng-change='UpdateTableProfile("gross_year",company.gross_year,"staff","id",company.staff_id,"staff")'>
+                                        <md-option value="0">
+                                            Select Year
+                                        </md-option>
+                                        <md-option ng-repeat="(key,year) in YearRange" value="{{key}}" ng-selected='{{key==company.gross_year}}' >
+                                            {{key}}
+                                        </md-option>
+                                    </md-select>
                                 </md-input-container>
                             </div>
                             <span class="pull-left">

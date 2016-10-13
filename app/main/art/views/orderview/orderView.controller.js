@@ -305,10 +305,10 @@
                     {
                         $mdDialog.hide();
                     }
-                    $scope.printPdf=function(flag,email)
+                    $scope.printPdf=function(flag,email,options)
                     {
                         $mdDialog.hide();
-                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email}
+                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email,options:options}
                         if(flag=='1')
                         {
                             var k = confirm("Do you want to send Art approval PDF to client?");
