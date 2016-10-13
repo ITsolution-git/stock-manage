@@ -48,7 +48,8 @@
                     <tbody>
 
                         <tr ng-repeat="client in rows" >
-                            <td ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
+                            <td ui-sref="app.client.profile({id:client.display_number})" class="cursor-p">{{ client.display_number }}</td>
+                            <td ui-sref="app.client.profile({id:client.display_number})" class="cursor-p">{{ client.client_company }}</td>
                             <td>{{ client.first_name }} {{client.last_name}}</td>
                             <td>{{ client.phone }}</td>
                             <td>{{ client.email }}</td>
