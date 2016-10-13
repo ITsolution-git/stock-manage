@@ -53,12 +53,12 @@
                                 </div>
                                 <div layout="column" flex="35" class="mrg10-R">
                                     <md-input-container flex="100" class="margin-0 date-input">
-                                        <input placeholder="Shipping By" kendo-date-picker ng-model="shipping.shipping_by" k-ng-model="dateObject1" ui-event="{ change : 'UpdateShippingDate(\'shipping_by\',shipping.shipping_by,shipping.shipping_id)' }"/>
+                                        <input type="text" placeholder="Shipping By" ng-model="shipping.shipping_by" disabled="">
                                     </md-input-container>
                                 </div>
                                 <div layout="column" flex="35" class="mrg10-R">
                                     <md-input-container flex="100" class="margin-0 date-input">
-                                        <input placeholder="In Hands By" kendo-date-picker ng-model="shipping.in_hands_by" k-ng-model="dateObject2" ui-event="{ change : 'UpdateShippingDate(\'in_hands_by\',shipping.in_hands_by,shipping.shipping_id)' }"/>
+                                        <input type="text" placeholder="In Hands By" ng-model="shipping.in_hands_by" disabled="">
                                     </md-input-container>
                                 </div>
                             </div>
