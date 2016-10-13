@@ -78,7 +78,8 @@ class Shipping extends Model {
                 foreach ($shippingData as $shipping)
                 {
                     $shipping_data = DB::table('shipping as s')
-                                        //->leftJoin('shipping_box as sb', 'sb.shipping_id', '=', 's.id')
+                                        ->leftJoin('orders as o', 's.order_id', '=', 'o.id')
+                                        ->select('s.id','o.date_shipped as shipping_by','o.in_hands_by')
                                         ->where('s.order_id','=',$shipping->id)
                                         ->get();
                     
