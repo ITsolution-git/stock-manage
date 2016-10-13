@@ -481,4 +481,52 @@ class Common extends Model {
 
         return $Companyuser;
     }
+
+    public function setDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$lastId)
+    {
+          //echo $pkey; die();
+
+          $sec_number = DB::table($table.' as tb')
+                            ->where($comp_field,$company_id)
+                            ->where('display_number','=','0')
+                            ->get();
+            if(count($sec_number)>0) // CHECK THE 0 DATA TO BE RESET
+            {
+                foreach ($sec_number as $key=>$value) 
+                {
+                   // echo $value->$pkey;
+                    $inc_id = $lastId+$key+1; // SET NEW ID BY INCREMENT OF LATEST ID
+                    $this->UpdateTableRecords($table,array($pkey=>$value->$pkey),array('display_number'=>$inc_id)) ;   // UPDATE NEW INCREMENTED ID     
+                }
+            }
+            $this->getDisplayNumber($table,$company_id,$comp_field,$pkey); // CHECK AGAIN TO SET NEW DISPLAY ID
+           // die();
+    }
+    public function getDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$call="no")
+    {
+
+        $sec_number = DB::table($table.' as tb')
+                            ->select(DB::raw('MAX(tb.display_number) as disp_number'))
+                            ->where($comp_field,$company_id)
+                            ->orderby("tb.display_number","desc")
+                            ->get();
+        
+        if(empty($sec_number[0]->disp_number))
+        {
+            $lastId= 1; // THERE NO RECORD
+        }
+        else
+        {
+            $lastId= $sec_number[0]->disp_number+1; // THERE ARE RECORDS AND LATEST DISPLAY ID
+        }    
+
+        if($call=="yes")
+        {
+            $this->setDisplayNumber($table,$company_id,$comp_field,$pkey,$lastId); // RESET ALL UNALLOCATED ID
+        }
+        else
+        {
+           return $lastId; // RETURN LATEST INCREMENTED ID
+        }
+    }
 }
