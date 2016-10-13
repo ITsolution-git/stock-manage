@@ -15,7 +15,8 @@ class Client extends Model {
     }
 	public function addclient($client,$contact)
 	{
-
+    //echo "<pre>"; print_r($client); echo "</pre>"; die;
+    $client['display_number'] = $this->common->getDisplayNumber('client',$client['company_id'],'company_id','client_id');
 		$result = DB::table('client')->insert($client);
 		$client_id = DB::getPdo()->lastInsertId();
     $address = array();
@@ -31,12 +32,13 @@ class Client extends Model {
 	}
 	public function getClientdata($post)
 	{
+       
             $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
     
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_id,c.client_id as id,c.client_company,cc.email,cc.first_name,cc.phone,cc.last_name,c.status,c.client_company as label')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_id,c.display_number,c.client_id as id,c.client_company,cc.email,cc.first_name,cc.phone,cc.last_name,c.status,c.client_company as label')];
         $whereConditions = ['c.company_id' => $post['company_id']];
 				$result =	DB::table('client as c')
         				 ->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
@@ -50,6 +52,7 @@ class Client extends Model {
                                     ->orWhere('cc.first_name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('cc.last_name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('cc.email', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('c.display_number', '=', $search)
                                     ->orWhere('cc.phone', 'LIKE', '%'.$search.'%');
                           });
                   }
@@ -150,7 +153,7 @@ class Client extends Model {
     	return $retArray;
     }
     
-    public function GetclientDetail($id)
+    public function GetclientDetail($id,$company_id)
     {
 
     	$retArray = DB::table('client as c')
@@ -163,7 +166,8 @@ class Client extends Model {
             ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
             ->leftJoin('state as st','st.id','=',"c.pl_state")
             ->leftJoin('users as usr','usr.id','=',"c.account_manager")
-    				->where('c.client_id','=',$id)
+    				->where('c.display_number','=',$id)
+            ->where('c.company_id','=',$company_id)
     				->get();
     	$result = array();
 
@@ -172,6 +176,7 @@ class Client extends Model {
     	{
     		foreach ($retArray as $key => $value) 
     		{
+          $result['client_id'] = $value->client_id;
     			$result['main']['client_id'] = $value->client_id;
           $result['main']['qid'] = $value->qid;
     			$result['main']['client_company'] = $value->client_company;
