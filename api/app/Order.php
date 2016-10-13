@@ -40,6 +40,7 @@ class Order extends Model {
                           {
                               $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('sales.sales_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('order.id', 'LIKE', '%'.$search.'%')
                                     ->orWhere('users.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');

@@ -43,7 +43,7 @@
                         <td height="15">Total Shipped</td>
                     </tr>
                  </table>
-                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" style="font-family: arial; font-size:10px; border-collapse:collapse;">
                     <tr>
                         <th width="30%" height="15" style="font-weight:bold; text-align:left;">Garment/Item Description</th>
                         <th width="10%" height="15" style="font-weight:bold; text-align:left;">Color</th>
@@ -57,14 +57,14 @@
                         {
                         ?>
                             <tr>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$items->name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$items->color_name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->color_name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">
                                     @foreach ($items->sizes as $sizedata)
                                         {{$sizedata->size}}-{{$sizedata->qnty}}&nbsp;&nbsp;
                                     @endforeach
                                 </td>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$items->total_size_qnty}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$items->total_size_qnty}}</td>
                             </tr>
                         <?php 
                         }
@@ -72,14 +72,14 @@
                         {
                         ?>
                             <tr style="background-color:#b7c2e0;">
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$items->name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$items->color_name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->color_name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">
                                     @foreach ($items->sizes as $sizedata)
                                         {{$sizedata->size}}-{{$sizedata->qnty}}&nbsp;&nbsp;
                                     @endforeach
                                 </td>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$items->total_size_qnty}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$items->total_size_qnty}}</td>
                             </tr>
                         <?php 
                         }
@@ -175,7 +175,7 @@
                     <td height="15">Breakdown</td>
                   </tr>
                  </table>
-                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" style="font-family: arial; font-size:10px; border-collapse:collapse;">
                     <tr>
                         <th width="10%" height="15" style="font-weight:bold; text-align:center;">Box</th>
                         <th width="10%" height="15" style="font-weight:bold; text-align:left;">Size</th>
@@ -191,12 +191,12 @@
                         {
                         ?>
                             <tr>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$count}}/<?php echo count($shipping->shipping_boxes); ?></td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->size}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->color_name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->product_name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->md}}/{{$box->spoil}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->boxed_qnty}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$count}}/<?php echo count($shipping->shipping_boxes); ?></td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->size}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->color_name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->product_name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$box->md}}/{{$box->spoil}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$box->boxed_qnty}}</td>
                             </tr>
                         <?php 
                         }
@@ -204,12 +204,12 @@
                         {
                         ?>
                             <tr style="background-color:#b7c2e0;">
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$count}}/<?php echo count($shipping->shipping_boxes); ?></td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->size}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->color_name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->product_name}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->md}}/{{$box->spoil}}</td>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">&nbsp;&nbsp;{{$box->boxed_qnty}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$count}}/<?php echo count($shipping->shipping_boxes); ?></td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->size}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->color_name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->product_name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$box->md}}/{{$box->spoil}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$box->boxed_qnty}}</td>
                             </tr>
                         <?php 
                         }
