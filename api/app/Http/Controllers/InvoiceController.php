@@ -761,9 +761,7 @@ public function getNoQuickbook(){
                 }
             }
         }
-        $retArray = $retArray->where('o.is_paid','=','0')
-        ->where('o.grand_total','>','o.total_payments')
-        ->where('o.approval_id','=',$estimate_id)
+        $retArray = $retArray->where('o.approval_id','=',$estimate_id)
         ->get();
 
         if(empty($retArray))
