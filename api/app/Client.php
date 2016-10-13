@@ -33,6 +33,7 @@ class Client extends Model {
 	public function getClientdata($post)
 	{
        
+       $this->common->getDisplayNumber('client',$post['company_id'],'company_id','client_id','yes');
             $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
