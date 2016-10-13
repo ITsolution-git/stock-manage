@@ -22,7 +22,7 @@
                                         <strong>{{$company_detail[0]->name}}</strong>                
                                       </span>
                                       <br/>
-                                      <span>{{$company_detail[0]->address}}, {{$company_detail[0]->city}}, {{$company_detail[0]->state}}, <br/>{{$company_detail[0]->country}} - {{$company_detail[0]->zip}}<br />{{$company_detail[0]->url}}</span>                                      
+                                      <span>{{$company_detail[0]->prime_address1}}, {{$company_detail[0]->prime_address_city}}, {{$company_detail[0]->prime_address_state}}, <br/>USA - {{$company_detail[0]->zip}}<br />{{$company_detail[0]->url}}</span>
                                     </td>
                                 </tr>
                             </table>

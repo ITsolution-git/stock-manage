@@ -39,6 +39,9 @@
           @foreach ($shipping_boxes as $box)
 
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr height="10"><td style="width:100%">&nbsp;</td></tr>
+            </table>
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <thead class="title">
                 <tr>
                   <th align="left" valign="top" width="25%"><img src="{{$company_detail[0]->photo}}" title="" alt="" height="100px" width="100px"></th>
@@ -52,6 +55,15 @@
                 </tr>
               </thead>
             </table>
+            <?php if($shipping->custom_po != ''){?> 
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td align="left" valign="top">PO: {{$shipping->custom_po}}</td>
+            </tr>
+            </table>
+            <?php
+            }
+            ?>
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <thead class="title">
                 <tr>
@@ -69,11 +81,18 @@
                 </tr>
                 
                 <tr style="height:150px;">
-                  <td align="left" valign="top" width="49%" height="10"><span>{{$box->product_name}}</span><br/>
+                  <td align="left" valign="top" width="70%" height="10"><span>{{$box->product_name}}</span>
+                  </td>
+                  <td align="left" valign="top" width="2%">&nbsp;</td>
+                  <td align="right" valign="top" width="18%" height="10"><span>{{$box->color_name}}</span>
+                  </td>
+                </tr>
+                <tr style="height:150px;">
+                  <td align="left" valign="top" width="49%" height="10">
                     <div class="boxbrdr">{{$box->box_qnty}}</div>
                   </td>
                   <td align="left" valign="top" width="2%">&nbsp;</td>
-                  <td align="right" valign="top" width="49%" height="10"><span>{{$box->color_name}}</span><br/>
+                  <td align="right" valign="top" width="49%" height="10">
                     <div class="boxbrdr">{{$box->size}}</div>
                   </td>
                 </tr>
@@ -99,7 +118,7 @@
       else
       {
       ?>
-        <td  align="left" valign="top" width="100%">
+        <td align="left" valign="top" width="100%">
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <thead class="title">
                 <tr>
@@ -114,6 +133,15 @@
                 </tr>
               </thead>
             </table>
+            <?php if($shipping->custom_po != ''){?> 
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td align="left" valign="top">PO: {{$shipping->custom_po}}</td>
+            </tr>
+            </table>
+            <?php
+            }
+            ?>
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <thead class="title">
               <tr>
@@ -168,10 +196,19 @@
                     </tr>
                   </thead>
                 </table>
+
                 </td>
               </tr>
                 
+                
                 <thead class="title">
+                  <?php if($shipping->custom_po != ''){?> 
+                   <tr>
+                      <td align="left" valign="top" width="100%" colspan="4">PO: {{$shipping->custom_po}}</td>
+                    </tr>
+                  <?php
+                  }
+                  ?>
                   <tr>
                     <th align="left" valign="top" width="50%" style="border-bottom:1px solid #000000;"><strong>Garment / Item Description</strong></th>
                     <th align="left" valign="top" width="20%" style="border-bottom:1px solid #000000;"><strong>Color</strong></th>
