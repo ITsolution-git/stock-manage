@@ -207,10 +207,11 @@ class ClientController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        1=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
-                        2=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
-                        3=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
+        				array('key' => 'c.display_number', 'name' => '#No'),
+                        array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        array('key' => 'cc.first_name', 'name' => 'Main Contact'),
+                        array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
+                        array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -344,10 +345,11 @@ class ClientController extends Controller {
 		$id = $post['client_id'];
 		if(!empty($id) && !empty($post['company_id']))
 		{
-			$result = $this->client->GetclientDetail($id);
+			$result = $this->client->GetclientDetail($id,$post['company_id']);
 
 			if(count($result)>0)
 			{
+				$id = $result['client_id'];
 				$CompanyUsers = $this->common->getBrandCordinator($post['company_id']);
 				$StaffList = $this->common->getStaffList($post['company_id']);
 				$ArrCleintType=$this->common->TypeList('company');
