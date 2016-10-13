@@ -65,6 +65,7 @@
                 $("#ajax_loader").hide();
                 var header = response.header;
                 $scope.success = response.success;
+                $scope.quickbook_url = response.quickbook_url;
                 return {
                   'rows': response.rows,
                   'header': header,

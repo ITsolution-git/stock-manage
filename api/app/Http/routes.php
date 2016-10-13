@@ -24,7 +24,7 @@ Route::post('admin/login', 'LoginController@loginverify');
 Route::post('admin/forgot_password', 'LoginController@forgot_password');
 Route::post('admin/check_user_password', 'LoginController@check_user_password');
 Route::post('admin/change_password', 'LoginController@change_password');
-Route::get('auth/session', 'LoginController@check_session');
+Route::post('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
 
 // COMPANY ROUTERS
@@ -39,11 +39,8 @@ Route::get('admin/company/getCompanyInfo/{company_id}', 'CompanyController@getCo
 Route::get('admin/company/getAffiliate/{company_id}/{affiliate_id}', 'CompanyController@getAffiliate');
 Route::post('admin/company/addAffilite', 'CompanyController@addAffilite');
 Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
-Route::get('admin/company/getAuthorizeAPI/{company_id}', 'CompanyController@getAuthorizeAPI');
-Route::get('admin/company/getUpsAPI/{company_id}', 'CompanyController@getUpsAPI');
-Route::get('admin/company/getSnsAPI/{company_id}', 'CompanyController@getSnsAPI');
-Route::get('admin/company/getQBAPI/{company_id}', 'CompanyController@getQBAPI');
-Route::get('admin/company/getFedexAPI/{company_id}', 'CompanyController@getFedexAPI');
+Route::post('admin/company/GetAllApi', 'CompanyController@GetAllApi');
+
 
 // COMPANY USERS ROUTERS
 Route::get('admin/account', 'AccountController@listData');
@@ -106,6 +103,10 @@ Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
 Route::post('admin/downloadPricegridCSV', 'SettingController@downloadPricegridCSV');
 Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
 Route::get('admin/uploadSnsCSV', 'SettingController@uploadSnsCSV');
+Route::post('admin/downloadPriceGridExcel', 'SettingController@downloadPriceGridExcel');
+Route::post('admin/getApprovedOrders', 'SettingController@getApprovedOrders');
+Route::post('admin/getPendingOrders', 'SettingController@getPendingOrders');
+Route::post('admin/getDeniedOrders', 'SettingController@getDeniedOrders');
 
 // ADMIN MISC ROUTERS
 Route::post('admin/miscSave', 'MiscController@miscSave');
@@ -158,7 +159,7 @@ Route::post('client/GetclientDetail','ClientController@GetclientDetail');
 Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
 Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
 Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
-Route::post('client/SaveCleintPlimp', 'ClientController@SaveCleintPlimp');
+Route::post('client/SaveClientInfo', 'ClientController@SaveClientInfo');
 Route::post('client/checkCompName', 'ClientController@checkCompName');
 Route::get('client/getDocument/{id}/{company_id}','ClientController@getDocument');
 Route::get('client/getDocumentDetailbyId/{id}/{company_id}', 'ClientController@getDocumentDetailbyId');
@@ -167,6 +168,7 @@ Route::post('client/saveDoc', 'ClientController@saveDoc');
 Route::get('client/deleteClientDoc/{id}', 'ClientController@deleteClientDoc');
 Route::get('client/SelectionData/{id}', 'ClientController@SelectionData');
 Route::post('client/saveTaxDoc', 'ClientController@saveTaxDoc');
+Route::post('client/setin_destribution', 'ClientController@setin_destribution');
 
 
 Route::get('client/GetNoteDetails/{id}', 'ClientController@GetNoteDetails');
@@ -248,7 +250,10 @@ Route::post('order/createInvoice', 'OrderController@createInvoice');
 Route::post('order/paymentInvoiceCash', 'OrderController@paymentInvoiceCash');
 Route::post('order/paymentLinkToPay', 'OrderController@paymentLinkToPay');
 Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
-
+Route::post('order/GetAllClientsLowerCase', 'OrderController@GetAllClientsLowerCase');
+Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
+Route::post('payment/refundTransaction', 'PaymentController@refundTransaction');
+Route::post('order/updateInvoicePayment', 'OrderController@updateInvoicePayment');
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
@@ -277,12 +282,13 @@ Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 Route::post('shipping/shipOrder', 'ShippingController@shipOrder');
 Route::post('shipping/getProductByAddress', 'ShippingController@getProductByAddress');
 Route::post('shipping/addProductToShip', 'ShippingController@addProductToShip');
+Route::post('shipping/addAllProductToShip', 'ShippingController@addAllProductToShip');
 Route::post('shipping/getShippingAddress', 'ShippingController@getShippingAddress');
 Route::post('shipping/getShippingBoxes', 'ShippingController@getShippingBoxes');
 Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverview');
 Route::post('shipping/createLabel', 'ShippingController@createLabel');
 Route::post('shipping/checkAddressValid', 'ShippingController@checkAddressValid');
-
+Route::post('shipping/vewLabelPDF', 'ShippingController@vewLabelPDF');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
@@ -302,6 +308,7 @@ Route::post('product/getVendorByProductCount', 'ProductController@getVendorByPro
 Route::post('product/getProductSize', 'ProductController@getProductSize');
 Route::post('product/checkProductExist', 'ProductController@checkProductExist');
 Route::post('product/findTotal', 'ProductController@findTotal');
+Route::post('product/downloadCustomProductCSV', 'ProductController@downloadCustomProductCSV');
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
@@ -362,4 +369,18 @@ Route::post('qbo/updateInvoicePayment', 'QuickBookController@updateInvoicePaymen
 Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
 Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceDetail');
 Route::get('invoice/getInvoiceHistory/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceHistory');
+Route::get('invoice/getInvoicePayment/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoicePayment');
+Route::get('invoice/getInvoiceCards/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceCards');
 Route::post('invoice/createInvoicePdf', 'InvoiceController@createInvoicePdf');
+Route::post('invoice/getPaymentCard', 'InvoiceController@getPaymentCard');
+Route::post('invoice/getNoQuickbook', 'InvoiceController@getNoQuickbook');
+Route::post('invoice/getSalesClosed', 'InvoiceController@getSalesClosed');
+Route::post('invoice/getUnpaid', 'InvoiceController@getUnpaid');
+Route::post('invoice/getAverageOrders', 'InvoiceController@getAverageOrders');
+Route::post('invoice/getLatestOrders', 'InvoiceController@getLatestOrders');
+Route::post('invoice/getEstimates', 'InvoiceController@getEstimates');
+Route::post('invoice/getComparison', 'InvoiceController@getComparison');
+Route::post('invoice/getSalesPersons', 'InvoiceController@getSalesPersons');
+Route::post('invoice/getUnshipped', 'InvoiceController@getUnshipped');
+Route::post('invoice/getProduction', 'InvoiceController@getProduction');
+Route::post('invoice/getFullShipped', 'InvoiceController@getFullShipped');

@@ -74,6 +74,9 @@
             //Misc data
             'app.misc',
             'xeditable',
-            'angular-clipboard'
+            'angular-clipboard',
+
+            // GOOGLE ADDRESS API
+            'vsGoogleAutocomplete'
         ]);
 })();

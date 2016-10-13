@@ -9,7 +9,7 @@
             //.controller('AngularWayCtrl', AngularWayCtrl);
 
     /** @ngInject */
-    function ClientController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http) {
+    function ClientController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http,notifyService,AllConstant) {
         var vm = this;
         // Data
         //console.log(sessionService.get('company_id'));
@@ -31,7 +31,17 @@
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
         $scope.company_id = sessionService.get('company_id');
-        $scope.role = sessionService.get('role_slug');
+        $scope.role_slug = sessionService.get('role_slug');
+
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' || $scope.role_slug=='AT' )
+        {
+            $scope.allow_access = 1;  // THESE ROLE CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 0; // THESE ROLE CAN ALLOW TO EDIT, JUST CAN VIEW
+        }
 
         //////////
 
@@ -83,6 +93,8 @@
         }
         function openClientDialog(ev, client)
         {
+            if($scope.allow_access==0){ notifyService.notify('error',AllConstant.NO_ACCESS); return false;}
+            
             $mdDialog.show({
                 controller: 'ClientDialogController',
                 controllerAs: 'vm',

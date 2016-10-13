@@ -9,13 +9,14 @@
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
         <link rel="shortcut icon" type="image/x-icon" href="/stokkup/favicon.ico" />
-        <link rel="stylesheet" href="styles/vendor.css">
+        <link rel="stylesheet" href="styles/vendor.css" type="text/css">
 
-        <link rel="stylesheet" href="styles/app.css">
-        <link rel="stylesheet" href="styles/stokkup-custom.css">
-        <link rel="stylesheet" href="styles/mdPickers.min.css">
+        <link rel="stylesheet" href="styles/app.css" type="text/css">
+        <link rel="stylesheet" href="styles/stokkup-custom.css" type="text/css">
+        <link rel="stylesheet" href="styles/mdPickers.min.css" type="text/css">
+        <link rel="stylesheet" href="styles/stokkup-global-custom.css" type="text/css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 
 
@@ -137,7 +138,7 @@ catch(PDOException $e)
                                        <div layout="column" flex="45">
                                             <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
                                             <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-<input name="invoice_id" ng-model="company.invoice_id" ng-init="7" type="hidden">
+                                                <input name="invoice_id" ng-model="company.invoice_id" ng-init="7" type="hidden">
                                                 <md-input-container flex="50">
                                                      <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
                                                 </md-input-container>

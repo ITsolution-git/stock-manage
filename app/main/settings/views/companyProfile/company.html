@@ -1,0 +1,23 @@
+<div class="client-profile-page">
+    <div class="header header-bg-custom"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
+            <h1 class="inner-page-heading">{{company_name}}</h1>
+        </div>
+    </div>
+    <div class="full-row pull-left">
+            <div ng-cloak>
+                <md-content class="stokkup-custom-tabs">
+                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                        <!-----------------Company Info Tab-------------------->
+                        <md-tab label="Company Profile">
+                            <div ng-include src="'app/main/settings/views/companyProfile/companyProfile.html'"></div>
+                        </md-tab>
+                        <md-tab label="Company Detail" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-show="role_slug != 'AT' && role_slug != 'SU' " ng-include src="'app/main/settings/views/companyDetails/companyDetails.html'"></div>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+        </div>
+    </div>
+</div>
+ 

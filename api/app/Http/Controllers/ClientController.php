@@ -207,10 +207,11 @@ class ClientController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        1=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
-                        2=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
-                        3=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
+        				array('key' => 'c.display_number', 'name' => '#No'),
+                        array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        array('key' => 'cc.first_name', 'name' => 'Main Contact'),
+                        array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
+                        array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -344,10 +345,12 @@ class ClientController extends Controller {
 		$id = $post['client_id'];
 		if(!empty($id) && !empty($post['company_id']))
 		{
-			$result = $this->client->GetclientDetail($id);
+			$result = $this->client->GetclientDetail($id,$post['company_id']);
 
 			if(count($result)>0)
 			{
+				$id = $result['client_id'];
+				$CompanyUsers = $this->common->getBrandCordinator($post['company_id']);
 				$StaffList = $this->common->getStaffList($post['company_id']);
 				$ArrCleintType=$this->common->TypeList('company');
 				$AddrTypeData = $this->common->GetMicType('address_type',$post['company_id']);
@@ -361,7 +364,7 @@ class ClientController extends Controller {
 				$documents = $this->client->getDocument($id,$post['company_id']);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'screenset_detail' => $screenset_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'screenset_detail' => $screenset_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents,'companyUsers'=>$CompanyUsers);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else
@@ -490,12 +493,24 @@ class ClientController extends Controller {
 		return response()->json(['data'=>$data]);
 	}
 
-	public function SaveCleintPlimp()
+	public function SaveClientInfo()
 	{
 		$post = Input::all();
-		$result = $this->client->SaveCleintPlimp($post['data'],$post['id']);
+		if(!empty($post['client_company']) && !empty($post['client_id']))
+		{
+			$post['pl_state'] = empty($post['pl_state'])?'':$post['pl_state'];
+			$post['pl_address'] = empty($post['pl_address'])?'':$post['pl_address'];
+			$post['pl_pincode'] = empty($post['pl_pincode'])?'':$post['pl_pincode'];
+			$post['pl_suite'] = empty($post['pl_suite'])?'':$post['pl_suite'];
+			$post['pl_city'] = empty($post['pl_city'])?'':$post['pl_city'];
 
-    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+			$result = $this->client->SaveClientInfo($post,$post['client_id']);
+    		$data = array("success"=>1,"message"=>UPDATE_RECORD);
+    	}
+    	else
+    	{
+    		$data = array("success"=>0,"message"=>MISSING_PARAMS);
+    	}
 		return response()->json(['data'=>$data]);
 	}
 /**
@@ -841,6 +856,46 @@ public function saveTaxDoc()
         return response()->json(['data'=>$data]);
     }
 
+    public function setin_destribution()
+    {
+    	$post = Input::all();
+    	if(!empty($post['client_id']) && !empty($post['company_id']) && !empty($post['location']))
+        {
+        	$get_location  = $post['location']; 
+        	$check_location = $this->common->GetTableRecords('client_distaddress',array('location_id'=>$get_location['id']),array());
+        	
+        	//echo "<pre>"; print_r($check_location); echo "</pre>"; die;
+        	$set_data = array('client_id'=>$post['client_id'],
+        					  'location_id'=>$get_location['id'],
+        					  'address'=>$get_location['address'],
+        					  'address2'=>$get_location['street'],
+        					  'city'=>$get_location['city'],
+        					  'state'=>$get_location['state'],
+        					  'zipcode'=>$get_location['postal_code'],
+        					  'country'=>'USA'        					  
+        					  );
+
+        	if(count($check_location)>0)
+        	{
+        		$this->common->UpdateTableRecords('client_distaddress',array('location_id'=>$get_location['id']),$set_data);
+        	}
+        	else
+        	{
+        		$this->common->InsertRecords('client_distaddress',$set_data);
+        	}
+        	$message = UPDATE_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
 
 
  } 

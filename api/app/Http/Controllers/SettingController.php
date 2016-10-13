@@ -6,6 +6,7 @@ require_once(app_path() . '/constants.php');
 
 use App\Price;
 use App\Common;
+use App\Order;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -24,11 +25,12 @@ class SettingController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Price $price,Common $common,Api $api) {
+    public function __construct(Price $price,Common $common,Api $api, Order $order) {
 
         $this->price = $price;
         $this->common = $common;
         $this->api = $api;
+        $this->order = $order;
     }
 
 /**
@@ -599,7 +601,7 @@ class SettingController extends Controller {
 
                 foreach ($data[3] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_primary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_primary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'pricing_11c' => $value->pricing_11c,'pricing_12c' => $value->pricing_12c,'pricing_13c' => $value->pricing_13c,'pricing_14c' => $value->pricing_14c,'pricing_15c' => $value->pricing_15c,'pricing_16c' => $value->pricing_16c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
@@ -613,7 +615,7 @@ class SettingController extends Controller {
 
                 foreach ($data[4] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_secondary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_secondary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'pricing_11c' => $value->pricing_11c,'pricing_12c' => $value->pricing_12c,'pricing_13c' => $value->pricing_13c,'pricing_14c' => $value->pricing_14c,'pricing_15c' => $value->pricing_15c,'pricing_16c' => $value->pricing_16c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
@@ -828,6 +830,292 @@ class SettingController extends Controller {
         $totaltime = ($endtime - $starttime);
         echo "This page was created in ".$totaltime." seconds";
         curl_close($curl);*/
+    }
+
+
+    public function downloadPriceGridExcel()
+    {
+       
+
+        $post = Input::all();
+       
+
+        $data = $this->price->priceDetailExcel($post['price_id']);
+        
+        $array = json_decode(json_encode($data), True);
+      
+        unset($array['embroswitch'][0]['id']);
+
+       
+        return Excel::create('price_grid', function($excel) use ($array) {
+
+            $excel->sheet('PriceGrid', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['price']);
+
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+
+            $excel->sheet('Charges', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['charges']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Charges List', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allPriceGrid']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Screen Printing Primary', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allScreenPrimary']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Screen Printing Secondary', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allScreenSecondary']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Embroidery Header', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['embroswitch']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Embroidery Price', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allEmbroidery']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Direct To Garment', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allGarment']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+             $excel->sheet('Garment Markup', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allGarmentMackup']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+
+        })->download($post['type']);
+    }
+
+    public function getApprovedOrders()
+    {
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.updated_date';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+        $post['type'] = 'approved';
+
+        $result = $this->order->getApprovalOrders($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
+                        3=>array('key' => 'u.name', 'name' => 'Name'),
+                        4=>array('key' => '', 'name' => 'S&S Order Number'),
+                        5=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    public function getPendingOrders()
+    {
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.updated_date';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+        $post['type'] = 'pending';
+
+        $result = $this->order->getApprovalOrders($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
+                        3=>array('key' => '', 'name' => 'Status'),
+                        4=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    public function getDeniedOrders()
+    {
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.updated_date';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+        $post['type'] = 'denied';
+
+        $result = $this->order->getApprovalOrders($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
+                        3=>array('key' => '', 'name' => 'Status'),
+                        4=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    /**
+    * Get Array
+    * @return json data
+    */
+    public function return_response($data)
+    {
+        
+
+        if (count($data) > 0) 
+        {
+            $response = $data;
+        } 
+        else 
+        {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        return  response()->json($response);
     }
 }
 

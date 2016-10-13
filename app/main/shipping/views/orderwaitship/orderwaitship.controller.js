@@ -15,8 +15,25 @@
         $scope.shipping_id = 0;
         $scope.productSearch = '';
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
         var combine_array_id = {};
         combine_array_id.id = $stateParams.id;
+
+        if($stateParams.id == '' || $scope.allow_access == '0'){
+             $state.go('app.shipping');
+             return false;
+        }
+
+        
         combine_array_id.company_id = sessionService.get('company_id');
         $scope.order_id = $stateParams.id;
         
@@ -68,8 +85,8 @@
                 $scope.assignedItems = [];
             }
 
-            if($scope.shipping_id > 0)
-            {
+/*            if($scope.shipping_id > 0)
+            {*/
                 var combine_array = {};
                 combine_array.address_id = $scope.address_id;
                 combine_array.order_id = $scope.order_id;
@@ -81,7 +98,7 @@
                         $scope.assignedItems = result.data.products;
                     }
                 });
-            }
+//            }
         }
 
         $scope.getShippingAddress = function()
@@ -90,12 +107,14 @@
             combine_array.client_id = $scope.order.client_id;
             combine_array.id = $scope.order.id;
             combine_array.search = $scope.productSearch;
+            combine_array.address_id = $scope.address_id;
             
             $http.post('api/public/shipping/getShippingAddress',combine_array).success(function(result, status, headers, config) {
                 
                 if(result.data.success == '1') {
                     $scope.assignAddresses = result.data.assignAddresses;
                     $scope.unAssignAddresses = result.data.unAssignAddresses;
+                    $scope.shipping_id = result.data.shipping_id;
                 }
             });
         }
@@ -106,24 +125,55 @@
             {
                 var data = {"status": "error", "message": "Please select address"}
                 notifyService.notify(data.status, data.message);
+                $scope.shipOrder();
                 return false;
             }
-            if(parseInt(productArr.remaining_qnty) < parseInt(productArr.distributed_qnty))
+            if(productArr.distributed_qnty > 0)
+            {
+                var combine_array = {};
+                combine_array.product = productArr;
+                combine_array.address_id = $scope.address_id;
+                combine_array.order_id = $scope.order_id;
+
+                $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
+                    
+                    if(result.data.success == '1') {
+                        $scope.shipOrder();
+                    }
+                });
+            }
+            else
             {
                 var data = {"status": "error", "message": "Please enter valid qnty"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
+        }
+
+        $scope.addAllProducts = function()
+        {
+            if($scope.address_id == 0)
+            {
+                var data = {"status": "error", "message": "Please select address"}
+                notifyService.notify(data.status, data.message);
+                $scope.shipOrder();
+                return false;
+            }
 
             var combine_array = {};
-            combine_array.product = productArr;
+            combine_array.products = $scope.unshippedProducts;
             combine_array.address_id = $scope.address_id;
             combine_array.order_id = $scope.order_id;
 
-            $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
+            $http.post('api/public/shipping/addAllProductToShip',combine_array).success(function(result, status, headers, config) {
                 
                 if(result.data.success == '1') {
                     $scope.shipOrder();
+                }
+                else
+                {
+                    var data = {"status": "error", "message": result.data.message}
+                    notifyService.notify(data.status, data.message);
                 }
             });
         }
@@ -134,12 +184,20 @@
             {
                 var data = {"status": "error", "message": "Please assign product to address"}
                 notifyService.notify(data.status, data.message);
-                return false;
+            }
+            if($scope.shipping_id == 0 || $scope.shipping_id == undefined)
+            {
+                var data = {"status": "error", "message": "Please select allocated address"}
+                notifyService.notify(data.status, data.message);
             }
             else
             {
                 $state.go('app.shipping.shipmentdetails',{id: $scope.shipping_id});
             }
+        }
+
+        $scope.reloadPage = function(){
+            $state.reload();
         }
 
         vm.openaddAddressDialog = openaddAddressDialog;

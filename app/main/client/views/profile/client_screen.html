@@ -1,54 +1,53 @@
-
-                    <md-content class="md-padding">
-                        <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title " layout="row" layout-align="space-between center">
-                                <div class="table-title-text" flex=20>
-                                    Screen Sets
-                                </div>
+<md-content>
+    <div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview">
+        <!-- <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=20>
+                Screen Sets
+            </div>
+        </div> -->
+        <div class="ms-responsive-table-wrapper">
+            <table class="dataTable">
+                <thead>
+                    <tr>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Description</span>
                             </div>
-                            <div class="ms-responsive-table-wrapper">
-                                <table class="simple">
-                                    <thead>
-                                        <tr>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Description</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Graphic Size</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Mokup Logo</span>
-                                                </div>
-                                            </th>
-                                            <th class="secondary-text">
-                                                <div class="table-header">
-                                                    <span class="column-title">Mokup Image</span>
-                                                </div>
-                                            </th>
-                                                                                 
-                                        </tr>
-                                    </thead>                                    
-                                    <tbody>
-                                        <tr ng-repeat="screenSet in screenset_detail">
-                                            <td><a target="_blank" ui-sref="app.art.screensetView({id:screenSet.screen_id})">{{screenSet.screen_set}}</a></td>
-                                            <td>{{screenSet.screen_width}}" X {{screenSet.screen_height}}"</td>
-                                            <td><img src="{{screenSet.mokup_logo}}" style="height: 100px; width: 140px;"></td>
-                                            <td><img src="{{screenSet.mokup_image}}"  style="height: 100px; width: 140px;"></td>
-                                            
-                                    </tr>                                    
-                                    </tbody>
-                                </table>
-                               <!--  <table> 
-                                    <tr>
-                                        <td class="p-16"><a href="">ADD NEW</a></td>                                                
-                                    </tr>
-                                </table> -->
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Graphic Size</span>
                             </div>
-                        </div> 
-                    </md-content>
+                        </th>
+                        <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Screenset Image</span>
+                            </div>
+                        </th>
+                       <!--  <th class="secondary-text">
+                            <div class="table-header">
+                                <span class="column-title">Mokup Image</span>
+                            </div>
+                        </th> -->
+                                                             
+                    </tr>
+                </thead>                                    
+                <tbody>
+                    <tr ng-repeat="screenSet in screenset_detail">
+                        <td><a target="_blank" ui-sref="app.art.screensetView({id:screenSet.screen_id})">{{screenSet.screen_set}}</a></td>
+                        <td><b ng-if="screenSet.screen_width!=''" >{{screenSet.screen_width}}"</b> X <b ng-if="screenSet.screen_height!=''">{{screenSet.screen_height}}"</b></td>
+                        <td>
+                            <img ng-if="ScreenSets.mokup_logo!=''" class="client-screenset-img" src="{{screenSet.mokup_logo}}">
+                            <img class="client-screenset-img" ng-if="ScreenSets.mokup_logo==''" ng-src="{{NoImage}}">
+                        </td>
+                        <!-- <td><img src="{{screenSet.mokup_image}}"  style="height: 100px; width: 140px;"></td> -->
+                        
+                </tr>                                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div> 
+</md-content>
                 

@@ -10,6 +10,17 @@
     function EditFinishingDialogController(Finishing,$mdDialog,$controller,$state,event,$scope,sessionService,$resource,DTOptionsBuilder,DTColumnBuilder,$http,notifyService)
     {
         var vm = this;
+        $scope.save = 0;
+
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
 
         $scope.finishing_data = Finishing;
 
@@ -65,11 +76,23 @@
             }
        
         $scope.cancel = function () {
+            if($scope.save == 0)
+            {
+                $scope.finishing_data.start_time = '';
+                $scope.finishing_data.end_time = '';
+                $scope.finishing_data.est = '';
+            }
             $mdDialog.hide();
         };
 
         function closeDialog()
         {
+            if($scope.save == 0)
+            {
+                $scope.finishing_data.start_time = '';
+                $scope.finishing_data.end_time = '';
+                $scope.finishing_data.est = '';
+            }
             $mdDialog.hide();
         }
 
@@ -80,38 +103,37 @@
             var minutes = ("0" + d.getMinutes()).slice(-2);
             var seconds = ("0" + d.getSeconds()).slice(-2);
 
-            var ampm = hours >= 12 ? 'PM' : 'AM';
-
-            hours = hours % 12;
-            hours = hours ? hours : 12; // the hour '0' should be '12'
-            minutes = minutes < 10 ? '0'+minutes : minutes;
-            var strTime = hours + ':' + minutes + ' ' + ampm;
-
+            var ampm = hours >= 12 ? ' PM' : ' AM';
+            
             if(param == 'start')
             {
                 /*if($scope.finishing_data.start_time == '')
                 {*/
                     $scope.finishing_data.end_time = '';
-                    $scope.finishing_data.start_time = strTime;
-/*                    var start_time = $scope.finishing_data.start_time;
+                    var start_time = hours + ":" + minutes + ":" + seconds;
+                    $scope.finishing_data.start_time = start_time + ampm;
+
 
                     var a = start_time.split(':');
                     var start_time = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
 
                     var est = (new Date).clearTime()
                       .addSeconds(start_time)
-                      .toString('H:mm:ss');*/
+                      .toString('H:mm:ss');
 
-                    //$scope.finishing_data.est = est;
+                    $scope.finishing_data.est = est;
                 //}
             }
             if(param == 'end')
             {
                 if($scope.finishing_data.start_time != '' && $scope.finishing_data.end_time == '')
                 {
-                    $scope.finishing_data.end_time = strTime;
-/*                    var start_time = $scope.finishing_data.start_time;
-                    var end_time = $scope.finishing_data.end_time;
+                    $scope.finishing_data.start_time1 = $scope.finishing_data.start_time.replace('AM','');
+                    $scope.finishing_data.start_time1 = $scope.finishing_data.start_time1.replace('PM','');
+                    var start_time = $scope.finishing_data.start_time1;
+                    var end_time = hours + ":" + minutes + ":" + seconds;
+
+                    $scope.finishing_data.end_time = end_time + ampm;
 
                     var a = start_time.split(':');
                     var b = end_time.split(':');
@@ -119,19 +141,26 @@
                     var strtime1 = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]);
                     var strtime2 = (+b[0]) * 60 * 60 + (+b[1]) * 60 + (+b[2]);
 
+                    console.log(strtime1);
+                    console.log(strtime2);
+
                     var time_diff = parseInt(strtime2) - parseInt(strtime1);
+
+                    console.log(time_diff);
                     
                     var est = (new Date).clearTime()
                       .addSeconds(time_diff)
                       .toString('H:mm:ss');
 
-                    $scope.finishing_data.est = est;*/
+                    $scope.finishing_data.est = est;
+
+
                 }
             }
         }
-
         $scope.editFinishing = function()
         {
+            $scope.save = 1;
             $http.post('api/public/finishing/updateFinishing',$scope.finishing_data).success(function(result)
             {
                 if(result.data.success == 1)

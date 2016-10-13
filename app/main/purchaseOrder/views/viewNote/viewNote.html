@@ -11,13 +11,13 @@
     <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15" >
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text h2 text-semibold" flex=20>
-                Notes
+                Order positions Notes
             </div>
-            <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+            <!-- <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
                 <md-button class="dark-bg chrome-weight" ng-click="openaddNoteDialog($event,'addNote','')">
                     ADD NEW
                 </md-button>
-            </div>
+            </div> -->
         </div>
            <div class="ms-responsive-table-wrapper" ng-show="success==1">
                 <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
@@ -25,9 +25,9 @@
                         <thead tasty-thead></thead>
                         <tbody >
                             <tr ng-repeat="(key,note) in rows">
-                                <td class="">{{note.note_date}}</td>
-                                <td class="">{{note.note_title}}</td>
+                                <td class="">{{note.value}}</td>
                                 <td class="">{{note.note}}</td>
+                                <td class="">{{note.description}}</td>
                                 <td><a class="font-12" class="cursor-p" ng-click="openaddNoteDialog($event,'editNote',note)">Edit</a></td> 
                                 <!-- <td class="" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})"> View</td> -->
                             </tr>

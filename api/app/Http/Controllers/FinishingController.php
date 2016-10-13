@@ -96,21 +96,24 @@ class FinishingController extends Controller {
 
             foreach ($inner_data as $row) {
                 if($row->start_time != '00:00:00') {
-                    $row->start_time = date('h:i A', strtotime($row->start_time));
+                    //$row->start_time = date('h:i A', strtotime($row->start_time));
+                    $start_time = explode(":", $row->start_time);
+                    $ampm = $start_time[0] >= 12 ? 'PM' : 'AM';
+                    $row->start_time = $row->start_time ." ". $ampm;
                 }
                 else {
                     $row->start_time = '';   
                 }
                 if($row->end_time != '00:00:00') {
-                    $row->end_time = date('h:i A', strtotime($row->end_time));
+                    //$row->end_time = date('h:i A', strtotime($row->end_time));
+                    $end_time = explode(":", $row->end_time);
+                    $ampm = $end_time[0] >= 12 ? 'PM' : 'AM';
+                    $row->end_time = $row->end_time ." ". $ampm;
                 }
                 else {
                     $row->end_time = '';
                 }
-                if($row->est != '00:00:00') {
-                    $row->est = date('h:i A', strtotime($row->est));
-                }
-                else {
+                if($row->est == '00:00:00') {
                     $row->est = '';
                 }
             }
@@ -128,6 +131,7 @@ class FinishingController extends Controller {
                         1=>array('key' => 'o.name', 'name' => 'Job Name'),
                         2=>array('key' => 'c.client_company', 'name' => 'Client'),
                         3=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false),
+                        4=>array('key' => 'null', 'name' => 'Order Status', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -178,6 +182,7 @@ class FinishingController extends Controller {
 
         $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est'],'note'=>$post['note']);
         $finishingData['where'] = array('id' => $post['id']);
+
 
         $result = $this->finishing->updateFinishing($finishingData);
         

@@ -1,0 +1,54 @@
+<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page view-notes">
+    <div class="header "  layout="column" >
+        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <a class="link-back" ui-sref="app.order.order-info({id:order_id})">BACK TO ORDER INFO</a>
+           <h2 flex="4" class="font-500">Notes for Order #{{order_id}}</h2>
+        </div>
+    </div>
+    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15" >
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text h2 text-semibold" flex=20>
+                Order Notes
+            </div>
+
+            <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div>
+           <!--  <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+                <md-button class="dark-bg chrome-weight" ng-click="openaddNoteDialog($event,'addNote','')">
+                    ADD NEW
+                </md-button>
+            </div> -->
+        </div>
+           <div class="ms-responsive-table-wrapper" ng-show="success==1">
+                <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                    <table class="dataTable row-border hover">
+                        <thead tasty-thead></thead>
+                        <tbody >
+                            <tr ng-repeat="(key,note) in rows">
+                                <td class="">{{note.note}}</td>
+                                <td><a class="font-12" class="cursor-p" ng-click="openaddNoteDialog($event,'editOrderNote',note)" ng-show="allow_access==1">Edit</a></td> 
+                                
+                            </tr>
+                        </tbody> 
+                    </table>
+                    <div tasty-pagination class="tasty-page"></div>
+                </div>
+            </div>
+            <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+               <table class="simple">
+                    <thead>
+                        <tr>
+                            <th>No Records Found</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="p-23 border-t-grey">
+            </div>
+        </div>
+    </div>
+</div>
+

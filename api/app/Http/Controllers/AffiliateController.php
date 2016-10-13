@@ -34,7 +34,7 @@ class AffiliateController extends Controller {
     public function getAffiliateDetail()
     {
         $post = Input::all();
-        $affiliate_data = $this->common->GetTableRecords('affiliates',array('company_id' => $post['cond']['company_id']),array());
+        $affiliate_data = $this->common->GetTableRecords('affiliates',array('company_id' => $post['cond']['company_id'],'is_delete' => '1','status' => '1'),array());
         $design_data = $this->common->GetTableRecords('order_design',array('order_id' => $post['cond']['order_id'],'is_calculate' => '1'),array());
 
         $design_detail = array();

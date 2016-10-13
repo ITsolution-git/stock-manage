@@ -22,14 +22,14 @@
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 }
             }).state('app.purchaseOrder.companyPO', {
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 },
                 url  : '/companyPO/:id',
@@ -43,7 +43,7 @@
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 },
                 url  : '/viewNote/:id',
@@ -57,7 +57,7 @@
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 },
                 url  : '/affiliatePO/:id',

@@ -12,6 +12,7 @@
     function UserProfileController($window, $timeout,$filter,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
         $scope.NoImage = AllConstant.NoImage;
+        $scope.valid_phone = AllConstant.VALID_PHONE;
       var vm = this;
 
     vm.openChangePasswordialog = openChangePasswordialog;
@@ -19,36 +20,28 @@
     $scope.company_id =sessionService.get("company_id");
     $scope.user_id = sessionService.get("user_id");
 
-        $scope.cancel = function () {
-            $mdDialog.hide();
-        };
-        
+    // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+    $scope.role_slug = sessionService.get('role_slug');
+    if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM')
+    {
+        $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+    }
+    else
+    {
+        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+    }
 
-       $http.get('api/public/client/SelectionData/'+$scope.company_id).success(function(Response) 
-        {   
-            if(Response.data.success=='1')
-            {   
-                $scope.states_all   = Response.data.result.state;
-                $scope.AllPriceGrid = Response.data.result.AllPriceGrid;
-            }
-        });
+    $scope.profile_id = $scope.user_id;
 
-
-        /**
-         * Close dialog
-         */
-        function closeDialog()
-        {
-            $mdDialog.hide();
-        }
-
+   
+    
 
     //console.log($scope.app.company_roleid);
       // GET ADMIN ROLE LIST
      
       $scope.GetCompany =  function() {
       $("#ajax_loader").show();
-      $http.get('api/public/admin/company/edit/'+$scope.user_id+'/'+$scope.company_id).success(function(Listdata) 
+      $http.get('api/public/admin/company/edit/'+$scope.profile_id+'/'+$scope.company_id).success(function(Listdata) 
       {
 
             if(Listdata.data.success==1)
@@ -71,8 +64,21 @@
 
    $scope.GetCompany();
     // COMPANY EDIT TIME CALL
-    $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+    $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
+        console.log(field_name); console.log(field_value);
+        console.log(Object.keys(validation).length);
+        
+        if($scope.allow_access=='0')
+        {
+            notifyService.notify('error','You have no rights to Edit.');
+            return false;
+        }
+        if(!angular.isUndefined(validation) && Object.keys(validation).length>0 )
+        {
+            notifyService.notify('error','Please enter valid Input.');
+            return false;
+        }
         var vm = this;
         var UpdateArray = {};
         UpdateArray.table =table_name;
@@ -118,7 +124,7 @@
             }
             else
             {
-                notifyService.notify('error', result.data.message);
+               //notifyService.notify('error', result.data.message);
             }
         });
     }                          
@@ -145,6 +151,11 @@
 
         function openChangePasswordialog(ev, settings)
         {
+            if($scope.allow_access=='0')
+            {
+                notifyService.notify('error','You have no rights to Edit.');
+                return false;
+            }
             $("#ajax_loader").show();
             $mdDialog.show({
 
@@ -195,7 +206,11 @@
         // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,is_drag,drag_image) 
         {
-
+                if($scope.allow_access=='0')
+                {
+                    //notifyService.notify('error','You have no rights to Edit.');
+                    return false;
+                }
                 $scope.column_name=column_name;
                 $scope.table_name=table_name;
                 $scope.folder_name=folder_name;
@@ -239,6 +254,11 @@
                                     $http.post('api/public/common/SaveImage',Image_data).success(function(result) {
                                         if(result.data.success=='1')
                                         {
+                                            // IF PROFILE IMAGE CHANGED, SET API CALL.
+                                            if(params.column_name=="profile_photo")
+                                            {
+                                                sessionService.AccessService('ALL','true','1');
+                                            }
                                             notifyService.notify("success", result.data.message);
                                             $mdDialog.hide();
                                         }
@@ -273,48 +293,7 @@
                 }
 
         };
-
-           $scope.qbClientSetup = function(){
-
-                $("#ajax_loader").show();
-                var companyId = {};
-
-                companyId ={company_id :sessionService.get('company_id')};
-
-                $http.post('api/public/common/AddEditClient',companyId).success(function(result) {
-                    $("#ajax_loader").hide();
-                            if(result != '0')
-                            {
-                                notifyService.notify('success',"Client Sync successfully");   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',"Please connect to quickbook first");
-                            }
-
-                           
-
-                           });
-            }
-
-            $scope.qbUpdateInovice = function(){
-                $("#ajax_loader").show();
-                var company_id = {};
-
-                company_id ={company_id :sessionService.get('company_id')};
-
-                $http.post('api/public/qbo/updateInvoicePayment',company_id).success(function(result) {
-                $("#ajax_loader").hide();
-                    if(result != '0')
-                    {
-                        notifyService.notify('success',"Invoice Payments Sync successfully");   
-                    }
-                    else
-                    {
-                        notifyService.notify('error',"Please connect to quickbook first");
-                    }
-                   });
-            }
+          
 
     }
 })();

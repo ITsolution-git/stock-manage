@@ -1,24 +1,24 @@
-<div class="content client-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20>
                 Clients
             </div>
-            <div class="search-block" flex=40>
-
-                <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                </md-input-container>
-            </div> 
-
-               
-            <div class="client-modal-title " ng-if="role=='CA' || role=='BC'" flex=50>
-                <span class="cursor-p" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
+            <div class="pull-right right-search-box">
+                <div class="client-modal-title pull-right" ng-if="role_slug=='CA' || role_slug=='AM' || role_slug=='FM' || role_slug=='PU'">
+                    <span class="cursor-p stokkup-btn-style1" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
+                </div>
+                <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="top-srch-label">Search Clients...</label>
+                        <input type="text" ng-model="name" ui-event="{change : 'search($event)'}" />
+                    </md-input-container>
+                </div> 
             </div>
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
-                 <table class="dataTable row-border hover">
+                 <table class="dataTable row-border">
     <!--                 <thead>
                         <tr>
                             <th class="secondary-text">
@@ -48,8 +48,8 @@
                     <tbody>
 
                         <tr ng-repeat="client in rows" >
-                            <td ng-if="role=='CA' || role=='BC'"  ui-sref="app.client.profile({id:client.client_id})" class="cursor-p">{{ client.client_company }}</td>
-                            <td ng-if="role!='CA' && role!='BC'">{{ client.client_company }}</td>
+                            <td ui-sref="app.client.profile({id:client.display_number})" class="cursor-p">{{ client.display_number }}</td>
+                            <td ui-sref="app.client.profile({id:client.display_number})" class="cursor-p">{{ client.client_company }}</td>
                             <td>{{ client.first_name }} {{client.last_name}}</td>
                             <td>{{ client.phone }}</td>
                             <td>{{ client.email }}</td>

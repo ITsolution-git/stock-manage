@@ -1,7 +1,7 @@
 <div class="main-design-page m-r-15 m-l-20 m-b-20">
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.order.affiliate-info({id:designInforamtion.order_id})">BACK TO ORDER INFO</a>
+            <a class="link-back cursor-p" ui-sref="app.order.affiliate-info({id:designInforamtion.order_id})">BACK</a>
             <h1 flex="4">Design Name - {{designInforamtion.design_name}}</h1>
         </div>
         <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
@@ -52,16 +52,83 @@
             <div class="title" ><span class="h2 text-semibold">Positions</span></div>
             <div class="design-positions-box border-grey m-b-20" layout="column" layout-align="start" ng-repeat="(key,order_design_position) in order_design_position">
                 <div class="box-toolbar" layout="row" layout-align="end center">
+                    <div flex="90" layout-align="start center" class="box-zerospace">
+                        <!-- <span class="h2 text-semibold">{{order_design_position.position_header_name}}</span> -->
+                        <div layout-wrap class="box-zerospace">
+                            <div class="trans-box order-designname pull-left">
+                                <div>Position:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.position_header_name}}</span>
+                            </div>
 
-                     <div flex="20" layout="row" layout-align="start center">
-                        <span class="h2 text-semibold">{{order_design_position.position_name}}</span>
+                            <div class="trans-box order-designname pull-left">
+                                <div>Type:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.placement_header_name}}</span>
+                            </div>
+
+                            <div class="trans-box order-designname pull-left">
+                                <div>Quantity:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.qnty_header_name}}</span>
+                            </div>
+
+                            <div class="trans-box order-designname pull-left">
+                                <div>Price:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.total_price | currency : $ : 2}}</span>
+                            </div>
+
+                            <div class="trans-box order-designname pull-left">
+                                <div>Screen Fees:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.total_screen_fees | currency : $ : 2}}</span>
+                            </div>
+
+                            <div class="trans-box order-designname pull-left">
+                                <div>Color Count:</div>
+                                <span class="font-14 chrome-weight">{{order_design_position.color_stitch_count}}</span>
+                            </div>
+
+                            <div class="trans-box order-designname pull-left">
+                                <div>Design Name:</div>
+                                <span class="font-14 chrome-weight">{{designInforamtion.design_name}}</span>
+                            </div>
+                        </div>
+                        <div class="box-zerospace white-bg">
+                            <div class="pull-left right-20 box-zerospace">
+                                <table class="simple-table layout-padding row-border box-zerospace">
+                                    <tbody>
+                                            <tr>
+                                                <td class="design-intable">
+                                                    <span class="stokkup-title-h4 light-300">Next Tier:</span>  
+                                                </td>
+                                                <td class="design-intable"><b>Screent Print: </b>{{order_design_position.screen_print_charge | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Embroidery: </b>{{order_design_position.embroidery_charge | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Direct To Garment: </b>{{order_design_position.direct_to_garment_charge | currency : $ : 2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="design-intable">
+                                                    <span class="stokkup-title-h4 light-300"></span>  
+                                                </td>
+                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.screen_print_charge_qnty}}</td>
+                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.embroidery_charge_qnty}}</td>
+                                                <td class="design-intable"><b>Next Qty Range: </b>{{order_design_position.direct_to_garment_charge_qnty}}</td>
+                                            </tr>
+                                             <tr>
+                                                <td class="design-intable">
+                                                    <span class="stokkup-title-h4 light-300"></span>  
+                                                </td>
+                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.screen_print_charge2 | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.embroidery_charge2 | currency : $ : 2}}</td>
+                                                <td class="design-intable"><b>Difference: </b>{{order_design_position.direct_to_garment_charge2 | currency : $ : 2}}</td>
+                                            </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-                  <div flex="80" layout-align="end center" layout="row">
+                    <div flex="10" layout-align="end center" layout="row">
                     <button  ng-click="position1.expanded = !position1.expanded">
                         <md-icon ng-if="position1.expanded" md-font-icon="icon-minus"></md-icon>
                         <md-icon ng-if="!position1.expanded" md-font-icon="icon-plus"></md-icon>
                     </button>
-                     <!-- <md-menu>
+                     <md-menu ng-show="order_number == '' && is_complete == '0' ">
                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                         </md-button>
@@ -72,8 +139,9 @@
                                 </md-button>
                             </md-menu-item>
                         </md-menu-content>
-                    </md-menu>  -->
+                    </md-menu> 
                    </div>
+                   
                 </div>
                 <div ng-if="position1.expanded" class="box-content disable-click" layout="column" layout-padding>
                     <div layout="row" class="postion-details" layout-align="space between">
@@ -373,7 +441,7 @@
                             <div layout="column" flex="35">
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Average Garment Cost</div>
-                                    <div class="h5 grey-color font-14 ">${{product.avg_garment_cost}}</div>
+                                    <div class="h5 grey-color font-14 ">{{product.avg_garment_cost }}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10 disable-click">
                                     <div class="h4">Markup Default 70%</div>
@@ -387,21 +455,21 @@
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Average Garment Price</div>
-                                    <div class="h5 grey-color font-14">${{product.avg_garment_price}}</div>
+                                    <div class="h5 grey-color font-14">{{product.avg_garment_price | currency : $ : 2}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h5">+</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h4">Print Charges</div>
-                                    <div class="h5 grey-color font-14">${{product.print_charges}}</div>
+                                    <div class="h5 grey-color font-14">{{product.print_charges | currency : $ : 2}}</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="">
                                     <div class="h5">=</div>
                                 </div>
                                 <div layout="row" layout-align="space-between start" class="p-b-10">
                                     <div class="h4">Total Line Charge</div>
-                                    <div class="h5 grey-color font-14">${{product.total_line_charge}}</div>
+                                    <div class="h5 grey-color font-14">{{product.total_line_charge | currency : $ : 2}}</div>
                                 </div>
                             </div> 
                             <div layout="column" flex="40">
@@ -426,16 +494,16 @@
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Per Item</div>
-                                        <div class="h5 grey-color font-14">${{product.total_line_charge}}</div>
+                                        <div class="h5 grey-color font-14">{{product.total_line_charge | currency : $ : 2}}</div>
                                     </div>
                                     <div layout="row" layout-align="space-between start" class="p-b-10">
                                         <div class="h4">Sale Total</div>
-                                        <div class="h5 grey-color font-14">${{product.sales_total}}</div>
+                                        <div class="h5 grey-color font-14">{{product.sales_total | currency : $ : 2}}</div>
                                     </div>
                                 </div>
                             </div>
                             <div layout="column" flex="25">
-                                <md-card class="m-b-20 newbox-typ">
+                                <md-card class="m-b-20 newbox-typ packing-info-box">
                                     <md-card-title>
                                         <md-card-title-text>
                                             Packing Information
@@ -444,7 +512,7 @@
                                     <md-card-content class="pad0 package-height scrollable" ms-scroll>
                                         <div class="card-box  hover-grey" layout="row" layout-align="space-between center" ng-repeat="order_item in product.order_items" ng-class="{active :  order_item.selected == 1}">
                                             <div>{{order_item.item}}</div>
-                                            <span>${{order_item.charge}}</span>
+                                            <span>{{order_item.charge | currency : $ : 2}}</span>
                                         </div>
                                     </md-card-content>
                                 </md-card>

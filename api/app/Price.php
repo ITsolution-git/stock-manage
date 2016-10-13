@@ -477,5 +477,69 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
     }
 
 
+    public function priceDetailExcel($priceId) {
+
+        $wherePriceConditions = ['id' => $priceId];
+        $listArrayData = ['name as Name'];
+        $priceData = DB::table('price_grid')->select($listArrayData)->where($wherePriceConditions)->get();
+
+
+        $wherePriceConditions = ['id' => $priceId];
+        $listArrayDatanew = [DB::raw("discharge as 'Discharge',foil as 'Foil',number_on_dark as 'Number on Dark',poly_bagging as 'Poly Bagging',specialty as 'Speciality',folding as 'Folding',number_on_light as 'Number on Light',press_setup as 'Press Setup',color_matching as 'Color Matching',hang_tag as 'Hang Tag',over_size as 'Oversize',printed_names as 'Printed Name',embroidered_names as 'Embroidered Names',ink_changes as 'Ink Charges',over_size_screens as 'Oversize Screens',screen_fees as 'Screen Fees',shipping_charge as 'Shipping Charge'")];
+        $priceDataCharges = DB::table('price_grid')->select($listArrayDatanew)->where($wherePriceConditions)->get();
+        
+
+
+        $whereConditions = ['price_id' => $priceId];
+        $listArray = [DB::raw("item as 'Item',charge as 'Charge',time as 'Time',is_per_line as 'Available to per Line',is_per_order as 'Available to per Order',is_per_screen_set as 'Available to per Screen Set'")];
+        $priceCharge = DB::table('price_grid_charges')->select($listArray)->where($whereConditions)->get();
+
+
+        $whereConditionsScreenPrimary = ['price_id' => $priceId];
+        $listArrayPrimary = [DB::raw("range_low as 'Low Range',range_high as 'High Range',pricing_1c,pricing_2c,pricing_3c,pricing_4c,pricing_5c,pricing_6c,pricing_7c,pricing_8c,pricing_9c,pricing_10c,pricing_11c,pricing_12c,pricing_13c,pricing_14c,pricing_15c,pricing_16c")];
+        $priceScreenPrimary = DB::table('price_screen_primary')->select($listArrayPrimary)->where($whereConditionsScreenPrimary)->get();
+
+
+        $whereConditionsScreenSecondary = ['price_id' => $priceId];
+        $listArraySecondary = [DB::raw("range_low as 'Low Range',range_high as 'High Range',pricing_1c,pricing_2c,pricing_3c,pricing_4c,pricing_5c,pricing_6c,pricing_7c,pricing_8c,pricing_9c,pricing_10c,pricing_11c,pricing_12c,pricing_13c,pricing_14c,pricing_15c,pricing_16c")];
+        $priceScreenSecondary = DB::table('price_screen_secondary')->select($listArraySecondary)->where($whereConditionsScreenSecondary)->get();
+
+
+        $whereConditionsGarmentMackup = ['price_id' => $priceId];
+        $listArrayGarmentMackup = [DB::raw("range_low as 'Range Low',range_high as 'Range High',percentage as 'Percentage'")];
+        $priceGarmentMackup = DB::table('price_garment_mackup')->select($listArrayGarmentMackup)->where($whereConditionsGarmentMackup)->get();
+
+
+        $whereConditionsAllGarment = ['price_id' => $priceId];
+        $listArrayAllGarment = [DB::raw("range_low as 'Range Low',range_high as 'Range High',pricing_1c as 'Light 4*4',pricing_2c as 'Dark 4*4',pricing_3c as 'Light 6*6',pricing_4c as 'Dark 6*6',pricing_5c as 'Light 10*10',pricing_6c as 'Dark 10*10',pricing_7c as 'Light 12*12',pricing_8c as 'Dark 12*12'")];
+        $priceAllGarment = DB::table('price_direct_garment')->select($listArrayAllGarment)->where($whereConditionsAllGarment)->get();
+
+
+        $whereConditionsembroSwitch = ['price_id' => $priceId];
+        $listArrayAllEmbroSwitch = ['id','range_low_1','range_low_2','range_low_3','range_low_4','range_low_5','range_low_6','range_low_7','range_low_8','range_low_9','range_high_1','range_high_2','range_high_3','range_high_4','range_high_5','range_high_6','range_high_7','range_high_8','range_high_9'];
+        $priceAllEmbroSwitch = DB::table('embroidery_switch_count')->select($listArrayAllEmbroSwitch)->where($whereConditionsembroSwitch)->get();
+        
+
+        $priceAllEmbro = array();
+        if(!empty($priceAllEmbroSwitch)){
+        $whereConditionsAllEmbro = ['price_id' => $priceId,'embroidery_switch_id' => $priceAllEmbroSwitch[0]->id];
+        $listArrayAllEmbro = ['range_low','range_high','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c'];
+        $priceAllEmbro = DB::table('price_screen_embroidery')->select($listArrayAllEmbro)->where($whereConditionsAllEmbro)->get();
+         }
+
+        $combine_array['price'] = $priceData;
+        $combine_array['charges'] = $priceDataCharges;
+        $combine_array['allPriceGrid'] = $priceCharge;
+        $combine_array['allScreenPrimary'] = $priceScreenPrimary;
+        $combine_array['allScreenSecondary'] = $priceScreenSecondary;
+        $combine_array['allGarmentMackup'] = $priceGarmentMackup;
+        $combine_array['allGarment'] = $priceAllGarment;
+        $combine_array['embroswitch'] = $priceAllEmbroSwitch;
+        $combine_array['allEmbroidery'] = $priceAllEmbro;
+        return $combine_array;
+    }
+
+
+
 
 }

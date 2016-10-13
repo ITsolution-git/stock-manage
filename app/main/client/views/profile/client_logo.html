@@ -6,7 +6,7 @@
                                     <md-card-header-text>
                                         <span class="md-title">Blind Approval Text</span>
                                     </md-card-header-text>
-                                    <md-menu>
+                                    <md-menu  ng-show="allow_access==1">
                                         <md-button aria-label="Blind Text Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
@@ -31,7 +31,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Color Company Logo</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -53,8 +53,8 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="form-group  m-b panel panel-default"  >
-                                              <img  ng-if="company_info.color_logo" ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
-                                              <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                                              <img  ng-src="{{company_info.color_url_photo}}" alt=""  class="popup-image"/>
+                                              <!-- <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" > -->
                                           </div>
                                     </md-card-content>
                                 </md-card>
@@ -65,7 +65,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">B/W Company Logo</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -87,8 +87,8 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="form-group  m-b panel panel-default"  >
-                                              <img  ng-if="company_info.b_w_logo" ng-src="{{company_info.bw_url_photo}}" alt=""  class="popup-image"/>
-                                              <img ng-if="company_info.b_w_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                                              <img   ng-src="{{company_info.bw_url_photo}}" alt=""  class="popup-image"/>
+                                              <!-- <img ng-if="company_info.b_w_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" > -->
                                           </div>
                                     </md-card-content>
                                 </md-card>
@@ -99,7 +99,7 @@
                                         <md-card-header-text>
                                             <span class="md-title">Shipping Company Logo</span>
                                         </md-card-header-text>
-                                        <md-menu>
+                                        <md-menu  ng-show="allow_access==1">
                                             <md-button aria-label="Color Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                             </md-button>
@@ -121,8 +121,8 @@
                                     </md-card-header>
                                     <md-card-content>
                                         <div class="form-group  m-b panel panel-default"  >
-                                              <img  ng-if="company_info.shipping_logo" ng-src="{{company_info.shipping_url_photo}}" alt=""  class="popup-image"/>
-                                              <img ng-if="company_info.shipping_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
+                                              <img ng-src="{{company_info.shipping_url_photo}}" alt=""  class="popup-image"/>
+                                              <!-- <img ng-if="company_info.shipping_logo == ''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" > -->
                                           </div>
                                     </md-card-content>
                                 </md-card>

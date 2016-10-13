@@ -11,7 +11,18 @@
     {
         var vm = this;
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
         $scope.shipping_id = $stateParams.id;
+
         var company_id = sessionService.get('company_id');
 
         $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
@@ -31,6 +42,8 @@
             $("#ajax_loader").show();
             var combine_array = {};
             combine_array.shipping_id = $scope.shipping_id;
+            combine_array.company_id = company_id;
+
 
             $http.post('api/public/shipping/getShippingOverview',combine_array).success(function(result) {
 
@@ -40,6 +53,7 @@
                     $scope.shippingBoxes =result.data.shippingBoxes;
                     $scope.shippingItems =result.data.shippingItems;
                     $scope.shipping =result.data.records[0];
+                    $scope.shipping.company_id = company_id;
 
                     if($scope.shipping.boxing_type == '0') {
                         $scope.shipping.boxing_type = 'Retail';
@@ -48,24 +62,45 @@
                         $scope.shipping.boxing_type = 'Standard';
                     }
                     if($scope.shipping.shipping_type_id == '1') {
-                        $scope.shipping.shipping_type_id = 'UPS';
+                        $scope.shipping.shipping_type_name = 'UPS';
                     }
                     if($scope.shipping.shipping_type_id == '2') {
-                        $scope.shipping.shipping_type_id = 'Fedex';
+                        $scope.shipping.shipping_type_name = 'Fedex';
                     }
+                    if($scope.shipping.shipping_type_id == '3') {
+                        $scope.shipping.shipping_type_name = 'Local Messenger';
+                    }
+
+                    if($scope.shipping.shipping_status == '1') {
+                        $scope.shipping.shipping_status_name = 'Waiting To Ship';
+                    }
+                    if($scope.shipping.shipping_status == '2') {
+                        $scope.shipping.shipping_status_name = 'Order In Process';
+                    }
+                    if($scope.shipping.shipping_status == '3') {
+                        $scope.shipping.shipping_status_name = 'Shipped';
+                    }
+                } else {
+
+                    $state.go('app.shipping');
+                    return false;
                 }
             });
         }
         $scope.getShippingOverview();
 
-        $scope.submitForm = function()
+        $scope.submitForm = function(image)
         {
-            var target;
+            //window.location.href = 'data:image/png;base64,' + image;
+
+            window.open(
+              'data:image/png;base64,' + image,
+              '_blank' // <- This is what makes it open in a new window.
+            );
+
+/*            var target;
             var form = document.createElement("form");
-            form.action = 'api/public/shipping/createLabel';
-            form.method = 'post';
-            form.target = target || "_blank";
-            form.style.display = 'none';
+            form.action = 'data:image/png;base64,' + image;
 
             var shipping = document.createElement('input');
             shipping.name = 'shipping';
@@ -73,11 +108,21 @@
             form.appendChild(shipping);
 
             document.body.appendChild(form);
-            form.submit();
+            form.submit();*/
         }
 
         $scope.printLAbel = function()
         {
+            if($scope.shipping.tracking_number != '')
+            {
+                notifyService.notify('error','Shipping label is already created');
+                return false;
+            }
+            if($scope.shippingBoxes.length == 0)
+            {
+                notifyService.notify('error','Please create box to print label');
+                return false;
+            }
             if($scope.shipping.address == '')
             {
                 notifyService.notify('error','address is compulsory');
@@ -93,7 +138,7 @@
                 notifyService.notify('error','city is compulsory');
                 return false;
             }
-            if($scope.shipping.state == '')
+            if($scope.shipping.code == '')
             {
                 notifyService.notify('error','state is compulsory');
                 return false;
@@ -109,11 +154,16 @@
                 return false;
             }
 
-            $http.post('api/public/shipping/checkAddressValid',$scope.shipping).success(function(result) {
+            $("#ajax_loader").show();
+            var combine_array = {};
+            combine_array.shipping = $scope.shipping;
+            combine_array.shippingBoxes = $scope.shippingBoxes;
+            $http.post('api/public/shipping/checkAddressValid',combine_array).success(function(result) {
 
+                $("#ajax_loader").hide();
                 if(result.data.success == '1')
                 {
-                    $scope.submitForm();
+                    $scope.getShippingOverview();
                 }
                 else
                 {
@@ -140,11 +190,17 @@
 
         $scope.print_pdf = function(method)
         {
+            if($scope.shippingBoxes.length == 0)
+            {
+                notifyService.notify('error','Please create box to generate pdf');
+                return false;
+            }
+
             var target;
             var form = document.createElement("form");
             form.action = 'api/public/shipping/createPDF';
             form.method = 'post';
-            form.target = target || "_blank";
+            form.target = '_blank';
             form.style.display = 'none';
 
             var print_type = document.createElement('input');
@@ -171,6 +227,43 @@
             input_company_detail.name = 'company_detail';
             input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
             form.appendChild(input_company_detail);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        $scope.box_shipment = function()
+        {
+            $("#ajax_loader").show();
+            $http.post('api/public/shipping/CreateBoxShipment',$scope.shippingItems).success(function(result) {
+
+                if(result.data.success == '1') {
+                    var data = {"status": "success", "message": "Boxes created Successfully."}
+                    notifyService.notify(data.status, data.message);
+                }
+                else
+                {
+                    var data = {"status": "info", "message": "Delete all boxes in the boxes tab to rebox shipment."}
+                    notifyService.notify(data.status, data.message);
+                }
+                $("#ajax_loader").hide();
+                $state.go('app.shipping.boxingdetail',{id: $stateParams.id});
+            });
+        }
+
+        $scope.viewLabelPDF = function()
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/shipping/vewLabelPDF';
+            form.method = 'post';
+            form.target = '_blank';
+            form.style.display = 'none';
+
+            var shipping_id = document.createElement('input');
+            shipping_id.name = 'shipping_id';
+            shipping_id.setAttribute('value', $scope.shipping_id);
+            form.appendChild(shipping_id);
 
             document.body.appendChild(form);
             form.submit();

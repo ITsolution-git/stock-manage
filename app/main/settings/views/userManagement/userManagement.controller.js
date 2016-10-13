@@ -13,6 +13,7 @@
         var originatorEv;
         var vm = this ;
         $scope.company_id = sessionService.get('company_id');
+        $scope.role_slug = sessionService.get('role_slug');
 
         vm.openAddEmployeeDialog = openAddEmployeeDialog;
         //vm.openEditEmployeeDialog = openEditEmployeeDialog;

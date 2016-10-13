@@ -1,5 +1,5 @@
-<div class="content">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content dashboard-page stockkup-content-table-container stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" ng-if="vm.role_slug!='SA'" flex=20>
                 {{vm.company_name}}
@@ -8,6 +8,284 @@
                 {{vm.name}}
             </div>
             
+        </div>
+    </div>
+    <div ng-show="vm.role_slug=='CA'">
+        <div layout="row" layout="wrap" layout-align="space-between center" class="inner-full-box top-30">
+            <md-card class="box-3 firstbox bottom-shadow">
+                <md-card-title>
+                    <md-card-title-text class="md-title">
+                        Numbers of Orders in Production
+                    </md-card-title-text>
+                    <div>
+                       <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
+                    </div>
+                </md-card-title>
+                <md-card-content class="center-num-box box-zerospace">
+                        <div class="center-num"><span class="num-style1 text-center">{{productionTotal}}</div>
+                </md-card-content>
+                <div class="dash-footer-box">
+                    <span class="global-labels">Filter by</span>
+                    <div class="dash-footer-filter">
+                        <md-select aria-label="Estimates By" ng-model="productionPersonName" ng-change="getProductionSalesMan(productionPersonName)" class="global-labels">
+                            <md-option value="0" selected>Sales Member</md-option>
+                            <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
+                        </md-select>
+                    </div>    
+                </div>
+                <!-- <md-divider ></md-divider> -->
+                
+            </md-card>
+            <md-card class="box-3 bottom-shadow">
+                <md-card-title>
+                    <md-card-title-text class="md-title">
+                        Sales Closed
+                    </md-card-title-text>
+                    <!--<div>
+                        <a class="common-header-links">EDIT</a>
+                    </div>-->
+                </md-card-title>
+                <md-card-content class="center-num-box box-zerospace">
+                        <div class="center-num"><span class="num-style1 text-center">{{salesClosed | currency : $ : 0}}</div>
+                </md-card-content>
+                <!-- <md-divider ></md-divider> -->
+                <div class="dash-footer-box">
+                    <span class="global-labels">Sales closed by</span>
+                    <div class="dash-footer-filter">
+                        <md-select aria-label="Filter By" ng-model="closedSalesMan" ng-change="getSalesClosedSalesMan(closedSalesMan)" class="global-labels">
+                            <md-option value="0" selected>Sales Member</md-option>
+                            <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
+                        </md-select>
+                    </div>    
+                </div>
+            </md-card>
+            <md-card class="box-3 bottom-shadow lastbox">
+                <md-card-title>
+                    <md-card-title-text class="md-title">
+                        Estimates
+                    </md-card-title-text>
+                    <div ng-if="po_data.complete==0">
+                        <a class="common-header-links">EDIT</a>
+                    </div>
+                </md-card-title>
+                <md-card-content class="center-num-box box-zerospace dashboard-cards">
+                        <div class="center-num"><span class="num-style1 text-center">{{estimatedTotal}} | {{estimated | currency : $ : 0}}</span>
+                        <span class="dash-btwn-txt comp-report-txt">Estimates | Revenue</span>
+                        </div>
+                </md-card-content>
+                <!-- <md-divider ></md-divider> -->
+                <div class="dash-footer-box text-center">
+                    <div flex=35 class="box-zerospace">
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="estimatesDuration" ng-change="getEstimatesSalesMan()" class="global-labels">
+                                <md-option value="0" selected>All Time</md-option>
+                                <md-option value="1">Today</md-option>
+                                <md-option value="2">Last Week</md-option>
+                                <md-option value="3">Last Month</md-option>
+                                <md-option value="4">Last Year</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                    <div flex=65 class="box-zerospace">
+                        <span class="global-labels">Estimates by</span>
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" ng-change="getEstimatesSalesMan()" class="global-labels">
+                                <md-option value="0" selected>Sales Member</md-option>
+                                <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                </div>
+            </md-card>
+        </div>
+        <div layout="row" layout="wrap" layout-align="space-between center" class="inner-full-box top-30">
+            <md-card class="box-3 firstbox bottom-shadow">
+                <md-card-title>
+                    <md-card-title-text class="md-title">
+                        Yearly Gross Compare
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content class="center-num-box box-zerospace dashboard-cards">
+                    <div class="center-num">
+                        <span class="num-style1 text-center">{{estimatedCurrent | currency : $ : 0}}</span>
+                        <span class="dash-btwn-txt green-txt"><i class="fa fa-caret-up"></i> {{estimatedComparisonPercent}}%</span>
+                        <span class="dash-btwn-txt comp-report-txt">{{estimatedPrevious | currency : $ : 0}} : Year - {{estimatedComparisonPeriod}}</span>
+                    </div>
+                </md-card-content>
+                <!-- <md-divider ></md-divider> -->
+                <div class="dash-footer-alternate-box">
+                    &nbsp;
+                </div>
+            </md-card>
+            <md-card class="box-3 bottom-shadow">
+                <md-card-title>
+                    <md-card-title-text class="md-title">
+                        Average Order
+                    </md-card-title-text>
+                    <div>
+                       <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
+                    </div>
+                </md-card-title>
+                <md-card-content class="center-num-box box-zerospace dashboard-cards">
+                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}} |Amount {{avgAmount | currency : $ : 0}}</div>
+                </md-card-content>
+                <!-- <md-divider ></md-divider> -->
+                <div class="dash-footer-box text-center">
+                    <!--<div flex=35 class="box-zerospace">
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="estdate" class="global-labels">
+                                <md-option value="0" selected>Dates</md-option>
+                                <md-option value="1">Today</md-option>
+                                <md-option value="2">Weekly</md-option>
+                            </md-select>
+                        </div>
+                    </div>-->
+                    <div flex=100 class="box-zerospace">
+                        <span class="global-labels">Filter by</span>
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="averagePersonName" ng-change="getAverageOrdersSalesMan(averagePersonName)" class="global-labels">
+                                <md-option value="0" selected>Sales Member</md-option>
+                                <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                </div>
+            </md-card>
+            
+            <md-card class="box-3 bottom-shadow lastbox">
+                <md-card-title>
+                    <md-card-title-text class="md-title">
+                        Latest Orders
+                    </md-card-title-text>
+                    <div>
+                       <!--  <a class="common-header-links" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a> -->
+                    </div>
+                </md-card-title>
+                <md-card-content class="center-num-box box-zerospace">
+                    <div class="center-num">
+                        <div ng-repeat="newOrders in latestOrders" class="dash-btwn-txt comp-report-txt dash-latest-order layout-padding">
+                            <div flex=20 class="cursor-p box-zerospace text-left global-labels" ui-sref="app.order.order-info({id:newOrders.order_id})" href="/order/order-info/{{newOrders.order_id}}">{{newOrders.order_id}}</div>
+                            <div flex=50 class="box-zerospace text-left">{{newOrders.client_company}}</div>
+                            <div flex=30 class="box-zerospace text-right">{{newOrders.grand_total | currency : $ : 2}}</div>
+                        </div>
+                    </div>
+                </md-card-content>
+                <div class="dash-footer-alternate-box">
+                    &nbsp;
+                </div>
+            </md-card>
+        </div>
+        <div layout="row" layout-wrap="nowrap" class="inner-full-box top-30 mb-30 last-row layout-wrap layout-row">
+            <div flex-xs flex-gt-xs="25" layout="column">
+                <md-card class="bottom-shadow md-default-theme firstbox">
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">On Time In Full</span>
+                        </md-card-header-text>
+                        <md-menu>
+                            <md-button aria-label="ID Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-card-header>
+                    <md-card-content class="center-num-box box-zerospace">
+                        <div class="center-num"><span class="num-style1 text-center">{{fullshippedTotal}}</div>
+                    </md-card-content>
+                    <div class="dash-footer-box text-center">
+                        <div flex=100 class="box-zerospace">
+                            <span class="global-labels">Filter by</span>
+                            <div class="dash-footer-filter">
+                                <md-select aria-label="Filter By" ng-model="fullDuration" ng-change="getFullOrdersDuration(fullDuration)" class="global-labels">
+                                <md-option value="0" selected>All Time</md-option>
+                                <md-option value="1">Today</md-option>
+                                <md-option value="2">Last Week</md-option>
+                                <md-option value="3">Last Month</md-option>
+                                <md-option value="4">Last Year</md-option>
+                            </md-select>
+                            </div>
+                        </div>
+                    </div>
+                </md-card>
+            </div>
+            <div flex-xs flex-gt-xs="25" layout="column">
+                <md-card class="bottom-shadow md-default-theme">
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Orders with Balances</span>
+                        </md-card-header-text>
+                        <md-menu>
+                            <md-button aria-label="Rate Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-card-header>
+                    <md-card-content class="center-num-box box-zerospace">
+                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} | {{unpaid | currency : $ : 0}}</span></div>
+                    </md-card-content>
+                </md-card>
+            </div>
+            <div flex-xs flex-gt-xs="25" layout="column">
+                <md-card class="bottom-shadow md-default-theme">
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Orders not send to Quickbooks</span>
+                        </md-card-header-text>
+                        <md-menu>
+                            <md-button aria-label="Tax Exempt Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-card-header>
+                    <md-card-content class="center-num-box box-zerospace">
+                        <div class="center-num"><span class="num-style1 text-center">{{noqbinvoice}}</span></div>
+                    </md-card-content>
+                </md-card>
+            </div>
+            <div flex-xs flex-gt-xs="25" layout="column">
+                <md-card class="bottom-shadow md-default-theme lastbox">
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Orders to be shipped</span>
+                        </md-card-header-text>
+                        <md-menu>
+                            <md-button aria-label="Document Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
+                            </md-button>
+                            <md-menu-content width="4">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                    </md-card-header>
+                    <md-card-content class="center-num-box box-zerospace">
+                        <div class="center-num"><span class="num-style1 text-center">{{unshippedTotal}} | {{unshipped | currency : $ : 0}}</sup></div>
+                    </md-card-content>
+                </md-card>
+            </div>
         </div>
     </div>
 </div>

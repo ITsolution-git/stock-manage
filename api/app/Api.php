@@ -44,7 +44,7 @@ class Api extends Model {
         return $data;
     }
 
-    public function getApiCredential($company_id,$page,$table)
+    public function getApiCredential($company_id,$page,$table,$where=array())
 	{
 		$table_name = $table . ' as ad';
 		$whereApiConditions = ['a.api_page' => $page,'api.company_id' => $company_id];
@@ -53,8 +53,12 @@ class Api extends Model {
 				->select('*','api.status')
 				->Join('api_link_table as api','api.id','=','ad.link_id')
 			 	->Join('api as a','a.api_id','=','api.api_id')
-			 	->where($whereApiConditions)
-				->get();
+			 	->where($whereApiConditions);
+			 	if(!empty($where))
+			 	{
+			 		$result=$result->where($where);
+			 	}
+				$result=$result->get();
 		return $result;
 	}
 	

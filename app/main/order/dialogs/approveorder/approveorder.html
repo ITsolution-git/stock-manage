@@ -3,8 +3,8 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">{{vm.title}}</span>
-                <md-button  ng-click="cancel()">
-                    <span>Cancel</span>
+                <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
                 </md-button>
             </div>
         </md-toolbar>
@@ -17,10 +17,12 @@
                     <md-checkbox aria-label="Create Invoice" aria-label="Select All" ng-model="invoice">Create Invoice</md-checkbox>
                 </div>
                 <div layout="row" flex="100">
-                    <md-select flex="30" ng-model="company.prime_address_state" placeholder="Payment Terms" class="mrg6-TB">
+                    <md-select flex="30" ng-model="payment_terms" placeholder="Payment Terms" class="mrg6-TB">
                         <md-option value="0">Payment Terms</md-option>
-                        <md-option>Pending</md-option>
-                        <md-option>Approved</md-option>
+                        <md-option value="1">50% upfront and 50% on shipping</md-option>
+                        <md-option value="100">100% on Shipping</md-option>
+                        <md-option value="15">Net 15</md-option>
+                        <md-option value="30">Net 30</md-option>
                     </md-select>
                 </div>
                 <div layout="row" flex="100">
@@ -31,7 +33,6 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="cancel()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
             <md-button class="md-accent md-raised " ng-click="save()">Save</md-button>
         </md-dialog-actions>
     </form>

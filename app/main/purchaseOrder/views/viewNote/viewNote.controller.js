@@ -107,10 +107,11 @@
                     $scope.editNote = function (notes) 
                     {
                         var UpdateArray = {};
-                        UpdateArray.table ='purchase_notes';
+                        UpdateArray.table ='order_design_position';
                         UpdateArray.data = notes;
                         UpdateArray.cond = {id: notes.id};
-                        delete UpdateArray.data.id;
+                        delete UpdateArray.data.id;delete UpdateArray.data.value;
+                        
 
                         $("#ajax_loader").show();
                         $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 

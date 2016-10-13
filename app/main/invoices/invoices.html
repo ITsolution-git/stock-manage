@@ -1,26 +1,29 @@
-<div class="content order-list-page puchase-order-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content order-list-page puchase-order-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20 class="cursor-p" >Invoices</div>
-            <div class="search-block" flex=25>
+            <div class="table-title-text" flex=20>Invoices</div>
+            <div class="pull-right right-search-box">
+                <div class="search-block pull-right">
                 <md-input-container class="md-block" flex-gt-sm>
-                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                        <label class="top-srch-label">Search Invoices...</label>
+                    <input ng-model="name" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
+                </div>
             </div>
+            
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
-                <table class="simple hover simple-tbl1">
+                <table class="dataTable row-border">
                     <thead tasty-thead></thead>
                     <tbody> 
                         <tr ng-repeat="inv in rows">
                             <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.id})">{{inv.order_id}}</td>
                             <td>{{inv.created_date}}</td>
-                            <td>${{inv.grand_total}}</td>
+                            <td>{{inv.grand_total | currency : $ : 2}}</td>
                             <td>{{inv.in_hands_by}}</td>
                             <td ng-if="inv.qb_id == '0'"><a href="#" class="icon font-18"></a></td>
-                            <td ng-if="inv.qb_id > '0'"><a target="_BLANK"href="https://sandbox.qbo.intuit.com/app/invoice?txnId={{inv.qb_id}}" class="icon  icon-rotate-3d font-18"></a></td>
+                            <td ng-if="inv.qb_id > '0'"><a target="_BLANK"href="{{quickbook_url}}{{inv.qb_id}}" class="icon  icon-rotate-3d font-18"></a></td>
                             <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.id})"><a>Pay</a></td>
                             <td>
                                 <md-menu>
@@ -43,7 +46,7 @@
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-           <table class="simple">
+           <table class="dataTable row-border">
                 <thead>
                     <tr>
                         <th>No Records Found</th>

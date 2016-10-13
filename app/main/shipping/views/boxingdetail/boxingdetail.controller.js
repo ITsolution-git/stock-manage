@@ -12,8 +12,36 @@
         var vm = this;
         $scope.shipping_id = $stateParams.id;
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+        if($scope.shipping_id == '' || $scope.allow_access == '0') {
+            $state.go('app.shipping');
+            return false;
+        }
+
         $scope.box_items = [];
         $scope.shipping_box_id = 0;
+
+        var ship_data = {};
+        ship_data['table'] ='shipping';
+        ship_data.cond = {'id' : $scope.shipping_id};
+
+        $("#ajax_loader").show();
+        $http.post('api/public/common/GetTableRecords',ship_data).success(function(result) {
+            if(result.data.success == 1)
+            {
+                $scope.shipping =result.data.records[0];
+            }
+            $("#ajax_loader").hide();
+        });
 
         $scope.getShippingBoxes = function()
         {
@@ -28,11 +56,15 @@
                 if(result.data.success == '1') 
                 {
                     $scope.shippingBoxes =result.data.shippingBoxes;
+                    $scope.total_box_qnty =result.data.total_box_qnty;
 
                     if($scope.shipping_box_id > 0)
                     {
                         $scope.select_box($scope.shipping_box_id);
                     }
+                } else {
+                     $state.go('app.shipping');
+                     return false;
                 }
             });
         }
@@ -107,6 +139,12 @@
         }
         $scope.delete_box = function(id)
         {
+            if($scope.shipping.tracking_number != '')
+            {
+                var data = {"status": "error", "message": "Label is already generated you can't delete boxes"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
             $scope.shipping_box_id = 0;
             $("#ajax_loader").show();
             $http.post('api/public/shipping/DeleteBox',id).success(function(result) {

@@ -1,67 +1,62 @@
-    <div class="content order-info-page m-b-20">
-        <div class="simple-table-container md-whiteframe-4dp">
-            <div class="pd15-TLR paddingbottom-0" layout="row" layout-align="space-between center">
-                <div class="table-title-text h2 text-semibold" flex=20>
-                    <div class="title"><span class="basicInfoStyle">COMPANY PRICE GRIDS</span></div>
-                </div>
-              
-                  <div class="order-modal-title " layout="row" layout-align="end end" flex="35" >
-
-
-
-                        <form name="uploadPricecsv" id="uploadPricecsv" action="api/public/admin/uploadPricingCSV" method="post" enctype="multipart/form-data" target="_self" class="width-auto">
-                        <div class="fileUpload">
-                            <input type="file" name="import_file" id="file" class="upload" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                            <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
-                            <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
-                            <span>Upload Excel</span>
-                        </div>
-                         <a href="#" class="btn-typ-submit" ng-click="submitPriceForm()">
-                            <span class="icon icon-upload"></span>
-                        </a> 
-                       <!--  <button class="btn btn-primary">Import File</button> -->
-                       </form>
-
-
-                        <form name="downloadPricecsv" id="downloadPricecsv" action="api/public/admin/downloadPricegridCSV" method="post" enctype="multipart/form-data" class="mrg10-L width-auto">
-                            <a href="#" class="btn-typ-submit" ng-click="submitPriceGridDownload()" class="btn-typ-submit">
-                                <span class="icon icon-download"></span>
-                                <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
-                            </a>
-                       </form>
-
-
-                        <!--     <form style="border: 4px solid #a1a1a1;margin-top: 15px;padding: 10px;" action="api/public/admin/uploadPricingCSV" class="form-horizontal" method="post" enctype="multipart/form-data">
-
-                                        <input type="file" name="import_file" />
-
-                                        <button class="btn btn-primary">Import File</button>
-
-                                    </form> -->
-               
-                </div>  
-               
+<div class="content stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview">
+        <div class="table-title " layout="row" layout-align="space-between center">
+        <div class="table-title-text" flex=20>
+            COMPANY PRICE GRIDS
+        </div>
+            <div class="order-modal-title mrg25-L" layout="row" layout-align="center center" flex="35">
+                <form name="uploadPricecsv" id="uploadPricecsv" action="api/public/admin/uploadPricingCSV" method="post" enctype="multipart/form-data" target="_self" class="width-auto" ng-show="allow_access==1">
+                    <div class="fileUpload">
+                        <input type="file" name="import_file" id="file" class="upload" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <md-tooltip md-direction="bottom">Upload Excel File</md-tooltip>
+                        <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                        <span>Upload Excel</span>
+                    </div>
+                     <a href="#" class="btn-typ-submit" ng-click="submitPriceForm()">
+                        <span class="icon icon-upload"></span>
+                    </a> 
+               <!--  <button class="btn btn-primary">Import File</button> -->
+               </form> 
             </div>
-            <div class="ms-responsive-table-wrapper priceGridTableContainer pd15-LR">
-                
-                <div class="order-container" ms-scroll>
-                    <table class="dataTable row-border hover" id="priceGrid" dt-options="vm.dtOptions">
-                        <thead>
+        </div>
+        <div class="ms-responsive-table-wrapper priceGridTableContainer">
+            <div class="order-container">
+                <table class="dataTable row-border" id="priceGrid" dt-options="vm.dtOptions">
+                    <thead>
                         <tr>
                             <th class="secondary-text">
                                 <div class="table-header">
                                     <span class="column-title">Price Grid Name</span>
                                 </div>
                             </th>
-                        </thead>    
-                       <tbody>
-                            <tr class="cursor-p" ng-repeat="price_data in price">
-                                <td class="" ui-sref="app.settings.price-info({id:price_data.id})">{{price_data.name}}</td>
-                               
-                            </tr>
-                        </tbody> 
-                    </table>
-                </div>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Download Price Grid</span>
+                                </div>
+                            </th>
+                        </tr>    
+                    </thead>    
+                   <tbody>
+                        <tr class="cursor-p" ng-repeat="price_data in price">
+                            <td class="" ui-sref="app.settings.price-info({id:price_data.id})">{{price_data.name}}</td>
+                            <td>
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4"> 
+                                        <md-menu-item>
+                                            <md-button ng-click="print_excel(price_data.id)">
+                                                Download Excel
+                                            </md-button>
+                                        </md-menu-item>
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+                        </tr>
+                    </tbody> 
+                </table>
             </div>
         </div>
     </div>
+</div>

@@ -7,10 +7,21 @@
 
     /** @ngInject */
     function FinishingController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
+        
         var vm = this;
-         vm.searchQuery = "";
+        vm.searchQuery = "";
 
-         this.condition = '';
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+        this.condition = '';
 
         this.conditions = ('Yes No').split(' ').map(function (state) { return { abbrev: state }; });
         
@@ -30,6 +41,15 @@
         }
 
         $scope.getFinishingData();*/
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
 
         $scope.init = {
           'count': 10,
@@ -178,6 +198,28 @@
             finishing_data.cond['id'] = finishing.id;
             $http.post('api/public/common/UpdateTableRecords',finishing_data).success(function(result) {
                 var data = {"status": "success", "message": "Record updated successfully"}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
+        $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
             });
         }

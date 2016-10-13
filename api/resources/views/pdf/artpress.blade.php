@@ -1,107 +1,189 @@
-
+<!DOCTYPE html>
 <html>
 <head>
-<style>
-    @page { margin: 180px 50px; }
-    #header { position: fixed; left: 0px; top: -180px; right: 0px; height: 150px; background-color: orange; text-align: center; }
-    #footer { position: fixed; left: 0px; bottom: -180px; right: 0px; height: 150px; background-color: lightblue; }
-    #footer .page:after { content: counter(page, upper-roman); }
-    img{width: 250px; height:220px;}
-  </style>
-  <title>Order Info</title>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <title>Orders Print</title>
+<style type="text/css">
+  body{font-size:9px;}
+  .align-left{ text-align:left;}
+  .align-right{ text-align:right;}
+  .align-center{ text-align:center;}
+  .line-height{line-height:20px;}
+  .font-bold{font-weight:bold;}
+  .border-w{border:1px solid #fff; }
+  .border-b{border:1px solid #000; }
+</style>
 </head>
-
-<body>
-    <table>
+<body style="padding:0; margin:0">
+    <table class="header">
     	<tr>
-      		<td align="right"><img src="{{$size[0]->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
+      		<td align="left" width="20%"><img src="{{$color[0]->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
+          <td align="left" width="40%" style=" font-weight:bold">
+             Job# {{$color[0]->order_id}}<br>
+             Job Name: {{$color[0]->order_name}}<br>
+             Client: {{$color[0]->client_company}}
+          </td>
+          <td width="40%"  style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
+              <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
+                  <td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                    <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td height="15">&nbsp;</td>
+                      </tr>
+                      <tr><td>{{$color[0]->street}} {{$color[0]->address}}<br>{{$color[0]->city}}, {{$color[0]->state_name}} {{$color[0]->postal_code}}</td></tr>
+                      <tr>
+                        <td height="15">&nbsp;</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+          </td>
     	</tr>
-    </table>
-  
-  <hr style="border:1px solid #000;">
+    </table><br>
+    <hr class="border-b">
+    <br>
 
+     <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+          <tr>
+              <th width="10%" class="align-left font-bold" height="15">Client PO</th>
+              <th width="20%" class="align-left font-bold" height="15">Account Manager</th>
+              <th width="10%" class="align-left font-bold" height="15">Terms</th>
+              <th width="15%" class="align-left font-bold" height="15">Ship Via</th>
+              <th width="15%" class="align-left font-bold" height="15">Ship Date</th>
+              <th width="15%" class="align-left font-bold" height="15">In Hands Date</th>
+              <th width="15%" class="align-left font-bold" height="15">Payment Due</th>
+          </tr>
+          <tr>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->custom_po}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->account_manager}}</td>
+              <td height="20" class="align-left line-height border-b"></td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->date_shipped}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->in_hands_by}}</td>
+              <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->payment_due_date}}</td>
+          </tr>
+      </table>
+  
+  <br><br>
+
+                  <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+                    <tr>
+                        <th width="40%" class="align-left font-bold" height="15">Garment/Item Description</th>
+                        <th width="15%" class="align-left font-bold" height="15">Color</th>
+                        <th width="37%" class="align-left font-bold" height="15">Size/Quantities</th>
+                        <th width="8%"  class="align-left font-bold" height="15">Qty</th>
+                        
+                    </tr>
+                    <?php
+                        $total  =0;
+                        $count=1;
+                        foreach($size as $key=>$value) 
+                        {
+                          if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";}
+                    ?>
+                    <tr style="background-color:<?php echo $color_bg; ?>;" >
+                        <td height="20" class="align-left line-height border-b" >&nbsp;&nbsp;{{$value['product_name']}}</td>
+                        <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$value['product_color']}}</td>
+                        <td height="20" class="align-left line-height border-b">
+                          <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>
+                            {{$key_col}}-{{$val_col}}&nbsp;&nbsp;  
+                          <?php } ?>  
+                        </td>
+                        <td height="20" class="align-left  line-height border-b" >&nbsp;&nbsp;{{$value['total_product']}}</td>
+                        <?php $total +=$value['total_product']; ?>
+                    </tr>
+                     <?php $count++; } // LOOP END?>
+                    <tr>
+                      <td class="align-right font-bold line-height" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
+                      <td class="align-left border-b line-height">&nbsp;&nbsp;<?php echo $total; ?></td>
+                    </tr>
+                </table>
+<br><br>
+<table style="margin-top:15px;">
+    <tr>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center border-b" style="height:20px;"></td>
+    </tr>
+    <tr>
+      <td width="10%" class="align-center font-bold border-w"  >Prod Mgr</td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center font-bold border-w" >Press Lead</td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center font-bold border-w" >Belt</td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center font-bold border-w" >QC</td>
+      <td width="2%"></td>
+      <td width="10%" class="align-center font-bold border-w" >Ship/Pack</td>
+    </tr>
+</table>
+<br><br>
   <table style="margin-top:15px;">
-  	<tr>
-      <td colspan="3" align="center">PRESS DETAILS</td>
+  	<!-- <tr>
+      <td colspan="3" class="align-">PRESS DETAILS</td>
     </tr>
     <tr >
-       <td width="30%" align="center"  style="border: 1px solid #000;">ART</td>
-       <td width="70%" align="center" style="border: 1px solid #000;">PRESS SETUP</td>
-    </tr>
+       <td width="30%" class="align-center"  style="border: 1px solid #000;">ART</td>
+       <td width="70%" class="align-center" style="border: 1px solid #000;">PRESS SETUP</td>
+    </tr> -->
     <tr style="margin-top: 20px;"> 
-    	<td width="30%" style="border: 1px solid #000;"> 
+    	<td width="30%"> 
     		<table>
-    			<tr><td align="center">Mockup Logo</td></tr>
-    			<tr><td align="center"><img src="{{$size[0]->mokup_logo}}" title="Culture Studio" height="150" width="150" alt="Culture Studio"></td></tr>
-    			<tr><td align="center">Mockup Image</td></tr>
-    			<tr><td align="center"><img src="{{$size[0]->mokup_image}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td></tr>
+    			
+    			<tr><td class="align-center"><img src="{{$color[0]->mokup_logo}}" title="Culture Studio" height="300" width="300" alt="Culture Studio"></td></tr>
+
     		</table>
     	</td>
-    	<td width="70%" style="border: 1px solid #000;">
+    	<td width="70%" >
           <table>
-           <hr style="border:1px solid #000;">
-            <tr>
-              <td align="center"><b>#POS</b></td>
-              <td align="center"><b>COLOR</b></td>
-              <td align="center"><b>PANTONE</b></td>
-              <td align="center"><b>INK</b></td>
-              <td align="center"><b>SQG</b></td>
-              <td align="center"><b>STR</b></td>
+           
+            <tr style="font-weight: 12px">
+              <td class="align-center font-bold" ><b>#POS</b></td>
+              <td class="align-center font-bold" ><b>COLOR</b></td>
+            <?php if($color[0]->placement_type!='45') { ?>
+              <td class="align-center font-bold" ><b>PANTONE</b></td>
+              <td class="align-center font-bold" ><b>INK TYPE</b></td>
+              <td class="align-center font-bold" ><b>SQUEEGEE</b></td>
+              <td class="align-center font-bold" ><b>STROKE</b></td>
+            <?php } else { ?>
+              <td class="align-center font-bold"><b>COLOR CODE</b></td>
+            <?php } ?>
             </tr>
-             <hr style="border:1px solid #000;">
+             
         <?php foreach($color as $key=>$value) {?>    
             <tr>
-              <td align="center">{{$key+1}}</td>
-              <td align="center">{{$value->color_name}}</td>
-              <td align="center">{{$value->pantone}}</td>
-              <td align="center">{{$value->inq}}</td>
-              <td align="center">{{$value->squeegee}}</td>
-              <td align="center">{{$value->stroke}}</td>
+              <td class="align-center line-height" border="1">{{$key+1}}</td>
+              <td class="align-center line-height" border="1">{{$value->color_name}}</td>
+            <?php if($color[0]->placement_type!='45') { ?>
+              <td class="align-center line-height" border="1">{{$value->thread_color}}</td>
+              <td class="align-center line-height" border="1">{{$value->inq}}</td>
+              <td class="align-center line-height" border="1">{{$value->squeegee}}</td>
+              <td class="align-center line-height" border="1">{{$value->stroke}}</td>
+            <?php } else { ?>
+                <td class="align-center line-height" border="1">{{$value->color_code}}</td>
+            <?php } ?>
+
             </tr>
         <?php } ?>
           </table>
       </td>
     </tr>
-   <tr><td colspan="3"></td></tr><tr><td colspan="3"></td></tr>
     <tr>
-    	<td align="center" ><p style="padding-top: 20px;">TOTAL GARMENTS</p></td>
-    	<td align="center" ><p style="padding-top: 20px;">_______________</p></td>
+    <br><br>
+      <td colspan="8"><b>Note:</b> {{$color[0]->note}}</td>
     </tr>
-  </table>
-  <div style="page-break-before: always;"></div>
-
- <table>
-    	<tr>
-      		<td align="right"><img src="{{$size[0]->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
-    	</tr>
-    </table>
   
-  <hr style="border:1px solid #000;">
- <table style="margin-top:15px;">
- 	<tr>
- 		<td align="center" height="20">GARMENTS</td>	
- 	</tr>
- </table>
- <table style="margin-top:15px;">
- 	<hr style="border:1px solid #000;">
-    <tr>
-      <td align="center" width="40%"><b>Product</b></td>
-      <td align="center" width="20%"><b>Qnty</b></td>
-      <td align="center" width="10%"><b>Size</b></td>
-      <td align="center" width="30%"><b>Color</b></td>
-    </tr>
-    <hr style="border:1px solid #000;">
-
- <?php foreach($size as $key=>$value) {?>
- 	<tr>
- 		<td width="40%">{{$value->product_name}}</td>
- 		<td align="center" width="20%">{{$value->qnty}}</td>
- 		<td align="center" width="10%">{{$value->size}}</td>
- 		<td align="center" width="30%">{{$value->product_color}}</td>	
- 	</tr>
-  <?php } ?>
   </table>
-
-
+ 
 </body>
 </html>

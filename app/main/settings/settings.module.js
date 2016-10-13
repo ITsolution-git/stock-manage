@@ -35,7 +35,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                        return sessionService.AccessService('ALL','true');
                     },
                 },
                 url  : '/userProfile',
@@ -52,7 +52,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/priceGrid',
@@ -77,41 +77,43 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU','false');
                     }
                 },
                 url  : '/companyProfile',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/main/settings/views/companyProfile/companyProfile.html',
-                        controller : 'UserProfileController as vm'
+                        templateUrl: 'app/main/settings/views/companyProfile/company.html',
+                        controller : 'CompanyProfileController as vm'
                     }
                 }
-            }).state('app.settings.companyDetails', {
+            })
+            /*.state('app.settings.companyDetails', {
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU,AT','false');
                     }
                 },
                 url  : '/companyDetails',
                 views: {
                     'content@app': {
-                        templateUrl: 'app/main/settings/views/companyDetails/companyDetails.html',
-                        controller : 'CompanyDetailsController as vm'
+                        templateUrl: 'app/main/settings/views/companyDetails/comany.html',
+                        controller : 'CompanyProfileController as vm'
                     }
                 }
-            }).state('app.settings.userManagement', {
+            })*/
+            .state('app.settings.userManagement', {
                 resolve: {
                     checksession : function (sessionService,$state)
                     {
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AM,SU,AT','false');
                     }
                 },
                 url  : '/userManagement',
@@ -128,7 +130,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('AT,SU','false');
                     }
                 },
                 url  : '/affiliate',
@@ -145,7 +147,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('ALL','true');
                     }
                 },
                 url  : '/integrations',
@@ -162,7 +164,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('SU','false');
                     }
                 },
                 url  : '/support',
@@ -179,7 +181,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('ALL','true');
                     }
                 },
                 url  : '/vendor',
@@ -197,7 +199,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('ALL','true');
                     }
                 },
                 url  : '/contact/:id',
@@ -214,7 +216,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('ALL','true');
                     }
                 },
                 url  : '/sales',
@@ -222,6 +224,23 @@
                     'content@app': {
                         templateUrl: 'app/main/settings/views/sales/sales.html',
                         controller : 'salesController as vm'
+                    }
+                }
+            }).state('app.settings.approvals', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA','true');
+                    }
+                },
+                url  : '/approvals',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/approvals/approvals.html',
+                        controller : 'approvalsController as vm'
                     }
                 }
             });
@@ -246,7 +265,6 @@
             state      : 'app.settings.userProfile',
             stateParams: {'id': 1},
             class      : 'navigation-dashboards project-dashboard',
-            
             weight     : 1
         });
 
@@ -257,21 +275,21 @@
             class      : 'navigation-dashboards project-dashboard',
             weight     : 2
         });
-
+/*
         msNavigationServiceProvider.saveItem('fuse.settings.companyDetails', {
             title      : 'Company Details',
             state      : 'app.settings.companyDetails',
             stateParams: {'id': 3},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 3
-        });
+        });*/
 
         msNavigationServiceProvider.saveItem('fuse.settings.userManagement', {
             title      : 'User Management',
             state      : 'app.settings.userManagement',
             stateParams: {'id': 4},
             class      : 'navigation-dashboards project-dashboard',
-            
+
             weight     : 4
         });
         msNavigationServiceProvider.saveItem('fuse.settings.priceGrid', {
@@ -309,6 +327,13 @@
             stateParams: {'id': 9},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 9
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
+            title      : 'S&S Approval',
+            state      : 'app.settings.approvals',
+            stateParams: {'id': 10},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 10
         });/*
         msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',

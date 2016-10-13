@@ -16,6 +16,7 @@
         //vm.client = angular.copy(Client);
         vm.clients = Clients;
         vm.newClient = false;
+        $scope.client={};
 
 
         // Methods
@@ -24,7 +25,44 @@
         vm.closeDialog = closeDialog;
         GetClientSelectionData();
         //////////
-
+        $scope.Gapi_options = { // GOOGLE ADDRESS API OPTIONS
+            componentRestrictions: { country: 'US' }
+        };
+        $scope.Gapi_address = { // GOOGLE ADDRESS API PARAMETERS
+            name: '',
+            place: '',
+            components: {
+              placeId: '',
+              streetNumber: '', 
+              street: '',
+              city: '',
+              state: '',
+              countryCode: '',
+              country: '',
+              postCode: '',
+              district: '',
+              location: {
+                lat: '',
+                long: ''
+                }
+            }
+        };
+        $scope.GetAPIData = function (apidata)
+        {
+           // console.log(123); return false;
+            $scope.client.pl_address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber+", ";
+            $scope.client.pl_address = angular.isUndefined(apidata.street)?$scope.client.pl_address:$scope.client.pl_address+apidata.street;
+            $scope.client.pl_city = angular.isUndefined(apidata.city)?'':apidata.city;
+            for(var i=0; i<$scope.states_all.length; i++)
+            {
+                if($scope.states_all[i].code == apidata.state)
+                {
+                    $scope.client.state_id = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
+                    $scope.client.pl_state = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
+                }
+            }
+            $scope.client.pl_pincode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+        }
         /**
          * Type, Disposition, State, PriceGrid
          */
@@ -45,6 +83,7 @@
                     vm.ArrCleintType =Response.data.result.ArrCleintType;
                     vm.Arrdisposition  = Response.data.result.Arrdisposition;
                     vm.states_all  = Response.data.result.state;
+                    $scope.states_all = Response.data.result.state;;
                     $scope.AllPriceGrid=Response.data.result.AllPriceGrid;
                     $scope.approval_all = Response.data.result.approval;
                    // console.log(vm.states_all);

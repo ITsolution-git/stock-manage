@@ -10,6 +10,7 @@ use App\Common;
 use App\Company;
 use App\Vendor;
 use App\Client;
+use App\Order;
 use App\Purchase;
 use App\Art;
 use DB;
@@ -23,7 +24,7 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order ) 
     {
         $this->common = $common;
         $this->company = $company;
@@ -31,6 +32,7 @@ class CommonController extends Controller {
         $this->purchase = $purchase;
         $this->art = $art;
         $this->client = $client;
+        $this->order = $order;
 
     }
 
@@ -993,6 +995,7 @@ class CommonController extends Controller {
                 3=>array('key' => 'cl.client_company', 'name' => 'Client'),
                 4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
                 5=>array('key' => 'po.date', 'name' => 'Created Date'),
+                6=>array('key' => '', '' => ''),
                 );
 
         }
@@ -1004,9 +1007,9 @@ class CommonController extends Controller {
             }
             $result = $this->purchase->getPurchaseNote($post);
             $header = array(
-                0=>array('key' => 'note.note_date', 'name' => 'Created date'),
-                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
-                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                0=>array('key' => 'mt.value', 'name' => 'Position'),
+                1=>array('key' => 'odp.note', 'name' => 'Note Name'),
+                2=>array('key' => 'odp.description', 'name' => 'Note Description')
                 );
 
         }
@@ -1024,6 +1027,7 @@ class CommonController extends Controller {
                 3=>array('key' => 'cl.client_company', 'name' => 'Client'),
                 4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
                 5=>array('key' => 'po.date', 'name' => 'Created Date'),
+                6=>array('key' => '', '' => ''),
                 );
 
         }
@@ -1085,7 +1089,8 @@ class CommonController extends Controller {
                 2=>array('key' => 'cl.client_company', 'name' => 'Client'),
                 3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
                 4=>array('key' => 'screen_width', 'name' => '#of Screen'),
-                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size')
+                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size'),
+                6=>array('key' => '', 'name' => '','sortable' => false)
                 );
         }
         if($post['filter']['function']=='art_notes') // SCREENSET COLOR NOTE
@@ -1097,13 +1102,27 @@ class CommonController extends Controller {
             $result = $this->art->getArtColorNote($post);
             $header = array(
                 0=>array('key' => 'note.note_date', 'name' => 'Created date'),
-                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
-                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                1=>array('key' => 'note.note_title', 'name' => 'Note Title'),
+                2=>array('key' => 'note.note', 'name' => 'Note Description'),
+                3=>array('key' => 'note.artapproval_display', 'name' => 'Show in Art Approval')
                 );
         }
 
-        
 
+        if($post['filter']['function']=='order_notes') // PURCHASE NOTES LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'odp.id';
+            }
+            $result = $this->order->getOrderNoteDetail($post);
+            $header = array(
+                 0=>array('key' => '', 'name' => 'Notes','sortable' => false)
+                );
+
+        }
+
+        
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;

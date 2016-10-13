@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add Document</span>
-                <md-button  ng-click="closeDialog()">
+                <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
                     <span>Close</span>
                 </md-button>
             </div>
@@ -11,20 +11,25 @@
         <md-dialog-content ms-scroll>
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
-                <md-input-container class="md-block first-box m-b-30">
-                    <input placeholder="Description" name="description" area-label=""  required ng-model="document_data.description">
-                </md-input-container>
-
-				<md-input-container class="upload-rel">
-                    <md-button class="md-primary md-hue-1 md-accent upload" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
-                </md-input-container>
-
                 <md-input-container class="md-block first-box">
+                    <input placeholder="Description *" name="description" area-label=""  required ng-model="document_data.description">
+                    <div ng-messages="clientForm.description.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span >This field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+				<md-input-container class="margin-0">
+                    <md-button class="border-radius-half stokkup-custom-btn1 stokkup-upload-btn stokkup-blue-btn pull-right" onclick="document.getElementById('myFileInput').click()" > UPLOAD</md-button>
+                </md-input-container>
+
+                <md-input-container class="md-block first-box margin-0">
                       <input type='file' area-label=""  style="display: none" data-ng-model="document_data.document_photo" id="myFileInput" onload="onLoad" base-sixty-four-input>
                 </md-input-container>
 
                 <div layout-wrap="nowrap" flex="50">
-                    <md-card class="card ">
+                    <md-card class="card margin-0">
                         <div class="height-image">
                           
                           <img ng-if="showtcprofileimg == false && document_data.document_photo != ''" ng-src="{{document_data.document_photo_url}}" alt="Document File"  class="img-responsive" height="200px" width="200px"/> 
@@ -37,7 +42,7 @@
               </div>
         </md-dialog-content>
          <md-dialog-actions layout="row" layout-align="end center">
-                   <md-button ng-click="AddDocument(document_data)" class="md-primary md-hue-1 md-accent ">Save</md-button>
+                   <md-button ng-disabled="clientForm.$invalid || clientForm.$pristine"  ng-click="AddDocument(document_data)" class="md-primary md-hue-1 md-accent ">Save</md-button>
         </md-dialog-actions> 
     </form>
 </md-dialog>

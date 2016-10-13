@@ -8,15 +8,18 @@
         <title>STOKKUP</title>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="shortcut icon" type="image/x-icon" href="/stokkup/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="styles/font-awesome.min.css">
+        <link rel="stylesheet" href="styles/mdPickers.min.css">
         <link rel="stylesheet" href="styles/vendor.css">
-
         <link rel="stylesheet" href="styles/app.css">
         <link rel="stylesheet" href="styles/stokkup-custom.css">
-        <link rel="stylesheet" href="styles/mdPickers.min.css">
+        <link rel="stylesheet" href="styles/stokkup-custom-global.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+        
+        <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
+        async defer></script>
 
         
         <script>
@@ -173,7 +176,9 @@
     <script src="app/main/order/dialogs/information/information.controller.js"></script>
     <script src="app/main/order/dialogs/approveorder/approveorder.controller.js"></script>
     <script src="app/main/order/dialogs/position/position-dialog.controller.js"></script>
-    
+    <script src="app/main/order/views/notes/notes.controller.js"></script>
+    <script src="app/main/order/dialogs/editOrderNote/editOrderNote.controller.js"></script>
+
 
     <!-- CLIENT FILES START -->
     <script src="app/main/client/client.module.js"></script>    
@@ -220,6 +225,7 @@
     <script src="app/main/settings/views/vendor/vendor.controller.js"></script>
     <script src="app/main/settings/views/vendor/viewContact/viewContact.controller.js"></script>
     <script src="app/main/settings/views/sales/sales.controller.js"></script>
+    <script src="app/main/settings/views/approvals/approval.controller.js"></script>
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>
@@ -289,5 +295,10 @@
     <link rel="stylesheet" href="scripts/angular-xeditable/xeditable.css">
     <script src="scripts/drag/angular-dragdrop.js"></script>
     <script src="scripts/clipboard.js"></script>
+    <script src="scripts/other/vs-autocomplete-validator.js"></script>
+
+    
+
+
 </body>
 </html>

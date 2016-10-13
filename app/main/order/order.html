@@ -1,19 +1,4 @@
-<div class="content order-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
-        <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20 class="cursor-p">
-                Orders
-            </div>
-            <div class="search-block" flex=40>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                </md-input-container>
-            </div>
-            <md-icon  ng-click="vm.openRightMenu()" md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
-              Filter By
-            </md-tooltip></md-icon>   
-            <!--Filter Sidebar Start-->
-            <div class="filter-menu" >
+<div class="filter-menu" >
                 <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
                     <md-toolbar class=" filter-title">
                         <h1 class="md-toolbar-tools">Filter By</h1>
@@ -22,12 +7,15 @@
                         <div class="contant-filter filter-detail" >
                             <div layout="column" class="f-box-1 first-cheak">
                                 <div class="f-header">
-                                    <span>
+                                    <span class="cursor-p" ng-if="vm.toggle" ng-click="vm.toggle = false">
                                         SALES REP 
-                                        <button ng-if="vm.toggle" ng-click="vm.toggle = false">
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-up"></md-icon>
                                         </button>
-                                        <button ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                    </span>
+                                    <span class="cursor-p" ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                                        SALES REP
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-down"></md-icon>
                                         </button>
                                     </span>
@@ -41,12 +29,15 @@
                             </div>
                             <div layout="column" class="f-box-2">
                                 <div class="f-header">
-                                    <span>
-                                        CREATE DATE  
-                                        <button ng-if="vm.createdate" ng-click="vm.createdate = false">
+                                    <span class="cursor-p" ng-if="vm.createdate" ng-click="vm.createdate = false">
+                                        CREATE DATE
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-up"></md-icon>
                                         </button>
-                                        <button ng-if="!vm.createdate" ng-click="vm.createdate = true">
+                                    </span>
+                                    <span class="cursor-p" ng-if="!vm.createdate" ng-click="vm.createdate = true">
+                                        CREATE DATE
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-down"></md-icon>
                                         </button>
                                     </span>
@@ -56,18 +47,21 @@
                                     <div layout="column" >
                                         <div class="date-input width100">
                                             <input id="datepicker" kendo-date-picker ng-model="vm.createDate" k-ng-model="dateObject6" placeholder="Dates"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            </div>
                             <div layout="column" class="f-box-1">
                                 <div class="f-header">
-                                    <span>
+                                    <span class="cursor-p" ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
                                         COMPANY  
-                                        <button ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-up"></md-icon>
                                         </button>
-                                        <button ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
+                                    </span>
+                                    <span class="cursor-p" ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
+                                        COMPANY
+                                        <button>
                                             <md-icon md-font-icon="icon-menu-down"></md-icon>
                                         </button>
                                     </span>
@@ -79,69 +73,89 @@
                                     </div>
                                 </div>
                             </div>
-                           
                         </div>
                     </md-content>
                     <div class="filter-footer" layout="row">
-                        <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()">                                      
-                            APPLY FILTERS
+                        <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button"  flex="50" ng-click="filterOrders()">APPLY FILTERS
                         </md-button>
-                        <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50">                                      
-                            RESET FILTERS
-                        </md-button>
+                        <md-button ng-click="vm.resetFilter()" class="stokkup-custom-btn1 md-button bg-grey md-raised" flex="50">RESET FILTERS</md-button>
 
                     </div>
                 </md-sidenav>
             </div>
-            <!----------Filter Sidebar End-------->
-            <div class="order-modal-title " layout="row" layout-align="end center" flex=11 ng-if="role=='CA' || role=='BC'">
-                <span class="cursor-p" ng-click="vm.openOrderDialog($event)" >CREATE NEW ORDER</span>
+<div class="content order-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=20 class="cursor-p">
+                Orders
             </div>
+            <div class="pull-right right-search-box">
+                <div class="order-modal-title pull-right" layout="row" layout-align="end center" ng-show="allow_access==1">
+                    <span class="cursor-p stokkup-btn-style1" ng-click="vm.openOrderDialog($event)" >CREATE NEW ORDER</span>
+                </div>
+
+                <md-icon  ng-click="vm.openRightMenu($event);"  md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
+              Filter By
+            </md-tooltip></md-icon>   
+            <!--Filter Sidebar Start-->
+            
+                 <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="top-srch-label">Search Orders...</label>
+                        <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div>
+            </div>
+           
+            
+            <!----------Filter Sidebar End-------->
+            
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
-                <table class="dataTable row-border hover">
+                <table class="dataTable row-border">
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr  ng-repeat-start="row in rows"  >
-                            <td ng-if="role=='CA' || role=='BC'" ui-sref="app.order.order-info({id:row.id})" class="cursor-p">{{ row.id}}</td>
-                            <td ng-if="role!='CA' && role!='BC'">{{ row.id}}</td>
+                            <td ui-sref="app.order.order-info({id:row.id})" class="cursor-p">{{ row.id}}</td>
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             <td>{{ row.approval}}</td>
-                            <td>{{ row.created_date | date:"M/d/yyyy" }}</td>
+                            <td ng-if="row.created_date != '0000-00-00'">{{ row.created_date | date:"M/d/yyyy" }}</td>
+                            <td ng-if="row.created_date == '0000-00-00'"></td>
                             <td>{{ row.sales_name}}</td>
-                            <td>{{ row.date_shipped | date:"M/d/yyyy" }}</td>
-                                 <td class="accor" ng-show="row.design_pos.length > 0">
-                            <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
-                            <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
-                        </td>
-                        <td  ng-show="row.design_pos.length == 0">
-                            &nbsp;
-                        </td>
+                            <td>{{ row.account_manager}}</td>
+                            <td ng-if="row.date_shipped != '0000-00-00'">{{ row.date_shipped | date:"M/d/yyyy" }}</td>
+                            <td ng-if="row.date_shipped == '0000-00-00'"></td>
+                            <td class="accor" ng-show="row.design_pos.length > 0">
+                                <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                                <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                            </td>
+                            <td  ng-show="row.design_pos.length == 0">
+                                &nbsp;
+                            </td>
                         </tr>
                                 <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
                                     <td colspan="8" class="collpas">
-                                    <table class="dataTable row-border hover" >
+                                    <table class="dataTable row-border" >
                                         <thead>
                                             <th>Design Name</th>
                                             <th>Postion Name</th>
                                             <th>Ship Date</th>
-                                            <th>Status</th>
-                                            
+                                            <!-- <th>Status</th> -->
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="design_data_all in row.design_pos">
                                                 <td class="cursor-p" ui-sref="app.order.design({id:design_data_all.id})">{{design_data_all.design_name}}</td>
-                                                <td>{{design_data_all.count_position}} Positions<md-tooltip md-direction="bottom">{{design_data_all.position_name}}</md-tooltip></td>
+                                                <td class="cursor-p">{{design_data_all.count_position}} Positions<md-tooltip md-direction="bottom">{{design_data_all.position_name}}</md-tooltip></td>
 
-                                                <td ng-if="design_data_all.shipping_date != '0000-00-00' && design_data_all.shipping_date != '' ">{{design_data_all.shipping_date | date:"M/d/yyyy"  }}</td>
-                                                <td ng-if="design_data_all.shipping_date == '0000-00-00' || design_data_all.shipping_date == '' "></td>
+                                                <td class="cursor-p" ng-if="design_data_all.shipping_date != '0000-00-00' && design_data_all.shipping_date != '' ">{{design_data_all.shipping_date | date:"M/d/yyyy"  }}</td>
+                                                <td class="cursor-p" ng-if="design_data_all.shipping_date == '0000-00-00' || design_data_all.shipping_date == '' "></td>
 
-                                                <td  class="text-center font-small mdslider"><label class="slider">123</label>
+                                                <!-- <td  class="text-center font-small mdslider"><label class="slider">123</label>
                                                     <md-slider flex ng-model="row.desc.statusValue" min="0" max="100"   aria-label="blue" id="blue-slider" class="md-primary blue-color">
                                                     </md-slider>
-                                                </td>                      
+                                                </td> -->                      
                                             </tr>
                                         </tbody>
                                     </table>
@@ -153,7 +167,7 @@
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-           <table class="simple">
+           <table class="dataTable row-border">
                 <thead>
                     <tr>
                         <th>No Records Found</th>

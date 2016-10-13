@@ -21,6 +21,50 @@
         $scope.po_id = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
 
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+        
+        $scope.updateOrderStatus = function(name,value,id)
+        {
+            if($scope.allow_access == 0){return false;}
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
         $scope.GetPodata = function ()
         {
             $("#ajax_loader").show();
@@ -50,6 +94,8 @@
         $scope.GetPodata();
         $scope.UpdateTableField = function(field_name,field_value,id,original,extra,param)
                     {
+                        if($scope.allow_access == 0){return false;}
+
                         if($scope.po_data.is_complete=='1')
                         {
                             notifyService.notify('error', 'Receive order is locked, Changes not accecptable.');
@@ -65,11 +111,11 @@
                         }
                         if(extra=='received')
                         {
-                            if(parseInt(field_value)>parseInt(original))
+                            /*if(parseInt(field_value)>parseInt(original))
                             {
                                 notifyService.notify('error', 'Received quantity should not be more then Ordered quantity');
                                 return false;
-                            }
+                            }*/
                             if(parseInt(param)>parseInt(field_value))
                             {
                                 notifyService.notify('error', 'Defective quantity should not be more then Received quantity');
@@ -121,7 +167,7 @@
         $scope.changeReceiveData = function (ev)
         {
         
-
+            if($scope.allow_access == 0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -138,6 +184,11 @@
 
                         UpdateArray.table ='purchase_order';
 
+                        if(new Date($scope.main_po.date) > new Date(field_value))
+                        {
+                            notifyService.notify('error', 'Receive date should be greater then Created Date.');
+                            return false;
+                        }
                         var condition_obj = {};
                         condition_obj[field_name] =  field_value;
                         UpdateArray.data = angular.copy(condition_obj);
@@ -176,6 +227,62 @@
                 onRemoving : $scope.GetPodata
             });
         } 
+        $scope.openClientEmailPopup = function(ev)
+        {
+            if($scope.allow_access == 0){return false;}
+            $mdDialog.show({
+                controller: function ($scope, params)
+                {
+                    $scope.mail=params.po_data.billing_email;
+                    $scope.company_id=params.company_id;
+                    $scope.po_id=params.po_id;
+                    //console.log($scope.mail);
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    }
+                    $scope.printPdf = function (flag,email)
+                    {
+                        if(flag=='1')
+                        {
+                            var k = confirm("Do you want to send PDF to client?");
+                            if(k==false)
+                            {
+                                return false;
+                            }
+                        }
+                        $mdDialog.hide();
+                        var pass_array = {company_id:$scope.company_id,po_id:$scope.po_id,flag:flag,email:email };
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/purchase/createPDF';
+                        form.method = 'post';
+                        form.target = target || "_blank";
+                        form.style.display = 'none';
+
+                        var input_screenset = document.createElement('input');
+                        input_screenset.name = 'receiving';
+                        input_screenset.setAttribute('value', JSON.stringify(pass_array));
+                        form.appendChild(input_screenset);
+
+                        document.body.appendChild(form);
+                        form.submit();  
+                    }
+                },
+                controllerAs: 'vm',
+                templateUrl: 'app/main/receiving/dialogs/EmailPopup.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                }
+            });
+        }
+
+
+
     }
     
     

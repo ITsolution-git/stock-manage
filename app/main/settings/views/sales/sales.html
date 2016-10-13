@@ -1,24 +1,22 @@
-<div class="content client-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content order-list-page puchase-order-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20>
-                Sales
-            </div>
-            <div class="search-block" flex=40>
-
+            <div class="table-title-text" flex=20>Sales</div>
+            <div class="pull-right right-search-box">
+                <div class="client-modal-title pull-right">
+                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="openInsertPopup($event)">ADD NEW</span>
+                </div>
+                <div class="search-block pull-right">
                 <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
+                        <label class="top-srch-label">Search...</label>
+                    <input ng-model="name" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
-            </div>
-
-               
-            <div class="client-modal-title " flex=50>
-                <span class="cursor-p" ng-click="openInsertPopup($event)">ADD NEW SALES PERSON</span>
+                </div>
             </div>
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
-                 <table class="dataTable row-border hover">
+                 <table class="dataTable row-border">
 
                     <thead tasty-thead></thead>
                     <tbody >
@@ -38,7 +36,7 @@
                                                 Edit Sales
                                             </md-button>
                                         </md-menu-item>
-                                        <md-menu-item>
+                                        <md-menu-item  ng-show="allow_access==1">
                                             <md-button ng-click="delete_sales($event,Sales.id)">
                                                 Remove Sales
                                             </md-button>
@@ -53,7 +51,7 @@
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-           <table class="simple">
+           <table class="dataTable row-border">
                 <thead>
                     <tr>
                         <th>No Records Found</th>

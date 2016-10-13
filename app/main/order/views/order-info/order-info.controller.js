@@ -9,6 +9,18 @@
     /** @ngInject */
     function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
             
@@ -24,6 +36,10 @@
                     $("#ajax_loader").hide();
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
+                   if($scope.order.item_ship_charge == undefined || $scope.order.item_ship_charge == '')
+                   {
+                        $scope.order.item_ship_charge = 0;
+                   }
                 } else {
                     $state.go('app.order');
                 }
@@ -217,20 +233,30 @@
             });
         }
         function openApproveOrderDialog(ev,order_number,sns_shipping,client_id) {
-            $mdDialog.show({
-                controller: 'approveOrderDiallogController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    order_number:order_number,
-                    sns_shipping:sns_shipping,
-                    client_id:client_id,
-                    event: ev
-                }
-            });
+            
+            if($scope.total_unit > 0)
+            {
+                $mdDialog.show({
+                    controller: 'approveOrderDiallogController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        order_number:order_number,
+                        sns_shipping:sns_shipping,
+                        client_id:client_id,
+                        event: ev
+                    }
+                });
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please add product to approve order"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
         }
         $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
         {
@@ -343,24 +369,33 @@
 
         $scope.openEmailPopup = function (ev) {
     
-            $mdDialog.show({
-                controller: 'openEmailController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/views/order-info/send-email.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    client_id: $scope.order.client_id,
-                    order_id: $stateParams.id,
-                    event: ev
-                  }
-            });
+            if($scope.total_unit > 0)
+            {
+                $mdDialog.show({
+                    controller: 'openEmailController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/order/views/order-info/send-email.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        client_id: $scope.order.client_id,
+                        order_id: $stateParams.id,
+                        paid: $scope.order.is_paid,
+                        balance: $scope.order.balance_due,
+                        event: ev
+                      }
+                });
+            }
+            else
+            {
+                notifyService.notify('error','Please add atleast one product.');
+            }
         };
 
        $scope.createPO = function() {
             
-            var permission = confirm("Please make sure that once you create PO, it can't be changed. You also would not be able to add new and edit existing Designs and Products.");
+            var permission = confirm("Do you want to create PO ?");
 
             if(permission == true){
 

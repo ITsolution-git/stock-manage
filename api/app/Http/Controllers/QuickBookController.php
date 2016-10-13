@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 require_once(app_path() . '/constants.php');
+require_once(app_path() . '/quickbook_constants.php');
 use App\Login;
 use Input;
 use Illuminate\Support\Facades\Session;
@@ -30,15 +31,36 @@ class QuickBookController extends Controller
         $this->company = $company;
         $this->common = $common;
 
-        if (!\QuickBooks_Utilities::initialized(QBO_DSN)) {
-            // Initialize creates the neccessary database schema for queueing up requests and logging
-            \QuickBooks_Utilities::initialize(QBO_DSN);
-        }
-
         $company_id = Session::get('company_id');
 
+        $this->company_id = $company_id;
+
         $result = $this->company->getQBAPI($company_id);
-        $this->IntuitAnywhere = new \QuickBooks_IPP_IntuitAnywhere(QBO_DSN,QBO_ENCRYPTION_KEY,$result[0]->consumer_key,$result[0]->consumer_secret_key,QBO_OAUTH_URL,QBO_SUCCESS_URL);
+
+        if($result[0]->is_sandbox == 0) {
+            $this->is_sandbox = true;
+            $this->QBO_DSN = "mysqli://csuser:codal123@192.168.1.13/stokkup";
+
+        } else if($result[0]->is_sandbox == 1) { 
+
+            $this->is_sandbox = true;
+            $this->QBO_DSN = "mysqli://root:stokkdb@1357@localhost/stokkup_new";
+
+        } else {
+
+            $this->is_sandbox = false;
+            $this->QBO_DSN = "mysqli://stokkuplive:Amren341221@stokkuplive.cagpmtmc0vub.us-east-1.rds.amazonaws.com/stokkuplive";
+            $result[0]->consumer_key = 'qyprdhrgHQpxfIujnPJETAWGSYNaTm';
+            $result[0]->consumer_secret_key = 'C86wTh5ZMQneweVfX33cYSKm6vnvx4Bbcm9kE2Wi';
+        }
+
+
+        if (!\QuickBooks_Utilities::initialized($this->QBO_DSN)) {
+            // Initialize creates the neccessary database schema for queueing up requests and logging
+            \QuickBooks_Utilities::initialize($this->QBO_DSN);
+        }
+
+        $this->IntuitAnywhere = new \QuickBooks_IPP_IntuitAnywhere($this->QBO_DSN,QBO_ENCRYPTION_KEY,$result[0]->consumer_key,$result[0]->consumer_secret_key,QBO_OAUTH_URL,QBO_SUCCESS_URL);
        
     }
 
@@ -50,7 +72,7 @@ class QuickBookController extends Controller
         if ($this->IntuitAnywhere->check(QBO_USERNAME, QBO_TENANT) && $this->IntuitAnywhere->test(QBO_USERNAME, QBO_TENANT)) {
 
             // Set up the IPP instance
-            $IPP = new \QuickBooks_IPP(QBO_DSN);
+            $IPP = new \QuickBooks_IPP($this->QBO_DSN);
             // Get our OAuth credentials from the database
             $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
             // Tell the framework to load some data from the OAuth store
@@ -59,7 +81,7 @@ class QuickBookController extends Controller
                 QBO_USERNAME,
                 $creds);
 
-            if (QBO_SANDBOX) {
+            if ($this->is_sandbox) {
                 // Turn on sandbox mode/URLs
                 $IPP->sandbox(true);
             }
@@ -68,11 +90,7 @@ class QuickBookController extends Controller
             // Load the OAuth information from the database
             $this->context = $IPP->context();
 
-
-
-           
         $response = array('success' => 1, 'message' => "Successful",'records' => true);
-        
         
         return response()->json(["data" => $response]);
 
@@ -86,8 +104,6 @@ class QuickBookController extends Controller
             
         }
     }
-
-
 
     public function qboOauth($oauth_token=''){
         /*if(!empty($oauth_token)) $_GET['oauth_token'] = $oauth_token;*/
@@ -111,8 +127,6 @@ class QuickBookController extends Controller
        
     }
 
-
-
     public function qboDisconnect(){
 
         $this->IntuitAnywhere->disconnect(QBO_USERNAME, QBO_TENANT,true);
@@ -129,7 +143,7 @@ class QuickBookController extends Controller
 
     public function createCustomer($client,$contact){
 
-       $IPP = new \QuickBooks_IPP(QBO_DSN);
+       $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -139,7 +153,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -216,7 +230,7 @@ class QuickBookController extends Controller
 
     public function updateCustomer($client,$contact){
 
-       $IPP = new \QuickBooks_IPP(QBO_DSN);
+       $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -226,7 +240,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -297,7 +311,7 @@ class QuickBookController extends Controller
     public function addItem(){
         $post = Input::all();
 
-        $IPP = new \QuickBooks_IPP(QBO_DSN);
+        $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -307,7 +321,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -425,10 +439,10 @@ class QuickBookController extends Controller
         }*/
     }
 
-    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid){
+    public function addInvoice($invoiceArray,$chargeArray,$customerRef,$db_product,$invoice_id,$other_charges,$price_grid,$payment,$orderId,$quickbook_id){
       
 
-         $IPP = new \QuickBooks_IPP(QBO_DSN);
+         $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -438,7 +452,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -451,11 +465,42 @@ class QuickBookController extends Controller
 
         $InvoiceService = new \QuickBooks_IPP_Service_Invoice();
 
+
+        if($quickbook_id > 0) {
+            $retr = $InvoiceService->delete($this->context, $this->realm, $quickbook_id);
+        }
+        
+
         $Invoice = new \QuickBooks_IPP_Object_Invoice();
 
-         $Invoice->setDocNumber('WEB' . mt_rand(0, 10000));
-         //$Invoice->setTxnDate('2015-10-11');
+         $Invoice->setDocNumber('INV-' . $orderId);
+         
          $Invoice->setTxnDate(date('Y-m-d'));
+        
+
+         if($payment == '15') {
+
+            $setDate  = date('Y-m-d', strtotime("+15 days"));
+           
+            $Invoice->setDueDate($setDate);
+            
+
+
+         } else if($payment == '30') {
+
+            $setDate  = date('Y-m-d', strtotime("+30 days"));
+            $Invoice->setDueDate($setDate);
+           
+
+         } else {
+            $Invoice->setDueDate(date('Y-m-d'));
+         }
+
+
+         
+         
+         
+
 
         foreach ($invoiceArray as $key => $value) {
 
@@ -839,25 +884,6 @@ class QuickBookController extends Controller
                  $Invoice->setCustomerRef($customerRef);
          }
 
-        
-
-
-         
-         /*$Line = new \QuickBooks_IPP_Object_Line();
-         $Line->setDetailType('SalesItemLineDetail');
-         $Line->setAmount(12.95 * 2);
-         $Line->setDescription('Test description goes here.');
-
-         $SalesItemLineDetail = new \QuickBooks_IPP_Object_SalesItemLineDetail();
-         $SalesItemLineDetail->setItemRef('8');
-         $SalesItemLineDetail->setUnitPrice(12.95);
-         $SalesItemLineDetail->setQty(2);
-
-         $Line->addSalesItemLineDetail($SalesItemLineDetail);
-
-         $Invoice->addLine($Line);
-
-         $Invoice->setCustomerRef($customerRef);*/
 
 
         if ($resp = $InvoiceService->add($this->context, $this->realm, $Invoice))
@@ -865,16 +891,18 @@ class QuickBookController extends Controller
             $qb_invoice_id =  $this->getId($resp);
              $this->common->UpdateTableRecords('invoice',array('id' => $invoice_id),array('qb_id' => $qb_invoice_id));
 
-           // $data_record = array("success"=>1,"message"=>"Success");
+             if($quickbook_id > 0) {
+                     $this->common->UpdateTableRecords('payment_history',array('order_id' => $orderId),array('qb_id' => $qb_invoice_id,'qb_flag' => 0));
+             }
+
+           
             return 1; 
         }
         else
         {
-
-          //  $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
-           // return response()->json(["data" => $data_record]);
+          
             return 0; 
-           // print($InvoiceService->lastError());
+          
         }
     }
 
@@ -889,7 +917,7 @@ class QuickBookController extends Controller
      public function updateInvoicePayment(){
         $data = array("success"=>1,'message' =>"Invoice Payments Sync successfully");
 
-        $IPP = new \QuickBooks_IPP(QBO_DSN);
+        $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
         $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
@@ -899,7 +927,7 @@ class QuickBookController extends Controller
             QBO_USERNAME,
             $creds);
 
-        if (QBO_SANDBOX) {
+        if ($this->is_sandbox) {
             // Turn on sandbox mode/URLs
             $IPP->sandbox(true);
         }
@@ -921,8 +949,14 @@ class QuickBookController extends Controller
         $company_id=$post['company_id'];
 
         $company_data = $this->common->GetTableRecords('company_info',array('user_id' => $company_id),array());
-        $result = $this->GetAllclientInovices($company_id);
+        $result = $this->GetAllclientInovicesAddDelete($company_id,0,1);
+        $resultDelete = $this->GetAllclientInovicesAddDelete($company_id,1,0);
+        if((count($result)<1) && (count($resultDelete)<1)){
+            $data = array("success"=>2,'message' =>"Either Quickbook not Connected or No Invoice Payments are there to Sync to Quickbook.");
+            return response()->json(['data'=>$data]);
+        }
 
+        // Updating add invoice payment data
         foreach ($result as $key => $all_data) 
         {
             $setPaymentRefNum='WEB' . mt_rand(0, 10000);
@@ -954,6 +988,10 @@ class QuickBookController extends Controller
             if ($resp = $PaymentService->add($this->context, $this->realm, $Payment))
             {
                 //print('Our new Payment ID is: [' . $resp . ']');
+                // Quickbook ID is returned as {-111}. Below 3 lines are to remove non-numeric things.
+                $resp=$numeric_filtered = filter_var($resp, FILTER_SANITIZE_NUMBER_INT);
+                $spChars= array('0' => '-');
+                $resp=str_replace($spChars, '', $resp);
                 //return 1;
                 $qbData=array('qb_payment_id' => $resp, 'qb_web_reference' => $setPaymentRefNum, 'qb_flag' => 1);
                 $this->common->UpdateTableRecords('payment_history',array('payment_id' => $all_data->payment_id),$qbData);
@@ -961,9 +999,33 @@ class QuickBookController extends Controller
             else
             {
                 //print($PaymentService->lastError());
-                $data = array("success"=>0,'message' =>$PaymentService->lastError());
+                $dataTemp = array("success_temp"=>0,'message' =>$PaymentService->lastError());
+                //return response()->json(['data'=>$data]);
                 //return 0;
             }
+        }
+
+        // Updating delete invoice payment data
+        foreach ($resultDelete as $key => $all_data) 
+        {
+            $qb_payment_id = $all_data->qb_payment_id;
+            if((isset($qb_payment_id)) && ($qb_payment_id!=0)){
+                $respDelete = $PaymentService->delete($this->context, $this->realm, $qb_payment_id);
+                if ($respDelete)
+                {
+                    // print('The payment was deleted!'); delete from payment history
+                    $result = $this->common->DeleteTableRecords('payment_history',array('payment_id'=>$all_data->payment_id, 'qb_payment_id'=>$all_data->qb_payment_id));
+                }
+                else
+                {
+                    //print('Could not delete payment: ' . $PaymentService->lastError());
+                    $dataTemp = array("success_temp"=>0,'message' =>'Could not delete payment: ' . $PaymentService->lastError());
+                    //return response()->json(['data'=>$data]);
+                }
+            }
+        }
+        if(isset($dataTemp) && $dataTemp['success_temp']==0){
+            $data = array("success"=>0,'message' =>"Quickbook not Connected.");
         }
         return response()->json(['data'=>$data]);
         //print_r($result);exit;
@@ -971,7 +1033,7 @@ class QuickBookController extends Controller
 
 
 
-    public function GetAllclientInovices($company_id){
+    /*public function GetAllclientInovices($company_id){
         $retArray = DB::table('users as u')
             ->select('i.qb_id as invoiceId', 'p.payment_id as payment_id', 'p.payment_date as payment_date', 'p.payment_amount as payment_amount', 'o.grand_total as totalAmount', 'c.qid as CustomerRef')
             ->leftJoin('client as c','c.company_id','=',"u.id")
@@ -983,7 +1045,24 @@ class QuickBookController extends Controller
             ->where('p.qb_flag','=',0)
             ->get();
         return $retArray;
+    }*/
+
+    public function GetAllclientInovicesAddDelete($company_id,$operationQB,$operationDelete){
+        $retArray = DB::table('users as u')
+            ->select('i.qb_id as invoiceId', 'p.payment_id as payment_id', 'p.payment_date as payment_date', 'p.payment_amount as payment_amount', 'o.grand_total as totalAmount', 'c.qid as CustomerRef', 'p.qb_payment_id as qb_payment_id')
+            ->leftJoin('client as c','c.company_id','=',"u.id")
+            ->leftJoin('orders as o','o.client_id','=',"c.client_id")
+            ->leftJoin('invoice as i','i.order_id','=',"o.id")
+            ->leftJoin('payment_history as p','p.qb_id','=',"i.qb_id")
+            ->where('u.id','=',$company_id)
+            ->where('i.qb_id','!=',0)
+            ->where('p.qb_flag','=',$operationQB)
+            ->where('p.is_delete','=',$operationDelete)
+            ->get();
+        return $retArray;
     }
+
+
 
 
 }

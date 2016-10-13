@@ -18,7 +18,7 @@
                     <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
                 </md-input-container>
             </div>
-            <div class="order-modal-title " layout="row" layout-align="end center"flex=11 >
+            <div class="order-modal-title " layout="row" layout-align="end center"flex=11  ng-show="allow_access==1">
                 <md-button class="dark-bg chrome-weight" ng-click="openInsertPopup('art/dialogs/notes/addNote.html',$event)">
                     ADD NEW
                 </md-button>
@@ -33,7 +33,13 @@
                                 <td class="">{{note.note_date}}</td>
                                 <td class="">{{note.note_title}}</td>
                                 <td class="">{{note.note}}</td>
-                                <td>
+                                
+                                <td ng-if="note.artapproval_display=='1'"><i class="icon icon-check s40"></i></td>
+                                <td ng-if="note.artapproval_display=='0'"><i class="icon icon-flickr-before s40"></i></td>
+
+
+                                <!-- <td class="">{{note.artapproval_display}}</td> -->
+                                <td  ng-show="allow_access==1">
                                     <md-menu>
                                         <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
@@ -49,7 +55,7 @@
                                                     Remove Note
                                                 </md-button>
                                             </md-menu-item>
-                                        </md-menu-content>
+                                        </md-menu-content> 
                                     </md-menu>
                                 </td>
                             </tr>

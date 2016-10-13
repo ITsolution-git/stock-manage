@@ -96,13 +96,18 @@ class LoginController extends Controller {
                 else
                 {
                     $session = array();
-                    $token = $this->login->getToken(10);
-                    $token .= $token.time();
-                    DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'date'=>date('Y-m-d H:i:s')]);
-                    
+                    $token = $this->login->getToken(10); // RANDOM STRING+CURRENT_TIMESTAMP
+
                     $company = $this->common->CompanyService($result[0]->id);
 
+                    $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
+
+                    $company[0]->company_id = (empty($company[0]->company_id))?0:$company[0]->company_id;
                     //echo "<pre>"; print_r($company); echo "</pre>"; die;
+                    DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'company_id'=>$company[0]->company_id,'date'=>date('Y-m-d H:i:s')]);
+                    
+
+                    //echo "<pre>"; print_r($result); echo "</pre>"; die;
                     Session::put('username',$result[0]->user_name);
                     Session::put('password', md5($password));
                     Session::put('useremail', $result[0]->email);
@@ -114,6 +119,8 @@ class LoginController extends Controller {
                     Session::put('login_id', $loginid);
                     Session::put('company_id',  $company[0]->company_id);
                     Session::put('company_name',  $company[0]->company_name);
+                    Session::put('profile_photo',  $result[0]->profile_photo);
+                    Session::put('token',  $token);
                     
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
@@ -126,6 +133,7 @@ class LoginController extends Controller {
                     $session['token'] = $token;
                     $session['company_id'] = $company[0]->company_id;
                     $session['company_name'] = $company[0]->company_name;
+                    $session['profile_photo'] = $result[0]->profile_photo;
                     
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
@@ -174,25 +182,22 @@ class LoginController extends Controller {
      *
      * @return Response
      */
-    public function check_session($token=0) {
+    public function check_session() 
+    {
+        $data = Input::all();
 
-/*        if(!empty($token))
-        {
-            $result = $this->login->check_session($token);
-            if(count($result)>0)
+            if(!empty($data['refresh']) && $data['refresh']==1)
             {
-                $response = array('success' => 1, 'message' => "session there",'records'=>$result[0]);
-             //   $response = array('success' => 1, 'message' =>"session there",);
+                Session::put('profile_photo', '');
+                $result = $this->common->GetTableRecords('users',array('id' => Session::get("user_id")),array());
+                $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.Session::get("company_id")."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.Session::get("company_id")."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
+
+                Session::put('profile_photo',  $result[0]->profile_photo);
+                $session['profile_photo'] = $result[0]->profile_photo;
+
+                //echo "<pre>"; print_r($result); echo "</pre>"; die;
             }
-            else
-            {
-                 $response = array('success' => 0, 'message' => NO_RECORDS);
-            }
-        }
-        else
-        {
-            $response = array('success' => 0, 'message' => LOGIN_WRONG);
-        }*/
+
             if (!empty(Session::get("useremail"))) {
                 //$result = $this->common->CompanyService(Session::get("user_id"));
             $response = array('success' => 1, 
@@ -205,7 +210,8 @@ class LoginController extends Controller {
                               "email" => Session::get("useremail"),
                               "role_session"=>Session::get("role_slug"),
                               "company_id"=>Session::get("company_id"),
-                              "token"=>$token
+                              "profile_photo"=>Session::get("profile_photo"),
+                              "token"=>Session::get("token")
                               );
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);

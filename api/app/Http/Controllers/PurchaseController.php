@@ -11,9 +11,12 @@ use App\Order;
 use App\Product;
 use App\Common;
 use DB;
+use File;
 use PDF;
-
 use Request;
+use Response;
+use Mail;
+
 
 class PurchaseController extends Controller { 
 
@@ -36,22 +39,23 @@ class PurchaseController extends Controller {
             
             if(count($order_data)>0)
             {
+                $this->common->UpdateTableRecords('purchase_order',array('order_id'=>$post['order_id']),array('is_active'=>0),'');
                 foreach ($order_data as $key=>$value) 
                 {
                     $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key);
                     $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
-                    if($purchase_order_id=='0')
+                    /*if($purchase_order_id=='0')
                     {
                         $response = array('success' => 0, 'message' => "Purchase order is already created.");
                         return response()->json(["data" => $response]);
                     }
                     else
-                    {
+                    {*/
                         foreach($order_data[$key] as $detail_key=>$detail_value) 
                         {
                             $purchase_order_line = $this->purchase->insert_purchase_order_line($detail_value,$purchase_order_id);
                         }
-                    }
+                    //}
                 }
                 $response = array('success' => 1, 'message' => "Purchase order created successfully.",'data'=>$order_data);
             }
@@ -372,12 +376,52 @@ class PurchaseController extends Controller {
     }
     public function createPDF()
     {
-        $post = Input::all();
-        $ArrPoline['arr_poline'] = json_decode($post['arr_poline']);
-        //print_r($ArrPoline['arr_poline']);exit;
+        
+        $pdf_array= json_decode($_POST['receiving']);
+        
+        if(count($pdf_array)>0)
+        {
+            $pdf_data = $this->purchase->GetPoReceived($pdf_array->po_id,$pdf_array->company_id);
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            if(count($pdf_data['receive'])>0)
+            {
+                $email_array = explode(",",$pdf_array->email);
+                $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
+               
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.receivepo',array('company'=>$pdf_data['po_data'],'receive_data'=>$pdf_data['receive']))->render());
+           
+                $pdf_url = "ReceivePO-".$pdf_array->po_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+                PDF::Output($filename, 'F');
 
-        PDF::AddPage('P','A4');
-        PDF::writeHTML(view('pdf.company_po',$ArrPoline)->render());
-        PDF::Output('company_po.pdf');
+                if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
+                {
+
+                    Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
+                    {
+                        $message->to($email_array);
+                        $message->subject('Receive order, for the Order '.$pdf_data['po_data']->order_name);
+                        $message->attach($filename);
+                    });
+                }
+
+                return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Error, No Product or Size selected.");
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
     }
 }
