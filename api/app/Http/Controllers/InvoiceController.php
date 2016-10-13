@@ -136,10 +136,37 @@ class InvoiceController extends Controller {
             {
                 $retutn_arr['invoice_data'][0]->payment_due_date = 'No Due Date';
             }
+         
 
-            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+            if($retutn_arr['invoice_data'][0]->payment_terms == '1')
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = '50% upfront and 50% on shipping';
+
+            } else if($retutn_arr['invoice_data'][0]->payment_terms == '100')
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = '100% on Shipping';
+            } else if($retutn_arr['invoice_data'][0]->payment_terms == '15')
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = 'Net 15';
+
+            } else if($retutn_arr['invoice_data'][0]->payment_terms == '30')
+
+            {
+                $retutn_arr['invoice_data'][0]->payment_terms = 'Net 30';
+            } else {
+                $retutn_arr['invoice_data'][0]->payment_terms = 'No Terms';
+            }
+
+           
+            
+
+            $order_array = array('id'=>$order_id,'company_id' => $company_id);
+
+            $order_data_all = $this->order->orderDetail($order_array);
+            $order_data =  $order_data_all['order']; 
 
 
+//            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
              if(empty($order_data))
             {
 
@@ -152,8 +179,36 @@ class InvoiceController extends Controller {
         }
         else
         {
-            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+            //$order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
+
+            $order_array = array('id'=>$order_id,'company_id' => $company_id);
+
+            $order_data_all = $this->order->orderDetail($order_array);
+            $order_data =  $order_data_all['order']; 
+
+
             $retutn_arr['invoice_data'] = array();
+        }
+
+
+         if(!empty($order_data))
+        {   
+                
+            
+                if($order_data[0]->date_shipped != '0000-00-00') {
+                    $order_data[0]->date_shipped = date("m/d/Y", strtotime($order_data[0]->date_shipped));
+                }
+                else {
+                    $order_data[0]->date_shipped = '';
+                }
+
+                if($order_data[0]->in_hands_by != '0000-00-00') {
+                    $order_data[0]->in_hands_by = date("m/d/Y", strtotime($order_data[0]->in_hands_by));
+                }
+                else {
+                    $order_data[0]->in_hands_by = '';
+                }
+                
         }
 
 
@@ -209,8 +264,26 @@ class InvoiceController extends Controller {
 
         foreach ($all_design as $design) {
             $data = array('company_id' => $company_id,'id' => $design->id);
-            $design->positions = $this->order->getDesignPositionDetail($data);
+            $pos_array = $this->order->getDesignPositionDetail($data);
+            
+          
+             $design->positions = array_chunk($pos_array['order_design_position'], 2);
+             
+
             $productData = $this->product->designProduct($data);
+
+
+            
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
+            
+            $total_product_qnty = 0;
+            foreach ($size_data as $size) {
+                $total_product_qnty += $size->qnty;
+               
+            }
+            
+            $design->total_product_qnty = $total_product_qnty;
+
             
             if(!empty($productData['productData'])) {
                 $design->products = $productData['productData'];    
@@ -221,12 +294,17 @@ class InvoiceController extends Controller {
             }
         }
 
+       
+
         $retutn_arr['all_design'] = $all_design;
+        //print_r($retutn_arr);exit;
 
         if($type == 1)
         {
             return $retutn_arr;
         }
+
+
 
         $response = array(
                                 'success' => 1, 
@@ -409,7 +487,7 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-    public function getNoQuickbook(){
+public function getNoQuickbook(){
         $post = Input::all();
         $client_id=$post['company_id'];
         
@@ -471,9 +549,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->totalSales=round($retArray[0]->totalSales, 2);
-        $tempFigure=explode(".", $retArray[0]->totalSales);
-        $retArray[0]->totalSales=$tempFigure;
+        $retArray[0]->totalSales=round($retArray[0]->totalSales, 0);
+        //$tempFigure=explode(".", $retArray[0]->totalSales);
+        //$retArray[0]->totalSales=$tempFigure;
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
@@ -504,9 +582,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->totalUnpaid=round($retArray[0]->totalUnpaid, 2);
-        $tempFigure=explode(".", $retArray[0]->totalUnpaid);
-        $retArray[0]->totalUnpaid=$tempFigure;
+        $retArray[0]->totalUnpaid=round($retArray[0]->totalUnpaid, 0);
+        //$tempFigure=explode(".", $retArray[0]->totalUnpaid);
+        //$retArray[0]->totalUnpaid=$tempFigure;
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
@@ -548,9 +626,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->avgOrderAmount=round($retArray[0]->avgOrderAmount, 2);
-        $tempFigure=explode(".", $retArray[0]->avgOrderAmount);
-        $retArray[0]->avgOrderAmount=$tempFigure;
+        $retArray[0]->avgOrderAmount=round($retArray[0]->avgOrderAmount, 0);
+        //$tempFigure=explode(".", $retArray[0]->avgOrderAmount);
+        //$retArray[0]->avgOrderAmount=$tempFigure;
 
         // Fetching average number of items per invoiced
         if(isset($post['sales_id']) && $post['sales_id']!=0){
@@ -606,9 +684,9 @@ class InvoiceController extends Controller {
             {
                 $order_design['total_unit'] = $total_unit;
                 $countOrders = count(array_unique($orderIDs));
-                $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,2);
-                $tempAvg=explode(".", $retArray[0]->avgOrderItems);
-                $retArray[0]->avgOrderItems=$tempAvg;
+                $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,0);
+                //$tempAvg=explode(".", $retArray[0]->avgOrderItems);
+                //$retArray[0]->avgOrderItems=$tempAvg;
             }
         }
 
@@ -656,15 +734,18 @@ class InvoiceController extends Controller {
         $post = Input::all();
         $client_id=$post['company_id'];
 
+        $estimate = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimate_id=$estimate[0]->id;
+        
+        $retArray = DB::table('invoice as i')
+        ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
+        ->leftJoin('orders as o','o.id','=','i.order_id')
+        ->leftJoin('client as c','c.client_id','=','o.client_id')
+        ->leftJoin('users as u','u.id','=','c.company_id')
+        ->where('u.id','=',$client_id);
+
         if( (isset($post['sales_id']) && $post['sales_id']!=0) || (isset($post['duration']) && $post['duration']!=0) ){
             $sales_id=$post['sales_id'];
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id);
-
             if(isset($post['sales_id']) && $post['sales_id']!=0){
                 $retArray = $retArray->where('o.sales_id','=',$sales_id);
             }
@@ -673,29 +754,18 @@ class InvoiceController extends Controller {
                 if($post['duration']=='1'){
                     $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
                 }else if($post['duration']=='2'){
-                    $duration='';
+                    $retArray = $retArray->where(DB::raw('WEEK(i.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
                 }else if($post['duration']=='3'){
-                    $duration='';
+                    $retArray = $retArray->where(DB::raw('MONTH(i.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
                 }else if($post['duration']=='4'){
                     $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
                 }
             }
-            $retArray = $retArray->where('o.is_paid','=','0')
-            ->where('o.grand_total','>','o.total_payments')
-            ->where('o.approval_id','=',2477)
-            ->get();
-        }else{
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.is_paid','=','0')
-            ->where('o.grand_total','>','o.total_payments')
-            ->where('o.approval_id','=',2477)
-            ->get();    
         }
+        $retArray = $retArray->where('o.is_paid','=','0')
+        ->where('o.grand_total','>','o.total_payments')
+        ->where('o.approval_id','=',$estimate_id)
+        ->get();
 
         if(empty($retArray))
         {
@@ -705,9 +775,9 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $retArray[0]->totalEstimated=round($retArray[0]->totalEstimated, 2);
-        $tempFigure=explode(".", $retArray[0]->totalEstimated);
-        $retArray[0]->totalEstimated=$tempFigure;
+        $retArray[0]->totalEstimated=round($retArray[0]->totalEstimated, 0);
+        //$tempFigure=explode(".", $retArray[0]->totalEstimated);
+        //$retArray[0]->totalEstimated=$tempFigure;
         $response = array(
             'success' => 1, 
             'message' => GET_RECORDS,
@@ -719,8 +789,9 @@ class InvoiceController extends Controller {
     public function getComparison(){
         $post = Input::all();
         $client_id=$post['company_id'];
+        $companyYear = $this->common->GetTableRecords('staff',array('user_id' => $client_id, 'status'=>'1'),array(),0,0,'gross_year');
         $year1=$post['comparisonPeriod1'];
-        $year2=$post['comparisonPeriod2'];
+        $year2=$companyYear[0]->gross_year;
         
         $retArray = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.grand_total) as totalEstimated'))
@@ -742,9 +813,11 @@ class InvoiceController extends Controller {
             ); 
            return response()->json(["data" => $response]);
         }
-        $amountCurrent=round($retArray[0]->totalEstimated, 2);
-        $tempFigure=explode(".", $amountCurrent);
-        $retArray[0]->totalEstimated=$tempFigure;
+        $amountCurrent=round($retArray[0]->totalEstimated, 0);
+        //$tempFigure=explode(".", $amountCurrent);
+        //$retArray[0]->totalEstimated=$tempFigure;
+        $retArray[0]->totalEstimated=$amountCurrent;
+        $retArray[0]->year2=$year2;
 
         $retArrayPrevious = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.grand_total) as totalEstimatedPrevious'))
@@ -764,13 +837,145 @@ class InvoiceController extends Controller {
            return response()->json(["data" => $response]);
         }*/
         if(!empty($retArrayPrevious)){
-            $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 2);
+            $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 0);
             $retArray[0]->totalEstimatedPrevious=$amountPrevious;
             if($amountPrevious!='0.00'){
-                $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),2)-100;    
+                $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),0)-100;    
             }else{
                 $retArray[0]->percentDifference = 0;
             }
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getUnshipped(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        
+        $retArray = DB::table('invoice as i')
+            ->select(DB::raw('SUM(o.balance_due) as totalUnshipped'), DB::raw('COUNT(i.id) as totalInvoice') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('shipping as s','s.order_id','=','o.id')   
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('s.shipping_status','=','1')
+            ->where('o.is_paid','=','0')
+            ->where('o.grand_total','>','o.total_payments')
+            ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->totalUnshipped=round($retArray[0]->totalUnshipped, 0);
+        /*$tempFigure=explode(".", $retArray[0]->totalUnpaid);
+        $retArray[0]->totalUnpaid=$tempFigure;*/
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+    
+    public function getFullShipped(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+
+        if((isset($post['duration']) && $post['duration']!=0)){
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('COUNT(i.id) as totalShipped') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('shipping as s','s.order_id','=','o.id')   
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.date_shipped','>','s.fully_shipped');
+
+            if($post['duration']=='1'){
+                $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
+            }else if($post['duration']=='2'){
+                $retArray = $retArray->where(DB::raw('WEEK(i.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
+            }else if($post['duration']=='3'){
+                $retArray = $retArray->where(DB::raw('MONTH(i.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
+            }else if($post['duration']=='4'){
+                $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
+            }
+            $retArray = $retArray->where('s.shipping_status','=','2')
+            ->get();
+        }else{
+            $retArray = DB::table('invoice as i')
+            ->select(DB::raw('COUNT(i.id) as totalShipped') )
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('shipping as s','s.order_id','=','o.id')   
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.date_shipped','>','s.fully_shipped')
+            ->where('s.shipping_status','=','2')
+            ->get();    
+        }
+
+        
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+        $retArray[0]->totalShipped=round($retArray[0]->totalShipped, 0);
+        /*$tempFigure=explode(".", $retArray[0]->totalUnpaid);
+        $retArray[0]->totalUnpaid=$tempFigure;*/
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getProduction(){
+        $post = Input::all();
+        $client_id=$post['company_id'];
+        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
+        $production_id=$production[0]->id;
+
+        $retArray = DB::table('invoice as i')
+        ->select(DB::raw('COUNT(i.id) as totalProduction'))
+        ->leftJoin('orders as o','o.id','=','i.order_id')
+        ->leftJoin('client as c','c.client_id','=','o.client_id')
+        ->leftJoin('users as u','u.id','=','c.company_id')
+        ->where('u.id','=',$client_id);
+
+        if(isset($post['sales_id']) && $post['sales_id']!=0){
+            $sales_id=$post['sales_id'];
+            $retArray = $retArray->where('o.sales_id','=',$sales_id);
+        }
+
+        $retArray = $retArray->where('o.approval_id','=',$production_id)
+        ->get();
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
         }
 
         $response = array(

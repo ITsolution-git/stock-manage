@@ -22,16 +22,14 @@
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">
-                        123 <!-- <span class="dash-btwn-txt">sales <br />totalling</span>$45,789 <sup>00</sup> --></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{productionTotal}}</div>
                 </md-card-content>
                 <div class="dash-footer-box">
                     <span class="global-labels">Filter by</span>
                     <div class="dash-footer-filter">
-                        <md-select aria-label="Filter By" ng-model="orderfilterbox" class="global-labels">
-                            <md-option value="0" selected>sales Member</md-option>
-                            <md-option value="1">User</md-option>
-                            <md-option value="2">admin</md-option>
+                        <md-select aria-label="Estimates By" ng-model="productionPersonName" ng-change="getProductionSalesMan(productionPersonName)" class="global-labels">
+                            <md-option value="0" selected>Sales Member</md-option>
+                            <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                         </md-select>
                     </div>    
                 </div>
@@ -48,7 +46,7 @@
                     </div>-->
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{salesClosed1 | currency : $ : 0}}<sup>{{salesClosed2}}</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{salesClosed | currency : $ : 0}}</div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box">
@@ -67,11 +65,11 @@
                         Estimates
                     </md-card-title-text>
                     <div ng-if="po_data.complete==0">
-                        <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
+                        <a class="common-header-links">EDIT</a>
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">{{estimatedTotal}} | {{estimated1 | currency : $ : 0}}<sup>{{estimated2}}</sup></span>
+                        <div class="center-num"><span class="num-style1 text-center">{{estimatedTotal}} | {{estimated | currency : $ : 0}}</span>
                         <span class="dash-btwn-txt comp-report-txt">Estimates | Revenue</span>
                         </div>
                 </md-card-content>
@@ -106,15 +104,12 @@
                     <md-card-title-text class="md-title">
                         Yearly Gross Compare
                     </md-card-title-text>
-                    <div ng-if="po_data.complete==0">
-                        <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
-                    </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
                     <div class="center-num">
-                        <span class="num-style1 text-center">{{estimatedCurrent1 | currency : $ : 0}}<sup>{{estimatedCurrent2}}</sup></span>
+                        <span class="num-style1 text-center">{{estimatedCurrent | currency : $ : 0}}</span>
                         <span class="dash-btwn-txt green-txt"><i class="fa fa-caret-up"></i> {{estimatedComparisonPercent}}%</span>
-                        <span class="dash-btwn-txt comp-report-txt">{{estimatedPrevious | currency : $ : 2}} : Year - {{estimatedComparisonPeriod}}</span>
+                        <span class="dash-btwn-txt comp-report-txt">{{estimatedPrevious | currency : $ : 0}} : Year - {{estimatedComparisonPeriod}}</span>
                     </div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
@@ -132,7 +127,7 @@
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems1}}<sup ng-show="avgItems2 != '0'">{{avgItems2}}</sup> |Amount {{avgAmount1 | currency : $ : 0}}<sup>{{avgAmount2}}</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}} |Amount {{avgAmount | currency : $ : 0}}</div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box text-center">
@@ -169,7 +164,7 @@
                 <md-card-content class="center-num-box box-zerospace">
                     <div class="center-num">
                         <div ng-repeat="newOrders in latestOrders" class="dash-btwn-txt comp-report-txt dash-latest-order layout-padding">
-                            <div flex=20 class="box-zerospace text-left global-labels">{{newOrders.order_id}}</div>
+                            <div flex=20 class="cursor-p box-zerospace text-left global-labels" ui-sref="app.order.order-info({id:newOrders.order_id})" href="/order/order-info/{{newOrders.order_id}}">{{newOrders.order_id}}</div>
                             <div flex=50 class="box-zerospace text-left">{{newOrders.client_company}}</div>
                             <div flex=30 class="box-zerospace text-right">{{newOrders.grand_total | currency : $ : 2}}</div>
                         </div>
@@ -188,10 +183,10 @@
                             <span class="md-title">On Time In Full</span>
                         </md-card-header-text>
                         <md-menu>
-                            <md-button aria-label="ID Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            <md-button aria-label="ID Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
                             </md-button>
-                            <md-menu-content width="4"  ng-click="vm.editCompanyInfo($event,'tax_form')">
+                            <md-menu-content width="4">
                                 <md-menu-item>
                                     <md-button>
                                         Edit
@@ -201,9 +196,22 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">
-                        89</div>
+                        <div class="center-num"><span class="num-style1 text-center">{{fullshippedTotal}}</div>
                     </md-card-content>
+                    <div class="dash-footer-box text-center">
+                        <div flex=100 class="box-zerospace">
+                            <span class="global-labels">Filter by</span>
+                            <div class="dash-footer-filter">
+                                <md-select aria-label="Filter By" ng-model="fullDuration" ng-change="getFullOrdersDuration(fullDuration)" class="global-labels">
+                                <md-option value="0" selected>All Time</md-option>
+                                <md-option value="1">Today</md-option>
+                                <md-option value="2">Last Week</md-option>
+                                <md-option value="3">Last Month</md-option>
+                                <md-option value="4">Last Year</md-option>
+                            </md-select>
+                            </div>
+                        </div>
+                    </div>
                 </md-card>
             </div>
             <div flex-xs flex-gt-xs="25" layout="column">
@@ -213,10 +221,10 @@
                             <span class="md-title">Orders with Balances</span>
                         </md-card-header-text>
                         <md-menu>
-                            <md-button aria-label="Rate Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            <md-button aria-label="Rate Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
                             </md-button>
-                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'tax_form')">
+                            <md-menu-content width="4">
                                 <md-menu-item>
                                     <md-button>
                                         Edit
@@ -226,7 +234,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} | {{unpaid1 | currency : $ : 0}}<sup>{{unpaid2}}</sup></span></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} | {{unpaid | currency : $ : 0}}</span></div>
                     </md-card-content>
                 </md-card>
             </div>
@@ -237,10 +245,10 @@
                             <span class="md-title">Orders not send to Quickbooks</span>
                         </md-card-header-text>
                         <md-menu>
-                            <md-button aria-label="Tax Exempt Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            <md-button aria-label="Tax Exempt Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
                             </md-button>
-                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'tax_form')">
+                            <md-menu-content width="4">
                                 <md-menu-item>
                                     <md-button>
                                         Edit
@@ -261,10 +269,10 @@
                             <span class="md-title">Orders to be shipped</span>
                         </md-card-header-text>
                         <md-menu>
-                            <md-button aria-label="Document Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            <md-button aria-label="Document Options" class="md-icon-button">
+                                <!--<md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>-->
                             </md-button>
-                            <md-menu-content width="4" ng-click="EditTaxDoc()">
+                            <md-menu-content width="4">
                                 <md-menu-item>
                                     <md-button>
                                         Edit
@@ -274,7 +282,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span  class="num-style1">45</span></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{unshippedTotal}} | {{unshipped | currency : $ : 0}}</sup></div>
                     </md-card-content>
                 </md-card>
             </div>

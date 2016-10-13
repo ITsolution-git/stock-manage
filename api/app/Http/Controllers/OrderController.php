@@ -2346,6 +2346,9 @@ class OrderController extends Controller {
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array());
         $qb_id = $qb_data[0]->qb_id;
         $order_id = $qb_data[0]->order_id;
+        if(isset($post['company_id'])){
+          $company_id=$post['company_id'];
+        }
 
         if(isset($post['invoice_id'])){
 
@@ -2373,7 +2376,9 @@ class OrderController extends Controller {
               if($retArray[0]->grand_total > $retArray[0]->totalAmount){
                   $amt=array('is_paid' => '0');
               }else{
-                  $amt=array('is_paid' => '1', 'approval_id' => 2885);
+                  $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $company_id, 'slug'=>568),array(),0,0,'id');
+                  $paid_id=$paid[0]->id;
+                  $amt=array('is_paid' => '1', 'approval_id' => $paid_id);
               }
           }else{
               $amt_data = $this->common->GetTableRecords('orders',array('id' => $order_id),array());

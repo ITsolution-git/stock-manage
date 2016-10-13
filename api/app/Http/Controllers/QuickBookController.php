@@ -50,6 +50,8 @@ class QuickBookController extends Controller
 
             $this->is_sandbox = false;
             $this->QBO_DSN = "mysqli://stokkuplive:Amren341221@stokkuplive.cagpmtmc0vub.us-east-1.rds.amazonaws.com/stokkuplive";
+            $result[0]->consumer_key = 'qyprdhrgHQpxfIujnPJETAWGSYNaTm';
+            $result[0]->consumer_secret_key = 'C86wTh5ZMQneweVfX33cYSKm6vnvx4Bbcm9kE2Wi';
         }
 
 
