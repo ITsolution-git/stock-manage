@@ -2328,6 +2328,11 @@ class OrderController extends Controller {
          } else {
            $setDate  = date('Y-m-d');
          }
+
+         $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
+         $ack_id=$ack[0]->id;
+         $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
+
          
         $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment']);
         $id = $this->common->InsertRecords('invoice',$orderData);
@@ -2452,6 +2457,7 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
+
          if($post['payment'] == '15') {
             $setDate  = date('Y-m-d', strtotime("+15 days"));
 
@@ -2461,6 +2467,13 @@ class OrderController extends Controller {
          } else {
            $setDate  = date('Y-m-d');
          }
+
+          $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
+          $ack_id=$ack[0]->id;
+
+          $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
+
+
          
         $this->common->UpdateTableRecords('invoice',array('id' => $post['invoice_id']),array('payment_due_date' => $setDate,'payment_terms' => $post['payment']));
 
