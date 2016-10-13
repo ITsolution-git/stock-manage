@@ -14,16 +14,16 @@
 
         $scope.NoImage = AllConstant.NoImage;
         $scope.valid_phone = AllConstant.VALID_PHONE;
+        $scope.currentyear = AllConstant.currentyear;
 
-
-   
+    
     $scope.company_id =sessionService.get("company_id");
     $scope.user_id = sessionService.get("user_id");
     $scope.role_slug = sessionService.get('role_slug');
     $scope.company_name = sessionService.get('company_name');
     
 
-
+    //console.log($scope.role_slug);
     $scope.profile_id = $scope.company_id;
     if($scope.role_slug=='CA')
     {
@@ -49,7 +49,13 @@
             }
         });
 
+       $scope.YearRange ={};
+       for(var i=$scope.currentyear; i>1970; i--)
+       {
+            $scope.YearRange[i] = i;
+       }
 
+       //console.log($scope.YearRange);
         /**
          * Close dialog
          */

@@ -214,6 +214,41 @@ class ShippingController extends Controller {
 
         $result = $this->shipping->shippingDetail($data);
         
+        if($result['shipping'][0]->shipping_by != '0000-00-00' && $result['shipping'][0]->shipping_by != '') {
+            $result['shipping'][0]->shipping_by = date("n/d/Y", strtotime($result['shipping'][0]->shipping_by));
+        } else {
+            $result['shipping'][0]->shipping_by = '';
+        }
+        if($result['shipping'][0]->in_hands_by != '0000-00-00' && $result['shipping'][0]->in_hands_by != '') {
+            $result['shipping'][0]->in_hands_by = date("n/d/Y", strtotime($result['shipping'][0]->in_hands_by));
+        } else {
+            $result['shipping'][0]->shipping_by = '';
+        }
+        if($result['shipping'][0]->date_shipped != '0000-00-00' && $result['shipping'][0]->date_shipped != '') {
+            $result['shipping'][0]->date_shipped = date("n/d/Y", strtotime($result['shipping'][0]->date_shipped));
+        } else {
+            $result['shipping'][0]->date_shipped = '';
+        }
+        if($result['shipping'][0]->fully_shipped != '0000-00-00' && $result['shipping'][0]->fully_shipped != '') {
+            $result['shipping'][0]->fully_shipped = date("n/d/Y", strtotime($result['shipping'][0]->fully_shipped));
+        } else {
+            $result['shipping'][0]->fully_shipped = '';
+        }
+
+        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
+        {
+            $result['shipping'][0]->shipping_status = 1;
+        }
+        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 2;
+        }
+        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 3;
+        }
+
+        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
 
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
@@ -400,7 +435,19 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
+        $company_detail = json_decode($_POST['company_detail']);
+        $company_id = $company_detail[0]->id;
+
         $shipping['shipping'] = json_decode($post['shipping']);
+
+        $shipping['company_detail'] = $this->common->getCompanyDetail($company_id);
+
+        $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
+
+        if($shipping['company_detail'][0]->photo != '')
+        {
+            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
+        }
 
         if($shipping['shipping']->in_hands_by != '0000-00-00') {
             $shipping['shipping']->in_hands_by = date("m/d/Y", strtotime($shipping['shipping']->in_hands_by));
@@ -415,102 +462,141 @@ class ShippingController extends Controller {
             $shipping['shipping']->shipping_by = '';
         }
 //        $shipping['shipping_type'] = json_decode($post['shipping_type']);
-        $shipping['shipping_items'] = json_decode($post['shipping_items']);
-        $company_detail = json_decode($_POST['company_detail']);
-        $shipping_boxes = json_decode($post['shipping_boxes']);
 
-        $company_id = $company_detail[0]->id;
-
-        $shipping['company_detail'] = $this->common->getCompanyDetail($company_id);
-
-        $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
-
-        if($shipping['company_detail'][0]->photo != '')
+        if($post['print_type'] == 'report')
         {
-            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
+            $shipping['shipping_items'] = $this->shipping->getshippedProductsByOrder($shipping['shipping']->order_id);
+
+            $total_product_qnty = 0;
+
+            foreach ($shipping['shipping_items'] as $items) {
+                
+                $items->sizes = $this->shipping->getItemsByProductAddress($items->product_address_id);
+                $items->total_size_qnty = 0;
+                foreach ($items->sizes as $sizedata) {
+                    $items->total_size_qnty += $sizedata->qnty;
+                }
+                $total_product_qnty += $items->total_size_qnty;
+            }
+
+            $other_data['total_product_qnty'] = $total_product_qnty;
+            $shipping['other_data'] = $other_data;
+
+            $shipping_data = $this->common->GetTableRecords('shipping',array('order_id'=>$shipping['shipping']->order_id));
+            
+            foreach ($shipping_data as $row) {
+                $row->shipping_boxes = $this->shipping->getShippingBoxes(array('company_id'=>$company_id,'shipping_id'=>$row->id));
+
+                $address_data = $this->shipping->getShipToAddress($row->address_id);
+
+                $row->main_name = $address_data[0]->description;
+                $row->address = $address_data[0]->address;
+                $row->address2 = $address_data[0]->address2;
+                $row->attn = $address_data[0]->attn;
+                $row->city = $address_data[0]->city;
+                $row->state = $address_data[0]->code;
+                $row->zipcode = $address_data[0]->zipcode;
+                $row->phone = $address_data[0]->phone;
+                $row->country = $address_data[0]->country;
+
+                $actual_total = 0;
+                $total_qnty = 0;
+                $total_md = 0;
+                $total_spoil = 0;
+
+                $color_all_data = array();
+                foreach ($row->shipping_boxes as $row1) {
+
+                    $color_all_data[$row1->color_name][$row1->size] = $row1->size;
+                    $color_all_data[$row1->color_name]['desc'] = strip_tags($row1->product_desc);
+                    $color_all_data[$row1->color_name][$row1->size] = $row1->box_qnty;
+
+                    $total_qnty += $row1->box_qnty;
+                    $actual_total += $row1->actual;
+                    $total_md += $row1->md;
+                    $total_spoil += $row1->spoil;
+                }
+
+                if($row->shipping_type_id == 1) {
+                    $row->shipping_type = 'UPS';
+                }
+                else if($row->shipping_type_id == 2) {
+                    $row->shipping_type = 'FEDEX';
+                }
+                else if($row->shipping_type_id == 3) {
+                    $row->shipping_type = 'Local Messanger';
+                }
+                else {
+                    $row->shipping_type = '';   
+                }
+
+                $other_data['total_box'] = count($row->shipping_boxes);
+                $other_data['total_pieces'] = $actual_total;
+
+                $other_data['total_qnty'] = $total_qnty;
+                $other_data['total_md'] = $total_md;
+                $other_data['total_spoil'] = $total_spoil;
+                $other_data['total_product_qnty'] = $total_product_qnty;
+
+                $row->other_data = $other_data;
+            }
+            $shipping['shipping_data'] = $shipping_data;
         }
+        else
+        {
+            $shipping['shipping_items'] = json_decode($post['shipping_items']);
 
-        $actual_total = 0;
-        $xs_qnty = 0;
-        $s_qnty = 0;
-        $m_qnty = 0;
-        $l_qnty = 0;
-        $xl_qnty = 0;
-        $xxl_qnty = 0;
-        $xxxl_qnty = 0;
-        $total_qnty = 0;
-        $total_md = 0;
-        $total_spoil = 0;
+            $shipping_boxes = json_decode($post['shipping_boxes']);
+
+            $actual_total = 0;
+            $total_qnty = 0;
+            $total_md = 0;
+            $total_spoil = 0;
 
 
-         $color_all_data = array();
-        foreach ($shipping_boxes as $row) {
+            $color_all_data = array();
+            foreach ($shipping_boxes as $row) {
 
-            $color_all_data[$row->color_name][$row->size] = $row->size;
-            $color_all_data[$row->color_name]['desc'] = strip_tags($row->product_desc);
-            $color_all_data[$row->color_name][$row->size] = $row->box_qnty;
+                $color_all_data[$row->color_name][$row->size] = $row->size;
+                $color_all_data[$row->color_name]['desc'] = strip_tags($row->product_desc);
+                $color_all_data[$row->color_name][$row->size] = $row->box_qnty;
 
-            $total_qnty += $row->box_qnty;
-            $actual_total += $row->actual;
-            $total_md += $row->md;
-            $total_spoil += $row->spoil;
-           
+                $total_qnty += $row->box_qnty;
+                $actual_total += $row->actual;
+                $total_md += $row->md;
+                $total_spoil += $row->spoil;
+            }
+
+            $total_product_qnty = 0;
+
+            foreach ($shipping['shipping_items'] as $items) {
+                
+                $items->sizes = $this->shipping->getItemsByProductAddress($items->product_address_id);
+                $items->total_size_qnty = 0;
+                foreach ($items->sizes as $sizedata) {
+                    $items->total_size_qnty += $sizedata->qnty;
+                }
+                $total_product_qnty += $items->total_size_qnty;
+            }
+
+            $other_data['total_box'] = count($shipping_boxes);
+            $other_data['total_pieces'] = $actual_total;
+
+            $other_data['total_qnty'] = $total_qnty;
+            $other_data['total_md'] = $total_md;
+            $other_data['total_spoil'] = $total_spoil;
+            $other_data['total_product_qnty'] = $total_product_qnty;
+
+            $shipping['shipping_boxes'] = $shipping_boxes;
+            $shipping['other_data'] = $other_data;
+            $shipping['color_all_data'] = $color_all_data;
         }
-      
-       /*
-        foreach ($shipping_boxes as $row) {
-
-            if($row->size == 'XS') {
-                $xs_qnty += $row->qnty;
-            }
-            else if($row->size == 'S') {
-                $s_qnty += $row->qnty;
-            }
-            else if($row->size == 'M') {
-                $m_qnty += $row->qnty;
-            }
-            else if($row->size == 'L') {
-                $l_qnty += $row->qnty;
-            }
-            else if($row->size == 'XL') {
-                $xl_qnty += $row->qnty;
-            }
-            else if($row->size == '2XL') {
-                $xxl_qnty += $row->qnty;
-            }
-            else if($row->size == '3XL') {
-                $xxxl_qnty += $row->qnty;
-            }
-
-           
-        }*/
-
-        $other_data['total_box'] = count($shipping_boxes);
-        $other_data['total_pieces'] = $actual_total;
-
-       /* $other_data['xs_qnty'] = $xs_qnty;
-        $other_data['s_qnty'] = $s_qnty;
-        $other_data['m_qnty'] = $m_qnty;
-        $other_data['l_qnty'] = $l_qnty;
-        $other_data['xl_qnty'] = $xl_qnty;
-        $other_data['2xl_qnty'] = $xxl_qnty;
-        $other_data['3xl_qnty'] = $xxxl_qnty;*/
-
-        $other_data['total_qnty'] = $total_qnty;
-        $other_data['total_md'] = $total_md;
-        $other_data['total_spoil'] = $total_spoil;
-
-        $shipping['shipping_boxes'] = $shipping_boxes;
-        $shipping['other_data'] = $other_data;
-        $shipping['color_all_data'] = $color_all_data;
-
+        
         if($post['print_type'] == 'manifest')
         {
-        
             PDF::AddPage('P','A4');
             PDF::writeHTML(view('pdf.shipping_manifest',$shipping)->render());
             PDF::Output('shipping_manifest.pdf');
-
         }
         else if($post['print_type'] == 'report')
         {
@@ -520,7 +606,7 @@ class ShippingController extends Controller {
         }
         else if($post['print_type'] == 'label')
         {
-            PDF::AddPage('P','A4');
+            PDF::AddPage('L','A5');
             PDF::writeHTML(view('pdf.shipping_label',$shipping)->render());
             PDF::Output('shipping_label.pdf');
         }
@@ -764,20 +850,33 @@ class ShippingController extends Controller {
         $data['overview'] = 1;
 
         $result = $this->shipping->shippingDetail($data);
-       
+        
+        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
+        {
+            $result['shipping'][0]->shipping_status = 1;
+        }
+        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 2;
+        }
+        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
+        {
+            $result['shipping'][0]->shipping_status = 3;
+        }
 
-         if(empty($result['shipping']))
-            {
-                  $response = array(
-                        'success' => 0, 
-                        'message' => "No Records Found",
-                        'shippingBoxes' => '',
-                        'records' => '',
-                        'shippingItems' => ''
-                    ); 
-                   return response()->json(["data" => $response]);
-            }
+        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
 
+        if(empty($result['shipping']))
+        {
+              $response = array(
+                    'success' => 0, 
+                    'message' => "No Records Found",
+                    'shippingBoxes' => '',
+                    'records' => '',
+                    'shippingItems' => ''
+                ); 
+               return response()->json(["data" => $response]);
+        }
 
         $boxes = $this->shipping->getShippingBoxes($data);
 

@@ -506,6 +506,8 @@ public function saveColorSize($post)
                 else if($combine_array['order_design_position'][$key]->image_4_url_photo != '')
                 {
                   $value->position_image = $combine_array['order_design_position'][$key]->image_4_url_photo;
+                } else {
+                    $value->position_image = NOIMAGE;
                 }
             }
             $combine_array['total_pos_qnty'] = $total_pos_qnty;

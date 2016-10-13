@@ -4,13 +4,8 @@
   <meta charset="utf-8">
   <meta name="description" content="">
   <title>Shipping Label</title>
-
   <style type="text/css">
-    body {
-      margin: 0;
-      padding: 0;
-      border: 0 none;
-    }
+    
     div.boxbrdr {
       border:1px solid #000000;
       color: #000000;
@@ -23,113 +18,172 @@
       width: 50px !important;
       height: 50px !important;
     }
-    p {
-      margin:0;
-      padding:0;
-      font-size: 10px;
-      line-height: 14px;
-    }
-    th {
-      line-height: 19px;
-    }
-    td {
-      line-height: 19px;
-    } 
-  </style>
-</head>
-<table border="0" cellpadding="0" cellspacing="0" width="100%">    
-    <tr>
-        <td align="left" valign="top" width="100%">          
-            <table border="0" cellpadding="0" cellspacing="0" width="100%">
-                <tr>
-                    <td><img src="{{$company_detail[0]->photo}}" title="Culture Studio" alt="Culture Studio" height="100px" width="100px"></td>
-                    <td align="center" valign="top" width="50%" class="tableCol">
-                        <span style="font-size:15px; line-height:15px;">
-                            <strong>{{$company_detail[0]->name}}</strong>                
-                        </span><br/>
-                        <span>{{$company_detail[0]->address}}, {{$company_detail[0]->city}}, {{$company_detail[0]->state}}, <br/>
-                          {{$company_detail[0]->country}} - {{$company_detail[0]->zip}}<br />
-                          {{$company_detail[0]->url}}
-                        </span>
-                    </td>
-                    <td align="right" valign="top" width="25%"><p><strong><span>{{$shipping->description}}</span><br />
-                        <span>{{$shipping->address}} {{$shipping->address2}}</span><br />
-                        <span>{{$shipping->city}} {{$shipping->state}} {{$shipping->zipcode}} {{$shipping->country}}</span></strong></p>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
     
-    <tr>
-      <td align="left" valign="top" width="100%">&nbsp;</td>
-    </tr>
+  </style>
 
-    <!-- <tr>
-      <td align="left" valign="top" width="100%">          
-        <table border="0" cellpadding="0" cellspacing="0" width="100%">
-            <tr>
-              <td align="center" valign="top" width="100%"><strong>PO :</strong> </td>
-            </tr>
-          </table>
-        </td>
-    </tr> -->
+</head>
+<body style="padding:0; margin:0">
 
-    <tr>
+<table width="500" align="center" border="0" cellspacing="0" cellpadding="0" style="font-size:10px;">
+<tr>
+<td style="width:100%">
+  <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:11px;">
+      
+      <tr>
       <?php if($shipping->boxing_type == 'Retail')
-      { ?>
-        <td align="left" valign="top" width="100%">        
+      {
+        $count=1;
+        $totalCount=count($shipping_boxes);
+        ?>
+        <td align="left" valign="top" width="100%">
+          @foreach ($shipping_boxes as $box)
+
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <thead class="title">
+                <tr>
+                  <th align="left" valign="top" width="25%"><img src="{{$company_detail[0]->photo}}" title="" alt="" height="100px" width="100px"></th>
+                  <th align="left" valign="top" width="25%">&nbsp;</th>
+                  <th align="right" valign="top" width="50%" style="font-size:11px; line-height:16px;">
+                      <span><strong>{{$shipping->description}}</strong></span><br />
+                      <span>{{$shipping->address}} {{$shipping->address2}}</span><br/>
+                      <span>{{$shipping->city}} {{$shipping->state}}</span><br />
+                      <span>{{$shipping->zipcode}} {{$shipping->country}}</span>
+                  </th>
+                </tr>
+              </thead>
+            </table>
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <thead class="title">
                 <tr>
-                  <th align="left" valign="top" width="49%" style="font-size:16px; line-height:32px;"><span><strong>Description</strong></span></th>
+                  <th align="left" valign="top" width="49%" style="font-size:16px; line-height:32px;"><span><strong>Garment / Item Description</strong></span></th>
                   <th align="left" valign="top" width="2%">&nbsp;</th>
                   <th align="right" valign="top" width="49%" style="font-size:16px; line-height:32px;"><span><strong>Color</strong></span></th>
                 </tr>
               </thead>
               <tbody class="color-grey">
                 <tr>
-                  <td align="left" valign="top" colspan="3" style="border-top:1px solid #000000;">&nbsp;</td>
+                  <td align="left" valign="top" colspan="3">&nbsp;</td>
                 </tr>
-                @foreach ($shipping_boxes as $box)
                 <tr>
+                  <td align="left" valign="middle" colspan="3" style="border-top:1px solid #000000;">&nbsp;</td>
+                </tr>
+                
+                <tr style="height:150px;">
                   <td align="left" valign="top" width="49%" height="10"><span>{{$box->product_name}}</span><br/>
-                    <div class="boxbrdr">3</div>
+                    <div class="boxbrdr">{{$box->box_qnty}}</div>
                   </td>
                   <td align="left" valign="top" width="2%">&nbsp;</td>
                   <td align="right" valign="top" width="49%" height="10"><span>{{$box->color_name}}</span><br/>
                     <div class="boxbrdr">{{$box->size}}</div>
                   </td>
                 </tr>
-                @endforeach
+                <tr>
+                  <td align="left" valign="top" colspan="3">&nbsp;</td>
+                </tr>
+                <tr>
+                  <td align="left" valign="middle" colspan="3"><span><strong>BOX {{$count}} of {{$totalCount}}</strong></span></td>
+                </tr>
               </tbody>
           </table>
+          <?php
+          if($count<$totalCount){
+          ?>
+          <div style="page-break-before: always;"></div>
+          <?php
+          }
+          $count++; ?>
+          @endforeach
         </td>
       <?php
       }
       else
       {
       ?>
-        <td align="left" valign="top" width="100%">        
+        <td  align="left" valign="top" width="100%">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <thead class="title">
+                <tr>
+                  <th align="left" valign="top" width="25%"><img src="{{$company_detail[0]->photo}}" title="" alt="" height="100px" width="100px"></th>
+                  <th align="left" valign="top" width="25%">&nbsp;</th>
+                  <th align="right" valign="top" width="50%" style="font-size:11px; line-height:16px;">
+                      <span><strong>{{$shipping->description}}</strong></span><br />
+                      <span>{{$shipping->address}} {{$shipping->address2}}</span><br/>
+                      <span>{{$shipping->city}} {{$shipping->state}}</span><br />
+                      <span>{{$shipping->zipcode}} {{$shipping->country}}</span>
+                  </th>
+                </tr>
+              </thead>
+            </table>
           <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <thead class="title">
               <tr>
-                <th align="center" valign="top" width="10%" style="border:1px solid #000000;"><strong>Qty.</strong></th>
-                <th align="center" valign="top" width="20%" style="border:1px solid #000000;"><strong>Type</strong></th>
-                <th align="center" valign="top" width="20%" style="border:1px solid #000000;"><strong>Size</strong></th>
-                <th align="center" valign="top" width="20%" style="border:1px solid #000000;"><strong>Color</strong></th>
-                <th align="center" valign="top" width="30%" style="border:1px solid #000000;"><strong>Description</strong></th>
+                <th align="left" valign="top" width="50%" style="border-bottom:1px solid #000000;"><strong>Garment / Item Description</strong></th>
+                <th align="left" valign="top" width="20%" style="border-bottom:1px solid #000000;"><strong>Color</strong></th>
+                <th align="left" valign="top" width="20%" style="border-bottom:1px solid #000000;"><strong>Size</strong></th>
+                <th align="center" valign="top" width="10%" style="border-bottom:1px solid #000000;"><strong>Qty.</strong></th>
               </tr>
             </thead>
             <tbody class="color-grey">
+              <?php
+              $count=1;
+              $page=1;
+              if(count($shipping_boxes)%9==0){
+                  $totalCount=count($shipping_boxes)%9;
+                }else{
+                  $totalCount=(count($shipping_boxes)%9) + 1;
+                }
+              
+              ?>
             @foreach ($shipping_boxes as $box)
               <tr>
-                <td align="center" valign="top" class="brdrBox" width="10%" style="border:1px solid #000000;"> {{$box->boxed_qnty}}</td>
-                <td align="center" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
-                <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->size_group_name}}</td>
-                <td align="left" valign="top" class="brdrBox" width="20%" style="border:1px solid #000000;"> {{$box->color_name}}</td>
-                <td align="left" valign="top" class="brdrBox" width="30%" style="border:1px solid #000000;"> {{$box->product_name}}</td>
+                <td align="left" valign="top" class="brdrBox" width="50%" style="border-bottom:1px solid #000000;">{{$box->product_name}}</td>
+                <td align="left" valign="top" class="brdrBox" width="20%" style="border-bottom:1px solid #000000;">{{$box->color_name}}</td>
+                <td align="left" valign="top" class="brdrBox" width="20%" style="border-bottom:1px solid #000000;">{{$box->size}}</td>
+                <td align="center" valign="top" class="brdrBox" width="10%" style="border-bottom:1px solid #000000;">{{$box->boxed_qnty}}</td>
               </tr>
+              <?php
+              $count++;
+              if($count%9 == 0){
+              ?>
+              
+              <?php
+              $page++;
+              ?>
+          </table>
+              <div style="page-break-before: always;"></div>
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="left" valign="top" width="100%">
+                  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="border-top:none;">
+                  <thead class="title">
+                    <tr>
+                      <th align="left" valign="top" width="25%"><img src="{{$company_detail[0]->photo}}" title="" alt="" height="100px" width="100px"></th>
+                      <th align="left" valign="top" width="25%">&nbsp;</th>
+                      <th align="right" valign="top" width="50%" style="font-size:11px; line-height:16px;" height="100px">
+                          <span><strong>{{$shipping->description}}</strong></span><br />
+                          <span>{{$shipping->address}} {{$shipping->address2}}</span><br/>
+                          <span>{{$shipping->city}} {{$shipping->state}}</span><br />
+                          <span>{{$shipping->zipcode}} {{$shipping->country}}</span>
+                      </th>
+                    </tr>
+                  </thead>
+                </table>
+                </td>
+              </tr>
+                
+                <thead class="title">
+                  <tr>
+                    <th align="left" valign="top" width="50%" style="border-bottom:1px solid #000000;"><strong>Garment / Item Description</strong></th>
+                    <th align="left" valign="top" width="20%" style="border-bottom:1px solid #000000;"><strong>Color</strong></th>
+                    <th align="left" valign="top" width="20%" style="border-bottom:1px solid #000000;"><strong>Size</strong></th>
+                    <th align="center" valign="top" width="10%" style="border-bottom:1px solid #000000;"><strong>Qty.</strong></th>
+                  </tr>
+                </thead>
+                
+              <tbody class="color-grey">
+              <?php
+              }
+              ?>
             @endforeach
             </tbody>
           </table>
@@ -138,6 +192,9 @@
       }
       ?>
     </tr>
+  </table>
+</td>
+</tr>
 </table>
 </body>
 </html>
