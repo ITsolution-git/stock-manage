@@ -546,6 +546,14 @@ class ShippingController extends Controller {
         {
             $shipping['shipping_items'] = json_decode($post['shipping_items']);
 
+            $order_data = $this->common->GetTableRecords('orders',array('id'=>$shipping['shipping']->order_id),array(),0,0,'custom_po');
+
+            if($order_data[0]->custom_po){
+                $shipping['custom_po']=$order_data[0]->custom_po;
+            }else{
+                $shipping['custom_po']='';
+            }
+
             $shipping_boxes = json_decode($post['shipping_boxes']);
 
             $actual_total = 0;
