@@ -489,7 +489,10 @@ class Common extends Model {
           $sec_number = DB::table($table.' as tb')
                             ->where($comp_field,$company_id)
                             ->where('display_number','=','0')
+                            ->orderby('client_id','asc')
                             ->get();
+
+            //echo count($sec_number); die();
             if(count($sec_number)>0) // CHECK THE 0 DATA TO BE RESET
             {
                 foreach ($sec_number as $key=>$value) 
@@ -513,7 +516,7 @@ class Common extends Model {
         
         if(empty($sec_number[0]->disp_number))
         {
-            $lastId= 1; // THERE NO RECORD
+            $lastId= 0; // THERE NO RECORD
         }
         else
         {
