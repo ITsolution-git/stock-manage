@@ -1935,3 +1935,15 @@ md-dialog.task-dialog md-input-container textarea{
 	max-height:150px;
 	overflow-y:scroll;
 }
+.srchstickyright{float: $nofloat;
+    position: fixed;
+    right: $zero;
+    top: 10px;
+    z-index: 100;
+}
+.srchstickyright label{
+	padding-left:15px;
+}
+.srchstickyright md-input-container label:not(.md-no-float):not(.md-container-ignore), .srchstickyright md-input-container .md-placeholder{
+	padding-left:15px;
+}
