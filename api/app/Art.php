@@ -156,11 +156,10 @@ class Art extends Model {
             $client_filter = $post['filter']['client'];
         }
         $admindata = DB::table('order_design_position as odp')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id,misc_type.value as approval,ord.approval_id,ord.id as order_id'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id,ord.approval_id,ord.id as order_id'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
 					->join('artjob_screensets as asc','asc.positions','=','odp.id')
 					->join('order_design as od','od.id','=','odp.design_id')
 					->join('orders as ord','ord.id','=','od.order_id')
-					->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
 					->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
 					->Join('misc_type as mt', 'mt.id', '=', 'odp.position_id')
 					->where('ord.is_delete','=','1')
@@ -177,7 +176,6 @@ class Art extends Model {
 	                        	  ->orWhere('asc.screen_width', 'LIKE', '%'.$search.'%')
 	                        	  ->orWhere('asc.screen_set', 'LIKE', '%'.$search.'%')
 	                        	  ->orWhere('mt.value', 'LIKE', '%'.$search.'%')
-	                        	  ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
 	                        	  ->orWhere('cl.client_company','LIKE', '%'.$search.'%');
 	                    });
 	                }
