@@ -95,8 +95,9 @@ class InvoiceController extends Controller {
                         2=>array('key' => 'o.grand_total', 'name' => 'Invoice $ Amount'),
                         3=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
                         4=>array('key' => '', 'name' => 'Synced with Quickbooks', 'sortable' => false),
-                        5=>array('key' => '', 'name' => '', 'sortable' => false),
-                        6=>array('key' => '', 'name' => 'Option', 'sortable' => false),
+                        5=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                        6=>array('key' => '', 'name' => '', 'sortable' => false), 
+                        7=>array('key' => '', 'name' => 'Option', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);

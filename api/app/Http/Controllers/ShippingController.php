@@ -148,8 +148,9 @@ class ShippingController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Order ID'),
                         1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
-                        3=>array('key' => '', 'name' => '', 'sortable' => false)
+                        2=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        4=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -702,7 +703,8 @@ class ShippingController extends Controller {
             }
             else
             {
-                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+                $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
+                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'display_number' => $display_number,'company_id' => $post['company_id']));
                 $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $product['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
                 $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id'],'distributed_qnty' =>$product['remaining_qnty']));
             }
@@ -754,7 +756,8 @@ class ShippingController extends Controller {
         }
         else
         {
-            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+            $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number));
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
             $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
         }
@@ -806,6 +809,12 @@ class ShippingController extends Controller {
                 $unAssignAddresses[] = $address;
             }
         }
+
+/*        if($shipping_id > 0)
+        {
+            $shipping_data = $this->common->GetTableRecords('shipping',array('id' => $shipping_id),array());
+            $shipping_id = $shipping_data[0]->display_number;
+        }*/
 
         $response = array(
                         'success' => 1,

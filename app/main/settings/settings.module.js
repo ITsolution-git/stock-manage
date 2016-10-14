@@ -233,7 +233,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA','true');
+                        return sessionService.AccessService('CA,AM','true');
                     }
                 },
                 url  : '/approvals',

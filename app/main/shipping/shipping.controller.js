@@ -7,8 +7,19 @@
             .controller('shippingProgressController', shippingProgressController)
             .controller('shippingShippedController', shippingShippedController);
     /** @ngInject */
-    function shippingController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function shippingController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
         
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+
+
         var vm = this;
         vm.searchQuery = "";
         $scope.currentTab = 'wait';
@@ -75,10 +86,33 @@
         {
             $scope.currentTab = 'wait';
         }
+
+         $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
     }
-    function shippingProgressController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function shippingProgressController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
 
         $scope.company_id = sessionService.get('company_id');
+
 
         $scope.init = {
           'count': 10,
@@ -128,10 +162,36 @@
         {
             $scope.currentTab = 'progress';
         }
+
+         $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
     }
-    function shippingShippedController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function shippingShippedController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
         
         $scope.company_id = sessionService.get('company_id');
+
+       
+
+
         $scope.tab = 'shipped';
 
         $scope.init = {
@@ -181,6 +241,28 @@
         $scope.getTab = function(tab)
         {
             $scope.currentTab = 'shipped';
+        }
+
+         $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
         }
     }
 })();
