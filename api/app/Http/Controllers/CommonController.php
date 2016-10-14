@@ -1136,11 +1136,11 @@ class CommonController extends Controller {
                 0=>array('key' => 'ord.id', 'name' => 'Screen Set Name'),
                 1=>array('key' => 'mt.value', 'name' => 'Position'),
                 2=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                4=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
-                5=>array('key' => 'screen_width', 'name' => '#of Screen'),
-                6=>array('key' => 'asc.screen_width', 'name' => 'Frame size'),
-                7=>array('key' => '', 'name' => '','sortable' => false)
+               /* 3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),*/
+                3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
+                4=>array('key' => 'screen_width', 'name' => '#of Screen'),
+                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size'),
+                6=>array('key' => '', 'name' => '','sortable' => false)
                 );
         }
         if($post['filter']['function']=='art_notes') // SCREENSET COLOR NOTE
