@@ -1523,4 +1523,8 @@ md-tabs.stokkup-invoice-tabs {
   -o-box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.4); }
 
+md-dialog.task-dialog md-input-container textarea {
+  max-height: 150px;
+  overflow-y: scroll; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */
