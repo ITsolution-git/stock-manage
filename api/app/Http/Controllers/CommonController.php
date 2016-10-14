@@ -1030,6 +1030,8 @@ class CommonController extends Controller {
                 $post['sorts']['sortBy'] = 'id';
             }
             $result = $this->purchase->getPurchaseNote($post);
+
+
             $header = array(
                 0=>array('key' => 'mt.value', 'name' => 'Position'),
                 1=>array('key' => 'odp.note', 'name' => 'Note Name'),
@@ -1044,15 +1046,36 @@ class CommonController extends Controller {
                 $post['sorts']['sortBy'] = 'po.po_id';
             }
             $result = $this->purchase->ListReceive($post);
+
+            $getAllReceivedata = $this->purchase->getAllReceivedata();
+
+
+            if(empty($result['allData']))
+                {
+                    $result['allData'] = array('No Records found');
+                }
+                else
+                {
+                    foreach($result['allData'] as $data) {
+
+                        if(array_key_exists($data->id, $getAllReceivedata)) {
+                            $data->design_po = $getAllReceivedata[$data->id];
+                        } else {
+                            $data->design_po = array();
+                        }
+                    }
+                }
+
+                
             $header = array(
-                0=>array('key' => 'po.po_id', 'name' => 'RO#'),
-                1=>array('key' => 'ord.id', 'name' => 'Order Id'),
-                2=>array('key' => 'po.po_type', 'name' => 'PO Type'),
-                3=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
-                5=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                6=>array('key' => 'po.date', 'name' => 'Created Date'),
-                7=>array('key' => '', '' => ''),
+               /* 0=>array('key' => 'po.po_id', 'name' => 'RO#'),*/
+                0=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                1=>array('key' => 'po.po_type', 'name' => 'PO Type'),
+                2=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                /*4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),*/
+                3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                4=>array('key' => 'po.date', 'name' => 'Created Date'),
+                5=>array('key' => '', 'name' => 'Operations', 'sortable' => false),
                 );
 
         }

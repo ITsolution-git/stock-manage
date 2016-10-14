@@ -580,7 +580,7 @@ class Purchase extends Model {
                                 ->orWhere('po.date','LIKE', '%'.$search.'%');
                       });
                   	}
-                 $result = $result->GroupBy('po.po_id')
+                 $result = $result->GroupBy('po.order_id')
 				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
 				 ->skip($post['start'])
                  ->take($post['range'])
@@ -607,6 +607,22 @@ class Purchase extends Model {
 		//echo "<pre>"; print_r($result); die();
 		return $returnData;
 	}
+
+	public function getAllReceivedata()
+    {
+        $whereConditions = ['po.complete' => '1'];
+        $listArray = ['po.po_id','po.order_id','po.vendor_id','v.name_company'];
+        $poData = DB::table('purchase_order as po')
+        				->leftJoin('vendors as v','v.id','=','po.vendor_id')
+                        ->select($listArray)
+                        ->where($whereConditions)->get();
+        $allData = array ();
+        foreach($poData as $data) {
+          
+            $allData[$data->order_id][] = $data;
+        }
+        return $allData;
+    }
 
 }
 
