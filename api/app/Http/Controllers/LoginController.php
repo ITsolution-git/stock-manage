@@ -120,6 +120,10 @@ class LoginController extends Controller {
                     Session::put('company_id',  $company[0]->company_id);
                     Session::put('company_name',  $company[0]->company_name);
                     Session::put('profile_photo',  $result[0]->profile_photo);
+                    if($result[0]->reset_password=='1'){
+                        Session::put('reset_password',  $result[0]->reset_password);
+                    }
+                    
                     Session::put('token',  $token);
                     
                     $session['name'] = $result[0]->name;
@@ -134,6 +138,10 @@ class LoginController extends Controller {
                     $session['company_id'] = $company[0]->company_id;
                     $session['company_name'] = $company[0]->company_name;
                     $session['profile_photo'] = $result[0]->profile_photo;
+                    if($result[0]->reset_password=='1'){
+                        $session['reset_password'] = $result[0]->reset_password;
+                    }
+                    
                     
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);

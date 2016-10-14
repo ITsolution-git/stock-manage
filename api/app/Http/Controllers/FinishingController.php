@@ -83,10 +83,10 @@ class FinishingController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'f.id';
+            $post['sorts']['sortBy'] = 'o.display_number';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'f.id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.display_number';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
 
         $result = $this->finishing->getFinishingdata($post);
@@ -127,7 +127,7 @@ class FinishingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.name', 'name' => 'Job Name'),
                         2=>array('key' => 'c.client_company', 'name' => 'Client'),
                         3=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false),

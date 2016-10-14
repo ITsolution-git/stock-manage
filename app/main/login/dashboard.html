@@ -10,7 +10,14 @@
             
         </div>
     </div>
-    <div ng-show="vm.role_slug=='CA'">
+    <div ng-show="showResetPassword" class="simple-table-container stokkup-main-tableview">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" ng-if="vm.role_slug!='SA'" flex=100>
+                Please change your random generated password for security purpose.
+            </div>
+        </div>
+    </div>
+    <div ng-show="vm.role_slug!='SA'">
         <div layout="row" layout="wrap" layout-align="space-between center" class="inner-full-box top-30">
             <md-card class="box-3 firstbox bottom-shadow">
                 <md-card-title>
@@ -126,7 +133,10 @@
                        <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
                     </div>
                 </md-card-title>
-                <md-card-content class="center-num-box box-zerospace dashboard-cards">
+                <!--<md-card-content id="avgItemShow" class="center-num-box box-zerospace dashboard-cards">
+                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}}</div>
+                </md-card-content>-->
+                <md-card-content id="avgAmountShow" class="center-num-box box-zerospace dashboard-cards">
                         <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}} |Amount {{avgAmount | currency : $ : 0}}</div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->

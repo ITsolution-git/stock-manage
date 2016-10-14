@@ -18,7 +18,9 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total,misc_type.value as approval,o.approval_id')];
+
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.display_number,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total,misc_type.value as approval,o.approval_id')];
+
 
         $shippingData = DB::table('orders as o')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
@@ -118,7 +120,6 @@ class Shipping extends Model {
         $returnData['count'] = $count[0]->Totalcount;
 
         return $returnData;
-
 
 	}
 
@@ -250,21 +251,6 @@ class Shipping extends Model {
                                 LEFT JOIN color as c ON pd.color_id = c.id
                                 WHERE po.order_id = '".$order_id."' AND pol.qnty_purchased > 0 AND pd.remaining_qnty > 0 
                                 GROUP BY pd.id ");
-
-/*        $result = DB::table('purchase_order as po')
-                    ->leftJoin('purchase_order_line as pol','po.po_id','=','pol.po_id')
-                    ->leftJoin('purchase_detail as pd','pol.purchase_detail','=','pd.id')
-                    ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
-                    ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
-                    ->leftJoin('products as p','dp.product_id','=','p.id')
-                    ->leftJoin('misc_type as mt','dp.size_group_id','=','mt.id')
-                    ->leftJoin('color as c','pd.color_id','=','c.id')
-                    ->select($listArr)
-                    ->where('po.order_id','=',$order_id)
-                    ->where('pol.qnty_purchased','>','0')
-                    ->GroupBy('pd.id')
-                    ->get();*/
-
         return $result;
     }
 
