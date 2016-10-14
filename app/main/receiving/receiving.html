@@ -26,6 +26,9 @@
                             <td class="">{{purchase.po_type}}</td>
                             <td class="">{{purchase.client_company}}</td>
                             <td class="">{{purchase.name_company}}</td>
+                            <td class=""><md-select aria-label="status" ng-model="purchase.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',purchase.approval_id,purchase.id)" ng-disabled="allow_access == '0'">
+                                    <md-option ng-selected="purchase.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                </md-select></td>
                             <td class=""> {{purchase.date}}</td>
                             <td class="viewbtn"><a class="cursor-p" ui-sref="app.receiving.receivingInfo({id:purchase.po_id})">View</a></td> 
                             <!-- <td class="" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})"> View</td> -->

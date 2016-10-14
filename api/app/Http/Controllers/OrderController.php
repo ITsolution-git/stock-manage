@@ -120,7 +120,7 @@ class OrderController extends Controller {
                         0=>array('key' => 'order.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'order.name', 'name' => 'Job Name'),
                         2=>array('key' => 'client.client_company', 'name' => 'Company'),
-                        3=>array('key' => 'order.approval_id', 'name' => 'Approval'),
+                        3=>array('key' => 'order.approval_id', 'name' => 'Order Status','sortable' => false),
                         4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
                         5=>array('key' => 'null', 'name' => 'Sales Rep', 'sortable' => false),
                         6=>array('key' => 'users.name', 'name' => 'Account Manager', 'sortable' => false),

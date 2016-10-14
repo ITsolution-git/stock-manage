@@ -18,13 +18,16 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.display_number,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
+
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.display_number,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total,misc_type.value as approval,o.approval_id')];
+
 
         $shippingData = DB::table('orders as o')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                         ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
                         ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
                         ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
+                        ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                         ->select($listArray)
                         ->where('o.is_complete','=','1')
                         ->where('po.is_active','=','1')
@@ -52,6 +55,7 @@ class Shipping extends Model {
                             $shippingData = $shippingData->Where(function($query) use($search)
                             {
                                 $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')   
                                 ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                             });
                         }
@@ -116,6 +120,7 @@ class Shipping extends Model {
         $returnData['count'] = $count[0]->Totalcount;
 
         return $returnData;
+
 	}
 
     public function getShippingOrders($company_id)

@@ -148,8 +148,9 @@ class ShippingController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Order ID'),
                         1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
-                        3=>array('key' => '', 'name' => '', 'sortable' => false)
+                        2=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        4=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);

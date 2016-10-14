@@ -15,10 +15,11 @@ class Invoice extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,i.id,i.qb_id,o.grand_total,o.in_hands_by,i.created_date')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,i.id,i.qb_id,o.grand_total,o.in_hands_by,i.created_date,misc_type.value as approval,o.approval_id')];
 
         $invoiceData = DB::table('invoice as i')
                         ->leftJoin('orders as o', 'o.id', '=', 'i.order_id')
+                        ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                         ->select($listArray)
                         ->where('o.company_id', '=', $post['company_id']);
 
@@ -29,6 +30,7 @@ class Invoice extends Model {
                               $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
                                     ->orWhere('i.created_date', 'LIKE', '%'.$search.'%')
                                     ->orWhere('o.grand_total', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('o.in_hands_by', 'LIKE', '%'.$search.'%');
                           });
                         }
@@ -44,8 +46,6 @@ class Invoice extends Model {
         $returnData['allData'] = $invoiceData;
         $returnData['count'] = $count[0]->Totalcount;
         return $returnData;
-
-        return $invoiceData;  
     }
 
     public function getShippingByOrder($order_id)

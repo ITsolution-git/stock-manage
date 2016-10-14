@@ -59,7 +59,7 @@
             
                 <div layout="column" layout-wrap="nowrap">
                     <md-input-container layout="row">
-                        <label class="selectbox-label">Approval</label>
+                        <label class="selectbox-label">Order Status</label>
                         <md-select ng-model="order_data.approval_id" flex="100">
                             <md-option ng-selected="order_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                         </md-select>
