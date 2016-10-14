@@ -89,6 +89,7 @@
     function LogoutController(sessionService)
     {
         sessionService.destroy();
+        $scope.showResetPassword = false;
         return false;
     }
     function DashboardController(sessionService,$scope,$http,notifyService,$state,AllConstant,$q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$stateParams)
