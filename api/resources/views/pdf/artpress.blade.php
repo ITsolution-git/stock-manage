@@ -13,41 +13,51 @@
   .font-bold{font-weight:bold;}
   .border-w{border:1px solid #fff; }
   .border-b{border:1px solid #000; }
+  .diff-border{width:100%;float:left;height:1px;border-top:solid 1px #000;}
 </style>
 </head>
-<body style="padding:0; margin:0">
+<body style="padding:0; margin:0;border:none;">
     <table class="header">
     	<tr>
-      		<td align="left" width="20%"><img src="{{$color[0]->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
-          <td align="left" width="40%" style=" font-weight:bold">
-             Job# {{$color[0]->order_id}}<br>
-             Job Name: {{$color[0]->order_name}}<br>
-             Client: {{$color[0]->client_company}}
-          </td>
-          <td width="40%"  style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
-              <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
+          <td>
+            <div style="width:100%;float:left;padding:15px 0;">
+              <table>
                 <tr>
-                  <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
-                  <td valign="middle" style="width:80%; height:100px; font-size:10px;">
-                    <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td height="15">&nbsp;</td>
-                      </tr>
-                      <tr><td>{{$color[0]->street}} {{$color[0]->address}}<br>{{$color[0]->city}}, {{$color[0]->state_name}} {{$color[0]->postal_code}}</td></tr>
-                      <tr>
-                        <td height="15">&nbsp;</td>
-                      </tr>
-                    </table>
+                  <td align="left" width="20%"><img src="{{$color[0]->companyphoto}}" title="Culture Studio" alt="Culture Studio" /></td>
+                  <td align="left" width="40%" style=" font-weight:bold">
+                     Job# {{$color[0]->order_id}}<br>
+                     Job Name: {{$color[0]->order_name}}<br>
+                     Client: {{$color[0]->client_company}}
                   </td>
-                </tr>
-              </table>
+                  <td width="40%"  style="vertical-align:middle; position:relative; height:100px;">
+                      
+                      <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
+                          <td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                            <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td height="15">&nbsp;</td>
+                              </tr>
+                              <tr><td>{{$color[0]->street}} {{$color[0]->address}}<br>{{$color[0]->city}}, {{$color[0]->state_name}} {{$color[0]->postal_code}}</td></tr>
+                              <tr>
+                                <td height="15">&nbsp;</td>
+                              </tr>
+                            </table>
+                          </td>
+                        </tr>
+                      </table>
+                      
+                  </td>
+              </tr>
+            </table>
+            </div>
+            <div class="diff-border">&nbsp;</div>
           </td>
-    	</tr>
-    </table><br>
-    <hr class="border-b">
-    <br>
-
-     <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+      </tr>     
+    <tr>
+      <td>
+        <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
           <tr>
               <th width="10%" class="align-left font-bold" height="15">Client PO</th>
               <th width="20%" class="align-left font-bold" height="15">Account Manager</th>
@@ -67,10 +77,13 @@
               <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;{{$color[0]->payment_due_date}}</td>
           </tr>
       </table>
-  
-  <br><br>
-
-                  <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+      <div style="height:10px;width:100%">&nbsp;</div>
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
                     <tr>
                         <th width="40%" class="align-left font-bold" height="15">Garment/Item Description</th>
                         <th width="15%" class="align-left font-bold" height="15">Color</th>
@@ -101,50 +114,61 @@
                       <td class="align-right font-bold line-height" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
                       <td class="align-left border-b line-height">&nbsp;&nbsp;<?php echo $total; ?></td>
                     </tr>
-                </table>
-<br><br>
-<table style="margin-top:15px;">
-    <tr>
-      <td width="10%" class="align-center border-b" style="height:20px;"></td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center border-b" style="height:20px;"></td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center border-b" style="height:20px;"></td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center border-b" style="height:20px;"></td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center border-b" style="height:20px;"></td>
+        </table>
+        <div style="height:10px;width:100%">&nbsp;</div>
+      </td>
     </tr>
+
     <tr>
-      <td width="10%" class="align-center font-bold border-w"  >Prod Mgr</td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center font-bold border-w" >Press Lead</td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center font-bold border-w" >Belt</td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center font-bold border-w" >QC</td>
-      <td width="2%"></td>
-      <td width="10%" class="align-center font-bold border-w" >Ship/Pack</td>
+      <td>
+        <table>
+            <tr>
+              <td width="10%" class="align-center border-b" style="height:20px;"></td>
+              <td width="2%"></td>
+              <td width="10%" class="align-center border-b" style="height:20px;"></td>
+              <td width="2%"></td>
+              <td width="10%" class="align-center border-b" style="height:20px;"></td>
+              <td width="2%"></td>
+              <td width="10%" class="align-center border-b" style="height:20px;"></td>
+              <td width="2%"></td>
+              <td width="10%" class="align-center border-b" style="height:20px;"></td>
+            </tr>
+            <tr>
+              <td class="align-center font-bold border-w"  >Prod Mgr</td>
+              <td ></td>
+              <td  class="align-center font-bold border-w" >Press Lead</td>
+              <td ></td>
+              <td  class="align-center font-bold border-w" >Belt</td>
+              <td ></td>
+              <td  class="align-center font-bold border-w" >QC</td>
+              <td ></td>
+              <td class="align-center font-bold border-w" >Ship/Pack</td>
+            </tr>
+        </table>
+        <div style="height:10px;width:100%">&nbsp;</div>
+      </td>
     </tr>
-</table>
-<br><br>
-  <table style="margin-top:15px;">
-  	<!-- <tr>
+
+    <tr>
+      <td>
+          <div style="height:10px;width:100%">&nbsp;</div>
+          <table>
+    <!-- <tr>
       <td colspan="3" class="align-">PRESS DETAILS</td>
     </tr>
     <tr >
        <td width="30%" class="align-center"  style="border: 1px solid #000;">ART</td>
        <td width="70%" class="align-center" style="border: 1px solid #000;">PRESS SETUP</td>
     </tr> -->
-    <tr style="margin-top: 20px;"> 
-    	<td width="30%"> 
-    		<table>
-    			
-    			<tr><td class="align-center"><img src="{{$color[0]->mokup_logo}}" title="Culture Studio" height="300" width="300" alt="Culture Studio"></td></tr>
+    <tr> 
+      <td width="30%"> 
+        <table>
+          
+          <tr><td class="align-center"><img src="{{$color[0]->mokup_logo}}" title="Culture Studio" height="300" width="300" alt="Culture Studio"></td></tr>
 
-    		</table>
-    	</td>
-    	<td width="70%" >
+        </table>
+      </td>
+      <td width="70%" >
           <table>
            
             <tr style="font-weight: 12px">
@@ -179,10 +203,12 @@
       </td>
     </tr>
     <tr>
-    <br><br>
-      <td colspan="8"><b>Note:</b> {{$color[0]->note}}</td>
+      <td><br /><br />&nbsp;&nbsp;<b>Note:</b> {{$color[0]->note}}</td>
     </tr>
   
+  </table>
+      </td>
+    </tr>
   </table>
  
 </body>
