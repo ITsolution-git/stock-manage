@@ -18,13 +18,14 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total,misc_type.value as approval,o.approval_id')];
 
         $shippingData = DB::table('orders as o')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                         ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
                         ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
                         ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
+                        ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                         ->select($listArray)
                         ->where('o.is_complete','=','1')
                         ->where('po.is_active','=','1')
@@ -52,6 +53,7 @@ class Shipping extends Model {
                             $shippingData = $shippingData->Where(function($query) use($search)
                             {
                                 $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')   
                                 ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                             });
                         }
@@ -117,81 +119,6 @@ class Shipping extends Model {
 
         return $returnData;
 
-        /*if($post['type'] == 'progress') {
-
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
-
-            $shippingData = DB::table('orders as o')
-                            ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
-                            ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
-                            ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                            ->leftJoin('product_address_mapping as pam','pam.order_id','=','o.id')
-                            ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
-                            ->select($listArray)
-                            ->where('o.is_complete','=','1')
-                            ->where('o.company_id','=',$post['company_id'])
-                            ->where('pas.distributed_qnty','>',0)
-                            ->havingRaw('distributed < total');
-                            if($search != '')
-                            {
-                                $shippingData = $shippingData->Where(function($query) use($search)
-                                {
-                                    $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
-                                });
-                            }
-                            $shippingData = $shippingData->GroupBy('o.id');
-                            $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-                            ->skip($post['start'])
-                            ->take($post['range'])
-                            ->get();
-
-                //$query = DB::getQueryLog();
-                //print_r($query);
-
-            $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
-
-            $returnData['allData'] = $shippingData;
-            $returnData['count'] = $count[0]->Totalcount;
-        }
-
-        if($post['type'] == 'shipped') {
-
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
-
-            $shippingData = DB::table('orders as o')
-                            ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
-                            ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
-                            ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                            ->leftJoin('product_address_mapping as pam','pam.order_id','=','o.id')
-                            ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
-                            ->select($listArray)
-                            ->where('o.is_complete','=','1')
-                            ->where('o.company_id','=',$post['company_id'])
-                            ->where('pas.distributed_qnty','>',0)
-                            ->havingRaw('distributed == total');
-                            if($search != '')
-                            {
-                                $shippingData = $shippingData->Where(function($query) use($search)
-                                {
-                                    $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
-                                });
-                            }
-                            $shippingData = $shippingData->GroupBy('o.id');
-                            $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-                            ->skip($post['start'])
-                            ->take($post['range'])
-                            ->get();
-
-                //$query = DB::getQueryLog();
-                //print_r($query);
-
-            $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
-
-            $returnData['allData'] = $shippingData;
-            $returnData['count'] = $count[0]->Totalcount;
-        }*/
 
 	}
 

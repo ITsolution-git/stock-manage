@@ -45,7 +45,13 @@
                                             <tr ng-repeat="wait in rows">
                                                 <td>{{ wait.id}}</td>
                                                 <td>{{ wait.client_company}}</td>
-                                                <td>0/{{ wait.total}}</td>
+                                                <td>
+                                                    <md-select aria-label="status" ng-model="wait.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',wait.approval_id,wait.id)" ng-disabled="allow_access == '0'">
+                                                    <md-option ng-selected="wait.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                                </md-select>
+                                                </td>
+                                                <td>0/{{ wait.total}}
+                                                </td>
                                                 <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.id})"><a>SHIP</a></td>
                                                 <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
                                             </tr>
@@ -85,6 +91,11 @@
                                         <tr ng-repeat="progress in rows">
                                             <td>{{ progress.id}}</td>
                                             <td>{{ progress.client_company}}</td>
+                                            <td>
+                                                <md-select aria-label="status" ng-model="progress.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',progress.approval_id,progress.id)" ng-disabled="allow_access == '0'">
+                                                <md-option ng-selected="progress.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                            </md-select>
+                                        </td>
                                             <td>{{ progress.distributed}}/{{ progress.total}}</td>
                                             <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:progress.id})"><a>SHIP</a></td>
                                             <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
@@ -124,6 +135,11 @@
                                         <tr ng-repeat-start="row in rows">
                                             <td>{{ row.id}}</td>
                                             <td>{{ row.client_company}}</td>
+                                            <td>
+                                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.id)" ng-disabled="allow_access == '0'">
+                                                    <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                                </md-select>
+                                            </td>
                                             <td>{{ row.distributed}}/{{ row.total}}</td>
                                             <td class="accor" ng-show="row.shipping_data.length > 0">
                                                 <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
