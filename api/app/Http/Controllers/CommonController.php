@@ -961,9 +961,10 @@ class CommonController extends Controller {
             }
             $result = $this->company->GetCompanyData($post);
             $header = array(
-                0=>array('key' => 'usr.name', 'name' => 'Name'),
-                1=>array('key' => 'usr.email', 'name' => 'Email'),
-                2=>array('key' => 'usr.created_date', 'name' => 'Create Date'),
+                array('key' => 'usr.display_number', 'name' => '#No'),
+                array('key' => 'usr.name', 'name' => 'Name'),
+                array('key' => 'usr.email', 'name' => 'Email'),
+                array('key' => 'usr.created_date', 'name' => 'Create Date'),
                 );
 
         }
