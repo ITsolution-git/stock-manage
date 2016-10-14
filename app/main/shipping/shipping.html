@@ -30,9 +30,9 @@
                     <md-tab label="Orders Waiting to Ship" ng-click="getTab('wait')">
                         <div class="fixe-top-tabs">
                             <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                <div class="search-block pd15-L" flex=25>
+                                <div class="search-block pd15-L srchstickyright" flex=25>
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
+                                        <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
                                         <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                     </md-input-container>
                                 </div>
@@ -70,9 +70,9 @@
                 <div ng-controller="shippingProgressController">
                     <md-tab label="Orders In Process" ng-click="getTab('progress')">
                         <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                            <div class="search-block pd15-L" flex=25>
+                            <div class="search-block pd15-L srchstickyright" flex=25>
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
+                                    <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
                                     <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                 </md-input-container>
                             </div>
@@ -109,9 +109,9 @@
                 <div ng-controller="shippingShippedController">
                     <md-tab label="Shipped Orders" ng-click="getTab('shipped')">
                         <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                            <div class="search-block pd15-L" flex=25>
+                            <div class="search-block pd15-L srchstickyright" flex=25>
                                 <md-input-container class="md-block" flex-gt-sm>
-                                    <label> <md-icon md-font-icon="icon-magnify"></md-icon></label>
+                                   <!--  <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
                                     <input ng-model="name" placeholder="Search Orders..." ui-event="{ change : 'search($event)' }">
                                 </md-input-container>
                             </div>
