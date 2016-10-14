@@ -737,9 +737,8 @@ public function getNoQuickbook(){
         $estimate = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
         $estimate_id=$estimate[0]->id;
         
-        $retArray = DB::table('invoice as i')
-        ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(i.id) as totalInvoice') )
-        ->leftJoin('orders as o','o.id','=','i.order_id')
+        $retArray = DB::table('orders as o')
+        ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(o.id) as totalInvoice') )
         ->leftJoin('client as c','c.client_id','=','o.client_id')
         ->leftJoin('users as u','u.id','=','c.company_id')
         ->where('u.id','=',$client_id);
@@ -752,19 +751,17 @@ public function getNoQuickbook(){
 
             if(isset($post['duration']) && $post['duration']!=0){
                 if($post['duration']=='1'){
-                    $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
+                    $retArray = $retArray->where(DB::raw('o.created_date'), '=', DB::raw('CURDATE()'));
                 }else if($post['duration']=='2'){
-                    $retArray = $retArray->where(DB::raw('WEEK(i.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
+                    $retArray = $retArray->where(DB::raw('WEEK(o.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
                 }else if($post['duration']=='3'){
-                    $retArray = $retArray->where(DB::raw('MONTH(i.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
+                    $retArray = $retArray->where(DB::raw('MONTH(o.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
                 }else if($post['duration']=='4'){
-                    $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
+                    $retArray = $retArray->where(DB::raw('YEAR(o.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
                 }
             }
         }
-        $retArray = $retArray->where('o.is_paid','=','0')
-        ->where('o.grand_total','>','o.total_payments')
-        ->where('o.approval_id','=',$estimate_id)
+        $retArray = $retArray->where('o.approval_id','=',$estimate_id)
         ->get();
 
         if(empty($retArray))
