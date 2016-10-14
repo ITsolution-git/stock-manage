@@ -19,7 +19,7 @@
 
     <table class="header">
       <tr>
-          <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
+          <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" style="padding:10px;" alt="Culture Studio"></td>
           <td align="left" width="40%" class="font-bold">
              Job# {{$company->order_id}}<br>
              Job Name: {{$company->order_name}}<br>
