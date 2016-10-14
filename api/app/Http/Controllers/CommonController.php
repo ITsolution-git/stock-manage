@@ -1131,7 +1131,7 @@ class CommonController extends Controller {
             {
                 $post['sorts']['sortBy'] = 'ord.id';
             }
-            $result = $this->art->Screen_Listing($post);
+            $result = $this->art->Screen_Listing($post); 
             $header = array(
                 0=>array('key' => 'ord.id', 'name' => 'Screen Set Name'),
                 1=>array('key' => 'mt.value', 'name' => 'Position'),
