@@ -66,8 +66,8 @@
     // COMPANY EDIT TIME CALL
     $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
-        console.log(field_name); console.log(field_value);
-        console.log(Object.keys(validation).length);
+        //console.log(field_name); console.log(field_value);
+        //console.log(Object.keys(validation).length);
         
         if($scope.allow_access=='0')
         {
@@ -172,6 +172,8 @@
 
                                         if(result.data.success=='1')
                                         {
+                                           sessionService.set('reset_password','0');
+                                            $scope.showResetPassword = false;
                                            notifyService.notify('success', result.data.message);
                                            $mdDialog.hide();
                                         }
