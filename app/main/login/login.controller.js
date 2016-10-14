@@ -57,6 +57,10 @@
                                    sessionService.set('company_id',result.data.records.company_id);
                                    sessionService.set('company',result.data.records.company);
                                    sessionService.set('profile_photo',result.data.records.profile_photo);
+                                   if(result.data.records.reset_password=='1'){
+                                    sessionService.set('reset_password',result.data.records.reset_password);
+                                   }
+                                   
                                    sessionService.set('token',result.data.records.token);
                                    
                                    var data = {"status": "success", "message": "Login Successfully, Please wait..."}
@@ -93,6 +97,11 @@
         //console.log(sessionService.get('company_name'));
         vm.company_name = sessionService.get('company_name');
         vm.role_slug = sessionService.get('role_slug');
+        if(sessionService.get('reset_password')=='1'){
+          $scope.showResetPassword = true;
+        }else{
+          $scope.showResetPassword = false;
+        }
         vm.name = sessionService.get('name');
 
 
@@ -391,7 +400,6 @@
                  $scope.data.string = $stateParams.string;
                 // console.log($scope.data); return false;
                  $http.post('api/public/admin/change_password', $scope.data).success(function(result,event, status, headers, config) {
-
                     if(result.data.success==0)
                     {
                         var data = {"status": "error", "message": result.data.message}
@@ -401,6 +409,8 @@
                     }
                     else
                     {
+                        sessionService.set('reset_password','0');
+                        $scope.showResetPassword = false;
                         var data = {"status": "success", "message": result.data.message}
                         notifyService.notify(data.status, data.message);
                         $state.go('app.login');

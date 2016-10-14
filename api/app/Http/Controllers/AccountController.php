@@ -237,10 +237,10 @@ class AccountController extends Controller {
 			 	$string = $this->login->getString(6);
 			 	Mail::send('emails.newpassword', ['url' =>$string,'user'=>$result[0]->name,'email'=>$email], function($message) use ($email) 
                 {
-                    $message->to($email, 'Hello, Your password has been changed, Your New Password is')->subject('New Password for Stokkup');
+                    $message->to($email, 'Hello, Your password has been changed, Your New Password is')->subject('Your New Password for Stokkup');
                 });
-				$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($string)));
-                $message = "New password send Successfully";
+				$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($string), 'reset_password'=>'1'));
+                $message = "New password sent Successfully";
 				$success = 1;
 			 }
 			 else
