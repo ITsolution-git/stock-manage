@@ -134,6 +134,7 @@
                 combine_array.product = productArr;
                 combine_array.address_id = $scope.address_id;
                 combine_array.order_id = $scope.order_id;
+                combine_array.company_id = sessionService.get('company_id');
 
                 $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
                     
@@ -164,6 +165,7 @@
             combine_array.products = $scope.unshippedProducts;
             combine_array.address_id = $scope.address_id;
             combine_array.order_id = $scope.order_id;
+            combine_array.company_id = sessionService.get('company_id');
 
             $http.post('api/public/shipping/addAllProductToShip',combine_array).success(function(result, status, headers, config) {
                 
