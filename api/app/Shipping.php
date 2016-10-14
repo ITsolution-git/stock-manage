@@ -18,7 +18,7 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.display_number,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total')];
 
         $shippingData = DB::table('orders as o')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
