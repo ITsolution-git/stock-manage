@@ -102,10 +102,10 @@ class OrderController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'order.id';
+            $post['sorts']['sortBy'] = 'order.display_number';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'order.id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'order.display_number';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
 
         $result = $this->order->getOrderdata($post);
@@ -117,7 +117,7 @@ class OrderController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'order.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'order.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'order.name', 'name' => 'Job Name'),
                         2=>array('key' => 'client.client_company', 'name' => 'Company'),
                         3=>array('key' => 'order.approval_id', 'name' => 'Approval'),
@@ -1329,12 +1329,11 @@ class OrderController extends Controller {
               }
         }
 
-        
         /*if(array_key_exists('sns_shipping', $post['orderData'])) {
         $post['orderdata']['sns_shipping'] = $post['orderData']['sns_shipping'];
         }*/
 
-
+         $post['orderdata']['display_number'] = $this->common->getDisplayNumber('orders',$post['company_id'],'company_id','id');
          $post['orderdata']['name'] = $post['orderData']['name'];
          $post['orderdata']['approval_id'] = $estimation_id;
          $post['orderdata']['login_id'] = $post['login_id'];
@@ -1347,8 +1346,6 @@ class OrderController extends Controller {
          $post['orderdata']['price_id'] = $client_data['sales']['salespricegrid'];
          $post['orderdata']['tax_rate'] = $client_data['tax']['tax_rate'];
          $post['orderdata']['contact_main_id'] = $client_data['contact']['id'];
-
-         
          
           $order_id = $this->common->InsertRecords('orders',$post['orderdata']);
 
@@ -1360,9 +1357,7 @@ class OrderController extends Controller {
 
            $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
            return response()->json(['data'=>$data]);
-
     }
-
 
      public function addDesign()
     {
@@ -1442,8 +1437,6 @@ class OrderController extends Controller {
         $data = Input::all();
         $result = $this->order->designDetail($data);
 
-         
-
         if(empty($result['design']))
         {
 
@@ -1453,8 +1446,6 @@ class OrderController extends Controller {
                                 ); 
            return response()->json(["data" => $response]);
         }
-
-      
          
          if($result['design'][0]->hands_date != '0000-00-00' && $result['design'][0]->hands_date != '') {
             $result['design'][0]->hands_date = date("n/d/Y", strtotime($result['design'][0]->hands_date));
@@ -1471,8 +1462,6 @@ class OrderController extends Controller {
          } else {
             $result['design'][0]->start_date = '';
          }
-
-        
        
             $response = array(
                                 'success' => 1, 
