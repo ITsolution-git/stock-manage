@@ -154,9 +154,17 @@ class Client extends Model {
     	return $retArray;
     }
     
-    public function GetclientDetail($id,$company_id)
+    public function GetclientDetail($id,$company_id=0)
     {
-
+      if(!empty($company_id))
+      {
+          $where = ['c.display_number'=>$id, 'company_id'=>$company_id];
+      }
+      else
+      {
+          $where = ['c.client_id'=>$id];
+      }
+      //echo $where; die();
     	$retArray = DB::table('client as c')
     				->select('st.name as state_name','st.id as state_id','pg.name as price_grid','stf.sales_name','mt.id as misc_id','mt.value as misc_value_p','ca.*','cc.*','cc.id as contact_id','c.*','usr.name as account_manager_name','tp.id as type_id','tp.name as type_name')
     				->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
@@ -167,8 +175,7 @@ class Client extends Model {
             ->leftJoin('price_grid as pg','pg.id','=','c.salespricegrid')
             ->leftJoin('state as st','st.id','=',"c.pl_state")
             ->leftJoin('users as usr','usr.id','=',"c.account_manager")
-    				->where('c.display_number','=',$id)
-            ->where('c.company_id','=',$company_id)
+    				->where($where)
     				->get();
     	$result = array();
 
