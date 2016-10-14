@@ -28,7 +28,7 @@
     }
     else
     {
-        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        $scope.allow_access = 1; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
     }
 
     $scope.profile_id = $scope.user_id;
