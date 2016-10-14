@@ -158,7 +158,7 @@ class Client extends Model {
     {
       if(!empty($company_id))
       {
-          $where = ['c.display_number'=>$id, 'company_id'=>$company_id];
+          $where = ['c.display_number'=>$id, 'c.company_id'=>$company_id];
       }
       else
       {
