@@ -202,11 +202,12 @@
                 delete_data.cond = angular.copy(obj);
                 
                 delete_data.table = table;
-                delete_data.extra = extra;
+                delete_data.data = {is_delete:0};
+                //delete_data.extra = extra;
                 var permission = confirm(AllConstant.deleteMessage);
                 if (permission == true) 
                 {
-                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                    $http.post('api/public/common/UpdateTableRecords',delete_data).success(function(result) 
                     {
                         if(result.data.success=='1')
                         {

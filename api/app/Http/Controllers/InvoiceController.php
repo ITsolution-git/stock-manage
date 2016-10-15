@@ -95,8 +95,9 @@ class InvoiceController extends Controller {
                         2=>array('key' => 'o.grand_total', 'name' => 'Invoice $ Amount'),
                         3=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
                         4=>array('key' => '', 'name' => 'Synced with Quickbooks', 'sortable' => false),
-                        5=>array('key' => '', 'name' => '', 'sortable' => false),
-                        6=>array('key' => '', 'name' => 'Option', 'sortable' => false),
+                        5=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                        6=>array('key' => '', 'name' => '', 'sortable' => false), 
+                        7=>array('key' => '', 'name' => 'Option', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
@@ -329,26 +330,17 @@ class InvoiceController extends Controller {
 
         $post = Input::all();
         
-        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+        //$invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
+        $retArray = $this->invoice->getInvoiceHistory($post,$invoice_id);
 
-         if(empty($invoice_data))
+        if(empty($retArray))
         {
-
            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
+            'success' => 0, 
+            'message' => NO_RECORDS
+            ); 
            return response()->json(["data" => $response]);
         }
-
-        
-        $order_id = $invoice_data[0]->order_id;
-
-        $retArray = DB::table('payment_history')
-            ->select('payment_id', 'payment_amount', 'payment_date', 'payment_method')
-            ->where('order_id','=',$order_id)
-            ->where('is_delete','=',1)
-            ->get();
 
         $response = array(
             'success' => 1, 
@@ -358,52 +350,15 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-    // get invoice payment stored for future use
-    public function getInvoicePayment($invoice_id,$company_id,$type=0){
-
-        $post = Input::all();
-        
-        $invoice_data = $this->common->GetTableRecords('invoice',array('id' => $invoice_id),array());
-
-        $retArray = DB::table('invoice')
-            ->select('creditFname', 'creditLname', 'creditCard', 'month', 'year', 'street', 'suite', 'city', 'state', 'zip')
-            ->where('id','=',$invoice_id)
-            ->get();
-
-         if(empty($invoice_data))
-        {
-
-           $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                ); 
-           return response()->json(["data" => $response]);
-        }
-
-        $response = array(
-            'success' => 1, 
-            'message' => GET_RECORDS,
-            'allData' => $invoice_data
-            );
-        return response()->json(["data" => $response]);
-    }
-
     // get stored card details with Authorized.net payment profile IDs
     public function getInvoiceCards($invoice_id,$company_id,$type=0){
 
         $post = Input::all();
 
-        $retArray = DB::table('invoice as i')
-            ->select('cppd.payment_profile_id', 'cppd.card_number', 'cppd.expiration')
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client_payment_profiles as cpp','cpp.client_id','=','o.client_id')
-            ->leftJoin('client_payment_profiles_detail as cppd','cppd.cpp_id','=','cpp.cpp_id')
-            ->where('i.id','=',$invoice_id)
-            ->get();
+        $retArray = $this->invoice->getInvoiceCards($post,$invoice_id);
 
         if(empty($retArray))
         {
-
            $response = array(
                 'success' => 0, 
                 'message' => NO_RECORDS
@@ -412,7 +367,6 @@ class InvoiceController extends Controller {
         }
         if($retArray[0]->payment_profile_id=='')
         {
-
            $response = array(
                 'success' => 0, 
                 'message' => NO_RECORDS
@@ -458,17 +412,8 @@ class InvoiceController extends Controller {
 
     public function getSalesPersons(){
         $post = Input::all();
-        $client_id=$post['company_id'];
-        
-        $retArray = DB::table('sales as s')
-            ->select('s.sales_name', 's.id as sales_id')
-            ->leftJoin('users as u','u.id','=','s.company_id')
-            //->leftJoin('orders as o','o.sales_id','=','s.id')
-            //->leftJoin('client as c','c.client_id','=','o.client_id')
-            //->leftJoin('users as u1','u1.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('s.sales_delete','=','1')
-            ->get();
+
+        $retArray = $this->invoice->getSalesPersons($post);
 
         if(empty($retArray))
         {
@@ -487,18 +432,9 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-public function getNoQuickbook(){
+    public function getNoQuickbook(){
         $post = Input::all();
-        $client_id=$post['company_id'];
-        
-        $retArray = DB::table('invoice as i')
-            ->select(DB::raw('COUNT(i.id) as totalInvoice'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('i.qb_id','=',0)
-            ->get();
+        $retArray = $this->invoice->getNoQuickbook($post);
 
         if(empty($retArray))
         {
@@ -519,27 +455,7 @@ public function getNoQuickbook(){
 
     public function getSalesClosed(){
         $post = Input::all();
-        $client_id=$post['company_id'];
-        
-        if(isset($post['sales_id']) && $post['sales_id']!=0){
-            $sales_id=$post['sales_id'];
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalSales'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.sales_id','=',$sales_id)
-            ->get();
-        }else{
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalSales'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->get();
-        }
+        $retArray = $this->invoice->getSalesClosed($post);
 
         if(empty($retArray))
         {
@@ -562,17 +478,7 @@ public function getNoQuickbook(){
 
     public function getUnpaid(){
         $post = Input::all();
-        $client_id=$post['company_id'];
-        
-        $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.balance_due) as totalUnpaid'), DB::raw('COUNT(i.id) as totalInvoice') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.is_paid','=','0')
-            ->where('o.grand_total','>','o.total_payments')
-            ->get();
+        $retArray = $this->invoice->getUnpaid($post);
 
         if(empty($retArray))
         {
@@ -595,100 +501,7 @@ public function getNoQuickbook(){
 
     public function getAverageOrders(){
         $post = Input::all();
-        $client_id=$post['company_id'];
-
-        // Fetching average amount of order per invoiced
-        if(isset($post['sales_id']) && $post['sales_id']!=0){
-            $sales_id=$post['sales_id'];
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('AVG(o.grand_total) as avgOrderAmount'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.sales_id','=',$sales_id)
-            ->get();
-        }else{
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('AVG(o.grand_total) as avgOrderAmount'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->get();
-        }
-
-        if(empty($retArray))
-        {
-           $response = array(
-                'success' => 0, 
-                'message' => NO_RECORDS
-            ); 
-           return response()->json(["data" => $response]);
-        }
-        $retArray[0]->avgOrderAmount=round($retArray[0]->avgOrderAmount, 0);
-        //$tempFigure=explode(".", $retArray[0]->avgOrderAmount);
-        //$retArray[0]->avgOrderAmount=$tempFigure;
-
-        // Fetching average number of items per invoiced
-        if(isset($post['sales_id']) && $post['sales_id']!=0){
-            $sales_id=$post['sales_id'];
-            $order_design_data = DB::table('invoice as i')
-            ->select('od.id as design_id', 'o.id as order_id')
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('order_design as od','od.order_id','=','o.id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.sales_id','=',$sales_id)
-            ->where('od.status','=','1')
-            ->where('od.is_delete','=','1')
-            ->get();
-        }else{
-            $order_design_data = DB::table('invoice as i')
-            ->select('od.id as design_id', 'o.id as order_id')
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('order_design as od','od.order_id','=','o.id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('od.status','=','1')
-            ->where('od.is_delete','=','1')
-            ->get();
-        }
-
-        if(!empty($order_design_data))
-        {
-            $size_data = array();
-            $order_design = array();
-            $orderIDs = array();
-            $total_unit = 0;
-
-            foreach ($order_design_data as $design)
-            {
-                $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->design_id,'is_delete' => '1'),array());
-
-                $total_qnty = 0;
-                foreach ($size_data as $size)
-                {
-                    $total_qnty += $size->qnty;
-                }
-                $total_unit += $total_qnty;
-                $design->size_data = $size_data;
-                $design->total_qnty = $total_qnty;
-                $orderIDs[]=$design->order_id;
-                //$order_design['all_design'][] = $design;
-            }
-
-            if($total_unit > 0)
-            {
-                $order_design['total_unit'] = $total_unit;
-                $countOrders = count(array_unique($orderIDs));
-                $retArray[0]->avgOrderItems=round($order_design['total_unit']/$countOrders,0);
-                //$tempAvg=explode(".", $retArray[0]->avgOrderItems);
-                //$retArray[0]->avgOrderItems=$tempAvg;
-            }
-        }
+        $retArray = $this->invoice->getAverageOrders($post);
 
         $response = array(
             'success' => 1, 
@@ -700,18 +513,7 @@ public function getNoQuickbook(){
 
     public function getLatestOrders(){
         $post = Input::all();
-        $client_id=$post['company_id'];
-        
-        $retArray = DB::table('invoice as i')
-            ->select('i.id as invoice_id', 'o.id as order_id', 'i.qb_id as quickbook_id', 'c.client_company', 'o.grand_total')
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.is_delete','=','1')
-            ->orderBy('i.created_date','desc')
-            ->take(5)
-            ->get();
+        $retArray = $this->invoice->getLatestOrders($post);
 
         if(empty($retArray))
         {
@@ -736,33 +538,8 @@ public function getNoQuickbook(){
 
         $estimate = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
         $estimate_id=$estimate[0]->id;
-        
-        $retArray = DB::table('orders as o')
-        ->select(DB::raw('SUM(o.grand_total) as totalEstimated'), DB::raw('COUNT(o.id) as totalInvoice') )
-        ->leftJoin('client as c','c.client_id','=','o.client_id')
-        ->leftJoin('users as u','u.id','=','c.company_id')
-        ->where('u.id','=',$client_id);
 
-        if( (isset($post['sales_id']) && $post['sales_id']!=0) || (isset($post['duration']) && $post['duration']!=0) ){
-            $sales_id=$post['sales_id'];
-            if(isset($post['sales_id']) && $post['sales_id']!=0){
-                $retArray = $retArray->where('o.sales_id','=',$sales_id);
-            }
-
-            if(isset($post['duration']) && $post['duration']!=0){
-                if($post['duration']=='1'){
-                    $retArray = $retArray->where(DB::raw('o.created_date'), '=', DB::raw('CURDATE()'));
-                }else if($post['duration']=='2'){
-                    $retArray = $retArray->where(DB::raw('WEEK(o.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
-                }else if($post['duration']=='3'){
-                    $retArray = $retArray->where(DB::raw('MONTH(o.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
-                }else if($post['duration']=='4'){
-                    $retArray = $retArray->where(DB::raw('YEAR(o.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
-                }
-            }
-        }
-        $retArray = $retArray->where('o.approval_id','=',$estimate_id)
-        ->get();
+        $retArray = $this->invoice->getEstimates($post,$estimate_id);
 
         if(empty($retArray))
         {
@@ -787,20 +564,9 @@ public function getNoQuickbook(){
         $post = Input::all();
         $client_id=$post['company_id'];
         $companyYear = $this->common->GetTableRecords('staff',array('user_id' => $client_id, 'status'=>'1'),array(),0,0,'gross_year');
-        $year1=$post['comparisonPeriod1'];
         $year2=$companyYear[0]->gross_year;
-        
-        $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalEstimated'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            //->where(YEAR('i.created_date'),'=',YEAR(CURDATE()))
-            ->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())'))
-            //->whereRaw('YEAR(i.created_date)' <= 'YEAR(CURDATE()')
-            ->get();
 
+        $retArray = $this->invoice->getComparison($post,$year2);
 
         if(empty($retArray))
         {
@@ -809,38 +575,6 @@ public function getNoQuickbook(){
                 'message' => NO_RECORDS
             ); 
            return response()->json(["data" => $response]);
-        }
-        $amountCurrent=round($retArray[0]->totalEstimated, 0);
-        //$tempFigure=explode(".", $amountCurrent);
-        //$retArray[0]->totalEstimated=$tempFigure;
-        $retArray[0]->totalEstimated=$amountCurrent;
-        $retArray[0]->year2=$year2;
-
-        $retArrayPrevious = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.grand_total) as totalEstimatedPrevious'))
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where(DB::raw('YEAR(i.created_date)'), '=',$year2)
-            ->get();
-
-        /*if(empty($retArrayPrevious))
-        {
-           $response = array(
-                'success' => 0, 
-                'message' => NO_RECORDS
-            ); 
-           return response()->json(["data" => $response]);
-        }*/
-        if(!empty($retArrayPrevious)){
-            $amountPrevious=round($retArrayPrevious[0]->totalEstimatedPrevious, 0);
-            $retArray[0]->totalEstimatedPrevious=$amountPrevious;
-            if($amountPrevious!='0.00'){
-                $retArray[0]->percentDifference = round((($amountCurrent*100) / $amountPrevious),0)-100;    
-            }else{
-                $retArray[0]->percentDifference = 0;
-            }
         }
 
         $response = array(
@@ -853,19 +587,8 @@ public function getNoQuickbook(){
 
     public function getUnshipped(){
         $post = Input::all();
-        $client_id=$post['company_id'];
-        
-        $retArray = DB::table('invoice as i')
-            ->select(DB::raw('SUM(o.balance_due) as totalUnshipped'), DB::raw('COUNT(i.id) as totalInvoice') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('shipping as s','s.order_id','=','o.id')   
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('s.shipping_status','=','1')
-            ->where('o.is_paid','=','0')
-            ->where('o.grand_total','>','o.total_payments')
-            ->get();
+
+        $retArray = $this->invoice->getUnshipped($post);
 
         if(empty($retArray))
         {
@@ -888,50 +611,15 @@ public function getNoQuickbook(){
     
     public function getFullShipped(){
         $post = Input::all();
-        $client_id=$post['company_id'];
 
-        if((isset($post['duration']) && $post['duration']!=0)){
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('COUNT(i.id) as totalShipped') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('shipping as s','s.order_id','=','o.id')   
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.date_shipped','>','s.fully_shipped');
-
-            if($post['duration']=='1'){
-                $retArray = $retArray->where(DB::raw('i.created_date'), '=', DB::raw('CURDATE()'));
-            }else if($post['duration']=='2'){
-                $retArray = $retArray->where(DB::raw('WEEK(i.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
-            }else if($post['duration']=='3'){
-                $retArray = $retArray->where(DB::raw('MONTH(i.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
-            }else if($post['duration']=='4'){
-                $retArray = $retArray->where(DB::raw('YEAR(i.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
-            }
-            $retArray = $retArray->where('s.shipping_status','=','2')
-            ->get();
-        }else{
-            $retArray = DB::table('invoice as i')
-            ->select(DB::raw('COUNT(i.id) as totalShipped') )
-            ->leftJoin('orders as o','o.id','=','i.order_id')
-            ->leftJoin('shipping as s','s.order_id','=','o.id')   
-            ->leftJoin('client as c','c.client_id','=','o.client_id')
-            ->leftJoin('users as u','u.id','=','c.company_id')
-            ->where('u.id','=',$client_id)
-            ->where('o.date_shipped','>','s.fully_shipped')
-            ->where('s.shipping_status','=','2')
-            ->get();    
-        }
-
-        
+        $retArray = $this->invoice->getFullShipped($post);
 
         if(empty($retArray))
         {
            $response = array(
                 'success' => 0, 
                 'message' => NO_RECORDS
-            ); 
+            );
            return response()->json(["data" => $response]);
         }
         $retArray[0]->totalShipped=round($retArray[0]->totalShipped, 0);
@@ -951,20 +639,7 @@ public function getNoQuickbook(){
         $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
         $production_id=$production[0]->id;
 
-        $retArray = DB::table('invoice as i')
-        ->select(DB::raw('COUNT(i.id) as totalProduction'))
-        ->leftJoin('orders as o','o.id','=','i.order_id')
-        ->leftJoin('client as c','c.client_id','=','o.client_id')
-        ->leftJoin('users as u','u.id','=','c.company_id')
-        ->where('u.id','=',$client_id);
-
-        if(isset($post['sales_id']) && $post['sales_id']!=0){
-            $sales_id=$post['sales_id'];
-            $retArray = $retArray->where('o.sales_id','=',$sales_id);
-        }
-
-        $retArray = $retArray->where('o.approval_id','=',$production_id)
-        ->get();
+        $retArray = $this->invoice->getProduction($post,$production_id);
 
         if(empty($retArray))
         {

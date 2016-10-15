@@ -23,6 +23,8 @@ class Company extends Model {
      *
      */
     public function GetCompanyData($post) {
+
+      $this->common->getDisplayNumber('users',1,'parent_id','id','yes');
        $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
@@ -30,7 +32,7 @@ class Company extends Model {
 
         $admindata = DB::table('users as usr')
                  ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
-                 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
+                 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.display_number,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
                  ->where('usr.is_delete','=','1')
                  ->where('rol.slug','=','CA')
                  ->where('usr.parent_id','=','1');
@@ -39,7 +41,8 @@ class Company extends Model {
                       $admindata = $admindata->Where(function($query) use($search)
                       {
                           $query->orWhere('usr.name', 'LIKE', '%'.$search.'%')
-                                ->orWhere('usr.email','LIKE', '%'.$search.'%');
+                                ->orWhere('usr.email','LIKE', '%'.$search.'%')
+                                ->orWhere('usr.display_number','=', $search);
                       });
                   }
                  $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
@@ -68,7 +71,8 @@ class Company extends Model {
  
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
       $string = $this->login->getString(6);
-      $result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
+      $display_number =  $this->common->getDisplayNumber('users',$post['parent_id'],'parent_id','id');
+      $result = DB::table('users')->insert(array('name'=>$post['name'],'display_number'=>$display_number,'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
        $user_array = $post;
       
       $post['prime_address1']       = !empty($post['prime_address1'])?$post['prime_address1']:'';

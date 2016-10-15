@@ -17,11 +17,12 @@ class Finishing extends Model {
         }
 
         //$listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,f.id,f.qty,fc.category_name,f.status,f.note,f.category_id,c.client_id,f.time,f.start_time,f.end_time,f.est')];
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,o.name,c.client_id,o.approval_id')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,o.name,c.client_id,o.approval_id,o.display_number')];
 
         $finishingData = DB::table('orders as o')
                         ->leftJoin('finishing as f', 'o.id', '=', 'f.order_id')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
+                        ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
   //                      ->leftJoin('finishing_category as fc', 'f.category_id', '=', 'fc.id')
                         ->select($listArray)
                         ->where('f.is_delete', '=', '1')
@@ -32,6 +33,7 @@ class Finishing extends Model {
                           $finishingData = $finishingData->Where(function($query) use($search)
                           {
                               $query->orWhere('o.name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                           });
                         }
