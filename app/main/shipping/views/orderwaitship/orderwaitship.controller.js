@@ -25,36 +25,17 @@
             $scope.allow_access = 1;
         }
 
-        var combine_array_id = {};
-        combine_array_id.id = $stateParams.id;
-
         if($stateParams.id == '' || $scope.allow_access == '0'){
              $state.go('app.shipping');
              return false;
         }
-
-        
-        combine_array_id.company_id = sessionService.get('company_id');
-        $scope.order_id = $stateParams.id;
-        
-
-        $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
-            if(result.data.success == '1') {
-                $("#ajax_loader").hide();
-               $scope.order = result.data.records[0];
-               $scope.order_items = result.data.order_item;
-               $scope.getShippingAddress();
-            } else {
-                $state.go('app.order');
-            }
-        });
 
         $scope.assignedItems = [];
 
         $scope.shipOrder = function()
         {
             var combine_array = {};
-            combine_array.order_id = $stateParams.id;
+            combine_array.order_id = $scope.order_id;
             
             $http.post('api/public/shipping/shipOrder',combine_array).success(function(result, status, headers, config) {
                 if(result.data.success == '1') {
@@ -72,8 +53,39 @@
                 }
             });
         }
-        $scope.shipOrder();
 
+        var allData = {};
+        allData.table ='orders';
+        allData.cond ={display_number:$stateParams.id,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.order_id = result.data.records[0].id;
+                $scope.getDetail();
+            }
+        });
+        
+        $scope.getDetail = function()
+        {
+            var combine_array_id = {};
+            combine_array_id.company_id = sessionService.get('company_id');
+            combine_array_id.id = $scope.order_id;
+
+            $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+                if(result.data.success == '1') {
+                    $("#ajax_loader").hide();
+                   $scope.order = result.data.records[0];
+                   $scope.order_items = result.data.order_item;
+                   $scope.getShippingAddress();
+                   $scope.shipOrder();
+                } else {
+                    $state.go('app.shipping');
+                }
+            });    
+        }
+        
         $scope.getProductByAddress = function(address)
         {
             $scope.address_id = address.id;
@@ -134,6 +146,7 @@
                 combine_array.product = productArr;
                 combine_array.address_id = $scope.address_id;
                 combine_array.order_id = $scope.order_id;
+                combine_array.company_id = sessionService.get('company_id');
 
                 $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
                     
@@ -164,6 +177,7 @@
             combine_array.products = $scope.unshippedProducts;
             combine_array.address_id = $scope.address_id;
             combine_array.order_id = $scope.order_id;
+            combine_array.company_id = sessionService.get('company_id');
 
             $http.post('api/public/shipping/addAllProductToShip',combine_array).success(function(result, status, headers, config) {
                 

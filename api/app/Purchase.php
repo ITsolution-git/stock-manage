@@ -27,7 +27,8 @@ class Purchase extends Model {
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date'))
+					->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id']);
@@ -40,10 +41,11 @@ class Purchase extends Model {
                                 ->orWhere('ord.id','LIKE', '%'.$search.'%')
                                 ->orWhere('cl.client_company','LIKE', '%'.$search.'%')
                                 ->orWhere('v.name_company','LIKE', '%'.$search.'%')
+                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                 ->orWhere('po.date','LIKE', '%'.$search.'%');
                       });
                   	}
-                 $result = $result->GroupBy('po.po_id')
+                 $result = $result->GroupBy('po.order_id')
 				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
 				 ->skip($post['start'])
                  ->take($post['range'])
@@ -70,6 +72,24 @@ class Purchase extends Model {
 		//echo "<pre>"; print_r($result); die();
 		return $returnData;
 	}
+
+	public function getAllPOdata()
+    {
+        $whereConditions = ['po.is_active' => '1'];
+        $listArray = ['po.po_id','po.order_id','po.vendor_id','v.name_company'];
+        $poData = DB::table('purchase_order as po')
+        				->leftJoin('vendors as v','v.id','=','po.vendor_id')
+                        ->select($listArray)
+                        ->where($whereConditions)->get();
+        $allData = array ();
+        foreach($poData as $data) {
+          
+            $allData[$data->order_id][] = $data;
+        }
+        return $allData;
+    }
+
+
 	function GetPodata($id,$company_id)
 	{
 		$result = DB::select("SELECT v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,cl.display_number,pg.name,vc.id as contact_id, vc.first_name,vc.last_name,v.url,po.po_id,
@@ -539,9 +559,10 @@ class Purchase extends Model {
 
 		$result = DB::table('purchase_order as po')
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
+					->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date'))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id'])
@@ -555,10 +576,11 @@ class Purchase extends Model {
                                 ->orWhere('ord.id','LIKE', '%'.$search.'%')
                                 ->orWhere('cl.client_company','LIKE', '%'.$search.'%')
                                 ->orWhere('v.name_company','LIKE', '%'.$search.'%')
+                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                 ->orWhere('po.date','LIKE', '%'.$search.'%');
                       });
                   	}
-                 $result = $result->GroupBy('po.po_id')
+                 $result = $result->GroupBy('po.order_id')
 				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
 				 ->skip($post['start'])
                  ->take($post['range'])
@@ -585,6 +607,22 @@ class Purchase extends Model {
 		//echo "<pre>"; print_r($result); die();
 		return $returnData;
 	}
+
+	public function getAllReceivedata()
+    {
+        $whereConditions = ['po.complete' => '1'];
+        $listArray = ['po.po_id','po.order_id','po.vendor_id','v.name_company'];
+        $poData = DB::table('purchase_order as po')
+        				->leftJoin('vendors as v','v.id','=','po.vendor_id')
+                        ->select($listArray)
+                        ->where($whereConditions)->get();
+        $allData = array ();
+        foreach($poData as $data) {
+          
+            $allData[$data->order_id][] = $data;
+        }
+        return $allData;
+    }
 
 }
 

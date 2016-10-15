@@ -1523,4 +1523,21 @@ md-tabs.stokkup-invoice-tabs {
   -o-box-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.4); }
 
+md-dialog.task-dialog md-input-container textarea {
+  max-height: 150px;
+  overflow-y: scroll; }
+
+.srchstickyright {
+  float: none;
+  position: fixed;
+  right: 0;
+  top: 10px;
+  z-index: 100; }
+
+.srchstickyright label {
+  padding-left: 15px; }
+
+.srchstickyright md-input-container label:not(.md-no-float):not(.md-container-ignore), .srchstickyright md-input-container .md-placeholder {
+  padding-left: 15px; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */

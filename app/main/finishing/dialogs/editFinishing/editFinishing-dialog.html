@@ -3,8 +3,8 @@
         <md-toolbar class="md-accent md-hue-2">
                 <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                     <span class="title">Edit Finishing Order</span>
-                    <md-button  ng-click="cancel()">
-                        <span>Cancel</span>
+                    <md-button  ng-click="cancel()" class="close-stokkup-dialog md-button">
+                        <span>close</span>
                     </md-button>
                 </div>
         </md-toolbar>
@@ -62,8 +62,10 @@
                 </div>
             </md-card-content>
         </div>
-        <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="editFinishing()" ng-show="allow_access == 1">
+        <md-dialog-actions layout="row" layout-align="end center" class="layout-align-end-center layout-row">
+        <md-button class="stokkup-custom-btn1 stokkup-blue-btn" id="affiliateSaveBtn" ng-click="editFinishing()" ng-show="allow_access == 1">
                 SAVE
         </md-button>
+    </md-dialog-actions>
     </div>
 </md-dialog>
