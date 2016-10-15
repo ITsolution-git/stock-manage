@@ -249,7 +249,7 @@ $this->common = $common;
 					$pass = md5($post['password']);
 					if($pass==$company_data[0]->password)
 					{
-						$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($post['new_password']) )); // SUCCESS ANDY UPDATE PASSWORD
+						$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($post['new_password']), 'reset_password'=>'0')); // SUCCESS ANDY UPDATE PASSWORD
 						$message = "Password successfully changed.";
 						$success = 1;
 					}

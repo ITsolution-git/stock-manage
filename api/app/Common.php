@@ -489,7 +489,7 @@ class Common extends Model {
           $sec_number = DB::table($table.' as tb')
                             ->where($comp_field,$company_id)
                             ->where('display_number','=','0')
-                            ->orderby('client_id','asc')
+                            ->orderby($pkey,'asc')
                             ->get();
 
             //echo count($sec_number); die();
@@ -511,7 +511,6 @@ class Common extends Model {
         $sec_number = DB::table($table.' as tb')
                             ->select(DB::raw('MAX(tb.display_number) as disp_number'))
                             ->where($comp_field,$company_id)
-                            ->orderby("tb.display_number","desc")
                             ->get();
         
         if(empty($sec_number[0]->disp_number))
@@ -529,6 +528,7 @@ class Common extends Model {
         }
         else
         {
+           if($lastId==0){$lastId=1;} 
            return $lastId; // RETURN LATEST INCREMENTED ID
         }
     }

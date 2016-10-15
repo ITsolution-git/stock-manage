@@ -4,10 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Common;
 use DateTime;
 
 class Order extends Model {
 
+  public function __construct(Common $common) 
+  {
+      $this->common = $common;
+  }
 	
 	public function getOrderdata($post)
 	{
@@ -21,9 +26,11 @@ class Order extends Model {
             $created_date = date("Y-m-d", strtotime($post['filter']['created_date']));
         }
 
+        $this->common->getDisplayNumber('orders',$post['company_id'],'company_id','id','yes');
+
         $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['company_id'],'order.parent_order_id' => '0'];
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.name,order.created_date,order.approved_date,order.date_shipped,
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.display_number,order.name,order.created_date,order.approved_date,order.date_shipped,
                       order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name,users.name as account_manager')];
 
         $orderData = DB::table('orders as order')
