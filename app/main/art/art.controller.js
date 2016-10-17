@@ -33,7 +33,7 @@
         $scope.init = {
           'count': 10,
           'page': 1,
-          'sortBy': 'po.id',
+          'sortBy': 'ord.display_number',
           'sortOrder': 'dsc'
         };
         vm.companyCheckModal = [];

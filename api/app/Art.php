@@ -30,15 +30,14 @@ class Art extends Model {
         $admindata = DB::table('orders as ord')
         				->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
         				->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
-        				->select(DB::raw('SQL_CALC_FOUND_ROWS ord.id,misc_type.value as approval,ord.approval_id,cl.client_company'),DB::raw("(SELECT count(*) from artjob_screensets ass WHERE ass.order_id = ord.id AND ass.screen_active='1') as total_screen"))
+        				->select(DB::raw('SQL_CALC_FOUND_ROWS ord.id,ord.display_number,misc_type.value as approval,ord.approval_id,cl.client_company'),DB::raw("(SELECT count(*) from artjob_screensets ass WHERE ass.order_id = ord.id AND ass.screen_active='1') as total_screen"))
         				->where('ord.is_delete','=','1')
-        				->where('ord.is_complete','=','1')
-		                ->where('ord.company_id','=',$post['company_id']);
+ 		                ->where('ord.company_id','=',$post['company_id']);
 		                if($search != '')               
 		                 {
 		                     $admindata = $admindata->Where(function($query) use($search)
 		                     {
-		                         $query->orWhere('ord.id', 'LIKE', '%'.$search.'%')
+		                         $query->orWhere('ord.display_number', '=', $search)
 		                               ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
 		                               ->orWhere('cl.client_company','LIKE', '%'.$search.'%');
 		                     });
@@ -82,7 +81,7 @@ class Art extends Model {
 	{
 		$query = DB::table('artjob_screensets as ass')
 
-			->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.display_number','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.positions','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','odp.image_1','art.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'or.approval_id')
+			->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.display_number','or.display_number as ord_displayId','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.positions','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','odp.image_1','art.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'or.approval_id')
 				->join('art as art','art.order_id','=','ass.order_id')
 				->join('orders as or','art.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -94,7 +93,7 @@ class Art extends Model {
 				->where('odp.is_delete','=','1')
 				->where('od.is_delete','=','1')
 				->where('or.company_id','=',$post['company_id'])
-				->where('or.id','=',$post['order_id'])
+				->where('or.display_number','=',$post['display_number'])
 				->orderBy('ass.screen_order')
 				->get();
 
