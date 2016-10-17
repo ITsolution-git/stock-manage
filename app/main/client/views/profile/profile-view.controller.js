@@ -67,6 +67,7 @@
                 if(result.data.success=='1')
                 {   
                     vm.Response = result.data.records;
+                    $scope.client_id = vm.Response.clientDetail.client_id;
                     $scope.mainaddress = vm.Response.clientDetail.address;
                     $scope.salesDetails =vm.Response.clientDetail.sales;
                     $scope.maincompcontact =vm.Response.clientDetail.contact;
