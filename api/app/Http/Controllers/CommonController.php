@@ -976,9 +976,11 @@ class CommonController extends Controller {
             }
             $result = $this->vendor->vendorList($post);
             $header = array(
-                0=>array('key' => 'name_company', 'name' => 'Name'),
-                1=>array('key' => 'email', 'name' => 'Email'),
-                2=>array('key' => 'prime_phone_no', 'name' => 'Phone'),
+                array('key' => 'display_number', 'name' => '#No'),
+                array('key' => 'name_company', 'name' => 'Name'),
+                array('key' => 'email', 'name' => 'Email'),
+                array('key' => 'prime_phone_no', 'name' => 'Phone'),
+                array('key' => '', 'name' => 'Action','sortable' => false)
                 );
 
         }
@@ -1087,11 +1089,11 @@ class CommonController extends Controller {
             }
             $result = $this->vendor->vendorContacts($post);
             $header = array(
-                0=>array('key' => 'first_name', 'name' => 'First Name'),
-                1=>array('key' => 'last_name', 'name' => 'Last Name'),
-                2=>array('key' => 'prime_email', 'name' => 'Email'),
-                3=>array('key' => 'prime_phone', 'name' => 'Phone'),
-                4=>array('key' => 'is_main', 'name' => 'Main')
+                array('key' => 'first_name', 'name' => 'First Name'),
+                array('key' => 'last_name', 'name' => 'Last Name'),
+                array('key' => 'prime_email', 'name' => 'Email'),
+                array('key' => 'prime_phone', 'name' => 'Phone'),
+                array('key' => 'is_main', 'name' => 'Main')
                 );
 
         }
@@ -1103,10 +1105,12 @@ class CommonController extends Controller {
             }
             $result = $this->vendor->SalesList($post);
             $header = array(
-                0=>array('key' => 'sales_name', 'name' => 'Name'),
-                1=>array('key' => 'sales_email', 'name' => 'Email'),
-                2=>array('key' => 'sales_phone', 'name' => 'Phone'),
-                3=>array('key' => 'sales_created_date', 'name' => 'Created Date')
+                array('key' => 'display_number', 'name' => '#No'),
+                array('key' => 'sales_name', 'name' => 'Name'),
+                array('key' => 'sales_email', 'name' => 'Email'),
+                array('key' => 'sales_phone', 'name' => 'Phone'),
+                array('key' => 'sales_created_date', 'name' => 'Created Date'),
+                array('key' => '', 'name' => 'Action','sortable' => false)
                 );
         }
         
