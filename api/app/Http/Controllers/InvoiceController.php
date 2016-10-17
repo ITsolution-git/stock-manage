@@ -164,7 +164,8 @@ class InvoiceController extends Controller {
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
-            $order_data =  $order_data_all['order']; 
+            $order_data =  $order_data_all['order'];
+           
 
 
 //            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
