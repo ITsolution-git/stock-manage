@@ -34,7 +34,7 @@
                                 </tr>
                             </table>
                         </td>
-                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">Order Acknowledgement #{{$order_data[0]->id}}<br>Created On: {{$invoice_data[0]->created_date}}<br>Job Name: {{$order_data[0]->name}}</td>
+                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">Order Acknowledgement #{{$order_data[0]->display_number}}<br>Created On: {{$invoice_data[0]->created_date}}<br>Job Name: {{$order_data[0]->order_name}}</td>
                     </tr>
                     <tr>
                     	<td style="height:15px;">&nbsp;</td>

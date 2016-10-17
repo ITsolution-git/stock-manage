@@ -23,22 +23,45 @@
         }
 
 
-        var invoice_data = {};
-        invoice_data.cond ={order_id:$stateParams.id};
-        invoice_data.table ='invoice';
-        
-        $http.post('api/public/common/GetTableRecords',invoice_data).success(function(result) {
+        // change display number to order Id for fetching the order data
+          var order_data = {};
+           order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           order_data.table ='orders';
+          
+          $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
             
-            if(result.data.success == '1') 
-            {
-                $scope.invoice_id = result.data.records[0].id;
-                $scope.qb_invoice_id = result.data.records[0].qb_id;
-            } 
-            else
-            {
-                $scope.invoice_id = 0;
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.order_id = result.data.records[0].id;
+                    $scope.invoiceData();
+                   
+              } 
+              
+          });
+
+
+            $scope.invoiceData = function(){
+
+                  var invoice_data = {};
+                    invoice_data.cond ={order_id:$scope.order_id};
+                    invoice_data.table ='invoice';
+                    
+                    $http.post('api/public/common/GetTableRecords',invoice_data).success(function(result) {
+                        
+                        if(result.data.success == '1') 
+                        {
+                            $scope.invoice_id = result.data.records[0].id;
+                            $scope.qb_invoice_id = result.data.records[0].qb_id;
+                        } 
+                        else
+                        {
+                            $scope.invoice_id = 0;
+                        }
+                    });
             }
-        });
+
+      
 
         $scope.save = function () {
           
@@ -59,7 +82,7 @@
                 }
 
                 var combine_array_id = {};
-                combine_array_id.id = $stateParams.id;
+                combine_array_id.id = $scope.order_id;
                 combine_array_id.company_id = sessionService.get('company_id');
                 combine_array_id.company_name = sessionService.get('company_name');
                 combine_array_id.sns_shipping = sns_shipping;
@@ -94,7 +117,7 @@
                 }
                
                 var combine_array = {};
-                combine_array.order_id = $stateParams.id;
+                combine_array.order_id = $scope.order_id;
                 combine_array.payment = $scope.payment_terms;
                  combine_array.company_id = sessionService.get('company_id');
 
@@ -115,7 +138,7 @@
                          if($scope.invoice == true && $scope.qb == true) {
 
                             var combine_array_id = {};
-                                combine_array_id.id = $stateParams.id;
+                                combine_array_id.id = $scope.order_id;
                                 combine_array_id.company_id = sessionService.get('company_id');
                                 combine_array_id.client_id = client_id;
                                 combine_array_id.invoice_id = $scope.invoice_id;
@@ -155,7 +178,7 @@
                 }
                
                 var combine_array = {};
-                combine_array.order_id = $stateParams.id;
+                combine_array.order_id = $scope.order_id;
                 combine_array.payment = $scope.payment_terms;
                 combine_array.invoice_id = $scope.invoice_id;
                 combine_array.company_id = sessionService.get('company_id');
@@ -180,7 +203,7 @@
                 }
                
                 var combine_array_id = {};
-                    combine_array_id.id = $stateParams.id;
+                    combine_array_id.id = $scope.order_id;
                     combine_array_id.company_id = sessionService.get('company_id');
                     combine_array_id.client_id = client_id;
                     combine_array_id.invoice_id = $scope.invoice_id;
