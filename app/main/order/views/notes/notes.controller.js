@@ -12,7 +12,11 @@
         var vm = this;
          //vm.openaddNoteDialog = openaddNoteDialog;
          $scope.company_id = sessionService.get('company_id');
-         $scope.order_id = $stateParams.id;
+
+         
+
+
+         $scope.display_number = $stateParams.id;
 
         //Dummy models data
      
@@ -40,8 +44,10 @@
 
        $scope.getResource = function (params, paramsObj, search)
         {   
+            
             $scope.params = params;
-            $scope.params.order_id = $scope.order_id;
+            $scope.params.display_number = $stateParams.id;
+            $scope.params.company_id = $scope.company_id;
             $scope.paramsObj = paramsObj;
 
             var company_data = {};

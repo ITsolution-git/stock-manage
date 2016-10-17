@@ -1355,13 +1355,18 @@ class OrderController extends Controller {
            $art_id = $this->common->InsertRecords('art',$insert_arr);
            $id = $art_id;
 
-           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
+           //$data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
+           // send display number other then order Id
+           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$post['orderdata']['display_number']);
+           
            return response()->json(['data'=>$data]);
     }
 
      public function addDesign()
     {
         $post = Input::all();
+
+        $post['designData']['display_number'] = $this->common->getDisplayNumber('order_design',$post['designData']['company_id'],'company_id','id');
      
         if(isset($post['designData']['hands_date']) && $post['designData']['hands_date'] != '') {
           $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
@@ -1386,7 +1391,8 @@ class OrderController extends Controller {
  
         $data = Input::all();
         $design_data = array();
-      
+        
+        $this->common->getDisplayNumber('order_design',$data['company_id'],'company_id','id','yes');
         $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
         
         $size_data = array();

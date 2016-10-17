@@ -22,6 +22,29 @@
             $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
         }
 
+
+        // change display number to design Id for fetching the order data
+          var design_data = {};
+           design_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           design_data.table ='order_design';
+          
+          $http.post('api/public/common/GetTableRecords',design_data).success(function(result) {
+            
+              
+              if(result.data.success == '1') 
+              {
+                 
+                  $scope.design_id = result.data.records[0].id;
+                   $scope.designDetail();
+                   $scope.designPosition();
+
+              } else {
+                $state.go('app.order');
+              }
+          });
+
+
+
         $scope.NoImage = AllConstant.NoImage;
         $scope.productSearch = '';
         $scope.vendor_id = 0;
@@ -47,7 +70,10 @@
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
                 if(result.data.success == '1') {
                     $("#ajax_loader").hide();
+
                    $scope.order = result.data.records[0];
+                   $scope.display_number = result.data.records[0]['display_number'];
+
                    $scope.order_items = result.data.order_item;
                 } else {
                     $state.go('app.order');
@@ -58,7 +84,7 @@
        $scope.designDetail = function(){
          $("#ajax_loader").show();
         var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             
             $http.post('api/public/order/designDetail',combine_array_id).success(function(result, status, headers, config) {
                
@@ -67,6 +93,7 @@
                      
                     $scope.order_id = result.data.records[0].order_id;
                     $scope.price_id = result.data.records[0].price_id;
+
 
 
                      var allData = {};
@@ -102,12 +129,12 @@
             });
         }
 
-        $scope.designDetail();
+       
 
         $scope.designProductData = function(){
             $("#ajax_loader").show();
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             
             $http.post('api/public/product/designProduct',combine_array_id).success(function(result, status, headers, config) {
                 
@@ -128,7 +155,7 @@
        $scope.designPosition = function(){
 
         var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.getNextPrice = $stateParams.getNextPrice;
             $scope.total_pos_qnty = 0;
@@ -153,13 +180,13 @@
             });
         }
 
-        $scope.designPosition();
+        
 
         $scope.addPosition = function(){
 
             var position_data_insert = {};
             position_data_insert.table ='order_design_position'
-            position_data_insert.data ={design_id:$stateParams.id}
+            position_data_insert.data ={design_id:$scope.design_id}
 
             $http.post('api/public/common/InsertRecords',position_data_insert).success(function(result) {
                 
@@ -173,7 +200,7 @@
         $scope.designPositionNew = function(){
 
         var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             combine_array_id.company_id = sessionService.get('company_id');
             $scope.total_pos_qnty = 0;
             
@@ -206,7 +233,7 @@
             condition_obj[match_condition] =  id;
             position_main_data.cond = angular.copy(condition_obj);
             position_main_data.order_id = $scope.order_id;
-            position_main_data.design_id = $stateParams.id;
+            position_main_data.design_id = $scope.design_id;
             position_main_data.company_id = sessionService.get('company_id');
             position_main_data.column_name = $scope.name_filed;
             
@@ -266,7 +293,7 @@
                 if(column_name == 'placement_type' || column_name == 'color_stitch_count' || column_name == 'qnty' || column_name == 'dtg_size' || column_name == 'dtg_on')
                 {
                     var combine_array_id = {};
-                    combine_array_id.id = $stateParams.id;
+                    combine_array_id.id = $scope.design_id;
                     combine_array_id.company_id = sessionService.get('company_id');
                     combine_array_id.getNextPrice = $scope.getNextPrice;
                     combine_array_id.position_id = id;
@@ -386,7 +413,7 @@
                 locals: {
                     product_id: product_id,
                     operation:operation,
-                    design_id:$stateParams.id,
+                    design_id:$scope.design_id,
                     color_id:color_id,
                     vendor_id:vendor_id,
                     is_supply:is_supply,
@@ -659,7 +686,7 @@
                     operation:operation,
                     product_name:product_name,
                     colorName:colorName,
-                    design_id:$stateParams.id,
+                    design_id:$scope.design_id,
                     design_product_id:design_product_id,
                     size_group_id:size_group_id,
                     warehouse:warehouse,
@@ -677,7 +704,7 @@
             if (permission == true) {
 
                 var combine_array_id = {};
-                combine_array_id.design_id = $stateParams.id;
+                combine_array_id.design_id = $scope.design_id;
                 combine_array_id.product_id = product_id;
                     
                 $http.post('api/public/product/deleteAddProduct',combine_array_id).success(function(result, status, headers, config) {
@@ -695,7 +722,7 @@
             var override_data = {};
             override_data['productData'] = $scope.productData[product_id];
             override_data['company_id'] = sessionService.get('company_id');
-            override_data['design_id'] = $stateParams.id;
+            override_data['design_id'] = $scope.design_id;
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
@@ -746,7 +773,7 @@
             var markup_data = {};
             markup_data['productData'] = $scope.productData[product_id];
             markup_data['company_id'] = sessionService.get('company_id');
-            markup_data['design_id'] = $stateParams.id;
+            markup_data['design_id'] = $scope.design_id;
 
             $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
                 $scope.designProductData();
