@@ -63,6 +63,7 @@
             if(result.data.success=='1')
             {   
                 $scope.order_id = result.data.records[0].id;
+                $scope.display_number = result.data.records[0].display_number;
                 $scope.getDetail();
             }
         });

@@ -801,7 +801,8 @@ class ShippingController extends Controller {
 
                 if($post['address_id'] == $address->id)
                 {
-                    $shipping_id = $address->shipping_id;
+                    $data = $this->common->GetTableRecords('shipping',array('id'=>$address->shipping_id));
+                    $shipping_id = $data[0]->display_number;
                 }
             }
             else
@@ -834,9 +835,13 @@ class ShippingController extends Controller {
 
         $total_box_qnty = 0;
 
+        $count = 1;
         foreach ($boxes as $box) {
             $box->boxItems = $this->shipping->getBoxItems($box->id);
+            $box->boxItems[0]->count = $count;
+            $box->count = $count;
             $shippingBoxes[$box->id] = $box;
+            $count++;
         }
 
          if(empty($shippingBoxes))
@@ -896,6 +901,12 @@ class ShippingController extends Controller {
         }
 
         $boxes = $this->shipping->getShippingBoxes($data);
+
+        $count = 1;
+        foreach ($boxes as $box) {
+            $box->count = $count;
+            $count++;
+        }
 
         foreach ($result['shippingItems'] as $item) {
             $item->description = strip_tags($item->description);
