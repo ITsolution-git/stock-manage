@@ -27,7 +27,7 @@
                                 </tr>
                             </table>
                         </td>
-                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">JOB# {{$shipping->order_id}}<br>JOB NAME: {{$shipping->name}}<br>CLIENT PO: {{$shipping->custom_po}}</td>
+                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">JOB# {{$shipping->display_number}}<br>JOB NAME: {{$shipping->name}}<br>CLIENT PO: {{$shipping->custom_po}}</td>
                     </tr>
                     <tr>
                       <td style="height:15px;">&nbsp;</td>
