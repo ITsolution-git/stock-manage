@@ -31,7 +31,7 @@
             });
 
        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/misc');
+        //$translatePartialLoaderProvider.addPart('app/main/misc');
 
        
       /*  // Navigation
