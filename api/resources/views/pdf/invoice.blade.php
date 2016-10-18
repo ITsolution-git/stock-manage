@@ -71,11 +71,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                 </table>
                 <table width="100%" border="0" align="center" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="48%" style="vertical-align:middle; border:1px solid #000; border-radius:20px; position:relative; height:100px;">
-                        	<table width="100%" align="left" border="0" cellspacing="10" cellpadding="0">
-                        		<tr>
-                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/bill.png"  title="" alt="" height="100"></td>
-                        			<td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                        <td width="48%" style="vertical-align:middle;  border-radius:20px; position:relative; height:100px;">
+                        	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                        		<tr style="align:left;position:fixed;float:left;margin:0;padding:0;" border="0" cellspacing="0" cellpadding="0">
+                        			<td width="15%"><img src="{{SITE_HOST}}/assets/images/etc/bill.png"  title="" alt="" height="100"></td>
+                        			<td width="85%" valign="middle" style="border:1px solid #000;border-left:solid 0px #fff;width:80%; height:100px; font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
                         						<td height="15">&nbsp;</td>
@@ -90,11 +90,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                         	</table>
                         </td>
                         <td width="4%"></td>
-                        <td width="48%" style="vertical-align:middle; border:1px solid #000; border-radius:20px; position:relative; height:100px;">
-                        	<table width="100%" align="left" border="0" cellspacing="10" cellpadding="0">
+                        <td width="48%" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
+                        	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         		<tr>
-                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png"   title="" alt="" height="100"></td>
-                        			<td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                        			<td width="15%"><img src="{{SITE_HOST}}/assets/images/etc/ship.png"   title="" alt="" height="100"></td>
+                        			<td width="85%" valign="middle" style="border:1px solid #000;border-left:solid 0px #fff;height:100px; font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
                         						<td height="15">&nbsp;</td>
@@ -225,7 +225,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                                                         <td width="100%" style="font-size:10px;">
 
                                                             <?php if($positionData->note != ''){?>
-                                                            <dt><b>Notes</b><br /><span style="font-size:10px;line-height:20px;float:none;">{{$positionData->note}}</span></dt>
+                                                            <dt><b>Notes</b></dt><dt><span style="font-size:10px;line-height:14px;float:none;">{{$positionData->note}}</span></dt>
                                                             <?php }?>
 
                                                         </td>
