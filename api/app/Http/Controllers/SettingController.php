@@ -997,7 +997,7 @@ class SettingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
                         2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => 'u.name', 'name' => 'Name'),
@@ -1043,7 +1043,7 @@ class SettingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
                         2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => '', 'name' => 'Status'),
@@ -1088,7 +1088,7 @@ class SettingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
                         2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => '', 'name' => 'Status'),
@@ -1105,8 +1105,6 @@ class SettingController extends Controller {
     */
     public function return_response($data)
     {
-        
-
         if (count($data) > 0) 
         {
             $response = $data;

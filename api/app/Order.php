@@ -874,9 +874,9 @@ public function saveColorSize($post)
           $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping,o.order_number,o.updated_date')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.display_number,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping,o.order_number,o.updated_date')];
 
-        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $post['company_id']];
+        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $post['company_id'],'o.parent_order_id' => 0];
         $orderData = DB::table('orders as o')
                           ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
                           ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
@@ -889,7 +889,7 @@ public function saveColorSize($post)
                           {
                             $orderData = $orderData->Where(function($query) use($search)
                             {
-                                $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                $query->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
                                       ->orWhere('o.order_number', 'LIKE', '%'.$search.'%')
                                       ->orWhere('u.name', 'LIKE', '%'.$search.'%');
                             });
