@@ -59,8 +59,10 @@
                                    sessionService.set('profile_photo',result.data.records.profile_photo);
                                    if(result.data.records.reset_password=='1'){
                                     sessionService.set('reset_password',result.data.records.reset_password);
+                                   }else{
+                                    sessionService.set('reset_password','0');
                                    }
-                                   
+
                                    sessionService.set('token',result.data.records.token);
                                    
                                    var data = {"status": "success", "message": "Login Successfully, Please wait..."}
@@ -110,7 +112,7 @@
 
         //$("#ajax_loader").show();
 
-        if(vm.role_slug != 'SA'){
+        if(vm.role_slug=='CA' || vm.role_slug=='AM' || vm.role_slug=='FM' || vm.role_slug=='SO' || vm.role_slug=='PU'){
             // Fetch Sales Persons for Filtering
             var combineSalesPersons = {};
             combineSalesPersons.company_id = sessionService.get('company_id');
