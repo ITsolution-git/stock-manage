@@ -515,7 +515,7 @@ class Common extends Model {
         
         if(empty($sec_number[0]->disp_number))
         {
-            $lastId= 0; // THERE NO RECORD
+            $lastId= 0; // THERE IS NO RECORD
         }
         else
         {
@@ -524,7 +524,7 @@ class Common extends Model {
 
         if($call=="yes")
         {
-            $this->setDisplayNumber($table,$company_id,$comp_field,$pkey,$lastId); // RESET ALL UNALLOCATED ID
+            $this->setDisplayNumber($table,$company_id,$comp_field,$pkey,$sec_number[0]->disp_number); // RESET ALL UNALLOCATED ID
         }
         else
         {
