@@ -4,18 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Common;
 use DateTime;
 
 class Invoice extends Model {
 
-	public function listInvoice($post)
+	public function __construct(Common $common) 
+    {
+        $this->common = $common;
+    }
+    public function listInvoice($post)
     {
         $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,i.id,i.qb_id,o.grand_total,o.in_hands_by,i.created_date,misc_type.value as approval,o.approval_id')];
+        $this->common->getDisplayNumber('invoice',$post['company_id'],'company_id','id','yes');
+
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.display_number,i.id,i.display_number as invoice_display_number,i.qb_id,o.grand_total,o.in_hands_by,i.created_date,misc_type.value as approval,o.approval_id')];
 
         $invoiceData = DB::table('invoice as i')
                         ->leftJoin('orders as o', 'o.id', '=', 'i.order_id')
