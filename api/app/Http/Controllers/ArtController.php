@@ -169,7 +169,7 @@ class ArtController extends Controller {
     public function ScreenSets()
     {
         $post = Input::all();
-        if(!empty($post['company_id']) && !empty($post['order_id']))
+        if(!empty($post['company_id']) && !empty($post['display_number']))
         {
             $scren_listing = $this->art->ScreenSets($post);
             if(count($scren_listing)>0)

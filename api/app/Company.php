@@ -527,7 +527,8 @@ class Company extends Model {
               {
                 $result=  $result->where('af.id','=',$affilite_id);
               }
-              $result = $result->get();
+
+              $result = $result->orderBy('af.id','desc')->get();
 
               if(count($result)>0)
               {
