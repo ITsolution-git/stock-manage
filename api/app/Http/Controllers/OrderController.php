@@ -2314,22 +2314,22 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
-         if($post['payment'] == '15') {
+        if($post['payment'] == '15') {
             $setDate  = date('Y-m-d', strtotime("+15 days"));
-
-         } else if($post['payment'] == '30') {
+        }
+        else if($post['payment'] == '30') {
             $setDate  = date('Y-m-d', strtotime("+30 days"));
+        } else {
+            $setDate  = date('Y-m-d');
+        }
 
-         } else {
-           $setDate  = date('Y-m-d');
-         }
+        $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
+        $ack_id=$ack[0]->id;
+        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
 
-         $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
-         $ack_id=$ack[0]->id;
-         $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
+        $display_number = $this->common->getDisplayNumber('invoice',$post['company_id'],'company_id','id');
 
-         
-        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment']);
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment'], 'company_id' => $post['company_id'], 'display_number' => $display_number);
         $id = $this->common->InsertRecords('invoice',$orderData);
 
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
