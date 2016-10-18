@@ -54,7 +54,7 @@ class Shipping extends Model {
                         {
                             $shippingData = $shippingData->Where(function($query) use($search)
                             {
-                                $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                $query->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
                                 ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')   
                                 ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                             });

@@ -33,6 +33,7 @@ class Finishing extends Model {
                           $finishingData = $finishingData->Where(function($query) use($search)
                           {
                               $query->orWhere('o.name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                           });
