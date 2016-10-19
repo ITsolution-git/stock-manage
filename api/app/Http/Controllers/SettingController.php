@@ -736,7 +736,7 @@ class SettingController extends Controller {
         {
             foreach ($product_all_data as $product) {
                 
-                $product_data = $this->common->GetTableRecords('products_new',array('id' => $product->styleID),array());
+                $product_data = $this->common->GetTableRecords('products',array('id' => $product->styleID),array());
                 $product_name = $product->title." - ".$product->styleName;
                 $description = $product->description;
 
@@ -745,12 +745,12 @@ class SettingController extends Controller {
 
                 if(empty($product_data))
                 {
-                    $product_id = $this->common->InsertRecords('products_new',$product_arr);
+                    $product_id = $this->common->InsertRecords('products',$product_arr);
                 }
                 else
                 {
                     unset($product_arr['id']);
-                    $this->common->UpdateTableRecords('products_new',array('id' => $product_id),$product_arr);
+                    $this->common->UpdateTableRecords('products',array('id' => $product_id),$product_arr);
                 }
 
                 // product mapping with category
