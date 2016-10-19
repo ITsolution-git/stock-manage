@@ -61,7 +61,7 @@
 
               orderData.cond ={company_id :sessionService.get('company_id'),params:$scope.params};
 
-              return $http.post('api/public/invoice/listInvoice',orderData).success(function(response) {
+              return $http.post('api/public/invoice/listInvoice',orderData,{headers: {"Authorization": sessionService.get('token')}}).success(function(response) {
                 $("#ajax_loader").hide();
                 var header = response.header;
                 $scope.success = response.success;

@@ -115,34 +115,6 @@
         if(vm.role_slug=='CA' || vm.role_slug=='AM' || vm.role_slug=='FM' || vm.role_slug=='SO' || vm.role_slug=='PU'){
             // Fetch Sales Persons for Filtering
 
-        /*$http({
-            url : 'api/public/invoice/getSalesPersons',
-            method : 'post',
-            headers : {
-                'Accept': 'application/vnd.layer+json; version=1.0',
-                'Content-Type': 'application/json',
-                'Authorization' : sessionService.get('token')
-            },
-            data : {
-                company_id : sessionService.get('company_id'),
-            }
-        }).then(function(response) {
-            
-        });
-
-            var headers = {
-                'Accept': 'application/vnd.layer+json; version=1.0',
-                'Content-Type': 'application/json',
-                'Authorization' : sessionService.get('token')
-            };
-            var combineSalesPersons = {};
-            combineSalesPersons.company_id = sessionService.get('company_id');
-
-            $http.post('api/public/invoice/getSalesPersons',combineSalesPersons,{headers: {"Authorization": sessionService.get('token')}
-  }).success(function(response){
-    console.log(response)
-  });*/
-
             var combineSalesPersons = {};
             combineSalesPersons.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getSalesPersons',combineSalesPersons,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultSales){
@@ -338,6 +310,7 @@
               //}
             }
 
+            // On Time In Full
             $scope.getFullOrdersDuration = function(duration){
                 //if(sales_id != 0){
                   $("#ajax_loader").show();

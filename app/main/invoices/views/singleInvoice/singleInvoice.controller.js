@@ -31,7 +31,7 @@
         {
             var invoice_data = {invoice_id:$scope.invoice_id,company_id :sessionService.get('company_id')};
         
-            $http.get('api/public/invoice/getInvoiceDetail/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
+            $http.get('api/public/invoice/getInvoiceDetail/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(result) {
 
                 if(result.data.success == '0') {
                         $state.go('app.invoices');
@@ -47,7 +47,7 @@
                 $scope.brand_coordinator = sessionService.get('role_title');
             });
 
-            $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(resultHistory) {
+            $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(resultHistory) {
 
                 /*if(result.data.success == '0') {
                         $state.go('app.invoices');
@@ -67,7 +67,7 @@
                 }
             });*/
 
-            $http.get('api/public/invoice/getInvoiceCards/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+            $http.get('api/public/invoice/getInvoiceCards/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(result123) {
 
                 if(result123.data.success == '0') {
                         //$state.go('app.invoices');
@@ -82,14 +82,14 @@
         condition_obj['company_id'] =  sessionService.get('company_id');
         misc_list_data.cond = angular.copy(condition_obj);
 
-        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data,{headers: {"Authorization": sessionService.get('token')}}).success(function(result, status, headers, config) {
                 $scope.miscData = result.data.records;
         });
 
         var state = {};
         state.table ='state';
 
-        $http.post('api/public/common/GetTableRecords',state).success(function(result) 
+        $http.post('api/public/common/GetTableRecords',state,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) 
         {   
             if(result.data.success=='1')
             {   
@@ -112,7 +112,7 @@
             combine_array_id.invoice_id = invoice_id.value;
             $("#ajax_loader").show();
 
-            $http.post('api/public/order/paymentLinkToPay',combine_array_id).success(function(result) 
+            $http.post('api/public/order/paymentLinkToPay',combine_array_id,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) 
             {
                 $("#ajax_loader").hide();
                 if(result.data.success=='1')
@@ -153,7 +153,7 @@
             condition_obj['id'] =  id;
             order_main_data.cond = angular.copy(condition_obj);
 
-            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+            $http.post('api/public/common/UpdateTableRecords',order_main_data,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) {
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
@@ -195,7 +195,7 @@
                 $("#ajax_loader").show();
                 var combine_array_id = {};
                 combine_array_id.cppd_id = profile;
-                $http.post('api/public/invoice/getPaymentCard',combine_array_id).success(function(result) 
+                $http.post('api/public/invoice/getPaymentCard',combine_array_id,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) 
                 {
                     $("#ajax_loader").hide();
                     if(result.data.success=='1')
@@ -257,7 +257,7 @@
             combine_array_id.invoice_id = invoice_id.value;
             combine_array_id.company_id = sessionService.get('company_id');
 
-            $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(result) 
+            $http.post('api/public/order/paymentInvoiceCash',combine_array_id,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) 
             {
                 amount.cashAmount = null;
                 amount.cashAmount = '';
@@ -271,7 +271,7 @@
                         $scope.showPaymentDetails = false;
                         $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
                     }
-                    $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
+                    $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(result) {
                         $scope.siData = result.data.allData;
                     });
                     $("#ajax_loader").hide();
@@ -397,7 +397,7 @@
             combine_array_id.company_id = company_id.value;
 
 
-            $http.post('api/public/payment/chargeCreditCard',combine_array_id).success(function(result) 
+            $http.post('api/public/payment/chargeCreditCard',combine_array_id,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) 
             {
                 $("#ajax_loader").hide();
                 if(result.data.success=='1')
@@ -410,11 +410,11 @@
                         $scope.showPaymentDetails = false;
                         $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
                     }
-                    $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
+                    $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(resultData) {
                         $scope.siData = resultData.data.allData;
                     });
 
-                    $http.get('api/public/invoice/getInvoiceCards/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                    $http.get('api/public/invoice/getInvoiceCards/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(result123) {
                         if(result123.data.success == '1') {
                             $scope.cardsAll = result123.data.allData;
                         }
@@ -478,7 +478,7 @@
                 combine_array.payment_id = payment_id;
                 combine_array.company_id = company_id.value;
                 combine_array.invoice_id = invoice_id.value;
-                $http.post('api/public/payment/refundTransaction',combine_array).success(function(result) 
+                $http.post('api/public/payment/refundTransaction',combine_array,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) 
                 {
                     
                     if(result.data.success=='1')
@@ -489,18 +489,18 @@
                         UpdateArray.data = {is_delete:0};
                         UpdateArray.cond = {payment_id:payment_id};
 
-                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdate) 
+                        $http.post('api/public/common/UpdateTableRecords',UpdateArray,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultUpdate) 
                         {
                             if(resultUpdate.data.success=='1')
                             {
-                                $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                                $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(result123) {
                                     $scope.siData = result123.data.allData;
 
                                     var combine_array_id = {};
                                     combine_array_id.invoice_id = $scope.invoice_id;
                                     combine_array_id.company_id = sessionService.get('company_id');
 
-                                    $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
+                                    $http.post('api/public/order/paymentInvoiceCash',combine_array_id,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultUpdate) 
                                     {
                                         $("#ajax_loader").hide();
                                         $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
@@ -513,7 +513,7 @@
                                                 UpdateArray.table ='orders';
                                                 UpdateArray.data = {approval_id:2491};
                                                 UpdateArray.cond = {id:$scope.allData.order_data[0].id};
-                                                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
+                                                $http.post('api/public/common/UpdateTableRecords',UpdateArray,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultUpdateStatus) 
                                                 {
                                                     if(resultUpdateStatus.data.success=='1')
                                                     {
@@ -552,36 +552,36 @@
                 UpdateArray.data = {is_delete:0};
                 UpdateArray.cond = {payment_id:payment_id};
 
-                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray,{headers: {"Authorization": sessionService.get('token')}}).success(function(result) 
                 {
                     if(result.data.success=='1')
                     {
-                       $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                       $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',{headers: {"Authorization": sessionService.get('token')}}).success(function(result123) {
                             $scope.siData = result123.data.allData;
 
                             var combine_array_id = {};
                             combine_array_id.invoice_id = $scope.invoice_id;
                             combine_array_id.company_id = sessionService.get('company_id');
 
-                            $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
+                            $http.post('api/public/order/paymentInvoiceCash',combine_array_id,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultUpdate) 
                             {
                                 $scope.allData.order_data[0].total_payments = resultUpdate.data.amt.total_payments;
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                 if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                     $scope.showPaymentDetails = true;
-                                    if($scope.allData.order_data[0].approval_id == 2885){
+                                    /*if($scope.allData.order_data[0].approval_id == 2885){
                                         var UpdateArray = {};
                                         UpdateArray.table ='orders';
                                         UpdateArray.data = {approval_id:2491};
                                         UpdateArray.cond = {id:$scope.allData.order_data[0].id};
-                                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
+                                        $http.post('api/public/common/UpdateTableRecords',UpdateArray,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultUpdateStatus) 
                                         {
                                             if(resultUpdateStatus.data.success=='1')
                                             {
                                                 $scope.allData.order_data[0].approval_id = 2491;
                                             }
                                         });
-                                    }
+                                    }*/
                                 }else{
                                     $scope.showPaymentDetails = false;
                                 }
