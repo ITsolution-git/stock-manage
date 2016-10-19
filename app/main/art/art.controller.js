@@ -15,12 +15,25 @@
 
         // Data
         $scope.company_id = sessionService.get('company_id');
+         
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
+
         /* TESTY PAGINATION */     
         $scope.init = {
           'count': 10,
           'page': 1,
-          'sortBy': 'po.id',
+          'sortBy': 'ord.display_number',
           'sortOrder': 'dsc'
         };
         vm.companyCheckModal = [];
@@ -178,6 +191,40 @@
         vm.openRightMenu1 = function () {
             $mdSidenav('left').toggle();
         };
+
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+
+        $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
+
     }
     function ArtScreenController($document, $window, $timeout,DTOptionsBuilder, DTColumnBuilder,$mdSidenav, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter){
 
@@ -228,6 +275,37 @@
             $scope.filterBy.name = $event.target.value;
             //getResource();
         };
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+
+        $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
         
       $scope.getResource = function (params, paramsObj, search)
         {   

@@ -148,8 +148,9 @@ class ShippingController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Order ID'),
                         1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
-                        3=>array('key' => '', 'name' => '', 'sortable' => false)
+                        2=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        4=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -800,7 +801,8 @@ class ShippingController extends Controller {
 
                 if($post['address_id'] == $address->id)
                 {
-                    $shipping_id = $address->shipping_id;
+                    $data = $this->common->GetTableRecords('shipping',array('id'=>$address->shipping_id));
+                    $shipping_id = $data[0]->display_number;
                 }
             }
             else
@@ -833,9 +835,13 @@ class ShippingController extends Controller {
 
         $total_box_qnty = 0;
 
+        $count = 1;
         foreach ($boxes as $box) {
             $box->boxItems = $this->shipping->getBoxItems($box->id);
+            $box->boxItems[0]->count = $count;
+            $box->count = $count;
             $shippingBoxes[$box->id] = $box;
+            $count++;
         }
 
          if(empty($shippingBoxes))
@@ -895,6 +901,12 @@ class ShippingController extends Controller {
         }
 
         $boxes = $this->shipping->getShippingBoxes($data);
+
+        $count = 1;
+        foreach ($boxes as $box) {
+            $box->count = $count;
+            $count++;
+        }
 
         foreach ($result['shippingItems'] as $item) {
             $item->description = strip_tags($item->description);

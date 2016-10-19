@@ -9,13 +9,42 @@
     /** @ngInject */
     function AffiliateInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
+
+
+        // change display number to order Id for fetching the order data
+          var order_data = {};
+           order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           order_data.table ='orders';
+          
+          $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+            
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.vendorRecord =result.data.records;
+                  $scope.order_id = result.data.records[0].id;
+                  $scope.display_number = result.data.records[0].display_number;
+
+                   $scope.orderDetail();
+                    $scope.designDetail();
+                    $scope.listAffiliate();
+                   
+
+              } 
+              else
+              {
+                   $state.go('app.order');
+              }
+          });
+
+          
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
             
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
-            $scope.order_id = $stateParams.id;
+            $scope.order_id = $scope.order_id;
             
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -32,7 +61,7 @@
         $scope.designDetail = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
@@ -50,7 +79,7 @@
         $scope.listAffiliate = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/affiliate/getAffiliateList',combine_array_id).success(function(result, status, headers, config) {
@@ -64,9 +93,7 @@
             });
         }
 
-        $scope.orderDetail();
-        $scope.designDetail();
-        $scope.listAffiliate();
+       
 
         $scope.checkDesign = function()
         {
@@ -349,7 +376,7 @@
                 clickOutsideToClose: true,
                 locals: {
                     client_id: $scope.order.client_id,
-                    order_id: $stateParams.id,
+                    order_id: $scope.order_id,
                     event: ev
                   }
             });

@@ -27,6 +27,7 @@ class OrderController extends Controller {
 
     public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company)
     {
+        //parent::__construct();
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
@@ -120,7 +121,7 @@ class OrderController extends Controller {
                         0=>array('key' => 'order.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'order.name', 'name' => 'Job Name'),
                         2=>array('key' => 'client.client_company', 'name' => 'Company'),
-                        3=>array('key' => 'order.approval_id', 'name' => 'Approval'),
+                        3=>array('key' => 'order.approval_id', 'name' => 'Order Status','sortable' => false),
                         4=>array('key' => 'order.created_date', 'name' => 'Date Created'),
                         5=>array('key' => 'null', 'name' => 'Sales Rep', 'sortable' => false),
                         6=>array('key' => 'users.name', 'name' => 'Account Manager', 'sortable' => false),
@@ -1355,13 +1356,18 @@ class OrderController extends Controller {
            $art_id = $this->common->InsertRecords('art',$insert_arr);
            $id = $art_id;
 
-           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
+           //$data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
+           // send display number other then order Id
+           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$post['orderdata']['display_number']);
+           
            return response()->json(['data'=>$data]);
     }
 
      public function addDesign()
     {
         $post = Input::all();
+
+        $post['designData']['display_number'] = $this->common->getDisplayNumber('order_design',$post['designData']['company_id'],'company_id','id');
      
         if(isset($post['designData']['hands_date']) && $post['designData']['hands_date'] != '') {
           $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
@@ -1386,7 +1392,8 @@ class OrderController extends Controller {
  
         $data = Input::all();
         $design_data = array();
-      
+        
+        $this->common->getDisplayNumber('order_design',$data['company_id'],'company_id','id','yes');
         $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
         
         $size_data = array();
@@ -2308,22 +2315,22 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
-         if($post['payment'] == '15') {
+        if($post['payment'] == '15') {
             $setDate  = date('Y-m-d', strtotime("+15 days"));
-
-         } else if($post['payment'] == '30') {
+        }
+        else if($post['payment'] == '30') {
             $setDate  = date('Y-m-d', strtotime("+30 days"));
+        } else {
+            $setDate  = date('Y-m-d');
+        }
 
-         } else {
-           $setDate  = date('Y-m-d');
-         }
+        $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
+        $ack_id=$ack[0]->id;
+        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
 
-         $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
-         $ack_id=$ack[0]->id;
-         $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
+        $display_number = $this->common->getDisplayNumber('invoice',$post['company_id'],'company_id','id');
 
-         
-        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment']);
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment'], 'company_id' => $post['company_id'], 'display_number' => $display_number);
         $id = $this->common->InsertRecords('invoice',$orderData);
 
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());

@@ -8,7 +8,7 @@
 
     /** @ngInject */
 
-    function OrderController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function OrderController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
 
         $scope.role_slug = sessionService.get('role_slug');
         if($scope.role_slug=='SU' || $scope.role_slug=='AT')
@@ -38,6 +38,16 @@
                   } 
                   
               });
+
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
 
        
 //1. sales rep
@@ -319,20 +329,31 @@
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
-//            jQuery('.dev-rdetail').on('click', function () {
-//                var $tr = $(this).closest('tr');
-//                var row = datatableObj.row($tr);
-//
-//                if (row.child.isShown()) {
-//                    row.child.hide();
-//                    $tr.removeClass('shown');
-//                } else {
-//                    var rowHtml=$tr.find("div.dev-rdetail-data").html();
-//                    row.child(rowHtml).show();
-//                    $tr.addClass('shown').next('tr').addClass('table-desc').children('td').addClass('collpas');
-//                }
-//            });
         }
+
+
+         $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
     }
 
 

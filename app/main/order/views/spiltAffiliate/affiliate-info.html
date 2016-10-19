@@ -1,8 +1,8 @@
 <div class="order-info-page m-r-15 m-l-20 m-b-20">
     <div class="header "  layout="column">
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.order.spiltAffiliate({id:order.parent_order_id})">BACK</a>
-            <h1 flex="4" class="font-500">Affiliate PO #{{order.id}} for Company: {{order.client_company}}</h1>
+            <a class="link-back cursor-p" ui-sref="app.order.spiltAffiliate({id:order.display_number})">BACK</a>
+            <h1 flex="4" class="font-500">Affiliate PO #{{display_number}} for Company: {{order.client_company}}</h1>
         </div>
         <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75">
@@ -100,11 +100,11 @@
                     </thead>
                    <tbody class="scrollable" ms-scroll>
                         <tr ng-repeat="design in designs">
-                            <td class="cursor-p">{{ design.id}} </td>
+                            <td class="cursor-p">{{ design.display_number}} </td>
                             <td>{{ design.design_name}}</td>
                             <td>{{ design.total_qnty}}</td>
                             <td>{{ design.cnt}}</td>
-                            <td><a class="link-back cursor-p" ui-sref="app.order.affiliate-view({id:design.id})">VIEW</a></td>
+                            <td><a class="link-back cursor-p" ui-sref="app.order.affiliate-view({id:design.display_number})">VIEW</a></td>
                             <td></td>
                         </tr>
                     </tbody> 

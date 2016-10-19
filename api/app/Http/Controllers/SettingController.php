@@ -696,9 +696,8 @@ class SettingController extends Controller {
         $mtime = $mtime[1] + $mtime[0];
         $starttime = $mtime;*/
 
-        $result_api = $this->api->getApiCredential(28,'api.sns','ss_detail');
-
-        $credential = $result_api[0]->username.":".$result_api[0]->password;
+        $result_api = $this->common->GetTableRecords('users',array('role_id'=>7));
+        $credential = $result_api[0]->ss_username.":".$result_api[0]->ss_password;
  
         $curl = curl_init();
 
@@ -997,7 +996,7 @@ class SettingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
                         2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => 'u.name', 'name' => 'Name'),
@@ -1043,7 +1042,7 @@ class SettingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
                         2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => '', 'name' => 'Status'),
@@ -1088,7 +1087,7 @@ class SettingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
                         2=>array('key' => '', 'name' => 'Order Total'),
                         3=>array('key' => '', 'name' => 'Status'),
@@ -1105,8 +1104,6 @@ class SettingController extends Controller {
     */
     public function return_response($data)
     {
-        
-
         if (count($data) > 0) 
         {
             $response = $data;

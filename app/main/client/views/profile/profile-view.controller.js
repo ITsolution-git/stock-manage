@@ -24,7 +24,7 @@
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' || $scope.role_slug=='AT')
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' || $scope.role_slug=='AT' || $scope.role_slug=='SH')
         {
             $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
         }
@@ -67,6 +67,7 @@
                 if(result.data.success=='1')
                 {   
                     vm.Response = result.data.records;
+                    $scope.client_id = vm.Response.clientDetail.client_id;
                     $scope.mainaddress = vm.Response.clientDetail.address;
                     $scope.salesDetails =vm.Response.clientDetail.sales;
                     $scope.maincompcontact =vm.Response.clientDetail.contact;

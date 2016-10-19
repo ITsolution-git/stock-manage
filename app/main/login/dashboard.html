@@ -12,12 +12,12 @@
     </div>
     <div ng-show="showResetPassword" class="simple-table-container stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" ng-if="vm.role_slug!='SA'" flex=100>
+            <div class="red-highlight" ng-if="vm.role_slug!='SA'" flex=100>
                 Please change your random generated password for security purpose.
             </div>
         </div>
     </div>
-    <div ng-show="vm.role_slug!='SA'">
+    <div ng-show="vm.role_slug=='CA' || vm.role_slug=='AM' || vm.role_slug=='FM' || vm.role_slug=='SO' || vm.role_slug=='PU'">
         <div layout="row" layout="wrap" layout-align="space-between center" class="inner-full-box top-30">
             <md-card class="box-3 firstbox bottom-shadow">
                 <md-card-title>
