@@ -8,6 +8,8 @@
     /** @ngInject */
     function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams,sessionService,notifyService)
     {
+
+        
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
         $scope.vendors = data.vendors;

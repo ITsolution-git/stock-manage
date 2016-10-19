@@ -1118,11 +1118,11 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'ord.id';
+                $post['sorts']['sortBy'] = 'ord.display_number';
             }
             $result = $this->art->Listing($post);
             $header = array(
-                0=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                0=>array('key' => 'ord.display_number', 'name' => 'Order Id'),
                 1=>array('key' => 'cl.client_company', 'name' => 'Client'),
                 2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets','sortable' => false),
                 3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),

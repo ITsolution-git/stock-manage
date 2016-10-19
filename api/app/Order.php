@@ -47,7 +47,7 @@ class Order extends Model {
                           {
                               $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('sales.sales_name', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('order.id', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('order.display_number', 'LIKE', '%'.$search.'%')
                                     ->orWhere('users.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                     ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
@@ -427,7 +427,7 @@ public function saveColorSize($post)
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id'];
+        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number'];
 
         $designDetailData = DB::table('order_design as od')
                          ->leftJoin('orders as o','od.order_id','=', 'o.id')
@@ -528,7 +528,7 @@ public function saveColorSize($post)
     public function getAllDesigndata()
     {
         $whereConditions = ['od.status' => '1','od.is_delete' => '1','odp.is_delete' => '1'];
-        $listArray = ['od.shipping_date','od.id','od.order_id','odp.position_id','od.design_name',DB::raw('group_concat(m.value) as position_name'),DB::raw('count(odp.position_id) as count_position')];
+        $listArray = ['od.shipping_date','od.id','od.order_id','odp.position_id','od.design_name','od.display_number as design_display_number',DB::raw('group_concat(m.value) as position_name'),DB::raw('count(odp.position_id) as count_position')];
         $designData = DB::table('order_design as od')
                         ->Join('order_design_position as odp','odp.design_id','=', 'od.id')
                         ->leftJoin('misc_type as m','odp.position_id','=', 'm.id')
@@ -718,11 +718,14 @@ public function saveColorSize($post)
 
     $result = DB::table('order_design as od')
             ->leftJoin('order_design_position as odp','od.id','=','odp.design_id')
+            ->leftJoin('orders as o','o.id','=','od.order_id')
           ->select($listArray)
           ->where('od.is_delete','=','1')
           ->where('odp.is_delete','=','1')
           ->where('odp.note','!=','')
-          ->where('od.order_id','=',$post['order_id']);
+          ->where('o.company_id','=',$post['company_id'])
+          ->where('o.parent_order_id','=',0)
+          ->where('o.display_number','=',$post['display_number']);
 
           if($search != '')               
                     {
@@ -871,9 +874,9 @@ public function saveColorSize($post)
           $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping,o.order_number,o.updated_date')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.display_number,o.created_date,SUM(dp.sales_total) as sales_total,u.name,o.order_sns_status,o.sns_shipping,o.order_number,o.updated_date')];
 
-        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $post['company_id']];
+        $where = ['v.name_company' => 'S&S Vendor','o.company_id' => $post['company_id'],'o.parent_order_id' => 0];
         $orderData = DB::table('orders as o')
                           ->leftJoin('order_design as od', 'o.id', '=', 'od.order_id')
                           ->leftJoin('design_product as dp', 'od.id', '=', 'dp.design_id')
@@ -886,7 +889,7 @@ public function saveColorSize($post)
                           {
                             $orderData = $orderData->Where(function($query) use($search)
                             {
-                                $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                                $query->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
                                       ->orWhere('o.order_number', 'LIKE', '%'.$search.'%')
                                       ->orWhere('u.name', 'LIKE', '%'.$search.'%');
                             });

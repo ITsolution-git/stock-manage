@@ -31,7 +31,7 @@
                                     <thead tasty-thead></thead>
                                     <tbody >
                                         <tr ng-repeat="art in rows">
-                                            <td>{{art.id}}</td>
+                                            <td>{{art.display_number}}</td>
                                             <td class="">{{art.client_company}}</td>
                                             <td class="">{{art.total_screen}}</td>
                                             <td class="">
@@ -39,7 +39,7 @@
                                                     <md-option ng-selected="art.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                                 </md-select>
                                             </td>
-                                            <td ><a class="font-12" class="cursor-p" ui-sref="app.art.orderView({id:art.id})">VIEW SCREEN SETS</a></td>
+                                            <td ><a class="font-12" class="cursor-p" ui-sref="app.art.orderView({id:art.display_number})">VIEW SCREEN SETS</a></td>
                                             <!-- <td class="" ui-sref="app.artOrder.companyPO({id:art.po_id})"> View</td> -->
                                         </tr>
                                     </tbody> 

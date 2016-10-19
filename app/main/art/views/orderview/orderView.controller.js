@@ -14,7 +14,7 @@
         vm.generateArtForm = generateArtForm;
         //vm.openClientEmailPopup = openClientEmailPopup;
         $scope.company_id = sessionService.get('company_id');
-        $scope.order_id = $stateParams.id;
+        $scope.display_number = $stateParams.id;
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
@@ -63,12 +63,13 @@
         $scope.GetOrderScreenSet = function() 
         {
             $("#ajax_loader").show();
-            var GetScreenArray = {company_id:$scope.company_id, order_id:$scope.order_id};
+            var GetScreenArray = {company_id:$scope.company_id, display_number:$scope.display_number};
             $http.post('api/public/art/ScreenSets',GetScreenArray).success(function(result) 
             {
                 if(result.data.success == '1') 
                 {
                     $scope.ScreenSets = result.data.records;
+                    $scope.order_id = $scope.ScreenSets[0].order_id;
                     $scope.ScreenSets_new = 
                     {
                         data_all: result.data.records,

@@ -87,6 +87,7 @@
                     controller: function ($scope, params){
                         $scope.params = params 
                         $scope.states_all  = $scope.params.states_all;
+                        $scope.allow_access  = $scope.params.allow_access;
                         $scope.AllPriceGrid= $scope.params.AllPriceGrid;
                         $("#ajax_loader").hide();
                         $scope.affiliate = {};

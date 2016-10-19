@@ -18,7 +18,7 @@
                     <thead tasty-thead></thead>
                     <tbody> 
                         <tr ng-repeat="inv in rows">
-                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.id})">{{inv.order_id}}</td>
+                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})">{{inv.display_number}}</td>
                             <td>{{inv.created_date}}</td>
                             <td>{{inv.grand_total | currency : $ : 2}}</td>
                             <td>{{inv.in_hands_by}}</td>

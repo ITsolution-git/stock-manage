@@ -4,11 +4,35 @@
   <meta charset="utf-8">
   <meta name="description" content="">
   <title>Orders Print</title>
-
 </head>
+<style>
+table{margin:0;padding:0;vertical-align: top;border-collapse: separate;border-spacing: 0;}
+.pdf-main-box{width:500px;float:left;margin:0;padding:0px;}
+.full-box{width:100%;float:left;margin:0;padding:0;}
+.company-details{padding:0 10px;}
+.company-details span{float:left;display:block;width:100%;margin:0 0 5px 0;padding-left:10px;font-size:10px;color:#000;line-height:15px;font-family: arial;}
+.order-details{margin:0;padding:0;}
+.order-details span{width:100%;float:left;font-weight:bold; text-transform:uppercase; font-size:10px;color:#000;}
+.pull-left{float:left;}
+.pull-right{float:right;}
+
+.main-table{width:500px;border:0;border-collapse:collapse;border-spacing: 0;}
+.main-table tr td{width:100%;}
+.first-table{width:500px;border:0;font-size:11px;font-family: arial;border-spacing: 0;border-collapse:collapse;}
+.first-table tr td{width:50%; vertical-align:bottom;}
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+ 
+ 
+
+}
+</style>
 <body style="padding:0; margin:0">
-    <table width="500" align="center" border="0" cellspacing="0" cellpadding="0" style="font-size:10px;">
-        <tr>
+    <table width="530" align="left" cellspacing="5" cellpadding="0" style="font-size:10px;">
+        <tr align="left" cellspacing="0" cellpadding="0">
             <td style="width:100%">
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="border-bottom:3px solid #000000; font-family: arial; font-size:11px;">
                     <tr>
@@ -16,17 +40,17 @@
                             <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
                                 <tr>
                                     <td width="25%" style="text-align:left;">
-                                    	<?php if(!empty($company_data[0]->photo))
-										{?>
-                                    	<img src="{{$company_data[0]->photo}}" title="" alt="">
-                                    	<?php
-										}
-										else
-										{ ?>
-											<img src="" title="" alt="">
-										<?php
-										}
-										?>
+                                     <?php if(!empty($company_data[0]->photo))
+                                        {?>
+                                     <img src="{{$company_data[0]->photo}}" title="" alt="">
+                                     <?php
+                                      }
+                                      else
+                                      { ?>
+                                       <img src="" title="" alt="">
+                                      <?php
+                                      }
+                                      ?>
                                     </td>
                                     <td width="5%">&nbsp;</td>
                                     <td width="70%" style="vertical-align:middle; font-size:13px; color:#00000; font-family: arial; line-height:13px; color:#000; font-size:10px; text-align:left;">{{$company_data[0]->name}}<br>{{$company_data[0]->prime_address1}}<br>{{$company_data[0]->prime_address_city}}, {{$company_data[0]->prime_address_state}} {{$company_data[0]->prime_address_zip}}<br>{{$company_data[0]->phone}}<br>{{$company_data[0]->url}}
@@ -34,24 +58,24 @@
                                 </tr>
                             </table>
                         </td>
-                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">Order Acknowledgement #{{$order_data[0]->id}}<br>Created On: {{$invoice_data[0]->created_date}}<br>Job Name: {{$order_data[0]->name}}</td>
+                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">Order Acknowledgement #{{$order_data[0]->display_number}}<br>Created On: {{$invoice_data[0]->created_date}}<br>Job Name: {{$order_data[0]->order_name}}</td>
                     </tr>
                     <tr>
-                    	<td style="height:15px;">&nbsp;</td>
+                     <td style="height:15px;">&nbsp;</td>
                     </tr>
                 </table>
-                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial;">
+                <table width="100%" border="0" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial;">
                     <tr>
                         <td style="height:15px;">&nbsp;</td>
                     </tr>
                 </table>
-                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+                <table width="100%" border="0" align="center" border="0" cellspacing="0" cellpadding="0">
                     <tr>
-                        <td width="48%" style="vertical-align:middle; border:1px solid #000; border-radius:20px; position:relative; height:100px;">
+                        <td width="48%" style="vertical-align:middle;  border-radius:20px; position:relative; height:100px;">
                         	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-                        		<tr>
-                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/bill.png"  title="" alt="" height="100"></td>
-                        			<td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                        		<tr style="align:left;position:fixed;float:left;margin:0;padding:0;" border="0" cellspacing="0" cellpadding="0">
+                        			<td width="15%"><img src="{{SITE_HOST}}/assets/images/etc/bill.png"  title="" alt="" height="100"></td>
+                        			<td width="85%" valign="middle" style="border:1px solid #000;border-left:solid 0px #fff;width:80%; height:100px; font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
                         						<td height="15">&nbsp;</td>
@@ -66,11 +90,11 @@
                         	</table>
                         </td>
                         <td width="4%"></td>
-                        <td width="48%" style="vertical-align:middle; border:1px solid #000; border-radius:20px; position:relative; height:100px;">
+                        <td width="48%" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
                         	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         		<tr>
-                        			<td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png"   title="" alt="" height="100"></td>
-                        			<td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                        			<td width="15%"><img src="{{SITE_HOST}}/assets/images/etc/ship.png"   title="" alt="" height="100"></td>
+                        			<td width="85%" valign="middle" style="border:1px solid #000;border-left:solid 0px #fff;height:100px; font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
                         						<td height="15">&nbsp;</td>
@@ -87,7 +111,7 @@
                     </tr>
                 </table>
 
-                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+                 <table width="100%" border="0" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
                  	<tr>
                  		<td height="15">&nbsp;</td>
                  	</tr>
@@ -172,123 +196,123 @@
 			                 	</tr>
 			                 </table>
 			                <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:15px; border-collapse:collapse;">
-			                    <tr>
-			                        <td width="70%" style="border-bottom:2px solid #000;">
-			                            <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:9px; border-collapse:collapse;">
-			                                
+                                <tr>
+                                    <td width="70%" style="border-bottom:2px solid #000;">
+                                       
+                                        <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:9px; border-collapse:collapse;">
+                                             @foreach($design->positions  as  $position)
+                                            <tr>
+                                                @foreach($position  as $positionData)
+                                                <td width="50%">
+                                                    <table width="100%" align="left" cellpadding="0" cellspacing="0">
+                                                        <tr>
+                                                            <td width="50%" valign="bottom" style="line-height:12px; font-size:9px;">Position:{{$positionData->position_name}}<br><?php if($positionData->color_stitch_count > 0) {?>Colors: {{$positionData->color_stitch_count > 0}}<br><?php }?>{{$positionData->placement_type_name}}<br><?php if($positionData->press_setup_qnty > 0){?>Press Setup @ {{$positionData->press_setup_qnty * $price_grid_data[0]->press_setup}} <br><?php }?><?php if($positionData->screen_fees_qnty > 0){?>Screen Fee @ {{$positionData->screen_fees_qnty * $price_grid_data[0]->screen_fees }}<br><?php }?><?php if($positionData->speciality_qnty > 0) {?>Speciality Ink @ {{$positionData->speciality_qnty * $price_grid_data[0]->specialty}}<?php }?>
+                                                            </td>
+                                                            <td width="50%" valign="bottom">
+                                                                <?php if($positionData->position_image != '') {?>
+                                                                <img src="{{$positionData->position_image}}" title="" alt="" width="60" height="60">
+                                                                <?php }
+                                                                else
+                                                                {
+                                                                ?>
+                                                                    <img src="" height="60" width="60">
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                            </td> 
+                                                        </tr>
+                                                        <tr>
+                                                        <td width="100%" style="font-size:10px;">
 
-			                            	@foreach($design->positions  as  $position)
+                                                            <?php if($positionData->note != ''){?>
+                                                            <dt><b>Notes</b></dt><dt><span style="font-size:10px;line-height:14px;float:none;">{{$positionData->note}}</span></dt>
+                                                            <?php }?>
 
-			                                <tr>
-			                                	@foreach($position  as $positionData)
-			                                    <td width="25%" style="line-height:12px; font-size:9px; vertical-align:top;">Position:{{$positionData->position_name}}<br><?php if($positionData->color_stitch_count > 0) {?>Colors: {{$positionData->color_stitch_count > 0}}<br><?php }?>{{$positionData->placement_type_name}}<br><?php if($positionData->press_setup_qnty > 0){?>Press Setup @ {{$positionData->press_setup_qnty * $price_grid_data[0]->press_setup}} <br><?php }?><?php if($positionData->screen_fees_qnty > 0){?>Screen Fee @ {{$positionData->screen_fees_qnty * $price_grid_data[0]->screen_fees }}<br><?php }?><?php if($positionData->speciality_qnty > 0) {?>Speciality Ink @ {{$positionData->speciality_qnty * $price_grid_data[0]->specialty}}<?php }?>
-			                                    </td>
-			                                    <td width="25%" style="text-align:center; vertical-align:top; padding-left:10px; padding-right:10px;">
-													<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-														<tr>
-															<td width="10%">&nbsp;</td>
-															<td width="80%">
-																<?php if($positionData->position_image != '') {?>
-																<img src="{{$positionData->position_image}}" title="" alt="">
-																<?php }
-																else
-																{
-																?>
-																	<img src="" height="40px" width="40px"></td>
-																<?php
-																}
-																?>
-															</td>
-															<td width="10%">&nbsp;</td>
-														</tr>
-														<tr>
-															<td colspan="3" style="font-size:10px;">
-
-																<?php if($positionData->note != '') {?>
-																<strong>Notes</strong><br>{{$positionData->note}}
-																<?php }?>
-
-															</td>
-														</tr>
-													</table>
-			                                    </td>
-			                                    @endforeach
-			                                    
-			                                </tr>
-			                                <tr>
-			                                    <td colspan="4" height="15" style="font-size:10px;"></td>
-			                                </tr> 
-
-			                                
-			                                @endforeach
+                                                        </td>
+                                                        
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="100%" height="15">&nbsp;</td>
+                                                        </tr>
+                                                    </table>
+                                                     
+                                                     
+                                                </td>
+                                                <!-- <td width="1%"></td> -->
+                                                @endforeach 
+                                                
+                                                </tr>              
+                                                @endforeach
+                                           
+                                            </table>
 
 
-			                				</table>
-                       					 </td>
+                                            
+                                         </td>
 
-					
+                    
 
-				                        <td width="30%" style="vertical-align:top;">
-				                        	<?php if ($index === $len - 1) { ?>
-				                            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" style="font-family: arial; font-size:15px; border-collapse:collapse;">
-				                                <tr>
-				                                    <td height="20" width="60%" style="text-align:right; font-size:9px; font-weight:bold; line-height:20px;">Screens</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td height="20" width="35%" style="text-align:right; font-size:9px; line-height:20px; font-weight:bold; border:1px solid #000;">$<?php echo number_format($order_data[0]->screen_charge,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; line-height:20px;">Press Setup</td>
-				                                    <td  height="20" width="5%">&nbsp;</td>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->press_setup_charge,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Separations</td>
-				                                    <td  width="5%">&nbsp;</td>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->separations_charge,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Rush</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->rush_charge,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; color:#ed1c24; line-height:20px;">Discount</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; color:#ed1c24; line-height:20px;">-$<?php echo number_format($order_data[0]->discount,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Order Total</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->order_total,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Tax</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->tax,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Grand Total</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->grand_total,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Payments</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->total_payments,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                                <tr>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Balance Due</td>
-				                                    <td width="5%">&nbsp;</td>
-				                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->balance_due,2); ?>&nbsp;&nbsp;</td>
-				                                </tr>
-				                            </table>
-				                             <?php }?>
-				                        </td>
+                                        <td width="30%" style="vertical-align:top;">
+                                            <?php if ($index === $len - 1) { ?>
+                                            <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" style="font-family: arial; font-size:15px; border-collapse:collapse;">
+                                                <tr>
+                                                    <td height="20" width="60%" style="text-align:right; font-size:9px; font-weight:bold; line-height:20px;">Screens</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td height="20" width="35%" style="text-align:right; font-size:9px; line-height:20px; font-weight:bold; border:1px solid #000;">$<?php echo number_format($order_data[0]->screen_charge,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; line-height:20px;">Press Setup</td>
+                                                    <td  height="20" width="5%">&nbsp;</td>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->press_setup_charge,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Separations</td>
+                                                    <td  width="5%">&nbsp;</td>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->separations_charge,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Rush</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->rush_charge,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; color:#ed1c24; line-height:20px;">Discount</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; color:#ed1c24; line-height:20px;">-$<?php echo number_format($order_data[0]->discount,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Order Total</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->order_total,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Tax</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->tax,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Grand Total</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->grand_total,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Payments</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->total_payments,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Balance Due</td>
+                                                    <td width="5%">&nbsp;</td>
+                                                    <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->balance_due,2); ?>&nbsp;&nbsp;</td>
+                                                </tr>
+                                            </table>
+                                             <?php }?>
+                                        </td>
 
-                    				</tr>
-                				</table>
+                                    </tr>
+                                </table>
 
-				                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+				                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="5" style="font-family: arial; font-size:10px; border-collapse:collapse;">
 				                 	<tr>
 				                 		<td height="15">&nbsp;</td>
 				                 	</tr>
@@ -307,10 +331,11 @@
             </td>
         </tr>
     </table>
-    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:15px; border-collapse:collapse;">
-        <tr>
-            <td><img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt=""></td>
-        </tr>
-    </table>
+
+
+    <br />
+    <footer>
+    	<img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt="">
+    </footer>
 </body>
 </html>
