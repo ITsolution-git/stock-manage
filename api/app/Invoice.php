@@ -34,7 +34,7 @@ class Invoice extends Model {
                         {
                           $invoiceData = $invoiceData->Where(function($query) use($search)
                           {
-                              $query->orWhere('o.id', 'LIKE', '%'.$search.'%')
+                              $query->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
                                     ->orWhere('i.created_date', 'LIKE', '%'.$search.'%')
                                     ->orWhere('o.grand_total', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')

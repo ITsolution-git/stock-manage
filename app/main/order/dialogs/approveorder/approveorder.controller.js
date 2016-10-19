@@ -51,6 +51,8 @@
                         
                         if(result.data.success == '1') 
                         {
+                           
+                            $scope.invoice_display_number = result.data.records[0].display_number;
                             $scope.invoice_id = result.data.records[0].id;
                             $scope.qb_invoice_id = result.data.records[0].qb_id;
                         } 
@@ -131,9 +133,10 @@
                     {
                         $scope.invoice_id = result.data.invoice_id;
                         $scope.qb_invoice_id = result.data.qb_invoice_id;
+                        $scope.invoice_display_number = result.data.display_number;
 
                         $mdDialog.hide();
-                        $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                        $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
 
                          if($scope.invoice == true && $scope.qb == true) {
 
@@ -155,14 +158,14 @@
                                     }
 
                                     $mdDialog.hide();
-                                    $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                                    $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                                     $("#ajax_loader").hide();
                                   
                                 });
                         } else {
 
                              $mdDialog.hide();
-                             $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                             $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                         }
                     }
                 });
@@ -220,7 +223,7 @@
                         }
 
                         $mdDialog.hide();
-                        $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                        $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                          $("#ajax_loader").hide();
                       
                     });
@@ -231,7 +234,7 @@
             if($scope.invoice_id > 0)
             {
                 $mdDialog.hide();
-                $state.go('app.invoices.singleInvoice',{id: $scope.invoice_id});
+                $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
             }
         }
     }
