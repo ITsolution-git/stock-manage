@@ -164,7 +164,7 @@
                                                             <td ng-if="data.shipping_by == '0000-00-00'"></td>
                                                             <td ng-if="data.in_hands_by != '0000-00-00'">{{ data.in_hands_by | date:"M/d/yyyy" }}</td>
                                                             <td ng-if="data.in_hands_by == '0000-00-00'"></td>
-                                                            <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.id})"><a>SHIPMENT OVERVIEW</a></td>
+                                                            <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.display_number})"><a>SHIPMENT OVERVIEW</a></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
