@@ -53,7 +53,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                                       ?>
                                     </td>
                                     <td width="5%">&nbsp;</td>
-                                    <td width="70%" style="vertical-align:middle; font-size:13px; color:#00000; font-family: arial; line-height:13px; color:#000; font-size:10px; text-align:left;">{{$company_data[0]->name}}<br>{{$company_data[0]->prime_address1}}<br>{{$company_data[0]->prime_address_city}}, {{$company_data[0]->prime_address_state}} {{$company_data[0]->prime_address_zip}}<br>{{$company_data[0]->phone}}<br>{{$company_data[0]->url}}
+                                    <td width="70%" style="vertical-align:middle; font-size:13px; color:#00000; font-family: arial; line-height:13px; color:#000; font-size:10px; text-align:left;">{{$company_data[0]->name}}<br>{{$company_data[0]->prime_address1}}<br>{{$company_data[0]->prime_address_city}}, {{$company_data[0]->prime_address_state}} {{$company_data[0]->prime_address_zip}}<br>{{$company_data[0]->phone}}<br><a href="{{$company_data[0]->url}}" target="_blank" style="text-decoration:none;color:#000;">{{$company_data[0]->url}}</a>
                                     </td>
                                 </tr>
                             </table>
