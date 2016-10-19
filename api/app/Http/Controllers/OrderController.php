@@ -27,7 +27,7 @@ class OrderController extends Controller {
 
     public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company)
     {
-        parent::__construct();
+        //parent::__construct();
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
