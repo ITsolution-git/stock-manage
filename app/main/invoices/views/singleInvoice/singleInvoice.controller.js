@@ -23,7 +23,7 @@
             } 
             else
             {
-                $state.go('app.order');
+                $state.go('app.invoices');
             }
         });
 
