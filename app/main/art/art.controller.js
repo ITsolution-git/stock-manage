@@ -440,6 +440,8 @@
         };
         vm.openRightMenu1 = function () {
             $mdSidenav('left').toggle();
+            $('body').addClass('vinit');
+            
         };
     }
 })();
