@@ -21,7 +21,7 @@
                 <div class="font-14 text-bold-center">Address</div>
                 <div class="gray-text mrg5-B text-bold-center">{{allData.company_data[0].prime_address1}}<br>{{allData.company_data[0].prime_address_city}}, {{allData.company_data[0].prime_address_state}} {{allData.company_data[0].prime_address_zip}}<br><span ng-if="allData.company_data[0].phone != ''">P: {{allData.company_data[0].phone}}</span></div>
                 <div class="font-14 text-bold-center">Website</div>
-                <div class="text-center"><a href="http://www.culturestudio.net" target="_blank" title="" class="common-header-links">{{allData.company_data[0].url}}</a></div>
+                <div class="text-center"><a href="{{allData.company_data[0].url}}" target="_blank" title="" class="common-header-links">{{allData.company_data[0].url}}</a></div>
             </div>
 
             <div layout="column" flex="25">

@@ -218,6 +218,11 @@ class InvoiceController extends Controller {
 
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
 
+       
+
+        $retutn_arr['company_data'][0]->url = (!empty($retutn_arr['company_data'][0]->url) && preg_match('/http/',$retutn_arr['company_data'][0]->url) == false) ? "http://".$retutn_arr['company_data'][0]->url:$retutn_arr['company_data'][0]->url;
+
+
         if($retutn_arr['company_data'][0]->photo != '')
         {
             $retutn_arr['company_data'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
