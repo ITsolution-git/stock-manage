@@ -10,52 +10,72 @@
         var vm = this;
         vm.linktopay = linktopay;
 
-        var invoice_data = {invoice_id:$stateParams.id,company_id :sessionService.get('company_id')};
+        var order_data = {};
+        order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+        order_data.table ='invoice';
+          
+        $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                $scope.invoice_id = result.data.records[0].id;
+                $scope.invoiceData();
+            } 
+            else
+            {
+                $state.go('app.order');
+            }
+        });
+
+        $scope.invoiceData = function()
+        {
+            var invoice_data = {invoice_id:$scope.invoice_id,company_id :sessionService.get('company_id')};
         
-        $http.get('api/public/invoice/getInvoiceDetail/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
+            $http.get('api/public/invoice/getInvoiceDetail/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
 
-            if(result.data.success == '0') {
-                    $state.go('app.invoices');
-                } 
+                if(result.data.success == '0') {
+                        $state.go('app.invoices');
+                    } 
 
-            $scope.allData = result.data.allData;
-            if(result.data.allData.order_data[0].grand_total > result.data.allData.order_data[0].total_payments){
-                $scope.showPaymentDetails = true;
-            }else{
-                $scope.showPaymentDetails = false;
-            }
+                $scope.allData = result.data.allData;
+                if(result.data.allData.order_data[0].grand_total > result.data.allData.order_data[0].total_payments){
+                    $scope.showPaymentDetails = true;
+                }else{
+                    $scope.showPaymentDetails = false;
+                }
 
-            $scope.brand_coordinator = sessionService.get('role_title');
-        });
+                $scope.brand_coordinator = sessionService.get('role_title');
+            });
 
-        $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(resultHistory) {
+            $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(resultHistory) {
 
-            /*if(result.data.success == '0') {
-                    $state.go('app.invoices');
-                }*/
-                
-            $scope.siData = resultHistory.data.allData;
-        });
+                /*if(result.data.success == '0') {
+                        $state.go('app.invoices');
+                    }*/
+                    
+                $scope.siData = resultHistory.data.allData;
+            });
 
-        /*$http.get('api/public/invoice/getInvoicePayment/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+            /*$http.get('api/public/invoice/getInvoicePayment/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
-            if(result123.data.success == '0') {
-                    $state.go('app.invoices');
-            }else{
-                //$scope.spData = result123.data.allData[0];
-                //alert(result123.data.allData[0].first_name+' : '+result123.data.allData[0].last_name+' : '+result123.data.allData[0].credit_card);
-                //$scope.company = result123.data.allData[0];
-            }
-        });*/
+                if(result123.data.success == '0') {
+                        $state.go('app.invoices');
+                }else{
+                    //$scope.spData = result123.data.allData[0];
+                    //alert(result123.data.allData[0].first_name+' : '+result123.data.allData[0].last_name+' : '+result123.data.allData[0].credit_card);
+                    //$scope.company = result123.data.allData[0];
+                }
+            });*/
 
-        $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+            $http.get('api/public/invoice/getInvoiceCards/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
-            if(result123.data.success == '0') {
-                    //$state.go('app.invoices');
-            }else{
-                $scope.cardsAll = result123.data.allData;
-            }
-        });
+                if(result123.data.success == '0') {
+                        //$state.go('app.invoices');
+                }else{
+                    $scope.cardsAll = result123.data.allData;
+                }
+            });
+        }
 
         var misc_list_data = {};
         var condition_obj = {};
@@ -81,7 +101,7 @@
         function linktopay(ev, settings) {
             var invoice_id = document.createElement('input');
             invoice_id.name = 'invoice_id';
-            invoice_id.setAttribute('value', $stateParams.id);
+            invoice_id.setAttribute('value', $scope.invoice_id);
             
 
             var company_id = document.createElement('input');
@@ -151,7 +171,7 @@
 
             var invoice_id = document.createElement('input');
             invoice_id.name = 'invoice_id';
-            invoice_id.setAttribute('value', $stateParams.id);
+            invoice_id.setAttribute('value', $scope.invoice_id);
             form.appendChild(invoice_id);
 
             var company_id = document.createElement('input');
@@ -225,7 +245,7 @@
 
             var invoice_id = document.createElement('input');
             invoice_id.name = 'invoice_id';
-            invoice_id.setAttribute('value', $stateParams.id);
+            invoice_id.setAttribute('value', $scope.invoice_id);
             
 
             var company_id = document.createElement('input');
@@ -251,7 +271,7 @@
                         $scope.showPaymentDetails = false;
                         $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
                     }
-                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
+                    $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
                         $scope.siData = result.data.allData;
                     });
                     $("#ajax_loader").hide();
@@ -341,7 +361,7 @@
 
             var invoice_id = document.createElement('input');
             invoice_id.name = 'invoice_id';
-            invoice_id.setAttribute('value', $stateParams.id);
+            invoice_id.setAttribute('value', $scope.invoice_id);
             
 
             var company_id = document.createElement('input');
@@ -390,11 +410,11 @@
                         $scope.showPaymentDetails = false;
                         $scope.allData.order_data[0].approval_id = result.data.amt.approval_id;
                     }
-                    $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
+                    $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(resultData) {
                         $scope.siData = resultData.data.allData;
                     });
 
-                    $http.get('api/public/invoice/getInvoiceCards/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                    $http.get('api/public/invoice/getInvoiceCards/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
                         if(result123.data.success == '1') {
                             $scope.cardsAll = result123.data.allData;
                         }
@@ -448,7 +468,7 @@
             if(method=='Credit Card'){
                 var invoice_id = document.createElement('input');
                 invoice_id.name = 'invoice_id';
-                invoice_id.setAttribute('value', $stateParams.id);
+                invoice_id.setAttribute('value', $scope.invoice_id);
 
                 var company_id = document.createElement('input');
                 company_id.name = 'company_id';
@@ -473,11 +493,11 @@
                         {
                             if(resultUpdate.data.success=='1')
                             {
-                                $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                                $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
                                     $scope.siData = result123.data.allData;
 
                                     var combine_array_id = {};
-                                    combine_array_id.invoice_id = $stateParams.id;
+                                    combine_array_id.invoice_id = $scope.invoice_id;
                                     combine_array_id.company_id = sessionService.get('company_id');
 
                                     $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
@@ -536,11 +556,11 @@
                 {
                     if(result.data.success=='1')
                     {
-                       $http.get('api/public/invoice/getInvoiceHistory/'+$stateParams.id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
+                       $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
                             $scope.siData = result123.data.allData;
 
                             var combine_array_id = {};
-                            combine_array_id.invoice_id = $stateParams.id;
+                            combine_array_id.invoice_id = $scope.invoice_id;
                             combine_array_id.company_id = sessionService.get('company_id');
 
                             $http.post('api/public/order/paymentInvoiceCash',combine_array_id).success(function(resultUpdate) 
