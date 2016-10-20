@@ -18,7 +18,7 @@ class Art extends Model {
 
 	public function Listing($post)
 	{
-
+		$this->common->getDisplayNumber('artjob_screensets',$post['company_id'],'company_id','id','yes');
 		$search = ''; $client_filter='';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
