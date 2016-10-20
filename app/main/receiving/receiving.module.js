@@ -7,7 +7,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function config($stateProvider,  msApiProvider, msNavigationServiceProvider)
     {
         // State
         $stateProvider
@@ -43,7 +43,7 @@
             ;
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/receiving');
+     //  $translatePartialLoaderProvider.addPart('app/main/receiving');
         // Api
 
         // Navigation

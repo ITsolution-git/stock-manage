@@ -18,7 +18,7 @@
             $mdOpenMenu(ev);
         };
         vm.openReceivingInformationDialog = openReceivingInformationDialog;
-        $scope.po_id = $stateParams.id;
+        $scope.display_number = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
@@ -68,12 +68,13 @@
         $scope.GetPodata = function ()
         {
             $("#ajax_loader").show();
-            $http.get('api/public/purchase/GetPoReceived/'+$scope.po_id+'/'+$scope.company_id).success(function(result) 
+            $http.get('api/public/purchase/GetPoReceived/'+$scope.display_number+'/'+$scope.company_id).success(function(result) 
             {
                 $("#ajax_loader").hide();
                 if(result.data.success=='1')
                 {
                     $scope.po_data = result.data.records.po_data;
+                    $scope.po_id = $scope.po_data.po_id;
                     $scope.poline = result.data.records.receive;
                     $scope.order_total = result.data.order_total[0];
                     if($scope.po_data.complete=='0')
@@ -235,7 +236,7 @@
                 {
                     $scope.mail=params.po_data.billing_email;
                     $scope.company_id=params.company_id;
-                    $scope.po_id=params.po_id;
+                    //$scope.po_id=params.display_number;
                     //console.log($scope.mail);
                     $scope.closeDialog = function() 
                     {
@@ -252,7 +253,7 @@
                             }
                         }
                         $mdDialog.hide();
-                        var pass_array = {company_id:$scope.company_id,po_id:$scope.po_id,flag:flag,email:email };
+                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email };
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/purchase/createPDF';

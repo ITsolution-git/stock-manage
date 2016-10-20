@@ -164,7 +164,8 @@ class InvoiceController extends Controller {
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
-            $order_data =  $order_data_all['order']; 
+            $order_data =  $order_data_all['order'];
+           
 
 
 //            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
@@ -216,6 +217,11 @@ class InvoiceController extends Controller {
         $retutn_arr['company_data'] = $this->common->getCompanyDetail($company_id);
 
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
+
+       
+
+        $retutn_arr['company_data'][0]->url = (!empty($retutn_arr['company_data'][0]->url) && preg_match('/http/',$retutn_arr['company_data'][0]->url) == false) ? "http://".$retutn_arr['company_data'][0]->url:$retutn_arr['company_data'][0]->url;
+
 
         if($retutn_arr['company_data'][0]->photo != '')
         {

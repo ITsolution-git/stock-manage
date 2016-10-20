@@ -27,6 +27,7 @@ class OrderController extends Controller {
 
     public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company)
     {
+        //parent::__construct();
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
@@ -386,15 +387,13 @@ class OrderController extends Controller {
         if($post['column_name'] == 'position_id') {
             $result = $this->order->checkDuplicatePositions($post['design_id'],$post['data']['position_id']);
 
-            $screen_set = $post['order_id'].'_'.$post['position'].'_'.$post['design_id'];
-
             if($result == '1' ) {
                 $data = array("success"=>2,"message"=>"Duplicate");
                  return response()->json(['data'=>$data]);
             }
         }
 
-        //$positionData = $this->common->GetTableRecords('order_design_position',array('design_id' => $data['design_id']),array());
+
 
         if(!empty($post['table']) && !empty($post['data'])  && !empty($post['cond']))
         {
@@ -420,8 +419,23 @@ class OrderController extends Controller {
 
           $result = $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['data'],$date_field);
 
-          if($post['column_name'] == 'position_id') {
-             $this->common->UpdateTableRecords('artjob_screensets',array('positions' => $post['cond']['id']),array('screen_set' => $screen_set));
+          if($post['column_name'] == 'position_id') 
+          {
+
+          $ord_display = $this->common->GetTableRecords('orders',array('id' => $post['order_id']),array());
+          $ord_display = $ord_display['0']->display_number;
+
+          $design_display = $this->common->GetTableRecords('order_design',array('id' => $post['design_id']),array());
+          $design_display = $design_display['0']->display_number;
+
+
+
+            $post['position'] = str_replace(" ","",strtolower(trim($post['position'])));
+            $screen_set = $ord_display.'_'.$post['position'].'_'.$design_display;
+
+
+            $this->common->getDisplayNumber('artjob_screensets',$post['company_id'],'company_id','id','yes');
+            $this->common->UpdateTableRecords('artjob_screensets',array('positions' => $post['cond']['id']),array('screen_set' => $screen_set,'company_id'=>$post['company_id']));
           }  
             
 
@@ -1355,13 +1369,18 @@ class OrderController extends Controller {
            $art_id = $this->common->InsertRecords('art',$insert_arr);
            $id = $art_id;
 
-           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
+           //$data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
+           // send display number other then order Id
+           $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$post['orderdata']['display_number']);
+           
            return response()->json(['data'=>$data]);
     }
 
      public function addDesign()
     {
         $post = Input::all();
+
+        $post['designData']['display_number'] = $this->common->getDisplayNumber('order_design',$post['designData']['company_id'],'company_id','id');
      
         if(isset($post['designData']['hands_date']) && $post['designData']['hands_date'] != '') {
           $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
@@ -1386,7 +1405,8 @@ class OrderController extends Controller {
  
         $data = Input::all();
         $design_data = array();
-      
+        
+        $this->common->getDisplayNumber('order_design',$data['company_id'],'company_id','id','yes');
         $order_design_data = $this->common->GetTableRecords('order_design',array('status' => '1','is_delete' => '1','order_id' => $data['id']),array(),'id','desc');
         
         $size_data = array();
@@ -1480,7 +1500,8 @@ class OrderController extends Controller {
        
         unset($post['designData']['order_number']);
         unset($post['designData']['is_complete']);
-      
+        unset($post['designData']['order_display_number']);
+
         if($post['designData']['hands_date'] != '')
         {
             $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
@@ -2288,12 +2309,24 @@ class OrderController extends Controller {
 
          if($id > 0) {
 
-            $post['artdata']['Positions'] = $id;
-            $post['artdata']['order_id'] = $post['order_id'];
-            $post['artdata']['screen_set'] = $post['order_id'].'_'.$post['position'].'_'.$post['design_id'];
+          $post['artdata']['Positions'] = $id;
+          $post['artdata']['order_id'] = $post['order_id'];
+          $post['artdata']['company_id'] = $post['company_id'];
+          $post['position'] = str_replace(" ","",strtolower(trim($post['position'])));
 
+
+          $ord_display = $this->common->GetTableRecords('orders',array('id' => $post['order_id']),array());
+          $ord_display = $ord_display['0']->display_number;
+
+          $design_display = $this->common->GetTableRecords('order_design',array('id' => $post['design_id']),array());
+          $design_display = $design_display['0']->display_number;
+
+
+          $post['artdata']['screen_set'] = $ord_display.'_'.$post['position'].'_'.$design_display;
+
+          $post['artdata']['display_number'] = $this->common->getDisplayNumber('artjob_screensets',$post['company_id'],'company_id','id','yes');
           $art_screen_id = $this->common->InsertRecords('artjob_screensets',$post['artdata']);
-
+                    
          }
          
 
@@ -2308,28 +2341,28 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
-         if($post['payment'] == '15') {
+        if($post['payment'] == '15') {
             $setDate  = date('Y-m-d', strtotime("+15 days"));
-
-         } else if($post['payment'] == '30') {
+        }
+        else if($post['payment'] == '30') {
             $setDate  = date('Y-m-d', strtotime("+30 days"));
+        } else {
+            $setDate  = date('Y-m-d');
+        }
 
-         } else {
-           $setDate  = date('Y-m-d');
-         }
+        $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
+        $ack_id=$ack[0]->id;
+        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
 
-         $ack= $this->common->GetTableRecords('misc_type',array('company_id' => $post['company_id'], 'slug'=>138),array(),0,0,'id');
-         $ack_id=$ack[0]->id;
-         $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('approval_id' => $ack_id));
+        $display_number = $this->common->getDisplayNumber('invoice',$post['company_id'],'company_id','id');
 
-         
-        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment']);
+        $orderData = array('order_id' => $post['order_id'], 'created_date' => date('Y-m-d'), 'payment_due_date' => $setDate, 'payment_terms' => $post['payment'], 'company_id' => $post['company_id'], 'display_number' => $display_number);
         $id = $this->common->InsertRecords('invoice',$orderData);
 
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
         $qb_id = $qb_data[0]->qb_id;
 
-        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id,"qb_invoice_id" => $qb_id);
+        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id,"qb_invoice_id" => $qb_id,"display_number" => $display_number);
         return response()->json(['data'=>$data]);
     }
 

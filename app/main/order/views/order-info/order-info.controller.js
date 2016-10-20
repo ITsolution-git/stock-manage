@@ -10,6 +10,32 @@
     function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
 
+         // change display number to order Id for fetching the order data
+          var order_data = {};
+           order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           order_data.table ='orders';
+          
+          $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+            
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.vendorRecord =result.data.records;
+                  $scope.order_id = result.data.records[0].id;
+
+                    $scope.orderDetail();
+                    $scope.designDetail();
+                    $scope.listAffiliate();
+
+              } 
+              else
+              {
+                   $state.go('app.order');
+              }
+          });
+
+
+
         $scope.role_slug = sessionService.get('role_slug');
         if($scope.role_slug=='SU' || $scope.role_slug=='AT')
         {
@@ -25,9 +51,9 @@
             $("#ajax_loader").show();
             
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
-            $scope.order_id = $stateParams.id;
+            $scope.order_id = $scope.order_id;
             $scope.company_id = sessionService.get('company_id');
             
 
@@ -49,7 +75,7 @@
         $scope.designDetail = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
@@ -73,7 +99,7 @@
         $scope.listAffiliate = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/affiliate/getAffiliateData',combine_array_id).success(function(result, status, headers, config) {
@@ -87,12 +113,11 @@
             });
         }
 
-        $scope.orderDetail();
-        $scope.designDetail();
-        $scope.listAffiliate();
+      
 
         $scope.checkDesign = function()
         {
+
             if($scope.designs.length == 0)
             {
                 var data = {"status": "error", "message": "Please add design to split order"}
@@ -107,7 +132,7 @@
             }*/
             else
             {
-                $state.go('app.order.spiltAffiliate',{id: $scope.order_id});
+                $state.go('app.order.spiltAffiliate',{id: $stateParams.id});
             }
         }
        
@@ -380,7 +405,8 @@
                     clickOutsideToClose: true,
                     locals: {
                         client_id: $scope.order.client_id,
-                        order_id: $stateParams.id,
+                        order_id: $scope.order_id,
+                        display_number: $stateParams.id,
                         paid: $scope.order.is_paid,
                         balance: $scope.order.balance_due,
                         event: ev

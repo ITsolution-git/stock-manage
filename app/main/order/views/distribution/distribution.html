@@ -1,8 +1,8 @@
 <div class="main-distribution-page m-r-15 m-l-20 m-b-20">
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.order.order-info({id:order_id})">BACK TO ORDER INFO</a>
-            <h1 flex="4">{{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}</h1>
+            <a class="link-back cursor-p" ui-sref="app.order.order-info({id:order.display_number})">BACK TO ORDER INFO</a>
+            <h1 flex="4">{{order.order_name}}  #{{order.display_number}} for Company: {{order.client_company}}</h1>
         </div>
         <div class="distribution-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
             <div class="info-disribution m-b-20" flex="100" >
@@ -158,7 +158,7 @@
                             <div class="simple-table-container md-whiteframe-4dp m-b-20">
                                 <div class="table-title " layout="row" layout-align="space-between center">
                                     <div class="table-title-text h2 text-semibold " Flex="55" >
-                                        Products
+                                        Locations
                                     </div>
                                     <div flex="45" class="text-right">
                                         <!-- <md-button  class="bg-grey bg-green right-m-0 " >
@@ -179,7 +179,7 @@
                                         <th></th>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="distlocation in distribution_address" class="cursor-p">
+                                            <tr ng-repeat="distlocation in distribution_address">
                                                 <td>{{ distlocation.description}}</td>
                                                 <td>{{ distlocation.attn}}  
                                                 <td>{{ distlocation.full_address}}</td>

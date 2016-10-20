@@ -10,6 +10,24 @@
 
     function AddProductController(product_id,operation,design_id,color_id,is_supply,vendor_id,product_name,description,vendor_name,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService, $timeout,AllConstant)
     {
+
+         // change display number to design Id for fetching the order data
+          var design_data = {};
+           design_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           design_data.table ='order_design';
+          
+          $http.post('api/public/common/GetTableRecords',design_data).success(function(result) {
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.design_id = result.data.records[0].id;
+
+              } 
+          });
+
+
+
+
         var vm = this;
         $scope.product_id = product_id;
         $scope.NoImage = AllConstant.NoImage;
@@ -161,7 +179,7 @@
             }
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             combine_array_id.product_id = product_id;
             combine_array_id.company_id = sessionService.get('company_id');
             combine_array_id.productData = productData;

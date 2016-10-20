@@ -313,7 +313,8 @@ core.factory('notifyService', msNotify);
 core.factory('AllConstant', AllConstant);
     function AllConstant($browser,$location,$filter)
         {
-            var base_path = "http://"+$location.host()+$browser.baseHref();
+            var protocol = $location.protocol();
+            var base_path = protocol+"://"+$location.host()+$browser.baseHref();
             var constatnt = {
                   deleteMessage: 'Are you sure want to delete this record ?',
                   deleteImage: 'Are you sure want to delete this image ?',
