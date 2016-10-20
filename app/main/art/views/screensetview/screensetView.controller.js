@@ -18,7 +18,7 @@
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
        
-        $scope.screenset_id = $stateParams.id;
+        $scope.display_id = $stateParams.id;
         //console.log($stateParams.id);
         if($stateParams.id=='' || angular.isUndefined($stateParams.id))
         {
