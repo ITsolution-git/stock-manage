@@ -113,8 +113,19 @@
         //$("#ajax_loader").show();
 
         if(vm.role_slug=='CA' || vm.role_slug=='AM' || vm.role_slug=='FM' || vm.role_slug=='SO' || vm.role_slug=='PU'){
-            // Fetch Sales Persons for Filtering
+            
+            $scope.showAvgItem = true;
+            $scope.showAvgAmount = false;
+            $scope.showItemAvg = function(){
+              $scope.showAvgItem = true;
+              $scope.showAvgAmount = false;
+            }
+            $scope.showAmountAvg = function(){
+              $scope.showAvgItem = false;
+              $scope.showAvgAmount = true;
+            }
 
+            // Fetch Sales Persons for Filtering
             var combineSalesPersons = {};
             combineSalesPersons.company_id = sessionService.get('company_id');
             $http.post('api/public/invoice/getSalesPersons',combineSalesPersons,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultSales){
@@ -157,19 +168,25 @@
             }
 
             // Average Orders
-            /*var combineAverageOrders = {};
+            var combineAverageOrders = {};
             combineAverageOrders.company_id = sessionService.get('company_id');
 
             $http.post('api/public/invoice/getAverageOrders',combineAverageOrders).success(function(resultAverageOrder){
                 if(resultAverageOrder.data.success == '1') {
-                  $scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
+                  $scope.avgAmount=resultAverageOrder.data.allData[0].avgOrderAmount;
+                  if(resultAverageOrder.data.allData[0].avgOrderItems){
+                      $scope.avgItems=resultAverageOrder.data.allData[0].avgOrderItems;
+                  }else{
+                      $scope.avgItems=0;
+                  }
+                  /*$scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
                   $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
                   $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
-                  $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];
+                  $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];*/
                 }
-            });*/
+            });
             // Average Orders with sales man filtering
-            $scope.getAverageOrdersSalesMan = function(sales_id){
+            /*$scope.getAverageOrdersSalesMan = function(sales_id){
                 //if(sales_id != 0){
                   $("#ajax_loader").show();
                   var combineAverageOrders = {};
@@ -185,20 +202,10 @@
                           }else{
                               $scope.avgItems=0;
                           }
-
-                          /*$scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
-                          $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
-                          if(resultAverageOrder.data.allData[0].avgOrderItems){
-                              $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
-                              $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];  
-                          }else{
-                              $scope.avgItems1=0;
-                              $scope.avgItems2=0;
-                          }*/
                       }
                   });
                 //}
-            }
+            }*/
 
             // Sales Closed
             /*var combineSalesClosed = {};

@@ -133,31 +133,27 @@
                        <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
                     </div>
                 </md-card-title>
-                <!--<md-card-content id="avgItemShow" class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}}</div>
-                </md-card-content>-->
-                <md-card-content id="avgAmountShow" class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">Items {{avgItems}} |Amount {{avgAmount | currency : $ : 0}}</div>
+                <md-card-content ng-show="showAvgItem" id="avgItemShow" class="center-num-box box-zerospace dashboard-cards">
+                        <div class="center-num"><span class="num-style1 text-center">{{avgItems}}</div>
                 </md-card-content>
+                <md-card-content ng-show="showAvgAmount" id="avgAmountShow" class="center-num-box box-zerospace dashboard-cards">
+                        <div class="center-num"><span class="num-style1 text-center">{{avgAmount | currency : $ : 0}}</div>
+                </md-card-content>
+
+
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box text-center">
-                    <!--<div flex=35 class="box-zerospace">
-                        <div class="dash-footer-filter">
-                            <md-select aria-label="Filter By" ng-model="estdate" class="global-labels">
-                                <md-option value="0" selected>Dates</md-option>
-                                <md-option value="1">Today</md-option>
-                                <md-option value="2">Weekly</md-option>
-                            </md-select>
-                        </div>
-                    </div>-->
+                    
                     <div flex=100 class="box-zerospace">
-                        <span class="global-labels">Filter by</span>
+                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Show Average Items" ng-click="showItemAvg()"><span class="ng-scope">Average Items</span></button>
+                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Show Average Amount" ng-click="showAmountAvg()"><span class="ng-scope">Average Amount</span></button>
+                        <!--<span class="global-labels">Filter by</span>
                         <div class="dash-footer-filter">
                             <md-select aria-label="Filter By" ng-model="averagePersonName" ng-change="getAverageOrdersSalesMan(averagePersonName)" class="global-labels">
                                 <md-option value="0" selected>Sales Member</md-option>
                                 <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                             </md-select>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </md-card>
