@@ -1,7 +1,38 @@
 <div class="content order-list-page stockkup-content-table-container">
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
-            <md-content>
-                <div md-border-bottom class="client-profile-tab">
+        <div class="filter-menu filter-box">
+            <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="left" layout="column">
+                <md-toolbar class=" filter-title">
+                    <h1 class="md-toolbar-tools">Filter</h1>
+                </md-toolbar>
+                <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+                    <div class="contant-filter filter-detail" >
+                        <div layout="column" class="f-box-1 first-cheak">
+                            <div class="f-body scrollable pad0"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-dropdown-multiselect="" options="ListClients" selected-model="vm.companyCheckModal_screen" extra-settings="vm.companyChecksettings_screen"  translation-texts="buttonSetting" class="cheak-box-class"></div>
+                                </div>
+                            </div>
+                        </div>
+                    
+                        <div layout="column" class="f-box-1">
+                            <div class="f-body  scrollable pad0"  ms-scroll>
+                                <div layout="column" >
+                                    <div ng-dropdown-multiselect="" options="screensizes" selected-model="vm.widthCheckModal" extra-settings="vm.widthChecksettings" translation-texts="buttonSetting" class="cheak-box-class"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </md-content>
+                <div class="filter-footer" layout="row">
+                    <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
+                    <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
+                </div>
+            </md-sidenav>
+        </div>
+           
+                <div md-border-bottom class="client-profile-tab art-fixed-section">
                     <div label="Screen Sets">
                         <div class="table-title custom-shadow1" layout="row" layout-align="space-between center">
                             <div class="table-title-text" flex=40 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">Arts
@@ -53,37 +84,6 @@
                     </div>
                      <div label="Orders" ui-sref="app.art"></div>
                 </div>
-            </md-content>
+            
     </div>
 </div>        
-<div class="filter-menu filter-box">
-    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="left" layout="column">
-        <md-toolbar class=" filter-title">
-            <h1 class="md-toolbar-tools">Filter</h1>
-        </md-toolbar>
-        <md-content class="flex-fix-bottom scrollable"  ms-scroll>
-            <div class="contant-filter filter-detail" >
-                <div layout="column" class="f-box-1 first-cheak">
-                    <div class="f-body scrollable pad0"  ms-scroll>
-                        <div layout="column" >
-                            <div ng-dropdown-multiselect="" options="ListClients" selected-model="vm.companyCheckModal_screen" extra-settings="vm.companyChecksettings_screen"  translation-texts="buttonSetting" class="cheak-box-class"></div>
-                        </div>
-                    </div>
-                </div>
-            
-                <div layout="column" class="f-box-1">
-                    <div class="f-body  scrollable pad0"  ms-scroll>
-                        <div layout="column" >
-                            <div ng-dropdown-multiselect="" options="screensizes" selected-model="vm.widthCheckModal" extra-settings="vm.widthChecksettings" translation-texts="buttonSetting" class="cheak-box-class"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </md-content>
-        <div class="filter-footer" layout="row">
-            <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
-            <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
-        </div>
-    </md-sidenav>
-</div>

@@ -696,9 +696,8 @@ class SettingController extends Controller {
         $mtime = $mtime[1] + $mtime[0];
         $starttime = $mtime;*/
 
-        $result_api = $this->api->getApiCredential(28,'api.sns','ss_detail');
-
-        $credential = $result_api[0]->username.":".$result_api[0]->password;
+        $result_api = $this->common->GetTableRecords('users',array('role_id'=>7));
+        $credential = $result_api[0]->ss_username.":".$result_api[0]->ss_password;
  
         $curl = curl_init();
 

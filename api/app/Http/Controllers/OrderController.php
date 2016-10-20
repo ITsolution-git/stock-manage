@@ -2336,7 +2336,7 @@ class OrderController extends Controller {
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $id),array());
         $qb_id = $qb_data[0]->qb_id;
 
-        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id,"qb_invoice_id" => $qb_id);
+        $data = array("success"=>1,"message"=>INSERT_RECORD,"invoice_id" => $id,"qb_invoice_id" => $qb_id,"display_number" => $display_number);
         return response()->json(['data'=>$data]);
     }
 
