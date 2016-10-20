@@ -566,7 +566,7 @@
             });
         }
     }
-    function SnsController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService) 
+    function SnsController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant) 
     {
         var originatorEv;
         var vm = this ;
