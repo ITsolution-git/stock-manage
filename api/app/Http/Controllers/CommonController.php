@@ -988,40 +988,35 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'po.po_id';
+                $post['sorts']['sortBy'] = 'ord.display_number';
             }
             $result = $this->purchase->ListPurchase($post);
             $getAllPOdata = $this->purchase->getAllPOdata();
 
 
             if(empty($result['allData']))
-                {
-                    $result['allData'] = array('No Records found');
-                }
-                else
-                {
-                    foreach($result['allData'] as $data) {
+            {
+                $result['allData'] = array('No Records found');
+            }
+            else
+            {
+                foreach($result['allData'] as $data) {
 
-                        if(array_key_exists($data->id, $getAllPOdata)) {
-                            $data->design_po = $getAllPOdata[$data->id];
-                        } else {
-                            $data->design_po = array();
-                        }
+                    if(array_key_exists($data->id, $getAllPOdata)) {
+                        $data->design_po = $getAllPOdata[$data->id];
+                    } else {
+                        $data->design_po = array();
                     }
                 }
-
-
+            }
 
             $header = array(
-                /*0=>array('key' => 'po.po_id', 'name' => 'PO#'),*/
-                0=>array('key' => 'ord.id', 'name' => 'Order Id'),
-                1=>array('key' => 'po.po_type', 'name' => 'PO Type'),
-                2=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                /*4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),*/
-                3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                4=>array('key' => 'po.date', 'name' => 'Created Date'),
-                5=>array('key' => '', 'name' => 'Operations', 'sortable' => false),
-                /*7=>array('key' => '', '' => ''),*/
+                array('key' => 'ord.display_number', 'name' => 'Order Id'),
+                array('key' => 'po.po_type', 'name' => 'PO Type'),
+                array('key' => 'cl.client_company', 'name' => 'Client'),
+                array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                array('key' => 'po.date', 'name' => 'Created Date'),
+                array('key' => '', 'name' => 'Operations', 'sortable' => false)
                 );
 
         }
@@ -1045,7 +1040,7 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'po.po_id';
+                $post['sorts']['sortBy'] = 'ord.display_number';
             }
             $result = $this->purchase->ListReceive($post);
 
@@ -1071,13 +1066,13 @@ class CommonController extends Controller {
                 
             $header = array(
                /* 0=>array('key' => 'po.po_id', 'name' => 'RO#'),*/
-                0=>array('key' => 'ord.id', 'name' => 'Order Id'),
-                1=>array('key' => 'po.po_type', 'name' => 'PO Type'),
-                2=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                array('key' => 'ord.display_number', 'name' => 'Order Id'),
+                array('key' => 'po.po_type', 'name' => 'PO Type'),
+                array('key' => 'cl.client_company', 'name' => 'Client'),
                 /*4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),*/
-                3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                4=>array('key' => 'po.date', 'name' => 'Created Date'),
-                5=>array('key' => '', 'name' => 'Operations', 'sortable' => false),
+                array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                array('key' => 'po.date', 'name' => 'Created Date'),
+                array('key' => '', 'name' => 'Operations', 'sortable' => false),
                 );
 
         }

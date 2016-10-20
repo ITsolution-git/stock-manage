@@ -42,7 +42,7 @@ class PurchaseController extends Controller {
                 $this->common->UpdateTableRecords('purchase_order',array('order_id'=>$post['order_id']),array('is_active'=>0),'');
                 foreach ($order_data as $key=>$value) 
                 {
-                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key);
+                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key,'po',$post['company_id']);
                     $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
                     /*if($purchase_order_id=='0')
                     {
@@ -184,23 +184,13 @@ class PurchaseController extends Controller {
         }
         else
         {
-            $this->purchase->Update_Ordertotal($po_id);
-            //$po = $this->purchase->GetPodata($po_id,$company_id);
+            $this->purchase->Update_Ordertotal($po_id,$company_id);
             $poline = $this->purchase->GetPoLinedata($po_id,$company_id);
 
-            //echo "<pre>"; print_r($poline); echo "</pre>"; die;
             if(count($poline)>0)
             {
                 
-                //c$unassign_order = $this->purchase->GetPoLinedata();
-
-                $order_total = $this->purchase->getOrdarTotal($po_id);
-                
-               // $received_total = $this->purchase->getreceivedTotal($po_id);
-               // $received_line = $this->purchase->GetPoReceived($po_id,$company_id);
-
-              //  $list_vendors = $this->common->getAllVendors($company_id);
-
+                $order_total = $this->purchase->getOrdarTotal($po_id,$company_id);
                 $po_data = $poline[0];
                 $result = array('po_data'=>$po_data,'poline'=>$poline,'order_total'=>$order_total);//,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
