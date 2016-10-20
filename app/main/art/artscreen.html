@@ -64,6 +64,7 @@
                                         <thead tasty-thead></thead>
                                         <tbody >
                                             <tr ng-repeat="art in rows">
+                                                <td>{{art.display_number}}</td>
                                                 <td>{{art.screen_set}}</td>
                                                 <td class="">{{art.value}}</td>
                                                 <td class="">{{art.client_company}}</td>
@@ -73,7 +74,7 @@
                                                 <td class="">{{art.color_stitch_count}}</td>
                                                 <td class="">{{art.screen_total}}</td>
                                                 <td class="">{{art.screen_width}}</td>
-                                                <td ><a class="font-12" class="cursor-p" ui-sref="app.art.screensetView({id:art.screen_id})">VIEW SCREEN</a></td> 
+                                                <td ><a class="font-12" class="cursor-p" ui-sref="app.art.screensetView({id:art.display_number})">VIEW SCREEN</a></td> 
                                                 <!-- <td class="" ui-sref="app.artOrder.companyPO({id:art.po_id})"> View</td> -->
                                             </tr>
                                         </tbody> 

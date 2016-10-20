@@ -81,7 +81,7 @@ class Art extends Model {
 	{
 		$query = DB::table('artjob_screensets as ass')
 
-			->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.display_number','or.display_number as ord_displayId','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.positions','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','odp.image_1','art.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'or.approval_id')
+			->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.display_number','or.display_number as ord_displayId','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.positions','ass.display_number as screen_display','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','odp.image_1','art.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'or.approval_id')
 				->join('art as art','art.order_id','=','ass.order_id')
 				->join('orders as or','art.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -94,7 +94,7 @@ class Art extends Model {
 				->where('od.is_delete','=','1')
 				->where('or.company_id','=',$post['company_id'])
 				->where('or.display_number','=',$post['display_number'])
-				->orderBy('ass.screen_order')
+				->orderBy('ass.id','desc')
 				->get();
 
 		if(count($query)>0)
@@ -115,13 +115,12 @@ class Art extends Model {
     public function Client_art_screen($client_id,$company_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select('ass.screen_set','ass.screen_width','ass.screen_height','ass.positions','or.id as order_id','or.company_id','ass.id as screen_id','ass.mokup_image','odp.image_1')
+				->select('ass.screen_set','ass.screen_width','ass.display_number','ass.screen_height','ass.positions','or.id as order_id','or.company_id','ass.id as screen_id','ass.mokup_image','odp.image_1')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
 				->join('order_design as od','od.id','=','odp.design_id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->where('or.client_id','=',$client_id)
 				->where('or.company_id','=',$company_id)
-				->where('or.is_complete','=','1')
 				->where('or.is_delete','=','1')
 				->where('odp.is_delete','=','1')
 				->where('od.is_delete','=','1')
@@ -155,7 +154,7 @@ class Art extends Model {
             $client_filter = $post['filter']['client'];
         }
         $admindata = DB::table('order_design_position as odp')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id,ord.approval_id,ord.id as order_id'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id,asc.display_number,ord.approval_id,ord.id as order_id'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
 					->join('artjob_screensets as asc','asc.positions','=','odp.id')
 					->join('order_design as od','od.id','=','odp.design_id')
 					->join('orders as ord','ord.id','=','od.order_id')
@@ -230,8 +229,11 @@ class Art extends Model {
     	$alldata = $post['alldata'];
     	if(isset($alldata['screen_width']))
     	{
+            $design_display = $this->common->GetTableRecords('order_design',array('id' => $alldata['design_id']),array());
+            $design_display = $design_display['0']->display_number;
+
     		$value = str_replace(" ","",strtolower(trim($alldata['value'])));
-    		$screen_set_name = $alldata['order_id']."_".$value."_".$alldata['design_id']."_".$alldata['screen_width']; 
+    		$screen_set_name = $post['display_order']."_".$value."_".$design_display."_".$alldata['screen_width']; 
     	}
     	$result = DB::table('artjob_screensets')->where('id','=',$alldata['id'])->update(array('screen_set'=>$screen_set_name,'screen_active'=>'1','frame_size'=>$alldata['frame_size'],'screen_location'=>$alldata['screen_location'],'line_per_inch'=>$alldata['line_per_inch'],'screen_date'=>date('Y-m-d'),'screen_width'=>$alldata['screen_width'],'screen_height'=>$alldata['screen_height']));
     	$sort=1;
@@ -262,17 +264,18 @@ class Art extends Model {
     }
 
  	//SCREEN SETS DETAIL PAGE COLOR LISTING
-    public function GetscreenColor($screen_id)
+    public function GetscreenColor($screen_id,$company_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.display_number','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*','mt.value as ink_value')
+				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.display_number as order_display','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.display_number','cl.client_id','cl.client_company','ass.screen_set','ass.display_number as screen_display','ass.id as screen_id','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*','mt.value as ink_value')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_contact as cc','cl.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
 				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
-				->where('ass.id','=',$screen_id)
+				->where('ass.display_number','=',$screen_id)
+				->where('ass.company_id','=',$company_id)
 				->groupby('acol.id')
 				->orderBy('acol.head_location','asc')
 				->orderBy('acol.id','desc')
@@ -302,9 +305,11 @@ class Art extends Model {
         }
 
 		$result = DB::table('art_notes as note')
-					->select('*')
+					->leftjoin('artjob_screensets as ass','ass.id','=','note.screenset_id')
+					->select('note.*')
 					->where('note.is_deleted','=','1')
-					->where('note.screenset_id','=',$post['screenset_id']);
+					->where('ass.display_number','=',$post['display_number'])
+					->where('ass.company_id','=',$post['company_id']);
 
 					if($search != '')               
                   	{

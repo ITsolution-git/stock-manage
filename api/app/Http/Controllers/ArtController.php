@@ -362,11 +362,11 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
     }
 
-    public function GetscreenColor($screen_id)
+    public function GetscreenColor($screen_id,$company_id)
     {
-        if(!empty($screen_id))
+        if(!empty($screen_id) && !empty($company_id))
         {
-            $result = $this->art->GetscreenColor($screen_id);
+            $result = $this->art->GetscreenColor($screen_id,$company_id);
             $allcolors = array();
             if(count($result)>0)
             {

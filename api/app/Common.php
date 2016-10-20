@@ -502,7 +502,12 @@ class Common extends Model {
                     $this->UpdateTableRecords($table,array($pkey=>$value->$pkey),array('display_number'=>$inc_id)) ;   // UPDATE NEW INCREMENTED ID     
                 }
             }
-            $this->getDisplayNumber($table,$company_id,$comp_field,$pkey); // CHECK AGAIN TO SET NEW DISPLAY ID
+            else
+            {
+                $inc_id = $lastId;
+            }
+            //$this->getDisplayNumber($table,$company_id,$comp_field,$pkey); // CHECK AGAIN TO SET NEW DISPLAY ID
+            return $inc_id+1;
            // die();
     }
     public function getDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$call="no")
@@ -524,7 +529,8 @@ class Common extends Model {
 
         if($call=="yes")
         {
-            $this->setDisplayNumber($table,$company_id,$comp_field,$pkey,$sec_number[0]->disp_number); // RESET ALL UNALLOCATED ID
+            $lastId = $this->setDisplayNumber($table,$company_id,$comp_field,$pkey,$sec_number[0]->disp_number); // RESET ALL UNALLOCATED ID
+            return $lastId; // RETURN LATEST INCREMENTED ID
         }
         else
         {

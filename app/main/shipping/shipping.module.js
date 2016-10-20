@@ -93,10 +93,10 @@
             });
 
        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/shipping');
+      //  $translatePartialLoaderProvider.addPart('app/main/shipping');
 
         // Api
-        msApiProvider.register('shipping', ['app/data/shipping/shipping.json']);
+       // msApiProvider.register('shipping', ['app/data/shipping/shipping.json']);
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',

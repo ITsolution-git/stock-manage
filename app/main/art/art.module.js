@@ -7,7 +7,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function config($stateProvider, msApiProvider, msNavigationServiceProvider)
     {
         // State
         $stateProvider
@@ -90,10 +90,10 @@
             });
 
        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/art');
+       //$translatePartialLoaderProvider.addPart('app/main/art');
 
         // Api
-        msApiProvider.register('ArtOrder', ['app/data/art/artOrder.json']);
+      //  msApiProvider.register('ArtOrder', ['app/data/art/artOrder.json']);
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',
