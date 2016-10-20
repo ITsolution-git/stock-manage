@@ -51,7 +51,7 @@
                                                 </md-select>
                                                 </td>
                                                 <td>0/{{ wait.total}}</td>
-                                                <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.id})"><a>SHIP</a></td>
+                                                <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.display_number})"><a>SHIP</a></td>
                                                 <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
                                             </tr>
                                         </tbody>
@@ -158,13 +158,13 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr ng-repeat="data in row.shipping_data">
-                                                            <td>{{data.display_number}}</td>
+                                                            <td>{{data.id}}</td>
                                                             <td>{{row.name}}</td>
                                                             <td ng-if="data.shipping_by != '0000-00-00'">{{ data.shipping_by | date:"M/d/yyyy" }}</td>
                                                             <td ng-if="data.shipping_by == '0000-00-00'"></td>
                                                             <td ng-if="data.in_hands_by != '0000-00-00'">{{ data.in_hands_by | date:"M/d/yyyy" }}</td>
                                                             <td ng-if="data.in_hands_by == '0000-00-00'"></td>
-                                                            <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.id})"><a>SHIPMENT OVERVIEW</a></td>
+                                                            <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.display_number})"><a>SHIPMENT OVERVIEW</a></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

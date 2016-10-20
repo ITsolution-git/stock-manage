@@ -25,10 +25,10 @@
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=60>
-               Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].display_number})">{{ScreenSets[0].client_company}}</a>
+               Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_display})">#{{ScreenSets[0].order_display}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].display_number})">{{ScreenSets[0].client_company}}</a>
             </div>
             <div class="pull-right right-search-box">
-                 <a class="pull-right common-header-links" ui-sref="app.art.orderView({id:ScreenSets[0].order_id})">BACK TO SCREENSET</a> 
+                 <a class="pull-right common-header-links" ui-sref="app.art.orderView({id:ScreenSets[0].order_display})">BACK TO SCREENSET</a> 
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@
                 <div class="text-center pad0"><span class="font-18">Total Notes</span></div>
             </md-card-content>
             <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                <a class="font-14 chrome-weight" ui-sref="app.art.notes({id:screenset_id})">View Notes</a>
+                <a class="font-14 chrome-weight" ui-sref="app.art.notes({id:ScreenSets[0].screen_display})">View Notes</a>
             </div>
         </md-card>
         <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace m-t-20" ng-show="allow_access==1">

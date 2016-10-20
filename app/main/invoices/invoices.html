@@ -18,7 +18,7 @@
                     <thead tasty-thead></thead>
                     <tbody> 
                         <tr ng-repeat="inv in rows">
-                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.id})">{{inv.order_id}}</td>
+                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})">{{inv.display_number}}</td>
                             <td>{{inv.created_date}}</td>
                             <td>{{inv.grand_total | currency : $ : 2}}</td>
                             <td>{{inv.in_hands_by}}</td>
@@ -27,7 +27,7 @@
                             <td><md-select aria-label="status" ng-model="inv.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',inv.approval_id,inv.order_id)" ng-disabled="allow_access == '0'">
                                     <md-option ng-selected="inv.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                 </md-select></td>
-                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.id})"><a>Pay</a></td>
+                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})"><a>Pay</a></td>
 
                             <td>
                                 <md-menu>

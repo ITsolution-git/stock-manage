@@ -2,7 +2,7 @@
     <div class="simple-table-container stokkup-main-tableview m-b-30">
         <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-                INV-{{allData.order_data[0].id}}
+                INV-{{allData.order_data[0].display_number}}
             </div>
             <div class="pull-right right-search-box">
                 <a class="pull-right common-header-links" ui-sref="app.invoices">BACK TO INVOICE</a>
@@ -21,11 +21,11 @@
                 <div class="font-14 text-bold-center">Address</div>
                 <div class="gray-text mrg5-B text-bold-center">{{allData.company_data[0].prime_address1}}<br>{{allData.company_data[0].prime_address_city}}, {{allData.company_data[0].prime_address_state}} {{allData.company_data[0].prime_address_zip}}<br><span ng-if="allData.company_data[0].phone != ''">P: {{allData.company_data[0].phone}}</span></div>
                 <div class="font-14 text-bold-center">Website</div>
-                <div class="text-center"><a href="http://www.culturestudio.net" target="_blank" title="" class="common-header-links">{{allData.company_data[0].url}}</a></div>
+                <div class="text-center"><a href="{{allData.company_data[0].url}}" target="_blank" title="" class="common-header-links">{{allData.company_data[0].url}}</a></div>
             </div>
 
             <div layout="column" flex="25">
-                <div class="font-14 mrg5-B text-bold-right">Order Acknowledgement # {{allData.order_data[0].id}}</div>
+                <div class="font-14 mrg5-B text-bold-right">Order Acknowledgement # {{allData.order_data[0].display_number}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Created on: {{allData.invoice_data[0].created_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Due Date: {{allData.invoice_data[0].payment_due_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Job Name: {{allData.order_data[0].name}}</div>
@@ -90,7 +90,7 @@
                     </thead>
                     <tbody>
                     <tr ng-repeat="shipping in allData.shipping_detail">
-                        <td>{{allData.order_data[0].id}}</td>
+                        <td>{{allData.order_data[0].display_number}}</td>
                         <td>{{shipping.shipping_by}}</td>
                         <td class="text-center">Pending</td>
                         <td class="text-center" ng-if="shipping.shipping_type_id == 0"></td>

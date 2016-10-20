@@ -358,7 +358,7 @@ class ClientController extends Controller {
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
 				$Client_orders = $this->client->ListClientOrder($id);
-				$screenset_detail = $this->art->Client_art_screen($post['client_id'],$post['company_id']);
+				$screenset_detail = $this->art->Client_art_screen($id,$post['company_id']);
 				$addressAll = $this->client->getAddress($id);
 				$Distribution_address = $this->client->GetDistributionAddress($id);
 				$documents = $this->client->getDocument($id,$post['company_id']);

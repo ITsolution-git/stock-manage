@@ -12,8 +12,11 @@ define('PATH', 'localhost');
 define('UPLOAD_PATH', url() . '/uploads/');
 define('THEME_IMAGES', url() . '/img/');
 define('FILEUPLOAD', base_path() . "/public/uploads/");
-define('CURRENT_URL','http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
-define('SITE_HOST','http://'.$_SERVER['HTTP_HOST']);
+
+$protocol = stripos($_SERVER['SERVER_PROTOCOL'],'https') === true ? 'https://' : 'http://';
+
+define('CURRENT_URL',$protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+define('SITE_HOST',$protocol.$_SERVER['HTTP_HOST']);
 define('NOIMAGE',url() ."/images/noimage.png");
 
 define ('GET_RECORDS','Get Records.');

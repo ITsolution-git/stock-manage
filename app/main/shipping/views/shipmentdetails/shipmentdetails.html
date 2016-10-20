@@ -26,11 +26,11 @@
                             
                                 <div layout="column" flex="30">
                                     <div class="global-labels">Order ID</div>
-                                    <div class="globa-text">{{ shipping.order_id }}</div>
+                                    <div class="globa-text">{{ shipping.display_number }}</div>
                                 </div>
                                 <div layout="column" flex="30">
                                     <div class="global-labels">Client ID</div>
-                                    <div class="global-text">{{ shipping.client_id }}</div>
+                                    <div class="global-text">{{ shipping.client_display_number }}</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mb-20">
@@ -40,7 +40,7 @@
                                 </div>
                                 <div layout="column" flex="100">
                                     <div class="global-labels">Client Distribution</div>
-                                    <div class="global-text">Chris niswandee</div>
+                                    <div class="global-text">{{ shipping.description}}</div>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mt-20">
@@ -214,7 +214,7 @@
             </tr>
         </table>
         <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-            <button aria-label="Back" ng-click="cancel()" class="stokkup-custom-btn1 stokkup-blue-btn mb-30 mr-20" type="button" ui-sref="app.shipping.orderwaitship({id:shipping.order_id})"><span class="ng-scope">Back</span>
+            <button aria-label="Back" ng-click="cancel()" class="stokkup-custom-btn1 stokkup-blue-btn mb-30 mr-20" type="button" ui-sref="app.shipping.orderwaitship({id:shipping.display_number})"><span class="ng-scope">Back</span>
             </button>
             <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mb-30" aria-label="Box Shipment" ng-click="box_shipment(shippingItems)"><span class="ng-scope">Box Shipment</span></button>
         </md-dialog-actions>
