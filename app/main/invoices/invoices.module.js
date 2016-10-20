@@ -68,7 +68,7 @@
             });
 
        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/invoices');
+      //  $translatePartialLoaderProvider.addPart('app/main/invoices');
 
         // Api
        /* msApiProvider.register('invoicesDetail', ['app/data/invoices/invoiceData.json']);

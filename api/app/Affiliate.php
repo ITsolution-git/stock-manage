@@ -19,7 +19,7 @@ class Affiliate extends Model {
         $whereConditions = ['o.parent_order_id' => $data['id']];
         
 
-        $listArray = ['a.name as affiliate_name','od.design_name','p.name as product_name','p.product_image','o.note','o.id','o.affiliate_id','dp.design_id','p.id as product_id','p.company_id','p.vendor_id'];
+        $listArray = ['a.name as affiliate_name','od.design_name','p.name as product_name','p.product_image','o.note','o.id','o.affiliate_id','dp.design_id','p.id as product_id','p.company_id','p.vendor_id','o.display_number'];
 
         $affiliatesData = DB::table('orders as o')
                          ->leftJoin('affiliates as a','o.affiliate_id','=', 'a.id')

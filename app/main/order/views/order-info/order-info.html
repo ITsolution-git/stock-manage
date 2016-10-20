@@ -2,7 +2,7 @@
     <div class="simple-table-container stokkup-main-tableview m-b-30">
         <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-                {{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}
+                {{order.order_name}}  #{{order.display_number}} for Company: {{order.client_company}}
             </div>
             <div class="pull-right right-search-box">
                 <a class="pull-right common-header-links" ui-sref="app.order">BACK TO ORDERS</a>
@@ -133,7 +133,7 @@
                             </thead>
                            <tbody class="">
                                 <tr ng-repeat="design in designs">
-                                    <td class="cursor-p" ui-sref="app.order.design({id:design.id})">{{ design.id}} </td>
+                                    <td class="cursor-p" ui-sref="app.order.design({id:design.display_number})">{{ design.display_number}} </td>
                                     <td>{{ design.design_name}}</td>
                                     <td>{{ design.total_qnty}}</td>
                                     <td>{{ design.colors_count}}</td>
@@ -227,14 +227,14 @@
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="purchase in order.purchase_orders" class="cursor-p">
-                                        <td>{{ purchase.po_id}}</td>
+                                        <td>{{ purchase.display_number}}</td>
                                         <td>{{ purchase.po_type}}</td>
                                         <td>{{ purchase.client_company}}</td>
                                         <td>{{ purchase.name_company}}</td>
                                         <td>{{ purchase.date}}
                                         </td> 
                                         <td class="text-right last-col-txt"> 
-                                            <a  href="#" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})">VIEW PO</a>
+                                            <a  href="#" ui-sref="app.purchaseOrder.companyPO({id:purchase.display_number})">VIEW PO</a>
                                         </td>
                                     </tr>
                                 </tbody> 
@@ -282,13 +282,13 @@
                                     </thead>
                                     <tbody>
                                         <tr ng-repeat="receive in order.recieve_orders" class="cursor-p">
-                                            <td>{{ receive.po_id}}</td>
+                                            <td>{{ receive.display_number}}</td>
                                             <td>{{ receive.client_company}}  
                                             <td>{{ receive.name_company}}</td>
                                             <td>{{ receive.date}}
                                             </td>
                                             <td class="text-right last-col-txt"> 
-                                                <a  href="#" ui-sref="app.receiving.receivingInfo({id:receive.po_id})">VIEW RECIEVE PO</a>
+                                                <a  href="#" ui-sref="app.receiving.receivingInfo({id:receive.display_number})">VIEW RECIEVE PO</a>
                                             </td>
                                         </tr>
                                     </tbody> 
@@ -338,7 +338,7 @@
                                             <td>{{ affiliateOrder.design_name}}</td>  
                                             <td>1</td>
                                             <td class="text-right last-col-txt"> 
-                                                <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.id})">VIEW </a>
+                                                <a href="#" ui-sref="app.order.affiliate-info({id:affiliateOrder.display_number})">VIEW </a>
                                             </td>
                                         </tr>
                                     </tbody> 
@@ -426,7 +426,7 @@
                                 </div>
                             </div>
                             <div class="box-wide p-b-20">
-                                <a class="text-right pull-right" ui-sref="app.shipping.orderwaitship({id:order.id})">VIEW SHIPPING</a>
+                                <a ng-show="order.total_shipped_qnty > 0" class="text-right pull-right" ui-sref="app.shipping.orderwaitship({id:order.display_number})">VIEW SHIPPING</a>
                             </div>
                     </md-card-content>
                 </md-card>
@@ -442,7 +442,7 @@
                                 <span class="num-style1">{{ order.dist_location}}</span><br/><span class="full-row text-center">Locations</span>
                             </div>
                             <div class="text-right">
-                                <a ui-sref="app.order.distribution({id:order_id})">VIEW DISTRIBUTION</a>
+                                <a ui-sref="app.order.distribution({id:order.display_number})">VIEW DISTRIBUTION</a>
                             </div>
                         </md-card-content>
                         
@@ -459,7 +459,7 @@
                                 <span class="num-style1">{{ order.notes_count}}</span><br /><span class="full-row text-center">Total Notes</span>
                             </div>
                             <div class="text-right">
-                                <a ui-sref="app.order.orderNotes({id:order_id})" >View</a>
+                                <a ui-sref="app.order.orderNotes({id:order.display_number})" >View</a>
                             </div>    
                         </md-card-content>
                     </md-card>
@@ -476,7 +476,7 @@
                                 <span class="full-row text-center not-visible">text</span>
                             </div>
                              <div class="text-right">
-                                <a ng-show="allow_access==1" ui-sref="app.art.orderView({id:order_id})">EDIT</a>
+                                <a ng-show="allow_access==1" ui-sref="app.art.orderView({id:order.display_number})">EDIT</a>
                             </div>
                         </md-card-content>
                     </md-card>

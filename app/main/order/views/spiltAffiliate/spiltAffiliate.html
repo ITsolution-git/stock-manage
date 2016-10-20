@@ -2,10 +2,10 @@
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview m-b-30">
         <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-                {{order.order_name}}  #{{order.id}} for Company: {{order.client_company}}
+                {{order.order_name}}  #{{display_number}} for Company: {{order.client_company}}
             </div>
             <div class="pull-right right-search-box">
-                <a class="pull-right common-header-links"  ui-sref="app.order.order-info({id:order_id})">BACK TO ORDER INFO</a>
+                <a class="pull-right common-header-links"  ui-sref="app.order.order-info({id:display_number})">BACK TO ORDER INFO</a>
             </div>
         </div>
     </div>
@@ -130,7 +130,7 @@
                                                     <span class="global-labels">Total</span>
                                                     <span>{{row.total}}</span>
                                                 </div>
-                                                <div class="text-right" flex="60"><a class="font-16 chrome-weight" ui-sref="app.order.affiliate-info({id:row.id})">VIEW</a></div>
+                                                <div class="text-right" flex="60"><a class="font-16 chrome-weight" ui-sref="app.order.affiliate-info({id:row.display_number})">VIEW</a></div>
                                                 </div>
                                         </div> 
                                         <div flex=100>

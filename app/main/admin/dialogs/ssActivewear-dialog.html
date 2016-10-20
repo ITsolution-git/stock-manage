@@ -1,0 +1,36 @@
+<md-dialog class="task-dialog ssActivewearDialog" >
+<form name="integration_form" class="md-inline-form" novalidate>
+    <div class="client-profile-page">
+        <md-toolbar class="md-accent md-hue-2">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                    <span class="title">S&S API INTEGRATION</span>
+                    <md-button  ng-click="closeDialog()" class="close-stokkup-dialog">
+                        <span>close</span>
+                    </md-button>
+                </div>
+        </md-toolbar>
+        <div ng-cloak>
+            <md-dialog-content ms-scroll>
+                <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
+                    <div layout="column"  flex="100" class="p-0 pt-15">
+                        <md-input-container class="md-block">
+                            <input placeholder="Username *" name="username" ng-model="params.ss_username" >
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <input placeholder="API Key" name="api_key" ng-model="params.ss_api_key" >
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <input placeholder="API Password" type="password" name="password" ng-model="params.ss_password"  >
+                        </md-input-container>
+                    </div>
+                </div>
+            </md-dialog-content>
+        </div>
+        <md-dialog-actions layout="row" layout-align="end center">
+        <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'users','role_id','7')">
+                SAVE
+        </md-button>
+    </md-dialog-actions>
+    </div>
+</form>
+</md-dialog>

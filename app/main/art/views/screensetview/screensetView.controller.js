@@ -18,7 +18,7 @@
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
        
-        $scope.screenset_id = $stateParams.id;
+        $scope.display_id = $stateParams.id;
         //console.log($stateParams.id);
         if($stateParams.id=='' || angular.isUndefined($stateParams.id))
         {
@@ -52,11 +52,12 @@
         $scope.GetOrderScreenSet = function() 
         {
             $("#ajax_loader").show();
-            $http.get('api/public/art/GetscreenColor/'+$scope.screenset_id).success(function(result) 
+            $http.get('api/public/art/GetscreenColor/'+$stateParams.id+'/'+$scope.company_id).success(function(result) 
             {
                 if(result.data.success == '1') 
                 {
                     $scope.ScreenSets = result.data.records;
+                    $scope.screenset_id = $scope.ScreenSets[0].id;
                     $scope.ScreenSets_new = 
                     {
                         data_all: result.data.records,

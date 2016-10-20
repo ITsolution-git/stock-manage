@@ -2,7 +2,7 @@
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=60>
-               Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].display_number})">{{ScreenSets[0].client_company}}</a>
+               Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].ord_displayId})">#{{ScreenSets[0].ord_displayId}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].display_number})">{{ScreenSets[0].client_company}}</a>
             </div>
             <div class="pull-right right-search-box">
                  <a class="pull-right common-header-links" ui-sref="app.art">BACK TO ART</a> 
@@ -116,7 +116,7 @@
                                                 <div flex="20" class="pull-left mt-20 text-center">
                                                     <md-button ng-show="allow_access==1" class="md-raised stokkup-custom-btn1 bg-grey mb-15" 
                                                     ng-click="createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
-                                                    <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
+                                                    <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_display})">View Screen</md-button>
                                                 </div>
                                                 <div flex=5 layout="row" dnd-handle class="dragiconscenter">
                                                     <span class="icon icon-menu fs22"></span>

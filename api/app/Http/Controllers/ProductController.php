@@ -1245,10 +1245,17 @@ public function create_dir($dir_path) {
     public function checkSnsAuth()
     {
         $data = Input::all();
-        $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
-       
-       // print_r($result_api[0]->password);exit;
-        $credential = $result_api[0]->username.":".$result_api[0]->password;
+
+        if(isset($data['role_id']))
+        {
+            $result_api = $this->common->GetTableRecords('users',array('role_id'=>7));
+            $credential = $result_api[0]->ss_username.":".$result_api[0]->ss_password;
+        }
+        else
+        {
+            $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
+            $credential = $result_api[0]->username.":".$result_api[0]->password;
+        }
  
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/categories/1");

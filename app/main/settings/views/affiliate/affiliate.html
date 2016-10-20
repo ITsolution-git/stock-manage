@@ -16,6 +16,11 @@
                         <tr>
                             <th class="secondary-text ">
                                 <div class="table-header">
+                                    <span class="column-title">#No</span>
+                                </div>
+                            </th>
+                            <th class="secondary-text ">
+                                <div class="table-header">
                                     <span class="column-title">Affiliate Name</span>
                                 </div>
                             </th>
@@ -43,6 +48,7 @@
                     </thead>
                    <tbody >
                         <tr  ng-repeat="affiliate in affilate_array">
+                            <td class="">{{affiliate.display_number}}</td>
                             <td class="">{{affiliate.name}}</td>
                             <td class="">{{affiliate.email}}</td>
                             <td class="">{{affiliate.price_grid}}</td>

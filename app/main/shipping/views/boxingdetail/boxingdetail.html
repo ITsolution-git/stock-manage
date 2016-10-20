@@ -13,7 +13,7 @@
                                         <div layout="row" flex="100" class="mrg5-B">
                                             <div layout="column" flex="50" class="mrg10-R">
                                                 <div>Box ID</div>
-                                                <div class="gray-text">{{ box.id }}</div>
+                                                <div class="gray-text">{{ box.count }}</div>
                                             </div>
                                             <div layout="column" flex="50">
                                                 <div>Number of Box</div>
@@ -57,7 +57,7 @@
                                     </thead>
                                     <tbody> 
                                         <tr ng-repeat="item in box_items" class="cursor-p">
-                                            <td>{{ item.box_item_id}}</td>
+                                            <td>{{ item.count}}</td>
                                             <!-- <td>{{ item.size_group_name}}</td> -->
                                             <td>{{ item.product_name}}</td>
                                             <td>{{ item.color_name}}</td>
@@ -90,8 +90,8 @@
         </table>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button aria-label="Back" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.shipmentdetails({id:shipping_id})"><span class="ng-scope">Back</span></button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save &amp; Print Labels" ui-sref="app.shipping.shipmentoverview({id:shipping_id})"><span class="ng-scope">Save &amp; Print Labels</span></button>
+        <button aria-label="Back" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.shipmentdetails({id:shipping.display_number})"><span class="ng-scope">Back</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save &amp; Print Labels" ui-sref="app.shipping.shipmentoverview({id:shipping.display_number})"><span class="ng-scope">Save &amp; Print Labels</span></button>
         <!-- <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button> -->
     </md-dialog-actions>
 </div>

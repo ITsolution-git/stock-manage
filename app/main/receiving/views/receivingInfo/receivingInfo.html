@@ -2,7 +2,7 @@
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview m-b-30">
         <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-               Receiving <a class="cursor-p" title="Go to Purchase order" ui-sref="app.purchaseOrder.companyPO({id:po_data.po_id})">Purchase Order #{{ po_data.po_id}}</a> for <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{ po_data.client_company}}</a>
+               Receiving <a class="cursor-p" title="Go to Purchase order" ui-sref="app.purchaseOrder.companyPO({id:display_number})">Purchase Order #{{ display_number}}</a> for <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{ po_data.client_company}}</a>
             </div>
             <div class="pull-right right-search-box">
                 <a class="pull-right common-header-links" ui-sref="app.receiving">BACK TO RECEIVING</a>
@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="trans-box">
                                     <div>Order Number</div>
-                                    <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:po_data.order_id})"><span class="chrome-weight font-14">#{{ po_data.order_id}}</span></a>
+                                    <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:po_data.ord_display})"><span class="chrome-weight font-14">#{{ po_data.ord_display}}</span></a>
                                 </div>
                                 <div class="trans-box">
                                     <div>Vendor</div>

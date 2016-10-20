@@ -93,10 +93,28 @@
                          return sessionService.AccessService('SA');
                     },
                 },
-                url  : '/admin.snsinventory',
+                url  : '/snsinventory',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/admin/views/s&s.html',
+                        controller : 'SnsController as vm'
+                    }
+                }
+            })
+            .state('app.admin.snscredentials', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".admin-block").removeClass("collapsed");
+                        }, 2000);
+                         return sessionService.AccessService('SA');
+                    },
+                },
+                url  : '/snscredentials',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/admin/views/credentials.html',
                         controller : 'SnsController as vm'
                     }
                 }
@@ -144,6 +162,13 @@
         msNavigationServiceProvider.saveItem('fuse.admin.snsinventory', {
             title      : 'S&S Inventory',
             state      : 'app.admin.snsinventory',
+            class      : 'navigation-dashboards project-dashboard',
+            
+            weight     : 4
+        });
+        msNavigationServiceProvider.saveItem('fuse.admin.snscredentials', {
+            title      : 'S&S Credentials',
+            state      : 'app.admin.snscredentials',
             class      : 'navigation-dashboards project-dashboard',
             
             weight     : 4

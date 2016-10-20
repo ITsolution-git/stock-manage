@@ -1,7 +1,32 @@
  <div class="content order-list-page stockkup-content-table-container">
         <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
-            <md-content>
-                <div md-dynamic-height md-border-bottom class="client-profile-tab">
+           <div class="filter-menu filter-box">
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
+        <md-toolbar class=" filter-title">
+            <h1 class="md-toolbar-tools">Filter</h1>
+        </md-toolbar>
+
+        <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+            <div class="contant-filter filter-detail" >
+                <div layout="column" class="f-box-1 first-cheak">
+                  
+                    <div class="f-body scrollable pad0"  ms-scroll>
+                        <div layout="column" >
+                            <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings" translation-texts="buttonSetting"  class="cheak-box-class"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </md-content>
+        <div class="filter-footer" layout="row">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
+            <md-button ng-click="vm.resetFilter()" class="stokkup-custom-btn1 stokkup-blue-btn" flex="50"> RESET FILTERS </md-button>
+        </div>
+    </md-sidenav>
+</div>
+                <div md-dynamic-height md-border-bottom class="client-profile-tab art-fixed-section">
                    
                     <div label="Orders">
                         <div class="table-title custom-shadow1" layout="row" layout-align="space-between center">
@@ -31,7 +56,7 @@
                                     <thead tasty-thead></thead>
                                     <tbody >
                                         <tr ng-repeat="art in rows">
-                                            <td>{{art.id}}</td>
+                                            <td>{{art.display_number}}</td>
                                             <td class="">{{art.client_company}}</td>
                                             <td class="">{{art.total_screen}}</td>
                                             <td class="">
@@ -39,7 +64,7 @@
                                                     <md-option ng-selected="art.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                                 </md-select>
                                             </td>
-                                            <td ><a class="font-12" class="cursor-p" ui-sref="app.art.orderView({id:art.id})">VIEW SCREEN SETS</a></td>
+                                            <td ><a class="font-12" class="cursor-p" ui-sref="app.art.orderView({id:art.display_number})">VIEW SCREEN SETS</a></td>
                                             <!-- <td class="" ui-sref="app.artOrder.companyPO({id:art.po_id})"> View</td> -->
                                         </tr>
                                     </tbody> 
@@ -60,33 +85,8 @@
                    <!--  <div label="Screen Sets"  ></div> -->
                     
                 </div>
-            </md-content>
+           
         </div>
 </div>
 
-<div class="filter-menu filter-box">
-    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
-        <md-toolbar class=" filter-title">
-            <h1 class="md-toolbar-tools">Filter</h1>
-        </md-toolbar>
 
-        <md-content class="flex-fix-bottom scrollable"  ms-scroll>
-            <div class="contant-filter filter-detail" >
-                <div layout="column" class="f-box-1 first-cheak">
-                  
-                    <div class="f-body scrollable pad0"  ms-scroll>
-                        <div layout="column" >
-                            <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings" translation-texts="buttonSetting"  class="cheak-box-class"></div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </md-content>
-        <div class="filter-footer" layout="row">
-            <md-button class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple"  flex="50" ng-click="filterOrders()"> APPLY FILTERS </md-button>
-            <md-button ng-click="vm.resetFilter()" class="md-accent md-raised md-btn-block md-button md-default-theme md-ink-ripple bg-grey" flex="50"> RESET FILTERS </md-button>
-        </div>
-    </md-sidenav>
-</div>
