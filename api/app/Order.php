@@ -658,7 +658,7 @@ public function saveColorSize($post)
                 ->leftJoin('orders as ord','po.order_id','=','ord.id')
                 ->leftJoin('client as cl','ord.client_id','=','cl.client_id')
                 ->leftJoin('vendors as v','v.id','=','po.vendor_id')
-                ->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.po_type',DB::raw('DATE_FORMAT(po.date,"%m/%d/%Y") as date'))
+                ->select('cl.client_company','v.name_company','ord.id','ord.status','po.po_id','po.display_number','po.po_type',DB::raw('DATE_FORMAT(po.date,"%m/%d/%Y") as date'))
                 ->where('ord.status','=','1')
                 ->where('ord.is_delete','=','1')
                 ->where('ord.id','=',$order_id);
