@@ -25,6 +25,16 @@
 
         $scope.company_id = sessionService.get('company_id');
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        
 
         /* TESTY PAGINATION */     
         $scope.init = {

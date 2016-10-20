@@ -15,12 +15,25 @@
 
         // Data
         $scope.company_id = sessionService.get('company_id');
+         
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
+
         /* TESTY PAGINATION */     
         $scope.init = {
           'count': 10,
           'page': 1,
-          'sortBy': 'po.id',
+          'sortBy': 'ord.display_number',
           'sortOrder': 'dsc'
         };
         vm.companyCheckModal = [];
@@ -427,6 +440,8 @@
         };
         vm.openRightMenu1 = function () {
             $mdSidenav('left').toggle();
+            $('body').addClass('vinit');
+            
         };
     }
 })();

@@ -10,7 +10,7 @@
     function CompanyPOController($document, $window,$state, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
         var vm = this;
-        $scope.po_id = $stateParams.id;
+        $scope.display_number = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
 
         var misc_list_data = {};
@@ -25,12 +25,13 @@
         $scope.GetPodata = function ()
         {
             $("#ajax_loader").show();
-            $http.get('api/public/purchase/GetPodata/'+$scope.po_id+'/'+$scope.company_id).success(function(result) 
+            $http.get('api/public/purchase/GetPodata/'+$scope.display_number+'/'+$scope.company_id).success(function(result) 
             {
                 $("#ajax_loader").hide();
                 if(result.data.success=='1')
                 {
                     $scope.po_data = result.data.records.po_data;
+                    $scope.po_id = $scope.po_data.po_id;
                     $scope.poline = result.data.records.poline;
                     $scope.order_total = result.data.records.order_total[0];
                 }
@@ -309,7 +310,7 @@
                     {
                         notifyService.notify('success', 'Receiving PO created.');
                         //$state.go('app.receiving.receivingInfo({id:po_id})');
-                        $state.go('app.receiving.receivingInfo',{id: po_id});
+                        $state.go('app.receiving.receivingInfo',{id: $scope.display_number});
                     }
                     else
                     {
@@ -320,7 +321,7 @@
             }
             else
             {
-                $state.go('app.receiving.receivingInfo',{id: po_id});
+                $state.go('app.receiving.receivingInfo',{id: $scope.display_number});
             }
         }
 

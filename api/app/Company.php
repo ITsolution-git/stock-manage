@@ -516,6 +516,8 @@ class Company extends Model {
     }
     public function getAffiliate($company_id,$affilite_id)
     {
+        $this->common->getDisplayNumber('affiliates',$company_id,'company_id','id','yes');
+             
        $result = DB::table('affiliates as af')
                   ->select('af.*','pg.name as price_grid','pg.id as price_id')
                   ->leftJoin('price_grid as pg','pg.id','=','af.price_grid')
@@ -525,7 +527,8 @@ class Company extends Model {
               {
                 $result=  $result->where('af.id','=',$affilite_id);
               }
-              $result = $result->get();
+
+              $result = $result->orderBy('af.id','desc')->get();
 
               if(count($result)>0)
               {
@@ -544,6 +547,7 @@ class Company extends Model {
     }
     public function addAffilite($post)
     {
+      $post['display_number'] = $this->common->getDisplayNumber('affiliates',$post['company_id'],'company_id','id');
       $result = DB::table('affiliates')->insert($post);
       return $result;
     }

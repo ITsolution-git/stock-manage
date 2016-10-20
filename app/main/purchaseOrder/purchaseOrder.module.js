@@ -7,7 +7,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function config($stateProvider, msApiProvider, msNavigationServiceProvider)
     {
         // State
         $stateProvider
@@ -68,14 +68,10 @@
                     }
                 }
             })
-             function searchTable() {
-            var query = vm.searchQuery;
-            vm.tableInstance.search(query).draw();
-        }
-            ;
+             
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/purchaseOrder');
+        //$translatePartialLoaderProvider.addPart('app/main/purchaseOrder');
 
         // Api
 

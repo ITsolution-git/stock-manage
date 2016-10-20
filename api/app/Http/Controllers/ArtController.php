@@ -169,7 +169,7 @@ class ArtController extends Controller {
     public function ScreenSets()
     {
         $post = Input::all();
-        if(!empty($post['company_id']) && !empty($post['order_id']))
+        if(!empty($post['company_id']) && !empty($post['display_number']))
         {
             $scren_listing = $this->art->ScreenSets($post);
             if(count($scren_listing)>0)
@@ -362,11 +362,11 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
     }
 
-    public function GetscreenColor($screen_id)
+    public function GetscreenColor($screen_id,$company_id)
     {
-        if(!empty($screen_id))
+        if(!empty($screen_id) && !empty($company_id))
         {
-            $result = $this->art->GetscreenColor($screen_id);
+            $result = $this->art->GetscreenColor($screen_id,$company_id);
             $allcolors = array();
             if(count($result)>0)
             {

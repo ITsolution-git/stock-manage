@@ -2,7 +2,7 @@
     <div class="simple-table-container stokkup-main-tableview m-b-30">
         <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-              Shipment Overview {{shipping.name}} #{{shipping.order_id}} for Company: {{shipping.client_company}}
+              Shipment Overview {{shipping.name}} #{{shipping.display_number}} for Company: {{shipping.client_company}}
             </div>
         </div>
         <!--inner full box starts here -->
@@ -14,7 +14,7 @@
                     <div layout="row" layout-wrap class="mrg10-B">
                         <div layout="column" flex="20">
                             <div class="global-labels">Order ID</div>
-                            <span class="global-text">{{ shipping.order_id }}</span>
+                            <span class="global-text">{{ shipping.display_number }}</span>
                         </div>
                         <div layout="column" flex="20">
                             <div class="global-labels">Order Name</div>
@@ -60,7 +60,7 @@
                     <div layout="row">
                         <div layout="column" flex="20">
                             <div class="global-labels">Client ID</div>
-                            <span class="global-text">{{ shipping.client_id }}</span>
+                            <span class="global-text">{{ shipping.client_display_number }}</span>
                         </div>
                         <div layout="column" flex="20">
                             <div class="global-labels">Client Name</div>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                     <div layout-align="end" layout="row" ng-show="allow_access==1">
-                        <a ui-sref="app.shipping.shipmentdetails({id: shipping.shipping_id})">EDIT</a>
+                        <a ui-sref="app.shipping.shipmentdetails({id: shipping.shipping_display_number})">EDIT</a>
                     </div>
                 </md-card-content>
             </md-card>
@@ -123,7 +123,7 @@
                         </thead>
                         <tbody> 
                             <tr ng-repeat="box in shippingBoxes">
-                                <td>{{ box.id}}</td>
+                                <td>{{ box.count}}</td>
                                 <td>{{ box.boxed_qnty}}</td>
                                 <td>{{ box.tracking_number}}</td>
                             </tr>                    
@@ -141,8 +141,8 @@
                 </div>    
             </div>
             <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace pull-right mb-20" ng-show="allow_access==1">
-                <button aria-label="Back" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" type="button" ui-sref="app.shipping.boxingdetail({id:shipping_id})"><span class="ng-scope">Back</span></button>
-                <button ui-sref="app.shipping.shipmentdetails({id:shipping_id})" type="button" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" aria-label="Save" ng-show="shippingBoxes.length == '0'"><span class="ng-scope">Create Boxes</span></button>
+                <button aria-label="Back" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" type="button" ui-sref="app.shipping.boxingdetail({id:display_number})"><span class="ng-scope">Back</span></button>
+                <button ui-sref="app.shipping.shipmentdetails({id:display_number})" type="button" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" aria-label="Save" ng-show="shippingBoxes.length == '0'"><span class="ng-scope">Create Boxes</span></button>
                 <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number != ''" type="button" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" aria-label="Print" ng-click="printLAbel()"><span class="ng-scope">Confirm & Print</span></button>
                 <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number == ''" type="button" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" aria-label="Print" ng-click="viewLabelPDF()"><span class="ng-scope">Print Label</span></button>
             </md-dialog-actions>

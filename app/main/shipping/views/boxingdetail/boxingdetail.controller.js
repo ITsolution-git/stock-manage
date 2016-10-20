@@ -30,18 +30,19 @@
         $scope.box_items = [];
         $scope.shipping_box_id = 0;
 
-        var ship_data = {};
-        ship_data['table'] ='shipping';
-        ship_data.cond = {'id' : $scope.shipping_id};
+        $scope.shippingDetails = function()
+        {
+            var ship_data = {};
+            ship_data['table'] ='shipping';
+            ship_data.cond = {'id' : $scope.shipping_id};
 
-        $("#ajax_loader").show();
-        $http.post('api/public/common/GetTableRecords',ship_data).success(function(result) {
-            if(result.data.success == 1)
-            {
-                $scope.shipping =result.data.records[0];
-            }
-            $("#ajax_loader").hide();
-        });
+            $http.post('api/public/common/GetTableRecords',ship_data).success(function(result) {
+                if(result.data.success == 1)
+                {
+                    $scope.shipping =result.data.records[0];
+                }
+            });
+        }
 
         $scope.getShippingBoxes = function()
         {
@@ -69,7 +70,19 @@
             });
         }
 
-        $scope.getShippingBoxes();
+        var allData = {};
+        allData.table ='shipping';
+        allData.cond ={display_number:$stateParams.id,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.shipping_id = result.data.records[0].id;
+                $scope.shippingDetails();
+                $scope.getShippingBoxes();
+            }
+        });
 
         $scope.reAllocate = function(box_id,box_item_id)
         {

@@ -22,13 +22,13 @@ class Purchase extends Model {
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
-
+        $this->common->getDisplayNumber('purchase_order',$post['company_id'],'company_id','po_id','yes');
 		$result = DB::table('purchase_order as po')
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
-					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.display_number,ord.id,ord.status,po.display_number as po_display,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id']);
@@ -76,7 +76,7 @@ class Purchase extends Model {
 	public function getAllPOdata()
     {
         $whereConditions = ['po.is_active' => '1'];
-        $listArray = ['po.po_id','po.order_id','po.vendor_id','v.name_company'];
+        $listArray = ['po.po_id','po.display_number','po.order_id','po.vendor_id','v.name_company'];
         $poData = DB::table('purchase_order as po')
         				->leftJoin('vendors as v','v.id','=','po.vendor_id')
                         ->select($listArray)
@@ -142,7 +142,7 @@ class Purchase extends Model {
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
+					->select('vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
                       DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
                       DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
@@ -151,7 +151,7 @@ class Purchase extends Model {
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
 					->where('pd.qnty','<>','')
-					->where('pol.po_id','=',$po_id)
+					->where('po.display_number','=',$po_id)
 					->Where('ord.company_id','=',$company_id)
 				  	->get();
 
@@ -183,11 +183,20 @@ class Purchase extends Model {
 			return $result;
 		}
 	}
-	function getOrdarTotal($po_id)
+	function getOrdarTotal($po_id,$company_id=0)
 	{
+		if(!empty($company_id))
+	    {
+	        $where = ['po.display_number'=>$po_id, 'po.company_id'=>$company_id];
+	    }
+	    else
+	    {
+	        $where = ['po.po_id'=>$po_id];
+	    }
+
 		$result = DB::table('purchase_order as po')
 					->LeftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-					->where('po.po_id','=',$po_id)
+					->where($where)
 				  	->where('pol.status','=','1')
 				  	->select(DB::raw('sum(pol.qnty_ordered) as ordered'),'po.order_total as total_amount')
 				  	->get();
@@ -212,12 +221,19 @@ class Purchase extends Model {
    		$this->Update_Ordertotal($po_id);
     	return $result;
 	}
-	function Update_Ordertotal($po_id)
+	function Update_Ordertotal($po_id,$company_id=0)
 	{
-
+		if(!empty($company_id))
+	    {
+	        $where = ['po.display_number'=>$po_id, 'po.company_id'=>$company_id];
+	    }
+	    else
+	    {
+	        $where = ['po.po_id'=>$po_id];
+	    }
 		$value = DB::table('purchase_order as po')
 					->leftJoin('purchase_order_line as pol','po.po_id','=','pol.po_id')
-					->where('po.po_id','=',$po_id)
+					->where($where)
 					->where('pol.status','=',1)
 					->select(DB::raw('sum(pol.line_total) as total'),'po.vendor_charge')
 					->get();
@@ -268,9 +284,18 @@ class Purchase extends Model {
    						->update(array('short'=>$short,'over'=>$over));
     	 return $result;
 	}
-	function GetPoReceived($po_id,$company_id)
+	function GetPoReceived($po_id,$company_id=0)
 	{
-		
+		if(!empty($company_id))
+	    {
+	        $where = ['po.display_number'=>$po_id, 'po.company_id'=>$company_id];
+	    }
+	    else
+	    {
+	        $where = ['po.po_id'=>$po_id];
+	    }
+
+
 		$result = DB::table('purchase_order as po')
 					->JOIN('purchase_order_line as pol','pol.po_id','=','po.po_id')
 					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
@@ -283,7 +308,7 @@ class Purchase extends Model {
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','cl.display_number','cl.billing_email','po.vendor_instruction','po.vendor_charge','ord.name as order_name','ord.custom_po','c.name as product_color','pd.sku','pd.size','pd.qnty',
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','cl.display_number','cl.billing_email','po.vendor_instruction','po.vendor_charge','ord.display_number as ord_display','po.display_number as po_display','ord.name as order_name','ord.custom_po','c.name as product_color','pd.sku','pd.size','pd.qnty',
 						DB::raw('(select count(*) from purchase_notes where po_id=po.po_id) as total_note'),'po.po_id',
 						'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
@@ -294,8 +319,7 @@ class Purchase extends Model {
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
 					->where('pd.qnty','<>','')
-					->where('pol.po_id','=',$po_id)
-					->Where('ord.company_id','=',$company_id)
+					->where($where)
 				  	->get();
 
 		$check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
@@ -520,7 +544,7 @@ class Purchase extends Model {
 		return $result;
 		
 	}
-	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po')
+	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po',$company_id)
 	{
 		/*$check = DB::table('purchase_order')
 				->select('*')
@@ -535,8 +559,8 @@ class Purchase extends Model {
 		}
 		else 
 		{*/
-			
-			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1));
+			$disp_id = $this->common->getDisplayNumber('purchase_order',$company_id,'company_id','po_id','yes');
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1,'company_id'=>$company_id,'display_number'=>$disp_id));
 			$id = DB::getPdo()->lastInsertId();
         	return $id;	
 		//}		
@@ -562,7 +586,7 @@ class Purchase extends Model {
 					->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.display_number,ord.id,ord.status,po.display_number as po_display,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id'])
@@ -611,7 +635,7 @@ class Purchase extends Model {
 	public function getAllReceivedata()
     {
         $whereConditions = ['po.complete' => '1'];
-        $listArray = ['po.po_id','po.order_id','po.vendor_id','v.name_company'];
+        $listArray = ['po.po_id','po.display_number','po.order_id','po.vendor_id','v.name_company'];
         $poData = DB::table('purchase_order as po')
         				->leftJoin('vendors as v','v.id','=','po.vendor_id')
                         ->select($listArray)

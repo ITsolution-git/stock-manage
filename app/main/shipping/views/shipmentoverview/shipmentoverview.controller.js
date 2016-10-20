@@ -87,7 +87,20 @@
                 }
             });
         }
-        $scope.getShippingOverview();
+
+        var allData = {};
+        allData.table ='shipping';
+        allData.cond ={display_number:$stateParams.id,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.shipping_id = result.data.records[0].id;
+                $scope.display_number = result.data.records[0].display_number;
+                $scope.getShippingOverview();
+            }
+        });
 
         $scope.submitForm = function(image)
         {

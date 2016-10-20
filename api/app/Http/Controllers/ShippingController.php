@@ -757,7 +757,7 @@ class ShippingController extends Controller {
         else
         {
             $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
-            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number));
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'company_id' => $post['company_id']));
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
             $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
         }
@@ -801,7 +801,8 @@ class ShippingController extends Controller {
 
                 if($post['address_id'] == $address->id)
                 {
-                    $shipping_id = $address->shipping_id;
+                    $data = $this->common->GetTableRecords('shipping',array('id'=>$address->shipping_id));
+                    $shipping_id = $data[0]->display_number;
                 }
             }
             else
@@ -834,9 +835,13 @@ class ShippingController extends Controller {
 
         $total_box_qnty = 0;
 
+        $count = 1;
         foreach ($boxes as $box) {
             $box->boxItems = $this->shipping->getBoxItems($box->id);
+            $box->boxItems[0]->count = $count;
+            $box->count = $count;
             $shippingBoxes[$box->id] = $box;
+            $count++;
         }
 
          if(empty($shippingBoxes))
@@ -896,6 +901,12 @@ class ShippingController extends Controller {
         }
 
         $boxes = $this->shipping->getShippingBoxes($data);
+
+        $count = 1;
+        foreach ($boxes as $box) {
+            $box->count = $count;
+            $count++;
+        }
 
         foreach ($result['shippingItems'] as $item) {
             $item->description = strip_tags($item->description);
