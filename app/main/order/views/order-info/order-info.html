@@ -426,7 +426,7 @@
                                 </div>
                             </div>
                             <div class="box-wide p-b-20">
-                                <a class="text-right pull-right" ui-sref="app.shipping.orderwaitship({id:order.display_number})">VIEW SHIPPING</a>
+                                <a ng-show="order.total_shipped_qnty > 0" class="text-right pull-right" ui-sref="app.shipping.orderwaitship({id:order.display_number})">VIEW SHIPPING</a>
                             </div>
                     </md-card-content>
                 </md-card>
