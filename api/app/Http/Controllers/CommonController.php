@@ -1133,18 +1133,19 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'ord.id';
+                $post['sorts']['sortBy'] = 'asc.display_number';
             }
             $result = $this->art->Screen_Listing($post); 
             $header = array(
-                0=>array('key' => 'ord.id', 'name' => 'Screen Set Name'),
-                1=>array('key' => 'mt.value', 'name' => 'Position'),
-                2=>array('key' => 'cl.client_company', 'name' => 'Client'),
+                array('key' => 'asc.display_number', 'name' => '#No'),
+                array('key' => 'ord.id', 'name' => 'Screen Set Name'),
+                array('key' => 'mt.value', 'name' => 'Position'),
+                array('key' => 'cl.client_company', 'name' => 'Client'),
                /* 3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),*/
-                3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
-                4=>array('key' => 'screen_width', 'name' => '#of Screen'),
-                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size'),
-                6=>array('key' => '', 'name' => '','sortable' => false)
+                array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
+                array('key' => 'screen_width', 'name' => '#of Screen'),
+                array('key' => 'asc.screen_width', 'name' => 'Frame size'),
+                array('key' => '', 'name' => '','sortable' => false)
                 );
         }
         if($post['filter']['function']=='art_notes') // SCREENSET COLOR NOTE

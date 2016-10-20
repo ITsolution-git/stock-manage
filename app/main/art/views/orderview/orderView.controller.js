@@ -108,6 +108,7 @@
                             {
                                 //alert(position_id);
                                 $scope.params = params;
+                                $scope.display_number= params.display_number;
                                 $scope.ink_array = params.miscData.art_type;
                                 $scope.position_id
                                 $scope.GetDetail =function () {
@@ -188,7 +189,7 @@
                                 }
                                 $scope.CreateScreenset = function(alldata)
                                 {
-                                    alldata = {alldata:alldata,add_screen_color:$scope.initial_add_color,remove_screen_color:$scope.screen_id_removed,change_color:$scope.getColors};
+                                    alldata = {alldata:alldata,add_screen_color:$scope.initial_add_color,remove_screen_color:$scope.screen_id_removed,change_color:$scope.getColors,display_order:$scope.display_number};
                                     
                                     $http.post('api/public/art/create_screen',alldata).success(function(result) 
                                     {
