@@ -107,6 +107,8 @@
         }
         vm.name = sessionService.get('name');
 
+        $scope.active = 0;
+
 
         var data = {company_id :sessionService.get('company_id')};
 
@@ -119,10 +121,12 @@
             $scope.showItemAvg = function(){
               $scope.showAvgItem = true;
               $scope.showAvgAmount = false;
+              $scope.active = 1;
             }
             $scope.showAmountAvg = function(){
               $scope.showAvgItem = false;
               $scope.showAvgAmount = true;
+              $scope.active = 2;
             }
             var combineSalesPersons = {};
             combineSalesPersons.company_id = sessionService.get('company_id');
