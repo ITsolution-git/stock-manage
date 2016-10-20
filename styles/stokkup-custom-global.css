@@ -1537,7 +1537,7 @@ md-dialog.task-dialog md-input-container textarea {
 .srchstickyright {
   float: none;
   position: fixed;
-  right: 0;
+  right: 70px;
   top: 10px;
   z-index: 100; }
 
@@ -1591,5 +1591,13 @@ md-dialog.task-dialog md-input-container textarea {
 .dashboard-act-btn.active {
   background-color: #f8f9fa;
   border-top: solid 1px #ededed; }
+
+.shipcustomfield input {
+  border-bottom: solid 1px #6e7584;
+  background-color: transparent; }
+
+@media only screen and (min-width: 1440px) {
+  .srchstickyright {
+    right: 20px; } }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
