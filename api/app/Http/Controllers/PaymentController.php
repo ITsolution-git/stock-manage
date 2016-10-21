@@ -11,6 +11,7 @@ use App\Order;
 use App\Api;
 use App\Common;
 use App\Company;
+use App\Invoice;
 use DB;
 use App;
 use Request;
@@ -25,12 +26,13 @@ define("AUTHORIZENET_LOG_FILE", "phplog");
 class PaymentController extends Controller {  
 
 
- 	public function __construct(Order $order,Common $common,Api $api,Company $company) 
+ 	public function __construct(Order $order,Common $common,Api $api,Company $company,Invoice $invoice) 
  	{
-    $this->order = $order;
+        $this->order = $order;
         $this->common = $common;
         $this->api = $api;
         $this->company = $company;
+        $this->invoice = $invoice;
     }
 
 
@@ -44,20 +46,13 @@ class PaymentController extends Controller {
     public function chargeCreditCard()
     {
         $post = Input::all();
-        
+
         $amount=round($post['amount'],2);
 
         if(isset($post['company_id']))
         {
             $company_id=$post['company_id'];
-            $retCredsArray = DB::table('authorize_detail as au')
-            ->select('au.login', 'au.transactionkey', 'au.is_live')
-            ->leftJoin('api_link_table as ai','ai.id','=',"au.link_id")
-            ->where('ai.company_id','=',$company_id)
-            ->where('ai.status','=','1')
-            ->where('au.is_active','=','1')
-            ->where('ai.api_id','=',3)
-            ->get();
+            $retCredsArray = $this->company->getApiDetail(AUTHORIZED_ID,'authorize_detail',$company_id); // GET API DETAILS
         }
 
         if(count($retCredsArray)<1){
@@ -79,17 +74,14 @@ class PaymentController extends Controller {
         $qb_data = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array());
         $qb_id = $qb_data[0]->qb_id;
         $order_id = $qb_data[0]->order_id;
+        $InvoiceNumber = $qb_data[0]->display_number;
 
         $order = new AnetAPI\OrderType();
-        $order->setDescription("Payment for Order ID: ".$order_id);
-        $order->setInvoiceNumber("INV - ".$order_id);
+        $order->setDescription("Payment for Invoice Number: ".$InvoiceNumber);
+        $order->setInvoiceNumber("INV - ".$InvoiceNumber);
 
-        $retArray = DB::table('orders as o')
-            ->select('c.client_company', 'c.client_id', 'c.billing_email')
-            ->leftJoin('client as c','c.client_id','=',"o.client_id")
-            ->where('o.id','=',$order_id)
-            ->where('o.is_delete','=','1')
-            ->get();
+        $retArray = $this->invoice->getInvoiceClient($order_id);
+        
 
         // direct payment with saved payment profile id on Authorized.net
         if(isset($post['savedCard']) && $post['savedCard']!=0 ){
@@ -104,12 +96,7 @@ class PaymentController extends Controller {
 
                 $id = $this->common->InsertRecords('payment_history',$orderData);
 
-                $retArrayPmt = DB::table('payment_history as p')
-                    ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
-                    ->leftJoin('orders as o','o.id','=',"p.order_id")
-                    ->where('p.order_id','=',$order_id)
-                    ->where('p.is_delete','=',1)
-                    ->get();
+                $retArrayPmt = $this->invoice->getInvoiceTotal($order_id);
 
                 $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
                 $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
@@ -190,12 +177,7 @@ class PaymentController extends Controller {
 
                     $id = $this->common->InsertRecords('payment_history',$orderData);
 
-                    $retArrayPmt = DB::table('payment_history as p')
-                        ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
-                        ->leftJoin('orders as o','o.id','=',"p.order_id")
-                        ->where('p.order_id','=',$order_id)
-                        ->where('p.is_delete','=',1)
-                        ->get();
+                    $retArrayPmt = $this->invoice->getInvoiceTotal($order_id);
 
                     $balance_due = $retArrayPmt[0]->grand_total - $retArrayPmt[0]->totalAmount;
                     $amt=array('total_payments' => round($retArrayPmt[0]->totalAmount, 2), 'balance_due' => round($balance_due, 2));
@@ -471,11 +453,8 @@ class PaymentController extends Controller {
     {
         $post = Input::all();
         $payment_id=$post['payment_id'];
-        $retArrayRefund = DB::table('payment_history')
-            ->select('payment_card', 'payment_amount', 'authorized_TransId', 'payment_date', 'authorized_AuthCode')
-            ->where('payment_id','=',$payment_id)
-            ->where('is_delete','=','1')
-            ->get();
+        $retArrayRefund = $this->invoice->getTransactionDetail($payment_id);
+
         if(count($retArrayRefund)<1){
             $data = array("success"=>0,'message' =>"Invalid Payment record");
             return response()->json(['data'=>$data]);
@@ -491,14 +470,7 @@ class PaymentController extends Controller {
         if(isset($post['company_id']))
         {
             $company_id=$post['company_id'];
-            $retCredsArray = DB::table('authorize_detail as au')
-            ->select('au.login', 'au.transactionkey', 'au.is_live')
-            ->leftJoin('api_link_table as ai','ai.id','=',"au.link_id")
-            ->where('ai.company_id','=',$company_id)
-            ->where('ai.status','=','1')
-            ->where('au.is_active','=','1')
-            ->where('ai.api_id','=',3)
-            ->get();
+            $retCredsArray = $this->company->getApiDetail(AUTHORIZED_ID,'authorize_detail',$company_id); // GET API DETAILS
         }
         if(count($retCredsArray)<1){
             $data = array("success"=>0,'message' =>"Please integrate Authorize.net details");
@@ -526,10 +498,7 @@ class PaymentController extends Controller {
         $paymentOne = new AnetAPI\PaymentType();
         $paymentOne->setCreditCard($creditCard);
 
-        $retArrayOrder = DB::table('invoice')
-        ->select('order_id')
-        ->where('id','=',$post['invoice_id'])
-        ->get();
+        $retArrayOrder = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array(),0,0,'order_id');
 
         $order_id=$retArrayOrder[0]->order_id;
         $result=$result['message'];
@@ -545,12 +514,7 @@ class PaymentController extends Controller {
         $transactionRequest->setPayment($paymentOne);
         $transactionRequest->setrefTransId($refTransId);
 
-        $retArrayBilling = DB::table('orders as o')
-            ->select('c.client_company', 'c.client_id', 'c.billing_email')
-            ->leftJoin('client as c','c.client_id','=',"o.client_id")
-            ->where('o.id','=',$order_id)
-            ->where('o.is_delete','=','1')
-            ->get();
+        $retArrayBilling = $this->invoice->getInvoiceClient($order_id);
 
         // Billing information fetched from Transaction id of Authorized.net
         $billto = new AnetAPI\CustomerAddressType();
@@ -647,16 +611,7 @@ class PaymentController extends Controller {
     {
         //$payment_data = $this->common->GetTableRecords('link_to_pay',array('session_link' => $token));
 
-        $payment_data = DB::table('link_to_pay as lp')
-            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'o.balance_due', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id', 'i.payment_terms')
-            ->leftJoin('orders as o','o.id','=',"lp.order_id")
-            ->leftJoin('invoice as i','i.order_id','=',"o.id")
-            ->leftJoin('client as c','c.client_id','=',"o.client_id")
-            ->leftJoin('users as u','u.id','=',"c.company_id")
-            ->where('lp.session_link','=',$token)
-            ->where('lp.payment_flag','=','0')
-            ->get();
-
+        $payment_data = $this->invoice->getLinkToPayDetail($token);
 
         if(count($payment_data)<1){
           //$data['orderArray'] = new stdClass();
@@ -686,12 +641,7 @@ class PaymentController extends Controller {
             //$data['orderArray']->link_status=1;
           //}else{
 
-            $user_data = DB::table('orders as o')
-            ->select('s.sales_name', 's.sales_email' , 's.sales_phone', 's.sales_web', 'u.name' , 'u.email' , 'u.phone')
-            ->leftJoin('sales as s','s.id','=', 'o.sales_id')
-            ->leftJoin('users as u','u.id','=', 'o.account_manager_id')
-            ->where('o.id','=',$data['orderArray']->order_id)
-            ->get();
+            $user_data = $this->invoice->getOrderSalesAccount($data['orderArray']->order_id);
 
             $data['orderArray']->sales_name=$user_data[0]->sales_name;
             $data['orderArray']->sales_email=$user_data[0]->sales_email;
