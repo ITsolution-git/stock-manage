@@ -333,7 +333,7 @@ Route::get('art/Client_art_screen/{client_id}/{company_id}', 'ArtController@Clie
 Route::get('art/screen_colorpopup/{screen_id}/{company_id}', 'ArtController@screen_colorpopup');
 Route::get('art/art_worklist_listing/{art_id}/{company_id}', 'ArtController@art_worklist_listing');
 Route::get('art/GetScreenset_detail/{position_id}', 'ArtController@GetScreenset_detail');
-Route::get('art/GetscreenColor/{screen_id}', 'ArtController@GetscreenColor');
+Route::get('art/GetscreenColor/{screen_id}/{company_id}', 'ArtController@GetscreenColor');
 Route::post('art/UpdateColorScreen', 'ArtController@UpdateColorScreen');
 Route::get('art/getScreenSizes/{company_id}', 'ArtController@getScreenSizes');
 Route::post('art/change_sortcolor', 'ArtController@change_sortcolor');

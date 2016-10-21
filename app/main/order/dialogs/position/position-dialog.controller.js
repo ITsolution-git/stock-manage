@@ -69,7 +69,7 @@
               combine_array_id.design_id = $scope.design_id;
               combine_array_id.order_id = order_id;
               combine_array_id.position = $scope.miscData.position[position_id].value;
-
+              combine_array_id.company_id = sessionService.get('company_id');
               
  
               $http.post('api/public/order/addPosition',combine_array_id).success(function(result) 

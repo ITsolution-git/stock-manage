@@ -24,7 +24,7 @@
                     <tbody >
                         <tr ng-repeat-start="purchase in rows">
                             <!-- <td class="">{{purchase.po_id}}</td> -->
-                            <td class="">{{purchase.id}}</td>
+                            <td class="">{{purchase.display_number}}</td>
                             <td class="">{{purchase.po_type}}</td>
                             <td class="">{{purchase.client_company}}</td>
                             <!-- <td class="">{{purchase.name_company}}</td> -->
@@ -59,9 +59,9 @@
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="po_data_all in purchase.design_po">
-                                                <td>{{po_data_all.po_id}}</td>
+                                                <td>{{po_data_all.display_number}}</td>
                                                 <td>{{po_data_all.name_company}}</td>
-                                                 <td class="viewbtn"><a class="cursor-p" ui-sref="app.purchaseOrder.companyPO({id:po_data_all.po_id})">VIEW</a></td> 
+                                                 <td class="viewbtn"><a class="cursor-p" ui-sref="app.purchaseOrder.companyPO({id:po_data_all.display_number})">VIEW</a></td> 
                      
                                             </tr>
                                         </tbody>

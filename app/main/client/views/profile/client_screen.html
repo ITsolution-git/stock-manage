@@ -35,7 +35,7 @@
                 </thead>                                    
                 <tbody>
                     <tr ng-repeat="screenSet in screenset_detail">
-                        <td><a target="_blank" ui-sref="app.art.screensetView({id:screenSet.screen_id})">{{screenSet.screen_set}}</a></td>
+                        <td><a target="_blank" ui-sref="app.art.screensetView({id:screenSet.display_number})">{{screenSet.screen_set}}</a></td>
                         <td><b ng-if="screenSet.screen_width!=''" >{{screenSet.screen_width}}"</b> X <b ng-if="screenSet.screen_height!=''">{{screenSet.screen_height}}"</b></td>
                         <td>
                             <img ng-if="ScreenSets.mokup_logo!=''" class="client-screenset-img" src="{{screenSet.mokup_logo}}">
