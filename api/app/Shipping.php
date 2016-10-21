@@ -123,19 +123,6 @@ class Shipping extends Model {
 
 	}
 
-    public function getShippingOrders($company_id)
-    {
-        $shippingData = DB::table('orders as o')
-                            ->leftJoin('misc_type as mt','o.f_approval','=',DB::raw("mt.id AND mt.company_id = ".$company_id))
-                            ->select('o.id','o.job_name','o.shipping_by','mt.value as job_status','o.client_id')
-                            ->where('mt.slug','>=','138')
-                            ->where('mt.slug','<=','149')
-                            ->where('o.company_id','=',$company_id)
-                            ->get();
-        return $shippingData;
-    }    
-
-
 /**
 * Shipping Detail           
 * @access public orderDetail
