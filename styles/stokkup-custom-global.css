@@ -1599,5 +1599,7 @@ md-dialog.task-dialog md-input-container textarea {
 @media only screen and (min-width: 1440px) {
   .srchstickyright {
     right: 20px; } }
+.filter-btn-txt {
+  font-size: 12px !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
