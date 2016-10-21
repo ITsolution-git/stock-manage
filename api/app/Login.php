@@ -146,4 +146,16 @@ class Login extends Model {
                     ->get();
         return $result;
     }
+
+    public function verifyloginUser($email, $id) {
+        $admindata = DB::table('users as usr')
+                    ->select('usr.id','usr.user_name','usr.email','usr.status','usr.password','usr.profile_photo','usr.name','r.title','r.slug','usr.name','usr.reset_password')
+                     ->leftjoin('roles as r','r.id', '=' ,'usr.role_id')
+                     ->where('usr.email', '=', $email)
+                     ->where('usr.id', '=', $id)
+                     ->where('usr.is_delete','=','1')
+                     ->where('usr.status','=','1')
+                     ->get();
+        return $admindata;
+    }
 }

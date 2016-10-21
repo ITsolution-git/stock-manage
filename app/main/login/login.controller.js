@@ -25,6 +25,7 @@
         vm.Login_verify = Login_verify;
         function Login_verify(data)
         {
+
             var user_data = data;
             sessionService.remove('role_slug');
 
@@ -46,6 +47,8 @@
 
                                 } else {
 
+                                  sessionService.set('oldLoginId',0);
+                                   sessionService.set('oldEmail','');
                                    sessionService.set('useremail',result.data.records.useremail);
                                    sessionService.set('role_slug',result.data.records.role_slug);
                                    sessionService.set('login_id',result.data.records.login_id);
@@ -107,6 +110,8 @@
         }
         vm.name = sessionService.get('name');
 
+        $scope.active = 0;
+
 
         var data = {company_id :sessionService.get('company_id')};
 
@@ -119,10 +124,12 @@
             $scope.showItemAvg = function(){
               $scope.showAvgItem = true;
               $scope.showAvgAmount = false;
+              $scope.active = 1;
             }
             $scope.showAmountAvg = function(){
               $scope.showAvgItem = false;
               $scope.showAvgAmount = true;
+              $scope.active = 2;
             }
             var combineSalesPersons = {};
             combineSalesPersons.company_id = sessionService.get('company_id');

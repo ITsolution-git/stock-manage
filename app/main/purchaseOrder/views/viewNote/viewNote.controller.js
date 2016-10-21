@@ -12,7 +12,20 @@
         var vm = this;
          //vm.openaddNoteDialog = openaddNoteDialog;
          $scope.company_id = sessionService.get('company_id');
-         $scope.po_id = $stateParams.id;
+        
+            $scope.display_number = $stateParams.id;
+
+            var companyData = {};
+            companyData.table ='purchase_order';
+            companyData.cond = {display_number: $stateParams.id,company_id:$scope.company_id};
+            // GET CLIENT TABLE CALL
+            $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+            {   
+                if(result.data.success=='1')
+                {   
+                    $scope.po_id =result.data.records[0].id;
+                }
+            });
 
         //Dummy models data
      
@@ -41,7 +54,8 @@
        $scope.getResource = function (params, paramsObj, search)
         {   
             $scope.params = params;
-            $scope.params.po_id = $scope.po_id;
+            $scope.params.display_number = $scope.display_number;
+            $scope.params.company_id = $scope.company_id;
             $scope.paramsObj = paramsObj;
 
             var company_data = {};
