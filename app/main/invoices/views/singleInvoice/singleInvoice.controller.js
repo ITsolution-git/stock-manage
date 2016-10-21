@@ -6,7 +6,7 @@
             .module('app.invoices')
             .controller('singleInvoiceController', singleInvoiceController);
     /** @ngInject */
-    function singleInvoiceController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService,$stateParams,$state) {
+    function singleInvoiceController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService,$stateParams,$state,AllConstant) {
         var vm = this;
         vm.linktopay = linktopay;
 
@@ -48,6 +48,7 @@
             });
 
             $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(resultHistory) {
+            //$http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',AllHeaders.header_config(sessionService.get('token'))).success(function(resultHistory) {
 
                 /*if(result.data.success == '0') {
                         $state.go('app.invoices');
@@ -569,7 +570,7 @@
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                 if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                     $scope.showPaymentDetails = true;
-                                    if($scope.allData.order_data[0].approval_id == 2885){
+                                    /*if($scope.allData.order_data[0].approval_id == 2885){
                                         var UpdateArray = {};
                                         UpdateArray.table ='orders';
                                         UpdateArray.data = {approval_id:2491};
@@ -581,7 +582,7 @@
                                                 $scope.allData.order_data[0].approval_id = 2491;
                                             }
                                         });
-                                    }
+                                    }*/
                                 }else{
                                     $scope.showPaymentDetails = false;
                                 }
