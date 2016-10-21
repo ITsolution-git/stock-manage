@@ -26,6 +26,7 @@ Route::post('admin/check_user_password', 'LoginController@check_user_password');
 Route::post('admin/change_password', 'LoginController@change_password');
 Route::post('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
+Route::post('admin/loginUser', 'LoginController@loginUser');
 
 // COMPANY ROUTERS
 Route::get('admin/company', 'CompanyController@listData');

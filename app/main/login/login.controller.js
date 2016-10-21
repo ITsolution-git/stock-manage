@@ -25,6 +25,7 @@
         vm.Login_verify = Login_verify;
         function Login_verify(data)
         {
+
             var user_data = data;
             sessionService.remove('role_slug');
 
@@ -46,6 +47,8 @@
 
                                 } else {
 
+                                  sessionService.set('oldLoginId',0);
+                                   sessionService.set('oldEmail','');
                                    sessionService.set('useremail',result.data.records.useremail);
                                    sessionService.set('role_slug',result.data.records.role_slug);
                                    sessionService.set('login_id',result.data.records.login_id);
