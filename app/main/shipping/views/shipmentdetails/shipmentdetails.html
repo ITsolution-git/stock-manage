@@ -51,19 +51,33 @@
                                         <md-option ng-selected="shipping.boxing_type==1" value="1">Standard</md-option>
                                     </md-select>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
+                                <div layout="column" flex="35" class="mrg10-R shipcustomfield">
                                     <md-input-container flex="100" class="margin-0 date-input">
                                         <input type="text" placeholder="Shipping By" ng-model="shipping.shipping_by" disabled="">
                                     </md-input-container>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
+                                <div layout="column" flex="35" class="mrg10-R shipcustomfield">
                                     <md-input-container flex="100" class="margin-0 date-input">
                                         <input type="text" placeholder="In Hands By" ng-model="shipping.in_hands_by" disabled="">
                                     </md-input-container>
                                 </div>
                             </div>
+                            <div layout="row" flex="100" class="mt-20 mb-20">
+                                <div layout="column" flex="50" class="mrg10-R">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                    <span class="mb-20">Date Shipped</span>
+                                        <input class="mt-10" kendo-date-picker ng-model="shipping.date_shipped" k-ng-model="dateObject3" ui-event="{ change : 'UpdateShippingDate(\'date_shipped\',shipping.date_shipped,shipping.shipping_id)' }"/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="50" class="mrg10-R">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                    <span class="mb-20">Fully Shipped</span>
+                                        <input class="mt-10" kendo-date-picker ng-model="shipping.fully_shipped" k-ng-model="dateObject4" ui-event="{ change : 'UpdateShippingDate(\'fully_shipped\',shipping.fully_shipped,shipping.shipping_id)' }"/>
+                                    </md-input-container>
+                                </div>
+                            </div>
                             <div layout="row" flex="100" class="mt-20">
-                                <div layout="column" flex="30" class="mrg10-R">
+                                <div layout="column" flex="100" class="mrg10-R">
                                     <md-select ng-model="shipping.shipping_type_id" placeholder="Shipping Type" class="mt-2 mb-0" name="shipping_type_id" ng-change="updateShippingAll('shipping_type_id',shipping.shipping_type_id,shipping.shipping_id)">
                                         <md-option>Shipping Type</md-option>
                                         <md-option value="1" ng-selected="shipping.shipping_type_id == 1">UPS</md-option>
@@ -71,19 +85,10 @@
                                         <md-option value="3" ng-selected="shipping.shipping_type_id == 3">Local Messenger</md-option>
                                     </md-select>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100" class="margin-0 date-input">
-                                        <input placeholder="Date Shipped" kendo-date-picker ng-model="shipping.date_shipped" k-ng-model="dateObject3" ui-event="{ change : 'UpdateShippingDate(\'date_shipped\',shipping.date_shipped,shipping.shipping_id)' }"/>
-                                    </md-input-container>
-                                </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100" class="margin-0 date-input">
-                                        <input placeholder="Fully Shipped" kendo-date-picker ng-model="shipping.fully_shipped" k-ng-model="dateObject4" ui-event="{ change : 'UpdateShippingDate(\'fully_shipped\',shipping.fully_shipped,shipping.shipping_id)' }"/>
-                                    </md-input-container>
-                                </div>
+                                
                             </div>
 
-
+                            
                             <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="50" class="mrg10-R pull-left" ng-show="shipping.shipping_type_id == 1">
                                     <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="mt-2 mb-0" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
