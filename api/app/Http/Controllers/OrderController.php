@@ -290,90 +290,6 @@ class OrderController extends Controller {
 
     }
 
-
-/** 
- * @SWG\Definition(
- *      definition="OrderPositionDetail",
- *      type="object",
- *      required={"company_id", "id"},
- *      @SWG\Property(
- *          property="company_id",
- *          type="integer"
- *      ),
- *      @SWG\Property(
- *          property="id",
- *          type="integer"
- *      )
- * )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/order/getOrderPositionDetail",
- *  summary = "Order Position Tab Detail",
- *  tags={"Order"},
- *  description = "Order Position Tab Detail",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Order Position Tab Detail",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/OrderPositionDetail")
- *  ),
- *  @SWG\Response(response=200, description="Order Position Tab Detail"),
- *  @SWG\Response(response="default", description="Order Position Tab Detail"),
- * )
- */
-
-    public function getOrderPositionDetail()
-    {
-        $data = Input::all();
-        $result = $this->order->getOrderPositionDetail($data);
-        
-        if (count($result) > 0) {
-            $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'order_position' => $result['order_position']
-                            );
-        } else {
-            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS,
-                                'order_position' => $result['order_position']
-                            );
-        }
-        return response()->json(["data" => $response]);
-    }
-
-    /**
-    * Insert record for any single table.
-    * @params Table name, Post array
-    * @return json data
-    */
-     public function insertPositions()
-     {
-        $post = Input::all();
-
-        //echo "<pre>"; print_r($post); echo "</pre>"; die;
-        if(!empty($post['table']) && !empty($post['data']))
-        {
-            $result = $this->order->insertPositions($post['table'],$post['data']);
-            $id = $result;
-            $message = INSERT_RECORD;
-            $success = 1;
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        
-        $data = array("success"=>$success,"message"=>$message,"id"=>$id);
-        return response()->json(['data'=>$data]);
-     }
-    
-
     /**
     * UPDATE record for any single table.
     * @params Table name, Condition array, Post array
@@ -488,370 +404,7 @@ class OrderController extends Controller {
         }
         return  response()->json($response);
     }
-
-    /** 
-     * @SWG\Definition(
-     *      definition="distributionDetail",
-     *      type="object",
-     *      required={"client_id", "order_id", "address_id"},
-     *      @SWG\Property(
-     *          property="client_id",
-     *          type="integer"
-     *      ),
-     *      @SWG\Property(
-     *          property="order_id",
-     *          type="integer"
-     *      ),
-     *      @SWG\Property(
-     *          property="address_id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/distributionDetail",
-     *  summary = "Order Line Tab Detail",
-     *  tags={"Order"},
-     *  description = "Order Line Tab Detail",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Order Line Tab Detail",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/distributionDetail")
-     *  ),
-     *  @SWG\Response(response=200, description="Order Line Tab Detail"),
-     *  @SWG\Response(response="default", description="Order Line Tab Detail"),
-     * )
-     */
-
-    public function distributionDetail()
-    {
-        $data = Input::all();
-        $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $data['client_id']),array());
-
-        $client_distaddress = array();
-        foreach ($dist_addr as $addr) {
-            $addr->full_address = $addr->attn ." ". $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
-            $client_distaddress[] = $addr;
-        }
-
-        $array = array('order.id' => $data['order_id'],'is_distribute' => '0');
-        $order_items = $this->order->getDistributionItems($array);
-
-        if(empty($order_items))
-        {
-            $this->common->UpdateTableRecords('orders',array('id' => $data['order_id']),array('fully_shipped' => date('Y-m-d')));
-        }
-        else
-        {
-            $this->common->UpdateTableRecords('orders',array('id' => $data['order_id']),array('fully_shipped' => ''));        
-        }
-
-        if(isset($data['address_id']) && !empty($data['address_id']))
-        {
-            $array2 = array('order.id' => $data['order_id'],'is_distribute' => '1','ia.address_id' => $data['address_id']);
-            $distributed_items = $this->order->getDistributedItems($array2);
-        }
-        else
-        {
-            $distributed_items = array();
-        }
-
-        $array3 = array('ia.order_id' => $data['order_id']);
-        $distributed_address = $this->order->getDistributedAddress($array3);
-
-        $distributed_address2 = array();
-
-        foreach ($distributed_address as $addr) {
-            $addr->full_address = $addr->attn ." ". $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
-            $box_arr = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $addr->shipping_id),array());
-
-            if(empty($distributed_items) && $addr->print_on_pdf == '1')
-            {
-                $array2 = array('order.id' => $data['order_id'],'is_distribute' => '1','ia.address_id' => $addr->id);
-                $distributed_items = $this->order->getDistributedItems($array2);
-            }
-
-            $actual_total = 0;
-            foreach ($box_arr as $row) {
-                $actual_total += $row->actual;
-            }
-            
-            $addr->total_box = count($box_arr);
-            $addr->actual_total = $actual_total;
-            $distributed_address2[] = $addr;
-        }
-
-
-        if (count($client_distaddress) > 0) {
-            $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'dist_addr' => $client_distaddress,
-                                'order_items' => $order_items,
-                                'distributed_items' => $distributed_items,
-                                'distributed_address' => $distributed_address2
-                            );
-        } else {
-            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS
-                                );
-        } 
-        
-        return response()->json(["data" => $response]);
-    }
-
-    public function addToDistribute()
-    {
-        $post = Input::all();
-
-        if(!isset($post['item_id']))
-        {
-            $post['data'] = $post;
-
-            $post['cond'] = array('order_id' => $post['order_id'],'address_id' => $post['address_id']);
-            $post['notcond'] = array();
-
-            $result = $this->common->GetTableRecords('item_address_mapping',$post['cond'],$post['notcond']);
-            if(empty($result))
-            {
-                $shipping_arr = array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'company_id' => $post['company_id'],'shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days")));
-                $shipping_id = $this->common->InsertRecords('shipping',$shipping_arr);
-
-                $insert_arr = array();
-                $insert_arr['data'] = array('address_id' => $post['address_id'], 'order_id' => $post['order_id'], 'shipping_id' => $shipping_id);
-
-                $result = $this->common->InsertRecords('item_address_mapping',$insert_arr);
-                $id = $result;
-            }
-            $message = INSERT_RECORD;
-            $success = 1;
-        }
-        else
-        {
-            if(isset($post['items']))
-            {
-                foreach ($post['items'] as $key => $value) {
-                    
-                    $insert_arr = array();
-
-                    $arr = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
-                    $insert_arr['shipping_id'] = $arr[0]->shipping_id;
-                    $insert_arr['item_id'] = $value['id'];
-                    $insert_arr['address_id'] = $post['address_id'];
-                    $insert_arr['order_id'] = $post['order_id'];
-
-                    $result = $this->common->InsertRecords('item_address_mapping',$insert_arr);
-                    $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
-                }
-            }
-            else
-            {
-                $arr = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
-                $post['shipping_id'] = $arr[0]->shipping_id;
-                $result = $this->common->InsertRecords('item_address_mapping',$post);
-                $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '1'));
-            }
-            
-            $success=1;
-            $message=UPDATE_RECORD;
-        }
-        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('shipping_by' => date('Y-m-d', strtotime("+9 days")),'in_hands_by' => date('Y-m-d', strtotime("+14 days"))));
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
-    /** 
-     * @SWG\Definition(
-     *      definition="removeFromDistribute",
-     *      type="object",
-     *      required={"order_id"},
-     *      @SWG\Property(
-     *          property="order_id",
-     *          type="integer"
-     *      ),
-      *      @SWG\Property(
-     *          property="address_id",
-     *          type="integer"
-     *      ),
-      *      @SWG\Property(
-     *          property="item_id",
-     *          type="integer"
-     *      ),
-      *      @SWG\Property(
-     *          property="shipping_id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/removeFromDistribute",
-     *  summary = "Distribution Delete",
-     *  tags={"Order"},
-     *  description = "Distribution Delete",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Distribution Delete",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/removeFromDistribute")
-     *  ),
-     *  @SWG\Response(response=200, description="Distribution Delete"),
-     *  @SWG\Response(response="default", description="Distribution Delete"),
-     * )
-     */
-
-    public function removeFromDistribute()
-    {
-        $post = Input::all();
-
-        if(!isset($post['item_id']))
-        {
-            $item_data = $this->common->GetTableRecords('item_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
-
-            if(!empty($item_data))
-            {
-                foreach ($item_data as $item) {
-                    if($item->item_id > 0)
-                    {
-                        $this->common->UpdateTableRecords('distribution_detail',array('id' => $item->item_id),array('is_distribute' => '0'));
-                    }
-                }
-            }
-
-            $post['cond'] = array('order_id' => $post['order_id'],'address_id' => $post['address_id']);
-
-            $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
-            $this->common->DeleteTableRecords('shipping',$post['cond']);
-
-            $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        }
-        else
-        {
-            $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['item_id']),array('is_distribute' => '0'));
-            
-            $post['cond'] = array('order_id' => $post['order_id'],'item_id' => $post['item_id']);
-            $this->common->DeleteTableRecords('item_address_mapping',$post['cond']);
-
-            $boxarr = $this->common->GetTableRecords('box_item_mapping',array('item_id' => $post['item_id'],'shipping_id' => $post['shipping_id']),array());
-
-            if(!empty($boxarr))
-            {
-                foreach ($boxarr as $value) {
-                    $this->common->DeleteTableRecords('shipping_box',array('id' => $value->box_id));
-                }
-            }
-
-            
-
-            $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        }
-        return response()->json(['data'=>$data]);
-    }
-
-    /** 
-     * @SWG\Definition(
-     *      definition="updateDistributedQty",
-     *      type="object",
-     *      required={"id","qty"},
-     *      @SWG\Property(
-     *          property="id",
-     *          type="integer"
-     *      ),
-      *      @SWG\Property(
-     *          property="qty",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/updateDistributedQty",
-     *  summary = "Update Distributed Qty",
-     *  tags={"Order"},
-     *  description = "Update Distributed Qty",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Update Distributed Qty",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/updateDistributedQty")
-     *  ),
-     *  @SWG\Response(response=200, description="Update Distributed Qty"),
-     *  @SWG\Response(response="default", description="Update Distributed Qty"),
-     * )
-     */
-
-    public function updateDistributedQty()
-    {
-        $post = Input::all();
-        $dist_addr = $this->common->GetTableRecords('distribution_detail',array('id' => $post['id']),array());
-        $qty = $dist_addr[0]->qnty - $post['qty'];
-
-        $this->common->UpdateTableRecords('distribution_detail',array('id' => $post['id']),array('qnty' => $post['qty']));
-
-        if($qty > 0)
-        {
-            $insert_data = array(
-                                'orderline_id' => $dist_addr[0]->orderline_id,
-                                'order_id' => $dist_addr[0]->order_id,
-                                'size' => $dist_addr[0]->size,
-                                'qnty' => $qty,
-                                'status' => '1',
-                                'date' => $dist_addr[0]->date,
-                                'is_distribute' => '0'
-                                );
-
-            $this->common->InsertRecords('distribution_detail',$insert_data);
-        }
-        $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        return response()->json(['data'=>$data]);
-    }
-
-     /**
-   * Save Color size.
-   * @return json data
-    */
-    public function saveColorSize()
-    {
-        $post = Input::all();
-        
-
-         $result = $this->order->getProductDetail($post['product_id']);
-         $colors_array = unserialize($result[0]->color_size_data);
-
-         $static_array = array();
-        
-                
-         $static_array[$post['color_id']] = array(array('name' => 'XS','piece_price' => 0),
-                                         array('name' => 'S','piece_price' => 0),
-                                         array('name' => 'M','piece_price' => 0),
-                                         array('name' => 'L','piece_price' => 0),
-                                         array('name' => 'XL','piece_price' => 0),
-                                         array('name' => '2XL','piece_price' => 0),
-                                         array('name' => '3XL','piece_price' => 0)); 
-              
-     
-      if($colors_array){
-      $merge_array = $colors_array + $static_array;
-      } else {
-        $merge_array = $static_array;
-      }
-
-      $colors_all_array = serialize($merge_array);
-      
-       $result = $this->order->updatePriceProduct($colors_all_array,$post['product_id']);
-       $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        return response()->json(['data'=>$data]);
-    }
-
+    
     /**
      * @SWG\Get(
      *  path = "/api/public/order/getProductDetailColorSize/{id}",
@@ -969,64 +522,7 @@ class OrderController extends Controller {
         
         
     }
-
-    public function updatePriceProduct()
-    {
-        $post = Input::all();
-        $size_array_data = serialize($post['temp_array']);
-        $result = $this->order->updatePriceProduct($size_array_data,$post['id']);
-        $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        return response()->json(['data'=>$data]);
-    }
-
-    /** 
-     * @SWG\Definition(
-     *      definition="deleteColorSize",
-     *      type="object",
-     *      required={"color_id","product_id"},
-     *      @SWG\Property(
-     *          property="color_id",
-     *          type="integer"
-     *      ),
-            @SWG\Property(
-     *          property="product_id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/deleteColorSize",
-     *  summary = "Delete Color Size",
-     *  tags={"Order"},
-     *  description = "Delete Color Size",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Delete Color Size",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/deleteColorSize")
-     *  ),
-     *  @SWG\Response(response=200, description="Delete Color Size"),
-     *  @SWG\Response(response="default", description="Delete Color Size"),
-     * )
-     */
-    
-    public function deleteColorSize()
-    {
-        $post = Input::all();
-        
-        $result = $this->order->getProductDetail($post['product_id']);
-        $colors_array = unserialize($result[0]->color_size_data);
-
-        unset($colors_array[$post['color_id']]);
-        $colors_all_array = serialize($colors_array);
-      
-       $result = $this->order->updatePriceProduct($colors_all_array,$post['product_id']);
-       $data = array("success"=>1,"message"=>UPDATE_RECORD);
-        return response()->json(['data'=>$data]);
-    }
+   
 
     /** 
      * @SWG\Definition(
@@ -1134,72 +630,6 @@ class OrderController extends Controller {
 
         $response = array('success' => 1, 'message' => 'Email has been sent successfully');
         return response()->json(["data" => $response]);
-
-      /* Mail::send('emails.pdfmail', ['user'=>'hardik Deliwala','email'=>$email_array], function($message) use ($email_array,$post,$attached_url)
-        {
-             $message->to($email_array)->subject('Order Acknowledgement #'.$post['order_id']);
-             $message->attach($attached_url);
-        });*/
-
-
-        /* $to = "hdeliwala@codal.com";
-         $subject = "This is subject";
-         
-         $message = "<b>This is HTML message.</b>";
-         $message .= "<h1>This is headline.</h1>";
-         
-         $header = "From:abc@somedomain.com \r\n";
-         $header .= "Cc:afgh@somedomain.com \r\n";
-         $header .= "MIME-Version: 1.0\r\n";
-         $header .= "Content-type: text/html\r\n";
-         
-         $retval = mail ($to,$subject,$message,$header);
-         
-         if( $retval == true ) {
-            echo "Message sent successfully...";
-         }else {
-            echo "Message could not be sent...";
-         }*/
-
-
-
-        //PHPMailer Object
-        $mail = new PHPMailer;
-
-        //From email address and name
-        $mail->From = "from@yourdomain.com";
-        $mail->FromName = "Full Name";
-
-        //To address and name
-        $mail->addAddress("hdeliwala@codal.com", "Recepient Name");
-        $mail->addAddress("recepient1@example.com"); //Recipient name is optional
-
-        //Address to which recipient will reply
-        $mail->addReplyTo("reply@yourdomain.com", "Reply");
-
-        //CC and BCC
-        $mail->addCC("cc@example.com");
-        $mail->addBCC("bcc@example.com");
-
-        //Send HTML or Plain Text email
-        $mail->isHTML(true);
-
-        $mail->Subject = "Subject Text";
-        $mail->Body = "<i>Mail body in HTML</i>";
-        $mail->AltBody = "This is the plain text version of the email content";
-
-        if(!$mail->send()) 
-        {
-            echo "Mailer Error: " . $mail->ErrorInfo;
-        } 
-        else 
-        {
-            echo "Message has been sent successfully";
-        }
-
-        $response = array('success' => 1, 'message' => MAIL_SEND);
-          
-        return response()->json(["data" => $response]);
     }
 
 
@@ -1212,73 +642,6 @@ class OrderController extends Controller {
             exec("chmod $dir_path 0777");
         }
     }
-
-    /** 
-     * @SWG\Definition(
-     *      definition="orderImageDetail",
-     *      type="object",
-     *      required={"id","company_id"},
-       *     @SWG\Property(
-     *          property="id",
-     *          type="integer"
-     *      ),
-       *     @SWG\Property(
-     *          property="company_id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/orderImageDetail",
-     *  summary = "Get Order Image Detail",
-     *  tags={"Order"},
-     *  description = "Get Order Image Detail",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Get Order Image Detail",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/orderImageDetail")
-     *  ),
-     *  @SWG\Response(response=200, description="Get Order Image Detail"),
-     *  @SWG\Response(response="default", description="Get Order Image Detail"),
-     * )
-     */
-
-    
-    public function orderImageDetail() {
- 
-        $data = Input::all();
-
-        $result = $this->order->orderImageDetail($data);
-
-         if (count($result) > 0) {
-
-        $result[0]->first_url_photo = UPLOAD_PATH.$data['company_id'].'/'.'order/'.$result[0]->id.'/'.$result[0]->first_logo;
-        $result[0]->second_url_photo = UPLOAD_PATH.$data['company_id'].'/'.'order/'.$result[0]->id.'/'.$result[0]->second_logo;
-        $result[0]->third_url_photo = UPLOAD_PATH.$data['company_id'].'/'.'order/'.$result[0]->id.'/'.$result[0]->third_logo;
-        $result[0]->fourth_url_photo = UPLOAD_PATH.$data['company_id'].'/'.'order/'.$result[0]->id.'/'.$result[0]->fourth_logo;
-        }
-
-        
-        if (count($result) > 0) {
-            $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'records' => $result[0]
-                                
-                                );
-        } else {
-            $response = array(
-                                'success' => 0, 
-                                'message' => NO_RECORDS,
-                                'records' => '');
-        } 
-        return response()->json(['data'=>$response]);
-    }
-
 
 /** 
  * @SWG\Definition(
@@ -2137,8 +1500,6 @@ class OrderController extends Controller {
         
         if(!empty($all_data))
         {
-            
-
             if(array_key_exists('code', $all_data)) {
 
                         if($all_data->code == 400) {
@@ -2147,9 +1508,6 @@ class OrderController extends Controller {
 
                     }
             }
-
-
-            
             
             $this->common->UpdateTableRecords('orders',array('id' => $post['id']),array('approved_by' => $post['user_id'],'order_number' => $all_data[0]->orderNumber,'order_sns_status' => $all_data[0]->orderStatus));
             $data_record = array("success"=>1,"message"=>"Order is successfully posted to S&S");
@@ -2160,13 +1518,7 @@ class OrderController extends Controller {
             
             return response()->json(["data" => $data_record]);
         }
-
-       
-        
-      
      }
-
-
 
      public function addInvoice()
      {
@@ -2175,7 +1527,6 @@ class OrderController extends Controller {
         if(!isset($post['quickbook_id'])){
           $post['quickbook_id'] = 0;
         }
-        
 
         $result = $this->client->GetclientDetail($post['client_id']);
         $result_qbProductId = $this->company->getQBAPI($post['company_id']);
@@ -2193,8 +1544,6 @@ class OrderController extends Controller {
             $data_record = array("success"=>0,"message"=>"Please complete Quickbook Setup First");
             return response()->json(["data" => $data_record]);
         }
-
-
 
 
         if($result['main']['qid'] == 0) {
@@ -2225,18 +1574,7 @@ class OrderController extends Controller {
             return response()->json(["data" => $data_record]);
           }
           
-
-          
         }
-
-         
-
-
-
-
-
-
-      
      }
 
 
@@ -2502,5 +1840,4 @@ class OrderController extends Controller {
         $data = array("success"=>1,"message"=>UPDATE_RECORD,"invoice_id" => $post['invoice_id']);
         return response()->json(['data'=>$data]);
     }
-
 }

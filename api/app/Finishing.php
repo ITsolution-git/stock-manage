@@ -16,7 +16,6 @@ class Finishing extends Model {
             $search = $post['filter']['name'];
         }
 
-        //$listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,f.id,f.qty,fc.category_name,f.status,f.note,f.category_id,c.client_id,f.time,f.start_time,f.end_time,f.est')];
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,o.name,c.client_id,o.approval_id,o.display_number')];
 
         $finishingData = DB::table('orders as o')
@@ -67,27 +66,6 @@ class Finishing extends Model {
                     ->where($data['where'])
                     ->update($data['field']);
         
-        return $result;
-    }
-
-
-
-    public function deleteFinishing($id)
-    {
-        if(!empty($id))
-        {
-                $result = DB::table('finishing')->where('id','=',$id)->update(array("is_delete" => '1'));
-                return $result;
-        }
-        else
-        {
-                return false;
-        }
-    }
-
-    public function getFinishingDetailById($id)
-    {
-        $result = DB::table('finishing')->where('id','=',$id)->get();
         return $result;
     }
 

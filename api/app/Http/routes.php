@@ -26,14 +26,13 @@ Route::post('admin/check_user_password', 'LoginController@check_user_password');
 Route::post('admin/change_password', 'LoginController@change_password');
 Route::post('auth/session', 'LoginController@check_session');
 Route::get('auth/logout', 'LoginController@logout');
+Route::post('admin/loginUser', 'LoginController@loginUser');
 
 // COMPANY ROUTERS
 Route::get('admin/company', 'CompanyController@listData');
-Route::post('admin/company/list', 'CompanyController@listData');
 Route::post('admin/company/add', 'CompanyController@addData');
 Route::get('admin/company/edit/{id}/{company_id}', 'CompanyController@GetData');
 Route::post('admin/company/save', 'CompanyController@SaveData');
-Route::post('admin/company/delete', 'CompanyController@DeleteData');
 Route::post('admin/company/change_password', 'CompanyController@change_password');
 Route::get('admin/company/getCompanyInfo/{company_id}', 'CompanyController@getCompanyInfo');
 Route::get('admin/company/getAffiliate/{company_id}/{affiliate_id}', 'CompanyController@getAffiliate');
@@ -114,21 +113,14 @@ Route::post('admin/placementSave', 'SettingController@placementSave');
 Route::post('admin/colorSave', 'SettingController@colorSave');
 Route::post('admin/colorInsert', 'SettingController@colorInsert');
 
-
-
 // COMMON CONTROLLER 
-Route::get('common/getAdminRoles', 'CommonController@getAdminRoles');
 Route::get('common/type/{type}', 'CommonController@type');
 Route::get('common/staffRole', 'CommonController@getStaffRoles');
 Route::get('common/checkemail/{email}/{userid}', 'CommonController@checkemailExist');
-Route::post('auth/company', 'CommonController@CompanyService');
-Route::get('common/getAllVendors/{id}', 'CommonController@getAllVendors');
 Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
 Route::post('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList/{id}', 'CommonController@getStaffList');
-Route::post('common/getAllPlacementData', 'CommonController@getAllPlacementData');
-Route::post('common/getMiscData', 'CommonController@getMiscData');
 Route::get('common/getAllColorData', 'CommonController@getAllColorData');
 Route::post('common/getCompanyDetail', 'CommonController@getCompanyDetail');
 Route::post('common/SaveImage', 'CommonController@SaveImage');
@@ -136,13 +128,9 @@ Route::post('common/InsertRecords', 'CommonController@InsertRecords'); // INSERT
 Route::post('common/GetTableRecords', 'CommonController@GetTableRecords'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/UpdateTableRecords', 'CommonController@UpdateTableRecords'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('common/DeleteTableRecords', 'CommonController@DeleteTableRecords'); // DELETE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
-Route::get('common/getBrandCo', 'CommonController@getBrandCo');
-Route::post('common/updatedate', 'CommonController@UpdateDate'); // ONLY UPDATE THE IMAGE IN MYSQL DATE FORMAT.
 Route::post('common/InsertUserRecords', 'CommonController@InsertUserRecords'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/deleteImage', 'CommonController@deleteImage'); //Update Image
-Route::post('common/updateRecordsEmailVal', 'CommonController@updateRecordsEmailVal'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('common/insertRecordsEmail', 'CommonController@insertRecordsEmail'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
-Route::post('common/allColor', 'CommonController@allColor'); // GET RECORD FOR ANY SINGLE TABLE, @PARAMS: TABLE,COND ARRAY.
 Route::post('common/getTestyRecords', 'CommonController@getTestyRecords'); // GET RECORDS WITH PAGINATION PARAMETERS.
 Route::post('common/AddEditClient', 'CommonController@addEditClient');
 
@@ -150,87 +138,31 @@ Route::post('common/AddEditClient', 'CommonController@addEditClient');
 Route::post('client/addclient', 'ClientController@addclient');
 Route::post('client/ListClient', 'ClientController@ListClient');
 Route::post('client/getClientFilterData', 'ClientController@getClientFilterData');
-Route::post('client/DeleteClient', 'ClientController@DeleteClient');
-Route::post('client/ClientContacts', 'ClientController@ClientContacts');
-Route::post('client/getContacts', 'ClientController@getContacts');
-Route::post('client/ClientAddress', 'ClientController@ClientAddress');
-Route::post('client/getAddress', 'ClientController@getAddress');
 Route::post('client/GetclientDetail','ClientController@GetclientDetail');
-Route::post('client/SaveSalesDetails', 'ClientController@SaveSalesDetails');
-Route::post('client/SaveCleintDetails', 'ClientController@SaveCleintDetails');
-Route::post('client/SaveCleintTax', 'ClientController@SaveCleintTax');
 Route::post('client/SaveClientInfo', 'ClientController@SaveClientInfo');
-Route::post('client/checkCompName', 'ClientController@checkCompName');
-Route::get('client/getDocument/{id}/{company_id}','ClientController@getDocument');
 Route::get('client/getDocumentDetailbyId/{id}/{company_id}', 'ClientController@getDocumentDetailbyId');
 Route::post('client/updateDoc', 'ClientController@updateDoc');
 Route::post('client/saveDoc', 'ClientController@saveDoc');
-Route::get('client/deleteClientDoc/{id}', 'ClientController@deleteClientDoc');
 Route::get('client/SelectionData/{id}', 'ClientController@SelectionData');
 Route::post('client/saveTaxDoc', 'ClientController@saveTaxDoc');
 Route::post('client/setin_destribution', 'ClientController@setin_destribution');
 
-
-Route::get('client/GetNoteDetails/{id}', 'ClientController@GetNoteDetails');
-Route::post('client/SaveCleintNotes', 'ClientController@SaveCleintNotes');
-Route::get('client/EditCleintNotes/{id}', 'ClientController@EditCleintNotes');
-Route::get('client/DeleteCleintNotes/{id}', 'ClientController@DeleteCleintNotes');
-Route::get('client/GetClientDetailById/{id}', 'ClientController@GetClientDetailById');
-Route::post('client/UpdateCleintNotes', 'ClientController@UpdateCleintNotes');
-Route::post('client/SaveDistAddress', 'ClientController@SaveDistAddress');
-Route::post('client/getDistAdressDetail', 'ClientController@getDistAdressDetail');
-
 //PURCHASE CONTROLLER
 Route::post('purchase/ListPurchase', 'PurchaseController@ListPurchase');
 Route::get('purchase/GetPodata/{id}/{company_id}', 'PurchaseController@GetPodata');
-Route::get('purchase/ChangeOrderStatus/{id}/{value}/{po_id}', 'PurchaseController@ChangeOrderStatus');
 Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
-Route::post('purchase/Receive_order', 'PurchaseController@Receive_order');
-Route::post('purchase/Update_shiftlock', 'PurchaseController@Update_shiftlock');
-Route::get('purchase/short_over/{id}', 'PurchaseController@short_over');
-Route::get('purchase/GetScreendata/{id}/{company_id}', 'PurchaseController@GetScreendata');
-Route::post('purchase/EditScreenLine', 'PurchaseController@EditScreenLine');
-Route::post('purchase/getPurchaseNote/{id}', 'PurchaseController@getPurchaseNote');
 Route::post('purchase/createPDF', 'PurchaseController@createPDF');
 Route::post('purchase/createPO', 'PurchaseController@createPO');
 Route::get('purchase/GetPoReceived/{id}/{company_id}', 'PurchaseController@GetPoReceived');
 
-
 // ORDER CONTROLLER 
 Route::post('order/listOrder', 'OrderController@listOrder');
-Route::post('order/deleteOrder', 'OrderController@deleteOrder');
-Route::post('order/orderAdd', 'OrderController@add');
-Route::post('order/orderEdit', 'OrderController@edit');
 Route::post('order/orderDetail', 'OrderController@orderDetail');
-Route::get('order/getOrderNoteDetails/{id}','OrderController@getOrderNoteDetails');
-Route::get('order/getOrderDetailById/{id}', 'OrderController@getOrderDetailById');
-Route::post('order/updateOrderNotes', 'OrderController@updateOrderNotes');
-Route::post('order/saveOrderNotes', 'OrderController@saveOrderNotes');
-Route::get('order/deleteOrderNotes/{id}', 'OrderController@deleteOrderNotes');
-Route::post('order/orderLineAdd', 'OrderController@orderLineadd');
-Route::post('order/orderLineUpdate', 'OrderController@orderLineUpdate');
-Route::post('order/deleteOrderLine', 'OrderController@deleteOrderLine');
-Route::post('order/saveButtonData', 'OrderController@saveButtonData');
-Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/deleteOrderCommon', 'OrderController@deleteOrderCommon');
-Route::post('order/PODetail', 'OrderController@PODetail');
-Route::post('order/updateOrderTask', 'OrderController@updateOrderTask');
-Route::post('order/updateDistributedQty', 'OrderController@updateDistributedQty');
-Route::post('order/duplicatePoData', 'OrderController@duplicatePoData');
-Route::post('order/getTaskDetails', 'OrderController@getTaskDetails');
-Route::post('order/getTaskList', 'OrderController@getTaskList');
-Route::post('order/saveColorSize', 'OrderController@saveColorSize');
 Route::get('order/getProductDetailColorSize/{id}','OrderController@getProductDetailColorSize');
-Route::post('order/savePDF', 'OrderController@savePDF');
-Route::post('order/AssignSize', 'OrderController@AssignSize');
 Route::post('order/productDetail', 'OrderController@productDetail');
-Route::post('order/updatePriceProduct', 'OrderController@updatePriceProduct');
-Route::post('order/deleteColorSize', 'OrderController@deleteColorSize');
 Route::post('order/sendEmail', 'OrderController@sendEmail');
-Route::post('order/getOrderPositionDetail', 'OrderController@getOrderPositionDetail');
-Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
-Route::post('order/orderImageDetail', 'OrderController@orderImageDetail');
 Route::post('order/addOrder', 'OrderController@addOrder');
 Route::post('order/addDesign', 'OrderController@addDesign');
 Route::post('order/designListing', 'OrderController@designListing');
@@ -258,12 +190,7 @@ Route::post('order/updateInvoicePayment', 'OrderController@updateInvoicePayment'
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
-Route::post('finishing/deleteFinishing', 'FinishingController@deleteFinishing');
 Route::post('finishing/updateFinishing', 'FinishingController@updateFinishing');
-Route::post('finishing/removeFinishingItem', 'FinishingController@removeFinishingItem');
-Route::post('finishing/addFinishingItem', 'FinishingController@addFinishingItem');
-Route::post('finishing/orderAdd', 'FinishingController@add');
-Route::post('finishing/orderEdit', 'FinishingController@edit');
 Route::post('finishing/addRemoveToFinishing', 'FinishingController@addRemoveToFinishing');
 
 // SHIPPING CONTROLLER
@@ -278,7 +205,6 @@ Route::post('shipping/addShippingItem', 'ShippingController@addShippingItem');
 Route::post('shipping/getBoxItems', 'ShippingController@getBoxItems');
 Route::post('shipping/createPDF', 'ShippingController@createPDF');
 Route::post('shipping/addRemoveAddressToPdf', 'ShippingController@addRemoveAddressToPdf');
-Route::get('shipping/addressValidate', 'ShippingController@addressValidate');
 Route::post('shipping/shipOrder', 'ShippingController@shipOrder');
 Route::post('shipping/getProductByAddress', 'ShippingController@getProductByAddress');
 Route::post('shipping/addProductToShip', 'ShippingController@addProductToShip');
@@ -350,10 +276,8 @@ Route::post('affiliate/getAffiliateDesignProduct', 'AffiliateController@getAffil
 Route::post('affiliate/affiliateCalculation', 'AffiliateController@affiliateCalculation');
 
 //DISTRIBUTION ROUTERS
-Route::post('distribution/distributionDetail', 'DistributionController@distributionDetail');
 Route::post('distribution/getDistProductAddress', 'DistributionController@getDistProductAddress');
 Route::post('distribution/addEditDistribute', 'DistributionController@addEditDistribute');
-Route::post('distribution/removeFromDistribute', 'DistributionController@removeFromDistribute');
 Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
 Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
 Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');

@@ -89,7 +89,7 @@ class Purchase extends Model {
         return $allData;
     }
 
-
+    // *****
 	function GetPodata($id,$company_id)
 	{
 		$result = DB::select("SELECT v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,cl.display_number,pg.name,vc.id as contact_id, vc.first_name,vc.last_name,v.url,po.po_id,
@@ -121,6 +121,7 @@ class Purchase extends Model {
 		
 		return $result;
 	}
+	// *****
 	function ListSgData($id)
 	{
 		$result = DB::table('purchase_list as pl')
@@ -386,6 +387,7 @@ class Purchase extends Model {
 		return $ret_array;
 	}
 
+	// *****
 	function Update_shiftlock($post)
 	{
 		$result = DB::table('purchase_order')
@@ -447,10 +449,11 @@ class Purchase extends Model {
 					->leftJoin('purchase_detail as pd','pd.id','=','pol.purchase_detail')
 					->leftJoin('order_design_position as odp','pd.design_id','=','odp.design_id')
 					->leftJoin('misc_type as mt','mt.id','=','odp.position_id')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS odp.note,mt.value,odp.description,odp.id'))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS odp.note,mt.value,odp.description,odp.id,po.po_id'))
 					->where('odp.is_delete','=','1')
 					->where('pd.is_delete','=','1')
-					->where('po.po_id','=',$post['po_id']);
+					->where('po.display_number','=',$post['display_number'])
+					->where('po.company_id','=',$post['company_id']);
 
 					if($search != '')               
                   	{

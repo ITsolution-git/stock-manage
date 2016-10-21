@@ -1030,9 +1030,9 @@ class CommonController extends Controller {
 
 
             $header = array(
-                0=>array('key' => 'mt.value', 'name' => 'Position'),
-                1=>array('key' => 'odp.note', 'name' => 'Note Name'),
-                2=>array('key' => 'odp.description', 'name' => 'Note Description')
+                array('key' => 'mt.value', 'name' => 'Position'),
+                array('key' => 'odp.note', 'name' => 'Note Name'),
+                array('key' => 'odp.description', 'name' => 'Note Description')
                 );
 
         }
