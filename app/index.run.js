@@ -6,7 +6,7 @@
         .module('fuse')
         .run(runBlock);
 
-   function runBlock($rootScope, $timeout, $state,  $resource,sessionService,notifyService,$q)
+   function runBlock($rootScope, $timeout, $state,  $resource,sessionService,$http,notifyService,$q)
     {
         // Store state in the root scope for easy access
         
@@ -27,6 +27,9 @@
             stateChangeStartEvent();
             stateChangeSuccessEvent();
         });
+        if(sessionService.get('token')){
+            $http.defaults.headers.common.Authorization = sessionService.get('token');
+        }
     }
 
 

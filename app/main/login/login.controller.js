@@ -118,6 +118,7 @@
             
             $scope.showAvgItem = true;
             $scope.showAvgAmount = false;
+            $scope.active = 1;
             $scope.showItemAvg = function(){
               $scope.showAvgItem = true;
               $scope.showAvgAmount = false;

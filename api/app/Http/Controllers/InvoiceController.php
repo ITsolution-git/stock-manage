@@ -21,7 +21,6 @@ class InvoiceController extends Controller {
 
     public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company)
     {
-        parent::__construct();
         $this->common = $common;
         $this->order = $order;
         $this->product = $product;
