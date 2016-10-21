@@ -175,7 +175,8 @@ class Purchase extends Model {
 			->select('*')
 			->where('odp.is_delete','=','1')
 			->where('pd.is_delete','=','1')
-			->where('po.po_id','=',$po_id)
+			->where('po.display_number','=',$po_id)
+			->Where('po.company_id','=',$company_id)
 			->GroupBy('odp.id')
 			->get();
 
