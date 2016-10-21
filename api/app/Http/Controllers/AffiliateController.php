@@ -278,9 +278,6 @@ class AffiliateController extends Controller {
              } else {
                 exit;
              }
-                   
-
-            
         }
 
         $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
