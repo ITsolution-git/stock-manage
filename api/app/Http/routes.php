@@ -211,26 +211,20 @@ Route::post('order/orderLineAdd', 'OrderController@orderLineadd');
 Route::post('order/orderLineUpdate', 'OrderController@orderLineUpdate');
 Route::post('order/deleteOrderLine', 'OrderController@deleteOrderLine');
 Route::post('order/saveButtonData', 'OrderController@saveButtonData');
-Route::post('order/insertPositions', 'OrderController@insertPositions'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/deleteOrderCommon', 'OrderController@deleteOrderCommon');
 Route::post('order/PODetail', 'OrderController@PODetail');
 Route::post('order/updateOrderTask', 'OrderController@updateOrderTask');
-Route::post('order/updateDistributedQty', 'OrderController@updateDistributedQty');
 Route::post('order/duplicatePoData', 'OrderController@duplicatePoData');
 Route::post('order/getTaskDetails', 'OrderController@getTaskDetails');
 Route::post('order/getTaskList', 'OrderController@getTaskList');
-Route::post('order/saveColorSize', 'OrderController@saveColorSize');
 Route::get('order/getProductDetailColorSize/{id}','OrderController@getProductDetailColorSize');
 Route::post('order/savePDF', 'OrderController@savePDF');
 Route::post('order/AssignSize', 'OrderController@AssignSize');
 Route::post('order/productDetail', 'OrderController@productDetail');
 Route::post('order/updatePriceProduct', 'OrderController@updatePriceProduct');
-Route::post('order/deleteColorSize', 'OrderController@deleteColorSize');
 Route::post('order/sendEmail', 'OrderController@sendEmail');
-Route::post('order/getOrderPositionDetail', 'OrderController@getOrderPositionDetail');
 Route::post('order/getOrderLineDetail', 'OrderController@getOrderLineDetail');
-Route::post('order/orderImageDetail', 'OrderController@orderImageDetail');
 Route::post('order/addOrder', 'OrderController@addOrder');
 Route::post('order/addDesign', 'OrderController@addDesign');
 Route::post('order/designListing', 'OrderController@designListing');
@@ -350,10 +344,8 @@ Route::post('affiliate/getAffiliateDesignProduct', 'AffiliateController@getAffil
 Route::post('affiliate/affiliateCalculation', 'AffiliateController@affiliateCalculation');
 
 //DISTRIBUTION ROUTERS
-Route::post('distribution/distributionDetail', 'DistributionController@distributionDetail');
 Route::post('distribution/getDistProductAddress', 'DistributionController@getDistProductAddress');
 Route::post('distribution/addEditDistribute', 'DistributionController@addEditDistribute');
-Route::post('distribution/removeFromDistribute', 'DistributionController@removeFromDistribute');
 Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
 Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
 Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');
