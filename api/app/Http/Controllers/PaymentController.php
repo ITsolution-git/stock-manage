@@ -28,6 +28,7 @@ class PaymentController extends Controller {
 
  	public function __construct(Order $order,Common $common,Api $api,Company $company,Invoice $invoice) 
  	{
+        parent::__construct();
         $this->order = $order;
         $this->common = $common;
         $this->api = $api;

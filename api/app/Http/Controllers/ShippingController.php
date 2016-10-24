@@ -22,6 +22,7 @@ class ShippingController extends Controller {
 
     public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order,Api $api,Company $company) 
     {
+        parent::__construct();
         $this->shipping = $shipping;
         $this->distribution = $distribution;
         $this->common = $common;
@@ -81,6 +82,8 @@ class ShippingController extends Controller {
         if(!isset($post['page']['page'])) {
              $post['page']['page']=1;
         }
+
+        $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id','yes');
 
         $post['range'] = RECORDS_PER_PAGE;
         $post['start'] = ($post['page']['page'] - 1) * $post['range'];
@@ -669,14 +672,15 @@ class ShippingController extends Controller {
             if(in_array($address->id, $allocatedAddress2))
             {
                 $shipping = $this->common->GetTableRecords('product_address_mapping',array('address_id' => $address->id,'order_id' => $post['id']),array());
-                $address->shipping_id = $shipping[0]->shipping_id;
                 $assignAddresses[] = $address;
 
-                if($post['address_id'] == $address->id)
-                {
-                    $data = $this->common->GetTableRecords('shipping',array('id'=>$address->shipping_id));
+/*                if($post['address_id'] == $address->id)
+                {*/
+                    $data = $this->common->GetTableRecords('shipping',array('id'=>$shipping[0]->shipping_id));
                     $shipping_id = $data[0]->display_number;
-                }
+                //}
+                $address->shipping_id = $shipping_id;
+
             }
             else
             {
