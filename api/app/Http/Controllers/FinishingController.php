@@ -18,6 +18,7 @@ class FinishingController extends Controller {
 
     public function __construct(Finishing $finishing, Category $category, Common $common, Order $order)
     {
+        parent::__construct();
         $this->finishing = $finishing;
         $this->category = $category;
         $this->common = $common;

@@ -27,7 +27,7 @@ class OrderController extends Controller {
 
     public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company)
     {
-        //parent::__construct();
+        parent::__construct();
         $this->order = $order;
         $this->purchase = $purchase;
         $this->common = $common;
@@ -236,40 +236,6 @@ class OrderController extends Controller {
         $result['order'][0]->purchase_orders = $purchase_orders;
         $result['order'][0]->recieve_orders = $recieve_orders;
 
-
-        //$order_items = $this->order->getOrderItemById($result['order'][0]->price_id);
-
-        /*if(!empty($order_items))
-        {
-            //$items = $this->order->getItemsByOrder($data['id']);
-            
-            foreach ($order_items as $order_item)
-            {
-                $i = 0;
-                foreach ($items as $item)
-                {
-                    if($item->item_id == $order_item->id)
-                    {
-                        $i = 1;
-                    }
-                }
-                
-                if($i == 1)
-                {
-                    $order_item->selected = '1';
-                    $result['order_item'][] = $order_item;
-                }
-                else
-                {
-                    $order_item->selected = '0';
-                    $result['order_item'][] = $order_item;
-                }
-            }
-        }
-        else
-        {
-            $result['order_item'] = array();
-        }*/
 
         if (count($result) > 0) {
             $response = array(

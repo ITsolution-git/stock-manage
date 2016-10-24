@@ -19,6 +19,7 @@ class AccountController extends Controller {
 
  	public function __construct(Account $account, Common $common, Login $login) 
  	{
+        parent::__construct();
         $this->account = $account;
         $this->common = $common;
         $this->login = $login;

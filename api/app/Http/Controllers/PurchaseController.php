@@ -22,6 +22,7 @@ class PurchaseController extends Controller {
 
     public function __construct(Purchase $purchase,Common $common,Product $product,Order $order) 
     {
+        parent::__construct();
         $this->purchase = $purchase;
         $this->product = $product;
         $this->order = $order;
