@@ -28,6 +28,7 @@ class ProductController extends Controller {
 */
     public function __construct(Product $product,Common $common,Api $api,Order $order,Shipping $shipping) {
 
+        parent::__construct();
         $this->product = $product;
         $this->common = $common;
         $this->api = $api;

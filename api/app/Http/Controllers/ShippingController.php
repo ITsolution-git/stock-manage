@@ -22,6 +22,7 @@ class ShippingController extends Controller {
 
     public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order,Api $api,Company $company) 
     {
+        parent::__construct();
         $this->shipping = $shipping;
         $this->distribution = $distribution;
         $this->common = $common;

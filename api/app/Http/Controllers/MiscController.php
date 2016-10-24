@@ -23,6 +23,7 @@ class MiscController extends Controller {
 */
     public function __construct(Misc $misc) {
 
+        parent::__construct();
         $this->misc = $misc;
        
     }

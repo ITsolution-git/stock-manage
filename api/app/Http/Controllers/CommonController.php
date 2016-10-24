@@ -26,6 +26,7 @@ class CommonController extends Controller {
 
     public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order ) 
     {
+        parent::__construct();
         $this->common = $common;
         $this->company = $company;
         $this->vendor = $vendor;
