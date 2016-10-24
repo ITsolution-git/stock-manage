@@ -18,7 +18,6 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.display_number,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total,misc_type.value as approval,o.approval_id')];
 
 
@@ -83,7 +82,7 @@ class Shipping extends Model {
                 {
                     $shipping_data = DB::table('shipping as s')
                                         ->leftJoin('orders as o', 's.order_id', '=', 'o.id')
-                                        ->select('s.id','o.date_shipped as shipping_by','o.in_hands_by')
+                                        ->select('s.id','o.date_shipped as shipping_by','o.in_hands_by','s.display_number')
                                         ->where('s.order_id','=',$shipping->id)
                                         ->get();
                     

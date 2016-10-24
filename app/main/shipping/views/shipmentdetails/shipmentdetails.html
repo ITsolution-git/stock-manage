@@ -2,7 +2,7 @@
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=60>
-              Shipping Details for Shipment #{{shipping.shipping_id}}
+              Shipping Details for Shipment #{{shipping.shipping_display_number}}
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
                             <div layout="row" flex="100" class="mb-20">
                                 <div layout="column" flex="40">
                                     <div class="global-labels">Shipping ID</div>
-                                    <div class="global-text">{{ shipping.shipping_id }}</div>
+                                    <div class="global-text">{{ shipping.shipping_display_number }}</div>
                                 </div>
                             
                                 <div layout="column" flex="30">
@@ -53,12 +53,14 @@
                                 </div>
                                 <div layout="column" flex="35" class="mrg10-R shipcustomfield">
                                     <md-input-container flex="100" class="margin-0 date-input">
-                                        <input type="text" placeholder="Shipping By" ng-model="shipping.shipping_by" disabled="">
+                                        <input ng-if="shipping.shipping_by != '0000-00-00'" type="text" placeholder="Shipping By" ng-model="shipping.shipping_by" disabled="">
+                                        <input ng-if="shipping.shipping_by == '0000-00-00'" type="text" placeholder="Shipping By" disabled="">
                                     </md-input-container>
                                 </div>
                                 <div layout="column" flex="35" class="mrg10-R shipcustomfield">
                                     <md-input-container flex="100" class="margin-0 date-input">
-                                        <input type="text" placeholder="In Hands By" ng-model="shipping.in_hands_by" disabled="">
+                                        <input ng-if="shipping.in_hands_by != '0000-00-00'" type="text" placeholder="In Hands By" ng-model="shipping.in_hands_by" disabled="">
+                                        <input ng-if="shipping.in_hands_by == '0000-00-00'" type="text" placeholder="In Hands By" disabled="">
                                     </md-input-container>
                                 </div>
                             </div>
@@ -170,7 +172,7 @@
                                     <td>
                                         <div class="layout-row pb-20">
                                             <div class="stokkup-title-h4">United Center
-                                                <span class="global-labels">Client Distribution ID: {{shipping.shipping_id}}</span>
+                                                <span class="global-labels">Client Distribution ID: {{shipping.shipping_display_number}}</span>
                                             </div>
                                         </div>
                                         <div class="tbl-scroll-cntnr" ms-scroll>
