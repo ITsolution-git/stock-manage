@@ -1,14 +1,17 @@
 
 <html>
 <head>
-<style>
-    @page { margin: 180px 50px; }
-    #header { position: fixed; left: 0px; top: -180px; right: 0px; height: 150px; background-color: orange; text-align: center; }
-    #footer { position: fixed; left: 0px; bottom: -180px; right: 0px; height: 150px; background-color: lightblue; }
-    #footer .page:after { content: counter(page, upper-roman); }
-    #header_logo{width: 120px; height:100px;}
-    
-  </style>
+<style type="text/css">
+  body{font-size:9px;}
+  .align-left{ text-align:left;}
+  .align-right{ text-align:right;}
+  .align-center{ text-align:center;}
+  .line-height{line-height:20px;}
+  .font-bold{font-weight:bold;}
+  .border-w{border:1px solid #fff; }
+  .border-b{border:1px solid #000; }
+  .diff-border{width:100%;float:left;height:1px;border-top:solid 1px #000;}
+</style>
   <title>Receive Info</title>
 </head>
 
@@ -25,9 +28,9 @@
               <tr>
                   <td>P: {{$company->prime_phone_main}}</td>
               </tr>
-              <tr>
+              <!-- <tr>
                   <td><a href="http://www.culturestdio.net">www.culturestdio.net</a></td>
-              </tr>
+              </tr> -->
           </table>
       </td>
         <td width="40%" align="center"><img id="header_logo" style="height: 100px; width: 100px;" src="{{$company->companyphoto}}" title="Culture Studio" alt="Culture Studio"></td>
@@ -53,61 +56,61 @@
     
   </table>
   <hr style="border:1px solid #000;">
-    <table style="margin-top:15px;">
-  <tr>
-      <th width="26%"><b>Product</b></th>
-      <th width="10%"><b>Size</b></th>
-      <th width="10%"><b>Color</b></th>
-      <th width="10%"><b>Orderd</b></th>
-      <th width="12%"><b>Received</b></th>
-      <th width="12%"><b>Defective</b></th>
-      <th width="10%"><b>Unit Price</b></th>
-      <th width="10%"><b>Total</b></th>
-    </tr>
-<?php foreach($receive_data as $key_main=>$value_main)
-{ ?>
-<hr style="border:1px solid #000;">
-  <?php foreach($value_main['data'] as $key=>$value)
-	{ 
-  	?>
-    <tr>
-      <td width="26%"><?php echo (!empty($value->product_name))?$value->product_name:''; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->size))?$value->size:''; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->product_color))?$value->product_color:''; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->qnty_ordered))?$value->qnty_ordered:0; ?></td>
-      <td width="12%" align="center"><?php echo (!empty($value->qnty_purchased))?$value->qnty_purchased:0; ?></td>
-      <td width="12%" align="center"><?php echo (!empty($value->short))?$value->short:0; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->unit_price))?"$".$value->unit_price:0; ?></td>
-      <td width="10%" align="center"><?php echo (!empty($value->line_total))?"$".$value->line_total:0; ?></td>
-    </tr>
-    <?php } ?>
-	<hr style="border:1px solid #000;">
-    <tr>
-    	<td >Order Total: <b><?php echo (!empty($value_main['total_product']))?$value_main['total_product']:0; ?></b></td>
-    	<td  colspan="3">Order Received: <b><?php echo (!empty($value_main['total_received']))?$value_main['total_received']:0; ?></b></td>
-    	<td  colspan="2">Order Defectives: <b><?php echo (!empty($value_main['total_defective']))?$value_main['total_defective']:0; ?></b></td>
-    	<td  colspan="2">Summary: <b><?php echo (!empty($value_main['total_remains']))?$value_main['total_remains']:0; ?></b></td>
-    </tr>
-
-<?php 
-}
-?>
-<hr style="border:1px solid #000;">
-<?php if(!empty($company->total_invoice)){ echo '<p style="float:right"> <b>Total </b> : $'.$company->total_invoice.'</p>'; } ?>
- </table>
-<!--   <hr style="border:1px solid #000;">
 
 
-  <table style="margin-top: 20px;">
-    <tr>
-      <td><b>Company Contact : {{$company->f_name}} {{$company->l_name}}</b></td>
-      <td>Job Name : {{$company->order_name}}</td>
-    </tr>
-    <tr>
-      <td>Brand Coordinator : {{Session::get('name')}}</td>
-      <td>Client PO# : {{$company->order_name}}</td>
-    </tr>
-    
-  </table> -->
+
+   <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+        <tr>
+            <th width="30%" class="align-center font-bold" height="15">Garment/Item Description</th>
+            <th width="10%" class="align-center font-bold" height="15">Size</th>
+            <th width="10%" class="align-center font-bold" height="15">Color</th>
+            <th width="10%" class="align-center font-bold" height="15">Orderd</th>
+            <th width="10%" class="align-center font-bold" height="15">Received</th>
+            <th width="10%" class="align-center font-bold" height="15">Defective</th>
+            <th width="10%"  class="align-center font-bold" height="15">Unit Price</th>
+            <th width="10%"  class="align-center font-bold" height="15">Unit Total</th>
+            
+        </tr>
+        <?php foreach($receive_data as $key_main=>$value_main)
+          {$count=1; ?>
+          <hr style="border:1px solid #000;">
+            <?php foreach($value_main['data'] as $key=>$value)
+            { 
+              if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} 
+              ?>
+              <tr style="background-color:<?php echo $color_bg; ?>;" >
+                  <td height="20" class="align-center line-height border-b" >&nbsp;<?php echo (!empty($value->product_name))?$value->product_name:''; ?></td>
+                  <td height="20" class="align-center line-height border-b">&nbsp;<?php echo (!empty($value->size))?$value->size:''; ?></td>
+                  <td height="20" class="align-center line-height border-b">&nbsp;<?php echo (!empty($value->product_color))?$value->product_color:''; ?></td>
+                  <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->qnty_ordered))?$value->qnty_ordered:0; ?></td>
+                  <td height="20" class="align-center  line-height border-b" ><?php echo (!empty($value->qnty_purchased))?$value->qnty_purchased:0; ?></td>
+                  <td height="20" class="align-center  line-height border-b" ><?php echo (!empty($value->short))?$value->short:0; ?></td>
+                  <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->unit_price))?"$".$value->unit_price:0; ?></td>
+                  <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->line_total))?"$".$value->line_total:0; ?></td>
+                  
+              </tr>
+            <?php $count++; } ?>
+            <hr style="border:1px solid #000;">
+              <tr>
+                <td><b>Order Total: <?php echo (!empty($value_main['total_product']))?$value_main['total_product']:0; ?></b></td>
+                <td colspan="3"><b>Order Received: <?php echo (!empty($value_main['total_received']))?$value_main['total_received']:0; ?></b></td>
+                <td colspan="2"><b>Order Defectives: <?php echo (!empty($value_main['total_defective']))?$value_main['total_defective']:0; ?></b></td>
+                <td colspan="2"><b>Summary: <?php echo (!empty($value_main['total_remains']))?$value_main['total_remains']:0; ?></b></td>
+              </tr>
+
+          <?php 
+          }
+          ?>
+
+            <hr style="border:1px solid #000;">
+        <tr><td colspan="8"></td></tr>
+        <tr>
+          <td class="align-right font-bold line-height" colspan="7" style=" border-right:1px solid #000;">Total&nbsp;&nbsp;</td>
+          <td class="align-left border-b line-height">&nbsp;&nbsp;<?php if(!empty($company->total_invoice)){ echo $company->total_invoice; } ?></td>
+        </tr>
+       
+  </table>
+
+
 </body>
 </html>
