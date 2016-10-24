@@ -154,6 +154,7 @@ Route::post('purchase/EditOrderLine', 'PurchaseController@EditOrderLine');
 Route::post('purchase/createPDF', 'PurchaseController@createPDF');
 Route::post('purchase/createPO', 'PurchaseController@createPO');
 Route::get('purchase/GetPoReceived/{id}/{company_id}', 'PurchaseController@GetPoReceived');
+Route::post('purchase/purchasePDF', 'PurchaseController@purchasePDF');
 
 // ORDER CONTROLLER 
 Route::post('order/listOrder', 'OrderController@listOrder');

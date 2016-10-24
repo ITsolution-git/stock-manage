@@ -8,6 +8,7 @@ use App\Api;
 use App\Order;
 use Response;
 use DB;
+use Input;
 use App;
 use App\Common;
 
@@ -19,6 +20,7 @@ abstract class Controller extends BaseController {
     	$common = new Common();
     	$this->common = $common;
         $headers = Request::header('Authorization');
+<<<<<<< HEAD
 		if (!empty($headers)){
 			$token_data = $this->common->GetTableRecords('login_token',array('token' => $headers),array(),0,0,'token');
 			if (empty($token_data)) {
@@ -31,6 +33,25 @@ abstract class Controller extends BaseController {
             	$message = "Invalid Token";
           		$data = json_encode(array("data"=>["success"=>0,'message' =>$message]));
           		print_r($data);exit;
+=======
+
+        $post = Input::all();
+
+        if(empty($post['pdf_token']))
+        {
+			if (!empty($headers) )
+			{
+				$token_data = $this->common->GetTableRecords('login_token',array('token' => $headers),array(),0,0,'token');
+				if (empty($token_data)) 
+				{
+					echo json_encode(['message' => 'Not valid token']); exit;
+				}
+			}
+			else
+			{
+					echo json_encode(['message' => 'Not valid token']); exit;
+			}
+>>>>>>> 824ae8348cddda06dbf5a7d026e1cbac244284af
 		}
     }
 }

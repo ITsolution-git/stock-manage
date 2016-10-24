@@ -139,11 +139,13 @@ class Purchase extends Model {
 					->JOIN('order_design as od','od.id','=','pd.design_id')
 					->JOIN('orders as ord','od.order_id','=','ord.id')
 					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
+					->JOIN('users as usr','usr.id','=','ord.company_id')
+					->JOIN('staff as stf','stf.user_id','=','usr.id')
 				    ->JOIN('products as p','p.id','=','pd.product_id')
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.billing_email','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.custom_po','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
                       DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
                       DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
@@ -163,6 +165,7 @@ class Purchase extends Model {
 			foreach ($result as $key=>$value) 
           	{
 	            $result[$key]->po_type =$check_array[$value->po_type] ;
+	            $result[$key]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
           	}
 			array_walk_recursive($result[0], function(&$item) {
 	            $item = str_replace(array('00/00/0000'),array(''), $item);
@@ -175,7 +178,8 @@ class Purchase extends Model {
 			->select('*')
 			->where('odp.is_delete','=','1')
 			->where('pd.is_delete','=','1')
-			->where('po.po_id','=',$po_id)
+			->where('po.display_number','=',$po_id)
+			->Where('po.company_id','=',$company_id)
 			->GroupBy('odp.id')
 			->get();
 
@@ -243,9 +247,9 @@ class Purchase extends Model {
 		if(count($value)>0)
 		{	
 			$sum = 	$value[0]->total + $value[0]->vendor_charge; 
-	   		$result = DB::table('purchase_order')
-	   						->where('po_id','=',$po_id)
-	   						->update(array('order_total'=>$sum));
+	   		$result = DB::table('purchase_order as po')
+	   						->where($where)
+	   						->update(array('po.order_total'=>$sum));
 	    	return $result;
     	}
 	}

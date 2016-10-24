@@ -415,4 +415,59 @@ class PurchaseController extends Controller {
         }
 
     }
+     public function PurchasePDF()
+    {
+        
+        $pdf_array= json_decode($_POST['purchase']);
+        
+        if(count($pdf_array)>0)
+        {
+            $order_total='';
+            $pdf_data = $this->purchase->GetPoLinedata($pdf_array->po_id,$pdf_array->company_id);
+            
+            if(count($pdf_data)>0)
+            {
+                $order_total = $this->purchase->getOrdarTotal($pdf_array->po_id,$pdf_array->company_id);
+                $email_array = explode(",",$pdf_array->email);
+                $pass_array = array('company'=>$pdf_data['0'],'po_data'=>$pdf_data,'order_total'=>$order_total);
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.purchasepo',$pass_array)->render());
+                PDF::Output("PurchaseOrder.pdf");
+                
+                //PDF::AddPage('P','A4');
+                //PDF::writeHTML(view('pdf.api_label',$shipping)->render());
+                //PDF::Output('api_label.pdf');
+
+                if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
+                {
+                    $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
+                    if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                    else { exec("chmod $file_path 0777"); }
+                    $pdf_url = "PurchaseOrder-".$pdf_array->po_id.".pdf"; 
+                    $filename = $file_path."/". $pdf_url;
+
+                    Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
+                    {
+                        $message->to($email_array);
+                        $message->subject('Purchase order, for the Order '.$pdf_data['0']->order_name);
+                        $message->attach($filename);
+                    });
+                }
+
+                //return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Sorry, No Products available for this Purchase.");
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
 }
