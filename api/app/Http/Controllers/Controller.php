@@ -20,38 +20,23 @@ abstract class Controller extends BaseController {
     	$common = new Common();
     	$this->common = $common;
         $headers = Request::header('Authorization');
-<<<<<<< HEAD
-		if (!empty($headers)){
-			$token_data = $this->common->GetTableRecords('login_token',array('token' => $headers),array(),0,0,'token');
-			if (empty($token_data)) {
-				$message = "Invalid Token";
-          		$data = json_encode(array("data"=>["success"=>0,'message' =>$message]));
-          		print_r($data);exit;
-			}
-		}else{
-				$data = array("success"=>0,'message' =>'Invalid Token');
-            	$message = "Invalid Token";
-          		$data = json_encode(array("data"=>["success"=>0,'message' =>$message]));
-          		print_r($data);exit;
-=======
-
         $post = Input::all();
 
         if(empty($post['pdf_token']))
         {
-			if (!empty($headers) )
-			{
+			if (!empty($headers)){
 				$token_data = $this->common->GetTableRecords('login_token',array('token' => $headers),array(),0,0,'token');
-				if (empty($token_data)) 
-				{
-					echo json_encode(['message' => 'Not valid token']); exit;
+				if (empty($token_data)) {
+					$message = "Invalid Token";
+	          		$data = json_encode(array("data"=>["success"=>0,'message' =>$message]));
+	          		print_r($data);exit;
 				}
-			}
-			else
-			{
-					echo json_encode(['message' => 'Not valid token']); exit;
-			}
->>>>>>> 824ae8348cddda06dbf5a7d026e1cbac244284af
-		}
+			}else{
+					$data = array("success"=>0,'message' =>'Invalid Token');
+	            	$message = "Invalid Token";
+	          		$data = json_encode(array("data"=>["success"=>0,'message' =>$message]));
+	          		print_r($data);exit;
+	        }
+     	}        
     }
 }
