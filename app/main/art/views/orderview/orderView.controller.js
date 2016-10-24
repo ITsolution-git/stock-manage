@@ -331,6 +331,11 @@
                         input_screenset.setAttribute('value', JSON.stringify(pass_array));
                         form.appendChild(input_screenset);
 
+                        var input_pdf = document.createElement('input');
+                        input_pdf.name = 'pdf_token';
+                        input_pdf.setAttribute('value', 'pdf_token');
+                        form.appendChild(input_pdf);
+
                         document.body.appendChild(form);
                         form.submit();  
 
