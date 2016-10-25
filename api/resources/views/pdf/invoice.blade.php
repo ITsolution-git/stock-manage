@@ -74,16 +74,13 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                         <td width="48%" style="vertical-align:middle;  border-radius:20px; position:relative; height:100px;">
                         	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         		<tr style="align:left;position:fixed;float:left;margin:0;padding:0;" border="0" cellspacing="0" cellpadding="0">
-                        			<td width="15%"><img src="{{SITE_HOST}}/assets/images/etc/bill.png"  title="" alt="" height="100"></td>
-                        			<td width="85%" valign="middle" style="border:1px solid #000;border-left:solid 0px #fff;width:80%; height:100px; font-size:10px;">
+                        			<td width="21"><img src="{{SITE_HOST}}/assets/images/etc/pdf-bill.png"  title="" alt="" ></td>
+                        			<td width="95%" valign="middle" style="border:1px solid #666; font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
-                        						<td height="15">&nbsp;</td>
+                        						<td height="5">&nbsp;</td>
                         					</tr>
                         					<tr><td><?php if(!empty($client_data)){?>{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}<?php } ?><br>@foreach ($addresses['result'] as $address)<?php if($address->address_billing == '1') {?>{{$address->address}}<br>{{$address->street}}<br>{{$address->city}}<br>{{$address->state_name}}<br>{{$address->postal_code}}<?php } ?>@endforeach</td></tr>
-                        					<tr>
-                        						<td height="15">&nbsp;</td>
-                        					</tr>
                         				</table>
                         			</td>
                         		</tr>
@@ -93,16 +90,14 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                         <td width="48%" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
                         	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         		<tr>
-                        			<td width="15%"><img src="{{SITE_HOST}}/assets/images/etc/ship.png"   title="" alt="" height="100"></td>
-                        			<td width="85%" valign="middle" style="border:1px solid #000;border-left:solid 0px #fff;height:100px; font-size:10px;">
+                        			<td width="21"><img src="{{SITE_HOST}}/assets/images/etc/pdf-ship.png"   title="" alt=""></td>
+                        			<td width="95%" valign="middle" style="border:1px solid #666;font-size:10px;">
                         				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                         					<tr>
-                        						<td height="15">&nbsp;</td>
+                        						<td height="5">&nbsp;</td>
                         					</tr>
                         					<tr><td><?php if(!empty($client_data)){?>{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}<?php } ?><br>@foreach ($addresses['result'] as $address)<?php if($address->address_shipping == '1') {?>{{$address->address}}<br>{{$address->street}}<br>{{$address->city}}<br>{{$address->state_name}}<br>{{$address->postal_code}}<?php } ?>@endforeach</td></tr>
-                        					<tr>
-                        						<td height="15">&nbsp;</td>
-                        					</tr>
+                        					
                         				</table>
                         			</td>
                         		</tr>
