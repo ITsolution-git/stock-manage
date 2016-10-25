@@ -132,7 +132,7 @@ class Login extends Model {
     }
     public function change_password($string,$email,$password)
     {
-        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s')));
+        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s'),'reset_password'=>'0'));
         $reset_password = DB::table('reset_password')->where('string','=',$string)->update(array('status'=>1));
         return 1;
     }
