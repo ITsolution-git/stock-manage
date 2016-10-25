@@ -47,9 +47,9 @@ class Login extends Model {
     * @access public loginRecordUpdate
     * @param  $loginid
     */
-    public function loginRecordUpdate($loginid)
+    public function loginRecordUpdate($token)
     {
-        $result = DB::table('login_record')->where('login_id','=',$loginid)->update(array('logout_time'=>date('Y-m-d H:i:s')));
+        $result = DB::table('login_token')->where('token','=',$token)->delete();
     }
      /**
     * Forgot password          

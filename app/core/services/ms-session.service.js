@@ -38,21 +38,29 @@
 						method : 'get'
 					}
 				});
-			logout.post(null, function(response) {
-				notifyService.notify('success',response.data.message);				
-				remove('useremail');
-                remove('role_slug');
-                remove('login_id');
-                remove('name');
-                remove('user_id');
-                remove('role_title');
-                remove('username');
-                remove('password');
-                remove('company_id');
-                remove('company');
-                remove('profile_photo');
-                remove('token');
-                $state.go('app.login');
+			logout.post(null, function(response) 
+			{
+				if(response.data.success=='1')
+	            { 
+					notifyService.notify('success',response.data.message);				
+					remove('useremail');
+	                remove('role_slug');
+	                remove('login_id');
+	                remove('name');
+	                remove('user_id');
+	                remove('role_title');
+	                remove('username');
+	                remove('password');
+	                remove('company_id');
+	                remove('company');
+	                remove('profile_photo');
+	                remove('token');
+	                $state.go('app.login');
+	            }
+	            else
+	            {
+	            	notifyService.notify('error',response.data.message);	
+	            }
 			},function(response) {
 				notifyService.notify('error',response.data.message);
 			});
