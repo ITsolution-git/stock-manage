@@ -38,21 +38,29 @@
 						method : 'get'
 					}
 				});
-			logout.post(null, function(response) {
-				notifyService.notify('success',response.data.message);				
-				remove('useremail');
-                remove('role_slug');
-                remove('login_id');
-                remove('name');
-                remove('user_id');
-                remove('role_title');
-                remove('username');
-                remove('password');
-                remove('company_id');
-                remove('company');
-                remove('profile_photo');
-                remove('token');
-                $state.go('app.login');
+			logout.post(null, function(response) 
+			{
+				if(response.data.success=='1')
+	            { 
+					notifyService.notify('success',response.data.message);				
+					remove('useremail');
+	                remove('role_slug');
+	                remove('login_id');
+	                remove('name');
+	                remove('user_id');
+	                remove('role_title');
+	                remove('username');
+	                remove('password');
+	                remove('company_id');
+	                remove('company');
+	                remove('profile_photo');
+	                remove('token');
+	                $state.go('app.login');
+	            }
+	            else
+	            {
+	            	notifyService.notify('error',response.data.message);	
+	            }
 			},function(response) {
 				notifyService.notify('error',response.data.message);
 			});
@@ -150,12 +158,12 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['invoices','purchaseOrder','customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid','settings.approvals'];
+				var ret_array = ['customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid','settings.approvals'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
 			{
-				var ret_array = ['invoices','purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals'];
+				var ret_array = ['purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals'];
 				hide_menu(ret_array);
 			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
@@ -172,7 +180,7 @@
 		function Module_menu_hide(arr_role,access)
 		{
 			var role = get('role_slug');
-			console.log(access);
+			//console.log(access);
 			if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) || access=="true" )) // PERMISSION ALLOW
             {
                 return false;

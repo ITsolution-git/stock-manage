@@ -2011,3 +2011,61 @@ md-dialog.task-dialog md-input-container textarea{
 .filter-btn-txt{
 	font-size:12px !important;
 }
+
+/*MIsc page scss */
+.misc-main-block{
+	width:$full-width;
+	padding:20px;
+}
+ul.misc-left-pane{
+	margin:$zero;
+	padding:$zero;
+	list-style-type:$nofloat;
+	display:$block;
+	max-height:68vh;
+	overflow-y:scroll;
+	li{
+		width:$full-width;
+		padding:$zero;
+		list-style-type:$nofloat;
+		display:$block;
+		a{
+			width:$full-width;
+			float:$left;
+			font-size:$popup-heading-font-size;
+			color:$stokkup-table-footer-txtcolor;
+			padding:15px;
+			border-bottom:solid 1px $pagination-border-color;
+			@extend .ease-animations;
+			&:hover, &:focus, &.active{
+				background-color:$datatable-bg;
+				@extend .ease-animations;
+				width:$full-width;
+			}
+		}
+	}
+}
+.misc-right-pane{
+	width:$full-width;
+	float:$left;
+	padding:20px;
+}
+.misc-linkbox{
+	width:50%;
+	float:$left;
+	.editable-input{
+		height: 35px;
+		border-radius: 5px;
+		border: 1px solid #ccc;
+		padding: 6px 12px;
+		}
+}
+.editable-click, a.editable-click{
+	border-bottom:solid 1px $blue-shade3 !important;
+	@extend .ease-animations;
+	
+}
+a.editable-click:hover, a.editable-click:focus{
+	border-bottom:solid 1px $stokkup-table-footer-txtcolor !important;
+	@extend .ease-animations;
+}

@@ -165,23 +165,19 @@ class LoginController extends Controller {
      *
      * @return Response
      */
-    public function logout() {
-
-       // if(!empty($token))
-       // {
-            if (!empty(Session::get("login_id"))) 
-            {
-                $loginid =Session::get("login_id");
-                $this->login->loginRecordUpdate($loginid);
-            }
-           // DB::table('login_token')->where('token','=',$token)->delete();
+    public function logout() 
+    {
+        if (!empty(Request::header('Authorization'))) 
+        {
+            $headers = Request::header('Authorization');
+            $this->login->loginRecordUpdate($headers);
             Session::flush(); 
             $response = array('success' => 1, 'message' => "Logout successfully.");
-/*        }
+        }
         else
         {
-            $response = array('success' => 0, 'message' => MISSING_PARAMS."- Token");
-        }*/
+            $response = array('success' => 0, 'message' => "Invalid Token");
+        }
         return response()->json(["data" => $response]);
     }
 
