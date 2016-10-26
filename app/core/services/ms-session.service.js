@@ -158,12 +158,12 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['invoices','purchaseOrder','customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid','settings.approvals'];
+				var ret_array = ['customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid','settings.approvals'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
 			{
-				var ret_array = ['invoices','purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals'];
+				var ret_array = ['purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals'];
 				hide_menu(ret_array);
 			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
@@ -180,7 +180,7 @@
 		function Module_menu_hide(arr_role,access)
 		{
 			var role = get('role_slug');
-			console.log(access);
+			//console.log(access);
 			if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) || access=="true" )) // PERMISSION ALLOW
             {
                 return false;

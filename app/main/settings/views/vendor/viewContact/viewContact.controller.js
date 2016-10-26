@@ -16,13 +16,13 @@
          $scope.v_id = $stateParams.id;
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU'  || $scope.role_slug=='AT' )
         {
             $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
         }
         else
         {
-            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+            $scope.allow_access = 1; // CAN BE EDIT BY ANYONE
         }
 
         /* STATE DATA*/   
