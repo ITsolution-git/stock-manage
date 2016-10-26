@@ -7,7 +7,7 @@
 /*All color variables ends here */
 /*global variables ends here */
 /*genera css */
-.ease-animations, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover {
+.ease-animations, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover, ul.misc-left-pane li a, ul.misc-left-pane li a:hover, ul.misc-left-pane li a:focus, ul.misc-left-pane li a.active, .editable-click, a.editable-click, a.editable-click:hover, a.editable-click:focus {
   -moz-transition: all ease-in-out 0.2s;
   -webkit-transition: all ease-in-out 0.2s;
   -ms-transition: all ease-in-out 0.2s;
@@ -1601,5 +1601,53 @@ md-dialog.task-dialog md-input-container textarea {
     right: 20px; } }
 .filter-btn-txt {
   font-size: 12px !important; }
+
+/*MIsc page scss */
+.misc-main-block {
+  width: 100%;
+  padding: 20px; }
+
+ul.misc-left-pane {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: block;
+  max-height: 68vh;
+  overflow-y: scroll; }
+  ul.misc-left-pane li {
+    width: 100%;
+    padding: 0;
+    list-style-type: none;
+    display: block; }
+    ul.misc-left-pane li a {
+      width: 100%;
+      float: left;
+      font-size: 16px;
+      color: #252932;
+      padding: 15px;
+      border-bottom: solid 1px #ccc; }
+      ul.misc-left-pane li a:hover, ul.misc-left-pane li a:focus, ul.misc-left-pane li a.active {
+        background-color: #f6f7f8;
+        width: 100%; }
+
+.misc-right-pane {
+  width: 100%;
+  float: left;
+  padding: 20px; }
+
+.misc-linkbox {
+  width: 50%;
+  float: left; }
+  .misc-linkbox .editable-input {
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 6px 12px; }
+
+.editable-click, a.editable-click {
+  border-bottom: solid 1px #4773d6 !important; }
+
+a.editable-click:hover, a.editable-click:focus {
+  border-bottom: solid 1px #252932 !important; }
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
