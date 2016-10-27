@@ -24,6 +24,7 @@ class VendorController extends Controller {
 */
     public function __construct(Vendor $vendor,Common $common) {
 
+        parent::__construct();
         $this->vendor = $vendor;
         $this->common = $common;
        

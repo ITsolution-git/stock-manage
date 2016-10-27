@@ -14,9 +14,10 @@ use Request;
 class CompanyController extends Controller {
 	public function __construct(Company $company, Common $common)
 	{
-$this->company = $company;
-$this->common = $common;
-}
+		parent::__construct();
+		$this->company = $company;
+		$this->common = $common;
+	}
 /**
 * Get All account list data
 *

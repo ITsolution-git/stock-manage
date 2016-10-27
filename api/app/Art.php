@@ -267,7 +267,7 @@ class Art extends Model {
     public function GetscreenColor($screen_id,$company_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.display_number as order_display','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.display_number','cl.client_id','cl.client_company','ass.screen_set','ass.display_number as screen_display','ass.id as screen_id','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*','mt.value as ink_value')
+				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.display_number as order_display','or.id as order_id',DB::raw('DATE_FORMAT(or.created_date, "%m/%d/%Y") as created_date'),'cc.first_name','cc.last_name','cl.display_number','cl.client_id','cl.client_company','ass.screen_set','ass.display_number as screen_display','ass.id as screen_id','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*','mt.value as ink_value')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')

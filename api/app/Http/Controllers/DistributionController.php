@@ -20,6 +20,7 @@ class DistributionController extends Controller {
 
     public function __construct(Order $order,Common $common,Product $product, Distribution $distribution)
     {
+        parent::__construct();
         $this->order = $order;
         $this->common = $common;
         $this->product = $product;

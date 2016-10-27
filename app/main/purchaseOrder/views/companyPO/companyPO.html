@@ -64,19 +64,25 @@
                         </md-menu>
                     </div>
                 </md-card>
+                    
                     </div>
                 </div>
             
                 <div class="pull-left ml-20 po-right-approve-box">
                     <div class="">
-                <div class="title box-title m-b-20"><span class="stokkup-title-h4">Order Status</span></div>
-                <div class="full-box md-default-theme white-bg layout-padding">
-                    <div flex="25" layout="column" class="trans-box">
-                        <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="po-selectbox select-width stokkup-select-box1" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
-                            <md-option ng-selected="po_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
-                        </md-select>
-                    </div>
-                </div>
+                        <div class="title box-title m-b-20"><span class="stokkup-title-h4">Order Status</span></div>
+                        <div class="full-box md-default-theme white-bg layout-padding">
+                            <div flex="25" layout="column" class="trans-box">
+                                <md-select aria-label="status" ng-model="po_data.approval_id" flex="100"  class="po-selectbox select-width stokkup-select-box1" ng-change="updateOrderStatus('approval_id',po_data.approval_id,po_data.order_id)" >
+                                    <md-option ng-selected="po_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                </md-select>
+                            </div>
+                        </div>
+                        <div class="full-box md-default-theme white-bg layout-padding">
+                            <div flex="50" layout="column" >
+                                <a href="javascript:;" ng-click="openClientEmailPopup()" class="pull-right stokkup-custom-btn1 stokkup-blue-btn text-white">Create PDF</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -156,7 +162,7 @@
                     Notes
                 </md-card-title-text>
                 <div>
-                    <a class="common-header-links" ui-sref="app.purchaseOrder.viewNote({id:po_id})" >VIEW NOTES</a>
+                    <a class="common-header-links" ui-sref="app.purchaseOrder.viewNote({id:po_data.po_display})" >VIEW NOTES</a>
                 </div>
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height">

@@ -60,8 +60,27 @@ class Invoice extends Model {
         
     }
 
-    public function getInvoiceHistory($post,$invoice_id){
+    public function getInvoiceTotal($order_id){
+        $retArray = DB::table('payment_history as p')
+            ->select(DB::raw('SUM(p.payment_amount) as totalAmount'), 'o.grand_total')
+            ->leftJoin('orders as o','o.id','=','p.order_id')
+            ->where('p.order_id','=',$order_id)
+            ->where('p.is_delete','=',1)
+            ->get();
+        return $retArray;
+    }
 
+    public function getInvoiceClient($order_id){
+        $retArray = DB::table('orders as o')
+            ->select('c.client_company', 'c.client_id', 'c.billing_email')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->where('o.id','=',$order_id)
+            ->where('o.is_delete','=','1')
+            ->get();
+        return $retArray;
+    }
+
+    public function getInvoiceHistory($post,$invoice_id){
         $retArray = DB::table('payment_history as ph')
             ->select('ph.payment_id', 'ph.payment_amount', 'ph.payment_date', 'ph.payment_method')
             ->leftJoin('orders as o','o.id','=','ph.order_id')
@@ -70,6 +89,38 @@ class Invoice extends Model {
             ->where('ph.is_delete','=',1)
             ->get();
 
+        return $retArray;
+    }
+
+    public function getTransactionDetail($payment_id){
+        $retArray = DB::table('payment_history')
+            ->select('payment_card', 'payment_amount', 'authorized_TransId', 'payment_date', 'authorized_AuthCode')
+            ->where('payment_id','=',$payment_id)
+            ->where('is_delete','=','1')
+            ->get();
+        return $retArray;
+    }
+
+    public function getLinkToPayDetail($token){
+        $retArray = DB::table('link_to_pay as lp')
+            ->select('lp.session_link', 'lp.ltp_id', 'lp.created_date', 'o.balance_due', 'lp.order_id', 'u.id as company_id', 'i.id as invoice_id', 'i.payment_terms')
+            ->leftJoin('orders as o','o.id','=',"lp.order_id")
+            ->leftJoin('invoice as i','i.order_id','=',"o.id")
+            ->leftJoin('client as c','c.client_id','=',"o.client_id")
+            ->leftJoin('users as u','u.id','=',"c.company_id")
+            ->where('lp.session_link','=',$token)
+            ->where('lp.payment_flag','=','0')
+            ->get();
+        return $retArray;
+    }
+
+    public function getOrderSalesAccount($order_id){
+        $retArray = DB::table('orders as o')
+            ->select('s.sales_name', 's.sales_email' , 's.sales_phone', 's.sales_web', 'u.name' , 'u.email' , 'u.phone')
+            ->leftJoin('sales as s','s.id','=', 'o.sales_id')
+            ->leftJoin('users as u','u.id','=', 'o.account_manager_id')
+            ->where('o.id','=',$order_id)
+            ->get();
         return $retArray;
     }
 

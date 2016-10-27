@@ -26,6 +26,7 @@ class CommonController extends Controller {
 
     public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order ) 
     {
+        parent::__construct();
         $this->common = $common;
         $this->company = $company;
         $this->vendor = $vendor;
@@ -1030,9 +1031,9 @@ class CommonController extends Controller {
 
 
             $header = array(
-                0=>array('key' => 'mt.value', 'name' => 'Position'),
-                1=>array('key' => 'odp.note', 'name' => 'Note Name'),
-                2=>array('key' => 'odp.description', 'name' => 'Note Description')
+                array('key' => 'mt.value', 'name' => 'Position'),
+                array('key' => 'odp.note', 'name' => 'Note Name'),
+                array('key' => 'odp.description', 'name' => 'Note Description')
                 );
 
         }

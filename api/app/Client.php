@@ -351,7 +351,7 @@ class Client extends Model {
    {
    		$result = DB::table('orders as ord')
    					->leftJoin('misc_type as mt','mt.id','=','ord.approval_id')
-   					->select('mt.value','ord.id','ord.client_id','ord.name','ord.approval_id',DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'))
+   					->select('mt.value','ord.id','ord.display_number','ord.client_id','ord.name','ord.approval_id',DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'))
    					->where('ord.client_id','=',$id)
    					->where('ord.is_delete','=','1')
    					->get();

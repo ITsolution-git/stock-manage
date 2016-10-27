@@ -19,6 +19,7 @@ class ArtController extends Controller {
 
     public function __construct(Art $art,Common $common) 
     {
+        parent::__construct();
         $this->art = $art;
         $this->common = $common;
     }

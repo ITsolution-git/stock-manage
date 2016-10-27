@@ -56,6 +56,10 @@
                         <md-icon md-font-icon="icon-logout" class="icon"></md-icon>
                         <md-button ng-click="vm.logout()">Logout</md-button>
                     </md-menu-item>
+                    <md-menu-item class="md-indent" ng-if = "oldLoginId != user_id && oldLoginId!='0'">
+                        <md-icon md-font-icon="icon-logout" class="icon"></md-icon>
+                        <md-button ng-click="vm.backToCompanyLogin()">Back To Company Admin</md-button>
+                    </md-menu-item>
                 </md-menu-content>
             </md-menu>
         </md-menu-bar>

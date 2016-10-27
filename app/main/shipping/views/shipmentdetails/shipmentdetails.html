@@ -2,7 +2,7 @@
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=60>
-              Shipping Details for Shipment #{{shipping.shipping_id}}
+              Shipping Details for Shipment #{{shipping.shipping_display_number}}
             </div>
         </div>
     </div>
@@ -21,7 +21,7 @@
                             <div layout="row" flex="100" class="mb-20">
                                 <div layout="column" flex="40">
                                     <div class="global-labels">Shipping ID</div>
-                                    <div class="global-text">{{ shipping.shipping_id }}</div>
+                                    <div class="global-text">{{ shipping.shipping_display_number }}</div>
                                 </div>
                             
                                 <div layout="column" flex="30">
@@ -51,19 +51,35 @@
                                         <md-option ng-selected="shipping.boxing_type==1" value="1">Standard</md-option>
                                     </md-select>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
+                                <div layout="column" flex="35" class="mrg10-R shipcustomfield">
                                     <md-input-container flex="100" class="margin-0 date-input">
-                                        <input type="text" placeholder="Shipping By" ng-model="shipping.shipping_by" disabled="">
+                                        <input ng-if="shipping.shipping_by != '0000-00-00'" type="text" placeholder="Shipping By" ng-model="shipping.shipping_by" disabled="">
+                                        <input ng-if="shipping.shipping_by == '0000-00-00'" type="text" placeholder="Shipping By" disabled="">
                                     </md-input-container>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
+                                <div layout="column" flex="35" class="mrg10-R shipcustomfield">
                                     <md-input-container flex="100" class="margin-0 date-input">
-                                        <input type="text" placeholder="In Hands By" ng-model="shipping.in_hands_by" disabled="">
+                                        <input ng-if="shipping.in_hands_by != '0000-00-00'" type="text" placeholder="In Hands By" ng-model="shipping.in_hands_by" disabled="">
+                                        <input ng-if="shipping.in_hands_by == '0000-00-00'" type="text" placeholder="In Hands By" disabled="">
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mt-20 mb-20">
+                                <div layout="column" flex="50" class="mrg10-R">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                    <span class="mb-20">Date Shipped</span>
+                                        <input aria-label="Date Shipped" class="mt-10" kendo-date-picker ng-model="shipping.date_shipped" k-ng-model="dateObject3" ui-event="{ change : 'UpdateShippingDate(\'date_shipped\',shipping.date_shipped,shipping.shipping_id)' }"/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="50" class="mrg10-R">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                    <span class="mb-20">Fully Shipped</span>
+                                        <input aria-label="Fully Shipped" class="mt-10" kendo-date-picker ng-model="shipping.fully_shipped" k-ng-model="dateObject4" ui-event="{ change : 'UpdateShippingDate(\'fully_shipped\',shipping.fully_shipped,shipping.shipping_id)' }"/>
                                     </md-input-container>
                                 </div>
                             </div>
                             <div layout="row" flex="100" class="mt-20">
-                                <div layout="column" flex="30" class="mrg10-R">
+                                <div layout="column" flex="100" class="mrg10-R">
                                     <md-select ng-model="shipping.shipping_type_id" placeholder="Shipping Type" class="mt-2 mb-0" name="shipping_type_id" ng-change="updateShippingAll('shipping_type_id',shipping.shipping_type_id,shipping.shipping_id)">
                                         <md-option>Shipping Type</md-option>
                                         <md-option value="1" ng-selected="shipping.shipping_type_id == 1">UPS</md-option>
@@ -71,19 +87,10 @@
                                         <md-option value="3" ng-selected="shipping.shipping_type_id == 3">Local Messenger</md-option>
                                     </md-select>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100" class="margin-0 date-input">
-                                        <input placeholder="Date Shipped" kendo-date-picker ng-model="shipping.date_shipped" k-ng-model="dateObject3" ui-event="{ change : 'UpdateShippingDate(\'date_shipped\',shipping.date_shipped,shipping.shipping_id)' }"/>
-                                    </md-input-container>
-                                </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100" class="margin-0 date-input">
-                                        <input placeholder="Fully Shipped" kendo-date-picker ng-model="shipping.fully_shipped" k-ng-model="dateObject4" ui-event="{ change : 'UpdateShippingDate(\'fully_shipped\',shipping.fully_shipped,shipping.shipping_id)' }"/>
-                                    </md-input-container>
-                                </div>
+                                
                             </div>
 
-
+                            
                             <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="50" class="mrg10-R pull-left" ng-show="shipping.shipping_type_id == 1">
                                     <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="mt-2 mb-0" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
@@ -119,19 +126,19 @@
                                 </div>
 
                                 <div layout="column" flex="50" class="pull-right">
-                                    <md-select ng-model="shipping.shipping_status" placeholder="Shipping Type" class="pull-right mb-0 mt-2" name="shipping_status" ng-change="updateShippingAll('shipping_status',shipping.shipping_status,shipping.shipping_id)">
-                                        <md-option>Shipping Status</md-option>
-                                        <md-option value="1" ng-selected="shipping.shipping_status == 1">Waiting To Ship</md-option>
-                                        <md-option value="2" ng-selected="shipping.shipping_status == 2">Order In Process</md-option>
-                                        <md-option value="3" ng-selected="shipping.shipping_status == 3">Shipped</md-option>
-                                    </md-select>
+                                    <div layout="column" flex="100">
+                                    <div class="global-labels">Shipping Status</div>
+                                    <div ng-if="shipping.shipping_status == 1" class="global-text">Waiting To Ship</div>
+                                    <div ng-if="shipping.shipping_status == 2" class="global-text">Order In Process</div>
+                                    <div ng-if="shipping.shipping_status == 3" class="global-text">Shipped</div>
+                                </div>
                                 </div>
                             </div>
 
                             <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="100">
                                     <md-input-container flex="100" class="margin-0">
-                                        <textarea>{{shipping.description}} {{shipping.attn}} {{shipping.address}} {{shipping.address2}} {{shipping.city}} {{shipping.zipcode}} {{shipping.state}} {{shipping.country}}</textarea>
+                                        <textarea aria-label="Address">{{shipping.description}} {{shipping.attn}} {{shipping.address}} {{shipping.address2}} {{shipping.city}} {{shipping.zipcode}} {{shipping.state}} {{shipping.country}}</textarea>
                                     </md-input-container>
                                 </div>
                             </div>
@@ -145,7 +152,7 @@
                             <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="100">
                                     <md-input-container flex="100" class="margin-0">
-                                        <textarea placeholder="Note" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">{{shipping.shipping_note}}</textarea>
+                                        <textarea aria-label="Note" placeholder="Note" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">{{shipping.shipping_note}}</textarea>
                                     </md-input-container>
                                 </div>
                             </div>
@@ -165,7 +172,7 @@
                                     <td>
                                         <div class="layout-row pb-20">
                                             <div class="stokkup-title-h4">United Center
-                                                <span class="global-labels">Client Distribution ID: {{shipping.shipping_id}}</span>
+                                                <span class="global-labels">Client Distribution ID: {{shipping.shipping_display_number}}</span>
                                             </div>
                                         </div>
                                         <div class="tbl-scroll-cntnr" ms-scroll>

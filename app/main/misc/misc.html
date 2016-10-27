@@ -34,179 +34,177 @@
 
 
 
-<div class="content order-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
-        <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text pd15-TB" flex=100 class="cursor-p">Misc Data</div>
-        </div>
-        <div ng-cloak>
-            <md-content>
-                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
-                    <!-----------------Order Waiting to Ship Tab-------------------->
-                    <md-tab label="Value 1">
-                        
-                        <div class="ms-responsive-table-wrapper">
-                            <table class="simple hover simple-tbl1" ng-controller="XeditableCtrl">
-                                <thead>
-                                    <tr>
-                                        <th class="secondary-text" >Approval / Order Sequence</th>
-                                        <th class="secondary-text" >Art Ink</th>
-                                        <th class="secondary-text" >Boxing Type</th>
-                                        <th class="secondary-text" >Charge Apply</th>
-                                        <th class="secondary-text" >Color Group</th>
-                                        <th class="secondary-text" >Direct to Garment</th>
-                                        <th class="secondary-text" >Dir. to Garment Sz.</th>
-                                        <th class="secondary-text" >Disposition</th>
-                                        <th class="secondary-text" >Graphic Size</th>
-                                        <th class="secondary-text" >Level</th>
-                                        <th class="secondary-text" >Yes No</th>
-                                        <th class="secondary-text" >PO Status</th>
-                                        <th class="secondary-text" >Address Type</th>
-                                       
-                                    </tr>
-                                </thead>
-                                <tbody> 
-                                 <tr data-ng-repeat="i in range">
-                                       <td><a editable-text="miscData.approval[i].value" onaftersave="updateUser(miscData.approval[i].value,miscData.approval[i].id)">{{miscData.approval[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.art_type[i].value" onaftersave="updateUser(miscData.art_type[i].value,miscData.art_type[i].id)">{{miscData.art_type[i].value}}</a></td>
 
 
-                                        <td><a editable-text="miscData.boxing_type[i].value" onaftersave="updateUser(miscData.boxing_type[i].value,miscData.boxing_type[i].id)">{{miscData.boxing_type[i].value}}</a></td>
 
 
-                                        <td><a editable-text="miscData.charges_apply[i].value" onaftersave="updateUser(miscData.charges_apply[i].value,miscData.charges_apply[i].id)">{{miscData.charges_apply[i].value}}</a></td>
+<div class="content order-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+      <div class="table-title " layout="row" layout-align="space-between center">
+          <div class="table-title-text" flex=50 class="cursor-p">
+              Misc Data
+          </div>
+      </div>
+          <div class="inner-full-box mt-20">
+            <div class="misc-main-block white-bg pull-left">
+              <div flex=25 class="pull-left">
+                <ul class="misc-left-pane">
+                  <li><a href="#" ng-repeat="misc_all in misc_all_data | orderBy:'name'" ng-class="{ 'active': misc_all.id == selectedIndex }" ng-click="itemClicked(misc_all.id)">{{misc_all.name}}</a></li>
+                </ul>
+              </div>
+
+              <div flex=75 class="pull-left">
+                <div class="misc-right-pane" ng-controller="XeditableCtrl">
+                  <div class="misc-detailed-row">
+
+                  <div class="pull-left p-10 misc-linkbox" data-ng-repeat="i in range">
+
+                    <span ng-show="selectedIndex=='approved'">
+                    <a class="common-header-links pull-left" editable-text="miscData.approval[i].value" onaftersave="updateUser(miscData.approval[i].value,miscData.approval[i].id)">{{miscData.approval[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='art_ink'">
+                     <a class="common-header-links pull-left" editable-text="miscData.art_type[i].value" onaftersave="updateUser(miscData.art_type[i].value,miscData.art_type[i].id)">{{miscData.art_type[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='boxing_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.boxing_type[i].value" onaftersave="updateUser(miscData.boxing_type[i].value,miscData.boxing_type[i].id)">{{miscData.boxing_type[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='charge_apply'">
+                     <a class="common-header-links pull-left" editable-text="miscData.charges_apply[i].value" onaftersave="updateUser(miscData.charges_apply[i].value,miscData.charges_apply[i].id)">{{miscData.charges_apply[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='color_group'">
+                     <a class="common-header-links pull-left" editable-text="miscData.color_group[i].value" onaftersave="updateUser(miscData.color_group[i].value,miscData.color_group[i].id)">{{miscData.color_group[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='dtg'">
+                     <a class="common-header-links pull-left" editable-text="miscData.direct_to_garment[i].value" onaftersave="updateUser(miscData.direct_to_garment[i].value,miscData.direct_to_garment[i].id)">{{miscData.direct_to_garment[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='dtgs'">
+                     <a class="common-header-links pull-left" editable-text="miscData.dir_to_garment_sz[i].value" onaftersave="updateUser(miscData.dir_to_garment_sz[i].value,miscData.dir_to_garment_sz[i].id)">{{miscData.dir_to_garment_sz[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='disposition'">
+                     <a class="common-header-links pull-left" editable-text="miscData.disposition[i].value" onaftersave="updateUser(miscData.disposition[i].value,miscData.disposition[i].id)">{{miscData.disposition[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='graphic_size'">
+                     <a class="common-header-links pull-left" editable-text="miscData.graphic_size[i].value" onaftersave="updateUser(miscData.graphic_size[i].value,miscData.graphic_size[i].id)">{{miscData.graphic_size[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='level'">
+                     <a class="common-header-links pull-left" editable-text="miscData.level[i].value" onaftersave="updateUser(miscData.level[i].value,miscData.level[i].id)">{{miscData.level[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='yesno'">
+                     <a class="common-header-links pull-left" editable-text="miscData.yesno[i].value" onaftersave="updateUser(miscData.yesno[i].value,miscData.yesno[i].id)">{{miscData.yesno[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='po_status'">
+                     <a class="common-header-links pull-left" editable-text="miscData.po_status[i].value" onaftersave="updateUser(miscData.po_status[i].value,miscData.po_status[i].id)">{{miscData.po_status[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='address_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.address_type[i].value" onaftersave="updateUser(miscData.address_type[i].value,miscData.address_type[i].id)">{{miscData.address_type[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='placement_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.placement_type[i].value" onaftersave="updateUser(miscData.placement_type[i].value,miscData.placement_type[i].id)">{{miscData.placement_type[i].value}}</a>
+                  </span>
 
 
-                                        <td><a editable-text="miscData.color_group[i].value" onaftersave="updateUser(miscData.color_group[i].value,miscData.color_group[i].id)">{{miscData.color_group[i].value}}</a></td>
+                   <span ng-show="selectedIndex=='position'">
+                     <a class="common-header-links pull-left" editable-text="miscData.position[i].value" onaftersave="updateUser(miscData.position[i].value,miscData.position[i].id)">{{miscData.position[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='production'">
+                     <a class="common-header-links pull-left" editable-text="miscData.production[i].value" onaftersave="updateUser(miscData.production[i].value,miscData.production[i].id)">{{miscData.production[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='production_sub_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.production_sub_type[i].value" onaftersave="updateUser(miscData.production_sub_type[i].value,miscData.production_sub_type[i].id)">{{miscData.production_sub_type[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='product_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.product_type[i].value" onaftersave="updateUser(miscData.product_type[i].value,miscData.product_type[i].id)">{{miscData.product_type[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='size_group'">
+                     <a class="common-header-links pull-left" editable-text="miscData.size_group[i].value" onaftersave="updateUser(miscData.size_group[i].value,miscData.size_group[i].id)">{{miscData.size_group[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='staff_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.staff_type[i].value" onaftersave="updateUser(miscData.staff_type[i].value,miscData.staff_type[i].id)">{{miscData.staff_type[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='status'">
+                     <a class="common-header-links pull-left" editable-text="miscData.status[i].value" onaftersave="updateUser(miscData.status[i].value,miscData.status[i].id)">{{miscData.status[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='symbol_description'">
+                     <a class="common-header-links pull-left" editable-text="miscData.symbol_description[i].value" onaftersave="updateUser(miscData.symbol_description[i].value,miscData.symbol_description[i].id)">{{miscData.symbol_description[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='terms'">
+                     <a class="common-header-links pull-left" editable-text="miscData.terms[i].value" onaftersave="updateUser(miscData.terms[i].value,miscData.terms[i].id)">{{miscData.terms[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='shipping_method'">
+                     <a class="common-header-links pull-left" editable-text="miscData.shipping_method[i].value" onaftersave="updateUser(miscData.shipping_method[i].value,miscData.shipping_method[i].id)">{{miscData.shipping_method[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='time_off_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.time_off_type[i].value" onaftersave="updateUser(miscData.time_off_type[i].value,miscData.time_off_type[i].id)">{{miscData.time_off_type[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='po_type'">
+                     <a class="common-header-links pull-left" editable-text="miscData.po_type[i].value" onaftersave="updateUser(miscData.po_type[i].value,miscData.po_type[i].id)">{{miscData.po_type[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='art_filter'">
+                     <a class="common-header-links pull-left" editable-text="miscData.art_filter[i].value" onaftersave="updateUser(miscData.art_filter[i].value,miscData.art_filter[i].id)">{{miscData.art_filter[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='purchasing_filter'">
+                     <a class="common-header-links pull-left" editable-text="miscData.purchasing_filter[i].value" onaftersave="updateUser(miscData.purchasing_filter[i].value,miscData.purchasing_filter[i].id)">{{miscData.purchasing_filter[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='shipping_filter'">
+                     <a class="common-header-links pull-left" editable-text="miscData.shipping_filter[i].value" onaftersave="updateUser(miscData.shipping_filter[i].value,miscData.shipping_filter[i].id)">{{miscData.shipping_filter[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='production_filter'">
+                     <a class="common-header-links pull-left" editable-text="miscData.production_filter[i].value" onaftersave="updateUser(miscData.production_filter[i].value,miscData.production_filter[i].id)">{{miscData.production_filter[i].value}}</a>
+                  </span>
+
+                   <span ng-show="selectedIndex=='production_shipped'">
+                     <a class="common-header-links pull-left" editable-text="miscData.production_shipped[i].value" onaftersave="updateUser(miscData.production_shipped[i].value,miscData.production_shipped[i].id)">{{miscData.production_shipped[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='production_paid'">
+                     <a class="common-header-links pull-left" editable-text="miscData.production_paid[i].value" onaftersave="updateUser(miscData.production_paid[i].value,miscData.production_paid[i].id)">{{miscData.production_paid[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='production_on_press'">
+                     <a class="common-header-links pull-left" editable-text="miscData.production_on_press[i].value" onaftersave="updateUser(miscData.production_on_press[i].value,miscData.production_on_press[i].id)">{{miscData.production_on_press[i].value}}</a>
+                  </span>
+
+                  <span ng-show="selectedIndex=='finishing'">
+                     <a class="common-header-links pull-left" editable-text="miscData.finishing[i].value" onaftersave="updateUser(miscData.finishing[i].value,miscData.finishing[i].id)">{{miscData.finishing[i].value}}</a>
+                  </span>
 
 
-                                        <td><a editable-text="miscData.direct_to_garment[i].value" onaftersave="updateUser(miscData.direct_to_garment[i].value,miscData.direct_to_garment[i].id)">{{miscData.direct_to_garment[i].value}}</a></td>
+                  </div>
 
-
-                                        <td><a editable-text="miscData.dir_to_garment_sz[i].value" onaftersave="updateUser(miscData.dir_to_garment_sz[i].value,miscData.dir_to_garment_sz[i].id)">{{miscData.dir_to_garment_sz[i].value}}</a></td>
-
-
-                                         <td><a editable-text="miscData.disposition[i].value" onaftersave="updateUser(miscData.disposition[i].value,miscData.disposition[i].id)">{{miscData.disposition[i].value}}</a></td>
-
-                                          <td><a editable-text="miscData.graphic_size[i].value" onaftersave="updateUser(miscData.graphic_size[i].value,miscData.graphic_size[i].id)">{{miscData.graphic_size[i].value}}</a></td>
-
-
-                                          <td><a editable-text="miscData.level[i].value" onaftersave="updateUser(miscData.level[i].value,miscData.level[i].id)">{{miscData.level[i].value}}</a></td>
-
-                                           <td><a editable-text="miscData.yesno[i].value" onaftersave="updateUser(miscData.yesno[i].value,miscData.yesno[i].id)">{{miscData.yesno[i].value}}</a></td>
-
-                                            <td><a editable-text="miscData.po_status[i].value" onaftersave="updateUser(miscData.po_status[i].value,miscData.po_status[i].id)">{{miscData.po_status[i].value}}</a></td>
-
-                                            <td><a editable-text="miscData.address_type[i].value" onaftersave="updateUser(miscData.address_type[i].value,miscData.address_type[i].id)">{{miscData.address_type[i].value}}</a></td>
-                                </tr>                
-                                </tbody>
-                            </table>
-                        </div>                    
-                    </md-tab>
-                    <!-----------------Order In Progress Tab-------------------->
-                    <md-tab label="Value 2">
-                        
-                         <div class="ms-responsive-table-wrapper">
-                            <table class="simple hover simple-tbl1">
-                                <thead>
-                                    <tr>
-                                          <th class="secondary-text">Placement Type</th>
-                                          <th class="secondary-text">Position</th>
-                                          <th class="secondary-text">Production</th>
-                                          <th class="secondary-text">Production Sub Type</th>
-                                          <th class="secondary-text">Production Type</th>
-                                          <th class="secondary-text">Size Group</th>
-                                          <th class="secondary-text">Staff Type</th>
-                                          <th class="secondary-text">Status</th>
-                                          <th class="secondary-text">Symbol Description</th>
-                                          <th class="secondary-text">Terms</th> 
-                                    </tr>
-                                </thead>
-                                <tbody> 
-                                    <tr data-ng-repeat="i in range">
-
-                                       <td><a editable-text="miscData.placement_type[i].value" onaftersave="updateUser(miscData.placement_type[i].value,miscData.placement_type[i].id)">{{miscData.placement_type[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.position[i].value" onaftersave="updateUser(miscData.position[i].value,miscData.position[i].id)">{{miscData.position[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.production[i].value" onaftersave="updateUser(miscData.production[i].value,miscData.production[i].id)">{{miscData.production[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.production_sub_type[i].value" onaftersave="updateUser(miscData.production_sub_type[i].value,miscData.production_sub_type[i].id)">{{miscData.production_sub_type[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.product_type[i].value" onaftersave="updateUser(miscData.product_type[i].value,miscData.product_type[i].id)">{{miscData.product_type[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.size_group[i].value" onaftersave="updateUser(miscData.size_group[i].value,miscData.size_group[i].id)">{{miscData.size_group[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.staff_type[i].value" onaftersave="updateUser(miscData.staff_type[i].value,miscData.staff_type[i].id)">{{miscData.staff_type[i].value}}</a></td>
-
-                                       <td><a editable-text="miscData.status[i].value" onaftersave="updateUser(miscData.status[i].value,miscData.status[i].id)">{{miscData.status[i].value}}</a></td>
-
-                                        <td><a editable-text="miscData.symbol_description[i].value" onaftersave="updateUser(miscData.symbol_description[i].value,miscData.symbol_description[i].id)">{{miscData.symbol_description[i].value}}</a></td>
-
-                                        <td><a editable-text="miscData.terms[i].value" onaftersave="updateUser(miscData.terms[i].value,miscData.terms[i].id)">{{miscData.terms[i].value}}</a>
-                                        </td>
-                                   </tr>                    
-                                </tbody>
-                            </table>
-                        </div>  
-                    </md-tab>
-                    <!-----------------Shipped Orders Tab-------------------->
-                    <md-tab label="Value 3">
-                        
-                         <div class="ms-responsive-table-wrapper">
-                            <table class="simple hover simple-tbl1">
-                                <thead>
-                                    <tr>
-                                          <th class="secondary-text">Shipping Method</th>
-                                          <th class="secondary-text">Time off Type</th>
-                                          <th class="secondary-text">PO Type</th>
-                                          <th class="secondary-text">Art Filter</th>
-                                          <th class="secondary-text">Purchasing Filter</th>
-                                          <th class="secondary-text">Shipping Filter</th>
-                                          <th class="secondary-text">Status Filter</th>
-                                          <th class="secondary-text">Production Filter</th>
-                                          <th class="secondary-text">Production Shipped</th>
-                                          <th class="secondary-text">Production Paid</th>
-                                          <th class="secondary-text">Production On Press</th>
-                                          <th class="secondary-text">Finishing</th>
-                                    </tr>
-                                </thead>
-                                <tbody> 
-                                      <tr data-ng-repeat="i in range">
-
-                                          <td><a editable-text="miscData.shipping_method[i].value" onaftersave="updateUser(miscData.shipping_method[i].value,miscData.shipping_method[i].id)">{{miscData.shipping_method[i].value}}</a></td>
-
-                                          <td><a editable-text="miscData.time_off_type[i].value" onaftersave="updateUser(miscData.time_off_type[i].value,miscData.time_off_type[i].id)">{{miscData.time_off_type[i].value}}</a></td>
-
-                                          <td><a editable-text="miscData.po_type[i].value" onaftersave="updateUser(miscData.po_type[i].value,miscData.po_type[i].id)">{{miscData.po_type[i].value}}</a></td>
-
-                                          <td><a editable-text="miscData.art_filter[i].value" onaftersave="updateUser(miscData.art_filter[i].value,miscData.art_filter[i].id)">{{miscData.art_filter[i].value}}</a></td>
-
-                                          <td><a editable-text="miscData.purchasing_filter[i].value" onaftersave="updateUser(miscData.purchasing_filter[i].value,miscData.purchasing_filter[i].id)">{{miscData.purchasing_filter[i].value}}</a></td>
-
-                                          <td><a editable-text="miscData.shipping_filter[i].value" onaftersave="updateUser(miscData.shipping_filter[i].value,miscData.shipping_filter[i].id)">{{miscData.shipping_filter[i].value}}</a></td>
-
-                                          <td><a editable-text="miscData.status[i].value" onaftersave="updateUser(miscData.status[i].value,miscData.status[i].id)">{{miscData.status[i].value}}</a></td>
-
-                                           <td><a editable-text="miscData.production_filter[i].value" onaftersave="updateUser(miscData.production_filter[i].value,miscData.production_filter[i].id)">{{miscData.production_filter[i].value}}</a></td>
-
-
-                                           <td><a editable-text="miscData.production_shipped[i].value" onaftersave="updateUser(miscData.production_shipped[i].value,miscData.production_shipped[i].id)">{{miscData.production_shipped[i].value}}</a></td>
-
-                                           <td><a editable-text="miscData.production_paid[i].value" onaftersave="updateUser(miscData.production_paid[i].value,miscData.production_paid[i].id)">{{miscData.production_paid[i].value}}</a></td>
-
-                                           <td><a editable-text="miscData.production_on_press[i].value" onaftersave="updateUser(miscData.production_on_press[i].value,miscData.production_on_press[i].id)">{{miscData.production_on_press[i].value}}</a></td>
-
-                                           <td><a editable-text="miscData.finishing[i].value" onaftersave="updateUser(miscData.finishing[i].value,miscData.finishing[i].id)">{{miscData.finishing[i].value}}</a></td>
-                                                                      
-                                        </tr>               
-                                </tbody>
-                            </table>
-                        </div> 
-                    </md-tab>
-                </md-tabs>
-            </md-content>
-        </div>
-    </div> 
+                 
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+      
+    </div>
 </div>
