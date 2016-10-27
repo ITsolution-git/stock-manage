@@ -156,7 +156,6 @@
             {
                 var data = {"status": "error", "message": "Please select address"}
                 notifyService.notify(data.status, data.message);
-                $scope.shipOrder();
                 return false;
             }
             if(productArr.distributed_qnty > 0)
@@ -201,7 +200,6 @@
             {
                 var data = {"status": "error", "message": "Please select address"}
                 notifyService.notify(data.status, data.message);
-                $scope.shipOrder();
                 return false;
             }
 
@@ -228,15 +226,23 @@
 
         $scope.shippingDetails = function()
         {
-            if($scope.assignedItems.length == 0)
+            if($scope.address_id == 0 || $scope.address_id == undefined)
             {
-                var data = {"status": "error", "message": "Please assign product to address"}
+                var data = {"status": "error", "message": "Please select address"}
                 notifyService.notify(data.status, data.message);
+                return false;
             }
-            if($scope.shipping_id == 0 || $scope.shipping_id == undefined)
+            else if($scope.shipping_id == 0 || $scope.shipping_id == undefined)
             {
                 var data = {"status": "error", "message": "Please select allocated address"}
                 notifyService.notify(data.status, data.message);
+                return false;
+            }
+            else if($scope.assignedItems.length == 0)
+            {
+                var data = {"status": "error", "message": "Please assign product to address"}
+                notifyService.notify(data.status, data.message);
+                return false;   
             }
             else
             {
