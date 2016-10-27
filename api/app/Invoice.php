@@ -405,7 +405,7 @@ class Invoice extends Model {
     public function getUnshipped($post){
         $client_id=$post['company_id'];
 
-        $retArray = DB::table('invoice as i')
+        /*$retArray = DB::table('invoice as i')
             ->select(DB::raw('SUM(o.balance_due) as totalUnshipped'), DB::raw('COUNT(i.id) as totalInvoice') )
             ->leftJoin('orders as o','o.id','=','i.order_id')
             ->leftJoin('shipping as s','s.order_id','=','o.id')   
@@ -414,9 +414,40 @@ class Invoice extends Model {
             ->where('u.id','=',$client_id)
             ->where('o.parent_order_id','=',0)
             ->where('o.is_delete','=','1')
-            ->where('s.shipping_status','=','1')
+            ->where('s.shipping_status','!=','3')
+            ->get();*/
+
+        $retArrayTemp = DB::table('invoice as i')
+            ->select(DB::raw('DISTINCT(o.id) as totalInvoice'))
+            ->leftJoin('orders as o','o.id','=','i.order_id')
+            ->leftJoin('client as c','c.client_id','=','o.client_id')
+            ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
+            ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+            ->leftJoin('users as u','u.id','=','c.company_id')
+            ->where('u.id','=',$client_id)
+            ->where('o.parent_order_id','=',0)
+            ->where('o.is_delete','=','1')
+            ->where('o.is_complete','=','1')
+            ->where('po.is_active','=','1')
+            ->where('pol.qnty_purchased','>',0)
+            ->where('o.shipping_status','!=','3')
             ->get();
 
+        $array = json_decode(json_encode($retArrayTemp), true);
+        $arrayOrder=array();
+        foreach ($array as $key => $value) {
+            $arrayOrder[]=$value['totalInvoice'];
+        }
+        if(count($arrayOrder)>0){
+            $retArray = DB::table('orders')
+                    ->select(DB::raw('count(id) as totalInvoice'),DB::raw('sum(balance_due) as totalUnshipped'))
+                    ->whereIn('id',$arrayOrder)
+                    ->get();
+        }else{
+            $retArray[0] = (object) null;
+            $retArray[0]->totalInvoice=0;
+            $retArray[0]->totalUnshipped=0;
+        }
        return $retArray;
     }
 
