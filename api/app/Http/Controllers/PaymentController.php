@@ -108,7 +108,7 @@ class PaymentController extends Controller {
                   $paid_id=$paid[0]->id;
                 }else{
                     $amt['is_paid'] = '1';
-                    $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>568),array(),0,0,'id');
+                    $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $company_id, 'slug'=>568),array(),0,0,'id');
                     $paid_id=$paid[0]->id;
                     $amt['approval_id']=$paid_id;
                 }
@@ -187,7 +187,7 @@ class PaymentController extends Controller {
                         $amt['is_paid'] = '0';
                     }else{
                         $amt['is_paid'] = '1';
-                        $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>568),array(),0,0,'id');
+                        $paid = $this->common->GetTableRecords('misc_type',array('company_id' => $company_id, 'slug'=>568),array(),0,0,'id');
                         $paid_id=$paid[0]->id;
                         $amt['approval_id']=$paid_id;
                     }

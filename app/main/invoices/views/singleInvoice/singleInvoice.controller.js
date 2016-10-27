@@ -155,9 +155,14 @@
             order_main_data.cond = angular.copy(condition_obj);
 
             $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
-
-                var data = {"status": "success", "message": "Data Updated Successfully."}
-                notifyService.notify(data.status, data.message);
+                if(result.data.success=='1')
+                {
+                    var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
+                }else{
+                    var data = {"status": "error", "message": "Data not Updated."}
+                    notifyService.notify(data.status, data.message);
+                }
             });
         }
 
@@ -508,20 +513,6 @@
                                         $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                         if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                             $scope.showPaymentDetails = true;
-                                            if($scope.allData.order_data[0].approval_id == 2885){
-
-                                                var UpdateArray = {};
-                                                UpdateArray.table ='orders';
-                                                UpdateArray.data = {approval_id:2491};
-                                                UpdateArray.cond = {id:$scope.allData.order_data[0].id};
-                                                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
-                                                {
-                                                    if(resultUpdateStatus.data.success=='1')
-                                                    {
-                                                        $scope.allData.order_data[0].approval_id = 2491;
-                                                    }
-                                                });
-                                            }
                                         }else{
                                             $scope.showPaymentDetails = false;
                                             $scope.allData.order_data[0].approval_id = resultUpdate.data.amt.approval_id;
@@ -570,19 +561,6 @@
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                 if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                     $scope.showPaymentDetails = true;
-                                    /*if($scope.allData.order_data[0].approval_id == 2885){
-                                        var UpdateArray = {};
-                                        UpdateArray.table ='orders';
-                                        UpdateArray.data = {approval_id:2491};
-                                        UpdateArray.cond = {id:$scope.allData.order_data[0].id};
-                                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
-                                        {
-                                            if(resultUpdateStatus.data.success=='1')
-                                            {
-                                                $scope.allData.order_data[0].approval_id = 2491;
-                                            }
-                                        });
-                                    }*/
                                 }else{
                                     $scope.showPaymentDetails = false;
                                 }
