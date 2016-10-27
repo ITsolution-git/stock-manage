@@ -9,8 +9,6 @@
     /** @ngInject */
     function DistributionController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
-
-
          // change display number to order Id for fetching the order data
           var order_data = {};
            order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
@@ -27,7 +25,6 @@
                     $scope.orderDetail();
                     $scope.designDetail();
                     $scope.getDistProductAddress();
-
               } 
               else
               {
@@ -107,36 +104,6 @@
 
         var vm = this;
         vm.openaddAddressDialog = openaddAddressDialog;
-        vm.distributionDistributed = {
-            "productshipped": "800",
-            "Total": "100",
-        };
-        vm.distributionLocation = {
-            "location": "231",
-        };
-        vm.distProducts = [
-            {productName: "Product Name 1", jobName: "Job Name1", job: "#", totalAllocated: "0/120", buttn: "Distributed"},
-            {productName: "Product Name 2", jobName: "Job Name1.1", job: "#", totalAllocated: "0/120", buttn: "Distributed"},
-            {productName: "Product Name 3", jobName: "Job Name1.2", job: "#", totalAllocated: "80/120", buttn: "Edit"}
-        ]
-
-                ;
-        vm.distlocations = [
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"}
-        ]
-
-                ;
-        vm.distInfo = {
-            customerPO: "######",
-            sales: "Keval Baxi",
-            blind: "Yes",
-            accountManager: "Nancy McPhee",
-            mainContact: "Joshi Goodman",
-            priceGrid: "ABC Grid",
-        };
-
         vm.openAddProductDialog = openAddProductDialog;
         function openaddAddressDialog(ev, order)
         {

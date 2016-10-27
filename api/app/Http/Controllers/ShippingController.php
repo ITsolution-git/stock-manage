@@ -11,7 +11,6 @@ use App\Common;
 use App\Distribution;
 use App\Api;
 use App\Company;
-
 use App\Order;
 use DB;
 use App;
@@ -23,52 +22,12 @@ class ShippingController extends Controller {
 
     public function __construct(Shipping $shipping,Common $common,Distribution $distribution,Order $order,Api $api,Company $company) 
     {
+        parent::__construct();
         $this->shipping = $shipping;
         $this->distribution = $distribution;
         $this->common = $common;
         $this->api = $api;
         $this->company = $company;
-    }
-
-    public function addressValidate()
-    {
-        $address = new \Ups\Entity\Address();
-        $address->setAttentionName('Test Test');
-        $address->setBuildingName('Test');
-        $address->setAddressLine1('Address Line 1');
-        $address->setAddressLine2('Address Line 2');
-        $address->setAddressLine3('Address Line 3');
-        $address->setStateProvinceCode('NY');
-        $address->setCity('New York');
-        $address->setCountryCode('US');
-        $address->setPostalCode('10000');
-
-        $xav = new \Ups\AddressValidation('2D084297048602C5', 'Codal', 'Mobile1357');
-        $xav->activateReturnObjectOnValidate(); //This is optional
-        try {
-            $response = $xav->validate($address, $requestOption = \Ups\AddressValidation::REQUEST_OPTION_ADDRESS_VALIDATION, $maxSuggestion = 15);
-        } catch (Exception $e) {
-            var_dump($e);
-        }
-        if ($response->noCandidates()) {
-            echo "noCandidates";
-            //Do something clever and helpful to let the use know the address is invalid
-        }
-        if ($response->isAmbiguous()) {
-            echo "isAmbiguous";
-            $candidateAddresses = $response->getCandidateAddressList();
-            foreach($candidateAddresses as $address) {
-                //Present user with list of candidate addresses so they can pick the correct one        
-            }
-        }
-        if ($response->isValid()) {
-            echo "isValid";
-            $validAddress = $response->getValidatedAddress();
-            //Show user validated address or update their address with the 'official' address
-            //Or do something else helpful...
-        }
-
-        exit;
     }
 
     /**
@@ -124,6 +83,8 @@ class ShippingController extends Controller {
              $post['page']['page']=1;
         }
 
+        $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id','yes');
+
         $post['range'] = RECORDS_PER_PAGE;
         $post['start'] = ($post['page']['page'] - 1) * $post['range'];
         $post['limit'] = $post['range'];
@@ -159,51 +120,6 @@ class ShippingController extends Controller {
     }
 
     /**
-    * Get Array List of All Shipping details
-    * @return json data
-    */
-    public function getShippingOrders()
-    {
-        $post = Input::all();
-        $result = $this->shipping->getShippingOrders($post[0]);
-        return $this->return_response($result);
-    }
-
-    /**
-     * Delete Data
-     *
-     * @param  post.
-     * @return success message.
-     */
-    public function DeleteShipping()
-    {
-        $post = Input::all();
-
-
-        if(!empty($post[0]))
-        {
-            $getData = $this->order->deleteShipping($post[0]);
-            if($getData)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
-    /**
     * Shipping Detail controller      
     * @access public detail
     * @param  array $data
@@ -236,21 +152,6 @@ class ShippingController extends Controller {
             $result['shipping'][0]->fully_shipped = '';
         }
 
-        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
-        {
-            $result['shipping'][0]->shipping_status = 1;
-        }
-        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 2;
-        }
-        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 3;
-        }
-
-        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
-
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if(!empty($result['shippingBoxes']))
@@ -282,32 +183,6 @@ class ShippingController extends Controller {
 //                                'shippingBoxes' => $result['shippingBoxes']
                                 );
         } 
-        return response()->json(["data" => $response]);
-    }
-
-    public function getTaskDetails()
-    {
-        $post = Input::all();
-        $users = $this->common->GetTableRecords('users',array(),array('role_id' => '7'));
-        $task = $this->common->GetTableRecords('task',array(),array());
-        $result = $this->common->GetTableRecords('result',array(),array());
-
-        $task_detail = array();
-
-        if(!empty($post['id']) > 0)
-        {
-            $task_detail = $this->order->getTaskDetail($post['id']);
-            $task_detail[0]->user_id = explode(',', $task_detail[0]->user_id);
-        }
-
-        $response = array(
-                                'success' => 1, 
-                                'message' => GET_RECORDS,
-                                'users' => $users,
-                                'tasks' => $task,
-                                'result' => $result,
-                                'task_detail' => $task_detail
-                            );
         return response()->json(["data" => $response]);
     }
 
@@ -621,20 +496,6 @@ class ShippingController extends Controller {
         }
     }
 
-    public function addRemoveAddressToPdf()
-    {
-        $post = Input::all();
-
-        $this->common->UpdateTableRecords('item_address_mapping',array('order_id' => $post['order_id']),array('print_on_pdf' => '0'));
-        $this->common->UpdateTableRecords('item_address_mapping',array('address_id' => $post['address_id'],'order_id' => $post['order_id']),array('print_on_pdf' => $post['print_on_pdf']));
-
-        $success=1;
-        $message=UPDATE_RECORD;
-        
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-    }
-
     public function shipOrder()
     {
         $post = Input::all();
@@ -796,14 +657,15 @@ class ShippingController extends Controller {
             if(in_array($address->id, $allocatedAddress2))
             {
                 $shipping = $this->common->GetTableRecords('product_address_mapping',array('address_id' => $address->id,'order_id' => $post['id']),array());
-                $address->shipping_id = $shipping[0]->shipping_id;
                 $assignAddresses[] = $address;
 
-                if($post['address_id'] == $address->id)
-                {
-                    $data = $this->common->GetTableRecords('shipping',array('id'=>$address->shipping_id));
+/*                if($post['address_id'] == $address->id)
+                {*/
+                    $data = $this->common->GetTableRecords('shipping',array('id'=>$shipping[0]->shipping_id));
                     $shipping_id = $data[0]->display_number;
-                }
+                //}
+                $address->shipping_id = $shipping_id;
+
             }
             else
             {
@@ -873,21 +735,6 @@ class ShippingController extends Controller {
 
         $result = $this->shipping->shippingDetail($data);
         
-        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
-        {
-            $result['shipping'][0]->shipping_status = 1;
-        }
-        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 2;
-        }
-        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 3;
-        }
-
-        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
-
         if(empty($result['shipping']))
         {
               $response = array(

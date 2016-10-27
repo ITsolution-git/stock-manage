@@ -122,53 +122,6 @@ class Order extends Model {
         return $combine_array;
     }
 
-    public function getOrderPositionDetail($data)
-    {
-        $whereOrderPositionConditions = ['order_id' => $data['id']];
-        $orderPositionData = DB::table('order_positions')->where($whereOrderPositionConditions)->get();
-        
-        foreach ($orderPositionData as $key=>$alldata){
-
-                    if($alldata->placementvalue){
-                         $orderPositionData[$key]->placementvalue = explode(',', $alldata->placementvalue);
-                    }
-
-                    if($alldata->sizegroupvalue){
-                        $orderPositionData[$key]->sizegroupvalue = explode(',', $alldata->sizegroupvalue);
-                    }
-        }
-        $combine_array['order_position'] = $orderPositionData;
-
-        return $combine_array;
-    }
-
-    /**
-    * Order line Details           
-    * @access public getOrderDetailById
-    * @param  int $orderline_id
-    * @return array $result
-    */
-
-    public function getOrderLineItemByColor($product_id,$color_id)
-    {
-        $listArray = ['pc.*','p.name as size'];
-
-        $productColorSizeData = DB::table('product_size as p')
-                         ->leftJoin('product_color_size as pc', 'p.id', '=', 'pc.size_id')
-                         ->select($listArray)
-                         ->where('pc.product_id','=',$product_id)
-                         ->where('pc.color_id','=',$color_id)
-                         ->get();
-
-        return $productColorSizeData;
-    }
-
-    public function getOrderLineItemById($id)
-    {
-        $result = DB::table('purchase_detail')->where('orderline_id','=',$id)->get();
-        return $result;
-    }
-
     /**
     * Order item Details           
     * @access public getOrderItemById
@@ -196,32 +149,6 @@ class Order extends Model {
         $result = DB::table('order_item_mapping')->where($whereConditions)->get();
         return $result;
     }
-
-
-     public function insertPositions($table,$records)
-    {
-
-        
-         if(array_key_exists('placementvalue', $records) && is_array($records['placementvalue'])) {
-          $records['placementvalue'] = implode(',', $records['placementvalue']);
-       
-           }
-
-          if(array_key_exists('sizegroupvalue', $records) && is_array($records['sizegroupvalue'])) {
-              $records['sizegroupvalue'] = implode(',', $records['sizegroupvalue']);
-           
-          }
-      
-
-
-        $result = DB::table($table)->insert($records);
-
-        $id = DB::getPdo()->lastInsertId();
-
-        return $id;
-    }
-
-
    
     public function updatePositions($table,$cond,$data)
     {
@@ -235,9 +162,6 @@ class Order extends Model {
           $data['sizegroupvalue'] = implode(',', $data['sizegroupvalue']);
        
       }
-      
-       
-       
 
          $result = DB::table($table);
         if(count($cond)>0)
@@ -251,78 +175,6 @@ class Order extends Model {
         $result=$result->update($data);
         return $result;
     }
-
-    public function getDistributionItems($data)
-    {
-        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.name as color_name','p.name','v.name_company as main_contact_person'];
-
-        $orderData = DB::table('orders as order')
-                        ->select($listArray)
-                        ->leftJoin('order_orderlines as ol', 'order.id', '=', 'ol.order_id')
-                        ->leftJoin('distribution_detail as pd', 'ol.id', '=', 'pd.orderline_id')
-                        ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
-                        ->leftJoin('products as p','p.id','=','ol.product_id')
-                        ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
-                        ->leftJoin('color as mt2','mt2.id','=','ol.color_id')
-                        ->where($data)
-                        ->where('pd.qnty','!=','')
-                        ->get();
-        return $orderData;  
-    }
-
-    public function getDistributedAddress($data)
-    {
-        $listArray = ['cd.*','ia.*','o.job_name'];
-
-        $orderData = DB::table('client_distaddress as cd')
-                        ->select($listArray)
-                        ->leftJoin('item_address_mapping as ia', 'cd.id', '=', 'ia.address_id')
-                        ->leftJoin('orders as o', 'ia.order_id', '=', 'o.id')
-                        ->where($data)
-                        ->GroupBy('ia.address_id')
-                        ->get();
-        return $orderData;  
-    }
-
-    public function getDistributedItems($data)
-    {
-        $listArray = ['pd.id','ol.product_id','ol.vendor_id','ol.color_id','ol.size_group_id','pd.size','pd.qnty','mt.value as size_group_name','mt2.name as color_name','p.name','v.name_company as main_contact_person','pd.shipped_qnty','ia.shipping_id'];
-
-        $orderData = DB::table('orders as order')
-                        ->select($listArray)
-                        ->leftJoin('order_orderlines as ol', 'order.id', '=', 'ol.order_id')
-                        ->leftJoin('distribution_detail as pd', 'ol.id', '=', 'pd.orderline_id')
-                        ->leftJoin('misc_type as mt','mt.id','=','ol.size_group_id')
-                        ->leftJoin('products as p','p.id','=','ol.product_id')
-                        ->leftJoin('vendors as v','v.id','=','ol.vendor_id')
-                        ->leftJoin('color as mt2','mt2.id','=','ol.color_id')
-                        ->leftJoin('item_address_mapping as ia', 'pd.id', '=', 'ia.item_id')
-                        ->where($data)
-                        ->get();
-        return $orderData;
-    }
-
-/**
-* Insert Order Note           
-* @access public saveColorSize
-* @param  array $post
-* @return array $result
-*/
-
-
-public function saveColorSize($post)
-   {
-
-    for ($x = 1; $x <= 7; $x++) {
-        $post['size_id'] = $x;
-        $post['price'] = 0;
-        $result = DB::table('product_color_size')->insert($post);
-        
-     } 
-
-       return $result;
-   }
-
 
 /**
 * Product Color Size Details           
@@ -376,45 +228,6 @@ public function saveColorSize($post)
 
         return $productColorSizeData;
     }
-
-  public function getProductDetail($product_id)
-    {
-        $whereProductConditions = ['id' => $product_id];
-        $productData = DB::table('products')->where($whereProductConditions)->get();
-        return $productData;
-    }
-
-
-/**
-* Update product price           
-* @access public updateOrderNotes
-* @param  array $post
-* @return array $result
-*/
-
-
-    public function updatePriceProduct($size_array_data,$product_id)
-   {
-            $result = DB::table('products')
-                        ->where('id','=',$product_id)
-                        ->update(array('color_size_data'=>$size_array_data));
-        return $result;
-   }
-
-   /**
-* Order Image Detail           
-* @access public orderDetail
-* @param  int $orderId and $clientId
-* @return array $combine_array
-*/  
-
-    public function orderImageDetail($data) {
-  
-        $whereOrderConditions = ['id' => $data['id'],'company_id' => $data['company_id']];
-        $orderData = DB::table('orders')->where($whereOrderConditions)->get();
-        return $orderData;
-    }
-
 
     /**
 * Order Detail           

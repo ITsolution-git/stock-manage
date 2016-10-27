@@ -359,5 +359,64 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
+
+        $scope.openClientEmailPopup = function(ev)
+        {
+            
+            $mdDialog.show({
+                controller: function ($scope, params)
+                {
+                    $scope.mail=params.po_data.billing_email;
+                    $scope.company_id=params.company_id;
+
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    }
+                    $scope.printPdf = function (flag,email)
+                    {
+                        if(flag=='1')
+                        {
+                            var k = confirm("Do you want to send PDF to client?");
+                            if(k==false)
+                            {
+                                return false;
+                            }
+                        }
+                        $mdDialog.hide();
+                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email };
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/purchase/purchasePDF';
+                        form.method = 'post';
+                        form.target = target || "_blank";
+                        form.style.display = 'none';
+
+                        var input_screenset = document.createElement('input');
+                        input_screenset.name = 'purchase';
+                        input_screenset.setAttribute('value', JSON.stringify(pass_array));
+                        form.appendChild(input_screenset);
+
+                         var input_pdf = document.createElement('input');
+                        input_pdf.name = 'pdf_token';
+                        input_pdf.setAttribute('value', 'pdf_token');
+                        form.appendChild(input_pdf);
+
+                        document.body.appendChild(form);
+                        form.submit();  
+                    }
+                },
+                controllerAs: 'vm',
+                templateUrl: 'app/main/receiving/dialogs/EmailPopup.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                }
+            });
+        }
+
     }
 })();

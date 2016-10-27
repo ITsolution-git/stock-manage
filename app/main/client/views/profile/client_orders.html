@@ -36,7 +36,7 @@
                                     </thead>                                  
                                     <tbody>
                                         <tr ng-repeat="order in Client_orders">
-                                            <td title="Go to Order" class="cursor-p" ui-sref="app.order.order-info({id:order.id})">{{order.id}}</td>
+                                            <td title="Go to Order" class="cursor-p" ui-sref="app.order.order-info({id:order.display_number})">{{order.display_number}}</td>
                                             <td>{{order.name}}</td>
                                             <td>{{order.created_date}}</td>
                                             <td>{{order.value}}</td>
@@ -46,7 +46,7 @@
                                             <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                         </md-button>
                                         <md-menu-content width="4">
-                                            <md-menu-item ui-sref="app.order.order-info({id:order.id})">
+                                            <md-menu-item ui-sref="app.order.order-info({id:order.display_number})">
                                                 <md-button>
                                                     Go to Order
                                                 </md-button>

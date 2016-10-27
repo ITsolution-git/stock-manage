@@ -24,6 +24,7 @@ class StaffController extends Controller {
 */
     public function __construct(Staff $staff,Common $common) {
 
+        parent::__construct();
         $this->staff = $staff;
         $this->common = $common;
        

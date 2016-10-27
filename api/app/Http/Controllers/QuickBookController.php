@@ -28,6 +28,7 @@ class QuickBookController extends Controller
     private $realm;
 
     public function __construct(Company $company,Common $common){
+        parent::__construct();
         $this->company = $company;
         $this->common = $common;
 

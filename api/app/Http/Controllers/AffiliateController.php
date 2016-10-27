@@ -25,6 +25,7 @@ class AffiliateController extends Controller {
 * @return void
 */
     public function __construct(Affiliate $affiliate,Common $common,Order $order,Product $product) {
+        parent::__construct();
         $this->affiliate = $affiliate;
         $this->common = $common;
         $this->order = $order;
@@ -278,9 +279,6 @@ class AffiliateController extends Controller {
              } else {
                 exit;
              }
-                   
-
-            
         }
 
         $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
