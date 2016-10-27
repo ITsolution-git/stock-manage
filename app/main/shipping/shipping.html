@@ -157,14 +157,14 @@
                                                         <th>&nbsp;</th>
                                                     </thead>
                                                     <tbody>
-                                                        <tr ng-repeat="data in row.shipping_data">
-                                                            <td>{{data.id}}</td>
+                                                        <tr ng-repeat="shipdata in row.shipping_data">
+                                                            <td>{{shipdata.display_number}}</td>
                                                             <td>{{row.name}}</td>
-                                                            <td ng-if="data.shipping_by != '0000-00-00'">{{ data.shipping_by | date:"M/d/yyyy" }}</td>
-                                                            <td ng-if="data.shipping_by == '0000-00-00'"></td>
-                                                            <td ng-if="data.in_hands_by != '0000-00-00'">{{ data.in_hands_by | date:"M/d/yyyy" }}</td>
-                                                            <td ng-if="data.in_hands_by == '0000-00-00'"></td>
-                                                            <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:data.display_number})"><a>SHIPMENT OVERVIEW</a></td>
+                                                            <td ng-if="shipdata.shipping_by != '0000-00-00'">{{ shipdata.shipping_by | date:"M/d/yyyy" }}</td>
+                                                            <td ng-if="shipdata.shipping_by == '0000-00-00'"></td>
+                                                            <td ng-if="shipdata.in_hands_by != '0000-00-00'">{{ shipdata.in_hands_by | date:"M/d/yyyy" }}</td>
+                                                            <td ng-if="shipdata.in_hands_by == '0000-00-00'"></td>
+                                                            <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:shipdata.display_number})"><a>SHIPMENT OVERVIEW</a></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

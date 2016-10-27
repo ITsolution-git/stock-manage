@@ -27,6 +27,7 @@ class SettingController extends Controller {
 */
     public function __construct(Price $price,Common $common,Api $api, Order $order) {
 
+        parent::__construct();
         $this->price = $price;
         $this->common = $common;
         $this->api = $api;

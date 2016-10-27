@@ -19,6 +19,7 @@ class ClientController extends Controller {
 
 	public function __construct(Client $client,Common $common,Art $art,Company $company) 
  	{
+ 		parent::__construct();
         $this->client = $client;
         $this->common = $common;
         $this->art = $art;

@@ -47,9 +47,9 @@ class Login extends Model {
     * @access public loginRecordUpdate
     * @param  $loginid
     */
-    public function loginRecordUpdate($loginid)
+    public function loginRecordUpdate($token)
     {
-        $result = DB::table('login_record')->where('login_id','=',$loginid)->update(array('logout_time'=>date('Y-m-d H:i:s')));
+        $result = DB::table('login_token')->where('token','=',$token)->delete();
     }
      /**
     * Forgot password          
@@ -132,7 +132,7 @@ class Login extends Model {
     }
     public function change_password($string,$email,$password)
     {
-        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s')));
+        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s'),'reset_password'=>'0'));
         $reset_password = DB::table('reset_password')->where('string','=',$string)->update(array('status'=>1));
         return 1;
     }
@@ -145,5 +145,17 @@ class Login extends Model {
                     ->select('*')
                     ->get();
         return $result;
+    }
+
+    public function verifyloginUser($email, $id) {
+        $admindata = DB::table('users as usr')
+                    ->select('usr.id','usr.user_name','usr.email','usr.status','usr.password','usr.profile_photo','usr.name','r.title','r.slug','usr.name','usr.reset_password')
+                     ->leftjoin('roles as r','r.id', '=' ,'usr.role_id')
+                     ->where('usr.email', '=', $email)
+                     ->where('usr.id', '=', $id)
+                     ->where('usr.is_delete','=','1')
+                     ->where('usr.status','=','1')
+                     ->get();
+        return $admindata;
     }
 }

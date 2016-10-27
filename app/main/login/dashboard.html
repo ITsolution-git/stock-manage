@@ -32,8 +32,9 @@
                         <div class="center-num"><span class="num-style1 text-center">{{productionTotal}}</div>
                 </md-card-content>
                 <div class="dash-footer-box">
-                    <span class="global-labels">Filter by</span>
+                    
                     <div class="dash-footer-filter">
+                        <span class="global-labels pull-left">Filter by</span>
                         <md-select aria-label="Estimates By" ng-model="productionPersonName" ng-change="getProductionSalesMan(productionPersonName)" class="global-labels">
                             <md-option value="0" selected>Sales Member</md-option>
                             <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
@@ -57,8 +58,9 @@
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box">
-                    <span class="global-labels">Sales closed by</span>
+                    
                     <div class="dash-footer-filter">
+                        <span class="global-labels pull-left">Sales closed by</span>
                         <md-select aria-label="Filter By" ng-model="closedSalesMan" ng-change="getSalesClosedSalesMan(closedSalesMan)" class="global-labels">
                             <md-option value="0" selected>Sales Member</md-option>
                             <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
@@ -76,8 +78,8 @@
                     </div>
                 </md-card-title>
                 <md-card-content class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">{{estimatedTotal}} | {{estimated | currency : $ : 0}}</span>
-                        <span class="dash-btwn-txt comp-report-txt">Estimates | Revenue</span>
+                        <div class="center-num"><span class="num-style1 text-center estimatebox">{{estimatedTotal}}<i>Estimates</i></span> <span class="pipe-divider">|</span> <span class="num-style1 text-center estimatebox">{{estimated | currency : $ : 0}}<i>Revenue</i></span>
+                       <!--  <span class="dash-btwn-txt comp-report-txt">Estimates | </span> -->
                         </div>
                 </md-card-content>
                 <!-- <md-divider ></md-divider> -->
@@ -94,8 +96,9 @@
                         </div>
                     </div>
                     <div flex=65 class="box-zerospace">
-                        <span class="global-labels">Estimates by</span>
+                        
                         <div class="dash-footer-filter">
+                            <span class="global-labels pull-left">Estimates by</span>
                             <md-select aria-label="Estimates By" ng-model="estimatesPersonName" ng-change="getEstimatesSalesMan()" class="global-labels">
                                 <md-option value="0" selected>Sales Member</md-option>
                                 <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
@@ -142,11 +145,11 @@
 
 
                 <!-- <md-divider ></md-divider> -->
-                <div class="dash-footer-box text-center">
+                <div class="text-center transparent-bg">
                     
                     <div flex=100 class="box-zerospace">
-                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Show Average Items" ng-click="showItemAvg()"><span class="ng-scope">Average Items</span></button>
-                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Show Average Amount" ng-click="showAmountAvg()"><span class="ng-scope">Average Amount</span></button>
+                        <button ng-class="{active :  active == 1}" type="button" class="dashboard-act-btn approve-btn global-labels" aria-label="Show Average Items" ng-click="showItemAvg()">Average Items</button>
+                        <button ng-class="{active :  active == 2}" type="button" class="dashboard-act-btn approve-btn global-labels" aria-label="Show Average Amount" ng-click="showAmountAvg()">Average Amount</button>
                         <!--<span class="global-labels">Filter by</span>
                         <div class="dash-footer-filter">
                             <md-select aria-label="Filter By" ng-model="averagePersonName" ng-change="getAverageOrdersSalesMan(averagePersonName)" class="global-labels">
@@ -183,7 +186,7 @@
         </div>
         <div layout="row" layout-wrap="nowrap" class="inner-full-box top-30 mb-30 last-row layout-wrap layout-row">
             <div flex-xs flex-gt-xs="25" layout="column">
-                <md-card class="bottom-shadow md-default-theme firstbox">
+                <md-card class="bottom-shadow md-default-theme firstbox ontimebox">
                     <md-card-header layout-align="space-between center">
                         <md-card-header-text>
                             <span class="md-title">On Time In Full</span>
@@ -206,8 +209,9 @@
                     </md-card-content>
                     <div class="dash-footer-box text-center">
                         <div flex=100 class="box-zerospace">
-                            <span class="global-labels">Filter by</span>
+                           
                             <div class="dash-footer-filter">
+                                 <span class="global-labels pull-left">Filter by</span>
                                 <md-select aria-label="Filter By" ng-model="fullDuration" ng-change="getFullOrdersDuration(fullDuration)" class="global-labels">
                                 <md-option value="0" selected>All Time</md-option>
                                 <md-option value="1">Today</md-option>
@@ -240,7 +244,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} | {{unpaid | currency : $ : 0}}</span></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{unpaidTotal}} <span class="pipe-divider">|</span> {{unpaid | currency : $ : 0}}</span></div>
                     </md-card-content>
                 </md-card>
             </div>
@@ -288,7 +292,7 @@
                         </md-menu>
                     </md-card-header>
                     <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{unshippedTotal}} | {{unshipped | currency : $ : 0}}</sup></div>
+                        <div class="center-num"><span class="num-style1 text-center">{{unshippedTotal}} <span class="pipe-divider">|</span> {{unshipped | currency : $ : 0}}</sup></div>
                     </md-card-content>
                 </md-card>
             </div>

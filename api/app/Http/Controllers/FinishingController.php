@@ -18,6 +18,7 @@ class FinishingController extends Controller {
 
     public function __construct(Finishing $finishing, Category $category, Common $common, Order $order)
     {
+        parent::__construct();
         $this->finishing = $finishing;
         $this->category = $category;
         $this->common = $common;
@@ -137,39 +138,6 @@ class FinishingController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return response()->json($data);
     }
-    /**
-     * Delete Data
-     *
-     * @param  post.
-     * @return success message.
-     */
-    public function DeleteFinishing()
-    {
-        $post = Input::all();
-
-        if(!empty($post[0]))
-        {
-            $getData = $this->finishing->deleteFinishing($post[0]);
-            if($getData)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-
-    }
 
     /**
     * Update Finishing record
@@ -205,32 +173,6 @@ class FinishingController extends Controller {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
         return  response()->json(["data" => $response]);
-    }
-
-    public function removeFinishingItem($post)
-    {
-        $category = $this->category->getCategoryByName($post['item_name']);
-
-        if(!empty($category))
-        {
-            $finishingData['table'] = 'finishing';
-            $finishingData['field'] = array('is_delete' => '1');
-            $finishingData['where'] = array('order_id' => $post['order_id'],'category_id' => $category[0]->id);
-
-            $result = $this->finishing->updateFinishing($finishingData);
-        }
-    }
-    public function addFinishingItem($post)
-    {
-        $category = $this->category->getCategoryByName($post['item_name']);
-
-        if(!empty($category))
-        {
-            //$finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qnty']);
-            $post['category_id'] = $category[0]->id;
-            unset($post['item_name']);
-            $result = $this->finishing->addFinishing($post);
-        }
     }
 
     public function addRemoveToFinishing()
