@@ -40,7 +40,20 @@
             $http.post('api/public/shipping/shipOrder',combine_array).success(function(result, status, headers, config) {
                 if(result.data.success == '1') {
                     $("#ajax_loader").hide();
-                   $scope.unshippedProducts = result.data.unshippedProducts;
+                    $scope.unshippedProducts = result.data.unshippedProducts;
+
+                   if($scope.unshippedProducts.length == '0')
+                   {
+                        var UpdateArray = {};
+                        UpdateArray.table ='orders';
+                        UpdateArray.data = {shipping_status:3};
+                        UpdateArray.cond = {id:$scope.order_id};
+
+                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                        {
+                            
+                        });
+                   }
 
                    if($scope.address_id > 0)
                    {
@@ -143,6 +156,16 @@
             }
             if(productArr.distributed_qnty > 0)
             {
+                var UpdateArray = {};
+                UpdateArray.table ='orders';
+                UpdateArray.data = {shipping_status:2};
+                UpdateArray.cond = {id:$scope.order_id};
+
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                {
+                    
+                });
+
                 var combine_array = {};
                 combine_array.product = productArr;
                 combine_array.address_id = $scope.address_id;
