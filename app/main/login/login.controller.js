@@ -169,6 +169,11 @@
                         /*$scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
                         $scope.estimated2=resultEstimated.data.allData[0].totalEstimated[1];*/
                         $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
+                      }else{
+                        $("#ajax_loader").hide();
+                        var data = {"status": "error", "message": "Data not found."}
+                        notifyService.notify(data.status, data.message);
+                        return false;
                       }
                   });
                 }
@@ -191,6 +196,11 @@
                   $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
                   $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
                   $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];*/
+                }else{
+                  $("#ajax_loader").hide();
+                  var data = {"status": "error", "message": "Data not found."}
+                  notifyService.notify(data.status, data.message);
+                  return false;
                 }
             });
             // Average Orders with sales man filtering
@@ -237,6 +247,11 @@
                             $scope.salesClosed=resultSalesClosed.data.allData[0].totalSales;
                             /*$scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
                             $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];*/
+                        }else{
+                          $("#ajax_loader").hide();
+                          var data = {"status": "error", "message": "Data not found."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
                         }
                     });
                 //}
@@ -248,6 +263,11 @@
             $http.post('api/public/invoice/getNoQuickbook',combineNoQuickbook,{headers: {"Authorization": sessionService.get('token')}}).success(function(result){
                 if(result.data.success == '1') {
                   $scope.noqbinvoice=result.data.allData[0].totalInvoice;
+                }else{
+                  $("#ajax_loader").hide();
+                  var data = {"status": "error", "message": "Data not found."}
+                  notifyService.notify(data.status, data.message);
+                  return false;
                 }
             });
 
@@ -260,6 +280,11 @@
                   /*$scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
                   $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];*/
                   $scope.unpaidTotal=resultUnpaid.data.allData[0].totalInvoice;
+                }else{
+                  $("#ajax_loader").hide();
+                  var data = {"status": "error", "message": "Data not found."}
+                  notifyService.notify(data.status, data.message);
+                  return false;
                 }
             });
 
@@ -269,6 +294,11 @@
             $http.post('api/public/invoice/getLatestOrders',combineLatestOrders,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultLatestOrders){
                 if(resultLatestOrders.data.success == '1') {
                   $scope.latestOrders=resultLatestOrders.data.allData;
+                }else{
+                  $("#ajax_loader").hide();
+                  var data = {"status": "error", "message": "Data not found."}
+                  notifyService.notify(data.status, data.message);
+                  return false;
                 }
             });
 
@@ -285,6 +315,11 @@
                   $scope.estimatedPrevious=resultComparison.data.allData[0].totalEstimatedPrevious;
                   $scope.estimatedComparisonPeriod=resultComparison.data.allData[0].year2;
                   $scope.estimatedComparisonPercent=resultComparison.data.allData[0].percentDifference;
+                }else{
+                  $("#ajax_loader").hide();
+                  var data = {"status": "error", "message": "Data not found."}
+                  notifyService.notify(data.status, data.message);
+                  return false;
                 }
                 /*$scope.brand_coordinator = sessionService.get('role_title');*/
             });
@@ -297,6 +332,11 @@
                   $scope.unshipped=resultUnshipped.data.allData[0].totalUnshipped;
                   //$scope.unshipped2=resultUnshipped.data.allData[0].totalUnpaid[1];
                   $scope.unshippedTotal=resultUnshipped.data.allData[0].totalInvoice;
+                }else{
+                  $("#ajax_loader").hide();
+                  var data = {"status": "error", "message": "Data not found."}
+                  notifyService.notify(data.status, data.message);
+                  return false;
                 }
             });
 
@@ -320,6 +360,11 @@
                   if(resultProduction.data.success == '1') {
                       $("#ajax_loader").hide();
                       $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
+                  }else{
+                    $("#ajax_loader").hide();
+                    var data = {"status": "error", "message": "Data not found."}
+                    notifyService.notify(data.status, data.message);
+                    return false;
                   }
                 });
               //}
@@ -336,6 +381,11 @@
                     if(resultFullShipped.data.success == '1') {
                       $("#ajax_loader").hide();
                       $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
+                    }else{
+                      $("#ajax_loader").hide();
+                      var data = {"status": "error", "message": "Data not found."}
+                      notifyService.notify(data.status, data.message);
+                      return false;
                     }
                   });
               //}
