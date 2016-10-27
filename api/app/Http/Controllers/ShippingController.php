@@ -152,21 +152,6 @@ class ShippingController extends Controller {
             $result['shipping'][0]->fully_shipped = '';
         }
 
-        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
-        {
-            $result['shipping'][0]->shipping_status = 1;
-        }
-        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 2;
-        }
-        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 3;
-        }
-
-        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
-
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if(!empty($result['shippingBoxes']))
@@ -750,21 +735,6 @@ class ShippingController extends Controller {
 
         $result = $this->shipping->shippingDetail($data);
         
-        if($result['shipping'][0]->distributed == '' || $result['shipping'][0]->distributed == 0)
-        {
-            $result['shipping'][0]->shipping_status = 1;
-        }
-        if($result['shipping'][0]->distributed > 0 && $result['shipping'][0]->distributed < $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 2;
-        }
-        if($result['shipping'][0]->distributed == $result['shipping'][0]->total)
-        {
-            $result['shipping'][0]->shipping_status = 3;
-        }
-
-        $this->common->UpdateTableRecords('shipping',array('id' => $data['shipping_id']),array('shipping_status' => $result['shipping'][0]->shipping_status));
-
         if(empty($result['shipping']))
         {
               $response = array(

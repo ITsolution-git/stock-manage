@@ -18,36 +18,31 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.display_number,o.name,c.client_company,SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total,misc_type.value as approval,o.approval_id')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.display_number,o.name,c.client_company,misc_type.value as approval,o.approval_id')];
 
 
         $shippingData = DB::table('orders as o')
                         ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
                         ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
                         ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                        ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
                         ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                         ->select($listArray)
                         ->where('o.is_complete','=','1')
                         ->where('po.is_active','=','1')
                         ->where('o.company_id','=',$post['company_id']);
+                        
                         if($post['type'] == 'wait')
                         {
                             $shippingData = $shippingData->where('pol.qnty_purchased','>',0);
-                            $shippingData = $shippingData->Where(function($query) use($search)
-                            {
-                                $query->orWhere('pas.distributed_qnty', '=', 0)
-                                ->orWhere('pas.distributed_qnty', '=', NULL)
-                                ->orWhere('pas.distributed_qnty', '=', '');
-                            });
+                            $shippingData = $shippingData->Where('o.shipping_status', '=', 1);
                         }
                         elseif($post['type'] == 'progress')
                         {
-                            $shippingData = $shippingData->havingRaw('distributed < total');
+                            $shippingData = $shippingData->where('o.shipping_status','=',2);
                         }
                         else
                         {
-                            $shippingData = $shippingData->where('pas.distributed_qnty','>',0);
+                            $shippingData = $shippingData->where('o.shipping_status','=',3);
                         }
                         if($search != '')
                         {
@@ -58,14 +53,6 @@ class Shipping extends Model {
                                 ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                             });
                         }
-                        if($post['type'] == 'progress')
-                        {
-                            $shippingData = $shippingData->where('pas.distributed_qnty','>',0);
-                        }
-                        if($post['type'] == 'shipped')
-                        {
-                            $shippingData = $shippingData->havingRaw('distributed = total');
-                        }
                         $shippingData = $shippingData->GroupBy('o.id');
                         $shippingData = $shippingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                         ->skip($post['start'])
@@ -74,44 +61,70 @@ class Shipping extends Model {
 
         $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
 
-        if($post['type'] == 'shipped')
+        if(!empty($shippingData))
         {
-            if(!empty($shippingData))
+            foreach ($shippingData as $shipping)
             {
-                foreach ($shippingData as $shipping)
+                $total_assigned = DB::table('purchase_order as po')
+                                    ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+                                    ->select(DB::raw('SUM(pol.qnty_purchased - pol.short) as total'))
+                                    ->where('po.order_id','=',$shipping->id)
+                                    ->get();
+                
+                if($total_assigned[0]->total > 0)
                 {
-                    $shipping_data = DB::table('shipping as s')
-                                        ->leftJoin('orders as o', 's.order_id', '=', 'o.id')
-                                        ->select('s.id','o.date_shipped as shipping_by','o.in_hands_by','s.display_number')
-                                        ->where('s.order_id','=',$shipping->id)
-                                        ->get();
-                    
-                    if(empty($shipping_data))
+                    $shipping->total = $total_assigned[0]->total;
+                    $shipping->distributed = 0;
+                }
+
+                $total_distributed = DB::table('shipping as s')
+                                    ->leftJoin('product_address_mapping as pam','s.id','=','pam.shipping_id')
+                                    ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                                    ->select(DB::raw('SUM(pas.distributed_qnty) as distributed'))
+                                    ->where('s.order_id','=',$shipping->id)
+                                    ->get();
+                
+                $shipping->distributed = $total_distributed[0]->distributed;
+
+                if($post['type'] == 'wait')
+                {
+                    $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
+                                        LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$shipping->id."' ");
+                
+                    foreach($purchase_detail as $row)
                     {
-                        $shipping->shipping_created = 0;
-                        $shipping->shipping_data = array();
+                        $value = DB::table('purchase_detail')
+                                ->where('id','=',$row->purchase_detail)
+                                ->update(array('remaining_qnty'=>$row->total));
                     }
-                    else
+
+                    $shipping->distributed = 0;
+                }
+                if($post['type'] == 'shipped')
+                {
+                    if(!empty($shippingData))
                     {
-                        $shipping->shipping_created = 1;
-                        $shipping->shipping_data = $shipping_data;
+                        foreach ($shippingData as $shipping)
+                        {
+                            $shipping_data = DB::table('shipping as s')
+                                                ->leftJoin('orders as o', 's.order_id', '=', 'o.id')
+                                                ->select('s.id','o.date_shipped as shipping_by','o.in_hands_by','s.display_number')
+                                                ->where('s.order_id','=',$shipping->id)
+                                                ->get();
+                            
+                            if(empty($shipping_data))
+                            {
+                                $shipping->shipping_created = 0;
+                                $shipping->shipping_data = array();
+                            }
+                            else
+                            {
+                                $shipping->shipping_created = 1;
+                                $shipping->shipping_data = $shipping_data;
+                            }
+                        }
                     }
                 }
-            }
-        }
-
-        if($post['type'] == 'wait')
-        {
-            foreach ($shippingData as $data)
-            {
-                $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
-                                            LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$data->id."' ");
-                foreach($purchase_detail as $row)
-                {
-                    $value = DB::table('purchase_detail')
-                            ->where('id','=',$row->purchase_detail)
-                            ->update(array('remaining_qnty'=>$row->total));
-                }            
             }
         }
 
@@ -134,8 +147,8 @@ class Shipping extends Model {
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
 
         $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number','o.display_number',
-                        's.boxing_type','o.date_shipped as shipping_by','o.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code','s.shipping_method','s.shipping_status',
-                        'o.date_shipped','o.in_hands_by',DB::raw('SUM(pas.distributed_qnty) as distributed,SUM(pol.qnty_purchased - pol.short) as total'),'o.custom_po','s.shipping_note','s.display_number as shipping_display_number','c.display_number as client_display_number'];
+                        's.boxing_type','o.date_shipped as shipping_by','o.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.code','s.shipping_method','o.shipping_status',
+                        'o.date_shipped','o.in_hands_by','o.custom_po','s.shipping_note','s.display_number as shipping_display_number','c.display_number as client_display_number'];
        
         $shippingData = DB::table('shipping as s')
                         ->leftJoin('orders as o','s.order_id','=','o.id')
@@ -144,12 +157,26 @@ class Shipping extends Model {
                         ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
                         ->leftJoin('state as st','cd.state','=','st.id')
                         ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$data['company_id']))
-                        ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
-                        ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                        ->leftJoin('product_address_size_mapping as pas','pol.purchase_detail','=','pas.purchase_detail_id')
                         ->select($listArray)
                         ->where($whereShippingConditions)
                         ->GroupBy('o.id')->get();
+
+
+        $total_assigned = DB::table('purchase_order as po')
+                                    ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+                                    ->select(DB::raw('SUM(pol.qnty_purchased - pol.short) as total'))
+                                    ->where('po.order_id','=',$shippingData[0]->order_id)
+                                    ->get();
+                
+        $shippingData[0]->total = $total_assigned[0]->total;
+
+        $total_distributed = DB::table('product_address_mapping as pam')
+                            ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                            ->select(DB::raw('SUM(pas.distributed_qnty) as distributed'))
+                            ->where('pam.shipping_id','=',$data['shipping_id'])
+                            ->get();
+        
+        $shippingData[0]->distributed = $total_distributed[0]->distributed;
 
         $whereItemConditions = ['pam.shipping_id' => $data['shipping_id']];
         $listItemsArray = ['pam.shipping_id','pd.id','pd.size','pd.qnty','pd.shipped_qnty','pd.boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
