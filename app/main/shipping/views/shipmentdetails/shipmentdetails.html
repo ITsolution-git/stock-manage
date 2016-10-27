@@ -68,13 +68,13 @@
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <md-input-container flex="100" class="margin-0 date-input">
                                     <span class="mb-20">Date Shipped</span>
-                                        <input class="mt-10" kendo-date-picker ng-model="shipping.date_shipped" k-ng-model="dateObject3" ui-event="{ change : 'UpdateShippingDate(\'date_shipped\',shipping.date_shipped,shipping.shipping_id)' }"/>
+                                        <input aria-label="Date Shipped" class="mt-10" kendo-date-picker ng-model="shipping.date_shipped" k-ng-model="dateObject3" ui-event="{ change : 'UpdateShippingDate(\'date_shipped\',shipping.date_shipped,shipping.shipping_id)' }"/>
                                     </md-input-container>
                                 </div>
                                 <div layout="column" flex="50" class="mrg10-R">
                                     <md-input-container flex="100" class="margin-0 date-input">
                                     <span class="mb-20">Fully Shipped</span>
-                                        <input class="mt-10" kendo-date-picker ng-model="shipping.fully_shipped" k-ng-model="dateObject4" ui-event="{ change : 'UpdateShippingDate(\'fully_shipped\',shipping.fully_shipped,shipping.shipping_id)' }"/>
+                                        <input aria-label="Fully Shipped" class="mt-10" kendo-date-picker ng-model="shipping.fully_shipped" k-ng-model="dateObject4" ui-event="{ change : 'UpdateShippingDate(\'fully_shipped\',shipping.fully_shipped,shipping.shipping_id)' }"/>
                                     </md-input-container>
                                 </div>
                             </div>
@@ -126,19 +126,19 @@
                                 </div>
 
                                 <div layout="column" flex="50" class="pull-right">
-                                    <md-select ng-model="shipping.shipping_status" placeholder="Shipping Type" class="pull-right mb-0 mt-2" name="shipping_status" ng-change="updateShippingAll('shipping_status',shipping.shipping_status,shipping.shipping_id)">
-                                        <md-option>Shipping Status</md-option>
-                                        <md-option value="1" ng-selected="shipping.shipping_status == 1">Waiting To Ship</md-option>
-                                        <md-option value="2" ng-selected="shipping.shipping_status == 2">Order In Process</md-option>
-                                        <md-option value="3" ng-selected="shipping.shipping_status == 3">Shipped</md-option>
-                                    </md-select>
+                                    <div layout="column" flex="100">
+                                    <div class="global-labels">Shipping Status</div>
+                                    <div ng-if="shipping.shipping_status == 1" class="global-text">Waiting To Ship</div>
+                                    <div ng-if="shipping.shipping_status == 2" class="global-text">Order In Process</div>
+                                    <div ng-if="shipping.shipping_status == 3" class="global-text">Shipped</div>
+                                </div>
                                 </div>
                             </div>
 
                             <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="100">
                                     <md-input-container flex="100" class="margin-0">
-                                        <textarea>{{shipping.description}} {{shipping.attn}} {{shipping.address}} {{shipping.address2}} {{shipping.city}} {{shipping.zipcode}} {{shipping.state}} {{shipping.country}}</textarea>
+                                        <textarea aria-label="Address">{{shipping.description}} {{shipping.attn}} {{shipping.address}} {{shipping.address2}} {{shipping.city}} {{shipping.zipcode}} {{shipping.state}} {{shipping.country}}</textarea>
                                     </md-input-container>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                             <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="100">
                                     <md-input-container flex="100" class="margin-0">
-                                        <textarea placeholder="Note" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">{{shipping.shipping_note}}</textarea>
+                                        <textarea aria-label="Note" placeholder="Note" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">{{shipping.shipping_note}}</textarea>
                                     </md-input-container>
                                 </div>
                             </div>
