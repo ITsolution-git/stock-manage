@@ -530,6 +530,7 @@ class OrderController extends Controller {
 
     public function sendEmail() {
 
+        ini_set('memory_limit', '1024M');
         $post = Input::all();
         $email = trim($post['email']);
         $fromemail = trim($post['from_email']);

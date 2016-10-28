@@ -76,7 +76,7 @@
             combine_array.balance = balance;
             combine_array.subject = subject;
 
-            //$("#ajax_loader").show();
+            $("#ajax_loader").show();
              
             $http.post('api/public/order/sendEmail',combine_array).success(function(result) 
             {
