@@ -26,12 +26,25 @@
                         return sessionService.AccessService('ALL','true');
                     },
                 }
-            }).state('app.production.productionInfo', {
-            url: '/productionDetail/:id',
+            }).state('app.finishingqueue', {
+            url: '/finishingqueue',
             views: {
                 'content@app': {
-                    templateUrl: 'app/main/production/views/productionInfo/productionInfo.html',
-                    controller: 'ProductionInfoController as vm'
+                    templateUrl: 'app/main/production/finishingqueue.html',
+                    controller: 'FinishingqueueController as vm'
+                }
+            },resolve: {
+                    checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('ALL','true');
+                    }
+                }
+        }).state('app.prodqueue', {
+            url: '/prodqueue',
+            views: {
+                'content@app': {
+                    templateUrl: 'app/main/production/prodqueue.html',
+                    controller: 'ProductionqueueController as vm'
                 }
             },resolve: {
                     checksession : function (sessionService)

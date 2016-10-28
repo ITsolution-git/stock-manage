@@ -1650,4 +1650,54 @@ ul.misc-left-pane {
 a.editable-click:hover, a.editable-click:focus {
   border-bottom: solid 1px #252932 !important; }
 
+.zero-padding {
+  padding: 0; }
+
+.card-details .stokkup-custom-btn1 {
+  font-size: 10.5px;
+  padding: 0 12px;
+  text-transform: capitalize; }
+
+.screenset-logo {
+  font-weight: bold;
+  margin-right: 3px;
+  font-size: 20px;
+  color: #FF9900;
+  line-height: 10px; }
+
+.garment-logo {
+  font-weight: bold;
+  margin-right: 3px;
+  font-size: 20px;
+  color: #3eb74f;
+  line-height: 10px; }
+
+.rush-box {
+  border: solid 1px #de0000;
+  float: left;
+  position: relative; }
+
+.rush-strip {
+  background-color: #de0000;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center; }
+  .rush-strip span {
+    font-size: 16px;
+    color: #fff;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transform: rotate(-90deg);
+    width: 100%;
+    text-align: center; }
+
+.cam-logo .fa, .prod-icons .fa {
+  font-size: 15px;
+  color: #252932; }
+
+.garment-logo.disabled, .screenset-logo.disabled {
+  color: #cdcfd3; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */

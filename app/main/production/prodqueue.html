@@ -1,0 +1,208 @@
+<!--Filter starts here -->
+<div class="filter-menu" >
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
+        <md-toolbar class=" filter-title">
+            <h1 class="md-toolbar-tools">Filter By</h1>
+        </md-toolbar>
+        <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+            <div class="contant-filter filter-detail" >
+                <div layout="column" class="f-box-1 first-cheak">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.toggle" ng-click="vm.toggle = false">
+                            SALES REP 
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                            SALES REP
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
+                        <div layout="column" >
+                            <div ng-dropdown-multiselect="" options="vm.salesCheckData" selected-model="vm.salesCheckModal" class="cheak-box-class" extra-settings="vm.salesChecksettings"></div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" class="f-box-2">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.createdate" ng-click="vm.createdate = false">
+                            CREATE DATE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.createdate" ng-click="vm.createdate = true">
+                            CREATE DATE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div class="f-body" ng-if="vm.createdate">
+                        <div layout="column" >
+                            <div class="date-input width100">
+                                <input id="datepicker" kendo-date-picker ng-model="vm.createDate" k-ng-model="dateObject6" placeholder="Dates"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" class="f-box-1">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
+                            COMPANY  
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
+                            COMPANY
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.companyfilter">
+                        <div layout="column" >
+                             <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings"  class="cheak-box-class"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </md-content>
+        <div class="filter-footer" layout="row">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button"  flex="50" ng-click="filterOrders()">APPLY FILTERS
+            </md-button>
+            <md-button ng-click="vm.resetFilter()" class="stokkup-custom-btn1 md-button bg-grey md-raised" flex="50">RESET FILTERS</md-button>
+
+        </div>
+    </md-sidenav>
+</div>
+<!--Filter ends here-->
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="tab-view-page simple-table-container stokkup-main-tableview">
+    	 <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
+            <div class="table-title-text" class="cursor-p">Production Queue</div>
+            <div class="pull-right right-search-box">
+                <div class="order-modal-title pull-right" layout="row" layout-align="end center">
+                    <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
+                </div>   
+                <md-icon  ng-click="vm.openRightMenu($event);"  md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
+              Filter By
+            </md-tooltip></md-icon>
+                 <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="top-srch-label">Search...</label>
+                        <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+
+        <!--Table starts here -->
+        <div class="ms-responsive-table-wrapper">
+            <div>
+                <table class="dataTable row-border">
+                    
+                    <thead>
+                    	<th>Assets</th>
+                    	<th>Order Name</th>
+                    	<th>Position</th>
+                    	<th>Client</th>
+                    	<th>Production Type</th>
+                    	<th>Run Date</th>
+                    	<th>In Hands Date</th>
+                    	<th>&nbsp;</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo disabled">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo disabled">S</span>
+                            	<span class="garment-logo disabled">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+                <div tasty-pagination class="tasty-page"></div>
+            </div>
+        </div>
+        <!--Table ends here -->
+    </div> 
+</div>
+<!--Finishing Queue page ends here -->

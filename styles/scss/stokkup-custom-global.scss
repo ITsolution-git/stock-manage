@@ -55,6 +55,7 @@ $sidenav-bg:#303440;
 $sidenav-color:#9fa1a7;
 $teal-green:#26b999;
 $red-border:#de0000;
+$orange-txt:#FF9900;
 /*All color variables ends here */
 
 $datatable-heading-size:14px;
@@ -2068,4 +2069,55 @@ ul.misc-left-pane{
 a.editable-click:hover, a.editable-click:focus{
 	border-bottom:solid 1px $stokkup-table-footer-txtcolor !important;
 	@extend .ease-animations;
+}
+.zero-padding{
+	padding:$zero;
+}
+.card-details .stokkup-custom-btn1{
+	font-size:10.5px;
+	padding:$zero 12px;
+	text-transform:capitalize;
+}
+.screenset-logo{
+	font-weight:bold;
+	margin-right:3px;
+	font-size:20px;
+	color:$orange-txt;
+	line-height:10px;
+}
+.garment-logo{
+	font-weight:bold;
+	margin-right:3px;
+	font-size:20px;
+	color:$app-green;
+	line-height:10px;
+}
+.rush-box{
+	border:solid 1px $red-border;
+	float:$left;
+	position:$pos-relative;
+}
+.rush-strip{
+	background-color:$red-border;
+	position:$pos-absolute;
+	height:$full-width;
+	display:flex;
+	align-items:center;
+	span{
+		font-size:16px;
+		color:$white-color;
+		line-height:20px;
+		text-transform:uppercase;
+		font-weight:$font-weight-600;
+		transform: rotate(-90deg);
+		width:$full-width;
+		text-align:center;
+	}
+}
+.cam-logo .fa, .prod-icons .fa{
+	font-size:15px;
+	color:$stokkup-table-footer-txtcolor;
+}
+.garment-logo.disabled, .screenset-logo.disabled{
+	color:$disable-btn-txt-color;
 }
