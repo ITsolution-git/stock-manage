@@ -52,6 +52,19 @@
                         return sessionService.AccessService('ALL','true');
                     }
                 }
+        }).state('app.scheduleboard', {
+            url: '/scheduleboard',
+            views: {
+                'content@app': {
+                    templateUrl: 'app/main/production/scheduleboard.html',
+                    controller: 'ScheduleBoardController as vm'
+                }
+            },resolve: {
+                    checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('ALL','true');
+                    }
+                }
         })
             ;
 

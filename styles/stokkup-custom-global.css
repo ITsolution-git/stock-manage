@@ -1700,4 +1700,75 @@ a.editable-click:hover, a.editable-click:focus {
 .garment-logo.disabled, .screenset-logo.disabled {
   color: #cdcfd3; }
 
+.shipping-custom-tab.schedule-board-tab md-tabs-canvas {
+  width: 100%; }
+
+.shipping-custom-tab.schedule-board-tab md-tabs-canvas md-pagination-wrapper {
+  left: auto;
+  right: 30px; }
+
+.boardtxt {
+  font-size: 11px;
+  margin-top: 10px !important;
+  right: 300px;
+  position: absolute; }
+
+.scheduleboarddate .date-input span.k-picker-wrap input {
+  border-radius: 5px;
+  border: solid 1px #000; }
+
+.mac-slots {
+  width: 25%;
+  float: left;
+  margin: 0;
+  min-height: 100px; }
+
+.odd-slot {
+  background-color: #e8e9ea; }
+
+.even-slot {
+  background-color: #efeff0; }
+
+.mac-shiftblocks-bg {
+  background-color: #f4f4f5; }
+
+.shift-slot {
+  width: 30.5%;
+  height: 60px;
+  float: left;
+  margin: 0; }
+  .shift-slot span {
+    font-size: 12px;
+    line-height: 15px; }
+  .shift-slot h6 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold; }
+
+.shift-slot.middle-slot {
+  margin: 0 10px; }
+
+.shift-post-card {
+  width: 100%;
+  height: 100px;
+  background-color: #fff;
+  border: solid 1px #e0e1e3;
+  margin: 0 0 10px 0; }
+
+.machine-full-slot {
+  width: 100%;
+  height: 500px;
+  overflow-y: scroll;
+  border-right: solid 1px #efefef;
+  background-color: #fff; }
+  .machine-full-slot h4 {
+    padding: 0;
+    margin: 0 0 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700; }
+
+.schedule-main {
+  border: solid 1px #ededed; }
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */

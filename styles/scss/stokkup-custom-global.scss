@@ -2121,3 +2121,78 @@ a.editable-click:hover, a.editable-click:focus{
 .garment-logo.disabled, .screenset-logo.disabled{
 	color:$disable-btn-txt-color;
 }
+
+.shipping-custom-tab.schedule-board-tab md-tabs-canvas{
+	width:$full-width;
+}
+.shipping-custom-tab.schedule-board-tab md-tabs-canvas md-pagination-wrapper{
+	left:auto;
+	right:30px;
+}
+.boardtxt{
+	font-size:11px;
+	margin-top:10px !important;
+	right:300px;
+	position:$pos-absolute;
+}
+.scheduleboarddate .date-input span.k-picker-wrap input{
+	border-radius:5px;
+	border:solid 1px #000;
+}
+.mac-slots{
+	width:25%;
+	float:left;
+	margin:$zero;
+	min-height:100px;
+}
+.odd-slot{
+	background-color:#e8e9ea;
+}
+.even-slot{
+	background-color:#efeff0;
+}
+.mac-shiftblocks-bg{
+	background-color:#f4f4f5;
+}
+.shift-slot{
+	width:30.5%;
+	height:60px;
+	float:left;
+	margin:0;
+	span{
+		font-size:12px;
+		line-height:15px;
+	}
+	h6{
+		margin:$zero;
+		font-size:20px;
+		font-weight:bold;
+	}
+}
+.shift-slot.middle-slot{
+	margin:0 10px;
+}
+.shift-post-card{
+	width:$full-width;
+	height:100px;
+	background-color:$white-color;
+	border:solid 1px $stokkup-table-footer-bg;
+	margin:0 0 10px 0;
+}
+.machine-full-slot{
+	width:$full-width;
+	height:500px;
+	overflow-y:scroll;
+	border-right:solid 1px #efefef;
+	background-color:$white-color;
+	h4{
+		padding:$zero;
+		margin:$zero $zero 10px;
+		width:$full-width;
+		text-align:center;
+		font-weight:$font-weight-700;
+	}
+}
+.schedule-main{
+	border:solid 1px #ededed;
+}

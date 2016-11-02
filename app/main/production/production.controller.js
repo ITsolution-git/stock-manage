@@ -5,7 +5,9 @@
             .module('app.production')
             .controller('ProductionController', ProductionController)
             .controller('FinishingqueueController', FinishingqueueController)
-            .controller('ProductionqueueController', ProductionqueueController);
+            .controller('ProductionqueueController', ProductionqueueController)
+            .controller('ScheduleBoardController', ScheduleBoardController);
+
 
             
 
@@ -28,6 +30,14 @@
      
     }
     function ProductionqueueController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
+    {
+        var vm = this;
+        vm.searchQuery = "";
+        
+        // Data
+     
+    }
+    function ScheduleBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
     {
         var vm = this;
         vm.searchQuery = "";

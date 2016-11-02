@@ -1,0 +1,330 @@
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="tab-view-page simple-table-container stokkup-main-tableview">
+        <md-content class="shipping-custom-tab transparent-bg schedule-board-tab">
+            <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                <div class="table-title white-bg bottom-shadow" flex=100 layout="row" layout-align="space-between center">
+                    <div class="table-title-text pull-left" flex=70 class="cursor-p">Production Schedule Board</div>
+                    <div class="pull-right boardtxt" flex=30><span class="text-uppercase"><b>Board views:</b></span></div>
+                    
+                </div>
+
+                <!---Order Waiting to Ship Tab-->
+                <div ng-controller="shippingController">
+                    <md-tab label="day" ng-click="getTab('wait')">
+                        <div class="fixe-top-tabs">
+                        	<div class="inner-full-box mt-30">
+                        		<div class="white-bg pull-left full-row schedule-main">
+                            		<div class="prod-board-details">
+                            			<div flex=60>
+                            			</div>
+                            			<div flex=40 class="pull-right">
+                            				<md-input-container class="md-block date-input scheduleboarddate">
+                            					
+							                    <input kendo-date-picker k-ng-model="dateObject2">
+							                </md-input-container>
+                            			</div>
+                            		</div>
+	                        	</div>
+	                        	<div class="full-row pull-left">
+
+	                        		<div class="mac-slots odd-slot">
+	                        			<div class="p-15 full-row pull-left">
+	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine one</span>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span class="mb-10">1st Shift</span>
+		                        				<h6>10%</h6>
+		                        			</div>
+		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>2nd Shift</span>
+		                        				<h6>60%</h6>
+		                        			</div>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>3rd Shift</span>
+		                        				<h6>23%</h6>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
+		                        			</div>
+	                        			</div>
+	                        			<div class="machine-full-slot">
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">1st Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">2nd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">3rd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+		                        		</div>	
+	                        		</div>
+	                        		
+	                        		<div class="mac-slots even-slot">
+	                        			<div class="p-15 full-row pull-left">
+	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine two</span>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span class="mb-10">1st Shift</span>
+		                        				<h6>10%</h6>
+		                        			</div>
+		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>2nd Shift</span>
+		                        				<h6>60%</h6>
+		                        			</div>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>3rd Shift</span>
+		                        				<h6>23%</h6>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
+		                        			</div>
+	                        			</div>
+
+	                        			<div class="machine-full-slot">
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">1st Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">2nd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">3rd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+		                        		</div>	
+	                        		</div>
+
+	                        		<div class="mac-slots odd-slot">
+	                        			<div class="p-15 full-row pull-left">
+	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine three</span>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span class="mb-10">1st Shift</span>
+		                        				<h6>10%</h6>
+		                        			</div>
+		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>2nd Shift</span>
+		                        				<h6>60%</h6>
+		                        			</div>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>3rd Shift</span>
+		                        				<h6>23%</h6>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
+		                        			</div>
+	                        			</div>
+	                        			<div class="machine-full-slot">
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">1st Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">2nd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">3rd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+		                        		</div>	
+	                        		</div>
+	                        		
+	                        		<div class="mac-slots even-slot">
+	                        			<div class="p-15 full-row pull-left">
+	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine four</span>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span class="mb-10">1st Shift</span>
+		                        				<h6>10%</h6>
+		                        			</div>
+		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>2nd Shift</span>
+		                        				<h6>60%</h6>
+		                        			</div>
+		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+		                        				<span>3rd Shift</span>
+		                        				<h6>23%</h6>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
+		                        			</div>
+		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
+		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
+		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
+		                        			</div>
+	                        			</div>
+
+	                        			<div class="machine-full-slot">
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">1st Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">2nd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+
+		                        			<div class="full-row pull-left p-10">
+		                        				<h4 class="text-center">3rd Shift</h4>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        				<div class="shift-post-card"></div>
+		                        			</div>
+		                        		</div>	
+	                        		</div>
+	                        	</div>
+                        	</div>
+                        </div>                 
+                    </md-tab>
+                </div>
+                <!---Order In Progress Tab-->
+                <!-- <div ng-controller="shippingProgressController">
+                    <md-tab label="week" ng-click="getTab('progress')">
+                        <div class="ms-responsive-table-wrapper">
+                            <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                <table class="dataTable row-border">
+                                    <thead tasty-thead></thead>
+                                    <tbody> 
+                                        <tr ng-repeat="progress in rows">
+                                            <td>{{ progress.display_number}}</td>
+                                            <td>{{ progress.client_company}}</td>
+                                            <td>
+                                                <md-select aria-label="status" ng-model="progress.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',progress.approval_id,progress.id)" ng-disabled="allow_access == '0'">
+                                                <md-option ng-selected="progress.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                            </md-select>
+                                        </td>
+                                            <td>{{ progress.distributed}}/{{ progress.total}}</td>
+                                            <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:progress.display_number})"><a>SHIP</a></td>
+                                            <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
+                                        </tr>                    
+                                    </tbody>
+                                </table>
+                                <div tasty-pagination class="tasty-page"></div>
+                            </div>
+                            <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+                               <table class="dataTable row-border">
+                                    <thead>
+                                        <tr>
+                                            <th>No Records Found</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </md-tab>
+                </div> -->
+                <!---Shipped Orders Tab-->
+               <!--  <div ng-controller="shippingShippedController">
+                    <md-tab label="machine" ng-click="getTab('shipped')">
+                        <div class="ms-responsive-table-wrapper">
+                            <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                <table class="dataTable row-border">
+                                    <thead tasty-thead></thead>
+                                    <tbody> 
+                                        <tr ng-repeat-start="row in rows">
+                                            <td>{{ row.display_number}}</td>
+                                            <td>{{ row.client_company}}</td>
+                                            <td>
+                                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.id)" ng-disabled="allow_access == '0'">
+                                                    <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                                </md-select>
+                                            </td>
+                                            <td>{{ row.distributed}}/{{ row.total}}</td>
+                                            <td class="accor" ng-show="row.shipping_data.length > 0">
+                                                <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                                                <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                                            </td>
+                                            <td ng-if="row.shipping_created == '0'" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:row.display_number})"><a>SHIP</a></td>
+                                        </tr>
+                                        <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
+                                            <td colspan="8" class="collpas">
+                                                <table class="dataTable row-border hover">
+                                                    <thead>
+                                                        <th>Shipping Id</th>
+                                                        <th>Job Name</th>
+                                                        <th>Shipping By</th>
+                                                        <th>In Hands By</th>
+                                                        <th>&nbsp;</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="shipdata in row.shipping_data">
+                                                            <td>{{shipdata.display_number}}</td>
+                                                            <td>{{row.name}}</td>
+                                                            <td ng-if="shipdata.shipping_by != '0000-00-00'">{{ shipdata.shipping_by | date:"M/d/yyyy" }}</td>
+                                                            <td ng-if="shipdata.shipping_by == '0000-00-00'"></td>
+                                                            <td ng-if="shipdata.in_hands_by != '0000-00-00'">{{ shipdata.in_hands_by | date:"M/d/yyyy" }}</td>
+                                                            <td ng-if="shipdata.in_hands_by == '0000-00-00'"></td>
+                                                            <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:shipdata.display_number})"><a>SHIPMENT OVERVIEW</a></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        </tr>               
+                                    </tbody>
+                                </table>
+                                <div tasty-pagination class="tasty-page"></div>
+                            </div>
+                            <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+                               <table class="dataTable row-border">
+                                    <thead>
+                                        <tr>
+                                            <th>No Records Found</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </md-tab>
+                </div> -->
+            </md-tabs>
+        </md-content>
+    </div> 
+</div>
