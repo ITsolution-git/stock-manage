@@ -20,31 +20,32 @@ abstract class Controller extends BaseController {
     use DispatchesCommands, ValidatesRequests;
 
     public function __construct() {
-    	$common = new Common();
-    	$this->common = $common;
-        $headers = Request::header('Authorization');
+    	  $common = new Common();
+    	  $this->common = $common;
+        $token = Request::header('Authorization');
+        $UserId = Request::header('AuthUserId');
         $post = Input::all();
-        if(empty($post['pdf_token']))
-        {
-			if (!empty($headers)){
-				$token_data = $this->common->GetTableRecords('login_token',array('token' => $headers),array(),0,0,'token');
-				if (empty($token_data)) {
-					$message = "Invalid Token";
-	          		$data = json_encode(array("data"=>["success"=>0,'message' =>$message]));
-          			print_r($data);
+
+        if(empty($post['pdf_token']))  // CHECK PDF FILE TOKEN
+        { 
+      			if (!empty($token) && !empty($UserId))  // CHECK TOKEN AND USERID COMBINATION
+            {
+        				$token_data = $this->common->GetTableRecords('login_token',array('token' => $token,'user_id'=>$UserId),array(),0,0,'token');
+        				if (empty($token_data)) 
+                {
+        	          $data = json_encode(array("data"=>["success"=>TOKEN_CODE,'message' =>"Sorry your Token is invalid or expired"]));
+                  	Session::flush();
+                  	print_r($data);
+        	          exit;
+    				    }
+  			    }
+            else
+            {
+    				    $data = json_encode(array("success"=>TOKEN_CODE,'message' =>'Invalid Token'));
           			Session::flush();
-          			Auth::logout();
-	          		exit;
-				}
-			}else{
-				$data = array("success"=>0,'message' =>'Invalid Token');
-            	$message = "Invalid Token";
-          		$data = json_encode(array("data"=>["success"=>0,'message' =>$message]));
-      			print_r($data);
-      			Session::flush();
-      			Auth::logout();
-      			exit;
-	        }
-     	}        
+                print_r($data);
+          			exit;
+    	      }
+       	}        
     }
-}
+} 
