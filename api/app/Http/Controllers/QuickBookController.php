@@ -28,7 +28,7 @@ class QuickBookController extends Controller
     private $realm;
 
     public function __construct(Company $company,Common $common){
-        parent::__construct();
+       
         $this->company = $company;
         $this->common = $common;
 
@@ -37,6 +37,7 @@ class QuickBookController extends Controller
         $this->company_id = $company_id;
 
         $result = $this->company->getQBAPI($company_id);
+
 
         if($result[0]->is_sandbox == 0) {
             $this->is_sandbox = true;
