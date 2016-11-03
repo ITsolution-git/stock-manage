@@ -3,7 +3,7 @@
 
         <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-                Purchase Order #{{po_data.po_display}} for Client <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{po_data.client_company}}</a>
+                Purchase Order {{po_data.po_display}} Job Number {{ po_data.ord_display}} Client Name: <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{po_data.client_company}}</a>
             </div>
             <div class="pull-right right-search-box">
                 <a class="pull-right common-header-links" ui-sref="app.purchaseOrder">BACK TO PO'<span class="text-lower">s</span></a>

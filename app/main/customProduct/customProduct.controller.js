@@ -14,8 +14,6 @@
         vm.rangeTo;
         $scope.company_id = sessionService.get('company_id');
         
-
-    
         $scope.init = {
           'count': 20,
           'page': 1,
@@ -87,25 +85,6 @@
             vm.tableInstance.search(query).draw();
         }
 
-/*
-        function openCustomProductDialog(ev, product_id)
-        {
-
-            $mdDialog                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .show({
-                controller: 'CustomProductDialogController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/customProduct/dialogs/customProduct/customProduct-dialog.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    product_id: product_id,
-                    event: ev
-                },
-                onRemoving : $scope.getReload
-            });
-        }
-*/
         
         $scope.submitForm = function () {
  
