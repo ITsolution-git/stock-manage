@@ -530,6 +530,7 @@ class OrderController extends Controller {
 
     public function sendEmail() {
 
+        ini_set('memory_limit', '1024M');
         $post = Input::all();
         $email = trim($post['email']);
         $fromemail = trim($post['from_email']);
@@ -544,11 +545,23 @@ class OrderController extends Controller {
         if(!isset($post['invoice_id']))
         {
           $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail(0,$post['company_id'],1,$post['order_id']);
+          $file_path_old = FILEUPLOAD.'order_invoice_'.$post['order_id'].$post['company_id'].'.pdf';
+
+          if(file_exists($file_path_old))
+            {
+                 unlink($file_path_old);
+            }
+         
           $file_path =  FILEUPLOAD.'order_invoice_'.$post['order_id'].$post['company_id'].'.pdf';
         }
         else
         {
           $data = app('App\Http\Controllers\InvoiceController')->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+          $file_path_old = FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';
+           if(file_exists($file_path_old))
+            {
+                 unlink($file_path_old);
+            }
           $file_path =  FILEUPLOAD.'order_invoice_'.$post['invoice_id'].'.pdf';           
         }
 

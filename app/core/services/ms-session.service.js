@@ -55,12 +55,13 @@
 	                remove('company');
 	                remove('profile_photo');
 	                remove('token');
-	                $state.go('app.login');
 	            }
 	            else
 	            {
+
 	            	notifyService.notify('error',response.data.message);	
 	            }
+	            $state.go('app.login');
 			},function(response) {
 				notifyService.notify('error',response.data.message);
 			});
