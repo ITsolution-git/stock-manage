@@ -33,8 +33,9 @@
             stateChangeStartEvent();
             stateChangeSuccessEvent();
         });
-        if(sessionService.get('token')){
+        if(sessionService.get('token') && sessionService.get('user_id')){
             $http.defaults.headers.common.Authorization = sessionService.get('token');
+            $http.defaults.headers.common.AuthUserId = sessionService.get('user_id');
         }
     }
 

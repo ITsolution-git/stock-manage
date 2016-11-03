@@ -29,7 +29,7 @@ define ('DELETE_RECORD','Record Deleted Successfully.');
 define ('CONFIRM_MESSAGE','Are you sure to delete this record ?');
 define ('SOMETHING_WRONG','Something Wrong Please Try agin.');
 define ('LOGIN_SUCCESS','Login Successfull');
-define ('LOGIN_WRONG','Wrong Credential');
+define ('LOGIN_WRONG','Wrong Credential, Please try again.');
 define('FILL_PARAMS','Please fill all required Parameters.');
 define('ALREADY_BOX','Delete all boxes in the boxes tab to rebox shipment.');
 
@@ -52,3 +52,6 @@ define('QUICKBOOK_ID',4);
 define('FEDEX_ID',5);
 define('OVERSIZE_VALUE',0.5);
 define('TAX_RATE',0);
+define('TOKEN_CODE',400);
+define('ERROR_CODE',0);
+define('SUCCESS_CODE',1);
