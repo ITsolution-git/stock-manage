@@ -133,26 +133,53 @@
               $scope.active = 2;
             }
 
-            // Fetch Sales Persons for Filtering
-            var combineSalesPersons = {};
-            combineSalesPersons.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getSalesPersons',combineSalesPersons,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultSales){
-                if(resultSales.data.success == '1') {
-                  $scope.salesPersons=resultSales.data.allData;
+            //Full dashboard
+            var combineDashboard = {};
+            combineDashboard.company_id = sessionService.get('company_id');
+            combineDashboard.comparisonPeriod1 = 'currentYear';
+            if($scope.estimatesPersonName != undefined && $scope.estimatesDuration != undefined) {
+                  combineDashboard.sales_id = $scope.estimatesPersonName;
+                  combineDashboard.duration = $scope.estimatesDuration;
+            }
+            $("#ajax_loader").show();
+            $http.post('api/public/invoice/getFullDashboard',combineDashboard,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultDashboard){
+                $("#ajax_loader").hide();
+                if(resultDashboard.data.success == '1') {
+                  // Fetch Sales Persons for Filtering
+                  $scope.salesPersons=resultDashboard.data.allData.salesPersons;
+                  // Average Order
+                  $scope.avgAmount=resultDashboard.data.allData.averageOrders[0].avgOrderAmount;
+                  if(resultDashboard.data.allData.averageOrders[0].avgOrderItems){
+                      $scope.avgItems=resultDashboard.data.allData.averageOrders[0].avgOrderItems;
+                  }else{
+                      $scope.avgItems=0;
+                  }
+                  // Yearly Gross Compare
+                  $scope.estimatedCurrent=resultDashboard.data.allData.yearlyComparison[0].totalEstimated;
+                  $scope.estimatedPrevious=resultDashboard.data.allData.yearlyComparison[0].totalEstimatedPrevious;
+                  $scope.estimatedComparisonPeriod=resultDashboard.data.allData.yearlyComparison[0].year2;
+                  $scope.estimatedComparisonPercent=resultDashboard.data.allData.yearlyComparison[0].percentDifference;
+
+                  // Latest Orders
+                  $scope.latestOrders=resultDashboard.data.allData.latestOrders;
+
+                  // Orders not send to Quickbooks
+                  $scope.noqbinvoice=resultDashboard.data.allData.noQuickbook[0].totalInvoice;
+
+                  // Orders to be shipped
+                  $scope.unshipped=resultDashboard.data.allData.totalUnshipped[0].totalUnshipped;
+                  $scope.unshippedTotal=resultDashboard.data.allData.totalUnshipped[0].totalInvoice;
+
+                  // Orders with Balances
+                  $scope.unpaid=resultDashboard.data.allData.totalUnpaid[0].totalUnpaid;
+                  $scope.unpaidTotal=resultDashboard.data.allData.totalUnpaid[0].totalInvoice;
+                }else{
+                  /*var data = {"status": "error", "message": "Data not found."}
+                  notifyService.notify(data.status, data.message);*/
+                  return false;
                 }
-                /*$scope.brand_coordinator = sessionService.get('role_title');*/
             });
 
-            // Estimates
-            /*var combineEstimates = {};
-            combineEstimates.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getEstimates',combineEstimates).success(function(resultEstimated){
-                if(resultEstimated.data.success == '1') {
-                  $scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
-                  $scope.estimated2=resultEstimated.data.allData[0].totalEstimated[1];
-                  $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
-                }
-            });*/
             // Estimates with sales man filtering
             $scope.getEstimatesSalesMan = function(){
                 //if(sales_id != 0){
@@ -179,51 +206,6 @@
                 }
                 //}
             }
-
-            // Average Orders
-            var combineAverageOrders = {};
-            combineAverageOrders.company_id = sessionService.get('company_id');
-
-            $http.post('api/public/invoice/getAverageOrders',combineAverageOrders).success(function(resultAverageOrder){
-                if(resultAverageOrder.data.success == '1') {
-                  $scope.avgAmount=resultAverageOrder.data.allData[0].avgOrderAmount;
-                  if(resultAverageOrder.data.allData[0].avgOrderItems){
-                      $scope.avgItems=resultAverageOrder.data.allData[0].avgOrderItems;
-                  }else{
-                      $scope.avgItems=0;
-                  }
-                  /*$scope.avgAmount1=resultAverageOrder.data.allData[0].avgOrderAmount[0];
-                  $scope.avgAmount2=resultAverageOrder.data.allData[0].avgOrderAmount[1];
-                  $scope.avgItems1=resultAverageOrder.data.allData[0].avgOrderItems[0];
-                  $scope.avgItems2=resultAverageOrder.data.allData[0].avgOrderItems[1];*/
-                }else{
-                  $("#ajax_loader").hide();
-                  var data = {"status": "error", "message": "Data not found."}
-                  notifyService.notify(data.status, data.message);
-                  return false;
-                }
-            });
-            // Average Orders with sales man filtering
-            /*$scope.getAverageOrdersSalesMan = function(sales_id){
-                //if(sales_id != 0){
-                  $("#ajax_loader").show();
-                  var combineAverageOrders = {};
-                  combineAverageOrders.company_id = sessionService.get('company_id');
-                  combineAverageOrders.sales_id = sales_id;
-
-                  $http.post('api/public/invoice/getAverageOrders',combineAverageOrders,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultAverageOrder){
-                      if(resultAverageOrder.data.success == '1'){
-                          $("#ajax_loader").hide();
-                          $scope.avgAmount=resultAverageOrder.data.allData[0].avgOrderAmount;
-                          if(resultAverageOrder.data.allData[0].avgOrderItems){
-                              $scope.avgItems=resultAverageOrder.data.allData[0].avgOrderItems;
-                          }else{
-                              $scope.avgItems=0;
-                          }
-                      }
-                  });
-                //}
-            }*/
 
             // Sales Closed
             /*var combineSalesClosed = {};
@@ -256,98 +238,6 @@
                     });
                 //}
             }
-
-            // Orders not send to Quickbooks
-            var combineNoQuickbook = {};
-            combineNoQuickbook.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getNoQuickbook',combineNoQuickbook,{headers: {"Authorization": sessionService.get('token')}}).success(function(result){
-                if(result.data.success == '1') {
-                  $scope.noqbinvoice=result.data.allData[0].totalInvoice;
-                }else{
-                  $("#ajax_loader").hide();
-                  var data = {"status": "error", "message": "Data not found."}
-                  notifyService.notify(data.status, data.message);
-                  return false;
-                }
-            });
-
-            // Orders with Balances
-            var combineUnpaid = {};
-            combineUnpaid.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getUnpaid',combineUnpaid,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultUnpaid){
-                if(resultUnpaid.data.success == '1') {
-                  $scope.unpaid=resultUnpaid.data.allData[0].totalUnpaid;
-                  /*$scope.unpaid1=resultUnpaid.data.allData[0].totalUnpaid[0];
-                  $scope.unpaid2=resultUnpaid.data.allData[0].totalUnpaid[1];*/
-                  $scope.unpaidTotal=resultUnpaid.data.allData[0].totalInvoice;
-                }else{
-                  $("#ajax_loader").hide();
-                  var data = {"status": "error", "message": "Data not found."}
-                  notifyService.notify(data.status, data.message);
-                  return false;
-                }
-            });
-
-            // Latest Orders
-            var combineLatestOrders = {};
-            combineLatestOrders.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getLatestOrders',combineLatestOrders,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultLatestOrders){
-                if(resultLatestOrders.data.success == '1') {
-                  $scope.latestOrders=resultLatestOrders.data.allData;
-                }else{
-                  $("#ajax_loader").hide();
-                  var data = {"status": "error", "message": "Data not found."}
-                  notifyService.notify(data.status, data.message);
-                  return false;
-                }
-            });
-
-            // Comparison Report: Today, Last Week, Last Month, Last Year
-            var combineComparison = {};
-            combineComparison.company_id = sessionService.get('company_id');
-            combineComparison.comparisonPeriod1 = 'currentYear';
-            //combineComparison.comparisonPeriod2 = '2015';
-            $http.post('api/public/invoice/getComparison',combineComparison,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultComparison){
-                if(resultComparison.data.success == '1') {
-                  $scope.estimatedCurrent=resultComparison.data.allData[0].totalEstimated;
-                  /*$scope.estimatedCurrent1=resultComparison.data.allData[0].totalEstimated[0];
-                  $scope.estimatedCurrent2=resultComparison.data.allData[0].totalEstimated[1];*/
-                  $scope.estimatedPrevious=resultComparison.data.allData[0].totalEstimatedPrevious;
-                  $scope.estimatedComparisonPeriod=resultComparison.data.allData[0].year2;
-                  $scope.estimatedComparisonPercent=resultComparison.data.allData[0].percentDifference;
-                }else{
-                  $("#ajax_loader").hide();
-                  var data = {"status": "error", "message": "Data not found."}
-                  notifyService.notify(data.status, data.message);
-                  return false;
-                }
-                /*$scope.brand_coordinator = sessionService.get('role_title');*/
-            });
-
-            // Orders to be shipped
-            var combineUnshipped = {};
-            combineUnshipped.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getUnshipped',combineUnshipped,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultUnshipped){
-                if(resultUnshipped.data.success == '1') {
-                  $scope.unshipped=resultUnshipped.data.allData[0].totalUnshipped;
-                  //$scope.unshipped2=resultUnshipped.data.allData[0].totalUnpaid[1];
-                  $scope.unshippedTotal=resultUnshipped.data.allData[0].totalInvoice;
-                }else{
-                  $("#ajax_loader").hide();
-                  var data = {"status": "error", "message": "Data not found."}
-                  notifyService.notify(data.status, data.message);
-                  return false;
-                }
-            });
-
-            // Numbers of Orders in Production
-            /*var combineProduction = {};
-            combineProduction.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getProduction',combineProduction).success(function(resultProduction){
-                if(resultProduction.data.success == '1') {
-                  $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
-                }
-            });*/
 
             // Numbers of Orders in Production with sales man filtering
             $scope.getProductionSalesMan = function(sales_id){
