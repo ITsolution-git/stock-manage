@@ -417,6 +417,7 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+    /*
     public function getSalesPersons(){
         $post = Input::all();
 
@@ -437,9 +438,9 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
-    public function getNoQuickbook(){
+    /*public function getNoQuickbook(){
         $post = Input::all();
         $retArray = $this->invoice->getNoQuickbook($post);
 
@@ -458,7 +459,7 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
     public function getSalesClosed(){
         $post = Input::all();
@@ -483,7 +484,7 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-    public function getUnpaid(){
+    /*public function getUnpaid(){
         $post = Input::all();
         $retArray = $this->invoice->getUnpaid($post);
 
@@ -504,9 +505,9 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
-    public function getAverageOrders(){
+    /*public function getAverageOrders(){
         $post = Input::all();
         $retArray = $this->invoice->getAverageOrders($post);
 
@@ -516,9 +517,9 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
-    public function getLatestOrders(){
+    /*public function getLatestOrders(){
         $post = Input::all();
         $retArray = $this->invoice->getLatestOrders($post);
 
@@ -537,7 +538,7 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
     public function getEstimates(){
         $post = Input::all();
@@ -567,7 +568,7 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-    public function getComparison(){
+    /*public function getComparison(){
         $post = Input::all();
         $client_id=$post['company_id'];
         $companyYear = $this->common->GetTableRecords('staff',array('user_id' => $client_id, 'status'=>'1'),array(),0,0,'gross_year');
@@ -590,7 +591,7 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
     public function getUnshipped(){
         $post = Input::all();
@@ -647,6 +648,81 @@ class InvoiceController extends Controller {
         $production_id=$production[0]->id;
 
         $retArray = $this->invoice->getProduction($post,$production_id);
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getFullDashboard(){
+        $retArray =array();
+        $post = Input::all();
+        $client_id=$post['company_id'];
+
+        // Fetch the list of sales persons
+        $retArraySales = $this->invoice->getSalesPersons($post);
+        if(!empty($retArraySales))
+        {
+            $retArray["salesPersons"] = $retArraySales;
+        }
+
+        //Average Orders
+        $retArrayAverageOrders = $this->invoice->getAverageOrders($post);
+        if(!empty($retArrayAverageOrders))
+        {
+            $retArray["averageOrders"] = $retArrayAverageOrders;
+        }
+
+        // Yearly Gross Compare
+        $companyYear = $this->common->GetTableRecords('staff',array('user_id' => $client_id, 'status'=>'1'),array(),0,0,'gross_year');
+        $year2=$companyYear[0]->gross_year;
+        $retArrayYearlyComparison = $this->invoice->getComparison($post,$year2);
+        if(!empty($retArrayYearlyComparison))
+        {
+            $retArray["yearlyComparison"] = $retArrayYearlyComparison;
+        }
+
+        // Latest Orders
+        $retArrayLatestOrders = $this->invoice->getLatestOrders($post);
+        if(!empty($retArrayLatestOrders))
+        {
+            $retArray["latestOrders"] = $retArrayLatestOrders;
+        }
+
+        // Orders not send to Quickbooks
+        $retArrayNoQuickbook = $this->invoice->getNoQuickbook($post);
+        if(!empty($retArrayNoQuickbook))
+        {
+            $retArray["noQuickbook"] = $retArrayNoQuickbook;
+        }
+
+        // Orders to be shipped
+        $retArrayUnshipped = $this->invoice->getUnshipped($post);
+        if(!empty($retArrayUnshipped))
+        {
+            $retArrayUnshipped[0]->totalUnshipped=round($retArrayUnshipped[0]->totalUnshipped, 0);
+            $retArray["totalUnshipped"] = $retArrayUnshipped;
+        }
+
+        // Orders with Balances
+        $retArrayUnpaid = $this->invoice->getUnpaid($post);
+        if(!empty($retArrayUnpaid))
+        {
+            $retArrayUnpaid[0]->totalUnpaid=round($retArrayUnpaid[0]->totalUnpaid, 0);
+            $retArray["totalUnpaid"] = $retArrayUnpaid;
+        }
 
         if(empty($retArray))
         {

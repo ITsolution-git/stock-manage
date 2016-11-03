@@ -229,7 +229,7 @@
 
                     var vendor = {};
                     vendor.table ='vendors';
-                    vendor.cond ={company_id:$scope.params.company_id,company_id:'0'};
+                    vendor.cond ={company_id:$scope.params.company_id};
                     vendor.sort='name_company';
                     vendor.sortcond='asc';
 
