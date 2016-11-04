@@ -33,7 +33,25 @@
     {
         var vm = this;
         vm.searchQuery = "";
+        vm.calendarpopup = calpop;
         
+        function calpop(ev)
+        {
+            console.log('abc');
+            $mdDialog.show({
+                controller: 'ProductionqueueController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/production/calendardialog.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                // locals: {
+                //     Client: client,
+                //     Clients: vm.clients,
+                //     event: ev
+                // }
+            });
+        }
         // Data
      
     }

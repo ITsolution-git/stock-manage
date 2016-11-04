@@ -2144,6 +2144,7 @@ a.editable-click:hover, a.editable-click:focus{
 	float:left;
 	margin:$zero;
 	min-height:100px;
+	margin-bottom:20px;
 }
 .odd-slot{
 	background-color:#e8e9ea;
@@ -2196,3 +2197,67 @@ a.editable-click:hover, a.editable-click:focus{
 .schedule-main{
 	border:solid 1px #ededed;
 }
+.date-slider{
+	.curr-seleceted-date{
+		padding:0 15px;
+		font-size:15px;
+		font-weight:$font-weight-700;
+		color:$datatable-text-color;
+	}
+	i{
+		font-size:18px;
+		color:$datatable-text-color;
+	}
+}
+/*schedule position popup */
+md-dialog.machine-dialog{
+	max-width:800px;
+}
+.schedule-shifts{
+	width:33%;
+	padding:0 12px;
+	border-right:solid 1px $stokkup-table-footer-bg;
+	float:$left;
+	text-align:center;
+	.stokkup-blue-btn{
+		font-size:11px !important;
+		padding:0 10px;
+		margin-top:10px;
+	}
+}
+.schedule-shifts:nth-of-type(3){
+	border-right:$nofloat;
+}
+.shift-units{
+	width:$full-width;
+	text-align:center;
+	float:left;
+	.percent{
+		font-size:26px;
+		line-height:40px;
+		color:$stokkup-table-footer-txtcolor;
+		font-weight:$font-weight-700;
+		width:$full-width;float:$left;
+	}
+	.machine-unit{
+		font-size:13px;
+		line-height:15px;
+		color:$datatable-text-color;
+		width:$full-width;
+		float:$left;
+	}
+}
+.btm-border-row{
+	border-bottom:solid 2px $stokkup-table-footer-bg;
+}
+.newdatestyle input{
+	border-bottom:$nofloat !important;
+}
+.mac-slots{
+	.schedule-shifts{
+		width:$full-width;
+		padding:15px;
+		text-align:center;
+	}
+}
+/*schedule position popup */
