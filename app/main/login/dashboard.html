@@ -35,7 +35,7 @@
                     
                     <div class="dash-footer-filter">
                         <span class="global-labels pull-left">Filter by</span>
-                        <md-select aria-label="Estimates By" ng-model="productionPersonName" ng-change="getProductionSalesMan(productionPersonName)" class="global-labels">
+                        <md-select aria-label="Estimates By" ng-model="productionPersonName" class="global-labels">
                             <md-option value="0" selected>Sales Member</md-option>
                             <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                         </md-select>
@@ -61,7 +61,7 @@
                     
                     <div class="dash-footer-filter">
                         <span class="global-labels pull-left">Sales closed by</span>
-                        <md-select aria-label="Filter By" ng-model="closedSalesMan" ng-change="getSalesClosedSalesMan(closedSalesMan)" class="global-labels">
+                        <md-select aria-label="Filter By" ng-model="closedSalesMan" class="global-labels">
                             <md-option value="0" selected>Sales Member</md-option>
                             <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                         </md-select>
@@ -86,7 +86,7 @@
                 <div class="dash-footer-box text-center">
                     <div flex=35 class="box-zerospace">
                         <div class="dash-footer-filter">
-                            <md-select aria-label="Filter By" ng-model="estimatesDuration" ng-change="getEstimatesSalesMan()" class="global-labels">
+                            <md-select aria-label="Filter By" ng-model="estimatesDuration" class="global-labels">
                                 <md-option value="0" selected>All Time</md-option>
                                 <md-option value="1">Today</md-option>
                                 <md-option value="2">Last Week</md-option>
@@ -99,7 +99,7 @@
                         
                         <div class="dash-footer-filter">
                             <span class="global-labels pull-left">Estimates by</span>
-                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" ng-change="getEstimatesSalesMan()" class="global-labels">
+                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" class="global-labels">
                                 <md-option value="0" selected>Sales Member</md-option>
                                 <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                             </md-select>
@@ -212,7 +212,7 @@
                            
                             <div class="dash-footer-filter">
                                  <span class="global-labels pull-left">Filter by</span>
-                                <md-select aria-label="Filter By" ng-model="fullDuration" ng-change="getFullOrdersDuration(fullDuration)" class="global-labels">
+                                <md-select aria-label="Filter By" ng-model="fullDuration" class="global-labels">
                                 <md-option value="0" selected>All Time</md-option>
                                 <md-option value="1">Today</md-option>
                                 <md-option value="2">Last Week</md-option>
