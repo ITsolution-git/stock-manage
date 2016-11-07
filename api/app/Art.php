@@ -267,7 +267,7 @@ class Art extends Model {
     public function GetscreenColor($screen_id,$company_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.display_number as order_display','or.id as order_id',DB::raw('DATE_FORMAT(or.created_date, "%m/%d/%Y") as created_date'),'cc.first_name','cc.last_name','cl.display_number','cl.client_id','cl.client_company','ass.screen_set','ass.display_number as screen_display','ass.id as screen_id','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*','mt.value as ink_value')
+				->select(DB::raw("(SELECT COUNT(*) FROM art_notes WHERE screenset_id=ass.id AND is_deleted='1') as note_total"),'or.name as order_name','or.company_id','or.display_number as order_display','or.id as order_id',DB::raw('DATE_FORMAT(or.created_date, "%m/%d/%Y") as created_date'),'cc.first_name','cc.last_name','cl.display_number','cl.client_id','cl.client_company','ass.screen_set','ass.display_number as screen_display','ass.mokup_image','odp.image_1','ass.positions','ass.approval','acol.*','mt.value as ink_value','ass.id as screen_id')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('orders as or','ass.order_id','=','or.id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
@@ -280,6 +280,7 @@ class Art extends Model {
 				->orderBy('acol.head_location','asc')
 				->orderBy('acol.id','desc')
 				->get();
+				//echo "<pre>"; print_r($query); echo "</pre>"; die;
 				return $query;
     }
     public function UpdateColorScreen($post)
@@ -480,6 +481,7 @@ class Art extends Model {
 	// PRESS INSTRUCTION PDF
 	public function getPressInstructionPDFdata($screen_id,$company_id)
 	{
+		//echo $screen_id."-".$company_id;
 		$query = DB::table('artjob_screensets as ass')
 				->select('or.name as order_name','or.company_id','inv.payment_due_date','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','col.color_code','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq','mt1.slug as placement_type',
 					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"),'ca.address','ca.street','ca.city','st.code as state_name','ca.postal_code')
@@ -505,7 +507,6 @@ class Art extends Model {
 				->where('or.company_id','=',$company_id)
 				/*->where('acol.is_complete','=','1')*/
 				->where('or.is_delete','=','1')
-				->where('pdtl.is_delete','=','1')
 				->where('odp.is_delete','=','1')
 				->where('od.is_delete','=','1')
 				->orderBy('ass.screen_order','asc')
