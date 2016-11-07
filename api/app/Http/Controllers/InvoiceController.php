@@ -21,7 +21,7 @@ class InvoiceController extends Controller {
 
     public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company)
     {
-        parent::__construct();
+        //parent::__construct();
         $this->common = $common;
         $this->order = $order;
         $this->product = $product;
@@ -722,6 +722,43 @@ class InvoiceController extends Controller {
         {
             $retArrayUnpaid[0]->totalUnpaid=round($retArrayUnpaid[0]->totalUnpaid, 0);
             $retArray["totalUnpaid"] = $retArrayUnpaid;
+        }
+
+        // Numbers of Orders in Production
+        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
+        $production_id=$production[0]->id;
+        $retArrayProduction = $this->invoice->getProduction($post,$production_id);
+        if(!empty($retArrayProduction))
+        {
+            $retArrayProduction[0]->totalProduction=round($retArrayProduction[0]->totalProduction, 0);
+            $retArray["totalProduction"] = $retArrayProduction;
+        }
+
+        // Sales Closed
+        $retArraySalesClosed = $this->invoice->getSalesClosed($post);
+        if(!empty($retArraySalesClosed))
+        {
+            $retArraySalesClosed[0]->totalSales=round($retArraySalesClosed[0]->totalSales, 0);
+            $retArray["salesClosed"] = $retArraySalesClosed;
+        }
+
+        $retArrayFullShipped = $this->invoice->getFullShipped($post);
+        if(!empty($retArrayFullShipped))
+        {
+            $retArrayFullShipped[0]->totalShipped=round($retArrayFullShipped[0]->totalShipped, 0);
+            $retArray["fullShipped"] = $retArrayFullShipped;
+        }
+
+
+        $estimate = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimate_id=$estimate[0]->id;
+
+        $retArrayEstimates = $this->invoice->getEstimates($post,$estimate_id);
+
+        if(!empty($retArrayEstimates))
+        {
+            $retArrayEstimates[0]->totalEstimated=round($retArrayEstimates[0]->totalEstimated, 0);
+            $retArray["totalEstimated"] = $retArrayEstimates;
         }
 
         if(empty($retArray))
