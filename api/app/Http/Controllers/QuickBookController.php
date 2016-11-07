@@ -415,8 +415,6 @@ class QuickBookController extends Controller
 
                     }
 
-                } else {
-                    return 0;
                 }
 
           }

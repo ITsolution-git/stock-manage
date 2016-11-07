@@ -57,7 +57,8 @@
                 if(result.data.success == '1') 
                 {
                     $scope.ScreenSets = result.data.records;
-                    $scope.screenset_id = $scope.ScreenSets[0].id;
+                    $scope.screenset_id = $scope.ScreenSets[0].screen_id;
+                    //console.log($scope.screenset_id);
                     $scope.ScreenSets_new = 
                     {
                         data_all: result.data.records,
