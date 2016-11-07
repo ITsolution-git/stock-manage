@@ -531,7 +531,7 @@ class ArtController extends Controller {
         if(count($screenArray)>0)
         {
             $pdf_data = $this->art->getPressInstructionPDFdata($screenArray->screen_id,$screenArray->company_id);
-            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+           // echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
             if(!empty($pdf_data['size']))
             {
                 
@@ -550,7 +550,7 @@ class ArtController extends Controller {
             }
             else
             {
-                $response = array('success' => 0, 'message' => "Error, No Product or Size selected.");
+                $response = array('success' => 0, 'message' => "Error, Please check your Order detail for this screen.");
                 return  response()->json(["data" => $response]);
             }
         }
