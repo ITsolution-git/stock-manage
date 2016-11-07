@@ -135,12 +135,115 @@
 
             //Full dashboard
             var combineDashboard = {};
+            var dashboardProduction  = '';
             combineDashboard.company_id = sessionService.get('company_id');
             combineDashboard.comparisonPeriod1 = 'currentYear';
-            if($scope.estimatesPersonName != undefined && $scope.estimatesDuration != undefined) {
-                  combineDashboard.sales_id = $scope.estimatesPersonName;
-                  combineDashboard.duration = $scope.estimatesDuration;
-            }
+
+            // Numbers of Orders in Production ng-module watch
+            $scope.$watch('productionPersonName', function(newVal, oldVal){
+                if(newVal == undefined && oldVal == undefined){
+                    dashboardProduction = true;
+                }else{
+                    dashboardProduction = false;
+                }
+                if(oldVal != undefined && !dashboardProduction){
+                    $("#ajax_loader").show();
+                    var combineProduction = {};
+                    combineProduction.company_id = sessionService.get('company_id');
+                    combineProduction.sales_id = newVal;
+                    $http.post('api/public/invoice/getProduction',combineProduction,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultProduction){
+                        $("#ajax_loader").hide();
+                        if(resultProduction.data.success == '1') {
+                            $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
+                        }else{
+                          var data = {"status": "error", "message": "Data not found."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+                        }
+                    });
+                }
+            });
+            // Sales Closed ng-module watch
+            var dashboardClosedSales  = '';
+            $scope.$watch('closedSalesMan', function(newValCS, oldValCS){
+                if(newValCS == undefined && oldValCS == undefined){
+                    dashboardClosedSales = true;
+                }else{
+                    dashboardClosedSales = false;
+                }
+                if(oldValCS != undefined && !dashboardClosedSales){
+                    $("#ajax_loader").show();
+                    var combineSalesClosed = {};
+                    combineSalesClosed.company_id = sessionService.get('company_id');
+                    combineSalesClosed.sales_id = newValCS;
+                    $http.post('api/public/invoice/getSalesClosed',combineSalesClosed,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultSalesClosed){
+                        if(resultSalesClosed.data.success == '1') {
+                            $("#ajax_loader").hide();
+                            $scope.salesClosed=resultSalesClosed.data.allData[0].totalSales;
+                        }else{
+                          $("#ajax_loader").hide();
+                          var data = {"status": "error", "message": "Data not found."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+                        }
+                    });
+                }
+            });
+
+            // On Time In Full ng-module watch
+            var dashboardFullShipped  = '';
+            $scope.$watch('fullDuration', function(newValFS, oldValFS){
+                if(newValFS == undefined && oldValFS == undefined){
+                    dashboardFullShipped = true;
+                }else{
+                    dashboardFullShipped = false;
+                }
+                if(oldValFS != undefined && !dashboardFullShipped){
+                    $("#ajax_loader").show();
+                    var combineFullShipped = {};
+                    combineFullShipped.company_id = sessionService.get('company_id');
+                    combineFullShipped.duration = newValFS;
+                    $http.post('api/public/invoice/getFullShipped',combineFullShipped,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultFullShipped){
+                        $("#ajax_loader").hide();
+                        if(resultFullShipped.data.success == '1') {
+                          $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
+                        }else{
+                          var data = {"status": "error", "message": "Data not found."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+                        }
+                    });
+                }
+            });
+
+            // Estimates ng-module watch
+            var dashboardEstimates  = '';
+            $scope.$watch('[estimatesDuration, estimatesPersonName]', function(newValED, oldValED){
+                if(newValED[0] == undefined && oldValED[0] == undefined && newValED[1] == undefined && oldValED[1] == undefined){
+                    dashboardEstimates = true;
+                }else{
+                    dashboardEstimates = false;
+                }
+                if(oldValED[0] != undefined && oldValED[1] != undefined && !dashboardFullShipped){
+                    $("#ajax_loader").show();
+                    var combineEstimates = {};
+                    combineEstimates.company_id = sessionService.get('company_id');
+                    combineEstimates.sales_id = newValED[1];
+                    combineEstimates.duration = newValED[0];
+                    $http.post('api/public/invoice/getEstimates',combineEstimates,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultEstimated){
+                        $("#ajax_loader").hide();
+                        if(resultEstimated.data.success == '1') {
+                          $scope.estimated=resultEstimated.data.allData[0].totalEstimated;
+                          $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
+                        }else{
+                          var data = {"status": "error", "message": "Data not found."}
+                          notifyService.notify(data.status, data.message);
+                          return false;
+                        }
+                    });
+                }
+            });
+
             $("#ajax_loader").show();
             $http.post('api/public/invoice/getFullDashboard',combineDashboard,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultDashboard){
                 $("#ajax_loader").hide();
@@ -173,6 +276,20 @@
                   // Orders with Balances
                   $scope.unpaid=resultDashboard.data.allData.totalUnpaid[0].totalUnpaid;
                   $scope.unpaidTotal=resultDashboard.data.allData.totalUnpaid[0].totalInvoice;
+
+                  // Numbers of Orders in Production
+                  $scope.productionTotal=resultDashboard.data.allData.totalProduction[0].totalProduction;
+
+                  // Sales Closed
+                  $scope.salesClosed=resultDashboard.data.allData.salesClosed[0].totalSales;
+
+                  // On Time In Full
+                  $scope.fullshippedTotal=resultDashboard.data.allData.fullShipped[0].totalShipped;
+
+                  // Estimates
+                  $scope.estimated=resultDashboard.data.allData.totalEstimated[0].totalEstimated;
+                  $scope.estimatedTotal=resultDashboard.data.allData.totalEstimated[0].totalInvoice;
+
                 }else{
                   /*var data = {"status": "error", "message": "Data not found."}
                   notifyService.notify(data.status, data.message);*/
@@ -181,6 +298,7 @@
             });
 
             // Estimates with sales man filtering
+            /*
             $scope.getEstimatesSalesMan = function(){
                 //if(sales_id != 0){
                   if($scope.estimatesPersonName != undefined && $scope.estimatesDuration != undefined) {
@@ -193,8 +311,6 @@
                       if(resultEstimated.data.success == '1') {
                         $("#ajax_loader").hide();
                         $scope.estimated=resultEstimated.data.allData[0].totalEstimated;
-                        /*$scope.estimated1=resultEstimated.data.allData[0].totalEstimated[0];
-                        $scope.estimated2=resultEstimated.data.allData[0].totalEstimated[1];*/
                         $scope.estimatedTotal=resultEstimated.data.allData[0].totalInvoice;
                       }else{
                         $("#ajax_loader").hide();
@@ -205,7 +321,7 @@
                   });
                 }
                 //}
-            }
+            }*/
 
             // Sales Closed
             /*var combineSalesClosed = {};
@@ -217,6 +333,7 @@
                 }
             });*/
             // Sales Closed with sales man filtering
+            /*
             $scope.getSalesClosedSalesMan = function(sales_id){
                 //if(sales_id != 0){
                     $("#ajax_loader").show();
@@ -227,8 +344,6 @@
                         if(resultSalesClosed.data.success == '1') {
                             $("#ajax_loader").hide();
                             $scope.salesClosed=resultSalesClosed.data.allData[0].totalSales;
-                            /*$scope.salesClosed1=resultSalesClosed.data.allData[0].totalSales[0];
-                            $scope.salesClosed2=resultSalesClosed.data.allData[0].totalSales[1];*/
                         }else{
                           $("#ajax_loader").hide();
                           var data = {"status": "error", "message": "Data not found."}
@@ -237,9 +352,10 @@
                         }
                     });
                 //}
-            }
+            };*/
 
             // Numbers of Orders in Production with sales man filtering
+            /*
             $scope.getProductionSalesMan = function(sales_id){
                 //if(sales_id != 0){
                   $("#ajax_loader").show();
@@ -258,37 +374,28 @@
                   }
                 });
               //}
-            }
+            }*/
 
             // On Time In Full
+            /*
             $scope.getFullOrdersDuration = function(duration){
-                //if(sales_id != 0){
-                  $("#ajax_loader").show();
-                  var combineFullShipped = {};
-                  combineFullShipped.company_id = sessionService.get('company_id');
-                  combineFullShipped.duration = duration;
-                  $http.post('api/public/invoice/getFullShipped',combineFullShipped,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultFullShipped){
-                    if(resultFullShipped.data.success == '1') {
-                      $("#ajax_loader").hide();
-                      $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
-                    }else{
-                      $("#ajax_loader").hide();
-                      var data = {"status": "error", "message": "Data not found."}
-                      notifyService.notify(data.status, data.message);
-                      return false;
-                    }
-                  });
-              //}
+                $("#ajax_loader").show();
+                var combineFullShipped = {};
+                combineFullShipped.company_id = sessionService.get('company_id');
+                combineFullShipped.duration = duration;
+                $http.post('api/public/invoice/getFullShipped',combineFullShipped,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultFullShipped){
+                  if(resultFullShipped.data.success == '1') {
+                    $("#ajax_loader").hide();
+                    $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
+                  }else{
+                    $("#ajax_loader").hide();
+                    var data = {"status": "error", "message": "Data not found."}
+                    notifyService.notify(data.status, data.message);
+                    return false;
+                  }
+                });
             }
-
-            // On Time In Full
-            /*var combineFullShipped = {};
-            combineFullShipped.company_id = sessionService.get('company_id');
-            $http.post('api/public/invoice/getFullShipped',combineFullShipped).success(function(resultFullShipped){
-                if(resultFullShipped.data.success == '1') {
-                  $scope.fullshippedTotal=resultFullShipped.data.allData[0].totalShipped;
-                }
-            });*/
+            */
         }
     }
     function ForgetController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
