@@ -68,7 +68,7 @@ class PropertyMetadata extends BasePropertyMetadata
                 }
             }
 
-            if (empty($setter) && !$this->readOnly) {
+            if (empty($setter) && ! $this->readOnly) {
                 if ($class->hasMethod('set'.$this->name) && $class->getMethod('set'.$this->name)->isPublic()) {
                     $setter = 'set'.$this->name;
                 } else {
@@ -88,6 +88,16 @@ class PropertyMetadata extends BasePropertyMetadata
         }
 
         return $obj->{$this->getter}();
+    }
+
+    public function setValue($obj, $value)
+    {
+        if (null === $this->setter) {
+            parent::setValue($obj, $value);
+            return;
+        }
+
+        $obj->{$this->setter}($value);
     }
 
     public function setType($type)
@@ -124,11 +134,13 @@ class PropertyMetadata extends BasePropertyMetadata
             $this->xmlAttributeMap,
             $this->maxDepth,
             parent::serialize(),
+            'xmlEntryNamespace' => $this->xmlEntryNamespace,
         ));
     }
 
     public function unserialize($str)
     {
+        $unserialized = unserialize($str);
         list(
             $this->sinceVersion,
             $this->untilVersion,
@@ -152,7 +164,11 @@ class PropertyMetadata extends BasePropertyMetadata
             $this->xmlAttributeMap,
             $this->maxDepth,
             $parentStr
-        ) = unserialize($str);
+        ) = $unserialized;
+
+        if (isset($unserialized['xmlEntryNamespace'])){
+            $this->xmlEntryNamespace = $unserialized['xmlEntryNamespace'];
+        }
 
         parent::unserialize($parentStr);
     }

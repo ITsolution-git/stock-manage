@@ -55,16 +55,6 @@ class SerializerExtension extends \Twig_Extension
     }
 
     /**
-     * Creates the serialization context
-     *
-     * @return SerializationContext
-     */
-    public function createContext()
-    {
-        return SerializationContext::create();
-    }
-
-    /**
      * @param object $object
      * @param string $type
      * @param SerializationContext $context
