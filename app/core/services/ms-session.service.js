@@ -87,6 +87,12 @@
 	                    set('profile_photo',result.data.profile_photo);
 	                    set('token',result.data.token);
 	                    
+	                //======= HEADER AUTHORIZATION FOR TOKEN AND USERID =======
+				        $http.defaults.headers.common.Authorization = result.data.token;
+				        $http.defaults.headers.common.AuthUserId = result.data.user_id;
+				    //======= HEADER AUTHORIZATION FOR TOKEN AND USERID =======
+
+
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);
 	                    //console.log(arr_role+"--"+access); 
