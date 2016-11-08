@@ -1,0 +1,386 @@
+<md-dialog class="task-dialog job-dialog">
+	<div flex=100 class="full-row pull-left">
+    	<form name="clientForm" class="md-inline-form" novalidate>
+        	<md-toolbar class="md-accent md-hue-2">
+			    <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+			        <span class="title">job 53775 detail</span>
+			        <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
+			            <span>Close</span>
+			        </md-button>
+			    </div>
+			</md-toolbar>
+			<md-dialog-content ms-scroll>
+				<div class=" pull-left pt-20 full-row">
+					<div class="full-row">
+						<div class="pull-left full-row" flex=20>
+							<span class="global-labels text-capitalize">client name</span>
+							<span class="global-text pull-left full-row">Live Nation</span>
+						</div>
+
+						<div class="pull-left full-row" flex=20>
+							<span class="global-labels text-capitalize">due date</span>
+							<span class="global-text pull-left full-row">07/23/2016</span>
+						</div>
+
+						<div class="pull-left full-row" flex=20>
+							<span class="global-labels text-capitalize">scheduled run date</span>
+							<span class="global-text pull-left full-row">07/20/2016</span>
+						</div>
+
+						<div class="pull-left full-row" flex=20>
+							<span class="global-labels text-capitalize">press Assigned To</span>
+							<span class="global-text pull-left full-row">Machine 12345</span>
+						</div>
+
+						<div class="pull-left full-row" flex=15>
+							<span class="global-labels text-capitalize">Shift</span>
+							<span class="global-text pull-left full-row">2nd Shift</span>
+						</div>
+						<div class="pull-left full-row" flex=5>
+							<span class="global-labels text-capitalize">Shift</span>
+							<span class="global-text pull-left full-row">Front</span>
+						</div>
+	        		</div>
+	        	</div>
+	        	<div class="full-row pull-left m-t-20">
+	        		<md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+	                <!---Screen Sets Tab-->
+	                <div ng-controller="shippingController">
+	                    <md-tab label="screen sets" ng-click="getTab('wait')">
+	                       	<div flex=40 class="pull-left">
+	                       		<h4 class="stokkup-title-h4 text-uppercase m-t-20">screen set info</h4>
+	                       		<div class="full-row">
+	                       			<div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Screen Set Name">
+						                </md-input-container>
+	                                </div>
+	                       			<div layout="column" flex=50 class="pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Screen Count">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Number of Colors">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=50 class="pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Width(inches)">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Height(inches)">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Screen Resolution">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Screen Size">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Notes">
+						                </md-input-container>
+	                                </div>
+
+	                       		</div>
+	                       	</div>
+
+	                       	<div flex=60 class="pull-left pl-10 full-row">
+	                       	<h4 class="stokkup-title-h4 text-uppercase m-t-20 m-b-20">screen set screens</h4>
+		                       	<div class="full-row">
+	                            	<div class="ms-responsive-table-wrapper">
+							            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+							                <table class="dataTable row-border">
+							                    <thead>
+							                    	<tr>
+							                    		<th>Color Name</th>
+							                    		<th>Pantone Color</th>
+							                    		<th>LPI</th>
+							                    		<th>Mesh</th>
+							                    		<th>Ink Type</th>
+							                    	</tr>
+							                    </thead>
+							                    <tbody>
+
+							                        <tr>
+							                            <td>lb straight</td>
+							                            <td>base</td>
+							                            <td></td>
+							                            <td></td>
+							                            <td>PL</td>
+							                        </tr>
+							                        <tr>
+							                            <td>flash</td>
+							                            <td></td>
+							                            <td></td>
+							                            <td></td>
+							                            <td>PL</td>
+							                        </tr>
+							                        <tr>
+							                            <td>orange</td>
+							                            <td>165c</td>
+							                            <td></td>
+							                            <td></td>
+							                            <td>PL</td>
+							                        </tr>
+							                        <tr>
+							                            <td>flash</td>
+							                            <td></td>
+							                            <td></td>
+							                            <td></td>
+							                            <td>PL</td>
+							                        </tr>
+							                        <tr>
+							                            <td>sf cotton</td>
+							                            <td>white</td>
+							                            <td></td>
+							                            <td></td>
+							                            <td>PL</td>
+							                        </tr>
+							                    </tbody>
+							                </table>
+							            </div>
+							        </div>
+	                            </div>
+	                       	</div>                
+	                    </md-tab>
+	                </div>
+	                <!---Garment Info Tab-->
+	                <div ng-controller="shippingProgressController">
+	                    <md-tab label="garment info" ng-click="getTab('progress')">
+
+	                    	<div class="full-row pull-left pl-30 pr-30 m-t-20">
+	                    		<div class="mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row pull-left">Product</span>
+	                    			<span>Spring Shirts</span>
+	                    		</div>
+
+	                    		<div class="pull-left mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row full-row pull-left">SKU</span>
+	                    			<span>#####</span>
+	                    		</div>
+
+	                    		<div class="mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row full-row pull-left">Size Group</span>
+	                    			<span>Mens</span>
+	                    		</div>
+
+	                    		<div class="mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row full-row pull-left">Color</span>
+	                    			<span>Blue</span>
+	                    		</div>
+	                    	</div>
+
+	                        <div class="trans-box mr-20 white-bg pull-left" flex=20>
+                                <div class="p-20 pull-left">
+                                    <span class="sizeColor mb-10 pull-left">M</span>
+                                    <div class="box-zerospace">
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Ordered</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">100</span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Received</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    98
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Defective</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    2
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <div class="text-center">________________</div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productYellow mb-0">2 Defective</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trans-box mr-20 white-bg pull-left" flex=20>
+                                <div class="p-20 pull-left">
+                                    <span class="sizeColor mb-10 pull-left">M</span>
+                                    <div class="box-zerospace">
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Ordered</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">100</span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Received</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    98
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Defective</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    2
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <div class="text-center">________________</div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productYellow mb-0">2 Defective</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trans-box mr-20 white-bg pull-left" flex=20>
+                                <div class="p-20 pull-left">
+                                    <span class="sizeColor mb-10 pull-left">M</span>
+                                    <div class="box-zerospace">
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Ordered</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">100</span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Received</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    98
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Defective</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    2
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <div class="text-center">________________</div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productYellow mb-0">2 Defective</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="trans-box mr-20 white-bg pull-left" flex=20>
+                                <div class="p-20 pull-left">
+                                    <span class="sizeColor mb-10 pull-left">M</span>
+                                    <div class="box-zerospace">
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Ordered</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">100</span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Received</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    100
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Defective</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    0
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <div class="text-center">________________</div>
+                                        </div>
+                                        <!-- <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productYellow mb-0">2 Defective</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+	                    </md-tab>
+	                </div>
+	            	
+	            	</md-tabs>
+	            </div>	
+
+			</md-dialog-content>
+
+			 <md-dialog-actions layout="row" layout-align="end center">
+            
+                  <!--  <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button> -->
+                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Cancel</md-button>
+
+                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Schedule</md-button>
+            
+        	</md-dialog-actions>
+    	</form>
+	</div>
+</md-dialog>

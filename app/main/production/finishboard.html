@@ -3,7 +3,7 @@
         <md-content class="shipping-custom-tab transparent-bg schedule-board-tab">
             <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
                 <div class="table-title white-bg bottom-shadow" flex=100 layout="row" layout-align="space-between center">
-                    <div class="table-title-text pull-left" flex=70 class="cursor-p">Production Schedule Board</div>
+                    <div class="table-title-text pull-left" flex=70 class="cursor-p">Finishing Schedule Board</div>
                     <div class="pull-right boardtxt" flex=30><span class="text-uppercase"><b>Board views:</b></span></div>
                     
                 </div>
@@ -30,7 +30,53 @@
                             			</div>
                             		</div>
 	                        	</div>
-	                        	<div class="full-row pull-left">
+	                        	<div class="full-row pull-left" flex=20>
+	                        		<!--unscheduled table starts here -->
+	                        		<table class="">
+	                        			<tr>
+	                        				<td>
+	                        					<div class="mac-slots odd-slot">
+				                        			<div class="p-15 full-row pull-left">
+				                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">Unscheduled</span>
+					                        			
+					                        			<div class="full-row  pull-left mt-10 p-5 mb-5">
+					                        				<span class="pull-left text-capitalize full-row" flex=65>total unscheduled</span>
+					                        				<span class="global-labels text-right pull-right full-row" flex=35>37</span>
+					                        			</div>
+					                        			<div class="full-row  pull-left p-5">
+					                        				<span class="pull-left text-capitalize full-row" flex=65>available machine hours</span>
+					                        				<span class="global-labels text-right pull-right full-row" flex=35>8</span>
+					                        			</div>
+				                        			</div>
+				                        			<div class="machine-full-slot">
+					                        			<div class="full-row pull-left p-10">
+					                        				
+					                        				<div class="shift-post-card"></div>
+					                        				<div class="shift-post-card"></div>
+					                        				<div class="shift-post-card"></div>
+					                        			</div>
+
+					                        			<div class="full-row pull-left p-10">
+					                        				
+					                        				<div class="shift-post-card"></div>
+					                        				<div class="shift-post-card"></div>
+					                        				<div class="shift-post-card"></div>
+					                        			</div>
+
+					                        			<div class="full-row pull-left p-10">
+					                        				
+					                        				<div class="shift-post-card"></div>
+					                        				<div class="shift-post-card"></div>
+					                        				<div class="shift-post-card"></div>
+					                        			</div>
+					                        		</div>	
+	                        					</div>
+	                        				</td>
+	                        			</tr>
+	                        		</table>
+	                        		<!--unscheduled table ends here -->
+	                        	</div>
+	                        	<div class="full-row pull-left" flex=80>
 	                        		<table class="schedule-finishing-table">
 	                        			<tr>
 	                        				<td>
@@ -461,7 +507,6 @@
                             		</div>
 	                        	</div>
 	                        	<div class="full-row pull-left">
-
 	                        		<table class="schedule-finishing-table">
 	                        			<tr>
 	                        				<td>

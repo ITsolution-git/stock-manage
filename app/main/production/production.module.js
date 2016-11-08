@@ -65,6 +65,19 @@
                         return sessionService.AccessService('ALL','true');
                     }
                 }
+        }).state('app.finishboard', {
+            url: '/finishboard',
+            views: {
+                'content@app': {
+                    templateUrl: 'app/main/production/finishboard.html',
+                    controller: 'ScheduleBoardController as vm'
+                }
+            },resolve: {
+                    checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('ALL','true');
+                    }
+                }
         })
             ;
 

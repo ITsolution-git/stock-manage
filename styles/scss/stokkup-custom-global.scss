@@ -2260,4 +2260,31 @@ md-dialog.machine-dialog{
 		text-align:center;
 	}
 }
+
 /*schedule position popup */
+.task-dialog.job-dialog{
+	width:1000px;
+	max-width:1000px;
+}
+.schedule-finishing-table{
+	max-width:100%;
+	overflow-x:scroll;
+	display:table-row;
+	float:$left;
+	tr{
+		td{
+			width:25%;
+			float:$nofloat;
+			display:table-cell;
+		}
+	}
+	.mac-slots{
+		width:19.6vw;
+	}
+}
+.schedule-finishing-table.unscheduled{
+	overflow-x:hidden;
+}
+.schedule-finishing-table.unscheduled .mac-slots{
+	width:$full-width;
+}
