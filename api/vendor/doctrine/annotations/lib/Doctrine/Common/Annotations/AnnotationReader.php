@@ -151,10 +151,8 @@ class AnnotationReader implements Reader
      * Constructor.
      *
      * Initializes a new AnnotationReader.
-     *
-     * @param DocParser $parser
      */
-    public function __construct(DocParser $parser = null)
+    public function __construct()
     {
         if (extension_loaded('Zend Optimizer+') && (ini_get('zend_optimizerplus.save_comments') === "0" || ini_get('opcache.save_comments') === "0")) {
             throw AnnotationException::optimizerPlusSaveComments();
@@ -176,8 +174,7 @@ class AnnotationReader implements Reader
 
         AnnotationRegistry::registerFile(__DIR__ . '/Annotation/IgnoreAnnotation.php');
 
-        $this->parser = $parser ?: new DocParser();
-
+        $this->parser    = new DocParser;
         $this->preParser = new DocParser;
 
         $this->preParser->setImports(self::$globalImports);

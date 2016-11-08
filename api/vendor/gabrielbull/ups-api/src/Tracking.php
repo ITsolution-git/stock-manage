@@ -22,6 +22,17 @@ class Tracking extends Ups
     private $request;
 
     /**
+     *
+     * Workaround flag to handle Multiple shipment nodes in tracking response
+     * See GitHub Issue #117
+     *
+     * fixme in next major release
+     *
+     * @var boolean
+     */
+    protected $allowMultipleShipments = false;
+
+    /**
      * @var ResponseInterface
      *                        // todo make private
      */
@@ -202,6 +213,9 @@ class Tracking extends Ups
             // USPS - Priority Mail Express International
             '/^EC\d{9}US$/',      // EC 000 000 000 US
 
+            // USPS Innovations Expedited
+            '/^927\d{23}$/',      // 9270 8900 8900 8900 8900 8900 00
+            
             // USPS - Priority Mail Express
             '/^927\d{19}$/',      // 9270 1000 0000 0000 0000 00
             '/^EA\d{9}US$/',      // EA 000 000 000 US
@@ -297,6 +311,14 @@ class Tracking extends Ups
      */
     private function formatResponse(SimpleXMLElement $response)
     {
+        if ($this->allowMultipleShipments) {
+            $response = $this->convertXmlObject($response);
+            if (!is_array($response->Shipment)) {
+                $response->Shipment = [$response->Shipment];
+            }
+            return $response;
+        }
+
         return $this->convertXmlObject($response->Shipment);
     }
 
@@ -340,6 +362,17 @@ class Tracking extends Ups
     public function setResponse(ResponseInterface $response)
     {
         $this->response = $response;
+
+        return $this;
+    }
+
+    /**
+     * @param bool $value
+     * @return $this
+     */
+    public function allowMultipleShipments($value = true)
+    {
+        $this->allowMultipleShipments = $value ? true : false;
 
         return $this;
     }
