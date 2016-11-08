@@ -148,7 +148,7 @@ default the order is undefined, but you may change it to either "alphabetical", 
     }
 
     /**
-     * @AccessorOrder("custom", custom = {"name", "SomeMethod" ,"id"})
+     * @AccessorOrder("custom", custom = {"name", "someMethod" ,"id"})
      *
      * Resulting Property Order: name, mood, id
      */
@@ -533,7 +533,7 @@ This annotation can be defined on a property to add additional xml serialization
         /**
         * @XmlElement(cdata=false, namespace="http://www.w3.org/2005/Atom")
         */
-        private $id = 'my_id;
+        private $id = 'my_id';
     }
 
 Resulting XML:

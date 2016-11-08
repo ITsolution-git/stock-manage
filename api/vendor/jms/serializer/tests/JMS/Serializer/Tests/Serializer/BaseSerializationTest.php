@@ -25,10 +25,14 @@ use JMS\Serializer\Handler\PhpCollectionHandler;
 use JMS\Serializer\SerializationContext;
 use JMS\Serializer\Tests\Fixtures\DateTimeArraysObject;
 use JMS\Serializer\Tests\Fixtures\Discriminator\Car;
+use JMS\Serializer\Tests\Fixtures\Discriminator\Moped;
+use JMS\Serializer\Tests\Fixtures\Garage;
 use JMS\Serializer\Tests\Fixtures\InlineChildEmpty;
 use JMS\Serializer\Tests\Fixtures\NamedDateTimeArraysObject;
 use JMS\Serializer\Tests\Fixtures\Tag;
+use JMS\Serializer\Tests\Fixtures\Timestamp;
 use JMS\Serializer\Tests\Fixtures\Tree;
+use JMS\Serializer\Tests\Fixtures\VehicleInterfaceGarage;
 use PhpCollection\Sequence;
 use Symfony\Component\Form\FormFactoryBuilder;
 use Symfony\Component\Translation\MessageSelector;
@@ -88,6 +92,7 @@ use JMS\Serializer\Tests\Fixtures\ObjectWithEmptyHash;
 use Metadata\MetadataFactory;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\Validator\Constraints\Time;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\ConstraintViolationList;
 use PhpCollection\Map;
@@ -238,6 +243,20 @@ abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testArrayEmpty()
+    {
+        if ('xml' === $this->getFormat()) {
+            $this->markTestSkipped('XML can\'t be tested for empty array');
+        }
+
+        $data = array('array' => []);
+        $this->assertEquals($this->getContent('array_empty'), $this->serialize($data));
+
+        if ($this->hasDeserializer()) {
+            $this->assertEquals($data, $this->deserialize($this->getContent('array_empty'), 'array'));
+        }
+    }
+
     public function testArrayFloats()
     {
         $data = array(1.34, 3.0, 6.42);
@@ -347,6 +366,22 @@ abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
         return array(
             array('date_time', new \DateTime('2011-08-30 00:00', new \DateTimeZone('UTC')), 'DateTime'),
         );
+    }
+
+    public function testTimestamp()
+    {
+        $value = new Timestamp(new \DateTime('2016-02-11 00:00:00', new \DateTimeZone('UTC')));
+        $this->assertEquals($this->getContent('timestamp'), $this->serialize($value));
+
+        if ($this->hasDeserializer()) {
+            $deserialized = $this->deserialize($this->getContent('timestamp'), Timestamp::class);
+            $this->assertEquals($value, $deserialized);
+            $this->assertEquals($value->getTimestamp()->getTimestamp(), $deserialized->getTimestamp()->getTimestamp());
+
+            $deserialized = $this->deserialize($this->getContent('timestamp_prev'), Timestamp::class);
+            $this->assertEquals($value, $deserialized);
+            $this->assertEquals($value->getTimestamp()->getTimestamp(), $deserialized->getTimestamp()->getTimestamp());
+        }
     }
 
     public function testDateInterval()
@@ -586,7 +621,6 @@ abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
 
     public function testFormErrorsWithNonFormComponents()
     {
-
         if (!class_exists('Symfony\Component\Form\Extension\Core\Type\SubmitType')) {
             $this->markTestSkipped('Not using Symfony Form >= 2.3 with submit type');
         }
@@ -616,7 +650,7 @@ abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
 
     public function testConstraintViolation()
     {
-        $violation = new ConstraintViolation('Message of violation', array(), null, 'foo', null);
+        $violation = new ConstraintViolation('Message of violation', 'Message of violation', array(), null, 'foo', null);
 
         $this->assertEquals($this->getContent('constraint_violation'), $this->serialize($violation));
     }
@@ -624,8 +658,8 @@ abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
     public function testConstraintViolationList()
     {
         $violations = new ConstraintViolationList();
-        $violations->add(new ConstraintViolation('Message of violation', array(), null, 'foo', null));
-        $violations->add(new ConstraintViolation('Message of another violation', array(), null, 'bar', null));
+        $violations->add(new ConstraintViolation('Message of violation', 'Message of violation', array(), null, 'foo', null));
+        $violations->add(new ConstraintViolation('Message of another violation', 'Message of another violation', array(), null, 'bar', null));
 
         $this->assertEquals($this->getContent('constraint_violation_list'), $this->serialize($violations));
     }
@@ -821,6 +855,50 @@ abstract class BaseSerializationTest extends \PHPUnit_Framework_TestCase
                     'JMS\Serializer\Tests\Fixtures\Discriminator\Car'
                 ),
                 'Class is resolved correctly when concrete sub-class is used and no type is defined.'
+            );
+        }
+    }
+
+    /**
+     * @group polymorphic
+     */
+    public function testNestedPolymorphicObjects()
+    {
+        $garage = new Garage(array(new Car(3), new Moped(1)));
+        $this->assertEquals(
+            $this->getContent('garage'),
+            $this->serialize($garage)
+        );
+
+        if ($this->hasDeserializer()) {
+            $this->assertEquals(
+                $garage,
+                $this->deserialize(
+                    $this->getContent('garage'),
+                    'JMS\Serializer\Tests\Fixtures\Garage'
+                )
+            );
+        }
+    }
+
+    /**
+     * @group polymorphic
+     */
+    public function testNestedPolymorphicInterfaces()
+    {
+        $garage = new VehicleInterfaceGarage(array(new Car(3), new Moped(1)));
+        $this->assertEquals(
+            $this->getContent('garage'),
+            $this->serialize($garage)
+        );
+
+        if ($this->hasDeserializer()) {
+            $this->assertEquals(
+                $garage,
+                $this->deserialize(
+                    $this->getContent('garage'),
+                    'JMS\Serializer\Tests\Fixtures\VehicleInterfaceGarage'
+                )
             );
         }
     }
