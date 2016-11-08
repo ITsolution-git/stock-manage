@@ -313,7 +313,7 @@ class Inline
                 $output = $match[1];
                 $i += strlen($output);
             } else {
-                throw new ParseException(sprintf('Malformed inline YAML string (%s).', $scalar));
+                throw new ParseException(sprintf('Malformed inline YAML string: %s.', $scalar));
             }
 
             // a non-quoted string cannot start with @ or ` (reserved) nor with a scalar indicator (| or >)
@@ -346,7 +346,7 @@ class Inline
     private static function parseQuotedScalar($scalar, &$i)
     {
         if (!preg_match('/'.self::REGEX_QUOTED_STRING.'/Au', substr($scalar, $i), $match)) {
-            throw new ParseException(sprintf('Malformed inline YAML string (%s).', substr($scalar, $i)));
+            throw new ParseException(sprintf('Malformed inline YAML string: %s.', substr($scalar, $i)));
         }
 
         $output = substr($match[0], 1, strlen($match[0]) - 2);
@@ -420,7 +420,7 @@ class Inline
             ++$i;
         }
 
-        throw new ParseException(sprintf('Malformed inline YAML string %s', $sequence));
+        throw new ParseException(sprintf('Malformed inline YAML string: %s.', $sequence));
     }
 
     /**
@@ -458,7 +458,10 @@ class Inline
 
             // key
             $key = self::parseScalar($mapping, $flags, array(':', ' '), array('"', "'"), $i, false);
-            $i = strpos($mapping, ':', $i);
+
+            if (false === $i = strpos($mapping, ':', $i)) {
+                break;
+            }
 
             if (!isset($mapping[$i + 1]) || ' ' !== $mapping[$i + 1]) {
                 @trigger_error('Omitting the space after the colon that follows a mapping key definition is deprecated since version 3.2 and will throw a ParseException in 4.0.', E_USER_DEPRECATED);
@@ -520,7 +523,7 @@ class Inline
             }
         }
 
-        throw new ParseException(sprintf('Malformed inline YAML string %s', $mapping));
+        throw new ParseException(sprintf('Malformed inline YAML string: %s.', $mapping));
     }
 
     /**
@@ -645,7 +648,10 @@ class Inline
                         return (float) str_replace(array(',', '_'), '', $scalar);
                     case preg_match(self::getTimestampRegex(), $scalar):
                         if (Yaml::PARSE_DATETIME & $flags) {
-                            return new \DateTime($scalar, new \DateTimeZone('UTC'));
+                            $date = new \DateTime($scalar);
+                            $date->setTimeZone(new \DateTimeZone('UTC'));
+
+                            return $date;
                         }
 
                         $timeZone = date_default_timezone_get();
