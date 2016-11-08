@@ -61,17 +61,13 @@ class XmlDeserializationVisitor extends AbstractVisitor
         $previous = libxml_use_internal_errors(true);
         $previousEntityLoaderState = libxml_disable_entity_loader($this->disableExternalEntities);
 
-        $dom = new \DOMDocument();
-        $dom->loadXML($data);
-        foreach ($dom->childNodes as $child) {
-            if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
-                $internalSubset = str_replace(array("\n", "\r"), '', $child->internalSubset);
-                if (!in_array($internalSubset, $this->doctypeWhitelist, true)) {
-                    throw new InvalidArgumentException(sprintf(
-                        'The document type "%s" is not allowed. If it is safe, you may add it to the whitelist configuration.',
-                        $internalSubset
-                    ));
-                }
+        if (false !== stripos($data, '<!doctype')) {
+            $internalSubset = $this->getDomDocumentTypeEntitySubset($data);
+            if (!in_array($internalSubset, $this->doctypeWhitelist, true)) {
+                throw new InvalidArgumentException(sprintf(
+                    'The document type "%s" is not allowed. If it is safe, you may add it to the whitelist configuration.',
+                    $internalSubset
+                ));
             }
         }
 
@@ -221,9 +217,10 @@ class XmlDeserializationVisitor extends AbstractVisitor
 
     public function visitProperty(PropertyMetadata $metadata, $data, Context $context)
     {
+
         $name = $this->namingStrategy->translateName($metadata);
 
-        if (!$metadata->type) {
+        if ( ! $metadata->type) {
             throw new RuntimeException(sprintf('You must define a type for %s::$%s.', $metadata->reflection->class, $metadata->name));
         }
 
@@ -260,6 +257,7 @@ class XmlDeserializationVisitor extends AbstractVisitor
         }
 
         if ($metadata->xmlNamespace) {
+
             $node = $data->children($metadata->xmlNamespace)->$name;
             if (!$node->count()) {
                 return;
@@ -272,27 +270,18 @@ class XmlDeserializationVisitor extends AbstractVisitor
                 $prefix = uniqid('ns-');
                 $data->registerXPathNamespace($prefix, $namespaces['']);
                 $nodes = $data->xpath('./'.$prefix. ':'.$name );
-                if (empty($nodes)) {
-                    return;
-                }
-                $node = reset($nodes);
             } else {
-                if (!isset($data->$name)) {
-                    return;
-                }
-                $node = $data->$name;
+                $nodes = $data->xpath('./'. $name );
             }
+            if (empty($nodes)) {
+                return;
+            }
+            $node = reset($nodes);
         }
 
         $v = $this->navigator->accept($node, $metadata->type, $context);
 
-        if (null === $metadata->setter) {
-            $metadata->reflection->setValue($this->currentObject, $v);
-
-            return;
-        }
-
-        $this->currentObject->{$metadata->setter}($v);
+        $metadata->setValue($this->currentObject, $v);
     }
 
     public function endVisitingObject(ClassMetadata $metadata, $data, array $type, Context $context)
@@ -355,5 +344,34 @@ class XmlDeserializationVisitor extends AbstractVisitor
     public function getDoctypeWhitelist()
     {
         return $this->doctypeWhitelist;
+    }
+
+    /**
+     * Retrieves internalSubset even in bugfixed php versions
+     *
+     * @param \DOMDocumentType $child
+     * @param string $data
+     * @return string
+     */
+    private function getDomDocumentTypeEntitySubset($data)
+    {
+        $startPos = $endPos = stripos($data, '<!doctype');
+        $braces = 0;
+        do {
+            $char = $data[$endPos++];
+            if ($char === '<') {
+                ++$braces;
+            }
+            if ($char === '>') {
+                --$braces;
+            }
+        } while ($braces > 0);
+
+        $internalSubset = substr($data, $startPos, $endPos - $startPos);
+        $internalSubset = str_replace(array("\n", "\r"), '', $internalSubset);
+        $internalSubset = preg_replace('/\s{2,}/', ' ', $internalSubset);
+        $internalSubset = str_replace(array("[ <!", "> ]>"), array('[<!', '>]>'), $internalSubset);
+
+        return $internalSubset;
     }
 }
