@@ -71,16 +71,16 @@ class QuickBookController extends Controller
     public function  qboConnect(){
 
 
-        if ($this->IntuitAnywhere->check(QBO_USERNAME, QBO_TENANT) && $this->IntuitAnywhere->test(QBO_USERNAME, QBO_TENANT)) {
+        if ($this->IntuitAnywhere->check(Session::get('useremail'), Session::get('user_id')) && $this->IntuitAnywhere->test(Session::get('useremail'), Session::get('user_id'))) {
 
             // Set up the IPP instance
             $IPP = new \QuickBooks_IPP($this->QBO_DSN);
             // Get our OAuth credentials from the database
-            $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+            $creds = $this->IntuitAnywhere->load(Session::get('useremail'), Session::get('user_id'));
             // Tell the framework to load some data from the OAuth store
             $IPP->authMode(
                 \QuickBooks_IPP::AUTHMODE_OAUTH,
-                QBO_USERNAME,
+                Session::get('useremail'),
                 $creds);
 
             if ($this->is_sandbox) {
@@ -109,7 +109,7 @@ class QuickBookController extends Controller
 
     public function qboOauth($oauth_token=''){
         /*if(!empty($oauth_token)) $_GET['oauth_token'] = $oauth_token;*/
-        if ($this->IntuitAnywhere->handle(QBO_USERNAME, QBO_TENANT))
+        if ($this->IntuitAnywhere->handle(Session::get('useremail'), Session::get('user_id')))
         {
             ; // The user has been connected, and will be redirected to QBO_SUCCESS_URL automatically.
         }
@@ -131,7 +131,7 @@ class QuickBookController extends Controller
 
     public function qboDisconnect(){
 
-        $this->IntuitAnywhere->disconnect(QBO_USERNAME, QBO_TENANT,true);
+        $this->IntuitAnywhere->disconnect(Session::get('useremail'), Session::get('user_id'),true);
 
         $response = array('success' => 1, 'message' => "Successful",'records' => true);
         
@@ -148,11 +148,11 @@ class QuickBookController extends Controller
        $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
-        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        $creds = $this->IntuitAnywhere->load(Session::get('useremail'), Session::get('user_id'));
         // Tell the framework to load some data from the OAuth store
         $IPP->authMode(
             \QuickBooks_IPP::AUTHMODE_OAUTH,
-            QBO_USERNAME,
+            Session::get('useremail'),
             $creds);
 
         if ($this->is_sandbox) {
@@ -235,11 +235,11 @@ class QuickBookController extends Controller
        $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
-        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        $creds = $this->IntuitAnywhere->load(Session::get('useremail'), Session::get('user_id'));
         // Tell the framework to load some data from the OAuth store
         $IPP->authMode(
             \QuickBooks_IPP::AUTHMODE_OAUTH,
-            QBO_USERNAME,
+            Session::get('useremail'),
             $creds);
 
         if ($this->is_sandbox) {
@@ -316,11 +316,11 @@ class QuickBookController extends Controller
         $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
-        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        $creds = $this->IntuitAnywhere->load(Session::get('useremail'), Session::get('user_id'));
         // Tell the framework to load some data from the OAuth store
         $IPP->authMode(
             \QuickBooks_IPP::AUTHMODE_OAUTH,
-            QBO_USERNAME,
+            Session::get('useremail'),
             $creds);
 
         if ($this->is_sandbox) {
@@ -445,11 +445,11 @@ class QuickBookController extends Controller
          $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
-        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        $creds = $this->IntuitAnywhere->load(Session::get('useremail'), Session::get('user_id'));
         // Tell the framework to load some data from the OAuth store
         $IPP->authMode(
             \QuickBooks_IPP::AUTHMODE_OAUTH,
-            QBO_USERNAME,
+            Session::get('useremail'),
             $creds);
 
         if ($this->is_sandbox) {
@@ -920,11 +920,11 @@ class QuickBookController extends Controller
         $IPP = new \QuickBooks_IPP($this->QBO_DSN);
 
         // Get our OAuth credentials from the database
-        $creds = $this->IntuitAnywhere->load(QBO_USERNAME, QBO_TENANT);
+        $creds = $this->IntuitAnywhere->load(Session::get('useremail'), Session::get('user_id'));
         // Tell the framework to load some data from the OAuth store
         $IPP->authMode(
             \QuickBooks_IPP::AUTHMODE_OAUTH,
-            QBO_USERNAME,
+            Session::get('useremail'),
             $creds);
 
         if ($this->is_sandbox) {
