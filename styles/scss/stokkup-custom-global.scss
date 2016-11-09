@@ -2,23 +2,7 @@
 /*global variables */
 
 @import "variables.scss";
-$stokkupfamily1:'Open Sans', sans-serif;
-$font-weight-300:300;
-$font-weight-400:400;
-$font-weight-600:600;
-$font-weight-700:700;
-$font-size-text:14px;
-$stokkup-global-txtcolor:#6e7584;
-$nofloat:none;
-$block:block;
-$full-width:100%;
-$zero:0;
-$auto:auto;
-$center:center;
-$left:left;
-$right:right;
-$pos-relative:relative;
-$pos-absolute:absolute;
+
 
 /*All color variables starts here */
 $white-color:#fff;
@@ -58,6 +42,24 @@ $red-border:#de0000;
 $orange-txt:#FF9900;
 /*All color variables ends here */
 
+/*All global variables ends here */
+$stokkupfamily1:'Open Sans', sans-serif;
+$font-weight-300:300;
+$font-weight-400:400;
+$font-weight-600:600;
+$font-weight-700:700;
+$font-size-text:14px;
+$stokkup-global-txtcolor:#6e7584;
+$nofloat:none;
+$block:block;
+$full-width:100%;
+$zero:0;
+$auto:auto;
+$center:center;
+$left:left;
+$right:right;
+$pos-relative:relative;
+$pos-absolute:absolute;
 $datatable-heading-size:14px;
 $datatable-content-size:13px;
 $stokkup-h4-size:18px;
