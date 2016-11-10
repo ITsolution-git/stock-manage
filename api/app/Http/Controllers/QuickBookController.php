@@ -347,7 +347,8 @@ class QuickBookController extends Controller
 
                  $Item->setName($charge);
                  $Item->setType('Inventory');
-                 $Item->setIncomeAccountRef('53');
+                 //$Item->setIncomeAccountRef('53');
+                 $Item->setIncomeAccountRef('40');
 
                 if ($resp = $ItemService->add($this->context, $this->realm, $Item))
                 {
