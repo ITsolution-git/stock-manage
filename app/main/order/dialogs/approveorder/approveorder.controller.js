@@ -147,6 +147,7 @@
                                 combine_array_id.invoice_id = $scope.invoice_id;
                                 combine_array_id.payment = $scope.payment_terms;
                                 combine_array_id.quickbook_id = $scope.qb_invoice_id;
+                                combine_array_id.display_order_id = $stateParams.id;
                                 
                                $("#ajax_loader").show();
                                
@@ -212,6 +213,7 @@
                     combine_array_id.invoice_id = $scope.invoice_id;
                     combine_array_id.payment = $scope.payment_terms;
                     combine_array_id.quickbook_id = $scope.qb_invoice_id;
+                    combine_array_id.display_order_id = $stateParams.id;
                     
                    $("#ajax_loader").show();
                    
