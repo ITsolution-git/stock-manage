@@ -22,10 +22,11 @@ class Invoice extends Model {
 
         $this->common->getDisplayNumber('invoice',$post['company_id'],'company_id','id','yes');
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.display_number,i.id,i.display_number as invoice_display_number,i.qb_id,o.grand_total,o.in_hands_by,i.created_date,misc_type.value as approval,o.approval_id')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.name,client.client_company,o.display_number,i.id,i.display_number as invoice_display_number,i.qb_id,o.grand_total,o.in_hands_by,i.created_date,misc_type.value as approval,o.approval_id')];
 
         $invoiceData = DB::table('invoice as i')
                         ->leftJoin('orders as o', 'o.id', '=', 'i.order_id')
+                        ->Join('client as client', 'o.client_id', '=', 'client.client_id')
                         ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                         ->select($listArray)
                         ->where('o.company_id', '=', $post['company_id']);
@@ -35,10 +36,12 @@ class Invoice extends Model {
                           $invoiceData = $invoiceData->Where(function($query) use($search)
                           {
                               $query->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('o.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('i.created_date', 'LIKE', '%'.$search.'%')
                                     ->orWhere('o.grand_total', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('o.in_hands_by', 'LIKE', '%'.$search.'%');
+                                    ->orWhere('o.in_hands_by', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('client.client_company', 'LIKE', '%'.$search.'%');
                           });
                         }
                         $invoiceData = $invoiceData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
