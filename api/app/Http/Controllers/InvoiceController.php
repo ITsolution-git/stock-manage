@@ -92,13 +92,15 @@ class InvoiceController extends Controller {
 
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Invoice'),
-                        1=>array('key' => 'i.created_date', 'name' => 'Date'),
-                        2=>array('key' => 'o.grand_total', 'name' => 'Invoice $ Amount'),
-                        3=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
-                        4=>array('key' => '', 'name' => 'Synced with Quickbooks', 'sortable' => false),
-                        5=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                        6=>array('key' => '', 'name' => '', 'sortable' => false), 
-                        7=>array('key' => '', 'name' => 'Option', 'sortable' => false),
+                        1=>array('key' => 'o.name', 'name' => 'Job Name'),
+                        2=>array('key' => 'client.client_company', 'name' => 'Company'),
+                        3=>array('key' => 'i.created_date', 'name' => 'Date'),
+                        4=>array('key' => 'o.grand_total', 'name' => 'Invoice $ Amount'),
+                        5=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
+                        6=>array('key' => '', 'name' => 'Sync with Quickbooks', 'sortable' => false),
+                        7=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                        8=>array('key' => '', 'name' => '', 'sortable' => false), 
+                        9=>array('key' => '', 'name' => 'Option', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
@@ -644,10 +646,10 @@ class InvoiceController extends Controller {
     public function getProduction(){
         $post = Input::all();
         $client_id=$post['company_id'];
-        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
-        $production_id=$production[0]->id;
+        $estimation = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimation_id=$estimation[0]->id;
 
-        $retArray = $this->invoice->getProduction($post,$production_id);
+        $retArray = $this->invoice->getProduction($post,$estimation_id);
 
         if(empty($retArray))
         {
@@ -725,9 +727,9 @@ class InvoiceController extends Controller {
         }
 
         // Numbers of Orders in Production
-        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
-        $production_id=$production[0]->id;
-        $retArrayProduction = $this->invoice->getProduction($post,$production_id);
+        $estimation_id = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimation_id=$estimation_id[0]->id;
+        $retArrayProduction = $this->invoice->getProduction($post,$estimation_id);
         if(!empty($retArrayProduction))
         {
             $retArrayProduction[0]->totalProduction=round($retArrayProduction[0]->totalProduction, 0);

@@ -46,7 +46,8 @@ class Distribution extends Model {
 	public function getDistAddress($data)
 	{
 		$result = DB::table('client_distaddress')
-					->where('client_id','=',$data['client_id']);
+					->where('client_id','=',$data['client_id'])
+					->where('is_deleted','=',1);
 					if(isset($data['search']))
                     {
                       $search = $data['search'];
