@@ -137,7 +137,7 @@
                                                 <td ng-if="distProduct.distributed == null">0/{{distProduct.total}}</td>
                                                 <td ng-if="distProduct.distributed != null">{{distProduct.distributed}}/{{distProduct.total}}</td>
                                                 <td class="text-right"> 
-                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0" ng-click="vm.createDistribution($event,'add',distProduct)">
+                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0 || distProduct.distributed == null" ng-click="vm.createDistribution($event,'add',distProduct)">
                                                         Distribute
                                                     </md-button>
                                                     <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0" ng-click="vm.createDistribution($event,'edit',distProduct)">
