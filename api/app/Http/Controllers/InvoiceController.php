@@ -646,10 +646,10 @@ class InvoiceController extends Controller {
     public function getProduction(){
         $post = Input::all();
         $client_id=$post['company_id'];
-        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
-        $production_id=$production[0]->id;
+        $estimation = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimation_id=$estimation[0]->id;
 
-        $retArray = $this->invoice->getProduction($post,$production_id);
+        $retArray = $this->invoice->getProduction($post,$estimation_id);
 
         if(empty($retArray))
         {
@@ -727,9 +727,9 @@ class InvoiceController extends Controller {
         }
 
         // Numbers of Orders in Production
-        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
-        $production_id=$production[0]->id;
-        $retArrayProduction = $this->invoice->getProduction($post,$production_id);
+        $estimation_id = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimation_id=$estimation_id[0]->id;
+        $retArrayProduction = $this->invoice->getProduction($post,$estimation_id);
         if(!empty($retArrayProduction))
         {
             $retArrayProduction[0]->totalProduction=round($retArrayProduction[0]->totalProduction, 0);
