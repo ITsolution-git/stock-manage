@@ -485,7 +485,7 @@ class Invoice extends Model {
         return $retArray;
     }
 
-    public function getProduction($post,$production_id){
+   /* public function getProduction($post,$production_id){
         $client_id=$post['company_id'];
 
         $retArray = DB::table('invoice as i')
@@ -504,6 +504,24 @@ class Invoice extends Model {
 
         $retArray = $retArray->where('o.approval_id','=',$production_id)
         ->get();
+
+        return $retArray;
+    }*/
+
+     public function getProduction($post,$estimation_id){
+        $client_id=$post['company_id'];
+
+        $retArray = DB::table('orders as o')
+        ->select(DB::raw('COUNT(o.id) as totalProduction'))
+        ->where('o.company_id','=',$client_id)
+        ->where('o.parent_order_id','=',0);
+
+        if(isset($post['sales_id']) && $post['sales_id']!=0){
+            $sales_id=$post['sales_id'];
+            $retArray = $retArray->where('o.sales_id','=',$sales_id);
+        }
+
+        $retArray = $retArray->where('o.approval_id','!=',$estimation_id)->get();
 
         return $retArray;
     }
