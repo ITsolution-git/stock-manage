@@ -21,7 +21,7 @@ class InvoiceController extends Controller {
 
     public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company)
     {
-        parent::__construct();
+        //parent::__construct();
         $this->common = $common;
         $this->order = $order;
         $this->product = $product;
@@ -92,13 +92,15 @@ class InvoiceController extends Controller {
 
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Invoice'),
-                        1=>array('key' => 'i.created_date', 'name' => 'Date'),
-                        2=>array('key' => 'o.grand_total', 'name' => 'Invoice $ Amount'),
-                        3=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
-                        4=>array('key' => '', 'name' => 'Synced with Quickbooks', 'sortable' => false),
-                        5=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                        6=>array('key' => '', 'name' => '', 'sortable' => false), 
-                        7=>array('key' => '', 'name' => 'Option', 'sortable' => false),
+                        1=>array('key' => 'o.name', 'name' => 'Job Name'),
+                        2=>array('key' => 'client.client_company', 'name' => 'Company'),
+                        3=>array('key' => 'i.created_date', 'name' => 'Date'),
+                        4=>array('key' => 'o.grand_total', 'name' => 'Invoice $ Amount'),
+                        5=>array('key' => 'o.in_hands_by', 'name' => 'In Hands By'),
+                        6=>array('key' => '', 'name' => 'Sync with Quickbooks', 'sortable' => false),
+                        7=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                        8=>array('key' => '', 'name' => '', 'sortable' => false), 
+                        9=>array('key' => '', 'name' => 'Option', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
@@ -417,6 +419,7 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+    /*
     public function getSalesPersons(){
         $post = Input::all();
 
@@ -437,9 +440,9 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
-    public function getNoQuickbook(){
+    /*public function getNoQuickbook(){
         $post = Input::all();
         $retArray = $this->invoice->getNoQuickbook($post);
 
@@ -458,7 +461,7 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
     public function getSalesClosed(){
         $post = Input::all();
@@ -483,7 +486,7 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-    public function getUnpaid(){
+    /*public function getUnpaid(){
         $post = Input::all();
         $retArray = $this->invoice->getUnpaid($post);
 
@@ -504,9 +507,9 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
-    public function getAverageOrders(){
+    /*public function getAverageOrders(){
         $post = Input::all();
         $retArray = $this->invoice->getAverageOrders($post);
 
@@ -516,9 +519,9 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
-    public function getLatestOrders(){
+    /*public function getLatestOrders(){
         $post = Input::all();
         $retArray = $this->invoice->getLatestOrders($post);
 
@@ -537,7 +540,7 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
     public function getEstimates(){
         $post = Input::all();
@@ -567,7 +570,7 @@ class InvoiceController extends Controller {
         return response()->json(["data" => $response]);
     }
 
-    public function getComparison(){
+    /*public function getComparison(){
         $post = Input::all();
         $client_id=$post['company_id'];
         $companyYear = $this->common->GetTableRecords('staff',array('user_id' => $client_id, 'status'=>'1'),array(),0,0,'gross_year');
@@ -590,7 +593,7 @@ class InvoiceController extends Controller {
             'allData' => $retArray
         );
         return response()->json(["data" => $response]);
-    }
+    }*/
 
     public function getUnshipped(){
         $post = Input::all();
@@ -643,10 +646,122 @@ class InvoiceController extends Controller {
     public function getProduction(){
         $post = Input::all();
         $client_id=$post['company_id'];
-        $production = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>143),array(),0,0,'id');
-        $production_id=$production[0]->id;
+        $estimation = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimation_id=$estimation[0]->id;
 
-        $retArray = $this->invoice->getProduction($post,$production_id);
+        $retArray = $this->invoice->getProduction($post,$estimation_id);
+
+        if(empty($retArray))
+        {
+           $response = array(
+                'success' => 0, 
+                'message' => NO_RECORDS
+            ); 
+           return response()->json(["data" => $response]);
+        }
+
+        $response = array(
+            'success' => 1, 
+            'message' => GET_RECORDS,
+            'allData' => $retArray
+        );
+        return response()->json(["data" => $response]);
+    }
+
+    public function getFullDashboard(){
+        $retArray =array();
+        $post = Input::all();
+        $client_id=$post['company_id'];
+
+        // Fetch the list of sales persons
+        $retArraySales = $this->invoice->getSalesPersons($post);
+        if(!empty($retArraySales))
+        {
+            $retArray["salesPersons"] = $retArraySales;
+        }
+
+        //Average Orders
+        $retArrayAverageOrders = $this->invoice->getAverageOrders($post);
+        if(!empty($retArrayAverageOrders))
+        {
+            $retArray["averageOrders"] = $retArrayAverageOrders;
+        }
+
+        // Yearly Gross Compare
+        $companyYear = $this->common->GetTableRecords('staff',array('user_id' => $client_id, 'status'=>'1'),array(),0,0,'gross_year');
+        $year2=$companyYear[0]->gross_year;
+        $retArrayYearlyComparison = $this->invoice->getComparison($post,$year2);
+        if(!empty($retArrayYearlyComparison))
+        {
+            $retArray["yearlyComparison"] = $retArrayYearlyComparison;
+        }
+
+        // Latest Orders
+        $retArrayLatestOrders = $this->invoice->getLatestOrders($post);
+        if(!empty($retArrayLatestOrders))
+        {
+            $retArray["latestOrders"] = $retArrayLatestOrders;
+        }
+
+        // Orders not send to Quickbooks
+        $retArrayNoQuickbook = $this->invoice->getNoQuickbook($post);
+        if(!empty($retArrayNoQuickbook))
+        {
+            $retArray["noQuickbook"] = $retArrayNoQuickbook;
+        }
+
+        // Orders to be shipped
+        $retArrayUnshipped = $this->invoice->getUnshipped($post);
+        if(!empty($retArrayUnshipped))
+        {
+            $retArrayUnshipped[0]->totalUnshipped=round($retArrayUnshipped[0]->totalUnshipped, 0);
+            $retArray["totalUnshipped"] = $retArrayUnshipped;
+        }
+
+        // Orders with Balances
+        $retArrayUnpaid = $this->invoice->getUnpaid($post);
+        if(!empty($retArrayUnpaid))
+        {
+            $retArrayUnpaid[0]->totalUnpaid=round($retArrayUnpaid[0]->totalUnpaid, 0);
+            $retArray["totalUnpaid"] = $retArrayUnpaid;
+        }
+
+        // Numbers of Orders in Production
+        $estimation_id = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimation_id=$estimation_id[0]->id;
+        $retArrayProduction = $this->invoice->getProduction($post,$estimation_id);
+        if(!empty($retArrayProduction))
+        {
+            $retArrayProduction[0]->totalProduction=round($retArrayProduction[0]->totalProduction, 0);
+            $retArray["totalProduction"] = $retArrayProduction;
+        }
+
+        // Sales Closed
+        $retArraySalesClosed = $this->invoice->getSalesClosed($post);
+        if(!empty($retArraySalesClosed))
+        {
+            $retArraySalesClosed[0]->totalSales=round($retArraySalesClosed[0]->totalSales, 0);
+            $retArray["salesClosed"] = $retArraySalesClosed;
+        }
+
+        $retArrayFullShipped = $this->invoice->getFullShipped($post);
+        if(!empty($retArrayFullShipped))
+        {
+            $retArrayFullShipped[0]->totalShipped=round($retArrayFullShipped[0]->totalShipped, 0);
+            $retArray["fullShipped"] = $retArrayFullShipped;
+        }
+
+
+        $estimate = $this->common->GetTableRecords('misc_type',array('company_id' => $client_id, 'slug'=>137),array(),0,0,'id');
+        $estimate_id=$estimate[0]->id;
+
+        $retArrayEstimates = $this->invoice->getEstimates($post,$estimate_id);
+
+        if(!empty($retArrayEstimates))
+        {
+            $retArrayEstimates[0]->totalEstimated=round($retArrayEstimates[0]->totalEstimated, 0);
+            $retArray["totalEstimated"] = $retArrayEstimates;
+        }
 
         if(empty($retArray))
         {

@@ -3,7 +3,7 @@
 
         <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-                Purchase Order #{{po_data.po_display}} for Client <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{po_data.client_company}}</a>
+                Purchase Order {{po_data.po_display}} Job Number {{ po_data.ord_display}} Client Name: <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{po_data.client_company}}</a>
             </div>
             <div class="pull-right right-search-box">
                 <a class="pull-right common-header-links" ui-sref="app.purchaseOrder">BACK TO PO'<span class="text-lower">s</span></a>
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="full-box md-default-theme white-bg layout-padding">
-                            <div flex="25" layout="column" class="trans-box">
+                            <div flex="70" layout="column" >
                                 <a href="javascript:;" ng-click="openClientEmailPopup()" class="pull-right stokkup-custom-btn1 stokkup-blue-btn text-white">Create PDF</a>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                 </div>
 
                 <!-- LOCK PO -->
-                <div flex="10">
+                <div flex="10" title="click to change" class="cursor-p" ng-click="changeVendorcharge(po_data.vendor_charge)">
                     <span class="small-headings mr-20">Vendor Ship Charge:</span>
                     <span class="small-results">${{ po_data.vendor_charge}}</span>
                 </div>

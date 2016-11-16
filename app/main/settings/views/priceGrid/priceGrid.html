@@ -10,12 +10,12 @@
                         <input type="file" name="import_file" id="file" class="upload" ng-model="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <md-tooltip md-direction="bottom">Upload Excel File</md-tooltip>
                         <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                        <input type="hidden" name="pdf_token" id="pdf_token" value="pdf_token">
                         <span>Upload Excel</span>
                     </div>
                      <a href="#" class="btn-typ-submit" ng-click="submitPriceForm()">
                         <span class="icon icon-upload"></span>
                     </a> 
-               <!--  <button class="btn btn-primary">Import File</button> -->
                </form> 
             </div>
         </div>

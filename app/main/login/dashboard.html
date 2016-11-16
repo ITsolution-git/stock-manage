@@ -1,10 +1,10 @@
 <div class="content dashboard-page stockkup-content-table-container stockkup-content-table-container">
     <div class="simple-table-container stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" ng-if="vm.role_slug!='SA'" flex=20>
+            <div class="table-title-text" ng-if="vm.role_slug!='SA'" flex=100>
                 {{vm.company_name}}
             </div>
-            <div class="table-title-text"  ng-if="vm.role_slug=='SA'" flex=20>
+            <div class="table-title-text"  ng-if="vm.role_slug=='SA'" flex=100>
                 {{vm.name}}
             </div>
             
@@ -22,7 +22,7 @@
             <md-card class="box-3 firstbox bottom-shadow">
                 <md-card-title>
                     <md-card-title-text class="md-title">
-                        Numbers of Orders in Production
+                        Number of Orders
                     </md-card-title-text>
                     <div>
                        <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
@@ -35,7 +35,7 @@
                     
                     <div class="dash-footer-filter">
                         <span class="global-labels pull-left">Filter by</span>
-                        <md-select aria-label="Estimates By" ng-model="productionPersonName" ng-change="getProductionSalesMan(productionPersonName)" class="global-labels">
+                        <md-select aria-label="Estimates By" ng-model="productionPersonName" class="global-labels">
                             <md-option value="0" selected>Sales Member</md-option>
                             <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                         </md-select>
@@ -61,7 +61,7 @@
                     
                     <div class="dash-footer-filter">
                         <span class="global-labels pull-left">Sales closed by</span>
-                        <md-select aria-label="Filter By" ng-model="closedSalesMan" ng-change="getSalesClosedSalesMan(closedSalesMan)" class="global-labels">
+                        <md-select aria-label="Filter By" ng-model="closedSalesMan" class="global-labels">
                             <md-option value="0" selected>Sales Member</md-option>
                             <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                         </md-select>
@@ -86,7 +86,7 @@
                 <div class="dash-footer-box text-center">
                     <div flex=35 class="box-zerospace">
                         <div class="dash-footer-filter">
-                            <md-select aria-label="Filter By" ng-model="estimatesDuration" ng-change="getEstimatesSalesMan()" class="global-labels">
+                            <md-select aria-label="Filter By" ng-model="estimatesDuration" class="global-labels">
                                 <md-option value="0" selected>All Time</md-option>
                                 <md-option value="1">Today</md-option>
                                 <md-option value="2">Last Week</md-option>
@@ -99,7 +99,7 @@
                         
                         <div class="dash-footer-filter">
                             <span class="global-labels pull-left">Estimates by</span>
-                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" ng-change="getEstimatesSalesMan()" class="global-labels">
+                            <md-select aria-label="Estimates By" ng-model="estimatesPersonName" class="global-labels">
                                 <md-option value="0" selected>Sales Member</md-option>
                                 <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                             </md-select>
@@ -212,7 +212,7 @@
                            
                             <div class="dash-footer-filter">
                                  <span class="global-labels pull-left">Filter by</span>
-                                <md-select aria-label="Filter By" ng-model="fullDuration" ng-change="getFullOrdersDuration(fullDuration)" class="global-labels">
+                                <md-select aria-label="Filter By" ng-model="fullDuration" class="global-labels">
                                 <md-option value="0" selected>All Time</md-option>
                                 <md-option value="1">Today</md-option>
                                 <md-option value="2">Last Week</md-option>
@@ -252,7 +252,7 @@
                 <md-card class="bottom-shadow md-default-theme">
                     <md-card-header layout-align="space-between center">
                         <md-card-header-text>
-                            <span class="md-title">Orders not send to Quickbooks</span>
+                            <span class="md-title">Orders not sent to Quickbooks</span>
                         </md-card-header-text>
                         <md-menu>
                             <md-button aria-label="Tax Exempt Options" class="md-icon-button">

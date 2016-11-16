@@ -155,9 +155,14 @@
             order_main_data.cond = angular.copy(condition_obj);
 
             $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
-
-                var data = {"status": "success", "message": "Data Updated Successfully."}
-                notifyService.notify(data.status, data.message);
+                if(result.data.success=='1')
+                {
+                    var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
+                }else{
+                    var data = {"status": "error", "message": "Data not Updated."}
+                    notifyService.notify(data.status, data.message);
+                }
             });
         }
 
@@ -179,6 +184,11 @@
             company_id.name = 'company_id';
             company_id.setAttribute('value', sessionService.get('company_id'));
             form.appendChild(company_id);
+
+            var input_pdf = document.createElement('input');
+            input_pdf.name = 'pdf_token';
+            input_pdf.setAttribute('value', 'pdf_token');
+            form.appendChild(input_pdf);
 
             document.body.appendChild(form);
             form.submit();
@@ -508,20 +518,6 @@
                                         $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                         if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                             $scope.showPaymentDetails = true;
-                                            if($scope.allData.order_data[0].approval_id == 2885){
-
-                                                var UpdateArray = {};
-                                                UpdateArray.table ='orders';
-                                                UpdateArray.data = {approval_id:2491};
-                                                UpdateArray.cond = {id:$scope.allData.order_data[0].id};
-                                                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
-                                                {
-                                                    if(resultUpdateStatus.data.success=='1')
-                                                    {
-                                                        $scope.allData.order_data[0].approval_id = 2491;
-                                                    }
-                                                });
-                                            }
                                         }else{
                                             $scope.showPaymentDetails = false;
                                             $scope.allData.order_data[0].approval_id = resultUpdate.data.amt.approval_id;
@@ -570,19 +566,6 @@
                                 $scope.allData.order_data[0].balance_due = resultUpdate.data.amt.balance_due;
                                 if($scope.allData.order_data[0].grand_total > $scope.allData.order_data[0].total_payments){
                                     $scope.showPaymentDetails = true;
-                                    /*if($scope.allData.order_data[0].approval_id == 2885){
-                                        var UpdateArray = {};
-                                        UpdateArray.table ='orders';
-                                        UpdateArray.data = {approval_id:2491};
-                                        UpdateArray.cond = {id:$scope.allData.order_data[0].id};
-                                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(resultUpdateStatus) 
-                                        {
-                                            if(resultUpdateStatus.data.success=='1')
-                                            {
-                                                $scope.allData.order_data[0].approval_id = 2491;
-                                            }
-                                        });
-                                    }*/
                                 }else{
                                     $scope.showPaymentDetails = false;
                                 }

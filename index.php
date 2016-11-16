@@ -76,6 +76,8 @@
 
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
 
+    <script src="//fast.appcues.com/21130.js"></script>
+
     <!-- <ms-theme-options></ms-theme-options> -->
     <script src="scripts/vendor.js"></script>
     <!--<script src="scripts/mdPickers.min.js"></script>-->

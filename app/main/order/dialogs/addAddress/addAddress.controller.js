@@ -56,6 +56,7 @@
             {
                 notifyService.notify('success','Record added successfully');
                 $mdDialog.hide();
+                $state.go($state.current, '', {reload: true, inherit: true});
             });
 
         }

@@ -7,9 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/type-resolver/src', $vendorDir . '/phpdocumentor/reflection-docblock/src'),
-    'Zend\\EventManager\\' => array($vendorDir . '/zendframework/zend-eventmanager/src'),
     'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
-    'Zend\\Code\\' => array($vendorDir . '/zendframework/zend-code/src'),
     'XdgBaseDir\\' => array($vendorDir . '/dnoegel/php-xdg-base-dir/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'Ups\\' => array($vendorDir . '/gabrielbull/ups-api/src'),
@@ -36,8 +34,7 @@ return array(
     'GuzzleHttp\\Psr7\\' => array($vendorDir . '/guzzlehttp/psr7/src'),
     'GuzzleHttp\\Promise\\' => array($vendorDir . '/guzzlehttp/promises/src'),
     'GuzzleHttp\\' => array($vendorDir . '/guzzlehttp/guzzle/src'),
-    'Goetas\\Xsd\\XsdToPhp\\' => array($vendorDir . '/goetas/xsd2php/lib'),
-    'Goetas\\XML\\XSDReader\\' => array($vendorDir . '/goetas/xsd-reader/src'),
+    'GoetasWebservices\\Xsd\\XsdToPhpRuntime\\' => array($vendorDir . '/goetas-webservices/xsd2php-runtime/src'),
     'GoetasWebservices\\XML\\XSDReader\\' => array($vendorDir . '/goetas-webservices/xsd-reader/src'),
     'Elibyy\\TCPDF\\' => array($vendorDir . '/elibyy/laravel-tcpdf/src'),
     'Doctrine\\Instantiator\\' => array($vendorDir . '/doctrine/instantiator/src/Doctrine/Instantiator'),
