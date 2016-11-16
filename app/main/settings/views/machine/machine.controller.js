@@ -63,7 +63,6 @@
 	     		$scope.success  = result.success;
 	     		if(result.success=='1')
 	            {
-	                
 	                return {
 	                  'rows': result.rows,
 	                  'header': result.header,
@@ -71,7 +70,6 @@
 	                  'sortBy': result.sortBy,
 	                  'sortOrder': result.sortOrder
                 	}
-
 	            }
 	            else
 	            {
@@ -85,15 +83,21 @@
             $mdDialog.show({
                 //controller: 'AddEmployeeDialogController',
                 controller: function($scope,params){
-                    $scope.params = params;
-                    $scope.states_all = params.states_all;
-                    $scope.addVendor = function (vendor) 
+                    
+                    $scope.machine = {
+                        'machine_type':'',
+                        'machine_name':'',
+                        'color_count':'',
+                        'screen_width':'',
+                        'screen_height':'',
+                    }
+                    $scope.addMachine = function (machine) 
                     {
       	 				var InserArray = {}; // INSERT RECORD ARRAY
 
-    	                InserArray.data = vendor;
-    	                InserArray.data.company_id = $scope.params.company_id;
-    	                InserArray.table ='vendors';            
+    	                InserArray.data = machine;
+    	                InserArray.data.company_id = sessionService.get('company_id');
+    	                InserArray.table ='machine';            
 
     	                // INSERT API CALL
     	                $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
@@ -115,7 +119,7 @@
                     } 
 
                 },
-                templateUrl: 'app/main/settings/dialogs/vendor/addvendor.html',
+                templateUrl: 'app/main/settings/dialogs/machine/addmachine.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -126,7 +130,7 @@
                 onRemoving : $scope.reloadCallback
             });
         }
-        $scope.edit_company = function (ev,user_id)
+        $scope.editMachine = function (ev,id)
         {
         	    $mdDialog.show({
                 controller: function($scope,params){
@@ -138,14 +142,14 @@
                     $scope.states_all = params.states_all;
 
                     var companyData = {};
-	                companyData.table ='vendors';
-	                companyData.cond = {id:user_id};
+	                companyData.table ='machine';
+	                companyData.cond = {id:id};
 	                // GET CLIENT TABLE CALL
 	                $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
 	                {   
 	                    if(result.data.success=='1')
 	                    {  
-	                    	$scope.users = result.data.records[0];
+	                    	$scope.machine = result.data.records[0];
 	                    }
 	                    else
 	                    {
@@ -153,32 +157,28 @@
 	                    }
 	                    $("#ajax_loader").hide();
 	                });
-                    $scope.SaveRecords = function(account){
+                    $scope.addMachine = function(machine){
                             
-                            var UpdateArray = {};
-				            UpdateArray.table ='vendors';
-				            
+                        var UpdateArray = {};
+			            UpdateArray.table ='machine';
+			            UpdateArray.data = machine;
+			            UpdateArray.cond = {id: machine.id};
+			            delete UpdateArray.data.id;
 
-				            UpdateArray.data = account;
-
-				            UpdateArray.cond = {id: account.id};
-				            delete UpdateArray.data.id;
-				            //console.log(UpdateArray); return false;
-
-				            $("#ajax_loader").show();
-				                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-				                    if(result.data.success=='1')
-				                    {
-				                        notifyService.notify('success', result.data.message);
-				                        $scope.closeDialog();
-				                    }
-				                    else
-				                    {
-				                        notifyService.notify('error', result.data.message);
-				                        $scope.closeDialog();
-				                    }
-				                    $("#ajax_loader").hide();
-				                });
+			            $("#ajax_loader").show();
+		                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+		                    if(result.data.success=='1')
+		                    {
+		                        notifyService.notify('success', result.data.message);
+		                        $scope.closeDialog();
+		                    }
+		                    else
+		                    {
+		                        notifyService.notify('error', result.data.message);
+		                        $scope.closeDialog();
+		                    }
+		                    $("#ajax_loader").hide();
+		                });
                     }
                     $scope.closeDialog = function() 
                     {
@@ -186,7 +186,7 @@
                     } 
 
                 },
-                templateUrl: 'app/main/settings/dialogs/vendor/editvendor.html',
+                templateUrl: 'app/main/settings/dialogs/machine/addmachine.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -229,22 +229,18 @@
             UpdateArray.data = {operation_status:status};
             UpdateArray.cond = {id: id};
             
-            var permission = confirm(AllConstant.deleteMessage);
-            if (permission == true) 
-            {
-                $("#ajax_loader").show();
-                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                    if(result.data.success=='1')
-                    {
-                        notifyService.notify('success', result.data.message);
-                    }
-                    else
-                    {
-                        notifyService.notify('error', result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
-            }
+            $("#ajax_loader").show();
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success', result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error', result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
         }
     }
 })();
