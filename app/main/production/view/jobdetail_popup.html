@@ -45,7 +45,7 @@
 	        	<div class="full-row pull-left m-t-20">
 	        		<md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
 	                <!---Screen Sets Tab-->
-	                <div ng-controller="shippingController">
+	                <div >
 	                    <md-tab label="screen sets" ng-click="getTab('wait')">
 	                       	<div flex=40 class="pull-left">
 	                       		<h4 class="stokkup-title-h4 text-uppercase m-t-20">screen set info</h4>
@@ -55,44 +55,44 @@
 						                    <input placeholder="Screen Set Name">
 						                </md-input-container>
 	                                </div>
-	                       			<div layout="column" flex=50 class="pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container>
+	                       			<div layout="column" flex=50 class="pull-left  shipcustomfield">
+	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Screen Count">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
-	                                    <md-input-container>
+	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Number of Colors">
 						                </md-input-container>
 	                                </div>
 
-	                                <div layout="column" flex=50 class="pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container>
+	                                <div layout="column" flex=50 class="pull-left shipcustomfield">
+	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Width(inches)">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
-	                                    <md-input-container>
+	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Height(inches)">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container>
+	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Screen Resolution">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container>
+	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Screen Size">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container>
+	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Notes">
 						                </md-input-container>
 	                                </div>
@@ -104,7 +104,7 @@
 	                       	<h4 class="stokkup-title-h4 text-uppercase m-t-20 m-b-20">screen set screens</h4>
 		                       	<div class="full-row">
 	                            	<div class="ms-responsive-table-wrapper">
-							            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+							            <div>
 							                <table class="dataTable row-border">
 							                    <thead>
 							                    	<tr>
@@ -161,7 +161,7 @@
 	                    </md-tab>
 	                </div>
 	                <!---Garment Info Tab-->
-	                <div ng-controller="shippingProgressController">
+	                <div>
 	                    <md-tab label="garment info" ng-click="getTab('progress')">
 
 	                    	<div class="full-row pull-left pl-30 pr-30 m-t-20">
