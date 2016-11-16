@@ -37,7 +37,7 @@ class Machine extends Model {
                         {
                             $machinedata = $machinedata->Where(function($query) use($search)
                             {
-                                $query->orWhere('name_machine', 'LIKE', '%'.$search.'%');
+                                $query->orWhere('machine_name', 'LIKE', '%'.$search.'%');
                             });
                         }
                         $machinedata = $machinedata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
