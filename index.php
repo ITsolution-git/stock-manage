@@ -205,6 +205,11 @@
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
     <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
+
+    <!--Production--> 
+    <script src="app/main/production/production.module.js"></script>
+    <script src="app/main/production/production.controller.js"></script>
+
     <!-- Settings -->
     <script src="app/main/settings/settings.module.js"></script>
     <script src="app/main/settings/settings.controller.js"></script>
