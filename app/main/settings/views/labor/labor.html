@@ -13,7 +13,25 @@
                 </md-input-container>
                 </div>
             </div>
+            
+
         </div>
+
+
+        <div class="table-title " layout="row" layout-align="space-between center">
+            
+
+            <div class="table-title-text" flex="20">Week begins on:</div>
+
+                 <div class="div-1000" id="custChkboxes1" flex="80">
+                        <div class="customChkbox md-raised" ng-repeat="item in items">
+                             <input type="checkbox" ng-checked="exists(item.id, selected)" ng-click="toggle(item.id, selected)" id="{{item.id}}" value="{{item.id}}"/>
+                            <label for="{{item.id}}" class="form-control">{{item.name}}</label>
+                        </div>
+                </div>
+        </div>
+
+
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
                  <table class="dataTable row-border">
@@ -32,7 +50,7 @@
                                     </md-button>
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
-                                            <md-button ng-click="openEditPopup($event,labor)">
+                                            <md-button ng-click="vm.openaddLaborDialog($event,labor.id)">
                                                 Edit Labor
                                             </md-button>
                                         </md-menu-item>

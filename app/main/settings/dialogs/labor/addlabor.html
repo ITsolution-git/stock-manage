@@ -1,64 +1,49 @@
-<md-dialog class="task-dialog addEmployeeDialog" >
-<form name="laborform" class="md-inline-form" novalidate>
-    <div class="client-profile-page">
-    <md-toolbar class="md-accent md-hue-2">
+<md-dialog class="task-dialog designadd-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">Edit Shift</span>
-                <md-button  ng-click="closeDialog()">
-                    <span>Cancel</span>
+                <span class="title">{{vm.title}}</span>
+                <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
                 </md-button>
             </div>
         </md-toolbar>
-    <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0" ng-class="{'disable-click': all_scope.allow_access==0}">
 
-     
-
-
-        <div layout="row" layout-wrap>
-
-
-             <div class="div-1000" id="custChkboxes1">
-                                <div class="customChkbox md-raised" ng-repeat="DaysAll in params.DisplayDays">
-                                     <input type="checkbox"  ng-checked="params.AllDays.indexOf(DaysAll.id) > -1"   value="{{DaysAll.id}}" id="{{DaysAll.id}}"  />
-                                    <label for="{{DaysAll.id}}" class="form-control">{{DaysAll.name}}</label>
-                                </div>
-                           
-
-             </div>
-
-                <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                    <input placeholder="Shift Name *" required name="shift_name"  ng-model="params.shift_name">
-                     <div ng-messages="laborform.shift_name.$error" role="alert" multiple>
-                        <div ng-message="required">
-                            <span>This field is required</span>
-                        </div>
-                    </div>
-                </md-input-container>
-
-               
-                           
-
+        <div class="div-1000" id="custChkboxes1">
+                <div class="customChkbox md-raised" ng-repeat="item in items">
+                     <input type="checkbox" ng-checked="exists(item.id, selected)" ng-click="toggle(item.id, selected)" id="{{item.id}}" value="{{item.id}}"/>
+                    <label for="{{item.id}}" class="form-control">{{item.slug}}</label>
+                </div>
         </div>
-    </md-card-content>
-       
-    </div>
-</div>
-<table> 
-    <tr>
-        <td class="p-16 td-500">
-        
-            <md-button class="bg-blue float-right" ng-show="flag=='add' && all_scope.allow_access==1" ng-disabled="laborform.$invalid" ng-click="InsertTableData(params,'labor')">
-                    SAVE
-            </md-button>
 
-             <md-button class="bg-blue float-right"  ng-show="flag=='edit' && all_scope.allow_access==1"  ng-disabled="laborform.$invalid" ng-click="UpdateTableDataAll(params,'labor','id',params.id,'labor')">
-                    UPDATE
-            </md-button>
+        <md-dialog-content ms-scroll>
+
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                <md-input-container class="md-block first-box" flex-gt-sm>
+                    <input placeholder="Shift Name" flex="80" ng-model="labor.shift_name">
+                </md-input-container>
+            </div>
+
+            <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
+
+                <label for="chk1"   class="form-control">Start Time</label>
+                <input kendo-time-picker ng-model="labor.shift_start_time" k-ng-model="t1">
+
+                <label for="chk2"   class="form-control">End Time</label>
+                <input kendo-time-picker ng-model="labor.shift_end_time" k-ng-model="t2">
+
+            </div>
+
+
+
 
             
-        </td>  
-    </tr>
-</table>
-</form>
-</md-dialog>
+            
+
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="md-accent md-raised " ng-click="savelabor(labor,selected)">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

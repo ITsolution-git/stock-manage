@@ -56,5 +56,30 @@ class Labor extends Model {
         //echo "<pre>"; print_r($result); die();
         return $returnData;
     }
+
+    /**
+* Labor Detail           
+* @access public laborDetail
+* @param  int $laborId and $clientId
+* @return array $combine_array
+*/  
+
+    public function laborDetail($data) {
+
+      
+        $whereConditions = ['labor.is_delete' => "1",'labor.id' => $data['id']];
+        
+        $listArray = ['labor.*'];
+
+        $laborDetailData = DB::table('labor as labor')
+                        
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        $combine_array = array();
+        $combine_array['labor'] = $laborDetailData;
+        return $combine_array;
+    }
  }   
 
