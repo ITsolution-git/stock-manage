@@ -138,18 +138,28 @@ class Purchase extends Model {
 					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
 					->JOIN('order_design as od','od.id','=','pd.design_id')
 					->JOIN('orders as ord','od.order_id','=','ord.id')
-					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
 					->JOIN('users as usr','usr.id','=','ord.company_id')
 					->JOIN('staff as stf','stf.user_id','=','usr.id')
 				    ->JOIN('products as p','p.id','=','pd.product_id')
+				    ->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
+				    ->leftJoin('client_address as ca','cl.client_id','=',DB::raw("ca.client_id AND ca.address_shipping = '1' "))
+				    ->leftJoin('state as st','st.id','=',"ca.state")
+				    ->leftjoin('users as usr1','usr1.id','=','ord.account_manager_id')
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
+					->leftjoin('invoice as inv','inv.order_id','=','ord.id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.billing_email','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.custom_po','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
-                      DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
-                      DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
-                      DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*','ord.approval_id')
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.billing_email','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.id as order_id','ord.custom_po','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',
+						DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
+						DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),
+                        DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),
+                        DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
+                        DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),
+                        DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
+                        DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),
+                        DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',
+                      DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*','ord.approval_id','usr1.name as account_manager','ca.street','ca.city','st.code as state_name','ca.postal_code','ca.address',DB::raw('DATE_FORMAT(inv.payment_due_date, "%m/%d/%Y") as payment_due_date'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
@@ -653,6 +663,33 @@ class Purchase extends Model {
             $allData[$data->order_id][] = $data;
         }
         return $allData;
+    }
+    public function GetPOpositions($po_id,$company_id)
+    {
+    	//echo $po_id."=".$company_id;
+		$result =  DB::table('purchase_order as po')
+		  ->leftJoin('orders as ord','po.order_id','=','ord.id')
+		  ->Join('purchase_order_line as pol','pol.po_id','=','po.po_id')
+		  ->Join('purchase_detail as pd','pd.id','=','pol.purchase_detail') 
+		  ->leftJoin('order_design as od','od.id','=','pd.design_id')
+		  ->leftJoin('order_design_position as odp','od.id','=','odp.design_id')
+		  ->leftJoin('misc_type as mt','mt.id','=','odp.position_id')
+		  ->select('ord.id as order_id','odp.image_1','odp.id','mt.value as position_name','odp.note')
+		  ->where('po.display_number','=',$po_id)
+		  ->where('po.company_id','=',$company_id)
+		  ->where('odp.is_delete','=','1')
+		  ->where('od.is_delete','=','1')
+		  ->where('ord.is_delete','=','1')
+		  ->GroupBy('odp.id')
+		  ->get();
+
+		foreach($result as $key=>$value) 
+		{
+            $value->image_1 = $value->image_1;
+            $value->image_1 = $this->common->checkImageExist($company_id.'/order_design_position/'.$value->id."/",$value->image_1);
+        }
+
+		return $result;
     }
 
 }
