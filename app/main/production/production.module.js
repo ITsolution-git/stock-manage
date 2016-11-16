@@ -15,7 +15,7 @@
                 url    : '/production',
                 views  : {
                     'content@app': {
-                        templateUrl: 'app/main/production/production.html',
+                        templateUrl: 'app/main/production/view/production.html',
                         controller : 'ProductionController as vm'
                     }
                 },
@@ -39,11 +39,11 @@
                         return sessionService.AccessService('ALL','true');
                     }
                 }
-        }).state('app.prodqueue', {
-            url: '/prodqueue',
+        }).state('app.productionlist', {
+            url: '/productionlist',
             views: {
                 'content@app': {
-                    templateUrl: 'app/main/production/prodqueue.html',
+                    templateUrl: 'app/main/production/view/prodqueue.html',
                     controller: 'ProductionqueueController as vm'
                 }
             },resolve: {

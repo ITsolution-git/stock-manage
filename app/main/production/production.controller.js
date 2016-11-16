@@ -51,7 +51,7 @@
             $mdDialog.show({
                 controller: 'ProductionqueueController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/production/calendardialog.html',
+                templateUrl: 'app/main/production/view/schedule_position.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -69,7 +69,7 @@
             $mdDialog.show({
                 controller: 'ProductionqueueController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/production/jobpopup.html',
+                templateUrl: 'app/main/production/view/jobdetail_popup.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
