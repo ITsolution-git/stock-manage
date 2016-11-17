@@ -52,11 +52,12 @@
        
 //1. sales rep
         vm.salesCheckModal = [];
-       
+        $scope.order_status = '';
         //3. create date
         vm.createDate;
         vm.createdate = false;
         vm.companyfilter = false;
+        vm.orderStatusfilter = false;
          //4. company
         vm.companyCheckModal = [];
         //vm.companyCheckData = [{id: 1, "label": "Checkbox 1"}, {id: 2, "label": "Checkbox 2"}, {id: 3, "label": "Checkbox 3"}, {id: 4, "label": "Checkbox 4"}, {id: 5,  "label": "Checkbox 5"}, {id: 6, "label": "Checkbox 6"}, {id: 7, "label": "Checkbox 7"}, ];
@@ -84,10 +85,12 @@
             for (var i = 0; i < this.companyCheckData.length; i++) {
                 this.companyCheckData[i].label = false;
             }
-*/            vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = false;
+*/           vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = false;
             this.searchOrder = null;
             jQuery('.dateFilter').prop("value", " ");
            
+            $scope.order_status = '';
+            
             vm.companyChecksettings = {externalIdProp: myCustomPropertyForTheObject()}
             function myCustomPropertyForTheObject(){
                 vm.companyCheckModal = [];
@@ -153,7 +156,8 @@
           'search': '',
           'seller': '',
           'client': '',
-          'created_date': ''
+          'created_date': '',
+          'order_status':''
         };
          $scope.search = function ($event){
             $scope.filterBy.name = $event.target.value;
@@ -179,6 +183,7 @@
             $scope.filterBy.seller = '';
             $scope.filterBy.client = '';
             $scope.filterBy.created_date = '';
+            $scope.filterBy.order_status = '';
             $scope.filterBy.temp = '';
             $scope.sellerArray = [];
 
@@ -206,9 +211,15 @@
                 flag = false;
                 $scope.filterBy.created_date = vm.createDate;
             }
+            
             if(flag == true)
             {
                 $scope.filterBy.temp = angular.copy(1);
+            }
+
+            if($scope.order_status != '')
+            {
+                $scope.filterBy.order_status = $scope.order_status;
             }
         }
 
