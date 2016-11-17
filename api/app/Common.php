@@ -510,6 +510,34 @@ class Common extends Model {
             return $inc_id+1;
            // die();
     }
+    public function setAffiliateDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$lastId)
+    {
+          //echo $pkey; die();
+
+          $sec_number = DB::table($table.' as tb')
+                            ->where($comp_field,$company_id)
+                            ->where('affiliate_display_number','=','0')
+                            ->orderby($pkey,'asc')
+                            ->get();
+
+            //echo count($sec_number); die();
+            if(count($sec_number)>0) // CHECK THE 0 DATA TO BE RESET
+            {
+                foreach ($sec_number as $key=>$value) 
+                {
+                   // echo $value->$pkey;
+                    $inc_id = $lastId+$key+1; // SET NEW ID BY INCREMENT OF LATEST ID
+                    $this->UpdateTableRecords($table,array($pkey=>$value->$pkey),array('affiliate_display_number'=>$inc_id)) ;   // UPDATE NEW INCREMENTED ID     
+                }
+            }
+            else
+            {
+                $inc_id = $lastId;
+            }
+            //$this->getDisplayNumber($table,$company_id,$comp_field,$pkey); // CHECK AGAIN TO SET NEW DISPLAY ID
+            return $inc_id+1;
+           // die();
+    }
     public function getDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$call="no")
     {
 
@@ -530,6 +558,34 @@ class Common extends Model {
         if($call=="yes")
         {
             $lastId = $this->setDisplayNumber($table,$company_id,$comp_field,$pkey,$sec_number[0]->disp_number); // RESET ALL UNALLOCATED ID
+            return $lastId; // RETURN LATEST INCREMENTED ID
+        }
+        else
+        {
+           if($lastId==0){$lastId=1;} 
+           return $lastId; // RETURN LATEST INCREMENTED ID
+        }
+    }
+    public function getAffiliateDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$call="no")
+    {
+
+        $sec_number = DB::table($table.' as tb')
+                            ->select(DB::raw('MAX(tb.affiliate_display_number) as disp_number'))
+                            ->where($comp_field,$company_id)
+                            ->get();
+        
+        if(empty($sec_number[0]->disp_number))
+        {
+            $lastId= 0; // THERE IS NO RECORD
+        }
+        else
+        {
+            $lastId= $sec_number[0]->disp_number+1; // THERE ARE RECORDS AND LATEST DISPLAY ID
+        }    
+
+        if($call=="yes")
+        {
+            $lastId = $this->setAffiliateDisplayNumber($table,$company_id,$comp_field,$pkey,$sec_number[0]->disp_number); // RESET ALL UNALLOCATED ID
             return $lastId; // RETURN LATEST INCREMENTED ID
         }
         else
