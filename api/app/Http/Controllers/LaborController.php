@@ -97,18 +97,9 @@ class LaborController extends Controller {
       public function editLabor()
     {
         $post = Input::all();
-
-
-
-       // $shift_start_time  = date("H:i", strtotime($post['laborData']['shift_start_time']));
-
-      //  $shift_end_time  = date("H:i", strtotime($post['laborData']['shift_end_time']));
-
-
       
         $post['laborData']['apply_days'] = implode(',', $post['laborData']['days_array']);
         unset($post['laborData']['days_array']);
-
 
        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['laborData']);
             $data = array("success"=>1,"message"=>UPDATE_RECORD);

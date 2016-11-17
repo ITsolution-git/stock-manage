@@ -73,13 +73,6 @@
 
         $scope.savelabor = function (laborData,selected) {
 
-          
-          if(selected.length == 0) {
-
-                      var data = {"status": "error", "message": "Select atleast 1 day"}
-                              notifyService.notify(data.status, data.message);
-                              return false;
-            }
 
 
             if(laborData.shift_name == undefined || laborData.shift_name == '') {
@@ -89,7 +82,59 @@
                               return false;
             }
 
+             if(selected.length == 0) {
+
+                      var data = {"status": "error", "message": "Select atleast 1 day"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+
+          if(laborData.shift_start_time == undefined || laborData.shift_start_time == '') {
+
+                      var data = {"status": "error", "message": "Shift Start Time should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+          if(laborData.shift_end_time == undefined || laborData.shift_end_time == '') {
+
+                      var data = {"status": "error", "message": "Shift End Time should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+          var today = new Date();
+
+          var format_check = laborData.shift_end_time;
+          var format_check_start = laborData.shift_start_time;
+          var format_end = format_check.match(/\s(.*)$/)[1];
+          var format_start = format_check_start.match(/\s(.*)$/)[1];
+          var todayend = new Date();
+          if (format_end == "AM" && format_start == "PM") {
+            todayend.setDate(todayend.getDate() + 1);                  
+          }                     
+
+          var valuestart =laborData.shift_start_time;              
+          var valuestop = laborData.shift_end_time;//$("select[name='timestop']").val();              //create date format                
+          var timeStart = new Date(today.toDateString() + " " + valuestart).getTime();              
+          var timeEnd = new Date(todayend.toDateString() + " " + valuestop).getTime();              
+          var hourDiff = (timeEnd - timeStart) / (1000 * 60 * 60);                
+
+
+
+          if(hourDiff != 8) {
+
+                      var data = {"status": "error", "message": "Shift must be 8 hrs."}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+          
+          
+
             laborData.days_array = selected;
+            laborData.total_shift_hours = hourDiff;
 
             
             if(labor_id != 0) {
