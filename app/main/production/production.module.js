@@ -93,7 +93,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.production', {
-            //title: 'Production',
+            title: 'Production',
             icon: 'icon-cart',
             state: 'app.production',
             /*stateParams: {
