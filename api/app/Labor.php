@@ -35,6 +35,15 @@ class Labor extends Model {
                                 ->orWhere('l.total_shift_hours','LIKE', '%'.$search.'%');
                       });
                     }
+
+                     if(isset($post['filter']['filter_days']) && $post['filter']['filter_days'] != 0)
+                        {
+                          $filter_day = $post['filter']['filter_days'];
+
+                          $result = $result->whereRaw('FIND_IN_SET('.$filter_day.',l.apply_days)');
+                        }
+
+
                  $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                  ->skip($post['start'])
                  ->take($post['range'])

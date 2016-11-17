@@ -9,7 +9,7 @@
             </div>
         </md-toolbar>
 
-        <div class="div-1000" id="custChkboxes1">
+        <div id="custChkboxes1" class="addLabourCheckbox">
                 <div class="customChkbox md-raised" ng-repeat="item in items">
                      <input type="checkbox" ng-checked="exists(item.id, selected)" ng-click="toggle(item.id, selected)" id="{{item.id}}" value="{{item.id}}"/>
                     <label for="{{item.id}}" class="form-control">{{item.slug}}</label>
@@ -33,12 +33,6 @@
                 <input kendo-time-picker ng-model="labor.shift_end_time" k-ng-model="t2">
 
             </div>
-
-
-
-
-            
-            
 
 
         </md-dialog-content>

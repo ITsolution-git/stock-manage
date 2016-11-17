@@ -1184,9 +1184,9 @@ class CommonController extends Controller {
             $result = $this->labor->laborList($post);
             $header = array(
                 array('key' => 'l.shift_name', 'name' => 'Shift Name'),
-                array('key' => 'l.shift_start_time', 'name' => 'Shift Start Time'),
-                array('key' => 'l.shift_end_time', 'name' => 'Shift End Time'),
-                array('key' => 'l.total_shift_hours', 'name' => 'Total Shift Hours'),
+                array('key' => 'l.shift_start_time', 'name' => 'Shift Start Time','sortable' => false),
+                array('key' => 'l.shift_end_time', 'name' => 'Shift End Time','sortable' => false),
+                array('key' => 'l.total_shift_hours', 'name' => 'Total Shift Hours','sortable' => false),
                 array('key' => '', 'name' => 'Action','sortable' => false)
                 );
         }

@@ -26,6 +26,7 @@
             $mdOpenMenu(ev);
         };
         $scope.company_id = sessionService.get('company_id');
+        $scope.filter_days = 0;
         
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
@@ -51,6 +52,7 @@
         $scope.filterBy = {
           'search': '',
           'name': '',
+          'filter_days': 0,
           'function': 'labor_list'
         };
         $scope.search = function ($event){
@@ -125,7 +127,7 @@
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                     if(result.data.success=='1')
                     {
-                        notifyService.notify('success', result.data.message);
+                        notifyService.notify('success', "Record Deleted Successfully.");
                         $scope.reloadCallback();
                     }
                     else
@@ -138,7 +140,26 @@
         }
 
 
-         $scope.selected = [];
+        $scope.filterLabor = function(filter_day){
+            
+            var flag = true;
+            
+            $scope.filterBy.filter_days = '';
+          
+            if(filter_day > 0)
+            {
+                flag = false;
+                $scope.filterBy.filter_days = filter_day;
+            }
+            if(flag == true)
+            {
+                $scope.filterBy.temp = angular.copy(1);
+            }
+        }
+
+
+
+         /*$scope.selected = [];
        
      
               $scope.toggle = function (item, list) {
@@ -153,7 +174,7 @@
 
               $scope.exists = function (item, list) {
                 return list.indexOf(item) > -1;
-              };
+              };*/
 
 
     }

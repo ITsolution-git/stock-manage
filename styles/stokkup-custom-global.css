@@ -1650,4 +1650,8 @@ ul.misc-left-pane {
 a.editable-click:hover, a.editable-click:focus {
   border-bottom: solid 1px #252932 !important; }
 
+.addLabourCheckbox{
+   padding-left: 30px;
+} 
+
 /*# sourceMappingURL=stokkup-custom-global.css.map */

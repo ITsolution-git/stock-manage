@@ -20,7 +20,7 @@
           });
           
           var vm = this;
-          vm.title = 'Add/Edit Labor';
+          vm.title = 'Add/Edit Shift';
 
         
         if(labor_id != 0) {
@@ -35,8 +35,6 @@
 
                     $scope.selected = result.data.records[0].apply_days.split(',');
                     
-                     
-
                 }
                 
             });
@@ -62,13 +60,6 @@
       $scope.exists = function (item, list) {
         return list.indexOf(item) > -1;
       };
-
-
-
-     
-
-      
-
 
 
         $scope.savelabor = function (laborData,selected) {
@@ -146,7 +137,7 @@
             
                 $http.post('api/public/labor/editLabor',order_data).success(function(result) {
                      $mdDialog.hide();
-                      var data = {"status": "success", "message": "Labor Updated Successfully."}
+                      var data = {"status": "success", "message": "Shift Updated Successfully."}
                      notifyService.notify(data.status, data.message);
                 });
 
@@ -160,7 +151,7 @@
                 $http.post('api/public/labor/addLabor',combine_array_id).success(function(result) 
                 {
                     $mdDialog.hide();
-                    var data = {"status": "success", "message": "Labor Added Successfully."}
+                    var data = {"status": "success", "message": "Shift Added Successfully."}
                      notifyService.notify(data.status, data.message);
                 });
 
