@@ -73,6 +73,16 @@
                                     </div>
                                 </div>
                             </div>
+                            <div layout="column" class="f-box-1">
+                                <div class="f-body scrollable pad0"  ms-scroll>
+                                    <div layout="column" >
+                                        <md-select ng-model="order_status" flex="100"  class="margin-0 select-width font-16 font-weight">
+                                            <md-option selected value="">Order Status</md-option>
+                                            <md-option slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                        </md-select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </md-content>
                     <div class="filter-footer" layout="row">
