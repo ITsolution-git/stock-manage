@@ -13,6 +13,7 @@ use App\Client;
 use App\Order;
 use App\Purchase;
 use App\Art;
+use App\Labor;
 use App\Machine;
 use DB;
 
@@ -25,7 +26,8 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Machine $machine) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Labor $labor,Machine $machine ) 
+
     {
         parent::__construct();
         $this->common = $common;
@@ -35,6 +37,7 @@ class CommonController extends Controller {
         $this->art = $art;
         $this->client = $client;
         $this->order = $order;
+        $this->labor = $labor;
         $this->machine = $machine;
     }
 
@@ -1185,8 +1188,25 @@ class CommonController extends Controller {
                 array('key' => '', 'name' => 'Operation Status','sortable' => false),
                 array('key' => '', 'name' => 'Action','sortable' => false)
             );
+         }   
 
+
+        if($post['filter']['function']=='labor_list') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'l.id';
+            }
+            $result = $this->labor->laborList($post);
+            $header = array(
+                array('key' => 'l.shift_name', 'name' => 'Shift Name'),
+                array('key' => 'l.shift_start_time', 'name' => 'Shift Start Time','sortable' => false),
+                array('key' => 'l.shift_end_time', 'name' => 'Shift End Time','sortable' => false),
+                array('key' => 'l.total_shift_hours', 'name' => 'Total Shift Hours','sortable' => false),
+                array('key' => '', 'name' => 'Action','sortable' => false)
+                );
         }
+
         
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
