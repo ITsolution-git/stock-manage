@@ -14,6 +14,7 @@ use App\Order;
 use App\Purchase;
 use App\Art;
 use App\Labor;
+use App\Machine;
 use DB;
 
 use Request;
@@ -25,7 +26,8 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Labor $labor ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Labor $labor,Machine $machine ) 
+
     {
         parent::__construct();
         $this->common = $common;
@@ -36,7 +38,7 @@ class CommonController extends Controller {
         $this->client = $client;
         $this->order = $order;
         $this->labor = $labor;
-
+        $this->machine = $machine;
     }
 
 /**
@@ -1160,8 +1162,6 @@ class CommonController extends Controller {
                 3=>array('key' => 'note.artapproval_display', 'name' => 'Show in Art Approval')
                 );
         }
-
-
         if($post['filter']['function']=='order_notes') // PURCHASE NOTES LISTING CONDITION
         {
             if(!isset($post['sorts']['sortBy'])) 
@@ -1172,8 +1172,24 @@ class CommonController extends Controller {
             $header = array(
                  0=>array('key' => '', 'name' => 'Notes','sortable' => false)
                 );
-
         }
+        if($post['filter']['function']=='machine_list') // VENDOR LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->machine->machineList($post);
+            $header = array(
+                array('key' => 'machine_name', 'name' => 'Machine Name'),
+                array('key' => 'machine_type', 'name' => 'Machine Type'),
+                array('key' => 'color_count', 'name' => 'Color/Head Count'),
+                array('key' => '', 'name' => 'Max Frame Size','sortable' => false),
+                array('key' => '', 'name' => 'Operation Status','sortable' => false),
+                array('key' => '', 'name' => 'Action','sortable' => false)
+            );
+         }   
+
 
         if($post['filter']['function']=='labor_list') // RECEIVE PO LISTING CONDITION
         {

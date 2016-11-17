@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="full-box md-default-theme white-bg layout-padding">
-                            <div flex="50" layout="column" >
+                            <div flex="70" layout="column" >
                                 <a href="javascript:;" ng-click="openClientEmailPopup()" class="pull-right stokkup-custom-btn1 stokkup-blue-btn text-white">Create PDF</a>
                             </div>
                         </div>
@@ -192,7 +192,7 @@
                 </div>
 
                 <!-- LOCK PO -->
-                <div flex="10">
+                <div flex="10" title="click to change" class="cursor-p" ng-click="changeVendorcharge(po_data.vendor_charge)">
                     <span class="small-headings mr-20">Vendor Ship Charge:</span>
                     <span class="small-results">${{ po_data.vendor_charge}}</span>
                 </div>
