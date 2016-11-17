@@ -244,7 +244,7 @@ class Order extends Model {
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number'];
+        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number','o.affiliate_display_number'];
 
         $designDetailData = DB::table('order_design as od')
                          ->leftJoin('orders as o','od.order_id','=', 'o.id')

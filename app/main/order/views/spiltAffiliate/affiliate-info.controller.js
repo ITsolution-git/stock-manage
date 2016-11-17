@@ -12,30 +12,27 @@
 
 
         // change display number to order Id for fetching the order data
-          var order_data = {};
-           order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
-           order_data.table ='orders';
+        var order_data = {};
+        order_data.cond ={company_id :sessionService.get('company_id'),affiliate_display_number:$stateParams.id};
+        order_data.table ='orders';
           
-          $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+        $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
             
-              
-              if(result.data.success == '1') 
-              {
-                  $scope.vendorRecord =result.data.records;
-                  $scope.order_id = result.data.records[0].id;
-                  $scope.display_number = result.data.records[0].display_number;
+            if(result.data.success == '1') 
+            {
+                $scope.vendorRecord =result.data.records;
+                $scope.order_id = result.data.records[0].id;
+                $scope.display_number = result.data.records[0].affiliate_display_number;
 
-                   $scope.orderDetail();
-                    $scope.designDetail();
-                    $scope.listAffiliate();
-                   
-
-              } 
-              else
-              {
-                   $state.go('app.order');
-              }
-          });
+                $scope.orderDetail();
+                $scope.designDetail();
+                $scope.listAffiliate();
+            } 
+            else
+            {
+                $state.go('app.order');
+            }
+        });
 
           
         $scope.orderDetail = function(){
