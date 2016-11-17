@@ -92,10 +92,10 @@
             weight: 1
         });
 
-        msNavigationServiceProvider.saveItem('fuse.production', {
+        msNavigationServiceProvider.saveItem('fuse.productionlist', {
             title: 'Production',
             icon: 'icon-cart',
-            state: 'app.production',
+            state: 'app.productionlist',
             /*stateParams: {
                 'param1': 'page'
              },*/
