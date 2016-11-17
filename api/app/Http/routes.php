@@ -310,3 +310,5 @@ Route::post('invoice/getUnshipped', 'InvoiceController@getUnshipped');
 Route::post('invoice/getProduction', 'InvoiceController@getProduction');
 Route::post('invoice/getFullShipped', 'InvoiceController@getFullShipped');
 Route::post('invoice/getFullDashboard', 'InvoiceController@getFullDashboard');
+
+Route::post('production/GetProductionList','ProductionController@GetProductionList');

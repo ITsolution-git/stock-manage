@@ -14,6 +14,7 @@ use App\Order;
 use App\Purchase;
 use App\Art;
 use App\Machine;
+use App\Production;
 use DB;
 
 use Request;
@@ -25,7 +26,7 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Machine $machine) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Machine $machine,Production $production) 
     {
         parent::__construct();
         $this->common = $common;
@@ -36,6 +37,7 @@ class CommonController extends Controller {
         $this->client = $client;
         $this->order = $order;
         $this->machine = $machine;
+        $this->production = $production;
     }
 
 /**
@@ -1187,7 +1189,26 @@ class CommonController extends Controller {
             );
 
         }
-        
+
+        if($post['filter']['function']=='production_list') // PRODUCTION LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'ord.id';
+            }
+            $result = $this->production->GetProductionList($post);
+            $header = 
+                array(
+                    array('key' => 'ord.order_display', 'name' => 'Assets','sortable' => false),
+                    array('key' => 'ord.job_name', 'name' => 'Order Name'),
+                    array('key' => 'cl.client', 'name' => 'Client'),
+                    array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
+                    array('key' => '', 'name' => '','sortable' => false)
+                );
+
+        }
+
+
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;
