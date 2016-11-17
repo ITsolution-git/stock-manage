@@ -233,7 +233,10 @@
     <script src="app/main/settings/views/vendor/viewContact/viewContact.controller.js"></script>
     <script src="app/main/settings/views/sales/sales.controller.js"></script>
     <script src="app/main/settings/views/approvals/approval.controller.js"></script>
+    <script src="app/main/settings/views/labor/labor.controller.js"></script>
+    <script src="app/main/settings/dialogs/labor/addLabor.controller.js"></script>
     <script src="app/main/settings/views/machine/machine.controller.js"></script>
+
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>

@@ -1651,6 +1651,11 @@ ul.misc-left-pane {
 a.editable-click:hover, a.editable-click:focus {
   border-bottom: solid 1px #252932 !important; }
 
+
+.addLabourCheckbox{
+   padding-left: 30px;
+} 
+
 .zero-padding {
   padding: 0; }
 
@@ -1851,5 +1856,6 @@ md-dialog.machine-dialog {
 
 .schedule-finishing-table.unscheduled .mac-slots {
   width: 100%; }
+
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */
