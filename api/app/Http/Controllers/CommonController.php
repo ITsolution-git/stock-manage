@@ -1217,9 +1217,9 @@ class CommonController extends Controller {
             $result = $this->production->GetProductionList($post);
             $header = 
                 array(
-                    array('key' => 'ord.order_display', 'name' => 'Assets','sortable' => false),
-                    array('key' => 'ord.job_name', 'name' => 'Order Name'),
-                    array('key' => 'cl.client', 'name' => 'Client'),
+                    array('key' => 'ord.order_display', 'name' => '#JOB','sortable' => false),
+                    array('key' => 'ord.name', 'name' => 'Order Name'),
+                    array('key' => 'cl.client_company', 'name' => 'Client'),
                     array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
                     array('key' => '', 'name' => '','sortable' => false)
                 );
