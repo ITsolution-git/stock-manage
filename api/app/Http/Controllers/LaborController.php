@@ -65,6 +65,12 @@ class LaborController extends Controller {
         $data = Input::all();
 
         $result = $this->labor->laborDetail($data);
+        
+       // $selectedDays = explode(',', $result['labor'][0]->apply_days);
+
+        $selectedDays = array_map("intval", explode(",", $result['labor'][0]->apply_days));
+
+
 
          if(empty($result['labor']))
         {
@@ -81,13 +87,15 @@ class LaborController extends Controller {
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
-                                'records' => $result['labor']
+                                'records' => $result['labor'],
+                                'selectedDays' => $selectedDays
                                 );
         } else {
             $response = array(
                                 'success' => 0, 
                                 'message' => NO_RECORDS,
-                                'records' => $result['labor']
+                                'records' => $result['labor'],
+                                'selectedDays' => 0
                             );
         } 
         return response()->json(["data" => $response]);
