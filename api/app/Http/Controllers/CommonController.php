@@ -1217,10 +1217,13 @@ class CommonController extends Controller {
             $result = $this->production->GetProductionList($post);
             $header = 
                 array(
-                    array('key' => 'ord.order_display', 'name' => '#JOB','sortable' => false),
+                    array('key' => '', 'name' => 'Asset','sortable' => false),
                     array('key' => 'ord.name', 'name' => 'Order Name'),
+                    array('key' => 'mt.value', 'name' => 'Poition'),
                     array('key' => 'cl.client_company', 'name' => 'Client'),
+                    array('key' => 'mt1.value', 'name' => 'Production Type'),
                     array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
+                    array('key' => '', 'name' => 'Run Date','sortable' => false),
                     array('key' => '', 'name' => '','sortable' => false)
                 );
 
