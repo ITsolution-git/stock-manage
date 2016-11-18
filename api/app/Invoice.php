@@ -508,7 +508,7 @@ class Invoice extends Model {
         return $retArray;
     }*/
 
-     public function getProduction($post,$estimation_id){
+     public function getProduction($post,$allproductionIds){
         $client_id=$post['company_id'];
 
         $retArray = DB::table('orders as o')
@@ -521,7 +521,7 @@ class Invoice extends Model {
             $retArray = $retArray->where('o.sales_id','=',$sales_id);
         }
 
-        $retArray = $retArray->where('o.approval_id','!=',$estimation_id)->get();
+        $retArray = $retArray->whereIn('o.approval_id',$allproductionIds)->get();
 
         return $retArray;
     }
