@@ -90,12 +90,12 @@
     	 <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
             <div class="table-title-text" class="cursor-p">Production Queue</div>
             <div class="pull-right right-search-box">
-                <div class="order-modal-title pull-right" layout="row" layout-align="end center">
+                <!-- <div class="order-modal-title pull-right" layout="row" layout-align="end center">
                     <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
                 </div>   
                 <md-icon  ng-click="vm.openRightMenu($event);"  md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
-            </md-tooltip></md-icon>
+            </md-tooltip></md-icon> -->
                  <div class="search-block pull-right">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label class="top-srch-label">Search...</label>
@@ -106,60 +106,28 @@
         </div>
 
         <!--Table starts here -->
-                <div class="ms-responsive-table-wrapper" ng-show="success==1">
-            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+            <div class="ms-responsive-table-wrapper" ng-show="success==1">
+               <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
                  <table class="dataTable row-border hover">
-
                     <thead tasty-thead></thead>
                     <tbody >
-                        <tr ng-repeat-start="prod_data in rows">
-                            <!-- <td class="">{{prod_data.po_id}}</td> -->
-                            <td class="">{{prod_data.order_display}}</td>
-                            <td class="">{{prod_data.order_name}}</td>
-                            <td class="">{{prod_data.client_company}}</td>
-                            <td class="">{{prod_data.in_hands_by}}</td>
-                           
-
-                             <td class="accor" ng-show="prod_data.positionsData.length > 0">
-                                <button ng-if="prod_data.expanded" ng-click="prod_data.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
-                                <button ng-if="!prod_data.expanded" ng-click="prod_data.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                        <tr ng-repeat="prod_data in rows">
+                            <td>
+                                <span class="garment-logo" ng-class="prod_data.screen_icon==2?'garment-logo':(prod_data.screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span>
+                                <span class="garment-logo" ng-class="prod_data.garment==0?'':' disabled'">G</span>
+                                <span ng-show="prod_data.image_1!=''" ng-click="DisplayMokup(prod_data.image_1)" class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
                             </td>
-                            <td  ng-show="prod_data.positionsData.length == 0">
-                                &nbsp;
+                            <td >{{prod_data.order_name}}</td>
+                            <td >{{prod_data.value}}</td>
+                            <td >{{prod_data.client_company}}</td>
+                            <td >{{prod_data.production_type}}</td>
+                            <td ></td>
+                            <td >{{prod_data.in_hands_by}}</td>
+                            <td class="prod-icons">
+                                    <a href="#"><i ng-click="vm.calendarpopup($event)" class="fa fa-calendar"></i></a> 
+                                    <a href="#"><i class="fa fa-eye" ng-click="vm.jobpopup($event)"></i></a>
                             </td>
-
                         </tr>
-
-
-
-                        <tr class="table-desc dev-rdetail-data"  ng-if="prod_data.expanded" ng-repeat-end="">
-                            <td colspan="8" class="collpas">
-                                <table class="dataTable row-border" >
-                                    <thead>
-                                        <th>Asset</th>
-                                        <th>Position</th>
-                                        <th>Production Type</th>
-                                        <th>Run Date</th>
-                                        <th></th>
-                                        <!-- <th>Status</th> -->
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="po_data_all in prod_data.positionsData">
-                                            <td>
-                                                <span class="garment-logo">S</span>
-                                                <span class="garment-logo disabled">G</span>
-                                                <span ng-show="po_data_all.image_1!=''" ng-click="DisplayMokup(po_data_all.image_1)" class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
-                                            </td>
-                                            <td>{{po_data_all.value}}</td>
-                                            <td>{{po_data_all.production_type}}</td>
-                                            <td class="prod-icons"><a href="#"><i ng-click="vm.calendarpopup($event)" class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye" ng-click="vm.jobpopup($event)"></i></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>  
-
-
                     </tbody> 
                 </table>
                 <div tasty-pagination class="tasty-page"></div>
