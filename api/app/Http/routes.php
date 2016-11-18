@@ -133,6 +133,7 @@ Route::post('common/deleteImage', 'CommonController@deleteImage'); //Update Imag
 Route::post('common/insertRecordsEmail', 'CommonController@insertRecordsEmail'); // INSERT RECORD FOR ANY TABLE, @PARAMS: TABLE,POST ARRAY.
 Route::post('common/getTestyRecords', 'CommonController@getTestyRecords'); // GET RECORDS WITH PAGINATION PARAMETERS.
 Route::post('common/AddEditClient', 'CommonController@addEditClient');
+Route::post('common/GetMiscApprovalData', 'CommonController@GetMiscApprovalData');
 
 // CLIENT CONTROLLER 
 Route::post('client/addclient', 'ClientController@addclient');

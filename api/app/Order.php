@@ -61,13 +61,13 @@ class Order extends Model {
                         {
                             $orderData = $orderData->whereIn('order.client_id', $post['filter']['client']);
                         }
+                        if(isset($post['filter']['status']))
+                        {
+                            $orderData = $orderData->whereIn('order.approval_id', $post['filter']['status']);
+                        }
                         if($created_date != '')
                         {
                             $orderData = $orderData->where('order.created_date', $created_date);
-                        }
-                        if(isset($post['filter']['order_status']) && $post['filter']['order_status'] != '')
-                        {
-                            $orderData = $orderData->where('order.approval_id', $post['filter']['order_status']);
                         }
                         $orderData = $orderData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                         ->skip($post['start'])

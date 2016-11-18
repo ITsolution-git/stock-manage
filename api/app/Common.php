@@ -594,4 +594,16 @@ class Common extends Model {
            return $lastId; // RETURN LATEST INCREMENTED ID
         }
     }
+
+    public function GetMiscApprovalData($post)
+    {
+
+        $approvalData = DB::table('misc_type')
+                    ->select('*','value as label')
+                    ->where($post)
+                    ->whereNotIn('slug', ['137','569'])
+                    ->get();
+        
+        return $approvalData;
+    }
 }

@@ -1241,7 +1241,6 @@ class CommonController extends Controller {
 
     public function addEditClient()
     {
-
         $post = Input::all();
         $result = $this->company->getQBAPI($post['company_id']);
 
@@ -1274,9 +1273,13 @@ class CommonController extends Controller {
                     return 1;
                     
                   }
-         
+    }
 
-       
+    public function GetMiscApprovalData()
+    {
+        $post = Input::all();
+        $result = $this->common->GetMiscApprovalData($post);
+        return $this->return_response($result);
     }
 
 
