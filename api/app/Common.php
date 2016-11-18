@@ -594,4 +594,26 @@ class Common extends Model {
            return $lastId; // RETURN LATEST INCREMENTED ID
         }
     }
+
+
+/**
+* Get All Misc Production Data type
+* @access public getAllMiscData
+* @return array $Misc
+*/
+
+    public function getAllMiscDataProduction($client_id) {
+
+         $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $client_id,'type' => 'approval'];
+        $MiscData = DB::table('misc_type')->where($whereMiscConditions)->whereNotIn('slug', [137,149,150,151,568,569])->get();
+
+        $allData = array ();
+        
+        foreach($MiscData as $data) {
+           
+            $allData[] = $data->id;
+          
+        }
+        return $allData;
+    }
 }
