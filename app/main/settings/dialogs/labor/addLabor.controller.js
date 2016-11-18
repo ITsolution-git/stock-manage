@@ -33,7 +33,8 @@
                 if(result.data.success == '1') {
                     $scope.labor = result.data.records[0];
 
-                    $scope.selected = result.data.records[0].apply_days.split(',');
+                    $scope.selected = result.data.selectedDays;
+
                     
                 }
                 
@@ -58,7 +59,8 @@
       };
 
       $scope.exists = function (item, list) {
-        return list.indexOf(item) > -1;
+        
+        return list.indexOf(parseInt(item)) > -1;
       };
 
 
