@@ -40,6 +40,7 @@ class Production extends Model {
 		                          $query->orWhere('ord.name', 'LIKE', '%'.$search.'%')
                                         ->orWhere('ord.name', 'LIKE', '%'.$search.'%')
                                         ->orWhere('mt.value', 'LIKE', '%'.$search.'%')
+                                        ->orWhere('cl.client_company', 'LIKE', '%'.$search.'%')
 		                                ->orWhere('mt1.value','LIKE', '%'.$search.'%');
 		                      });
 		                  }
