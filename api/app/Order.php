@@ -55,15 +55,19 @@ class Order extends Model {
                         }
                         if(isset($post['filter']['seller']))
                         {
-                          $orderData = $orderData->whereIn('order.sales_id', $post['filter']['seller']);
+                            $orderData = $orderData->whereIn('order.sales_id', $post['filter']['seller']);
                         }
                         if(isset($post['filter']['client']))
                         {
-                          $orderData = $orderData->whereIn('order.client_id', $post['filter']['client']);
+                            $orderData = $orderData->whereIn('order.client_id', $post['filter']['client']);
+                        }
+                        if(isset($post['filter']['status']))
+                        {
+                            $orderData = $orderData->whereIn('order.approval_id', $post['filter']['status']);
                         }
                         if($created_date != '')
                         {
-                          $orderData = $orderData->where('order.created_date', $created_date);
+                            $orderData = $orderData->where('order.created_date', $created_date);
                         }
                         $orderData = $orderData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                         ->skip($post['start'])
@@ -240,7 +244,7 @@ class Order extends Model {
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number'];
+        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number','o.affiliate_display_number'];
 
         $designDetailData = DB::table('order_design as od')
                          ->leftJoin('orders as o','od.order_id','=', 'o.id')

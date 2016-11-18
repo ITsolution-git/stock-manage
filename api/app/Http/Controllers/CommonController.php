@@ -13,6 +13,9 @@ use App\Client;
 use App\Order;
 use App\Purchase;
 use App\Art;
+use App\Labor;
+use App\Machine;
+use App\Production;
 use DB;
 
 use Request;
@@ -24,7 +27,7 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Labor $labor, Machine $machine,Production $production) 
     {
         parent::__construct();
         $this->common = $common;
@@ -34,7 +37,9 @@ class CommonController extends Controller {
         $this->art = $art;
         $this->client = $client;
         $this->order = $order;
-
+        $this->labor = $labor;
+        $this->machine = $machine;
+        $this->production = $production;
     }
 
 /**
@@ -1158,8 +1163,6 @@ class CommonController extends Controller {
                 3=>array('key' => 'note.artapproval_display', 'name' => 'Show in Art Approval')
                 );
         }
-
-
         if($post['filter']['function']=='order_notes') // PURCHASE NOTES LISTING CONDITION
         {
             if(!isset($post['sorts']['sortBy'])) 
@@ -1170,10 +1173,59 @@ class CommonController extends Controller {
             $header = array(
                  0=>array('key' => '', 'name' => 'Notes','sortable' => false)
                 );
+        }
+        if($post['filter']['function']=='machine_list') // VENDOR LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            $result = $this->machine->machineList($post);
+            $header = array(
+                array('key' => 'machine_name', 'name' => 'Machine Name'),
+                array('key' => 'machine_type', 'name' => 'Machine Type'),
+                array('key' => 'color_count', 'name' => 'Color/Head Count'),
+                array('key' => '', 'name' => 'Max Frame Size','sortable' => false),
+                array('key' => '', 'name' => 'Operation Status','sortable' => false),
+                array('key' => '', 'name' => 'Action','sortable' => false)
+            );
+         }   
+
+
+        if($post['filter']['function']=='labor_list') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'l.id';
+            }
+            $result = $this->labor->laborList($post);
+            $header = array(
+                array('key' => 'l.shift_name', 'name' => 'Shift Name'),
+                array('key' => 'l.shift_start_time', 'name' => 'Shift Start Time','sortable' => false),
+                array('key' => 'l.shift_end_time', 'name' => 'Shift End Time','sortable' => false),
+                array('key' => 'l.total_shift_hours', 'name' => 'Total Shift Hours','sortable' => false),
+                array('key' => '', 'name' => 'Action','sortable' => false)
+                );
+        }
+
+        if($post['filter']['function']=='production_list') // PRODUCTION LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'ord.id';
+            }
+            $result = $this->production->GetProductionList($post);
+            $header = 
+                array(
+                    array('key' => 'ord.order_display', 'name' => '#JOB','sortable' => false),
+                    array('key' => 'ord.name', 'name' => 'Order Name'),
+                    array('key' => 'cl.client_company', 'name' => 'Client'),
+                    array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
+                    array('key' => '', 'name' => '','sortable' => false)
+                );
 
         }
 
-        
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $message = (empty($result['count']))?NO_RECORDS:GET_RECORDS;
@@ -1189,7 +1241,6 @@ class CommonController extends Controller {
 
     public function addEditClient()
     {
-
         $post = Input::all();
         $result = $this->company->getQBAPI($post['company_id']);
 
@@ -1222,9 +1273,13 @@ class CommonController extends Controller {
                     return 1;
                     
                   }
-         
+    }
 
-       
+    public function GetMiscApprovalData()
+    {
+        $post = Input::all();
+        $result = $this->common->GetMiscApprovalData($post);
+        return $this->return_response($result);
     }
 
 

@@ -62,6 +62,24 @@
                         controller : 'PriceGridController as vm'
                     }
                 }
+            }).state('app.settings.machine', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('AT,SU','false');
+                    }
+                },
+                url  : '/machine',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/machine/machine.html',
+                        controller : 'MachineController as vm'
+                        
+                    }
+                }
             }).state('app.settings.price-info', {
                 url  : '/price-info/:id',
                 views: {
@@ -85,6 +103,23 @@
                     'content@app': {
                         templateUrl: 'app/main/settings/views/companyProfile/company.html',
                         controller : 'CompanyProfileController as vm'
+                    }
+                }
+            }).state('app.settings.labor', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('AT,SU','false');
+                    }
+                },
+                url  : '/labor',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/labor/labor.html',
+                        controller : 'laborController as vm'
                     }
                 }
             })
@@ -300,41 +335,59 @@
             
             weight     : 5
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.affiliate', {
-            title      : 'Affiliate',
-            state      : 'app.settings.affiliate',
+        msNavigationServiceProvider.saveItem('fuse.settings.machine', {
+            title      : 'Machine Settings',
+            state      : 'app.settings.machine',
             stateParams: {'id': 6},
             class      : 'navigation-dashboards project-dashboard',
+            
             weight     : 6
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.integrations', {
-            title      : 'Integrations',
-            state      : 'app.settings.integrations',
+        msNavigationServiceProvider.saveItem('fuse.settings.labor', {
+            title      : 'Labor Settings',
+            state      : 'app.settings.labor',
             stateParams: {'id': 7},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 7
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.vendor', {
-            title      : 'Vendor',
-            state      : 'app.settings.vendor',
+        msNavigationServiceProvider.saveItem('fuse.settings.affiliate', {
+            title      : 'Affiliate',
+            state      : 'app.settings.affiliate',
             stateParams: {'id': 8},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 8
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.sales', {
-            title      : 'Sales',
-            state      : 'app.settings.sales',
+        msNavigationServiceProvider.saveItem('fuse.settings.integrations', {
+            title      : 'Integrations',
+            state      : 'app.settings.integrations',
             stateParams: {'id': 9},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 9
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
-            title      : 'S&S Approval',
-            state      : 'app.settings.approvals',
+        msNavigationServiceProvider.saveItem('fuse.settings.vendor', {
+            title      : 'Vendor',
+            state      : 'app.settings.vendor',
             stateParams: {'id': 10},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 10
-        });/*
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.sales', {
+            title      : 'Sales',
+            state      : 'app.settings.sales',
+            stateParams: {'id': 11},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 11
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
+            title      : 'S&S Approval',
+            state      : 'app.settings.approvals',
+            stateParams: {'id': 12},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 12
+
+        });
+        
+        /*
         msNavigationServiceProvider.saveItem('fuse.settings.support', {
             title      : 'Support',
             state      : 'app.settings.support',

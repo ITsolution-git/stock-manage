@@ -17,7 +17,7 @@
 </head>
 <body style="padding:0; margin:0">
 
-    <table class="header">
+    <table class="header" cellpadding="5" cellspacing="5">
       <tr>
           <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" style="padding:10px;" alt="Culture Studio"></td>
           <td align="left" width="40%" class="font-bold">
@@ -98,19 +98,19 @@
             <td class="align-left  line-height border-b" >&nbsp;&nbsp;{{$value['price']}}</td>
         </tr>
          <?php $count++; } // LOOP END?>
-        <tr>
+        <!-- <tr>
             <td class="align-right font-bold line-height" colspan="3" style=" border-right:1px solid #000;">Total Qty&nbsp;&nbsp;</td>
             <td class="align-left border-b line-height">&nbsp;&nbsp;<?php echo $total; ?></td>
             <td class="">&nbsp;&nbsp;</td>
             
-        </tr>
+        </tr> -->
     </table>
   <br><br>
 
 <?php foreach($data as $key_main=>$value_main)
 { 
   ?>
-  <table>
+  <table cellspacing="5" cellpadding="5">
      <tr>
       <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?></td>
       <!-- <td>w:<?php //echo $value_main[0][0]->screen_width; ?> X h:<?php //echo $value_main[0][0]->screen_height; ?></td> -->
@@ -265,7 +265,7 @@ foreach($data as $key_main=>$value_main)
 <br>
 <?php if(!empty($options) && count($options)>0) {
 ?>
-<table>
+<table cellspacing="5" cellpadding="5">
   <tr>
     <?php foreach($options as $key_img=>$img_val)
     { ?>
@@ -280,7 +280,12 @@ foreach($data as $key_main=>$value_main)
 <table>
   <tr>
     <td>
-        <img src="{{$company->mokup_image}}" title="Culture Studio" height="525" width="535" alt="Culture Studio">
+        <img src="{{$company->mokup_image}}" title="Culture Studio" height="500" width="535" alt="Culture Studio">
     </td>
   </tr>
 </table>
+<footer>
+      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt="">
+    </footer>
+</body>
+</html>

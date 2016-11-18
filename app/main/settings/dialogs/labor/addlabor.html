@@ -1,0 +1,43 @@
+<md-dialog class="task-dialog designadd-dialog" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">{{vm.title}}</span>
+                <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <div id="custChkboxes1" class="addLabourCheckbox">
+                <div class="customChkbox md-raised" ng-repeat="item in items">
+                     <input type="checkbox" ng-checked="exists(item.id, selected)" ng-click="toggle(item.id, selected)" id="{{item.id}}" value="{{item.id}}"/>
+                    <label for="{{item.id}}" class="form-control">{{item.slug}}</label>
+                </div>
+        </div>
+
+        <md-dialog-content ms-scroll>
+
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                <md-input-container class="md-block first-box" flex-gt-sm>
+                    <input placeholder="Shift Name" flex="80" ng-model="labor.shift_name">
+                </md-input-container>
+            </div>
+
+            <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
+
+                <label for="chk1"   class="form-control">Start Time</label>
+                <input kendo-time-picker ng-model="labor.shift_start_time" k-ng-model="t1">
+
+                <label for="chk2"   class="form-control">End Time</label>
+                <input kendo-time-picker ng-model="labor.shift_end_time" k-ng-model="t2">
+
+            </div>
+
+
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="md-accent md-raised " ng-click="savelabor(labor,selected)">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 
