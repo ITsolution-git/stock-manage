@@ -410,6 +410,7 @@
 			        }
 			        $scope.UpdateTableDataAll = function(tableData,table_name,cond_field,cond_value,extra,extra_cond)
 			        {
+			        	console.log(tableData);return false;
 			        	$("#ajax_loader").show();
 			        	var UpdateArray = {};
 			            UpdateArray.table =table_name;

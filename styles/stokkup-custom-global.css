@@ -5,6 +5,7 @@
 /*----------------------------------------------------------------*/
 /*All color variables starts here */
 /*All color variables ends here */
+/*All global variables start here */
 /*global variables ends here */
 /*genera css */
 .ease-animations, #custChkboxes .customChkbox label, #custChkboxes1 .customChkbox label, #custChkboxes .customChkbox input:checked + label, #custChkboxes1 .customChkbox input:checked + label, #custChkboxes .customChkbox label:hover, #custChkboxes1 .customChkbox label:hover, ul.misc-left-pane li a, ul.misc-left-pane li a:hover, ul.misc-left-pane li a:focus, ul.misc-left-pane li a.active, .editable-click, a.editable-click, a.editable-click:hover, a.editable-click:focus {
@@ -1649,5 +1650,212 @@ ul.misc-left-pane {
 
 a.editable-click:hover, a.editable-click:focus {
   border-bottom: solid 1px #252932 !important; }
+
+
+.addLabourCheckbox{
+   padding-left: 30px;
+} 
+
+.zero-padding {
+  padding: 0; }
+
+.card-details .stokkup-custom-btn1 {
+  font-size: 10.5px;
+  padding: 0 12px;
+  text-transform: capitalize; }
+
+.screenset-logo {
+  font-weight: bold;
+  margin-right: 3px;
+  font-size: 20px;
+  color: #FF9900;
+  line-height: 10px; }
+
+.garment-logo {
+  font-weight: bold;
+  margin-right: 3px;
+  font-size: 20px;
+  color: #3eb74f;
+  line-height: 10px; }
+
+.rush-box {
+  border: solid 1px #de0000;
+  float: left;
+  position: relative; }
+
+.rush-strip {
+  background-color: #de0000;
+  position: absolute;
+  height: 100%;
+  display: flex;
+  align-items: center; }
+  .rush-strip span {
+    font-size: 16px;
+    color: #fff;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    transform: rotate(-90deg);
+    width: 100%;
+    text-align: center; }
+
+.cam-logo .fa, .prod-icons .fa {
+  font-size: 15px;
+  color: #252932; }
+
+.garment-logo.disabled, .screenset-logo.disabled {
+  color: #cdcfd3; }
+
+.shipping-custom-tab.schedule-board-tab md-tabs-canvas {
+  width: 100%; }
+
+.shipping-custom-tab.schedule-board-tab md-tabs-canvas md-pagination-wrapper {
+  left: auto;
+  right: 30px; }
+
+.boardtxt {
+  font-size: 11px;
+  margin-top: 10px !important;
+  right: 300px;
+  position: absolute; }
+
+.scheduleboarddate .date-input span.k-picker-wrap input {
+  border-radius: 5px;
+  border: solid 1px #000; }
+
+.mac-slots {
+  width: 25%;
+  float: left;
+  margin: 0;
+  min-height: 100px;
+  margin-bottom: 20px; }
+
+.odd-slot {
+  background-color: #e8e9ea; }
+
+.even-slot {
+  background-color: #efeff0; }
+
+.mac-shiftblocks-bg {
+  background-color: #f4f4f5; }
+
+.shift-slot {
+  width: 30.5%;
+  height: 60px;
+  float: left;
+  margin: 0; }
+  .shift-slot span {
+    font-size: 12px;
+    line-height: 15px; }
+  .shift-slot h6 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: bold; }
+
+.shift-slot.middle-slot {
+  margin: 0 10px; }
+
+.shift-post-card {
+  width: 100%;
+  height: 100px;
+  background-color: #fff;
+  border: solid 1px #e0e1e3;
+  margin: 0 0 10px 0; }
+
+.machine-full-slot {
+  width: 100%;
+  height: 500px;
+  overflow-y: scroll;
+  border-right: solid 1px #efefef;
+  background-color: #fff; }
+  .machine-full-slot h4 {
+    padding: 0;
+    margin: 0 0 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700; }
+
+.schedule-main {
+  border: solid 1px #ededed; }
+
+.date-slider .curr-seleceted-date {
+  padding: 0 15px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #6e7584; }
+.date-slider i {
+  font-size: 18px;
+  color: #6e7584; }
+
+/*schedule position popup */
+md-dialog.machine-dialog {
+  max-width: 800px; }
+
+.schedule-shifts {
+  width: 33%;
+  padding: 0 12px;
+  border-right: solid 1px #e0e1e3;
+  float: left;
+  text-align: center; }
+  .schedule-shifts .stokkup-blue-btn {
+    font-size: 11px !important;
+    padding: 0 10px;
+    margin-top: 10px; }
+
+.schedule-shifts:nth-of-type(3) {
+  border-right: none; }
+
+.shift-units {
+  width: 100%;
+  text-align: center;
+  float: left; }
+  .shift-units .percent {
+    font-size: 26px;
+    line-height: 40px;
+    color: #252932;
+    font-weight: 700;
+    width: 100%;
+    float: left; }
+  .shift-units .machine-unit {
+    font-size: 13px;
+    line-height: 15px;
+    color: #6e7584;
+    width: 100%;
+    float: left; }
+
+.btm-border-row {
+  border-bottom: solid 2px #e0e1e3; }
+
+.newdatestyle input {
+  border-bottom: none !important; }
+
+.mac-slots .schedule-shifts {
+  width: 100%;
+  padding: 15px;
+  text-align: center; }
+
+/*schedule position popup */
+.task-dialog.job-dialog {
+  width: 1000px;
+  max-width: 1000px; }
+
+.schedule-finishing-table {
+  max-width: 100%;
+  overflow-x: scroll;
+  display: table-row;
+  float: left; }
+  .schedule-finishing-table tr td {
+    width: 25%;
+    float: none;
+    display: table-cell; }
+  .schedule-finishing-table .mac-slots {
+    width: 19.6vw; }
+
+.schedule-finishing-table.unscheduled {
+  overflow-x: hidden; }
+
+.schedule-finishing-table.unscheduled .mac-slots {
+  width: 100%; }
+
 
 /*# sourceMappingURL=stokkup-custom-global.css.map */

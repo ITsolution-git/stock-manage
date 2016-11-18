@@ -45,6 +45,7 @@
             // Receiving
             'app.receiving',
 
+            
             'ngTasty',
 
             // image uploading module
@@ -64,6 +65,9 @@
 
             //shipping
             'app.shipping',
+            
+            // Production
+            'app.production',
 
             // Navigation
             'app.navigation',

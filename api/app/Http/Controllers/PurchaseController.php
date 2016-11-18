@@ -424,12 +424,14 @@ class PurchaseController extends Controller {
         {
             $order_total='';
             $pdf_data = $this->purchase->GetPoLinedata($pdf_array->po_id,$pdf_array->company_id);
+            $positions_data = $this->purchase->GetPOpositions($pdf_array->po_id,$pdf_array->company_id);
+           // echo "<pre>"; print_r($positions_data); echo "</pre>"; die();
             
             if(count($pdf_data)>0)
             {
                 $order_total = $this->purchase->getOrdarTotal($pdf_array->po_id,$pdf_array->company_id);
                 $email_array = explode(",",$pdf_array->email);
-                $pass_array = array('company'=>$pdf_data['0'],'po_data'=>$pdf_data,'order_total'=>$order_total);
+                $pass_array = array('company'=>$pdf_data['0'],'po_data'=>$pdf_data,'order_total'=>$order_total,'positions'=>$positions_data);
                 
                 PDF::AddPage('P','A4');
                 PDF::writeHTML(view('pdf.purchasepo',$pass_array)->render());
