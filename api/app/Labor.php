@@ -22,8 +22,10 @@ class Labor extends Model {
             $search = $post['filter']['name'];
         }
 
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS l.*')];
+
         $result = DB::table('labor as l')
-                    ->select('l.*')
+                    ->select($listArray)
                     ->where('l.is_delete','=','1')
                     ->where('l.company_id','=',$post['company_id']);
 
@@ -49,20 +51,12 @@ class Labor extends Model {
                  ->take($post['range'])
                  ->get();
         
-       /* //echo "<pre>"; print_r($result); echo "</pre>"; die;
-        if(count($result)>0)
-        {
-            foreach ($result as $key=>$value) 
-            {
-                $value->note_date = ($value->note_date=='0000-00-00' || empty($value->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
-                $value->artapproval_display = ($value->artapproval_display=='0')? false: true;
-            }
-        }*/
+       
         $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
         $returnData = array();
         $returnData['allData'] = $result;
         $returnData['count'] = $count[0]->Totalcount;       
-        //echo "<pre>"; print_r($result); die();
+        
         return $returnData;
     }
 
