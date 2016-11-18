@@ -9,10 +9,6 @@
             .controller('ScheduleBoardController', ScheduleBoardController)
             .controller('FinishboardController', ScheduleBoardController);
 
-
-            
-
-
     /** @ngInject */
     function ProductionController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
     {
@@ -42,8 +38,7 @@
     {
         var vm = this;
         vm.searchQuery = "";
-        vm.calendarpopup = calpop;
-        vm.jobpopup = jobpopup;
+       
         $scope.company_id = sessionService.get('company_id');
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
@@ -128,6 +123,26 @@
                 }
             });
         }
+
+        $scope.JobSchedualPopup = function ()
+        {
+            $("#ajax_loader").hide();
+            var companyData = {company_id:$scope.company_id};
+
+            $http.post('api/public/production/GetShiftMachine',companyData).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success',result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+
         function calpop(ev)
         {
             

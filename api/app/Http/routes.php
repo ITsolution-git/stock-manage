@@ -317,3 +317,5 @@ Route::post('labor/editLabor', 'LaborController@editLabor');
 Route::post('labor/addLabor', 'LaborController@addLabor');
 
 Route::post('production/GetProductionList','ProductionController@GetProductionList');
+Route::post('production/GetShiftMachine','ProductionController@GetShiftMachine');
+

@@ -19,5 +19,21 @@ class ProductionController extends Controller {
         $this->production = $production;
         $this->common = $common;
     }
+    public function GetShiftMachine()
+    {
+    	$post = Input::all();
+    	if(!empty($post['company_id']))
+	    {
+	    	$machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0));
+	    	$shift_data   = $this->common->GetTableRecords('company_info',array('user_id'=>$post['company_id']));
+	    	$data = array("success"=>1,"message"=>GET_RECORDS,"machine_data"=>$machine_data,'shift_data'=>$shift_data);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+
+        return response()->json(['data'=>$data]);
+    }
 
 }
