@@ -1678,6 +1678,13 @@ a.editable-click:hover, a.editable-click:focus {
   color: #3eb74f;
   line-height: 10px; }
 
+ .garment-logo-orange {
+  font-weight: bold;
+  margin-right: 3px;
+  font-size: 20px;
+  color: orange;
+  line-height: 10px; }
+
 .rush-box {
   border: solid 1px #de0000;
   float: left;
