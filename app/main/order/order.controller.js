@@ -49,19 +49,27 @@
                 $scope.miscData = result.data.records;
         });
 
-       
-//1. sales rep
+        var approval_data = {};
+        approval_data ={company_id :sessionService.get('company_id'),type:'approval','is_delete':1,'status':1};
+      
+        $http.post('api/public/common/GetMiscApprovalData',approval_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                vm.statusCheckData =result.data.records;
+            } 
+        });
+
         vm.salesCheckModal = [];
-       
-        //3. create date
         vm.createDate;
         vm.createdate = false;
         vm.companyfilter = false;
+        vm.orderStatusfilter = false;
          //4. company
         vm.companyCheckModal = [];
+        vm.statusCheckModal = [];
         //vm.companyCheckData = [{id: 1, "label": "Checkbox 1"}, {id: 2, "label": "Checkbox 2"}, {id: 3, "label": "Checkbox 3"}, {id: 4, "label": "Checkbox 4"}, {id: 5,  "label": "Checkbox 5"}, {id: 6, "label": "Checkbox 6"}, {id: 7, "label": "Checkbox 7"}, ];
         vm.searchOrder;
-        vm.ordersId = [{"id": "27"}, {"id": "35"}, {"id": "12"}];
         vm.orderfilter = false;
         vm.rangeFrom;
         vm.rangeTo;
@@ -78,13 +86,7 @@
 
         function resetFilter() {
 
-/*            for (var i = 0; i < this.salesCheckData.length; i++) {
-                this.salesCheckData[i].label = false;
-            }
-            for (var i = 0; i < this.companyCheckData.length; i++) {
-                this.companyCheckData[i].label = false;
-            }
-*/            vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = false;
+            vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = false;
             this.searchOrder = null;
             jQuery('.dateFilter').prop("value", " ");
            
@@ -96,16 +98,26 @@
             function myCustomPropertyForTheObjectSale(){
                 vm.salesCheckModal = [];
             }
+            vm.statusChecksettings = {externalIdProp: myCustomPropertyForTheObjectStatus()}
+            function myCustomPropertyForTheObjectStatus(){
+                vm.statusCheckModal = [];
+            }
             for (var i = 0; i < this.salesCheckModal.length; i++) {
                this.salesCheckModal[i].id = null;
             }
             for (var i = 0; i < vm.companyCheckModal.length; i++) {
                 vm.companyCheckModal[i].id = null;
 
+            }
+            for (var i = 0; i < vm.statusCheckModal.length; i++) {
+                vm.statusCheckModal[i].id = null;
+
             }   
             vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = null;
             this.searchOrder = null;
             jQuery('.dateFilter').prop("value", " ");
+
+            console.log(vm.statusCheckModal);
 
             $scope.filterOrders();
         }
@@ -153,7 +165,8 @@
           'search': '',
           'seller': '',
           'client': '',
-          'created_date': ''
+          'created_date': '',
+          'status':''
         };
          $scope.search = function ($event){
             $scope.filterBy.name = $event.target.value;
@@ -179,6 +192,7 @@
             $scope.filterBy.seller = '';
             $scope.filterBy.client = '';
             $scope.filterBy.created_date = '';
+            $scope.filterBy.status = '';
             $scope.filterBy.temp = '';
             $scope.sellerArray = [];
 
@@ -201,11 +215,22 @@
                 $scope.filterBy.client = angular.copy($scope.clientArray);
             }
 
+            $scope.orderStatusArray = [];
+            angular.forEach(vm.statusCheckModal, function(status){
+                    $scope.orderStatusArray.push(status.id);
+            })
+            if($scope.orderStatusArray.length > 0)
+            {
+                flag = false;
+                $scope.filterBy.status = angular.copy($scope.orderStatusArray);
+            }
+
             if(vm.createDate != '' && vm.createDate != undefined && vm.createDate != false)
             {
                 flag = false;
                 $scope.filterBy.created_date = vm.createDate;
             }
+            
             if(flag == true)
             {
                 $scope.filterBy.temp = angular.copy(1);

@@ -1,0 +1,80 @@
+<md-dialog class="task-dialog machine-dialog">
+	<div flex=100 class="full-row pull-left">
+    	<form name="clientForm" class="md-inline-form" novalidate>
+        	<md-toolbar class="md-accent md-hue-2">
+			    <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+			        <span class="title">Schedule Position</span>
+			        <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
+			            <span>Close</span>
+			        </md-button>
+			    </div>
+			</md-toolbar>
+			<md-dialog-content ms-scroll>
+				<div class="full-row pull-left p-20">
+				<div flex=100 class="full-row pull-left mb-30 btm-border-row">
+	    			<md-input-container class="md-block date-input pull-left full-row m-0 newdatestyle" flex=70>      					<span class="global-labels">Schedule Run Date</span>
+	                    <input kendo-date-picker k-ng-model="dateObject2">
+	                </md-input-container>
+	            	<div class="pull-right" flex=30>
+	            		<md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">change run date</md-button>
+	            	</div>
+	        	</div>
+
+	        	<div class="full-row pull-left">
+	        		<div class="schedule-shifts">
+	        			<h4 class="global-labels m-0 m-b-10">1st Shift</h4>
+	        			<div class="shift-units">
+	        				<span class="percent">80%</span>
+	        				<span class="machine-unit">capacity</span>
+	        			</div>
+	        			<md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">schedule for 1st shift</md-button>
+	        		</div>
+
+	        		<div class="schedule-shifts">
+	        			<h4 class="global-labels m-0 m-b-10">2nd Shift</h4>
+	        			<div class="shift-units">
+	        				<span class="percent">90%</span>
+	        				<span class="machine-unit">capacity</span>
+	        			</div>
+	        			<md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">schedule for 2nd shift</md-button>
+	        		</div>
+
+	        		<div class="schedule-shifts">
+	        			<h4 class="global-labels m-0 m-b-10">3rd Shift</h4>
+	        			<div class="shift-units">
+	        				<span class="percent">100%</span>
+	        				<span class="machine-unit">capacity</span>
+	        			</div>
+	        			<md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">schedule for 3rd shift</md-button>
+	        		</div>
+	        	</div>
+
+	        	<div class="full-row pull-left">
+	        		<md-input-container class="full-row pull-left">
+	                    <span class="global-labels">Schedule to Machine</span>
+	                    <md-select ng-model="client.pl_state">
+	                        <md-option value="0">
+	                            Select State
+	                        </md-option>
+	                        <md-option ng-repeat="state_val in states_all" value="{{state_val.id}}">
+	                            {{state_val.name}}
+	                        </md-option>
+	                    </md-select>
+	                </md-input-container>
+	        	</div>
+	        	<div class="full-row pull-left">
+	        	</div>
+	        	</div>
+			</md-dialog-content>
+
+			 <md-dialog-actions layout="row" layout-align="end center">
+            
+                  <!--  <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button> -->
+                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Cancel</md-button>
+
+                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Schedule</md-button>
+            
+        	</md-dialog-actions>
+    	</form>
+	</div>
+</md-dialog>

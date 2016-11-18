@@ -205,6 +205,11 @@
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
     <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
+
+    <!--Production--> 
+    <script src="app/main/production/production.module.js"></script>
+    <script src="app/main/production/production.controller.js"></script>
+
     <!-- Settings -->
     <script src="app/main/settings/settings.module.js"></script>
     <script src="app/main/settings/settings.controller.js"></script>
@@ -228,6 +233,10 @@
     <script src="app/main/settings/views/vendor/viewContact/viewContact.controller.js"></script>
     <script src="app/main/settings/views/sales/sales.controller.js"></script>
     <script src="app/main/settings/views/approvals/approval.controller.js"></script>
+    <script src="app/main/settings/views/labor/labor.controller.js"></script>
+    <script src="app/main/settings/dialogs/labor/addLabor.controller.js"></script>
+    <script src="app/main/settings/views/machine/machine.controller.js"></script>
+
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>
