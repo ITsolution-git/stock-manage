@@ -74,6 +74,28 @@
                                 </div>
                             </div>
                             <div layout="column" class="f-box-1">
+                                <div class="f-header">
+                                    <span class="cursor-p" ng-if="vm.orderStatusfilter" ng-click="vm.orderStatusfilter = false">
+                                        ORDER STATUS
+                                        <button>
+                                            <md-icon md-font-icon="icon-menu-up"></md-icon>
+                                        </button>
+                                    </span>
+                                    <span class="cursor-p" ng-if="!vm.orderStatusfilter" ng-click="vm.orderStatusfilter = true">
+                                        ORDER STATUS
+                                        <button>
+                                            <md-icon md-font-icon="icon-menu-down"></md-icon>
+                                        </button>
+                                    </span>
+                                    <md-divider ></md-divider>
+                                </div>
+                                <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.orderStatusfilter">
+                                    <div layout="column" >
+                                         <div ng-dropdown-multiselect="" options="vm.statusCheckData" selected-model="vm.statusCheckModal" extra-settings="vm.statusChecksettings"  class="cheak-box-class"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div layout="column" class="f-box-1">
                                 <div class="f-body scrollable pad0"  ms-scroll>
                                     <div layout="column" >
                                         <md-select ng-model="order_status" flex="100"  class="margin-0 select-width font-16 font-weight">
@@ -82,7 +104,7 @@
                                         </md-select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </md-content>
                     <div class="filter-footer" layout="row">

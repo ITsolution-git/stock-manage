@@ -595,12 +595,22 @@ class Common extends Model {
         }
     }
 
+    public function GetMiscApprovalData($post)
+    {
 
-/**
-* Get All Misc Production Data type
-* @access public getAllMiscData
-* @return array $Misc
-*/
+        $approvalData = DB::table('misc_type')
+                    ->select('*','value as label')
+                    ->where($post)
+                    ->whereNotIn('slug', ['137','569'])
+                    ->get();
+        
+        return $approvalData;
+    }
+    /**
+    * Get All Misc Production Data type
+    * @access public getAllMiscData
+    * @return array $Misc
+    */
 
     public function getAllMiscDataProduction($client_id) {
 
