@@ -9,10 +9,6 @@
             .controller('ScheduleBoardController', ScheduleBoardController)
             .controller('FinishboardController', ScheduleBoardController);
 
-
-            
-
-
     /** @ngInject */
     function ProductionController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
     {
@@ -42,8 +38,7 @@
     {
         var vm = this;
         vm.searchQuery = "";
-        vm.calendarpopup = calpop;
-        vm.jobpopup = jobpopup;
+       
         $scope.company_id = sessionService.get('company_id');
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
@@ -76,7 +71,8 @@
             $scope.filterBy.name = $event.target.value;
             //getResource();
         };
-        
+
+
 
        $scope.getResource = function (params, paramsObj, search)
         {   
@@ -128,6 +124,45 @@
                 }
             });
         }
+
+
+        $scope.openEditPopup = function(path,param)
+        {
+            // PATH WILL BE SET AFTER MAIN WITHOUT /
+            var edit_params = {data:param,flag:'edit'};
+            sessionService.openEditPopup($scope,path,edit_params,'position_schedule');
+        }
+        // RETURN FUNCTION FROM POPUP.
+        $scope.returnFunction = function()
+        {
+            //console.log(123);
+            $scope.reloadCallback();
+        }
+
+        $scope.JobSchedualPopup = function (position_id)
+        {
+            $("#ajax_loader").hide();
+            var companyData = {company_id:$scope.company_id,position_id:position_id};
+
+            $http.post('api/public/production/GetShiftMachine',companyData).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    $scope.machine_data = result.data.machine_data;
+                    $scope.shift_data = result.data.shift_data;
+                    $scope.Position_scheduleData = result.data.Position_scheduleData;
+                    $scope.openEditPopup('production/view/schedule_position.html',$scope);
+
+                    //notifyService.notify('success',result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+
         function calpop(ev)
         {
             
