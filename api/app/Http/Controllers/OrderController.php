@@ -1379,7 +1379,7 @@ class OrderController extends Controller {
 
             if($order_charges_total > 0)
             {
-                $order_total = $order_charges_total - $order_data[0]->discount;    
+                $order_total = $order_charges_total - $order_data[0]->discount;
             }
             else
             {

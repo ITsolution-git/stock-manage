@@ -523,7 +523,7 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
         $priceAllEmbro = array();
         if(!empty($priceAllEmbroSwitch)){
         $whereConditionsAllEmbro = ['price_id' => $priceId,'embroidery_switch_id' => $priceAllEmbroSwitch[0]->id];
-        $listArrayAllEmbro = ['range_low','range_high','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c'];
+        $listArrayAllEmbro = ['range_low','range_high','pricing_1c','pricing_2c','pricing_3c','pricing_4c','pricing_5c','pricing_6c','pricing_7c','pricing_8c','pricing_9c','pricing_10c'];
         $priceAllEmbro = DB::table('price_screen_embroidery')->select($listArrayAllEmbro)->where($whereConditionsAllEmbro)->get();
          }
 
