@@ -223,9 +223,9 @@
         function openinformationDialog(ev,order_id)
         {
             $mdDialog.show({
-                controller: 'InformationController',
+                controller: 'AffiliateInformationController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/information/information.html',
+                templateUrl: 'app/main/order/dialogs/information/affiliateInformation.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
