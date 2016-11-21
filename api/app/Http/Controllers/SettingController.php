@@ -644,7 +644,7 @@ class SettingController extends Controller {
 
                 foreach ($data[6] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_embroidery',array('price_id' => $price_id,'embroidery_switch_id' => $embroidery_switch_id,'range_low' => $value->range_low,'range_high' => $value->range_high,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_embroidery',array('price_id' => $price_id,'embroidery_switch_id' => $embroidery_switch_id,'range_low' => $value->range_low,'range_high' => $value->range_high,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
