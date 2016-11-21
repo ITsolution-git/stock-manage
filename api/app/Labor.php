@@ -20,9 +20,9 @@ class Labor extends Model {
         $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
-        }
+        }  
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS l.*')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS l.*')]; 
 
         $result = DB::table('labor as l')
                     ->select($listArray)

@@ -122,7 +122,24 @@ class AffiliateController extends Controller {
             $order_item_mapping_id = $this->common->InsertRecords('order_item_mapping',$insert_item);
         }
 
-        $insert_design_product = array('design_id' => $design_id, 'product_id' => $design_product[0]->product_id, 'is_affiliate_design' => '1', 'extra_charges' => $extra_charges);
+        $insert_design_product = array(
+                                        'design_id' => $design_id,
+                                        'product_id' => $design_product[0]->product_id,
+                                        'avg_garment_cost' => $post['calculatedData']['avg_garment_cost'],
+                                        'avg_garment_price' => $post['calculatedData']['avg_garment_price'],
+                                        'print_charges' => $post['calculatedData']['print_charges'],
+                                        'markup' => $post['calculatedData']['print_charges'],
+                                        'markup_default' => $post['calculatedData']['markup_default'],
+                                        'override' => $design_product[0]->override,
+                                        'override_diff' => $design_product[0]->override_diff,
+                                        'sales_total' => $post['calculatedData']['sales_total'],
+                                        'total_line_charge' => $post['calculatedData']['total_line_charge'],
+                                        'extra_charges' => $extra_charges,
+                                        'size_group_id' => $design_product[0]->size_group_id,
+                                        'warehouse' => $design_product[0]->warehouse,
+                                        'is_supply' => $design_product[0]->is_supply,
+                                        'is_affiliate_design' => '1'
+                                    );
 
         $design_product_id = $this->common->InsertRecords('design_product',$insert_design_product);
 
@@ -581,7 +598,18 @@ class AffiliateController extends Controller {
             }
 
             $sales_total2 = $sales_total + $extraCharges;
-            $data = array("success"=>1,"message"=>"","affiliate_invoice"=>$sales_total2);
+
+            $calculatedData = array(
+                                'avg_garment_cost' => round($avg_garment_cost,2),
+                                'avg_garment_price' => round($avg_garment_price,2),
+                                'print_charges' => round($print_charges,2),
+                                'markup' => $markup,
+                                'markup_default' => $markup_default,
+                                'sales_total' => round($sales_total2,2),
+                                'total_line_charge' => round($per_item,2)
+                                );
+
+            $data = array("success"=>1,"message"=>"","calculatedData"=>$calculatedData);
             return $data;
         }
     }
