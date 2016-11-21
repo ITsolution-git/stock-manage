@@ -1,0 +1,102 @@
+<md-dialog class="task-dialog" aria-label="New order">
+    <form name="orderInfoForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Information</span>
+                 <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll class="m-t-20">
+                <div class="popup-stokkup-modal">
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                    <label class="selectbox-label">Name</label>
+                       <input placeholder="Name" flex="100" ng-model="order_data.name" disabled="">
+                    </md-input-container>
+                </div>  
+
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Sales</label>
+                        <md-select ng-model="order_data.sales_id" flex="100" disabled="">
+                            <md-option ng-selected="staff.id==order_data.sales_id" ng-repeat="staff in staffList" value="{{staff.id}}">
+                                {{staff.sales_name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+
+                 <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Company</label>
+                        <md-select ng-model="order_data.client_id" flex="100" disabled="">
+                            <md-option ng-selected="company.client_id==order_data.client_id" ng-repeat="company in allCompany" value="{{company.client_id}}">
+                                {{company.client_company}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>
+           
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Blind</label>
+                        <md-select ng-model="order_data.is_blind" flex="100" disabled="">
+                            <md-option value="0">No</md-option>
+                            <md-option value="1">Yes</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>    
+            
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Order Status</label>
+                        <md-select ng-model="order_data.approval_id" flex="100" disabled="">
+                            <md-option ng-selected="order_data.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                        </md-select>
+                    </md-input-container>
+                </div>    
+            
+
+               <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Account Manager</label>
+                        <md-select ng-model="order_data.account_manager_id" flex="100" disabled="">
+                            <md-option  ng-repeat="user in brandCoList" value="{{user.id}}">
+                                {{user.name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div> 
+
+
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Main Contact</label>
+                        <md-select ng-model="order_data.contact_main_id" flex="100" disabled="">
+                            <md-option  ng-repeat="userName in contact_main" value="{{userName.id}}">
+                                {{userName.first_name}} &nbsp; {{ userName.last_name}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </div> 
+            
+            
+                <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                    <label class="selectbox-label">Price Grid</label>
+                    <md-select ng-model="order_data.price_id" flex="100">
+                        <md-option  ng-repeat="data in allGrid" value="{{data.id}}">
+                            {{data.name}}
+                        </md-option>
+                    </md-select>
+                    </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised dialog-submit-global" ng-disabled="orderInfoForm.$invalid">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

@@ -783,7 +783,13 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper innertab-scroll">
+
                                 <div class="pd15 embroidery-sec" ng-class="{'disable-click': allow_access==0}">
+                                    <div layout="row" flex="100">
+                                        <div layout="column" flex="20" class="text-bold mrg10-T"></div> 
+                                        <div layout="column" flex="70" class="text-bold mrg10-T">Stitch Count</div> 
+                                        <div layout="column" flex="10" class="text-bold mrg10-T">Add'tl 1000</div>
+                                    </div>
                                     <div layout="row" flex="100">
                                         <div layout="column" flex="10" class="text-bold mrg10-T">Range</div>
                                         <div layout="column" flex="10" class="text-bold mrg10-T">Low</div>
@@ -839,6 +845,11 @@
                                                 <input placeholder=" " name="" ui-event="" aria-label="Low"  ng-model="embroswitch.range_low_9">
                                             </md-input-container>
                                         </div>
+                                        <div layout="column" flex="10">
+                                            <md-input-container class="md-block first-box settings-margin-0">
+                                                <input placeholder=" " name="" ui-event="" aria-label="Low"  ng-model="embroswitch.range_low_10">
+                                            </md-input-container>
+                                        </div>
                                         <div layout="column" flex="5">&nbsp;</div>
                                     </div>
                                     <div layout="row" flex="100">
@@ -887,6 +898,11 @@
                                         <div layout="column" flex="10">
                                             <md-input-container class="md-block first-box settings-margin-0">
                                                 <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="embroswitch.range_high_9">
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="column" flex="10">
+                                            <md-input-container class="md-block first-box settings-margin-0">
+                                                <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="embroswitch.range_high_10">
                                             </md-input-container>
                                         </div>
                                         <div layout="column" flex="5">&nbsp;</div>
@@ -945,6 +961,11 @@
                                         <div layout="column" flex="10">
                                             <md-input-container class="md-block first-box settings-margin-0">
                                                 <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="price_embroidery.pricing_9c">
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="column" flex="10">
+                                            <md-input-container class="md-block first-box settings-margin-0">
+                                                <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="price_embroidery.pricing_10c">
                                             </md-input-container>
                                         </div>
                                         <div layout="column" flex="5" class="text-center mrg10-T">
