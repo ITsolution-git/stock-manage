@@ -14,11 +14,16 @@
                     <div layout="row" layout-wrap>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-200">
                             <label>Machine Type</label>
-                            <md-select aria-label='Machine Type' name="Machine Type" ng-model="machine.machine_type">
+                            <md-select aria-label='Machine Type' required name="machine_type" ng-model="machine.machine_type">
                                 <md-option value="">Select Machine Type</md-option>
                                 <md-option value="0">Screen Print</md-option>
                                 <md-option value="1">Embroidery</md-option>
                             </md-select>
+                            <div ng-messages="employeeform.machine_type.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
                         </md-input-container>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
                             <input placeholder="Machine Name *" required name="machine_name"  ng-model="machine.machine_name">
