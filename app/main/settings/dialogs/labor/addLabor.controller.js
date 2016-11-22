@@ -115,10 +115,10 @@
           var hourDiff = (timeEnd - timeStart) / (1000 * 60 * 60);                
 
 
+          
+          if(hourDiff < 8.5) {
 
-          if(hourDiff != 8) {
-
-                      var data = {"status": "error", "message": "Shift must be 8 hrs."}
+                      var data = {"status": "error", "message": "The shift must be more than 8.5 hrs."}
                               notifyService.notify(data.status, data.message);
                               return false;
             }
