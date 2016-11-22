@@ -58,7 +58,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                                 </tr>
                             </table>
                         </td>
-                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">Order Acknowledgement #{{$order_data[0]->display_number}}<br>Created On: {{$invoice_data[0]->created_date}}<br>Job Name: {{$order_data[0]->order_name}}</td>
+                        <td width="50%" style="padding:10px 0; vertical-align:top; text-align:right; font-weight:bold; text-transform:uppercase; font-size:10px;">Order Acknowledgement #{{$order_data[0]->display_number}}<br>Created On: <?php if(!empty($invoice_data)){?>{{$invoice_data[0]->created_date}}<?php } ?> <br>Job Name: {{$order_data[0]->order_name}}</td>
                     </tr>
                     <tr>
                      <td style="height:15px;">&nbsp;</td>
@@ -124,11 +124,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                     <tr>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->custom_po}}</td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->name}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$invoice_data[0]->payment_terms}}</td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_terms}}<?php } ?></td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"></td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->date_shipped}}</td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->in_hands_by}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$invoice_data[0]->payment_due_date}}</td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_due_date}}}<?php } ?></td>
                     </tr>
                 </table>
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">

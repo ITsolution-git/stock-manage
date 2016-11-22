@@ -393,6 +393,7 @@
 			            var condition_obj = {};
 			            condition_obj[cond_field] =  cond_value;
 			            UpdateArray.cond = angular.copy(condition_obj);
+			            UpdateArray.date_field = extra;
                 		
                 		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
 			        	{
@@ -410,7 +411,7 @@
 			        }
 			        $scope.UpdateTableDataAll = function(tableData,table_name,cond_field,cond_value,extra,extra_cond)
 			        {
-			        	console.log(tableData);return false;
+			        	//console.log(tableData);return false;
 			        	$("#ajax_loader").show();
 			        	var UpdateArray = {};
 			            UpdateArray.table =table_name;
