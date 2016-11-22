@@ -593,6 +593,7 @@ class OrderController extends Controller {
 
         if(!file_exists($file_path))
         {
+           
             PDF::AddPage('P','A4');
             PDF::writeHTML(view('pdf.invoice',$data)->render());
             PDF::Output($file_path,'F');
