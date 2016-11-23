@@ -96,7 +96,29 @@ class Production extends Model {
                 return  $garment[0]->result = 0; // GARMENTS ARE AVAILABLE IN WAREHOUSE
             }
         }
-         return 1;// NO GARMENTS
+        return 1;// NO GARMENTS
+    }
+
+    // PRODUCTION POSITION DETAIL
+    public function GetPositionDetails($PositionId,$company_id)
+    {
+
+       $garment = DB::table('order_design_position as odp')
+                        ->select('odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','odp.note','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height')
+                        ->leftjoin('order_design as od','odp.design_id','=','od.id')
+                        ->leftjoin('orders as ord','ord.id','=','od.order_id')
+                        ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
+                        ->leftjoin('position_schedule as ps','ps.position_id','=','odp.id')
+                        ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
+                        ->leftjoin('artjob_screensets as ass','ass.positions','=','odp.id')
+                        ->leftjoin('artjob_screencolors as acol','ass.id','=','acol.screen_id')
+                        ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
+                        ->leftjoin('misc_type as mt1','mt1.id','=','acol.inq')
+                        ->leftjoin('color as col','col.id','=','acol.color_name')
+                        ->where('odp.id','=',$PositionId)
+                        ->get();
+        //echo "<pre>"; print_r($garment); echo "</pre>"; die();
+        return $garment;
     }
 
 

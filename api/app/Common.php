@@ -95,7 +95,28 @@ class Common extends Model {
           
         return $allData;
     }
+    /**
+* Get All Misc type
+* @access public getAllMiscDataWithoutBlank
+* @return array $Misc
+*/
 
+    public function getAllMiscDataCompanyId($company_id) {
+        
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $company_id];
+        $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
+
+        $allData = array ();
+        foreach($MiscData as $data) {
+           
+           if($data->value != ''){
+            $allData[$data->id] = $data;
+           }
+
+        }
+
+        return $allData;
+    }
 
     /**
 * Get All Misc type

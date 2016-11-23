@@ -48,5 +48,20 @@ class ProductionController extends Controller {
 
         return response()->json(['data'=>$data]);
     }
+    public function GetPositionDetails()
+    {
+    	$post = Input::all();
+    	if(!empty($post['company_id']) && !empty($post['position_id']))
+	    {
+	    	$PositionDetail= $this->production->GetPositionDetails($post['position_id'],$post['company_id']);
+			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+
+        return response()->json(['data'=>$data]);
+    }
 
 }

@@ -12,33 +12,33 @@
 			<md-dialog-content ms-scroll>
 				<div class=" pull-left pt-20 full-row">
 					<div class="full-row">
-						<div class="pull-left full-row" flex=20>
+						<div class="pull-left full-row" flex=15>
 							<span class="global-labels text-capitalize">client name</span>
-							<span class="global-text pull-left full-row">Live Nation</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].client_company}}</span>
 						</div>
 
-						<div class="pull-left full-row" flex=20>
+						<div class="pull-left full-row" flex=15>
 							<span class="global-labels text-capitalize">due date</span>
-							<span class="global-text pull-left full-row">07/23/2016</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].in_hands_by}}</span>
 						</div>
 
 						<div class="pull-left full-row" flex=20>
 							<span class="global-labels text-capitalize">scheduled run date</span>
-							<span class="global-text pull-left full-row">07/20/2016</span>
-						</div>
-
-						<div class="pull-left full-row" flex=20>
-							<span class="global-labels text-capitalize">press Assigned To</span>
-							<span class="global-text pull-left full-row">Machine 12345</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].run_date}}</span>
 						</div>
 
 						<div class="pull-left full-row" flex=15>
+							<span class="global-labels text-capitalize">press Assigned To</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].machine_name}}</span>
+						</div>
+
+						<div class="pull-left full-row" flex=10>
 							<span class="global-labels text-capitalize">Shift</span>
 							<span class="global-text pull-left full-row">2nd Shift</span>
 						</div>
-						<div class="pull-left full-row" flex=5>
-							<span class="global-labels text-capitalize">Shift</span>
-							<span class="global-text pull-left full-row">Front</span>
+						<div class="pull-left full-row" flex=20>
+							<span class="global-labels text-capitalize">Print Location</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].screen_location}}</span>
 						</div>
 	        		</div>
 	        	</div>
@@ -52,12 +52,12 @@
 	                       		<div class="full-row">
 	                       			<div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
 	                                    <md-input-container>
-						                    <input placeholder="Screen Set Name">
+						                    <input placeholder="Screen Set Name" name="screen_set" ng-model="params.PositionDetail[0].screen_set" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
 						                </md-input-container>
 	                                </div>
 	                       			<div layout="column" flex=50 class="pull-left  shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Screen Count">
+						                    <input placeholder="Screen Count"  name="screen_count" ng-model="params.PositionDetail[0].screen_count">
 						                </md-input-container>
 	                                </div>
 
@@ -69,31 +69,31 @@
 
 	                                <div layout="column" flex=50 class="pull-left shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Width(inches)">
+						                    <input placeholder="Width(inches)"  name="screen_width" ng-model="params.PositionDetail[0].screen_width" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Height(inches)">
+						                    <input placeholder="Height(inches)" name="screen_height" ng-model="params.PositionDetail[0].screen_height" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Screen Resolution">
+						                    <input placeholder="Screen Resolution"  name="screen_resolution" ng-model="params.PositionDetail[0].screen_resolution">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Screen Size">
+						                    <input placeholder="Screen Size" name="screen_size">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Notes">
+						                    <input placeholder="Notes" name="note" ng-model="params.PositionDetail[0].note" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'id\',params.PositionDetail[0].position_id)' }">
 						                </md-input-container>
 	                                </div>
 
@@ -117,40 +117,12 @@
 							                    </thead>
 							                    <tbody>
 
-							                        <tr>
-							                            <td>lb straight</td>
-							                            <td>base</td>
-							                            <td></td>
-							                            <td></td>
-							                            <td>PL</td>
-							                        </tr>
-							                        <tr>
-							                            <td>flash</td>
-							                            <td></td>
-							                            <td></td>
-							                            <td></td>
-							                            <td>PL</td>
-							                        </tr>
-							                        <tr>
-							                            <td>orange</td>
-							                            <td>165c</td>
-							                            <td></td>
-							                            <td></td>
-							                            <td>PL</td>
-							                        </tr>
-							                        <tr>
-							                            <td>flash</td>
-							                            <td></td>
-							                            <td></td>
-							                            <td></td>
-							                            <td>PL</td>
-							                        </tr>
-							                        <tr>
-							                            <td>sf cotton</td>
-							                            <td>white</td>
-							                            <td></td>
-							                            <td></td>
-							                            <td>PL</td>
+							                        <tr ng-repeat="color in params.PositionDetail">
+							                            <td>{{color.color_name}}</td>
+							                            <td>{{color.thread_color}}</td>
+							                            <td>{{color.line_per_inch}}</td>
+							                            <td>{{color.mesh_thread_count}}</td>
+							                            <td>{{color.inq}}</td>
 							                        </tr>
 							                    </tbody>
 							                </table>
@@ -374,12 +346,7 @@
 			</md-dialog-content>
 
 			 <md-dialog-actions layout="row" layout-align="end center">
-            
-                  <!--  <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button> -->
-                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Cancel</md-button>
-
                  <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Schedule</md-button>
-            
         	</md-dialog-actions>
     	</form>
 	</div>
