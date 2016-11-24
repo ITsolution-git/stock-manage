@@ -52,18 +52,18 @@
 	                       		<div class="full-row">
 	                       			<div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
 	                                    <md-input-container>
-						                    <input placeholder="Screen Set Name" name="screen_set" ng-model="params.PositionDetail[0].screen_set" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
+						                    <input placeholder="Screen Set Name" name="screen_set" ng-model="params.PositionDetail[0].screen_set" disabled="">
 						                </md-input-container>
 	                                </div>
 	                       			<div layout="column" flex=50 class="pull-left  shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Screen Count"  name="screen_count" ng-model="params.PositionDetail[0].screen_count">
+						                    <input placeholder="Screen Count"  name="screen_total" ng-model="params.PositionDetail[0].screen_total" disabled="">
 						                </md-input-container>
 	                                </div>
 
 	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
 	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Number of Colors">
+						                    <input placeholder="Number of Colors" name="color_stitch_count" ng-model="params.PositionDetail[0].color_stitch_count" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'position_id\',params.PositionDetail[0].position_id)' }">
 						                </md-input-container>
 	                                </div>
 
@@ -79,7 +79,7 @@
 						                </md-input-container>
 	                                </div>
 
-	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+<!-- 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
 	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Screen Resolution"  name="screen_resolution" ng-model="params.PositionDetail[0].screen_resolution">
 						                </md-input-container>
@@ -90,7 +90,7 @@
 						                    <input placeholder="Screen Size" name="screen_size">
 						                </md-input-container>
 	                                </div>
-
+ -->
 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
 	                                    <md-input-container class="zero-padding">
 						                    <input placeholder="Notes" name="note" ng-model="params.PositionDetail[0].note" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'id\',params.PositionDetail[0].position_id)' }">
@@ -136,38 +136,39 @@
 	                <div>
 	                    <md-tab label="garment info" ng-click="getTab('progress')">
 
+	                    <div  ng-repeat="garment in params.GarmentDetail.receive">
 	                    	<div class="full-row pull-left pl-30 pr-30 m-t-20">
 	                    		<div class="mr-20 full-row pull-left" flex=20>
 	                    			<span class="global-labels full-row pull-left">Product</span>
-	                    			<span>Spring Shirts</span>
+	                    			<span>{{garment.product.name}}</span>
 	                    		</div>
 
 	                    		<div class="pull-left mr-20 full-row pull-left" flex=20>
 	                    			<span class="global-labels full-row full-row pull-left">SKU</span>
-	                    			<span>#####</span>
+	                    			<span>{{garment.product.sku}}</span>
 	                    		</div>
 
-	                    		<div class="mr-20 full-row pull-left" flex=20>
+	                    		<!-- <div class="mr-20 full-row pull-left" flex=20>
 	                    			<span class="global-labels full-row full-row pull-left">Size Group</span>
 	                    			<span>Mens</span>
-	                    		</div>
+	                    		</div> -->
 
 	                    		<div class="mr-20 full-row pull-left" flex=20>
 	                    			<span class="global-labels full-row full-row pull-left">Color</span>
-	                    			<span>Blue</span>
+	                    			<span>{{garment.product.color_name}}</span>
 	                    		</div>
 	                    	</div>
 
-	                        <div class="trans-box mr-20 white-bg pull-left" flex=20>
+	                        <div class="trans-box mr-20 white-bg pull-left" flex=20 ng-repeat="data_line in garment.data">
                                 <div class="p-20 pull-left">
-                                    <span class="sizeColor mb-10 pull-left">M</span>
+                                    <span class="sizeColor mb-10 pull-left">{{data_line.size}}</span>
                                     <div class="box-zerospace">
                                         <div flex=100 class="mb-10 pull-left box-zerospace">
                                             <div flex=50 class="pull-left box-zerospace">
                                                 <span class="global-labels">Ordered</span>
                                             </div>
                                             <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">100</span>
+                                                <span class="font-14 chrome-weight fontStyle">{{data_line.qnty_ordered}}</span>
                                             </div>
                                         </div>
                                         <div flex=100 class="mb-10 pull-left box-zerospace">
@@ -176,7 +177,7 @@
                                             </div>
                                             <div flex=50 class="pull-left box-zerospace">
                                                 <span class="font-14 chrome-weight fontStyle">
-                                                    98
+                                                    {{data_line.qnty_purchased}}
                                                 </span>
                                             </div>
                                         </div>
@@ -186,7 +187,7 @@
                                             </div>
                                             <div flex=50 class="pull-left box-zerospace">
                                                 <span class="font-14 chrome-weight fontStyle">
-                                                    2
+                                                    {{data_line.short}}
                                                 </span>
                                             </div>
                                         </div>
@@ -194,149 +195,20 @@
                                             <div class="text-center">________________</div>
                                         </div>
                                         <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productYellow mb-0">2 Defective</p>
+                                            <p class="productYellow mb-0">{{data_line.short}} Defective</p>
                                         </div>
                                         <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
+                                            <p class="productRed mb-5 mt-5">{{data_line.short_unit}} Units Short</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">{{data_line.over_unit}} Units Over</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="trans-box mr-20 white-bg pull-left" flex=20>
-                                <div class="p-20 pull-left">
-                                    <span class="sizeColor mb-10 pull-left">M</span>
-                                    <div class="box-zerospace">
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Ordered</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">100</span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Received</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">
-                                                    98
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Defective</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">
-                                                    2
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <div class="text-center">________________</div>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productYellow mb-0">2 Defective</p>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
 
-                            <div class="trans-box mr-20 white-bg pull-left" flex=20>
-                                <div class="p-20 pull-left">
-                                    <span class="sizeColor mb-10 pull-left">M</span>
-                                    <div class="box-zerospace">
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Ordered</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">100</span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Received</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">
-                                                    98
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Defective</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">
-                                                    2
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <div class="text-center">________________</div>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productYellow mb-0">2 Defective</p>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="trans-box mr-20 white-bg pull-left" flex=20>
-                                <div class="p-20 pull-left">
-                                    <span class="sizeColor mb-10 pull-left">M</span>
-                                    <div class="box-zerospace">
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Ordered</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">100</span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Received</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">
-                                                    100
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="mb-10 pull-left box-zerospace">
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="global-labels">Defective</span>
-                                            </div>
-                                            <div flex=50 class="pull-left box-zerospace">
-                                                <span class="font-14 chrome-weight fontStyle">
-                                                    0
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <div class="text-center">________________</div>
-                                        </div>
-                                        <!-- <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productYellow mb-0">2 Defective</p>
-                                        </div>
-                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
-                                            <p class="productRed mb-5 mt-5">2 Units Short</p>
-                                        </div> -->
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
 	                    </md-tab>
 	                </div>
 	            	
@@ -345,9 +217,9 @@
 
 			</md-dialog-content>
 
-			 <md-dialog-actions layout="row" layout-align="end center">
+			 <!-- <md-dialog-actions layout="row" layout-align="end center">
                  <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Schedule</md-button>
-        	</md-dialog-actions>
+        	</md-dialog-actions> -->
     	</form>
 	</div>
 </md-dialog>
