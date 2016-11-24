@@ -54,7 +54,8 @@ class ProductionController extends Controller {
     	if(!empty($post['company_id']) && !empty($post['position_id']))
 	    {
 	    	$PositionDetail= $this->production->GetPositionDetails($post['position_id'],$post['company_id']);
-			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail);
+	    	$GarmentDetail= $this->production->GetGarmentDetail($post['position_id'],$post['company_id']);
+			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail);
 	    }
 	    else
 	    {
