@@ -23,10 +23,11 @@ class Production extends Model {
         }
 
         $production_data = DB::table('orders as ord')
-                        ->select(DB::raw('SQL_CALC_FOUND_ROWS ord.name as order_name,ord.display_number as order_display, ord.id as order_id,cl.client_company ,ord.in_hands_by,mt.value,odp.id,ass.id as screenset,ass.screen_active,ass.approval,mt1.value as production_type,odp.image_1'))
+                        ->select(DB::raw('SQL_CALC_FOUND_ROWS ord.name as order_name,ord.display_number as order_display, ord.id as order_id,cl.client_company ,ord.in_hands_by,mt.value,odp.id,ass.id as screenset,ass.screen_active,ass.approval,mt1.value as production_type,odp.image_1,ps.run_date'))
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
                         ->leftjoin('order_design as od','ord.id','=','od.order_id')
                         ->leftjoin('order_design_position as odp','odp.design_id','=','od.id')
+                        ->leftjoin('position_schedule as ps','ps.position_id','=','odp.id')
                         ->leftjoin('artjob_screensets as ass','ass.positions','=','odp.id')
                         ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
                         ->leftjoin('misc_type as mt1','mt1.id','=','odp.placement_type')
@@ -58,7 +59,8 @@ class Production extends Model {
                 if($value->approval==1){$value->screen_icon = '2';} 
                 elseif($value->screen_active=='1'){$value->screen_icon='1';} 
                 else{$value->screen_icon='0';}
-            	$value->in_hands_by =($value->in_hands_by=='0000-00-00')?'':date('m/d/Y',strtotime($value->in_hands_by)) ;
+            	$value->in_hands_by =($value->in_hands_by=='0000-00-00' || $value->in_hands_by=='')?'':date('m/d/Y',strtotime($value->in_hands_by)) ;
+                $value->run_date =($value->run_date=='0000-00-00' || $value->run_date=='')?'':date('m/d/Y',strtotime($value->run_date)) ;
                 $value->image_1= file_exists(FILEUPLOAD.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1)?UPLOAD_PATH.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1:'';
                 $value->garment = $this->CheckWarehouseQuantity($value->id);
           	}
