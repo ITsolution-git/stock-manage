@@ -90,7 +90,36 @@
     }
 
 
+
+$scope.allShiftData =  function() {
+
+            var allData = {};
+        allData.table ='company_shift';
+        allData.sort ='id';
+        allData.sortcond ='desc';
+        allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.allshiftData = result.data.records;
+                $scope.shiftDataDisplay = 1;
+            } else {
+                $scope.allshiftData = {};
+                $scope.shiftDataDisplay = 0;
+            }     
+                
+        });
+ }   
+
+
    $scope.GetCompany();
+   $scope.allShiftData();
+
+
+
+
     // COMPANY EDIT TIME CALL
     $scope.UpdateTableProfile = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
     {
@@ -387,6 +416,114 @@
                     }
                    });
             }
+
+
+             $scope.delete_shift = function (ev,id)
+        {
+            var UpdateArray = {};
+            UpdateArray.table ='company_shift';
+            UpdateArray.data = {is_delete:0};
+            UpdateArray.cond = {id: id};
+            
+            var permission = confirm(AllConstant.deleteMessage);
+            if (permission == true) 
+            {
+                $("#ajax_loader").show();
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success', "Record Deleted Successfully.");
+                        $scope.allShiftData();
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+            }
+        }
+
+
+
+            $scope.company_shift = {};
+
+            $scope.saveCompanyShift = function (companyShift) {
+
+
+
+            if(companyShift.shift_name == undefined || companyShift.shift_name == '') {
+
+                      var data = {"status": "error", "message": "Shift Name should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+             
+
+
+          if(companyShift.shift_start_time == undefined || companyShift.shift_start_time == '') {
+
+                      var data = {"status": "error", "message": "Shift Start Time should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+          if(companyShift.shift_end_time == undefined || companyShift.shift_end_time == '') {
+
+                      var data = {"status": "error", "message": "Shift End Time should not be blank"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+          var today = new Date();
+
+          var format_check = companyShift.shift_end_time;
+          var format_check_start = companyShift.shift_start_time;
+          var format_end = format_check.match(/\s(.*)$/)[1];
+          var format_start = format_check_start.match(/\s(.*)$/)[1];
+          var todayend = new Date();
+          if (format_end == "AM" && format_start == "PM") {
+            todayend.setDate(todayend.getDate() + 1);                  
+          }                     
+
+          var valuestart =companyShift.shift_start_time;              
+          var valuestop = companyShift.shift_end_time;//$("select[name='timestop']").val();              //create date format                
+          var timeStart = new Date(today.toDateString() + " " + valuestart).getTime();              
+          var timeEnd = new Date(todayend.toDateString() + " " + valuestop).getTime();              
+          var hourDiff = (timeEnd - timeStart) / (1000 * 60 * 60);                
+
+
+          
+          if(hourDiff < 8.5) {
+
+                      var data = {"status": "error", "message": "The shift must be more than 8.5 hrs."}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+            }
+
+            companyShift.total_shift_hours = hourDiff;
+
+            companyShift.company_id = sessionService.get('company_id'); 
+           
+            var combine_array_id = {};
+            combine_array_id.data = companyShift;
+           
+            combine_array_id.table ='company_shift';
+
+            $http.post('api/public/common/InsertRecords',combine_array_id).success(function(result) {
+                    $scope.allShiftData();
+                    $scope.company_shift = {};
+                    $scope.company_shift.shift_start_time = '';
+                    $scope.company_shift.shift_end_time = '';
+                    var data = {"status": "success", "message": "Shift Added Successfully."}
+                     notifyService.notify(data.status, data.message);
+                 
+                
+            });
+
+
+        }
 
 
     }
