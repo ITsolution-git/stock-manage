@@ -139,7 +139,30 @@
                                 
                         </md-card-content> 
 
-                             
+                             <md-card-content flex="50" layout="column"  >
+                              <div class="simple-table-container md-whiteframe-4dp" ng-show="shiftDataDisplay==1">
+                                            <div class="ms-responsive-table-wrapper">
+                                                <table ms-responsive-table="" class="simple">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Shift Name</th>
+                                                            <th>Shift Start Time</th>
+                                                            <th>Shift End Time</th>
+                                                            <th>Operation</th>
+                                                            </tr>
+                                                        </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="shifts in allshiftData" class="ng-scope">
+                                                             <td>{{ shifts.shift_name}}</td>
+                                                            <td>{{ shifts.shift_start_time}}</td>
+                                                             <td>{{ shifts.shift_end_time}}</td>
+                                                            <td>Delete</td>
+                                                         </tr>
+                                                    </tbody>
+                                                 </table> 
+                                               </div>
+                                    </div>   
+                            </md-card-content> 
 
                      </md-card>
                         

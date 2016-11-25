@@ -93,7 +93,22 @@
 
 $scope.allShiftData =  function() {
 
-       
+            var allData = {};
+        allData.table ='company_shift';
+        allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.allshiftData = result.data.records;
+                $scope.shiftDataDisplay = 1;
+            } else {
+                $scope.allshiftData = {};
+                $scope.shiftDataDisplay = 0;
+            }     
+                
+        });
  }   
 
 
