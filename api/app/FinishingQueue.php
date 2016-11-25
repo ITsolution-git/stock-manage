@@ -16,7 +16,7 @@ class FinishingQueue extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,o.name,c.client_id,o.approval_id,o.display_number,fc.item as category_name')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,o.name,c.client_id,o.approval_id,o.display_number,fc.item as category_name,o.due_date,o.in_hands_by as in_hands_date')];
 
         $finishingData = DB::table('finishing as f')
                         ->leftJoin('orders as o', 'o.id', '=', 'f.order_id')
@@ -25,15 +25,21 @@ class FinishingQueue extends Model {
                         ->select($listArray)
                         ->where('o.company_id', '=', $post['company_id'])
                         ->where('fc.id', '>',0);
-
+                        if($post['type'] == 'unscheduled')
+                        {
+                            $finishingData = $finishingData->Where('f.is_schedule','=',0);
+                        }
+                        if($post['type'] == 'scheduled')
+                        {
+                            $finishingData = $finishingData->Where('f.is_schedule','=',1);
+                        }
                         if($search != '')
                         {
                             $finishingData = $finishingData->Where(function($query) use($search)
                             {
                                 $query->orWhere('o.name', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
+                                    ->orWhere('c.client_company', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('fc.item', 'LIKE', '%'.$search.'%');
                             });
                         }
                         $finishingData = $finishingData->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])

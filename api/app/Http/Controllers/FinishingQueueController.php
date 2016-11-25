@@ -71,6 +71,7 @@ class FinishingQueueController extends Controller {
 
         $post = $post_all['cond']['params'];
         $post['company_id'] = $post_all['cond']['company_id'];
+        $post['type'] = $post_all['cond']['type'];
 
         if(!isset($post['page']['page'])) {
              $post['page']['page']=1;
@@ -92,7 +93,7 @@ class FinishingQueueController extends Controller {
 
         $result = $this->finishingQueue->getFinishingdata($post);
 
-        foreach ($result['allData'] as $data) {
+        /*foreach ($result['allData'] as $data) {
             $inner_data = $this->finishingQueue->getFinishingByOrder($data->order_id);
 
             foreach ($inner_data as $row) {
@@ -120,7 +121,7 @@ class FinishingQueueController extends Controller {
             }
 
             $data->order_finishing = $inner_data;
-        }
+        }*/
 
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
@@ -129,10 +130,10 @@ class FinishingQueueController extends Controller {
 
         $header = array(
                         0=>array('key' => 'o.name', 'name' => 'Order Name'),
-                        1=>array('key' => 'o.client_company', 'name' => 'Client'),
+                        1=>array('key' => 'c.client_company', 'name' => 'Client'),
                         2=>array('key' => 'fc.item', 'name' => 'Finishing Type'),
                         3=>array('key' => 'o.due_date', 'name' => 'Due Date'),
-                        4=>array('key' => 'o.in_hands_date', 'name' => 'In Hands Date'),
+                        4=>array('key' => 'o.in_hands_by', 'name' => 'In Hands Date'),
                         5=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 

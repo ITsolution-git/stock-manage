@@ -1,78 +1,86 @@
-Finishing Queue page starts here -->
 <div class="content client-list-page stockkup-content-table-container">
     <div class="tab-view-page simple-table-container stokkup-main-tableview">
          <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
             <div class="table-title-text" class="cursor-p">Finishing Queue</div>
-            <div class="pull-right right-search-box">
+            <!-- <div class="pull-right right-search-box">
                 <div class="order-modal-title pull-right" layout="row" layout-align="end center">
                     <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
-                </div>   
-
-                 <div class="search-block pull-right">
-                    <md-input-container class="md-block" flex-gt-sm>
-                        <label class="top-srch-label">Search...</label>
-                        <input ng-model="name" ui-event="{ change : 'search($event)' }">
-                    </md-input-container>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="inner-full-box">
             <md-content class="mt-30 white-bg p-25">
                 <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
-                    <!---Order Waiting to Ship Tab-->
                     <div ng-controller="FinishingQueueController">
                         <md-tab label="All" ng-click="getTab('wait')">
                             <div class="ms-responsive-table-wrapper">
-                                    <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
-                                        <table class="dataTable row-border">
-                                            <thead tasty-thead></thead>
-                                            <tbody>
-                                                <tr ng-repeat="all in rows">
-                                                    <td>{{ all.name}}</td>
-                                                    <td>{{ all.client_company}}</td>
-                                                    <td>{{ all.category_name}}</td>
-                                                    <td>{{ all.due_date }}</td>
-                                                    <td>{{ all.in_hands_date }}</td>
-                                                    <td class="prod-icons">
-                                                        <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div tasty-pagination class="tasty-page"></div>
+                                <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
+                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                        </md-input-container>
                                     </div>
-                                    <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-                                        <table class="dataTable row-border">
-                                            <thead>
-                                                <tr>
-                                                    <th>No Records Found</th>
-                                                </tr>
-                                            </thead>
-                                        </table>
-                                    </div>
+                                </div>
+                                <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                    <table class="dataTable row-border">
+                                        <thead tasty-thead></thead>
+                                        <tbody>
+                                            <tr ng-repeat="all in rows">
+                                                <td>{{ all.name}}</td>
+                                                <td>{{ all.client_company}}</td>
+                                                <td>{{ all.category_name}}</td>
+                                                <td ng-if="all.due_date != '0000-00-00'">{{ all.due_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.due_date == '0000-00-00'"></td>
+                                                <td ng-if="all.in_hands_date != '0000-00-00'">{{ all.in_hands_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.in_hands_date == '0000-00-00'"></td>
+                                                <td class="prod-icons">
+                                                    <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                                <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+                                    <table class="dataTable row-border">
+                                        <thead>
+                                            <tr>
+                                                <th>No Records Found</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
                             </div>                 
                         </md-tab>
                     </div>
-                    <!---Order In Progress Tab-->
-                    <div>
+                    <div ng-controller="FinishingUnscheduleController">
                         <md-tab label="Unscheduled" ng-click="getTab('progress')">
                             <div class="ms-responsive-table-wrapper">
+                                <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
+                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                        </md-input-container>
+                                    </div>
+                                </div>
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
                                     <table class="dataTable row-border">
                                         <thead tasty-thead></thead>
                                         <tbody> 
-                                            <tr ng-repeat="progress in rows">
-                                                <td>{{ progress.display_number}}</td>
-                                                <td>{{ progress.client_company}}</td>
-                                                <td>
-                                                    <md-select aria-label="status" ng-model="progress.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',progress.approval_id,progress.id)" ng-disabled="allow_access == '0'">
-                                                    <md-option ng-selected="progress.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
-                                                </md-select>
-                                            </td>
-                                                <td>{{ progress.distributed}}/{{ progress.total}}</td>
-                                                <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:progress.display_number})"><a>SHIP</a></td>
-                                                <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
+                                            <tr ng-repeat="all in rows">
+                                                <td>{{ all.name}}</td>
+                                                <td>{{ all.client_company}}</td>
+                                                <td>{{ all.category_name}}</td>
+                                                <td ng-if="all.due_date != '0000-00-00'">{{ all.due_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.due_date == '0000-00-00'"></td>
+                                                <td ng-if="all.in_hands_date != '0000-00-00'">{{ all.in_hands_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.in_hands_date == '0000-00-00'"></td>
+                                                <td class="prod-icons">
+                                                    <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
+                                                </td>
                                             </tr>                    
                                         </tbody>
                                     </table>
@@ -90,53 +98,33 @@ Finishing Queue page starts here -->
                             </div>
                         </md-tab>
                     </div>
-                    <!---Shipped Orders Tab-->
-                    <div>
+                    <div ng-controller="FinishingScheduleController">
                         <md-tab label="Scheduled" ng-click="getTab('shipped')">
                             <div class="ms-responsive-table-wrapper">
+                                <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
+                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                        </md-input-container>
+                                    </div>
+                                </div>
                                 <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
                                     <table class="dataTable row-border">
                                         <thead tasty-thead></thead>
                                         <tbody> 
-                                            <tr ng-repeat-start="row in rows">
-                                                <td>{{ row.display_number}}</td>
-                                                <td>{{ row.client_company}}</td>
-                                                <td>
-                                                    <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.id)" ng-disabled="allow_access == '0'">
-                                                        <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
-                                                    </md-select>
+                                            <tr ng-repeat="all in rows">
+                                                <td>{{ all.name}}</td>
+                                                <td>{{ all.client_company}}</td>
+                                                <td>{{ all.category_name}}</td>
+                                                <td ng-if="all.due_date != '0000-00-00'">{{ all.due_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.due_date == '0000-00-00'"></td>
+                                                <td ng-if="all.in_hands_date != '0000-00-00'">{{ all.in_hands_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.in_hands_date == '0000-00-00'"></td>
+                                                <td class="prod-icons">
+                                                    <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
                                                 </td>
-                                                <td>{{ row.distributed}}/{{ row.total}}</td>
-                                                <td class="accor" ng-show="row.shipping_data.length > 0">
-                                                    <button ng-if="row.expanded" ng-click="row.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
-                                                    <button ng-if="!row.expanded" ng-click="row.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
-                                                </td>
-                                                <td ng-if="row.shipping_created == '0'" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:row.display_number})"><a>SHIP</a></td>
-                                            </tr>
-                                            <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
-                                                <td colspan="8" class="collpas">
-                                                    <table class="dataTable row-border hover">
-                                                        <thead>
-                                                            <th>Shipping Id</th>
-                                                            <th>Job Name</th>
-                                                            <th>Shipping By</th>
-                                                            <th>In Hands By</th>
-                                                            <th>&nbsp;</th>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr ng-repeat="shipdata in row.shipping_data">
-                                                                <td>{{shipdata.display_number}}</td>
-                                                                <td>{{row.name}}</td>
-                                                                <td ng-if="shipdata.shipping_by != '0000-00-00'">{{ shipdata.shipping_by | date:"M/d/yyyy" }}</td>
-                                                                <td ng-if="shipdata.shipping_by == '0000-00-00'"></td>
-                                                                <td ng-if="shipdata.in_hands_by != '0000-00-00'">{{ shipdata.in_hands_by | date:"M/d/yyyy" }}</td>
-                                                                <td ng-if="shipdata.in_hands_by == '0000-00-00'"></td>
-                                                                <td class="text-center" ui-sref="app.shipping.shipmentoverview({id:shipdata.display_number})"><a>SHIPMENT OVERVIEW</a></td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>               
+                                            </tr>                    
                                         </tbody>
                                     </table>
                                     <div tasty-pagination class="tasty-page"></div>
@@ -153,10 +141,8 @@ Finishing Queue page starts here -->
                             </div>
                         </md-tab>
                     </div>
-                    
                 </md-tabs>
             </md-content>
         </div>
     </div> 
 </div>
-<!--Finishing Queue page ends here 
