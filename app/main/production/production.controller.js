@@ -173,6 +173,7 @@
                 if(result.data.success=='1')
                 {
                     $scope.PositionDetail = result.data.PositionDetail;
+                    $scope.GarmentDetail = result.data.GarmentDetail;
                     $scope.openEditPopup('production/view/jobdetail_popup.html',$scope);
                 }
                 else
