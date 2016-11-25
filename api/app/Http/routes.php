@@ -195,6 +195,10 @@ Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
 Route::post('finishing/updateFinishing', 'FinishingController@updateFinishing');
 Route::post('finishing/addRemoveToFinishing', 'FinishingController@addRemoveToFinishing');
 
+// FINISHING QUEUE CONTROLLER
+Route::get('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
+Route::post('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
+
 // SHIPPING CONTROLLER
 Route::get('shipping/listShipping', 'ShippingController@listShipping');
 Route::post('shipping/listShipping', 'ShippingController@listShipping');

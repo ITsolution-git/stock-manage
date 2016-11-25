@@ -69,6 +69,9 @@
             // Production
             'app.production',
 
+            // Finishing Scheduling
+            'app.finishingQueue',
+
             // Navigation
             'app.navigation',
 

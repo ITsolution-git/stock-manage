@@ -1,0 +1,148 @@
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="tab-view-page simple-table-container stokkup-main-tableview">
+         <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
+            <div class="table-title-text" class="cursor-p">Finishing Queue</div>
+            <!-- <div class="pull-right right-search-box">
+                <div class="order-modal-title pull-right" layout="row" layout-align="end center">
+                    <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="inner-full-box">
+            <md-content class="mt-30 white-bg p-25">
+                <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                    <div ng-controller="FinishingQueueController">
+                        <md-tab label="All" ng-click="getTab('wait')">
+                            <div class="ms-responsive-table-wrapper">
+                                <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
+                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                    <table class="dataTable row-border">
+                                        <thead tasty-thead></thead>
+                                        <tbody>
+                                            <tr ng-repeat="all in rows">
+                                                <td>{{ all.name}}</td>
+                                                <td>{{ all.client_company}}</td>
+                                                <td>{{ all.category_name}}</td>
+                                                <td ng-if="all.due_date != '0000-00-00'">{{ all.due_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.due_date == '0000-00-00'"></td>
+                                                <td ng-if="all.in_hands_date != '0000-00-00'">{{ all.in_hands_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.in_hands_date == '0000-00-00'"></td>
+                                                <td class="prod-icons">
+                                                    <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                                <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+                                    <table class="dataTable row-border">
+                                        <thead>
+                                            <tr>
+                                                <th>No Records Found</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>                 
+                        </md-tab>
+                    </div>
+                    <div ng-controller="FinishingUnscheduleController">
+                        <md-tab label="Unscheduled" ng-click="getTab('progress')">
+                            <div class="ms-responsive-table-wrapper">
+                                <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
+                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                    <table class="dataTable row-border">
+                                        <thead tasty-thead></thead>
+                                        <tbody> 
+                                            <tr ng-repeat="all in rows">
+                                                <td>{{ all.name}}</td>
+                                                <td>{{ all.client_company}}</td>
+                                                <td>{{ all.category_name}}</td>
+                                                <td ng-if="all.due_date != '0000-00-00'">{{ all.due_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.due_date == '0000-00-00'"></td>
+                                                <td ng-if="all.in_hands_date != '0000-00-00'">{{ all.in_hands_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.in_hands_date == '0000-00-00'"></td>
+                                                <td class="prod-icons">
+                                                    <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
+                                                </td>
+                                            </tr>                    
+                                        </tbody>
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                                <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+                                   <table class="dataTable row-border">
+                                        <thead>
+                                            <tr>
+                                                <th>No Records Found</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </md-tab>
+                    </div>
+                    <div ng-controller="FinishingScheduleController">
+                        <md-tab label="Scheduled" ng-click="getTab('shipped')">
+                            <div class="ms-responsive-table-wrapper">
+                                <div layout="row" layout-align="space-between right" class="art-search-cntnr">
+                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                        <md-input-container class="md-block" flex-gt-sm>
+                                            <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
+                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                                <div ng-show="success==1" tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback">
+                                    <table class="dataTable row-border">
+                                        <thead tasty-thead></thead>
+                                        <tbody> 
+                                            <tr ng-repeat="all in rows">
+                                                <td>{{ all.name}}</td>
+                                                <td>{{ all.client_company}}</td>
+                                                <td>{{ all.category_name}}</td>
+                                                <td ng-if="all.due_date != '0000-00-00'">{{ all.due_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.due_date == '0000-00-00'"></td>
+                                                <td ng-if="all.in_hands_date != '0000-00-00'">{{ all.in_hands_date | date:"M/d/yyyy"}}</td>
+                                                <td ng-if="all.in_hands_date == '0000-00-00'"></td>
+                                                <td class="prod-icons">
+                                                    <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
+                                                </td>
+                                            </tr>                    
+                                        </tbody>
+                                    </table>
+                                    <div tasty-pagination class="tasty-page"></div>
+                                </div>
+                                <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+                                   <table class="dataTable row-border">
+                                        <thead>
+                                            <tr>
+                                                <th>No Records Found</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </md-tab>
+                    </div>
+                </md-tabs>
+            </md-content>
+        </div>
+    </div> 
+</div>
