@@ -156,7 +156,9 @@
                                                              <td>{{ shifts.shift_name}}</td>
                                                             <td>{{ shifts.shift_start_time}}</td>
                                                              <td>{{ shifts.shift_end_time}}</td>
-                                                            <td>Delete</td>
+                                                            <td>
+                                                                <a href="#" class="remove-size" ng-click="delete_shift($event,shifts.id)"><span class="icon icon-close"></span></a>
+                                                    </td>
                                                          </tr>
                                                     </tbody>
                                                  </table> 

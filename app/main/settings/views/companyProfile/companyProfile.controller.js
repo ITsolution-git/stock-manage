@@ -95,6 +95,8 @@ $scope.allShiftData =  function() {
 
             var allData = {};
         allData.table ='company_shift';
+        allData.sort ='id';
+        allData.sortcond ='desc';
         allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
 
         $http.post('api/public/common/GetTableRecords',allData).success(function(result)
@@ -414,6 +416,35 @@ $scope.allShiftData =  function() {
                     }
                    });
             }
+
+
+             $scope.delete_shift = function (ev,id)
+        {
+            var UpdateArray = {};
+            UpdateArray.table ='company_shift';
+            UpdateArray.data = {is_delete:0};
+            UpdateArray.cond = {id: id};
+            
+            var permission = confirm(AllConstant.deleteMessage);
+            if (permission == true) 
+            {
+                $("#ajax_loader").show();
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success', "Record Deleted Successfully.");
+                        $scope.allShiftData();
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+            }
+        }
+
+
 
             $scope.company_shift = {};
 
