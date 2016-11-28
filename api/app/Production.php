@@ -96,8 +96,107 @@ class Production extends Model {
                 return  $garment[0]->result = 0; // GARMENTS ARE AVAILABLE IN WAREHOUSE
             }
         }
-         return 1;// NO GARMENTS
+        return 1;// NO GARMENTS
     }
 
+    // PRODUCTION POSITION DETAIL
+    public function GetPositionDetails($PositionId,$company_id)
+    {
+
+       $positionInfo = DB::table('order_design_position as odp')
+                        ->select('odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+                        ->leftjoin('order_design as od','odp.design_id','=','od.id')
+                        ->leftjoin('orders as ord','ord.id','=','od.order_id')
+                        ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
+                        ->leftjoin('position_schedule as ps','ps.position_id','=','odp.id')
+                        ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
+                        ->leftjoin('artjob_screensets as ass','ass.positions','=','odp.id')
+                        ->leftjoin('artjob_screencolors as acol','ass.id','=','acol.screen_id')
+                        ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
+                        ->leftjoin('misc_type as mt1','mt1.id','=','acol.inq')
+                        ->leftjoin('color as col','col.id','=','acol.color_name')
+                        ->where('odp.id','=',$PositionId)
+                        ->get();
+        foreach ($positionInfo as $key=>$value) 
+        {
+                array_walk_recursive($value, function(&$item) {
+                            $item = str_replace(array('00/00/0000'),array(''), $item);
+                        });
+        }
+        return $positionInfo;
+    }
+
+    public function GetGarmentDetail ($PositionId,$company_id)
+    {
+        $result = DB::table('order_design_position as odp')
+                    ->select('p.name','pd.sku','pd.size','pd.qnty','pol.qnty_purchased','c.name as color_name','pol.qnty_ordered','pol.short','pol.over','pd.product_id','pol.line_total')
+                    ->leftjoin('order_design as od','odp.design_id','=','od.id')
+                    ->leftjoin('purchase_detail as pd','pd.design_id','=','od.id')
+                    ->leftjoin('purchase_order_line as pol','pol.purchase_detail','=','pd.id')
+                    ->leftjoin('purchase_order as po','po.po_id','=','pol.po_id')
+                    ->leftjoin('products as p','p.id','=','pd.product_id')
+                    ->leftJoin('color as c','c.id','=','pd.color_id')
+                    ->where('odp.id','=',$PositionId)
+                    ->where('po.is_active','=','1')
+                    ->get();
+                $ret_array = array();
+                if(count($result)>0)
+                {
+
+                    $ret_array['po_data']=array();
+                    foreach ($result as $key=>$value) 
+                    {
+                        array_walk_recursive($value, function(&$item) {
+                            $item = str_replace(array('00/00/0000'),array(''), $item);
+                        });
+                        $ret_array['receive'][$value->product_id]['data'][$value->size]= $value;
+                        $ret_array['receive'][$value->product_id]['product'] = $value;
+                        $ret_array['po_data']= $result[0];
+                    }
+                    $total_invoice = 0;
+                    foreach ($ret_array['receive'] as $key => $value) 
+                    {
+                        $total_order = 0;
+                        $rec_qnty = 0;
+                        $short = 0;
+                        foreach ($value['data'] as $key_ret_array => $value_ret_array) 
+                        {
+                            $total_order += $value_ret_array->qnty_ordered;
+                            $rec_qnty += $value_ret_array->qnty_purchased;
+                            $short += $value_ret_array->short;
+
+                            if($value_ret_array->qnty_ordered>$value_ret_array->qnty_purchased)
+                            {
+                                $value['data'][$key_ret_array]->short_unit = ($value_ret_array->qnty_ordered - $value_ret_array->qnty_purchased);
+                                $value['data'][$key_ret_array]->over_unit = 0;
+                            }
+                            else
+                            {
+                                $value['data'][$key_ret_array]->short_unit = 0;
+                                $value['data'][$key_ret_array]->over_unit = ($value_ret_array->qnty_purchased- $value_ret_array->qnty_ordered);
+                            }
+                            
+                            $total_invoice += $value_ret_array->line_total;
+                            //$value['data'][$key_ret_array]['']
+                        }
+                        $ret_array['receive'][$key]['data'] = array_values($value['data']);
+                        $ret_array['receive'][$key]['total_product'] = $total_order;
+                        $ret_array['receive'][$key]['total_received'] = $rec_qnty;
+                        $ret_array['receive'][$key]['total_defective'] = $short;
+                        if($total_order>$rec_qnty)
+                        {
+                            $ret_array['receive'][$key]['total_remains'] = $total_order -$rec_qnty." Short";
+                        }
+                        else
+                        {
+                            $ret_array['receive'][$key]['total_remains'] = $rec_qnty -$total_order." Over";
+                        }
+                        
+                        $ret_array['po_data']->total_invoice = $total_invoice;
+                    }
+                }           
+        //echo "<pre>"; print_r($ret_array); echo "</pre>"; die();                    
+        return $ret_array;
+    }
 
  }

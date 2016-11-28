@@ -1297,3 +1297,7 @@ margin-top:30px;
   padding-left: 25px;
   padding-top: 25px;
 }
+.shift_scroll {
+  max-height: 220px;
+  overflow-y: scroll;
+}
