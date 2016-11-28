@@ -1,0 +1,71 @@
+<md-dialog class="task-dialog editFinishingDialog" >
+    <div class="client-profile-page">
+        <md-toolbar class="md-accent md-hue-2">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                    <span class="title">Edit Finishing Order</span>
+                    <md-button  ng-click="cancel()" class="close-stokkup-dialog md-button">
+                        <span>close</span>
+                    </md-button>
+                </div>
+        </md-toolbar>
+        <div ng-cloak ng-class="{'disable-click': allow_access == 0}">
+            <md-card-content layout="column" class="box-shadow-0">
+                <div layout="row" layout-wrap="nowrap" id="editFinishing" layout-padding layout-align="space-between start">
+                    <div layout="column"  flex="100">
+                        <div layout="row" layout-wrap>
+                            <div class="trans-box width-33">
+                                <span class="font-11 chrome-weight">Product ID</span>
+                                    <div class="font-16">{{finishing_data.product_id}}</div>
+                                </div>
+                                <div class="trans-box width-33">
+                                    <span class="font-11 chrome-weight">Design</span>
+                                    <div class="font-16">{{finishing_data.design_name}}</div>
+                                </div>
+                                <div class="trans-box width-33">
+                                    <span class="font-11 chrome-weight">Finishing Task</span>
+                                    <div class="font-16">{{finishing_data.category_name}}</div>
+                                </div>
+                        </div>
+                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Start Time" name="" ui-event="" ng-model="finishing_data.start_time" ng-click="setTime(finishing_data,'start')" readonly="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Stop Time" name="" ui-event="" ng-model="finishing_data.end_time" ng-click="setTime(finishing_data,'end')" readonly="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <!-- <input placeholder="EST Completion Time" kendo-time-picker ng-model="finishing_data.est" k-ng-model="obj"/> -->
+                                <input placeholder="EST Completion Time" name="" ui-event="" ng-model="finishing_data.est" readonly="">
+                                <div ng-messages=" " role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <md-input-container class="md-block first-box settings-margin-0">
+                            <textarea ng-model="finishing_data.note" md-maxlength="150" rows="5" md-select-on-focus placeholder="Notes"></textarea>
+                        </md-input-container>
+                    </div>
+                </div>
+            </md-card-content>
+        </div>
+        <md-dialog-actions layout="row" layout-align="end center" class="layout-align-end-center layout-row">
+        <md-button class="stokkup-custom-btn1 stokkup-blue-btn" id="affiliateSaveBtn" ng-click="editFinishing()" ng-show="allow_access == 1">
+                SAVE
+        </md-button>
+    </md-dialog-actions>
+    </div>
+</md-dialog>

@@ -98,8 +98,78 @@
                         
 
                         </md-card-content> 
+
                     </md-card>
+
+
+                    <md-card layout="row">
+                    
+                        <md-card-content flex="50" layout="column"  >
+                           
+                                    <div class="table-title paddingbottom-0 pad-top-25" layout="row" layout-align="space-between center">
+                                            <div class="table-title-text h2 text-semibold" flex=40>
+                                                <div class="title" layout-padding><span class="basicInfoStyle">DEFINE COMPANY SHIFTS</span></div>
+                                            </div>
+                                    </div>
+
+
+                                        <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                                            <md-input-container class="md-block first-box" flex-gt-sm>
+                                                <input placeholder="Shift Name" flex="80" ng-model="company_shift.shift_name">
+                                            </md-input-container>
+                                        </div>
+
+                                        <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
+
+                                            <label for="chk1"   class="form-control">Start Time</label>
+                                            <input kendo-time-picker ng-model="company_shift.shift_start_time" k-ng-model="t1">
+
+                                            <label for="chk2"   class="form-control">End Time</label>
+                                            <input kendo-time-picker ng-model="company_shift.shift_end_time" k-ng-model="t2">
+
+                                        </div>
+
+                                        <div>
+
+                                            <md-button  class="md-accent md-raised " ng-click="saveCompanyShift(company_shift)" type="button" >
+                                                    CREATE SHIFT
+                                            </md-button>
+
+                                        </div>
+                                
+                        </md-card-content> 
+
+                             <md-card-content flex="50" layout="column"  >
+                              <div class="simple-table-container md-whiteframe-4dp" ng-show="shiftDataDisplay==1">
+                                            <div class="ms-responsive-table-wrapper shift_scroll">
+                                                <table ms-responsive-table="" class="simple">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Shift Name</th>
+                                                            <th>Shift Start Time</th>
+                                                            <th>Shift End Time</th>
+                                                            <th>Operation</th>
+                                                            </tr>
+                                                        </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="shifts in allshiftData" class="ng-scope">
+                                                             <td>{{ shifts.shift_name}}</td>
+                                                            <td>{{ shifts.shift_start_time}}</td>
+                                                             <td>{{ shifts.shift_end_time}}</td>
+                                                            <td>
+                                                                <a href="#" class="remove-size" ng-click="delete_shift($event,shifts.id)"><span class="icon icon-close"></span></a>
+                                                    </td>
+                                                         </tr>
+                                                    </tbody>
+                                                 </table> 
+                                               </div>
+                                    </div>   
+                            </md-card-content> 
+
+                     </md-card>
+                        
                     </form>
+
                 </div>   
             </div>
         </div>

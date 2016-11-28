@@ -190,6 +190,7 @@ class Client extends Model {
     			$result['main']['client_company'] = $value->client_company;
     			//$result['main']['created_date'] = $value->created_date;
     			$result['main']['billing_email'] = $value->billing_email;
+          $result['main']['is_blind'] = $value->is_blind;
     			$result['main']['company_phone'] = $value->company_phone;
     			$result['main']['salesweb'] = (!empty($value->salesweb) && preg_match('/http/',$value->salesweb) == false) ? "http://".$value->salesweb:$value->salesweb;
           
@@ -303,7 +304,8 @@ class Client extends Model {
                       'account_manager'=>$post['account_manager'],
                       'billing_email'=>$post['billing_email'],
                       'company_phone'=>$post['company_phone'],
-                      'company_url'=>$post['company_url']
+                      'company_url'=>$post['company_url'],
+                      'is_blind'=>$post['is_blind']
                       ));
       return $result;
    }
