@@ -167,6 +167,93 @@
                             </md-card-content> 
 
                      </md-card>
+
+
+
+                     <md-card layout="row">
+                    
+                        <md-card-content flex="50" layout="column"  >
+                           
+                                    <div class="table-title paddingbottom-0 pad-top-25" layout="row" layout-align="space-between center">
+                                            <div class="table-title-text h2 text-semibold" flex=40>
+                                                <div class="title" layout-padding><span class="basicInfoStyle">DEPARTMENT ALLOWANCES</span></div>
+                                            </div>
+                                    </div>
+
+
+                                      <div class="simple-table-container md-whiteframe-4dp">
+                                            <div class="ms-responsive-table-wrapper">
+                                                <table ms-responsive-table="" class="simple">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Department/Event</th>
+                                                            <th>Allowance Days</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <tr class="ng-scope">
+                                                            <td>Created</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Created" valid-number ng-model="company_data.created_allowance" name="created_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Order Acknowledgement</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Order Acknowledgement" valid-number ng-model="company_data.order_acknowledgement_allowance" name="order_acknowledgement_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Garment Department</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Garment Department" valid-number ng-model="company_data.garment_department_allowance" name="garment_department_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Art Department</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Art Department" valid-number ng-model="company_data.art_department_allowance" name="art_department_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Production</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Production" valid-number ng-model="company_data.production_allowance" name="production_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Finishing</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Finishing" valid-number ng-model="company_data.finishing_allowance" name="finishing_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Shipping</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Shipping" valid-number ng-model="company_data.shipping_allowance" name="shipping_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>In Hands</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="In Hands" valid-number ng-model="company_data.in_hands_allowance" name="in_hands_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                    </tbody>
+                                                 </table> 
+                                               </div>
+                                    </div> 
+
+
+                                
+                        </md-card-content> 
+
+                            
+
+                     </md-card>
+
+
                         
                     </form>
 
