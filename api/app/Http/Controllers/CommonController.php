@@ -1212,7 +1212,7 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'ord.id';
+                $post['sorts']['sortBy'] = 'odp.id';
             }
             $result = $this->production->GetProductionList($post);
             $header = 
