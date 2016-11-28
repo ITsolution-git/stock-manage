@@ -3,7 +3,7 @@
     	<form name="clientForm" class="md-inline-form" novalidate>
         	<md-toolbar class="md-accent md-hue-2">
 			    <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-			        <span class="title">job 53775 detail</span>
+			        <span class="title">{{params.PositionDetail[0].position_name}} Position detail</span>
 			        <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
 			            <span>Close</span>
 			        </md-button>
@@ -34,7 +34,7 @@
 
 						<div class="pull-left full-row" flex=10>
 							<span class="global-labels text-capitalize">Shift</span>
-							<span class="global-text pull-left full-row">2nd Shift</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].shift_name}}</span>
 						</div>
 						<div class="pull-left full-row" flex=20>
 							<span class="global-labels text-capitalize">Print Location</span>
