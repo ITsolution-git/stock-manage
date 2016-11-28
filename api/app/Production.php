@@ -106,11 +106,12 @@ class Production extends Model {
     {
 
        $positionInfo = DB::table('order_design_position as odp')
-                        ->select('odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+                        ->select('cs.shift_name','odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
                         ->leftjoin('order_design as od','odp.design_id','=','od.id')
                         ->leftjoin('orders as ord','ord.id','=','od.order_id')
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
                         ->leftjoin('position_schedule as ps','ps.position_id','=','odp.id')
+                        ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
                         ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                         ->leftjoin('artjob_screensets as ass','ass.positions','=','odp.id')
                         ->leftjoin('artjob_screencolors as acol','ass.id','=','acol.screen_id')
