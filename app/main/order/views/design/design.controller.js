@@ -263,11 +263,16 @@
                     $scope.order_design_position[key].position_header_name = $scope.miscData.position[value].value;
                     $scope.order_design_position[key].duplicate_position_id = $scope.miscData.position[value].id;
                 }
-
+               
+               
                 if(column_name == 'color_stitch_count') {
-                    $scope.order_design_position[key].screen_fees_qnty = value;
+                    if($scope.miscData.placement_type[$scope.order_design_position[key].placement_type].slug != 45){
+                        $scope.order_design_position[key].screen_fees_qnty = value;
+                    }
+                    
                     $scope.order_design_position[key].stitch_header_name = value;
                 }
+
 
                 if(column_name == 'placement_type' && $scope.miscData.placement_type[value].slug != 46) {
                     $scope.order_design_position[key].dtg_size = 0;

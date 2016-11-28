@@ -110,6 +110,19 @@
                     <input placeholder="Company Website URL"  name="company_url" ng-model="client.company_url" >
                 </md-input-container>
 
+
+                <md-input-container>
+                    <label>Blind</label>
+                    <md-select ng-model="client.is_blind" name="is_blind"  >
+                       
+                       <md-option value="0">No</md-option>
+                       <md-option value="1">Yes</md-option>
+                       
+                    </md-select>
+                </md-input-container> 
+
+
+
                 <!---------      DISPOSITIONS      ---------------->
                 <md-input-container>
                     <label>Deposition</label>

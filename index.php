@@ -250,6 +250,10 @@
     <script src="app/main/finishing/finishing.controller.js"></script>
     <script src="app/main/finishing/dialogs/editFinishing/editFinishing-dialog.controller.js"></script>
 
+    <!-- Finishing Queue-->
+    <script src="app/main/finishingQueue/finishingQueue.module.js"></script>
+    <script src="app/main/finishingQueue/finishingQueue.controller.js"></script>
+
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>
     <script src="app/main/art/art.controller.js"></script>

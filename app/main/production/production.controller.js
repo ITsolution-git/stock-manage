@@ -163,21 +163,24 @@
             });
         }
 
-        function calpop(ev)
+        $scope.JobDetail = function(position_id)
         {
-            
-            $mdDialog.show({
-                controller: 'ProductionqueueController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/production/view/schedule_position.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                // locals: {
-                //     Client: client,
-                //     Clients: vm.clients,
-                //     event: ev
-                // }
+            $("#ajax_loader").hide();
+            var companyData = {company_id:$scope.company_id,position_id:position_id};
+
+            $http.post('api/public/production/GetPositionDetails',companyData).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    $scope.PositionDetail = result.data.PositionDetail;
+                    $scope.GarmentDetail = result.data.GarmentDetail;
+                    $scope.openEditPopup('production/view/jobdetail_popup.html',$scope);
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
             });
         }
 
