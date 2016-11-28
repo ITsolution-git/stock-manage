@@ -37,7 +37,7 @@ class ProductionController extends Controller {
 
 
 	    	$machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0));  // GET MACHINE FROM COMPANU
-	    	$shift_data   = $this->common->GetTableRecords('company_shift',array('company_id'=>$post['company_id'])); // GET COMPANY SHIFT
+	    	$shift_data   = $this->common->GetTableRecords('company_shift',array('company_id'=>$post['company_id'],'is_delete'=>1)); // GET COMPANY SHIFT
 	    	
 
 	    	$data = array("success"=>1,"message"=>GET_RECORDS,"machine_data"=>$machine_data,'shift_data'=>$shift_data,'Position_scheduleData'=>$Position_scheduleData);
