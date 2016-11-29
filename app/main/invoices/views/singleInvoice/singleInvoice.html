@@ -25,7 +25,7 @@
             </div>
 
             <div layout="column" flex="25">
-                <div class="font-14 mrg5-B text-bold-right">Order Acknowledgement # {{allData.order_data[0].display_number}}</div>
+                <div class="font-14 mrg5-B text-bold-right">{{miscData.approval[allData.order_data[0].approval_id].value}} # {{allData.order_data[0].display_number}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Created on: {{allData.invoice_data[0].created_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Due Date: {{allData.invoice_data[0].payment_due_date}}</div>
                 <div class="font-14 mrg5-B text-bold-right">Job Name: {{allData.order_data[0].order_name}}</div>
