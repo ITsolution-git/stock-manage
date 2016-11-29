@@ -34,7 +34,7 @@
         // Data
      
     }
-    function ProductionqueueController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
+    function ProductionqueueController($document,$mdSidenav,$window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
     {
         var vm = this;
         vm.searchQuery = "";
@@ -51,6 +51,26 @@
         {
             $scope.allow_access = 1; // CAN BE EDIT BY ANYONE FOR NOW
         }        
+
+        vm.ClientModal = [];
+        vm.ProductionModal = [];
+        var Filterdata = {};
+        Filterdata.company_id =$scope.company_id;
+
+        $http.post('api/public/production/GetFilterData',Filterdata).success(function(result) 
+        {
+            if(result.data.success=='1')
+            {
+                $scope.clients = result.data.clients;
+                $scope.production_type = result.data.production_type;
+            }
+            else
+            {
+                notifyService.notify('error',result.data.message);
+            }
+            $("#ajax_loader").hide();
+        });
+
 
                 /* TESTY PAGINATION */     
         $scope.init = {
@@ -202,6 +222,14 @@
             });
         }
         // Data
+         // -> Filter menu
+        vm.toggle = true;
+        vm.openRightMenu = function () {
+            $mdSidenav('right').toggle();
+        };
+        vm.openRightMenu1 = function () {
+            $mdSidenav('left').toggle();
+        };
      
     }
     function ScheduleBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 

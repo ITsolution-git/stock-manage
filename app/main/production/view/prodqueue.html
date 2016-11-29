@@ -1,4 +1,3 @@
-<!--Filter starts here -->
 <div class="filter-menu" >
     <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
         <md-toolbar class=" filter-title">
@@ -24,7 +23,29 @@
                     </div>
                     <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
                         <div layout="column" >
-                            <div ng-dropdown-multiselect="" options="vm.salesCheckData" selected-model="vm.salesCheckModal" class="cheak-box-class" extra-settings="vm.salesChecksettings"></div>
+                            <div ng-dropdown-multiselect="" options="clients" selected-model="vm.ClientModal" class="cheak-box-class" extra-settings="vm.salesChecksettings"></div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" class="f-box-1 first-cheak">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.ProductionType" ng-click="vm.ProductionType = false">
+                            PRODUCTION TYPE 
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.ProductionType" ng-click="vm.ProductionType = true">
+                            PRODUCTION TYPE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div ng-if="vm.ProductionType" class="f-body scrollable pad0"  ms-scroll>
+                        <div layout="column" >
+                            <div ng-dropdown-multiselect="" options="production_type" selected-model="vm.ProductionModal" class="cheak-box-class" extra-settings="vm.salesChecksettings"></div>
                         </div>
                     </div>
                 </div>
@@ -47,33 +68,36 @@
                     <div class="f-body" ng-if="vm.createdate">
                         <div layout="column" >
                             <div class="date-input width100">
-                                <input id="datepicker" kendo-date-picker ng-model="vm.createDate" k-ng-model="dateObject6" placeholder="Dates"/>
+                                <input id="datepicker" kendo-date-picker ng-model="vm.createDate" k-ng-model="dateObject6" placeholder="Select Date"/>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div layout="column" class="f-box-1">
+                <div layout="column" class="f-box-2">
                     <div class="f-header">
-                        <span class="cursor-p" ng-if="vm.companyfilter" ng-click="vm.companyfilter = false">
-                            COMPANY  
+                        <span class="cursor-p" ng-if="vm.inhandDate" ng-click="vm.inhandDate = false">
+                            IN HAND DATE
                             <button>
                                 <md-icon md-font-icon="icon-menu-up"></md-icon>
                             </button>
                         </span>
-                        <span class="cursor-p" ng-if="!vm.companyfilter" ng-click="vm.companyfilter = true">
-                            COMPANY
+                        <span class="cursor-p" ng-if="!vm.inhandDate" ng-click="vm.inhandDate = true">
+                           IN HAND DATE
                             <button>
                                 <md-icon md-font-icon="icon-menu-down"></md-icon>
                             </button>
                         </span>
                         <md-divider ></md-divider>
                     </div>
-                    <div class="f-body scrollable pad0"  ms-scroll ng-if="vm.companyfilter">
+                    <div class="f-body" ng-if="vm.inhandDate">
                         <div layout="column" >
-                             <div ng-dropdown-multiselect="" options="vm.companyCheckData" selected-model="vm.companyCheckModal" extra-settings="vm.companyChecksettings"  class="cheak-box-class"></div>
+                            <div class="date-input width100">
+                                <input id="datepicker1" kendo-date-picker ng-model="vm.inhandDate" k-ng-model="dateObject7" placeholder="Select Date"/>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </md-content>
         <div class="filter-footer" layout="row">
@@ -90,12 +114,12 @@
     	 <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
             <div class="table-title-text" class="cursor-p">Production Queue</div>
             <div class="pull-right right-search-box">
-                <!-- <div class="order-modal-title pull-right" layout="row" layout-align="end center">
+                <div class="order-modal-title pull-right" layout="row" layout-align="end center">
                     <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
                 </div>   
                 <md-icon  ng-click="vm.openRightMenu($event);"  md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
-            </md-tooltip></md-icon> -->
+            </md-tooltip></md-icon>
                  <div class="search-block pull-right">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label class="top-srch-label">Search...</label>
@@ -242,4 +266,4 @@
         <!--Table ends here -->
     </div> 
 </div>
-<!--Finishing Queue page ends here -->
+<!--Finishing Queue page ends here 
