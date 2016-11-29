@@ -397,7 +397,7 @@
             form.submit();
         };
 
-        $scope.openEmailPopup = function (ev) {
+        $scope.openEmailPopup = function (ev,approval) {
     
             if($scope.total_unit > 0)
             {
@@ -414,6 +414,7 @@
                         display_number: $stateParams.id,
                         paid: $scope.order.is_paid,
                         balance: $scope.order.balance_due,
+                        approval: $scope.order.approval,
                         event: ev
                       }
                 });
