@@ -198,6 +198,7 @@ Route::post('finishing/addRemoveToFinishing', 'FinishingController@addRemoveToFi
 // FINISHING QUEUE CONTROLLER
 Route::get('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
 Route::post('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
+Route::post('finishingQueue/GetShiftMachine','FinishingQueueController@GetShiftMachine');
 
 // SHIPPING CONTROLLER
 Route::get('shipping/listShipping', 'ShippingController@listShipping');
