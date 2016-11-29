@@ -320,6 +320,7 @@ class Invoice extends Model {
     }
 
     public function getEstimates($post,$estimate_id){
+        
         $client_id=$post['company_id'];
 
         $retArray = DB::table('orders as o')
@@ -345,6 +346,12 @@ class Invoice extends Model {
                     $retArray = $retArray->where(DB::raw('MONTH(o.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
                 }else if($post['duration']=='4'){
                     $retArray = $retArray->where(DB::raw('YEAR(o.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
+                }else if($post['duration']=='5'){
+                    $retArray = $retArray->where(DB::raw('WEEK(o.created_date)'), '=', DB::raw('WEEK(CURDATE())'));
+                }else if($post['duration']=='6'){
+                    $retArray = $retArray->where(DB::raw('MONTH(o.created_date)'), '=', DB::raw('MONTH(CURDATE())'));
+                }else if($post['duration']=='7'){
+                    $retArray = $retArray->where(DB::raw('YEAR(o.created_date)'), '=', DB::raw('YEAR(CURDATE())'));
                 }
             }
         }
