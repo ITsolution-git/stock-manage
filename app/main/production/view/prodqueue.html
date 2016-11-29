@@ -51,24 +51,24 @@
                 </div>
                 <div layout="column" class="f-box-2">
                     <div class="f-header">
-                        <span class="cursor-p" ng-if="vm.createdate" ng-click="vm.createdate = false">
-                            CREATE DATE
+                        <span class="cursor-p" ng-if="vm.rundate" ng-click="vm.rundate = false">
+                            RUN DATE
                             <button>
                                 <md-icon md-font-icon="icon-menu-up"></md-icon>
                             </button>
                         </span>
-                        <span class="cursor-p" ng-if="!vm.createdate" ng-click="vm.createdate = true">
-                            CREATE DATE
+                        <span class="cursor-p" ng-if="!vm.rundate" ng-click="vm.rundate = true">
+                            RUN DATE
                             <button>
                                 <md-icon md-font-icon="icon-menu-down"></md-icon>
                             </button>
                         </span>
                         <md-divider ></md-divider>
                     </div>
-                    <div class="f-body" ng-if="vm.createdate">
+                    <div class="f-body" ng-if="vm.rundate">
                         <div layout="column" >
                             <div class="date-input width100">
-                                <input id="datepicker" kendo-date-picker ng-model="vm.createDate" k-ng-model="dateObject6" placeholder="Select Date"/>
+                                <input id="datepicker" kendo-date-picker ng-model="vm.rundate" k-ng-model="dateObject6" placeholder="Select Date"/>
                             </div>
                         </div>
                     </div>
@@ -101,7 +101,7 @@
             </div>
         </md-content>
         <div class="filter-footer" layout="row">
-            <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button"  flex="50" ng-click="filterOrders()">APPLY FILTERS
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button"  flex="50" ng-click="filterProduction()">APPLY FILTERS
             </md-button>
             <md-button ng-click="vm.resetFilter()" class="stokkup-custom-btn1 md-button bg-grey md-raised" flex="50">RESET FILTERS</md-button>
 

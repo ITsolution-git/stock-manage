@@ -38,7 +38,7 @@
     {
         var vm = this;
         vm.searchQuery = "";
-       
+        vm.resetFilter = resetFilter;
         $scope.company_id = sessionService.get('company_id');
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
@@ -70,6 +70,38 @@
             }
             $("#ajax_loader").hide();
         });
+
+        function resetFilter() {
+
+            vm.inhandDate = vm.rundate  = false;
+            this.searchOrder = null;
+            jQuery('.dateFilter').prop("value", " ");
+           
+            vm.clientsettings = {externalIdProp: clientFunction()}
+            function clientFunction(){
+                vm.ClientModal = [];
+            }
+            vm.productionksettings = {externalIdProp:productionFunction()}
+            function productionFunction(){
+                vm.ProductionModal = [];
+            }
+
+            for (var i = 0; i < this.ClientModal.length; i++) {
+               this.ClientModal[i].id = null;
+            }
+            for (var i = 0; i < vm.ProductionModal.length; i++) {
+                vm.ProductionModal[i].id = null;
+
+            }
+
+            vm.inhandDate = vm.rundate = null;
+            this.searchOrder = null;
+            jQuery('.dateFilter').prop("value", " ");
+
+            //console.log(vm.statusCheckModal);
+
+            $scope.filterProduction();
+        }
 
 
                 /* TESTY PAGINATION */     
@@ -125,6 +157,58 @@
                 
             });
         }
+
+
+        $scope.filterProduction = function(){
+            
+            var flag = true;
+            $scope.filterBy.client = '';
+            $scope.filterBy.rundate = '';
+            $scope.filterBy.inhandDate = '';
+            $scope.filterBy.production='';
+            $scope.filterBy.temp = '';
+            
+
+            $scope.clientArray = [];
+            angular.forEach(vm.ClientModal, function(company){
+                    $scope.clientArray.push(company.id);
+            })
+            if($scope.clientArray.length > 0)
+            {
+                flag = false;
+                $scope.filterBy.client = angular.copy($scope.clientArray);
+            }
+
+
+            $scope.ProductionArray = [];
+            angular.forEach(vm.ProductionModal, function(company){
+                    $scope.ProductionArray.push(company.id);
+            })
+            if($scope.ProductionArray.length > 0)
+            {
+                flag = false;
+                $scope.filterBy.production = angular.copy($scope.ProductionArray);
+            }
+
+
+
+            if(vm.rundate != '' && vm.rundate != undefined && vm.rundate != false)
+            {
+                flag = false;
+                $scope.filterBy.rundate = vm.rundate;
+            }
+            if(vm.inhandDate != '' && vm.inhandDate != undefined && vm.inhandDate != false)
+            {
+                flag = false;
+                $scope.filterBy.inhandDate = vm.inhandDate;
+            }
+            
+            if(flag == true)
+            {
+                $scope.filterBy.temp = angular.copy(1);
+            }
+        }
+
 
         $scope.DisplayMokup = function(image)
         {
