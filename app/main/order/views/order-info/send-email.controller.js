@@ -8,7 +8,7 @@
             
 
     /** @ngInject */
-    function openEmailController(client_id,order_id,display_number,paid,balance,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
+    function openEmailController(client_id,order_id,display_number,paid,balance,approval,$document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
         
            function get_company_data_selected(id)
@@ -23,7 +23,7 @@
                 {
                     $scope.allCompany =result.data.records;
                     $scope.email =sessionService.get('email');
-                    $scope.subject = 'Order: '+display_number+' from '+sessionService.get('company_name');
+                    $scope.subject = approval+': '+display_number+' from '+sessionService.get('company_name');
                 } 
                 else
                 {
