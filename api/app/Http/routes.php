@@ -323,4 +323,6 @@ Route::post('labor/addLabor', 'LaborController@addLabor');
 Route::post('production/GetProductionList','ProductionController@GetProductionList');
 Route::post('production/GetShiftMachine','ProductionController@GetShiftMachine');
 Route::post('production/GetPositionDetails','ProductionController@GetPositionDetails');
+Route::post('production/GetFilterData','ProductionController@GetFilterData');
+
 
