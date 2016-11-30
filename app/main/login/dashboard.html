@@ -28,8 +28,10 @@
                        <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
                     </div>
                 </md-card-title>
-                <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{productionTotal}}</div>
+               <md-card-content class="center-num-box box-zerospace dashboard-cards">
+                        <div class="center-num"><span class="num-style1 text-center estimatebox">{{productionTotal}}<i>Production</i></span> <span class="pipe-divider">|</span> <span class="num-style1 text-center estimatebox">{{totalProductionInvoice | currency : $ : 0}}<i>Revenue</i></span>
+                       <!--  <span class="dash-btwn-txt comp-report-txt">Estimates | </span> -->
+                        </div>
                 </md-card-content>
                 <div class="dash-footer-box">
                     
@@ -59,13 +61,31 @@
                 <!-- <md-divider ></md-divider> -->
                 <div class="dash-footer-box">
                     
+                    <div flex=35 class="box-zerospace">
+                        <div class="dash-footer-filter">
+                            <md-select aria-label="Filter By" ng-model="closedSalesDuration" class="global-labels">
+                                <md-option value="0" selected>All Time</md-option>
+                                <md-option value="1">Today</md-option>
+                                <md-option value="5">This Week</md-option>
+                                <md-option value="6">This Month</md-option>
+                                <md-option value="7">This Year</md-option>
+                                <md-option value="2">Last Week</md-option>
+                                <md-option value="3">Last Month</md-option>
+                                <md-option value="4">Last Year</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+
+                    
+                    <div flex=65 class="box-zerospace">
                     <div class="dash-footer-filter">
                         <span class="global-labels pull-left">Sales closed by</span>
                         <md-select aria-label="Filter By" ng-model="closedSalesMan" class="global-labels">
                             <md-option value="0" selected>Sales Member</md-option>
                             <md-option ng-repeat="salesMan in salesPersons" value="{{salesMan.sales_id}}">{{salesMan.sales_name}}</md-option>
                         </md-select>
-                    </div>    
+                    </div>
+                    </div>  
                 </div>
             </md-card>
             <md-card class="box-3 bottom-shadow lastbox">
@@ -140,7 +160,7 @@
                     </div>
                 </md-card-title>
                 <md-card-content ng-show="showAvgItem" id="avgItemShow" class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">{{avgItems}}</div>
+                        <div class="center-num"><span class="num-style1 text-center">{{avgItems | currency : $ : 0}}</div>
                 </md-card-content>
                 <md-card-content ng-show="showAvgAmount" id="avgAmountShow" class="center-num-box box-zerospace dashboard-cards">
                         <div class="center-num"><span class="num-style1 text-center">{{avgAmount | currency : $ : 0}}</div>

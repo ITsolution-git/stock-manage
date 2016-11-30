@@ -198,6 +198,7 @@ Route::post('finishing/addRemoveToFinishing', 'FinishingController@addRemoveToFi
 // FINISHING QUEUE CONTROLLER
 Route::get('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
 Route::post('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
+Route::post('finishingQueue/GetShiftMachine','FinishingQueueController@GetShiftMachine');
 
 // SHIPPING CONTROLLER
 Route::get('shipping/listShipping', 'ShippingController@listShipping');
@@ -323,4 +324,6 @@ Route::post('labor/addLabor', 'LaborController@addLabor');
 Route::post('production/GetProductionList','ProductionController@GetProductionList');
 Route::post('production/GetShiftMachine','ProductionController@GetShiftMachine');
 Route::post('production/GetPositionDetails','ProductionController@GetPositionDetails');
+Route::post('production/GetFilterData','ProductionController@GetFilterData');
+
 

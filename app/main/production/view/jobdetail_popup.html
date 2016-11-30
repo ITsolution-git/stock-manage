@@ -207,7 +207,18 @@
                                 </div>
                             </div>
 
-
+                            <md-card layout="row" class="box-zerospace mh-0 m-t-0">
+			                    <md-card-content flex="50" layout="column">
+			                        <div layout="row" layout-wrap class="marginProduct">
+			                            <p class="font-14 chrome-weight"><span class="global-labels">Order Total:</span> {{garment.total_product}}</p>
+			                        </div>
+			                    </md-card-content>
+			                    <md-card-content flex="50" layout="column">
+			                        <div layout="row" layout-wrap class="marginProduct">
+			                            <p class="font-14 chrome-weight"><span class="global-labels">Order Received:</span> {{garment.total_received}}</p>
+			                        </div>
+			                    </md-card-content>
+			                </md-card>
                         </div>
 	                    </md-tab>
 	                </div>
