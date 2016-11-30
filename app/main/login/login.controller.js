@@ -155,6 +155,10 @@
                         $("#ajax_loader").hide();
                         if(resultProduction.data.success == '1') {
                             $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
+                            $scope.totalProductionInvoice=resultProduction.data.allData[0].totalProductionInvoice;
+                            if($scope.totalProductionInvoice == null) {
+                              $scope.totalProductionInvoice = 0;
+                            }
                         }else{
                           var data = {"status": "error", "message": "Data not found."}
                           notifyService.notify(data.status, data.message);
@@ -165,17 +169,20 @@
             });
             // Sales Closed ng-module watch
             var dashboardClosedSales  = '';
-            $scope.$watch('closedSalesMan', function(newValCS, oldValCS){
-                if(newValCS == undefined && oldValCS == undefined){
+            $scope.$watch('[closedSalesDuration, closedSalesMan]', function(newValCS, oldValCS){
+
+                if(newValCS[0] == undefined && oldValCS[0] == undefined && newValCS[1] == undefined && oldValCS[1] == undefined){
                     dashboardClosedSales = true;
                 }else{
                     dashboardClosedSales = false;
                 }
-                if(oldValCS != undefined && !dashboardClosedSales){
+
+                if(oldValCS[0] != undefined && oldValCS[1] != undefined && !dashboardClosedSales){
                     $("#ajax_loader").show();
                     var combineSalesClosed = {};
                     combineSalesClosed.company_id = sessionService.get('company_id');
-                    combineSalesClosed.sales_id = newValCS;
+                    combineSalesClosed.sales_id = newValCS[1];
+                    combineSalesClosed.duration = newValCS[0];
                     $http.post('api/public/invoice/getSalesClosed',combineSalesClosed,{headers: {"Authorization": sessionService.get('token')}}).success(function(resultSalesClosed){
                         if(resultSalesClosed.data.success == '1') {
                             $("#ajax_loader").hide();
@@ -279,6 +286,10 @@
 
                   // Numbers of Orders in Production
                   $scope.productionTotal=resultDashboard.data.allData.totalProduction[0].totalProduction;
+                  $scope.totalProductionInvoice=resultDashboard.data.allData.totalProduction[0].totalProductionInvoice;
+                  if($scope.totalProductionInvoice == null) {
+                    $scope.totalProductionInvoice = 0;
+                  }
 
                   // Sales Closed
                   $scope.salesClosed=resultDashboard.data.allData.salesClosed[0].totalSales;
