@@ -7,7 +7,7 @@
             .controller('FinishingqueueController', FinishingqueueController)
             .controller('ProductionqueueController', ProductionqueueController)
             .controller('ScheduleBoardController', ScheduleBoardController)
-            .controller('FinishboardController', ScheduleBoardController);
+            .controller('FinishboardController', FinishboardController);
 
     /** @ngInject */
     function ProductionController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
@@ -318,9 +318,56 @@
     }
     function ScheduleBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
     {
+
         var vm = this;
-        vm.searchQuery = "";
+        $scope.company_id = sessionService.get('company_id');
+        $scope.run_date = AllConstant.currentdate;
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 1; // CAN BE EDIT BY ANYONE FOR NOW
+        }        
+
+        $scope.SchedualBoardData = function(run_date)
+        {
+            $("#ajax_loader").show();
+            var schedule_data = {};
+            schedule_data.company_id =$scope.company_id;
+            schedule_data.run_date =run_date;
+
+            $http.post('api/public/production/SchedualBoardData',schedule_data).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    $scope.get_data = 1;
+                    $scope.SchedualData = result.data.SchedualBoardData;
+                    $scope.current_date = result.data.current_date;
+                    $scope.prev_date = result.data.prev_date;
+                    $scope.next_date = result.data.next_date;
+                }
+                else if(result.data.success=='2')
+                {
+                    $scope.get_data = 0;
+                    $scope.current_date = result.data.current_date;
+                    $scope.prev_date = result.data.prev_date;
+                    $scope.next_date = result.data.next_date;
+                    notifyService.notify('error',result.data.message);
+                }
+                else
+                {
+                    $scope.get_data = 0;
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
         
+        $scope.SchedualBoardData($scope.run_date);
         // Data
      
     }
