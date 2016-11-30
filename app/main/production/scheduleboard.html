@@ -9,442 +9,80 @@
                 </div>
 
                 <!---Order Waiting to Ship Tab-->
-                <div ng-controller="shippingController">
+                <div >
                     <md-tab label="day" ng-click="getTab('wait')">
                         <div class="fixe-top-tabs">
-                        	<div class="inner-full-box mt-30">
+                        	<div class="inner-full-box mt-10">
                         		<div class="white-bg pull-left full-row schedule-main">
                             		<div class="prod-board-details">
                             			<div flex=75 class="full-row pull-left text-center p-20">
                             				<div class="date-slider mt-5">
-                            					<a href="#"><i class="fa fa-angle-left"></i></a>
-                            					<span class="curr-seleceted-date">2nd November, 2016</span>
-                            					<a href="#"><i class="fa fa-angle-right"></i></a>
+                            					<a href="#" ><i ng-click="SchedualBoardData(prev_date)" class="fa fa-angle-left"></i></a>
+                            					<span class="curr-seleceted-date">{{current_date}}</span>
+                            					<a href="#" ><i ng-click="SchedualBoardData(next_date)" class="fa fa-angle-right"></i></a>
                             				</div>
                             			</div>
                             			<div flex=25 class="pull-right">
                             				<md-input-container class="md-block date-input scheduleboarddate">
                             					
-							                    <input kendo-date-picker k-ng-model="dateObject2">
+							                    <input kendo-date-picker aria-label="true" ui-event="{ change : 'SchedualBoardData($event.target.value)' }" k-ng-model="dateObject2">
 							                </md-input-container>
                             			</div>
                             		</div>
 	                        	</div>
-	                        	<div class="full-row pull-left">
+	                        	<div class="full-row pull-left" ng-show="get_data==1">
 	                        		<table class="schedule-finishing-table">
 	                        			<tr>
-	                        				<td>
+	                        				<td ng-repeat="schedule in SchedualData">
 	                        					<div class="mac-slots odd-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine one</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
+				                        			<div class="p-15 full-row pull-left">
+				                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">{{schedule.machine_name}}</span>
+					                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+					                        				<span class="mb-10">1st Shift</span>
+					                        				<h6>10%</h6>
+					                        			</div>
+					                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
+					                        				<span>2nd Shift</span>
+					                        				<h6>60%</h6>
+					                        			</div>
+					                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
+					                        				<span>3rd Shift</span>
+					                        				<h6>23%</h6>
+					                        			</div>
+					                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
+					                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
+					                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
+					                        			</div>
+					                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
+					                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
+					                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
+					                        			</div>
+				                        			</div>
+				                        			<div class="machine-full-slot">
+					                        			<div ng-repeat="shift in schedule.machine_data" class="full-row pull-left p-10">
+					                        				<h4 class="text-center">{{shift.shift_name}}</h4>
+					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data">
+					                        					{{positions.name}} - {{positions.display_number}} - {{positions.position_name}}
+					                        				</div>
+					                        			</div>
 
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
+					                        			
+			                        				</div>	
 	                        					</div>
 	                        				</td>	
-	                        			
-	                        				<td>
-	                        					<div class="mac-slots even-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine two</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
 
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
-	                        					</div>
-	                        				</td>
-	                        				
-	                        				<td>
-	                        					<div class="mac-slots odd-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine three</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
-	                        					</div>
-	                        				</td>
-	                        				
-	                        				<td>	
-	                        					<div class="mac-slots even-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine four</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
-
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
-	                        					</div>
-	                        				</td>
-	                        				
-	                        				<td>	
-	                        					<div class="mac-slots odd-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine five</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
-	                        					</div>
-	                        				</td>
-	                        				
-	                        				<td>	
-	                        					<div class="mac-slots even-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine six</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
-
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
-	                        					</div>
-	                        				</td>
-	                        				
-	                        				<td>	
-	                        					<div class="mac-slots odd-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine seven</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
-	                        					</div>
-	                        				</td>
-
-	                        				<td>
-	                        					<div class="mac-slots even-slot">
-	                        			<div class="p-15 full-row pull-left">
-	                        				<span class="global-labels text-center text-capitalize full-row mb-10 pull-left">machine eight</span>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span class="mb-10">1st Shift</span>
-		                        				<h6>10%</h6>
-		                        			</div>
-		                        			<div class="shift-slot middle-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>2nd Shift</span>
-		                        				<h6>60%</h6>
-		                        			</div>
-		                        			<div class="shift-slot mac-shiftblocks-bg text-center p-10">
-		                        				<span>3rd Shift</span>
-		                        				<h6>23%</h6>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left mt-10 p-5 mb-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-		                        			</div>
-		                        			<div class="full-row mac-shiftblocks-bg pull-left p-5">
-		                        				<span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-		                        				<span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-		                        			</div>
-	                        			</div>
-
-	                        			<div class="machine-full-slot">
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">1st Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">2nd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-
-		                        			<div class="full-row pull-left p-10">
-		                        				<h4 class="text-center">3rd Shift</h4>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        				<div class="shift-post-card"></div>
-		                        			</div>
-		                        		</div>	
-	                        					</div>
-	                        				</td>
 	                        			</tr>
 	                        		</table>		
+	                        	</div>
+								<div class="full-row pull-left" ng-show="get_data==0">
+	                        		No Record found.
 	                        	</div>
                         	</div>
                         </div>                 
                     </md-tab>
                 </div>
                 <!---Order In Progress Tab-->
-                <div ng-controller="shippingProgressController">
+                <div>
                     <md-tab label="week" ng-click="getTab('progress')">
                         <div class="fixe-top-tabs">
                         	<div class="inner-full-box mt-30">
@@ -455,7 +93,7 @@
                             			<div flex=40 class="pull-right">
                             				<md-input-container class="md-block date-input scheduleboarddate">
                             					
-							                    <input kendo-date-picker k-ng-model="dateObject2">
+							                    <input kendo-date-picker  aria-label="true"  k-ng-model="dateObject2">
 							                </md-input-container>
                             			</div>
                             		</div>
@@ -875,7 +513,7 @@
                     </md-tab>
                 </div>
                 <!---Shipped Orders Tab-->
-                <div ng-controller="shippingShippedController">
+                <div >
                     <md-tab label="machine" ng-click="getTab('shipped')">
                         <div class="fixe-top-tabs">
                         	<div class="inner-full-box mt-30">
@@ -887,7 +525,7 @@
                             			<div flex=40 class="pull-right">
                             				<md-input-container class="md-block date-input scheduleboarddate">
                             					
-							                    <input kendo-date-picker k-ng-model="dateObject2">
+							                    <input kendo-date-picker  aria-label="true"  k-ng-model="dateObject2">
 							                </md-input-container>
                             			</div>
                             		</div>

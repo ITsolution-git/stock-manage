@@ -515,7 +515,7 @@ md-card {
 .inner-full-box {
   width: 100%;
   float: left;
-  padding: 0 35px; }
+  padding: 0 10px; }
 
 .box-3 {
   width: 33%;
@@ -1747,8 +1747,8 @@ a.editable-click:hover, a.editable-click:focus {
   background-color: #f4f4f5; }
 
 .shift-slot {
-  width: 30.5%;
-  height: 60px;
+  width: 29%;
+  //height: 60px;
   float: left;
   margin: 0; }
   .shift-slot span {
@@ -1767,7 +1767,10 @@ a.editable-click:hover, a.editable-click:focus {
   height: 100px;
   background-color: #fff;
   border: solid 1px #e0e1e3;
-  margin: 0 0 10px 0; }
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 13%; }
 
 .machine-full-slot {
   width: 100%;
@@ -1856,7 +1859,7 @@ md-dialog.machine-dialog {
     float: none;
     display: table-cell; }
   .schedule-finishing-table .mac-slots {
-    width: 19.6vw; }
+    width: 17.5vw; }
 
 .schedule-finishing-table.unscheduled {
   overflow-x: hidden; }
