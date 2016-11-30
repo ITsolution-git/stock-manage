@@ -9,28 +9,48 @@
     /** @ngInject */
     function DistributionController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
-         // change display number to order Id for fetching the order data
-          var order_data = {};
-           order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
-           order_data.table ='orders';
-          
-          $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
-            
-              
-              if(result.data.success == '1') 
-              {
-                  $scope.vendorRecord =result.data.records;
-                  $scope.order_id = result.data.records[0].id;
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
 
-                    $scope.orderDetail();
-                    $scope.designDetail();
-                    $scope.getDistProductAddress();
-              } 
-              else
-              {
-                   $state.go('app.order');
-              }
-          });
+        // change display number to order Id for fetching the order data
+        var order_data = {};
+        order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+        order_data.table ='orders';
+
+        $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                $scope.vendorRecord =result.data.records;
+                $scope.order_id = result.data.records[0].id;
+
+                $scope.orderDetail();
+                $scope.designDetail();
+                $scope.getDistProductAddress();
+            } 
+            else
+            {
+                $state.go('app.order');
+            }
+        });
+
+        var state_data = {};
+        state_data.table ='state';
+
+        $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                $scope.states_all  = result.data.records;
+            } 
+        });
 
           
         $scope.orderDetail = function(){
@@ -95,9 +115,7 @@
             });
         }
 
-       
-
-        $scope.reloadPage = function()
+        $scope.returnFunction = function()
         {
             $state.reload();
         }
@@ -118,7 +136,7 @@
                     Orders: $scope.order,
                     event: ev
                 },
-                onRemoving : $scope.reloadPage
+                onRemoving : $scope.returnFunction
             });
         }
 
@@ -155,7 +173,7 @@
                     Orders: $scope.order,
                     event: ev
                 },
-                onRemoving : $scope.reloadPage
+                onRemoving : $scope.returnFunction
             });
         }
 
@@ -176,8 +194,13 @@
                     product_arr: product_array,
                     event: ev
                 },
-                onRemoving : $scope.reloadPage
+                onRemoving : $scope.returnFunction
             });
+        }
+        $scope.openInsertPopup = function(path,ev,table)
+        {
+            var insert_params = {client_id:$scope.order.client_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
         }
         vm.productSearch = null;
     }

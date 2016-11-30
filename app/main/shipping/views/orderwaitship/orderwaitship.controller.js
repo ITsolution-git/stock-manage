@@ -81,6 +81,17 @@
                 $scope.getDetail();
             }
         });
+
+        var state_data = {};
+        state_data.table ='state';
+
+        $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                $scope.states_all  = result.data.records;
+            } 
+        });
         
         $scope.getDetail = function()
         {
@@ -250,27 +261,16 @@
             }
         }
 
-        $scope.reloadPage = function(){
+        $scope.returnFunction = function(){
             $state.reload();
         }
 
-        vm.openaddAddressDialog = openaddAddressDialog;
-
-        function openaddAddressDialog(ev, order)
+        // DYNAMIC POPUP FOR INSERT RECORDS
+        $scope.openInsertPopup = function(path,ev,table)
         {
-            $mdDialog.show({
-                controller: 'AddAddressController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/addAddress/addAddress.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    Orders: $scope.order,
-                    event: ev
-                },
-                onRemoving : $scope.reloadPage
-            });
+            console.log($scope.order.client_id);
+            var insert_params = {client_id:$scope.order.client_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
         }
     }
 })();
