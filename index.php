@@ -11,7 +11,7 @@
         <meta property="og:description" content="Stokkup" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
-        <meta property="og:image" content="https://app.stokkup.com/assets/images/loader/loder.png" />
+        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_logo.png" />
 
 
 
