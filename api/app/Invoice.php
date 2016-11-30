@@ -543,7 +543,7 @@ class Invoice extends Model {
         $client_id=$post['company_id'];
 
         $retArray = DB::table('orders as o')
-        ->select(DB::raw('COUNT(o.id) as totalProduction'))
+        ->select(DB::raw('SUM(o.grand_total) as totalProductionInvoice'), DB::raw('COUNT(o.id) as totalProduction') )
         ->where('o.company_id','=',$client_id)
         ->where('o.parent_order_id','=',0);
 

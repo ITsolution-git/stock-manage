@@ -28,8 +28,10 @@
                        <!--  <a class="common-header-links" href="{{po_data.url}}" target="_blank">View</a> -->
                     </div>
                 </md-card-title>
-                <md-card-content class="center-num-box box-zerospace">
-                        <div class="center-num"><span class="num-style1 text-center">{{productionTotal}}</div>
+               <md-card-content class="center-num-box box-zerospace dashboard-cards">
+                        <div class="center-num"><span class="num-style1 text-center estimatebox">{{productionTotal}}<i>Production</i></span> <span class="pipe-divider">|</span> <span class="num-style1 text-center estimatebox">{{totalProductionInvoice | currency : $ : 0}}<i>Revenue</i></span>
+                       <!--  <span class="dash-btwn-txt comp-report-txt">Estimates | </span> -->
+                        </div>
                 </md-card-content>
                 <div class="dash-footer-box">
                     
@@ -158,7 +160,7 @@
                     </div>
                 </md-card-title>
                 <md-card-content ng-show="showAvgItem" id="avgItemShow" class="center-num-box box-zerospace dashboard-cards">
-                        <div class="center-num"><span class="num-style1 text-center">{{avgItems}}</div>
+                        <div class="center-num"><span class="num-style1 text-center">{{avgItems | currency : $ : 0}}</div>
                 </md-card-content>
                 <md-card-content ng-show="showAvgAmount" id="avgAmountShow" class="center-num-box box-zerospace dashboard-cards">
                         <div class="center-num"><span class="num-style1 text-center">{{avgAmount | currency : $ : 0}}</div>

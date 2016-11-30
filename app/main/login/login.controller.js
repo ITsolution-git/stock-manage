@@ -155,6 +155,10 @@
                         $("#ajax_loader").hide();
                         if(resultProduction.data.success == '1') {
                             $scope.productionTotal=resultProduction.data.allData[0].totalProduction;
+                            $scope.totalProductionInvoice=resultProduction.data.allData[0].totalProductionInvoice;
+                            if($scope.totalProductionInvoice == null) {
+                              $scope.totalProductionInvoice = 0;
+                            }
                         }else{
                           var data = {"status": "error", "message": "Data not found."}
                           notifyService.notify(data.status, data.message);
@@ -282,6 +286,10 @@
 
                   // Numbers of Orders in Production
                   $scope.productionTotal=resultDashboard.data.allData.totalProduction[0].totalProduction;
+                  $scope.totalProductionInvoice=resultDashboard.data.allData.totalProduction[0].totalProductionInvoice;
+                  if($scope.totalProductionInvoice == null) {
+                    $scope.totalProductionInvoice = 0;
+                  }
 
                   // Sales Closed
                   $scope.salesClosed=resultDashboard.data.allData.salesClosed[0].totalSales;
