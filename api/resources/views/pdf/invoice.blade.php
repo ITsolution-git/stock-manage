@@ -31,6 +31,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 }
 </style>
 <body style="padding:0; margin:0">
+
     <table width="530" align="left" cellspacing="5" cellpadding="0" style="font-size:10px;">
         <tr align="left" cellspacing="0" cellpadding="0">
             <td style="width:100%">
@@ -125,10 +126,10 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->custom_po}}</td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->name}}</td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_terms}}<?php } ?></td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"></td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->sns_shipping_name}}</td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->date_shipped}}</td>
                         <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->in_hands_by}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_due_date}}}<?php } ?></td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_due_date}}<?php } ?></td>
                     </tr>
                 </table>
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
@@ -168,8 +169,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 			                    <tr style="background-color:<?php echo $color_bg?>;">
 			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->id}} - {{$product->product_name}}</td>
 			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->color_name}}</td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">@foreach ($product->sizeData as $size){{$size->size}}-{{$size->qnty}}&nbsp;@endforeach</td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->total_qnty}}</td>
+			                        <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">@foreach ($product->sizeData as $size){{$size->size}}:(<?php echo number_format($size->qnty); ?>)&nbsp;@endforeach</td>
+			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($product->total_qnty) ?></td>
 			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px;line-height:20px;">$<?php echo number_format($product->total_price,2) ?></td>
 			                    </tr>
 			                     <?php $count++;?>
@@ -178,7 +179,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 			                   
 			                    <tr>
 			                        <td height="20" colspan="3" style="border:1px solid #fff; border-right:1px solid #000; line-height:20px; font-size:9px; text-align:right; font-weight:bold">Total Qty&nbsp;&nbsp;</td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$design->total_product_qnty}}</td>
+			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($design->total_product_qnty) ?></td>
 			                        <td height="20" style="border:1px solid #fff; text-align:left; font-size:9px;">&nbsp;</td>
 			                    </tr>
 			                   
@@ -192,8 +193,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 			                 </table>
 			                <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:15px; border-collapse:collapse;">
                                 <tr>
-                                    <td width="70%" style="border-bottom:2px solid #000;">
-                                       
+                                    <!-- <td width="60%" style="border-bottom:2px solid #000;"> -->
+                                       <td width="63%">
                                         <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:9px; border-collapse:collapse;">
                                              @foreach($design->positions  as  $position)
                                             <tr>
@@ -247,7 +248,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
                     
 
-                                        <td width="30%" style="vertical-align:top;">
+                                        <td width="37%" style="vertical-align:top;">
                                             <?php if ($index === $len - 1) { ?>
                                             <table width="100%" align="center" border="0" cellspacing="0" cellpadding="1" style="font-family: arial; font-size:15px; border-collapse:collapse;">
                                                 <tr>
