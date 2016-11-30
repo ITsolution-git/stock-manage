@@ -243,4 +243,32 @@ class Production extends Model {
         return $ret_array;
     }
 
+    public function SchedualBoardData($company_id,$run_date)
+    {
+        $result = DB::table('position_schedule as ps')
+                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
+                    ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
+                    ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
+                    ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
+                    ->leftJoin('order_design as od','od.id','=','odp.design_id')
+                    ->leftJoin('orders as ord','ord.id','=','od.order_id')
+                    ->where('od.company_id','=',$company_id)
+                    ->where('ps.run_date','=',$run_date)
+                    ->where('ps.run_date','=',$run_date)
+                    ->where('od.is_delete','=','1')
+                    ->where('odp.is_delete','=','1')
+                    ->get();
+
+        $ret_array = array();            
+        foreach($result as $key=>$value)
+        {
+            
+            $ret_array[$value->machine_id]['machine_name'] = $value->machine_name;
+            $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_name']=$value->shift_name;
+            $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_data'][$value->position_id]=$value;
+        }            
+        return $ret_array;
+    }
+
  }
