@@ -7,11 +7,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
-        <meta property="og:site_name" content="#app.stokkup.com"/>
-        <meta property="og:description" content="#Stokkup" />
+        <meta property="og:site_name" content="app.stokkup.com"/>
+        <meta property="og:description" content="Stokkup" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
-        <meta property="og:image" content="#https://app.stokkup.com/assets/images/logos/stokkup-logo.png" />
+        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/stokkup-logo.png" />
 
 
 
