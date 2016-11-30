@@ -8,16 +8,18 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Production;
 use App\Common;
+use App\Client;
 use DB;
 use Request;
 
 class ProductionController extends Controller { 
 
-	public function __construct(Production $production,Common $common) 
+	public function __construct(Production $production,Common $common, Client $client) 
  	{
  		parent::__construct();
         $this->production = $production;
         $this->common = $common;
+        $this->client = $client;
     }
 
     // GET MACHINE, SHIFT AND POSITION SCHEDULE DATA. POSITION SCHEDULE POPUP.
@@ -64,6 +66,27 @@ class ProductionController extends Controller {
 	    }
 
         return response()->json(['data'=>$data]);
+    }
+
+    public function GetFilterData()
+    {
+    	$post = Input::all();
+    	if(!empty($post['company_id']))
+	    {
+	    	$filter=array('cond');
+	    	$filter['cond']['company_id'] = $post['company_id'];
+	    	$clients = $this->client->getClientFilterData($filter);  // GET CLIENT FROM COMPANy
+	    	$production_type   = $this->common->GetTableRecords('misc_type',array('company_id'=>$post['company_id'],'type'=>'placement_type','is_delete'=>1),array('value'=>'')); // GET COMPANY PRODUCTION TYPE
+	    	foreach ($production_type as $key => $value) {
+	    		$value->label=$value->value;
+	    	}
+			$data = array("success"=>1,"message"=>GET_RECORDS,"clients"=>$clients,'production_type'=>$production_type);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+	    return response()->json(['data'=>$data]);
     }
 
 }

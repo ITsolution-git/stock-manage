@@ -16,7 +16,7 @@ class FinishingQueue extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_company,o.id as order_id,o.name,c.client_id,o.approval_id,o.display_number,fc.item as category_name,o.due_date,o.in_hands_by as in_hands_date')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS f.id,c.client_company,o.id as order_id,o.name,c.client_id,o.approval_id,o.display_number,fc.item as category_name,o.due_date,o.in_hands_by as in_hands_date')];
 
         $finishingData = DB::table('finishing as f')
                         ->leftJoin('orders as o', 'o.id', '=', 'f.order_id')

@@ -21,7 +21,18 @@ class Production extends Model {
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
-
+        if(isset($post['filter']['client'])) {
+            $client_filter = $post['filter']['client'];
+        }
+        if(isset($post['filter']['production'])) {
+            $production_filter = $post['filter']['production'];
+        }
+        if(isset($post['filter']['rundate'])) {
+            $rundate_filter = $post['filter']['rundate'];
+        }
+        if(isset($post['filter']['inhandDate'])) {
+            $inhandDate_filter = $post['filter']['inhandDate'];
+        }
         $production_data = DB::table('orders as ord')
                         ->select(DB::raw('SQL_CALC_FOUND_ROWS ord.name as order_name,ord.display_number as order_display, ord.id as order_id,cl.client_company ,ord.in_hands_by,mt.value,odp.id,ass.id as screenset,ass.screen_active,ass.approval,mt1.value as production_type,odp.image_1,ps.run_date'))
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
@@ -35,16 +46,46 @@ class Production extends Model {
                         ->where('odp.is_delete','=','1')
                         ->where('ord.company_id','=',$post['company_id']);
 		                if($search != '')               
-		                  {
-		                      $production_data = $production_data->Where(function($query) use($search)
-		                      {
-		                          $query->orWhere('ord.name', 'LIKE', '%'.$search.'%')
+    	                {
+    	                    $production_data = $production_data->Where(function($query) use($search)
+    	                    {
+    	                        $query->orWhere('ord.name', 'LIKE', '%'.$search.'%')
                                         ->orWhere('ord.name', 'LIKE', '%'.$search.'%')
                                         ->orWhere('mt.value', 'LIKE', '%'.$search.'%')
                                         ->orWhere('cl.client_company', 'LIKE', '%'.$search.'%')
-		                                ->orWhere('mt1.value','LIKE', '%'.$search.'%');
-		                      });
-		                  }
+    	                                ->orWhere('mt1.value','LIKE', '%'.$search.'%');
+    	                    });
+    	                }
+                        if(!empty($rundate_filter))               
+                        {
+                            $production_data = $production_data->Where(function($query) use($rundate_filter)
+                            {
+                                $rundate_filter = date('Y-m-d',strtotime($rundate_filter));
+                                $query->orWhere('ps.run_date', '=', $rundate_filter);
+                            });
+                        }
+                        if(!empty($inhandDate_filter))               
+                        {
+                            $production_data = $production_data->Where(function($query) use($inhandDate_filter)
+                            {
+                                $inhandDate_filter = date('Y-m-d',strtotime($inhandDate_filter));
+                                $query->orWhere('ord.in_hands_by', '=', $inhandDate_filter);
+                            });
+                        }
+                        if(!empty($client_filter))               
+                        {
+                             $production_data = $production_data->Where(function($query) use($client_filter)
+                             {
+                                 $query->whereIn('cl.client_id',$client_filter);
+                             });
+                        }
+                        if(!empty($production_filter))               
+                        {
+                             $production_data = $production_data->Where(function($query) use($production_filter)
+                             {
+                                 $query->whereIn('mt1.id',$production_filter);
+                             });
+                        }
                  $production_data = $production_data->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
                  ->skip($post['start'])
                  ->take($post['range'])
