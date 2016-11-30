@@ -89,4 +89,35 @@ class ProductionController extends Controller {
 	    return response()->json(['data'=>$data]);
     }
 
+    public function SchedualBoardData()
+    {
+    	$post = Input::all();
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die();
+    	if(!empty($post['company_id']))
+	    {
+	    	$run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
+	    	$SchedualBoardData = $this->production->SchedualBoardData($post['company_id'],$run_date);
+	    	$prev_date = date('Y-m-d', strtotime('-1 day', strtotime($run_date)));
+	    	$next_date = date('Y-m-d', strtotime('+1 day', strtotime($run_date)));
+	    	$current_date = date('F j, Y',strtotime($run_date));
+	    	if(count($SchedualBoardData)>0)
+	    	{
+	    		$success=1;
+	    		$message =GET_RECORDS;
+	    	}
+	    	else
+	    	{
+				$success=2;
+	    		$message =NO_RECORDS;
+	    	}
+	    	$data = array("success"=>$success,"message"=>$message,'SchedualBoardData'=>$SchedualBoardData,'prev_date'=>$prev_date,'next_date'=>$next_date,'current_date'=>$current_date);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+	    return response()->json(['data'=>$data]);
+
+    }
+
 }
