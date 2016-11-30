@@ -174,6 +174,7 @@ class Invoice extends Model {
     }
 
     public function getSalesClosed($post){
+
         $client_id=$post['company_id'];
 
         $retArray = DB::table('invoice as i')
@@ -184,10 +185,33 @@ class Invoice extends Model {
         ->where('u.id','=',$client_id)
         ->where('o.parent_order_id','=',0)
         ->where('o.is_delete','=','1');
-        if(isset($post['sales_id']) && $post['sales_id']!=0){
+
+        if( (isset($post['sales_id']) && $post['sales_id']!=0) || (isset($post['duration']) && $post['duration']!=0) ){
             $sales_id=$post['sales_id'];
-            $retArray = $retArray->where('o.sales_id','=',$sales_id);
+            if(isset($post['sales_id']) && $post['sales_id']!=0){
+                $retArray = $retArray->where('o.sales_id','=',$sales_id);
+            }
+
+            if(isset($post['duration']) && $post['duration']!=0){
+                if($post['duration']=='1'){
+                    $retArray = $retArray->where(DB::raw('o.created_date'), '=', DB::raw('CURDATE()'));
+                }else if($post['duration']=='2'){
+                    $retArray = $retArray->where(DB::raw('WEEK(o.created_date)'), '=', DB::raw('WEEK(CURDATE())-1'));
+                }else if($post['duration']=='3'){
+                    $retArray = $retArray->where(DB::raw('MONTH(o.created_date)'), '=', DB::raw('MONTH(CURDATE())-1'));
+                }else if($post['duration']=='4'){
+                    $retArray = $retArray->where(DB::raw('YEAR(o.created_date)'), '=', DB::raw('YEAR(CURDATE())-1'));
+                }else if($post['duration']=='5'){
+                    $retArray = $retArray->where(DB::raw('WEEK(o.created_date)'), '=', DB::raw('WEEK(CURDATE())'));
+                }else if($post['duration']=='6'){
+                    $retArray = $retArray->where(DB::raw('MONTH(o.created_date)'), '=', DB::raw('MONTH(CURDATE())'));
+                }else if($post['duration']=='7'){
+                    $retArray = $retArray->where(DB::raw('YEAR(o.created_date)'), '=', DB::raw('YEAR(CURDATE())'));
+                }
+            }
         }
+
+
         $retArray = $retArray->get();
 
         return $retArray;
@@ -519,7 +543,7 @@ class Invoice extends Model {
         $client_id=$post['company_id'];
 
         $retArray = DB::table('orders as o')
-        ->select(DB::raw('COUNT(o.id) as totalProduction'))
+        ->select(DB::raw('SUM(o.grand_total) as totalProductionInvoice'), DB::raw('COUNT(o.id) as totalProduction') )
         ->where('o.company_id','=',$client_id)
         ->where('o.parent_order_id','=',0);
 
