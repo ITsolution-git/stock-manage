@@ -3965,3 +3965,281 @@
  Tue, 08 Nov 2016 01:02:55 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createTransactionResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1478588573</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><transactionResponse><responseCode>1</responseCode><authCode>DQPYVM</authCode><avsResultCode>Y</avsResultCode><cvvResultCode>P</cvvResultCode><cavvResultCode>2</cavvResultCode><transId>40004130489</transId><refTransID /><transHash>3B1C5AFDAF0B5A3B625536AA4C693498</transHash><testRequest>0</testRequest><accountNumber>XXXX0027</accountNumber><accountType>Visa</accountType><messages><message><code>1</code><description>This transaction has been approved.</description></message></messages><transHashSha2 /></transactionResponse></createTransactionResponse>
  Tue, 08 Nov 2016 01:02:55 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
  Tue, 08 Nov 2016 01:02:55 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Wed, 30 Nov 2016 01:21:20 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Wed, 30 Nov 2016 01:21:20 -0600 DEBUG : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\GetTransactionDetailsRequest Object
+(
+    [transId:net\authorize\api\contract\v1\GetTransactionDetailsRequest:private] => 60011385378
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => 
+)
+
+ Wed, 30 Nov 2016 01:21:20 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Wed, 30 Nov 2016 01:21:20 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Wed, 30 Nov 2016 01:21:20 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<getTransactionDetailsRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <transId><![CDATA[60011385378]]></transId>
+</getTransactionDetailsRequest>
+
+ Wed, 30 Nov 2016 01:21:20 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Wed, 30 Nov 2016 01:21:20 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - 
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Wed, 30 Nov 2016 01:21:22 -0600 DEBUG : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\CreateTransactionRequest Object
+(
+    [transactionRequest:net\authorize\api\contract\v1\CreateTransactionRequest:private] => net\authorize\api\contract\v1\TransactionRequestType Object
+        (
+            [transactionType:net\authorize\api\contract\v1\TransactionRequestType:private] => refundTransaction
+            [amount:net\authorize\api\contract\v1\TransactionRequestType:private] => 20
+            [currencyCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [payment:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\PaymentType Object
+                (
+                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                        (
+                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => 0002
+                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                        )
+
+                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                )
+
+            [profile:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [solution:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [callId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [authCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [refTransId:net\authorize\api\contract\v1\TransactionRequestType:private] => 60011385378
+            [splitTenderId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [order:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [lineItems:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [tax:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [duty:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [shipping:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [taxExempt:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [poNumber:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customer:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [billTo:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                (
+                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Piyush
+                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Dave
+                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => communication
+                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => asdfasdfasdf
+                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => sfgdfgdfsgsdfgf
+                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => AZ
+                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 62541
+                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => USA
+                )
+
+            [shipTo:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customerIP:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [cardholderAuthentication:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [retail:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [employeeId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [transactionSettings:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [userFields:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+        )
+
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1480490482
+)
+
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1480490482]]></refId>
+  <transactionRequest>
+    <transactionType><![CDATA[refundTransaction]]></transactionType>
+    <amount>20</amount>
+    <payment>
+      <creditCard>
+        <cardNumber><![CDATA[0002]]></cardNumber>
+        <expirationDate>xxxx</expirationDate>
+      </creditCard>
+    </payment>
+    <refTransId><![CDATA[60011385378]]></refTransId>
+    <billTo>
+      <firstName><![CDATA[Piyush]]></firstName>
+      <lastName><![CDATA[Dave]]></lastName>
+      <company><![CDATA[communication]]></company>
+      <address><![CDATA[asdfasdfasdf]]></address>
+      <city><![CDATA[sfgdfgdfsgsdfgf]]></city>
+      <state><![CDATA[AZ]]></state>
+      <zip><![CDATA[62541]]></zip>
+      <country><![CDATA[USA]]></country>
+    </billTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Wed, 30 Nov 2016 01:21:22 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Wed, 30 Nov 2016 01:21:24 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createTransactionResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1480490482</refId><messages><resultCode>Error</resultCode><message><code>E00027</code><text>The transaction was unsuccessful.</text></message></messages><transactionResponse><responseCode>3</responseCode><authCode /><avsResultCode>P</avsResultCode><cvvResultCode /><cavvResultCode /><transId>0</transId><refTransID>60011385378</refTransID><transHash>D844B3C44B74CD77AE1300222E583BF6</transHash><testRequest>0</testRequest><accountNumber>XXXX0002</accountNumber><accountType>AmericanExpress</accountType><errors><error><errorCode>54</errorCode><errorText>The referenced transaction does not meet the criteria for issuing a credit.</errorText></error></errors><transHashSha2 /></transactionResponse></createTransactionResponse>
+ Wed, 30 Nov 2016 01:21:24 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Wed, 30 Nov 2016 01:21:24 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Wed, 30 Nov 2016 01:22:26 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Wed, 30 Nov 2016 01:22:26 -0600 DEBUG : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\GetTransactionDetailsRequest Object
+(
+    [transId:net\authorize\api\contract\v1\GetTransactionDetailsRequest:private] => 60011385378
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => 
+)
+
+ Wed, 30 Nov 2016 01:22:26 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Wed, 30 Nov 2016 01:22:26 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Wed, 30 Nov 2016 01:22:26 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<getTransactionDetailsRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <transId><![CDATA[60011385378]]></transId>
+</getTransactionDetailsRequest>
+
+ Wed, 30 Nov 2016 01:22:26 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Wed, 30 Nov 2016 01:22:26 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Wed, 30 Nov 2016 01:22:28 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - 
+ Wed, 30 Nov 2016 01:22:28 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Wed, 30 Nov 2016 01:22:29 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Wed, 30 Nov 2016 01:22:29 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Wed, 30 Nov 2016 01:22:29 -0600 DEBUG : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\CreateTransactionRequest Object
+(
+    [transactionRequest:net\authorize\api\contract\v1\CreateTransactionRequest:private] => net\authorize\api\contract\v1\TransactionRequestType Object
+        (
+            [transactionType:net\authorize\api\contract\v1\TransactionRequestType:private] => voidTransaction
+            [amount:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [currencyCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [payment:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [profile:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [solution:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [callId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [authCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [refTransId:net\authorize\api\contract\v1\TransactionRequestType:private] => 60011385378
+            [splitTenderId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [order:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [lineItems:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [tax:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [duty:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [shipping:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [taxExempt:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [poNumber:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customer:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [billTo:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                (
+                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Piyush
+                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => Dave
+                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => communication
+                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => asdfasdfasdf
+                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => sfgdfgdfsgsdfgf
+                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => AZ
+                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 62541
+                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => USA
+                )
+
+            [shipTo:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customerIP:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [cardholderAuthentication:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [retail:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [employeeId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [transactionSettings:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [userFields:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+        )
+
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1480490549
+)
+
+ Wed, 30 Nov 2016 01:22:29 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Wed, 30 Nov 2016 01:22:29 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Wed, 30 Nov 2016 01:22:29 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1480490549]]></refId>
+  <transactionRequest>
+    <transactionType><![CDATA[voidTransaction]]></transactionType>
+    <refTransId><![CDATA[60011385378]]></refTransId>
+    <billTo>
+      <firstName><![CDATA[Piyush]]></firstName>
+      <lastName><![CDATA[Dave]]></lastName>
+      <company><![CDATA[communication]]></company>
+      <address><![CDATA[asdfasdfasdf]]></address>
+      <city><![CDATA[sfgdfgdfsgsdfgf]]></city>
+      <state><![CDATA[AZ]]></state>
+      <zip><![CDATA[62541]]></zip>
+      <country><![CDATA[USA]]></country>
+    </billTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+ Wed, 30 Nov 2016 01:22:29 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Wed, 30 Nov 2016 01:22:29 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Wed, 30 Nov 2016 01:22:30 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createTransactionResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1480490549</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><transactionResponse><responseCode>1</responseCode><authCode>GC2EE0</authCode><avsResultCode>P</avsResultCode><cvvResultCode /><cavvResultCode /><transId>60011385378</transId><refTransID>60011385378</refTransID><transHash>DF81F752353362D9501E7A83C6AD4E52</transHash><testRequest>0</testRequest><accountNumber>XXXX0002</accountNumber><accountType>AmericanExpress</accountType><messages><message><code>1</code><description>This transaction has been approved.</description></message></messages><transHashSha2 /></transactionResponse></createTransactionResponse>
+ Wed, 30 Nov 2016 01:22:30 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Wed, 30 Nov 2016 01:22:30 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End

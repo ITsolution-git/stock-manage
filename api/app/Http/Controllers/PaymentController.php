@@ -468,6 +468,9 @@ class PaymentController extends Controller {
         $payment_date=$retArrayRefund[0]->payment_date;
         $authorized_AuthCode=$retArrayRefund[0]->authorized_AuthCode;
 
+        $paydate = strtotime($retArrayRefund[0]->payment_date);
+        $currdate = strtotime(date('Y-m-d'));
+
         if(isset($post['company_id']))
         {
             $company_id=$post['company_id'];
@@ -492,12 +495,15 @@ class PaymentController extends Controller {
         }
         $refId = 'ref' . time();
 
-        // Create the payment data for a credit card
-        $creditCard = new AnetAPI\CreditCardType();
-        $creditCard->setCardNumber($creditCardNumberStored);
-        $creditCard->setExpirationDate("XXXX");
-        $paymentOne = new AnetAPI\PaymentType();
-        $paymentOne->setCreditCard($creditCard);
+        if($currdate == $paydate)
+        {
+            // Create the payment data for a credit card
+            $creditCard = new AnetAPI\CreditCardType();
+            $creditCard->setCardNumber($creditCardNumberStored);
+            $creditCard->setExpirationDate("XXXX");
+            $paymentOne = new AnetAPI\PaymentType();
+            $paymentOne->setCreditCard($creditCard);
+        }
 
         $retArrayOrder = $this->common->GetTableRecords('invoice',array('id' => $post['invoice_id']),array(),0,0,'order_id');
 
@@ -510,9 +516,18 @@ class PaymentController extends Controller {
 
         //create a transaction
         $transactionRequest = new AnetAPI\TransactionRequestType();
-        $transactionRequest->setTransactionType( "refundTransaction"); 
-        $transactionRequest->setAmount($result['amount']);
-        $transactionRequest->setPayment($paymentOne);
+
+        if($currdate > $paydate)
+        {
+            $transactionRequest->setTransactionType("voidTransaction");
+        }
+        else
+        {
+            $transactionRequest->setTransactionType("refundTransaction");
+            $transactionRequest->setAmount($result['amount']);
+            $transactionRequest->setPayment($paymentOne);
+        }
+        
         $transactionRequest->setrefTransId($refTransId);
 
         $retArrayBilling = $this->invoice->getInvoiceClient($order_id);

@@ -700,7 +700,10 @@ class ShippingController extends Controller {
         $count = 1;
         foreach ($boxes as $box) {
             $box->boxItems = $this->shipping->getBoxItems($box->id);
-            $box->boxItems[0]->count = $count;
+            if(!empty($box->boxItems))
+            {
+                $box->boxItems[0]->count = $count;
+            }
             $box->count = $count;
             $shippingBoxes[$box->id] = $box;
             $count++;

@@ -76,7 +76,7 @@
                                             <td>{{ item.actual}}</td>
                                             <td>
                                                 <md-select aria-label="shipping_box_id" ng-model="shipping_box_id" class="mrg6-TB" ng-change="reAllocate(shipping_box_id,item.box_item_id)">
-                                                    <md-option ng-repeat="sbox in shippingBoxes" value="{{sbox.id}}">{{sbox.id}}</md-option>
+                                                    <md-option ng-repeat="sbox in shippingBoxes" value="{{sbox.id}}">{{sbox.count}}</md-option>
                                                 </md-select>
                                             </td>
                                         </tr>                    
