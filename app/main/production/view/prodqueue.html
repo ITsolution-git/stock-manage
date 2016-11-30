@@ -114,9 +114,9 @@
     	 <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
             <div class="table-title-text" class="cursor-p">Production Queue</div>
             <div class="pull-right right-search-box">
-                <div class="order-modal-title pull-right" layout="row" layout-align="end center">
+                <!-- <div class="order-modal-title pull-right" ui-sref="app.scheduleboard" layout="row" layout-align="end center">
                     <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
-                </div>   
+                </div>  -->  
                 <md-icon  ng-click="vm.openRightMenu($event);"  md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
               Filter By
             </md-tooltip></md-icon>
@@ -142,7 +142,7 @@
                                 <span ng-show="prod_data.image_1!=''" ng-click="DisplayMokup(prod_data.image_1)" class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
                             </td>
                             <td >{{prod_data.order_name}}</td>
-                            <td >{{prod_data.value}}</td>
+                            <td >{{prod_data.order_display}} - {{prod_data.value}}</td>
                             <td >{{prod_data.client_company}}</td>
                             <td >{{prod_data.production_type}}</td>
                             <td >{{prod_data.in_hands_by}}</td>
