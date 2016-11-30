@@ -208,6 +208,7 @@
 			$mdDialog.show({
                 controller:function ($scope, params, all_scope)
                 {
+                	console.log(params);
                 	$("#ajax_loader").hide();
                     $scope.params = params; 		//	GET PARAMETERS FOR POPUP
                     $scope.flag = 'add'; 		//	GET PARAMETERS FOR POPUP
@@ -255,7 +256,7 @@
                 			}
                 		if(extra=='client_contact'){InserArray.data.client_id=$scope.all_scope.client_id;}
                 		if(extra=='client_notes'){InserArray.data.client_id=$scope.all_scope.client_id; InserArray.data.user_id=$scope.all_scope.login_id;InserArray.data.created_date=AllConstant.currentdate;}
-                		if(extra=='client_distaddress'){InserArray.data.client_id=$scope.all_scope.client_id;}
+                		if(extra=='client_distaddress'){InserArray.data.client_id=$scope.params.client_id;}
                 		if(extra=='company_address'){InserArray.data.company_id=$scope.all_scope.company_id;}
                 		if(extra=='Newcolor'){InserArray.data.company_id=$scope.all_scope.company_id; InserArray.data.status=1; InserArray.data.is_delete=1; InserArray.data.is_sns=1;}
                 		
