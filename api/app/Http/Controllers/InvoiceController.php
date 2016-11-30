@@ -167,8 +167,25 @@ class InvoiceController extends Controller {
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
+
+
+                $order_data_all['order'][0]->sns_shipping_name = '';
+
+            if($order_data_all['order'][0]->sns_shipping == '1') {
+                $order_data_all['order'][0]->sns_shipping_name = 'Ground';
+            } elseif ($order_data_all['order'][0]->sns_shipping == '2') {
+                $order_data_all['order'][0]->sns_shipping_name = 'Next Day Air';
+            } elseif ($order_data_all['order'][0]->sns_shipping == '3') {
+                $order_data_all['order'][0]->sns_shipping_name = '2nd Day Air';
+            } elseif ($order_data_all['order'][0]->sns_shipping == '16') {
+                $order_data_all['order'][0]->sns_shipping_name = '3 Day Select';
+            } elseif ($result['order'][0]->sns_shipping == '6') {
+                $order_data_all['order'][0]->sns_shipping_name = 'Will Call / PickUp';
+            }
+
+
             $order_data =  $order_data_all['order'];
-           
+
 
 
 //            $order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
@@ -189,6 +206,22 @@ class InvoiceController extends Controller {
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
+
+            $order_data_all['order'][0]->sns_shipping_name = '';
+
+            if($order_data_all['order'][0]->sns_shipping == '1') {
+                $order_data_all['order'][0]->sns_shipping_name = 'Ground';
+            } elseif ($order_data_all['order'][0]->sns_shipping == '2') {
+                $order_data_all['order'][0]->sns_shipping_name = 'Next Day Air';
+            } elseif ($order_data_all['order'][0]->sns_shipping == '3') {
+                $order_data_all['order'][0]->sns_shipping_name = '2nd Day Air';
+            } elseif ($order_data_all['order'][0]->sns_shipping == '16') {
+                $order_data_all['order'][0]->sns_shipping_name = '3 Day Select';
+            } elseif ($result['order'][0]->sns_shipping == '6') {
+                $order_data_all['order'][0]->sns_shipping_name = 'Will Call / PickUp';
+            }
+
+
             $order_data =  $order_data_all['order']; 
 
 
@@ -235,7 +268,6 @@ class InvoiceController extends Controller {
         $retutn_arr['client_data'] = $this->common->GetTableRecords('client_contact',array('client_id' => $order_data[0]->client_id,'contact_main' => 1),array());
 
         $retutn_arr['price_grid_data'] = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $order_data[0]->price_id),array());
-
         $retutn_arr['order_data'] = $order_data;
 
         $retutn_arr['shipping_detail'] = $this->common->GetTableRecords('shipping',array('order_id' => $order_id),array());
