@@ -645,7 +645,7 @@ class ShippingController extends Controller {
 
         foreach ($allAddress as $address) {
             
-            $address->full_address = $address->address ." ". $address->address2 ." ". $address->city ." ". $address->state ." ". $address->zipcode ." ".$address->country;
+            $address->full_address = $address->address2 ." ". $address->address ." ". $address->city ." ". $address->state ." ". $address->zipcode ." USA";
             $address->selected = 0;
 
             $allocatedAddress2 = array();
