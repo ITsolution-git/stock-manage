@@ -468,13 +468,14 @@ class Product extends Model {
                                      ->get();
                 $product->sizeData = $sizeData;
 
-                $total_qnty = DB::table('purchase_detail')
-                                     ->select(DB::raw('SUM(qnty) as total_qnty'),DB::raw('SUM(price) as total_price'))
-                                     ->where('design_product_id','=',$product->design_product_id)
-                                     ->get();
-
-                $product->total_qnty = $total_qnty[0]->total_qnty;
-                $product->total_price = round($total_qnty[0]->total_price,2);
+                $product->total_qnty = 0;
+                $product->total_price = 0;
+                
+                foreach ($sizeData as $size) {
+                    $product->total_price += $size->qnty * $size->price;
+                    $product->total_qnty += $size->qnty;
+                }
+                $product->total_price = round($product->total_price,2);
 
                 $total_price += $product->total_price;
                 $total_product += $product->total_qnty;
