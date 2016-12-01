@@ -15,6 +15,13 @@
 
 
 
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="app.stokkup.com" />
+        <meta name="twitter:description" content="app.stokkup.com" />
+        <meta name="twitter:image" content="https://app.stokkup.com/assets/images/logos/og_logo.png" />
+
+
+
 
         <title>STOKKUP</title>
 
