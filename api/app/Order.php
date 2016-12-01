@@ -461,8 +461,8 @@ class Order extends Model {
     {
         $whereConditions = ['od.order_id' => $order_id,'od.is_delete' => '1','dp.is_delete' => '1'];
         $listArray = [DB::raw('SUM(dp.sales_total) as total')];
-        $qntyData = DB::table('order_design as od')
-                         ->leftJoin('design_product as dp','dp.design_id','=','od.id')
+        $qntyData = DB::table('design_product as dp')
+                         ->leftJoin('order_design as od','dp.design_id','=','od.id')
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
