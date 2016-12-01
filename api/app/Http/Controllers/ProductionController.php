@@ -89,4 +89,107 @@ class ProductionController extends Controller {
 	    return response()->json(['data'=>$data]);
     }
 
+    public function SchedualBoardData()
+    {
+    	$post = Input::all();
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die();
+    	if(!empty($post['company_id']))
+	    {
+	    	$run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
+	    	$SchedualBoardData = $this->production->SchedualBoardData($post['company_id'],$run_date);
+
+	    	$prev_date = date('Y-m-d', strtotime('-1 day', strtotime($run_date)));
+	    	$next_date = date('Y-m-d', strtotime('+1 day', strtotime($run_date)));
+	    	$current_date = date('F j, Y',strtotime($run_date));
+	    	if(count($SchedualBoardData)>0)
+	    	{
+	    		$success=1;
+	    		$message =GET_RECORDS;
+	    	}
+	    	else
+	    	{
+				$success=2;
+	    		$message =NO_RECORDS;
+	    	}
+	    	$data = array("success"=>$success,"message"=>$message,'SchedualBoardData'=>$SchedualBoardData,'prev_date'=>$prev_date,'next_date'=>$next_date,'current_date'=>$current_date);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+	    return response()->json(['data'=>$data]);
+
+    }
+    
+    public function SchedualBoardweekData()
+    {
+    	$post = Input::all();
+    	if(!empty($post['company_id']))
+	    {
+	    	$run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
+	    	
+	    	$week_start = date('Y-m-d',strtotime("monday this week",strtotime($run_date)));
+	    	$week_end = date('Y-m-d',strtotime("sunday this week",strtotime($run_date)));
+	    	
+	    	$start_day = date('d',strtotime($week_start));
+	    	$end_day = date('d',strtotime($week_end));
+	    	$month = date('F',strtotime($run_date));
+	    	$year = date('Y',strtotime($run_date));
+
+	    	$SchedualBoardweekData = $this->production->SchedualBoardweekData($post['company_id'],$week_start,$week_end);
+	    	$prev_date = date('Y-m-d', strtotime('-2 day', strtotime($week_start)));
+	    	$next_date = date('Y-m-d', strtotime('+2 day', strtotime($week_end)));
+	    	$current_date = $month." ".$start_day."-".$end_day.", ".$year;
+
+	    	if(count($SchedualBoardweekData)>0)
+	    	{
+	    		$success=1;
+	    		$message =GET_RECORDS;
+	    	}
+	    	else
+	    	{
+				$success=2;
+	    		$message =NO_RECORDS;
+	    	}
+	    	$data = array("success"=>$success,"message"=>$message,'SchedualBoardweekData'=>$SchedualBoardweekData,'prev_date'=>$prev_date,'next_date'=>$next_date,'current_date'=>$current_date);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+	    return response()->json(['data'=>$data]);
+
+    }
+    public function SchedualBoardMachineData()
+    {
+    	$post = Input::all();
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die();
+    	if(!empty($post['company_id']))
+	    {
+	    	$machine_id = (!empty($post['machine_id']))?$post['machine_id']:'';
+	    	$run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
+	    	$SchedualBoardMachineData = $this->production->SchedualBoardMachineData($post['company_id'],$run_date,$machine_id);
+
+	    	$prev_date = date('Y-m-d', strtotime('-1 day', strtotime($run_date)));
+	    	$next_date = date('Y-m-d', strtotime('+1 day', strtotime($run_date)));
+	    	$current_date = date('F j, Y',strtotime($run_date));
+	    	if(count($SchedualBoardMachineData)>0)
+	    	{
+	    		$success=1;
+	    		$message =GET_RECORDS;
+	    	}
+	    	else
+	    	{
+				$success=2;
+	    		$message =NO_RECORDS;
+	    	}
+	    	$data = array("success"=>$success,"message"=>$message,'SchedualBoardMachineData'=>$SchedualBoardMachineData,'prev_date'=>$prev_date,'next_date'=>$next_date,'current_date'=>$current_date);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+	    return response()->json(['data'=>$data]);
+    }
+
 }
