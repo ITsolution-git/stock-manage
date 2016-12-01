@@ -666,7 +666,7 @@ class TCPDF {
 	 * @since 5.9.174 (2012-07-25)
 	 * @protected
 	 */
-	protected $header_line_color = array(0,0,0);
+	protected $header_line_color = array(255,255,255);
 
 	/**
 	 * Color for footer text (RGB array).
