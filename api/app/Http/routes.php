@@ -327,3 +327,5 @@ Route::post('production/GetPositionDetails','ProductionController@GetPositionDet
 Route::post('production/GetFilterData','ProductionController@GetFilterData');
 
 Route::post('production/SchedualBoardData','ProductionController@SchedualBoardData');
+Route::post('production/SchedualBoardweekData','ProductionController@SchedualBoardweekData');
+Route::post('production/SchedualBoardMachineData','ProductionController@SchedualBoardMachineData');
