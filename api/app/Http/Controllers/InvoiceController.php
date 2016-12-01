@@ -305,27 +305,23 @@ class InvoiceController extends Controller {
         $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
 
         foreach ($all_design as $design) {
+            
             $data = array('company_id' => $company_id,'id' => $design->id);
             $pos_array = $this->order->getDesignPositionDetail($data);
-            
           
-             $design->positions = array_chunk($pos_array['order_design_position'], 2);
-             
+            $design->positions = array_chunk($pos_array['order_design_position'], 2);
 
             $productData = $this->product->designProduct($data);
-
-
             
             $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
             
             $total_product_qnty = 0;
+
             foreach ($size_data as $size) {
                 $total_product_qnty += $size->qnty;
-               
             }
             
             $design->total_product_qnty = $total_product_qnty;
-
             
             if(!empty($productData['productData'])) {
                 $design->products = $productData['productData'];    
@@ -336,17 +332,12 @@ class InvoiceController extends Controller {
             }
         }
 
-       
-
         $retutn_arr['all_design'] = $all_design;
-        //print_r($retutn_arr);exit;
 
         if($type == 1)
         {
             return $retutn_arr;
         }
-
-
 
         $response = array(
                                 'success' => 1, 
