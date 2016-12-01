@@ -5,7 +5,8 @@
             .module('app.finishingQueue')
             .controller('FinishingQueueController', FinishingQueueController)
             .controller('FinishingUnscheduleController', FinishingUnscheduleController)
-            .controller('FinishingScheduleController', FinishingScheduleController);
+            .controller('FinishingScheduleController', FinishingScheduleController)
+            .controller('FinishingBoardController', FinishingBoardController);
 
     /** @ngInject */
     function FinishingQueueController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
@@ -293,5 +294,141 @@
                 $("#ajax_loader").hide();
             });
         }
+    }
+    function FinishingBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 
+    {
+        var vm = this;
+        $scope.company_id = sessionService.get('company_id');
+        $scope.run_date = AllConstant.currentdate;
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 1; // CAN BE EDIT BY ANYONE FOR NOW
+        }        
+
+        
+        var companyData = {};
+        companyData.table ='machine';
+        companyData.cond = {company_id:$scope.company_id,is_delete:1};
+        $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+        {   
+            if(result.data.success=='1')
+            {   
+               $scope.machine_all = result.data.records;
+            }
+        });
+
+        $scope.SchedualBoardData = function(run_date)
+        {
+            $("#ajax_loader").show();
+            var schedule_data = {};
+            schedule_data.company_id =$scope.company_id;
+            schedule_data.run_date =run_date;
+
+            $http.post('api/public/production/SchedualBoardData',schedule_data).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    $scope.get_data = 1;
+                    $scope.SchedualData = result.data.SchedualBoardData;
+                    $scope.current_date = result.data.current_date;
+                    $scope.prev_date = result.data.prev_date;
+                    $scope.next_date = result.data.next_date;
+                }
+                else if(result.data.success=='2')
+                {
+                    $scope.get_data = 0;
+                    $scope.current_date = result.data.current_date;
+                    $scope.prev_date = result.data.prev_date;
+                    $scope.next_date = result.data.next_date;
+                    notifyService.notify('error',result.data.message);
+                }
+                else
+                {
+                    $scope.get_data = 0;
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+        $scope.SchedualBoardweekData = function(run_date)
+        {
+            $("#ajax_loader").show();
+            var schedule_data = {};
+            schedule_data.company_id =$scope.company_id;
+            schedule_data.run_date =run_date;
+
+            $http.post('api/public/production/SchedualBoardweekData',schedule_data).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    $scope.getweek_data = 1;
+                    $scope.SchedualweekData = result.data.SchedualBoardweekData;
+                    $scope.currentweek_date = result.data.current_date;
+                    $scope.prevweek_date = result.data.prev_date;
+                    $scope.nextweek_date = result.data.next_date;
+                }
+                else if(result.data.success=='2')
+                {
+                    $scope.getweek_data = 0;
+                    $scope.currentweek_date = result.data.current_date;
+                    $scope.prevweek_date = result.data.prev_date;
+                    $scope.nextweek_date = result.data.next_date;
+                    notifyService.notify('error',result.data.message);
+                }
+                else
+                {
+                    $scope.getweek_data = 0;
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+        $scope.SchedualBoardMachineData = function(run_date,machine_id)
+        {
+            //console.log(machine_id);
+            $("#ajax_loader").show();
+            $scope.machineDate = run_date;
+            $scope.machine_id = machine_id;
+            var schedule_data = {};
+            schedule_data.company_id =$scope.company_id;
+            schedule_data.run_date =run_date;
+            schedule_data.machine_id =machine_id;
+
+            $http.post('api/public/production/SchedualBoardMachineData',schedule_data).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    $scope.getmachine_data = 1;
+                    $scope.SchedualmachineData = result.data.SchedualBoardMachineData;
+                    $scope.currentmachine_date = result.data.current_date;
+                    $scope.prevmachine_date = result.data.prev_date;
+                    $scope.nextmachine_date = result.data.next_date;
+                }
+                else if(result.data.success=='2')
+                {
+                    $scope.getmachine_data = 0;
+                    $scope.currentmachine_date = result.data.current_date;
+                    $scope.prevmachine_date = result.data.prev_date;
+                    $scope.nextmachine_date = result.data.next_date;
+                    notifyService.notify('error',result.data.message);
+                }
+                else
+                {
+                    $scope.getmachine_data = 0;
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+        
+        $scope.SchedualBoardData($scope.run_date); // DAY TAB DATA
+        $scope.SchedualBoardweekData($scope.run_date); // WEEKLY TAB DATA
+        $scope.SchedualBoardMachineData($scope.run_date); // MACHINE TAB DATA
     }
 })();
