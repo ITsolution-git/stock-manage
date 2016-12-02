@@ -323,19 +323,19 @@
             }
         });
 
-        $scope.SchedualBoardData = function(run_date)
+        $scope.FinishingBoardData = function(run_date)
         {
             $("#ajax_loader").show();
-            var schedule_data = {};
-            schedule_data.company_id =$scope.company_id;
-            schedule_data.run_date =run_date;
+            var finishing_data = {};
+            finishing_data.company_id =$scope.company_id;
+            finishing_data.run_date =run_date;
 
-            $http.post('api/public/production/SchedualBoardData',schedule_data).success(function(result) 
+            $http.post('api/public/finishing/FinishingBoardData',finishing_data).success(function(result) 
             {
                 if(result.data.success=='1')
                 {
                     $scope.get_data = 1;
-                    $scope.SchedualData = result.data.SchedualBoardData;
+                    $scope.SchedualData = result.data.FinishingBoardData;
                     $scope.current_date = result.data.current_date;
                     $scope.prev_date = result.data.prev_date;
                     $scope.next_date = result.data.next_date;
@@ -356,19 +356,19 @@
                 $("#ajax_loader").hide();
             });
         }
-        $scope.SchedualBoardweekData = function(run_date)
+        $scope.FinishingBoardweekData = function(run_date)
         {
             $("#ajax_loader").show();
-            var schedule_data = {};
-            schedule_data.company_id =$scope.company_id;
-            schedule_data.run_date =run_date;
+            var finishing_data = {};
+            finishing_data.company_id =$scope.company_id;
+            finishing_data.run_date =run_date;
 
-            $http.post('api/public/production/SchedualBoardweekData',schedule_data).success(function(result) 
+            $http.post('api/public/finishing/FinishingBoardweekData',finishing_data).success(function(result) 
             {
                 if(result.data.success=='1')
                 {
                     $scope.getweek_data = 1;
-                    $scope.SchedualweekData = result.data.SchedualBoardweekData;
+                    $scope.SchedualweekData = result.data.FinishingBoardweekData;
                     $scope.currentweek_date = result.data.current_date;
                     $scope.prevweek_date = result.data.prev_date;
                     $scope.nextweek_date = result.data.next_date;
@@ -389,23 +389,23 @@
                 $("#ajax_loader").hide();
             });
         }
-        $scope.SchedualBoardMachineData = function(run_date,machine_id)
+        $scope.FinishingBoardMachineData = function(run_date,machine_id)
         {
             //console.log(machine_id);
             $("#ajax_loader").show();
             $scope.machineDate = run_date;
             $scope.machine_id = machine_id;
-            var schedule_data = {};
-            schedule_data.company_id =$scope.company_id;
-            schedule_data.run_date =run_date;
-            schedule_data.machine_id =machine_id;
+            var finishing_data = {};
+            finishing_data.company_id =$scope.company_id;
+            finishing_data.run_date =run_date;
+            finishing_data.machine_id =machine_id;
 
-            $http.post('api/public/production/SchedualBoardMachineData',schedule_data).success(function(result) 
+            $http.post('api/public/finishing/FinishingBoardMachineData',finishing_data).success(function(result) 
             {
                 if(result.data.success=='1')
                 {
                     $scope.getmachine_data = 1;
-                    $scope.SchedualmachineData = result.data.SchedualBoardMachineData;
+                    $scope.SchedualmachineData = result.data.FinishingBoardMachineData;
                     $scope.currentmachine_date = result.data.current_date;
                     $scope.prevmachine_date = result.data.prev_date;
                     $scope.nextmachine_date = result.data.next_date;
@@ -427,8 +427,8 @@
             });
         }
         
-        $scope.SchedualBoardData($scope.run_date); // DAY TAB DATA
-        $scope.SchedualBoardweekData($scope.run_date); // WEEKLY TAB DATA
-        $scope.SchedualBoardMachineData($scope.run_date); // MACHINE TAB DATA
+        $scope.FinishingBoardData($scope.run_date); // DAY TAB DATA
+        $scope.FinishingBoardweekData($scope.run_date); // WEEKLY TAB DATA
+        $scope.FinishingBoardMachineData($scope.run_date); // MACHINE TAB DATA
     }
 })();

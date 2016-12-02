@@ -3,7 +3,7 @@
         <md-content class="shipping-custom-tab transparent-bg schedule-board-tab">
             <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
                 <div class="table-title white-bg bottom-shadow" flex=100 layout="row" layout-align="space-between center">
-                    <div class="table-title-text pull-left" flex=70 class="cursor-p">Production Schedule Board</div>
+                    <div class="table-title-text pull-left" flex=70 class="cursor-p">Finishing Schedule Board</div>
                     <div class="pull-right boardtxt" flex=30><span class="text-uppercase"><b>Board views:</b></span></div>
                     
                 </div>
@@ -17,15 +17,15 @@
                             		<div class="prod-board-details">
                             			<div flex=75 class="full-row pull-left text-center p-20">
                             				<div class="date-slider mt-5">
-                            					<a href="#" ><i ng-click="SchedualBoardData(prev_date)" class="fa fa-angle-left"></i></a>
+                            					<a href="#" ><i ng-click="FinishingBoardData(prev_date)" class="fa fa-angle-left"></i></a>
                             					<span class="curr-seleceted-date">{{current_date}}</span>
-                            					<a href="#" ><i ng-click="SchedualBoardData(next_date)" class="fa fa-angle-right"></i></a>
+                            					<a href="#" ><i ng-click="FinishingBoardData(next_date)" class="fa fa-angle-right"></i></a>
                             				</div>
                             			</div>
                             			<div flex=25 class="pull-right">
                             				<md-input-container class="md-block date-input scheduleboarddate">
                             					
-							                    <input kendo-date-picker aria-label="true" ui-event="{ change : 'SchedualBoardData($event.target.value)' }" k-ng-model="dateObject1">
+							                    <input kendo-date-picker aria-label="true" ui-event="{ change : 'FinishingBoardData($event.target.value)' }" k-ng-model="dateObject1">
 							                </md-input-container>
                             			</div>
                             		</div>
@@ -62,7 +62,7 @@
 					                        			<div ng-repeat="shift in schedule.machine_data" class="full-row pull-left p-10">
 					                        				<h4 class="text-center">{{shift.shift_name}}</h4>
 					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data">
-					                        					{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}
+					                        					{{positions.name}} - #{{positions.display_number}} - {{positions.category_name}}
 					                        				</div>
 					                        			</div>
 
@@ -94,15 +94,15 @@
                             		<div class="prod-board-details">
                             			<div flex=75 class="full-row pull-left text-center p-20">
                             				<div class="date-slider mt-5">
-                            					<a href="#" ><i ng-click="SchedualBoardweekData(prevweek_date)" class="fa fa-angle-left"></i></a>
+                            					<a href="#" ><i ng-click="FinishingBoardweekData(prevweek_date)" class="fa fa-angle-left"></i></a>
                             					<span class="curr-seleceted-date">{{currentweek_date}}</span>
-                            					<a href="#" ><i ng-click="SchedualBoardweekData(nextweek_date)" class="fa fa-angle-right"></i></a>
+                            					<a href="#" ><i ng-click="FinishingBoardweekData(nextweek_date)" class="fa fa-angle-right"></i></a>
                             				</div>
                             			</div>
                             			<div flex=40 class="pull-right">
                             				<md-input-container class="md-block date-input scheduleboarddate">
                             					
-							                    <input kendo-date-picker  aria-label="true" ui-event="{ change : 'SchedualBoardweekData($event.target.value)' }"  k-ng-model="dateObject2">
+							                    <input kendo-date-picker  aria-label="true" ui-event="{ change : 'FinishingBoardweekData($event.target.value)' }"  k-ng-model="dateObject2">
 							                </md-input-container>
                             			</div>
                             		</div>
@@ -140,7 +140,7 @@
 					                        			<div ng-repeat="shift in scheduleweek.date_data" class="full-row pull-left p-10">
 					                        				<h4 class="text-center">{{shift.shift_name}}</h4>
 					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data">
-					                        					{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}
+					                        					{{positions.name}} - #{{positions.display_number}} - {{positions.category_name}}
 					                        				</div>
 					                        			</div>
 
@@ -173,7 +173,7 @@
                             		<div class="prod-board-details">
                             			<div flex=20 class="full-row pull-left text-center p-20">
                             				<div class="date-slider mt-5">
-                            					 <md-select aria-label="true" ng-model="machine_id" name="machine_id" ng-change='SchedualBoardMachineData(machineDate,machine_id)' >
+                            					 <md-select aria-label="true" ng-model="machine_id" name="machine_id" ng-change='FinishingBoardMachineData(machineDate,machine_id)' >
 							                        <md-option value="0">
 							                            Select Machine
 							                        </md-option>
@@ -185,14 +185,14 @@
                             			</div>
                             			<div flex=50 class="full-row pull-left text-center p-20">
                             				<div class="date-slider mt-5">
-                            					<a href="#" ><i ng-click="SchedualBoardMachineData(prevmachine_date,machine_id)" class="fa fa-angle-left"></i></a>
+                            					<a href="#" ><i ng-click="FinishingBoardMachineData(prevmachine_date,machine_id)" class="fa fa-angle-left"></i></a>
                             					<span class="curr-seleceted-date">{{currentmachine_date}}</span>
-                            					<a href="#" ><i ng-click="SchedualBoardMachineData(nextmachine_date,machine_id)" class="fa fa-angle-right"></i></a>
+                            					<a href="#" ><i ng-click="FinishingBoardMachineData(nextmachine_date,machine_id)" class="fa fa-angle-right"></i></a>
                             				</div>
                             			</div>
                             			<div flex=30 class="pull-right">
                             				<md-input-container class="md-block date-input scheduleboarddate">
-							                    <input kendo-date-picker  aria-label="true" ui-event="{ change : 'SchedualBoardMachineData($event.target.value,machine_id)' }"  k-ng-model="dateObject3">
+							                    <input kendo-date-picker  aria-label="true" ui-event="{ change : 'FinishingBoardMachineData($event.target.value,machine_id)' }"  k-ng-model="dateObject3">
 							                </md-input-container>
                             			</div>
                             		</div>
@@ -209,7 +209,7 @@
 						        		<div class="machine-full-slot">
 		                        			<div class="full-row pull-left p-10">
 		                        				<div class="shift-post-card" ng-repeat="positions in Schedualmachine.shift_data">
-		                        				{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}
+		                        				{{positions.name}} - #{{positions.display_number}} - {{positions.category_name}}
 		                        				</div>
 		                        			</div>
 		                        		</div>
@@ -226,7 +226,7 @@
 						        		<div class="machine-full-slot">
 		                        			<div class="full-row pull-left p-10">
 		                        				<div class="shift-post-card" ng-repeat="positionsall in SchedualmachineData.shift_all">
-		                        				{{positionsall.name}} - #{{positionsall.display_number}} - {{positionsall.position_name}}
+		                        				{{positionsall.name}} - #{{positionsall.display_number}} - {{positionsall.category_name}}
 		                        				</div>
 		                        			</div>
 		                        		</div>

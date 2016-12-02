@@ -177,7 +177,7 @@ class FinishingQueueController extends Controller {
         if(!empty($post['company_id']))
         {
             $run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
-            $FinishingBoardData = $this->production->FinishingBoardData($post['company_id'],$run_date);
+            $FinishingBoardData = $this->finishingQueue->FinishingBoardData($post['company_id'],$run_date);
 
             $prev_date = date('Y-m-d', strtotime('-1 day', strtotime($run_date)));
             $next_date = date('Y-m-d', strtotime('+1 day', strtotime($run_date)));
@@ -217,7 +217,7 @@ class FinishingQueueController extends Controller {
             $month = date('F',strtotime($run_date));
             $year = date('Y',strtotime($run_date));
 
-            $FinishingBoardweekData = $this->production->FinishingBoardweekData($post['company_id'],$week_start,$week_end);
+            $FinishingBoardweekData = $this->finishingQueue->FinishingBoardweekData($post['company_id'],$week_start,$week_end);
             $prev_date = date('Y-m-d', strtotime('-2 day', strtotime($week_start)));
             $next_date = date('Y-m-d', strtotime('+2 day', strtotime($week_end)));
             $current_date = $month." ".$start_day."-".$end_day.", ".$year;
@@ -249,7 +249,7 @@ class FinishingQueueController extends Controller {
         {
             $machine_id = (!empty($post['machine_id']))?$post['machine_id']:'';
             $run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
-            $FinishingBoardMachineData = $this->production->FinishingBoardMachineData($post['company_id'],$run_date,$machine_id);
+            $FinishingBoardMachineData = $this->finishingQueue->FinishingBoardMachineData($post['company_id'],$run_date,$machine_id);
 
             $prev_date = date('Y-m-d', strtotime('-1 day', strtotime($run_date)));
             $next_date = date('Y-m-d', strtotime('+1 day', strtotime($run_date)));
