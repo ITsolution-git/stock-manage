@@ -74,4 +74,90 @@ class FinishingQueue extends Model {
 
         return $finishingData;
     }
+
+    public function FinishingBoardData($company_id,$run_date)
+    {
+        $result = DB::table('finishing_schedule as fs')
+                    ->select('cs.shift_name','mc.machine_name','pgc.item as category_name','ord.display_number','ord.name','fs.*')
+                    ->leftjoin('company_shift as cs','cs.id','=','fs.shift_id')
+                    ->leftjoin('machine as mc','mc.id','=','fs.machine_id')
+                    ->leftjoin('finishing as f','fs.finishing_id','=','f.id')
+                    ->leftjoin('price_grid_charges as pgc','pgc.id','=','f.category_id')
+                    ->leftJoin('order_design as od','od.id','=','f.design_id')
+                    ->leftJoin('orders as ord','ord.id','=','od.order_id')
+                    ->where('od.company_id','=',$company_id)
+                    ->where('fs.run_date','=',$run_date)
+                    ->where('od.is_delete','=','1')
+                    ->where('f.is_delete','=','1')
+                    ->orderBy('f.id','desc')
+                    ->get();
+
+        $ret_array = array();            
+        foreach($result as $key=>$value)
+        {
+            $ret_array[$value->machine_id]['machine_name'] = $value->machine_name;
+            $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_name']=$value->shift_name;
+            $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_data'][$value->finishing_id]=$value;
+        }            
+        return $ret_array;
+    }
+    public function FinishingBoardweekData($company_id,$start_date,$end_date)
+    {
+        //echo $start_date."=".$end_date; die();
+        $result = DB::table('finishing_schedule as fs')
+                    ->select('cs.shift_name','mc.machine_name','pgc.item as category_name','ord.display_number','ord.name','fs.*')
+                    ->leftjoin('company_shift as cs','cs.id','=','fs.shift_id')
+                    ->leftjoin('machine as mc','mc.id','=','fs.machine_id')
+                    ->leftjoin('finishing as f','fs.finishing_id','=','f.id')
+                    ->leftjoin('price_grid_charges as pgc','pgc.id','=','f.category_id')
+                    ->leftJoin('order_design as od','od.id','=','f.design_id')
+                    ->leftJoin('orders as ord','ord.id','=','od.order_id')
+                    ->where('od.company_id','=',$company_id)
+                    ->whereBetween('fs.run_date', [$start_date, $end_date])
+                    ->where('od.is_delete','=','1')
+                    ->where('f.is_delete','=','1')
+                    ->orderBy('fs.run_date','asc')
+                    ->orderBy('ord.id','desc')
+                    ->orderBy('f.id','desc')
+                    ->get();
+
+        $ret_array = array();            
+        foreach($result as $key=>$value)
+        {
+            $ret_array[$value->run_date]['date'] = date('l - m/d/Y',strtotime($value->run_date));
+            $ret_array[$value->run_date]['date_data'][$value->shift_id]['shift_name']=$value->shift_name;
+            $ret_array[$value->run_date]['date_data'][$value->shift_id]['shift_data'][$value->finishing_id]=$value;
+        }            
+        return $ret_array;
+    }
+
+    public function FinishingBoardMachineData($company_id,$run_date,$machine_id)
+    {
+        $where = (!empty($machine_id))?array('fs.machine_id'=>$machine_id):array();
+        $result = DB::table('finishing_schedule as fs')
+                    ->select('cs.shift_name','mc.machine_name','pgc.item as category_name','ord.display_number','ord.name','fs.*')
+                    ->leftjoin('company_shift as cs','cs.id','=','fs.shift_id')
+                    ->leftjoin('machine as mc','mc.id','=','fs.machine_id')
+                    ->leftjoin('finishing as f','fs.finishing_id','=','f.id')
+                    ->leftjoin('price_grid_charges as pgc','pgc.id','=','f.category_id')
+                    ->leftJoin('order_design as od','od.id','=','f.design_id')
+                    ->leftJoin('orders as ord','ord.id','=','od.order_id')
+                    ->where('od.company_id','=',$company_id)
+                    ->where('fs.run_date','=',$run_date)
+                    ->where('od.is_delete','=','1')
+                    ->where($where)
+                    ->where('f.is_delete','=','1')
+                    ->orderBy('ord.id','desc')
+                    ->orderBy('f.id','desc')
+                    ->get();
+
+        $ret_array = array();            
+        foreach($result as $key=>$value)
+        {
+            $ret_array['shift_all'][]=$value;
+            $ret_array['shifts'][$value->shift_id]['shift_name']=$value->shift_name;
+            $ret_array['shifts'][$value->shift_id]['shift_data'][$value->finishing_id]=$value;
+        }            
+        return $ret_array;
+    }
 }
