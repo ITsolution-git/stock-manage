@@ -495,7 +495,7 @@ class PaymentController extends Controller {
         }
         $refId = 'ref' . time();
 
-        if($currdate == $paydate)
+        if($currdate > $paydate)
         {
             // Create the payment data for a credit card
             $creditCard = new AnetAPI\CreditCardType();
@@ -517,7 +517,7 @@ class PaymentController extends Controller {
         //create a transaction
         $transactionRequest = new AnetAPI\TransactionRequestType();
 
-        if($currdate > $paydate)
+        if($currdate == $paydate)
         {
             $transactionRequest->setTransactionType("voidTransaction");
         }
