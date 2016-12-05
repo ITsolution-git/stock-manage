@@ -171,7 +171,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->color_name}}</td>
 			                        <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">@foreach ($product->sizeData as $size){{$size->size}}:(<?php echo number_format($size->qnty); ?>)&nbsp;@endforeach</td>
 			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($product->total_qnty) ?></td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px;line-height:20px;">$<?php echo number_format($product->total_price,2) ?></td>
+			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px;line-height:20px;">$<?php echo number_format($product->total_line_charge,2) ?></td>
 			                    </tr>
 			                     <?php $count++;?>
 			                    @endforeach
