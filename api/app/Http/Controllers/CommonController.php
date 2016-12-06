@@ -1184,6 +1184,7 @@ class CommonController extends Controller {
             $header = array(
                 array('key' => 'machine_name', 'name' => 'Machine Name'),
                 array('key' => 'machine_type', 'name' => 'Machine Type'),
+                array('key' => 'run_rate', 'name' => 'Run Rate'),
                 array('key' => 'color_count', 'name' => 'Color/Head Count'),
                 array('key' => '', 'name' => 'Max Frame Size','sortable' => false),
                 array('key' => '', 'name' => 'Operation Status','sortable' => false),
