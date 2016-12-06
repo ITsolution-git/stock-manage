@@ -265,7 +265,11 @@ class DistributionController extends Controller {
         $total = $this->distribution->getTotalRecieved($post['order_id']);
         $distributed = $this->distribution->getTotalDistributed($post['order_id']);
 
-        if($total == $distributed)
+        if(empty($distributed))
+        {
+            $shipping_status = 1;
+        }
+        else if($total == $distributed)
         {
             $shipping_status = 3;
         }
