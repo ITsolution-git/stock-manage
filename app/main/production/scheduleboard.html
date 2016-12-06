@@ -61,7 +61,7 @@
 				                        			<div class="machine-full-slot">
 					                        			<div ng-repeat="shift in schedule.machine_data" class="full-row pull-left p-10">
 					                        				<h4 class="text-center">{{shift.shift_name}}</h4>
-					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data">
+					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data" ng-click="GetSchedulePositionDetail(positions.position_id)">
 					                        					{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}
 					                        				</div>
 					                        			</div>
@@ -139,7 +139,7 @@
 					                        			<div class="machine-full-slot">
 					                        			<div ng-repeat="shift in scheduleweek.date_data" class="full-row pull-left p-10">
 					                        				<h4 class="text-center">{{shift.shift_name}}</h4>
-					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data">
+					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data" ng-click="GetSchedulePositionDetail(positions.position_id)">
 					                        					{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}
 					                        				</div>
 					                        			</div>
@@ -208,7 +208,7 @@
 						        		</div>
 						        		<div class="machine-full-slot">
 		                        			<div class="full-row pull-left p-10">
-		                        				<div class="shift-post-card" ng-repeat="positions in Schedualmachine.shift_data">
+		                        				<div class="shift-post-card" ng-repeat="positions in Schedualmachine.shift_data" ng-click="GetSchedulePositionDetail(positions.position_id)">
 		                        				{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}
 		                        				</div>
 		                        			</div>
@@ -225,7 +225,7 @@
 						        		</div>
 						        		<div class="machine-full-slot">
 		                        			<div class="full-row pull-left p-10">
-		                        				<div class="shift-post-card" ng-repeat="positionsall in SchedualmachineData.shift_all">
+		                        				<div class="shift-post-card" ng-repeat="positionsall in SchedualmachineData.shift_all" ng-click="GetSchedulePositionDetail(positionsall.position_id)">
 		                        				{{positionsall.name}} - #{{positionsall.display_number}} - {{positionsall.position_name}}
 		                        				</div>
 		                        			</div>
