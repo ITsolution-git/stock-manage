@@ -101,13 +101,6 @@
           <?php 
           }
           ?>
-
-            <hr style="border:1px solid #000;">
-        <tr><td colspan="8"></td></tr>
-        <tr>
-          <td class="align-right font-bold line-height" colspan="7" style=" border-right:1px solid #000;">Total&nbsp;&nbsp;</td>
-          <td class="align-left border-b line-height">&nbsp;&nbsp;<?php if(!empty($company->total_invoice)){ echo $company->total_invoice; } ?></td>
-        </tr>
        
   </table>
 
