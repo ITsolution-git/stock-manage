@@ -526,7 +526,10 @@
                         </div>
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Tax Rate(%)</div>
-                            <span class="ng-binding global-heading-style">{{order.tax_rate | currency : '' : 2}}</span>
+                            <md-input-container flex="50" flex-gt-sm="" class="md-input-has-placeholder pull-right flex-gt-sm flex-50">
+                                    <input aria-label="Tax" ng-model="order.tax_rate" placeholder="" class="text-right ng-pristine ng-valid md-input ng-empty ng-touched" id="input_77" aria-invalid="false" ui-event="{ change : 'updateTax()' }" valid-number>
+                            </md-input-container>
+                            <!-- <span class="ng-binding global-heading-style">{{order.tax_rate | currency : '' : 2}}</span> -->
                         </div>
                         <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                             <div class="ng-binding global-text-style">Order Total</div>

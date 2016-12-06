@@ -778,30 +778,22 @@ public function create_dir($dir_path) {
 
                 $item_price = 0;
                 $line_qty = 0;
+                $unit_cost = 0;
                 foreach($purchase_detail as $pd) {
                     if($pd->qnty > 0)
                     {
                         $price = $pd->price;
-                        if($supplied > 0) {
-                            $sum = 0;
-                        }
-                        else {
-                            $sum = $price + $price_grid->shipping_charge;
-                        }
-                        $avg_garment_cost += $sum;
+                        //$sum = $price + $price_grid->shipping_charge;
+                        $unit_cost += $price * $pd->qnty;
                         $line_qty += $pd->qnty;
                     }
                 }
 
-                if($avg_garment_cost == 0)
-                {
-                    if($supplied > 0) {
-                        $avg_garment_cost = 0;
-                    }
-                    else {
-                        $avg_garment_cost = $price_grid->shipping_charge;
-                    }
+                $avg_garment_cost = $unit_cost/$line_qty;
 
+                if($supplied > 0)
+                {
+                    $avg_garment_cost = 0;
                 }
 
                 if($markup > 0)
