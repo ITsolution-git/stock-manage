@@ -113,5 +113,28 @@ class Distribution extends Model {
 
 		return $result[0]->total;
 	}
+
+	public function getTotalRecieved($order_id)
+	{
+		$total_assigned = DB::table('purchase_order as po')
+                        ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+                        ->select(DB::raw('SUM(pol.qnty_purchased - pol.short) as total'))
+                        ->where('po.order_id','=',$order_id)
+                        ->get();
+                
+        return $total_assigned[0]->total;
+	}
+
+	public function getTotalDistributed($order_id)
+	{
+		$total_distributed = DB::table('shipping as s')
+                            ->leftJoin('product_address_mapping as pam','s.id','=','pam.shipping_id')
+                            ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                            ->select(DB::raw('SUM(pas.distributed_qnty) as distributed'))
+                            ->where('s.order_id','=',$order_id)
+                            ->get();
+                
+       return $total_distributed[0]->distributed;
+	}
 }	
 ?>

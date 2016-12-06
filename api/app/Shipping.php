@@ -304,6 +304,7 @@ class Shipping extends Model {
                     ->leftJoin('color as c','pd.color_id','=','c.id')
                     ->select($listArr)
                     ->where($where)
+                    ->where('pas.distributed_qnty','>','0')
                     ->GroupBy('pd.id')
                     ->get();
         

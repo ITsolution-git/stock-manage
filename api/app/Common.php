@@ -195,7 +195,7 @@ class Common extends Model {
         {
             foreach ($cond as $key => $value) 
             {
-                if(!empty($value))
+                //if(!empty($value))
                 $result =$result ->where($key,'=',$value);
             }
         }
