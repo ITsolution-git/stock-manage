@@ -68,7 +68,7 @@
 
         $scope.getDistributionDetail = function()
         {
-
+            $("#ajax_loader").show();
             var combine_array_id = {};
             combine_array_id.product_id = $scope.product_id;
             combine_array_id.order_id = order_id;
@@ -77,6 +77,7 @@
 
             $http.post('api/public/distribution/getDistAddress',combine_array_id).success(function(result) {
                 
+                $("#ajax_loader").hide();
                 if(result.success == '1') {
                    $scope.addresses = result.addresses;
                    $scope.selected_addresses = result.selected_addresses;
@@ -154,12 +155,16 @@
             combine_array.product_id = $scope.product_id;
             combine_array.order_id = order_id;
             combine_array.client_id = client_id;
+            combine_array.company_id = sessionService.get('company_id')
 //            combine_array.address_ids = $scope.selected_addresses;
             combine_array.address_id = $scope.address_id;
             combine_array.products = $scope.products;
             combine_array.action = action;
 
+            $("#ajax_loader").show();
             $http.post('api/public/distribution/addEditDistribute',combine_array).success(function(result) {
+                
+                $("#ajax_loader").hide();
                 if(result.success == 1) {
                     var data = {"status": "success", "message": result.message}
                     notifyService.notify(data.status, data.message);

@@ -2,11 +2,11 @@
     <div class="tab-view-page simple-table-container stokkup-main-tableview">
          <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
             <div class="table-title-text" class="cursor-p">Finishing Queue</div>
+            <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
         </div>
-        <div class="order-modal-title" ui-sref="app.finishingBoard" layout="row">
+        <!-- <div class="order-modal-title" flex=30 ui-sref="app.finishingBoard" layout="row">
                 <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
-            </div>
-
+            </div> -->
         <div class="inner-full-box">
             <md-content class="mt-30 white-bg p-25">
                 <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
@@ -14,9 +14,9 @@
                         <md-tab label="All" ng-click="getTab('wait')">
                             <div class="ms-responsive-table-wrapper">
                                 <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                    <div class="mr-220 search-block pd15-L srchstickyright" flex=50>
                                         <md-input-container class="md-block" flex-gt-sm>
-                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                            <input ng-model="name" placeholder="Search Finishing..." ui-event="{ change : 'search($event)' }">
                                         </md-input-container>
                                     </div>
                                 </div>
@@ -56,10 +56,10 @@
                         <md-tab label="Unscheduled" ng-click="getTab('progress')">
                             <div class="ms-responsive-table-wrapper">
                                 <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                    <div class="mr-220 search-block pd15-L srchstickyright" flex=50>
                                         <md-input-container class="md-block" flex-gt-sm>
                                             <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
-                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                            <input ng-model="name" placeholder="Search Finishing..." ui-event="{ change : 'search($event)' }">
                                         </md-input-container>
                                     </div>
                                 </div>
@@ -99,10 +99,10 @@
                         <md-tab label="Scheduled" ng-click="getTab('shipped')">
                             <div class="ms-responsive-table-wrapper">
                                 <div layout="row" layout-align="space-between right" class="art-search-cntnr">
-                                    <div class="search-block pd15-L srchstickyright" flex=25>
+                                    <div class="mr-220 search-block pd15-L srchstickyright" flex=50>
                                         <md-input-container class="md-block" flex-gt-sm>
                                             <!-- <label> <md-icon md-font-icon="icon-magnify"></md-icon></label> -->
-                                            <input ng-model="name" placeholder="Search..." ui-event="{ change : 'search($event)' }">
+                                            <input ng-model="name" placeholder="Search Finishing..." ui-event="{ change : 'search($event)' }">
                                         </md-input-container>
                                     </div>
                                 </div>
