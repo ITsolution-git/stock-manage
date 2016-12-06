@@ -304,10 +304,195 @@ class InvoiceController extends Controller {
 
         $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id,'is_delete' => '1'),array());
 
+
+        $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $order_data[0]->price_id),array());
+        $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $order_data[0]->price_id),array());
+        $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $order_data[0]->price_id),array());
+        $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $order_data[0]->price_id),array());
+        $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $order_data[0]->price_id),array());
+
+        $data = array();
+        $data['cond']['company_id'] = $company_id;
+        $miscData = $this->common->getAllMiscDataWithoutBlank($data);
+
+
+
         foreach ($all_design as $design) {
             
             $data = array('company_id' => $company_id,'id' => $design->id);
             $pos_array = $this->order->getDesignPositionDetail($data);
+
+            foreach ($pos_array['order_design_position'] as $position) {
+
+               $position->placement_type_charge = 0;
+
+
+                            if($position->placement_type > 0)
+                                        {
+                                            $placement_type_id =  $position->placement_type;
+                                            $miscData['placement_type'][$placement_type_id]->slug;
+                                            
+                                            if($miscData['placement_type'][$placement_type_id]->slug == 43)
+                                            {
+                                                foreach($price_screen_primary as $primary) {
+                                                    
+                                                    $price_field = 'pricing_'.$position->color_stitch_count.'c';
+
+                                                    if($position->qnty >= $primary->range_low && $position->qnty <= $primary->range_high)
+                                                    {
+                                                        if(isset($primary->$price_field))
+                                                        {
+                                                            $position->placement_type_charge = $primary->$price_field;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            elseif($miscData['placement_type'][$placement_type_id]->slug == 44)
+                                            {
+                                                foreach($price_screen_secondary as $secondary) {
+                                                    
+                                                    $price_field = 'pricing_'.$position->color_stitch_count.'c';
+
+                                                    if($position->qnty >= $secondary->range_low && $position->qnty <= $secondary->range_high)
+                                                    {
+                                                        if(isset($secondary->$price_field))
+                                                        {
+                                                            $position->placement_type_charge = $secondary->$price_field;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            elseif($miscData['placement_type'][$placement_type_id]->slug == 45)
+                                            {
+                                                $switch_id = 0;
+                                                foreach($embroidery_switch_count as $embroidery) {
+                                                    
+                                                    $price_field = 'pricing_'.$position->color_stitch_count.'c';
+
+                                                    if($position->color_stitch_count >= $embroidery->range_low_1 && $position->color_stitch_count <= $embroidery->range_high_1)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_1c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_2 && $position->color_stitch_count <= $embroidery->range_high_2)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_2c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_3 && $position->color_stitch_count <= $embroidery->range_high_3)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_3c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_4 && $position->color_stitch_count <= $embroidery->range_high_4)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_4c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_5 && $position->color_stitch_count <= $embroidery->range_high_5)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_5c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_6 && $position->color_stitch_count <= $embroidery->range_high_6)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_6c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_7 && $position->color_stitch_count <= $embroidery->range_high_7)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_7c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_8 && $position->color_stitch_count <= $embroidery->range_high_8)
+                                                    {
+                                                        $switch_id = $embroidery.id;
+                                                        $embroidery_field = 'pricing_8c';
+                                                    }
+                                                    if($position->color_stitch_count >= $embroidery->range_low_9 && $position->color_stitch_count <= $embroidery->range_high_9)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_9c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_10 && $position->color_stitch_count <= $embroidery->range_high_10)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_10c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_11 && $position->color_stitch_count <= $embroidery->range_high_11)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_11c';
+                                                    }
+                                                    elseif($position->color_stitch_count >= $embroidery->range_low_12 && $position->color_stitch_count <= $embroidery->range_high_12)
+                                                    {
+                                                        $switch_id = $embroidery->id;
+                                                        $embroidery_field = 'pricing_12c';
+                                                    }
+                                                }
+
+                                                if($switch_id > 0)
+                                                {
+                                                    $price_screen_embroidery = $this->common->GetTableRecords('price_screen_embroidery',array('embroidery_switch_id' => $switch_id),array());
+
+                                                    foreach ($price_screen_embroidery as $embroidery2) {
+                                                        
+                                                        if($position->qnty >= $embroidery2->range_low && $position->qnty <= $embroidery2->range_high)
+                                                        {
+                                                            $position->placement_type_charge = $embroidery2->$embroidery_field;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            elseif($miscData['placement_type'][$placement_type_id]->slug == 46)
+                                            {
+                                                if($position->dtg_size > 0 && $position->dtg_on > 0)
+                                                {
+                                                    $dtg_size_id =  $position->dtg_size;
+                                                    $miscData['dir_to_garment_sz'][$dtg_size_id]->slug;
+
+                                                    $dtg_on_id = $position->dtg_on;
+                                                    $miscData['direct_to_garment'][$dtg_on_id]->slug;
+
+                                                    if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 17 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                                        $garment_field = 'pricing_1c';
+                                                    }
+                                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 17 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                                        $garment_field = 'pricing_2c';
+                                                    }
+                                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 18 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                                        $garment_field = 'pricing_3c';
+                                                    }
+                                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 18 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                                        $garment_field = 'pricing_4c';
+                                                    }
+                                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 19 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                                        $garment_field = 'pricing_5c';
+                                                    }
+                                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 19 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                                        $garment_field = 'pricing_6c';
+                                                    }
+                                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 20 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
+                                                        $garment_field = 'pricing_7c';
+                                                    }
+                                                    else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 20 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
+                                                        $garment_field = 'pricing_8c';
+                                                    }
+
+                                                    foreach($price_direct_garment as $garment) {
+                                                        
+                                                        if($position->qnty >= $garment->range_low && $position->qnty <= $garment->range_high)
+                                                        {
+                                                            $position->placement_type_charge = $garment->$garment_field;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                    }
+
+               
           
             $design->positions = array_chunk($pos_array['order_design_position'], 2);
 
