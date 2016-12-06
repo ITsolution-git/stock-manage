@@ -67,8 +67,8 @@
             <th width="10%" class="align-center font-bold" height="15">Orderd</th>
             <th width="10%" class="align-center font-bold" height="15">Received</th>
             <th width="10%" class="align-center font-bold" height="15">Defective</th>
-            <th width="10%"  class="align-center font-bold" height="15">Unit Price</th>
-            <th width="10%"  class="align-center font-bold" height="15">Unit Total</th>
+            <th width="10%"  class="align-center font-bold" height="15">Short</th>
+            <th width="10%"  class="align-center font-bold" height="15">Over</th>
             
         </tr>
         <?php foreach($receive_data as $key_main=>$value_main)
@@ -85,8 +85,8 @@
                   <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->qnty_ordered))?$value->qnty_ordered:0; ?></td>
                   <td height="20" class="align-center  line-height border-b" ><?php echo (!empty($value->qnty_purchased))?$value->qnty_purchased:0; ?></td>
                   <td height="20" class="align-center  line-height border-b" ><?php echo (!empty($value->short))?$value->short:0; ?></td>
-                  <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->unit_price))?"$".$value->unit_price:0; ?></td>
-                  <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->line_total))?"$".$value->line_total:0; ?></td>
+                  <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->short_unit))?$value->short_unit:0; ?></td>
+                  <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->over_unit))?$value->over_unit:0; ?></td>
                   
               </tr>
             <?php $count++; } ?>
