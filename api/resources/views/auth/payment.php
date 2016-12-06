@@ -146,7 +146,7 @@
     <input type="hidden" name="company_id" id="company_id" value="<?php echo $orderArray->company_id ?>">
     <input type="hidden" name="ltp_id" id="ltp_id" value="<?php echo $orderArray->ltp_id ?>">
     
-    <h4 class="stokkup-title-h4">Link to Pay - INV-<?php echo $orderArray->order_id ?> Balance Amount to pay : $<?php echo $orderArray->balance_due ?></h4>
+    <h4 class="stokkup-title-h4">Link to Pay - INV-<?php echo $orderArray->order_id ?> Balance Amount to pay : $<?php echo round($orderArray->balance_due,2) ?></h4>
     <?php
     if(isset($orderArray->payment_terms)){
     ?>
