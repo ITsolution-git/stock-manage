@@ -241,6 +241,9 @@ md-menu-content {
 .search-block md-input-container {
   margin: 0 10px 0 0;
   padding: 0; }
+.mr-220 {
+  margin-right: 220px;
+}
   .search-block md-input-container.md-input-focused label {
     display: none; }
   .search-block md-input-container .top-srch-label {

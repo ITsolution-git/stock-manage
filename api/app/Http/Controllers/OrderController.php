@@ -1351,10 +1351,7 @@ class OrderController extends Controller {
         }
         $this->common->UpdateTableRecords('design_product',array('design_id' => $post['design_id'],'product_id' => $post['productData']['id']),$update_arr);
 
-        if($post['productData']['override'] == 0 || $post['productData']['override'] == '')
-        {
-            $return = app('App\Http\Controllers\ProductController')->orderCalculation($post['design_id']);
-        }
+        $this->calculateAll($post['order_id'],$post['company_id']);
 
         $data = array("success"=>1);
         return response()->json(["data" => $data]);

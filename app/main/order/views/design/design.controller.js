@@ -728,6 +728,7 @@
             override_data['productData'] = $scope.productData[product_id];
             override_data['company_id'] = sessionService.get('company_id');
             override_data['design_id'] = $scope.design_id;
+            override_data['order_id'] = $scope.order_id;
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();

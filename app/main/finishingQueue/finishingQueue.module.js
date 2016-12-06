@@ -25,7 +25,20 @@
                         controller : 'FinishingQueueController as vm'
                     }
                 }
-            })
+            }).state('app.finishingBoard', {
+                url: '/finishingBoard',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/finishingQueue/finishingBoard.html',
+                        controller: 'FinishingBoardController as vm'
+                    }
+                },resolve: {
+                    checksession : function (sessionService)
+                    {
+                        return sessionService.AccessService('ALL','true');
+                    }
+                }
+        })
             ;
 
         // Translation
