@@ -67,10 +67,10 @@
 
         $scope.GetPodata = function ()
         {
-            $("#ajax_loader").show();
+            //$("#ajax_loader").show();
             $http.get('api/public/purchase/GetPoReceived/'+$scope.display_number+'/'+$scope.company_id).success(function(result) 
             {
-                $("#ajax_loader").hide();
+                
                 if(result.data.success=='1')
                 {
                     $scope.po_data = result.data.records.po_data;
@@ -90,6 +90,7 @@
                     $state.go('app.receiving');
                     return false;
                 }
+                //$("#ajax_loader").hide();
             });
         }
         $scope.GetPodata();
@@ -169,7 +170,7 @@
         {
         
             if($scope.allow_access == 0){return false;}
-            $("#ajax_loader").show();
+            //$("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
                 controller:function ($scope, params)
@@ -178,7 +179,7 @@
                     
                     $scope.main_po =  $scope.params.po_data;
 
-                    $("#ajax_loader").hide();
+                    //$("#ajax_loader").hide();
                     $scope.UpdateTableField = function(field_name,field_value,extra)
                     {
                         var UpdateArray = {};
@@ -196,7 +197,7 @@
 
                         UpdateArray.cond = {po_id: $scope.params.po_id};
                         UpdateArray.date_field = extra;
-                        $("#ajax_loader").show();
+                        //$("#ajax_loader").show();
                        // console.log(UpdateArray); return false;
                         $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                             if(result.data.success=='1')
@@ -209,7 +210,7 @@
                                 notifyService.notify('error', result.data.message);
                                // $scope.closeDialog();
                             }
-                            $("#ajax_loader").hide();
+                           // $("#ajax_loader").hide();
                         });
                     }
                     $scope.closeDialog = function() 
