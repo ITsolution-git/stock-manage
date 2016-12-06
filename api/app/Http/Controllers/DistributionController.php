@@ -247,35 +247,6 @@ class DistributionController extends Controller {
             }
         }
 
-        /*$size_distributed_data = $this->common->GetTableRecords('product_address_size_mapping',array('distributed_qnty' => '0'));
-
-        if(!empty($size_distributed_data))
-        {
-            foreach ($size_distributed_data as $product_address) {
-
-                $size_address_data = $this->common->GetTableRecords('product_address_mapping',array('id' => $product_address->product_address_id));
-                $this->common->DeleteTableRecords('product_address_mapping',array('id' => $product_address->product_address_id));
-
-                foreach ($size_address_data as $adress_data) {
-                    $this->common->DeleteTableRecords('shipping',array('id' => $adress_data->shipping_id));
-                }
-            }
-        }*/
-
-        $total = $this->distribution->getTotalRecieved($post['order_id']);
-        $distributed = $this->distribution->getTotalDistributed($post['order_id']);
-
-        if($total == $distributed)
-        {
-            $shipping_status = 3;
-        }
-        else
-        {
-            $shipping_status = 2;
-        }
-
-        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('shipping_status' => $shipping_status));
-
         $message = 'Product allocated successfully';
 
         $response = array('success'=>1,'message'=>$message);
