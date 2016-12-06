@@ -117,7 +117,7 @@
                             </div>
                             <div class="box-typ3" ng-repeat="product in unshippedProducts">
                                 <div layout="row" flex="100">
-                                    <div layout="colum" flex="10" class="align-M align-self-C text-center">
+                                    <div layout="colum" flex="10" class="align-M align-self-C text-center" ng-click="updateShipping(product)">
                                         <a href="#" class="icon icon-arrow-left font-18"></a>
                                     </div>
                                     <div layout="column" flex="90">
@@ -153,7 +153,7 @@
                                                 </div>
                                                 <div layout="column" flex="60" class="pd10 bdr-1L">
                                                     <md-input-container class="md-block md-input-container1" flex-gt-sm>
-                                                        <input aria-label="distributed_qnty" ng-model="product.distributed_qnty" ui-event="{ change : 'updateShipping(product)' }" only-number>
+                                                        <input aria-label="distributed_qnty" ng-model="product.distributed_qnty" only-number>
                                                     </md-input-container>
                                                     <div class="font-13 gray-text text-center">Qty to Distribute</div>
                                                 </div>

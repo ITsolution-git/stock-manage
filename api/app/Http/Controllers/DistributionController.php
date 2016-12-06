@@ -175,7 +175,8 @@ class DistributionController extends Controller {
 
         if(empty($shipping_data))
         {
-            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+            $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'company_id' => $post['company_id']));
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
         }
         else
@@ -245,6 +246,35 @@ class DistributionController extends Controller {
                 $this->common->UpdateTableRecords('purchase_detail',array('id'=>$product['id']),array('remaining_qnty' => $remaining_qnty));
             }
         }
+
+        /*$size_distributed_data = $this->common->GetTableRecords('product_address_size_mapping',array('distributed_qnty' => '0'));
+
+        if(!empty($size_distributed_data))
+        {
+            foreach ($size_distributed_data as $product_address) {
+
+                $size_address_data = $this->common->GetTableRecords('product_address_mapping',array('id' => $product_address->product_address_id));
+                $this->common->DeleteTableRecords('product_address_mapping',array('id' => $product_address->product_address_id));
+
+                foreach ($size_address_data as $adress_data) {
+                    $this->common->DeleteTableRecords('shipping',array('id' => $adress_data->shipping_id));
+                }
+            }
+        }*/
+
+        $total = $this->distribution->getTotalRecieved($post['order_id']);
+        $distributed = $this->distribution->getTotalDistributed($post['order_id']);
+
+        if($total == $distributed)
+        {
+            $shipping_status = 3;
+        }
+        else
+        {
+            $shipping_status = 2;
+        }
+
+        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('shipping_status' => $shipping_status));
 
         $message = 'Product allocated successfully';
 
