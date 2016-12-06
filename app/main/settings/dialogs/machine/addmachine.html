@@ -25,6 +25,19 @@
                                 </div>
                             </div>
                         </md-input-container>
+                         <!-- <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                            <input placeholder="Run Rate *" required name="run_rate"  ng-model="machine.run_rate" valid-number>
+                            <div ng-messages="employeeform.run_rate.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container> -->
+
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                            <input placeholder="Run Rate"   ng-model="machine.run_rate" valid-number>
+                        </md-input-container>
+
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
                             <input placeholder="Machine Name *" required name="machine_name"  ng-model="machine.machine_name">
                             <div ng-messages="employeeform.machine_name.$error" role="alert" multiple>
