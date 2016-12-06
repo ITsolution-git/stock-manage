@@ -173,6 +173,11 @@
 				var ret_array = ['purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals'];
 				hide_menu(ret_array);
 			}
+			else if(role=='SM')
+			{
+				var ret_array = ['settings','admin','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','order'];
+				hide_menu(ret_array);
+			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
 			{
 				var ret_array = ['admin','settings.approvals'];
