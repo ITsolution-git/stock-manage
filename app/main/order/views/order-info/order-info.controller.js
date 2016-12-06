@@ -452,6 +452,19 @@
             }
         }
 
+        $scope.updateTax = function()
+        {
+            var UpdateArray = {};
+            UpdateArray.table ='orders';
+            UpdateArray.data = {tax_rate:$scope.order.tax_rate};
+            UpdateArray.cond = {id:$scope.order_id};
+
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+            {
+                $scope.calculateAll($scope.order_id,$scope.company_id);
+            });
+        }
+
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
         {
             var vm = this;
