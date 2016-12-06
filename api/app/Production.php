@@ -147,7 +147,7 @@ class Production extends Model {
     {
 
        $positionInfo = DB::table('order_design_position as odp')
-                        ->select('cs.shift_name','odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+                        ->select('ord.display_number as order_id','ord.name as order_name','cs.shift_name','odp.image_1','odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','mt2.value as production_type','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','ass.approval','ass.screen_active','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ass.screen_date, "%m/%d/%Y") as screen_date'),DB::raw('DATE_FORMAT(ass.production_date, "%m/%d/%Y") as production_date'),DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
                         ->leftjoin('order_design as od','odp.design_id','=','od.id')
                         ->leftjoin('orders as ord','ord.id','=','od.order_id')
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
@@ -158,6 +158,7 @@ class Production extends Model {
                         ->leftjoin('artjob_screencolors as acol','ass.id','=','acol.screen_id')
                         ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
                         ->leftjoin('misc_type as mt1','mt1.id','=','acol.inq')
+                        ->leftjoin('misc_type as mt2','mt2.id','=','odp.placement_type')
                         ->leftjoin('color as col','col.id','=','acol.color_name')
                         ->where('odp.id','=',$PositionId)
                         ->get();
@@ -166,6 +167,11 @@ class Production extends Model {
                 array_walk_recursive($value, function(&$item) {
                             $item = str_replace(array('00/00/0000'),array(''), $item);
                         });
+                if($value->approval==1){$value->screen_icon = '2';} 
+                elseif($value->screen_active=='1'){$value->screen_icon='1';} 
+                else{$value->screen_icon='0';}
+                $value->garment = $this->CheckWarehouseQuantity($value->position_id);
+                $value->image_1= file_exists(FILEUPLOAD.$company_id.'/order_design_position/'.$PositionId.'/'.$value->image_1)?UPLOAD_PATH.$company_id.'/order_design_position/'.$PositionId.'/'.$value->image_1:'';
         }
         return $positionInfo;
     }
@@ -246,7 +252,7 @@ class Production extends Model {
     public function SchedualBoardData($company_id,$run_date)
     {
         $result = DB::table('position_schedule as ps')
-                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->select('cs.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id')
                     ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
