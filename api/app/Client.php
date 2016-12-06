@@ -123,6 +123,15 @@ class Client extends Model {
                   ->where('cd.is_deleted','=','1')
                   ->get();
 
+        foreach ($result as $key => $value) 
+        {
+          $value->fulladdress  = !empty($value->address2)?$value->address2." ":'';
+          $value->fulladdress .= !empty($value->address)?$value->address.",":'' ; 
+          $value->fulladdress .= !empty($value->city)?$value->city.", ":''; 
+          $value->fulladdress .= !empty($value->state_name)?$value->state_name.", ":'';
+          $value->fulladdress .= !empty($value->zipcode)?$value->zipcode.", ":'';
+          $value->fulladdress .= !empty($value->country)?$value->country:'';
+        }         
       
       $retArray = array('result'=>$result);
       //echo "<pre>"; print_r($retArray); echo "</pre>"; die;
