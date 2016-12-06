@@ -345,6 +345,42 @@
             }
         });
 
+        $scope.openEditPopup = function(path,param)
+        {
+            // PATH WILL BE SET AFTER MAIN WITHOUT /
+            var edit_params = {data:param,flag:'edit'};
+            sessionService.openEditPopup($scope,path,edit_params,'position_schedule');
+        }
+        // RETURN FUNCTION FROM POPUP.
+        $scope.returnFunction = function()
+        {
+            //console.log(123);
+            $scope.reloadCallback();
+        }
+
+
+
+        $scope.GetSchedulePositionDetail = function(position_id)
+        {
+            //$("#ajax_loader").hide();
+            var companyData = {company_id:$scope.company_id,position_id:position_id};
+
+            $http.post('api/public/production/GetSchedulePositionDetail',companyData).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    $scope.PositionDetail = result.data.PositionDetail;
+                    $scope.GarmentDetail = result.data.GarmentDetail;
+                    $scope.openEditPopup('production/view/scheduleposition_popup.html',$scope);
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+
         $scope.SchedualBoardData = function(run_date)
         {
             $("#ajax_loader").show();
@@ -448,7 +484,7 @@
                 $("#ajax_loader").hide();
             });
         }
-        
+
         $scope.SchedualBoardData($scope.run_date); // DAY TAB DATA
         $scope.SchedualBoardweekData($scope.run_date); // WEEKLY TAB DATA
         $scope.SchedualBoardMachineData($scope.run_date); // MACHINE TAB DATA
