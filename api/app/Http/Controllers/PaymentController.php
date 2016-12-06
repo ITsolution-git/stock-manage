@@ -642,6 +642,7 @@ class PaymentController extends Controller {
 
           if($data['orderArray']->payment_terms == 1){
                 $data['orderArray']->payment_terms = '50% upfront and 50% on shipping';
+                $data['orderArray']->balance_due = $data['orderArray']->balance_due / 2;
           }else if($data['orderArray']->payment_terms == 100){
                 $data['orderArray']->payment_terms = '100% on Shipping';
           }else if($data['orderArray']->payment_terms == 15){
@@ -649,6 +650,7 @@ class PaymentController extends Controller {
           }else if($data['orderArray']->payment_terms == 30){
                 $data['orderArray']->payment_terms = 'Net 30';
           }
+
         
           //if(($curtime-$time) > 86400) {     //86400 seconds
             //echo "Link expired";
