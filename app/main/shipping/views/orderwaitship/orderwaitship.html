@@ -62,7 +62,7 @@
                                             <md-checkbox aria-label="Select"></md-checkbox>
                                         </div> -->
                                         <div layout="column" flex="100">
-                                            <div layout-wrap="" layout="row" class="layout-wrap layout-row m-b-30">
+                                            <div layout-wrap="" layout="row" class="layout-wrap layout-row">
                                                 <!-- <div class="trans-box">
                                                     <div>Size Group</div>
                                                     <span class="ng-binding">{{ item.misc_value }}</span>
@@ -78,7 +78,10 @@
                                                     <div>Color</div>
                                                     <span class="font-14 ng-binding">{{ item.color_name }}</span> </div>
                                             </div>
-                                            <div layout="row" flex="100" class="m-t-20">
+                                            <div layout="colum" flex="10" class="align-R" ng-click="unAllocateProduct(item)">
+                                                <a href="#" class="icon icon-arrow-right font-18"></a>
+                                            </div>
+                                            <div layout="row" flex="100">
                                                 <div layout="column" flex="100">
                                                     <div class="pt-20 global-text">Quantity to distribute to location</div>
                                                     <div class="search-block" flex=40>
@@ -88,16 +91,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- <div layout="row" flex="100">
-                                                <div layout="column" flex="40" class="pd10">
-                                                    <div class="font-18 text-center">{{ orders.qtyOrdered }}</div>
-                                                    <div class="font-13 gray-text text-center">Qty Ordered</div>
-                                                </div>
-                                                <div layout="column" flex="60" class="pd10 bdr-1L">
-                                                    <div class="font-18 text-center">{{ orders.remainingDistribute }}</div>
-                                                    <div class="font-13 gray-text text-center">Remaining to Distribute</div>
-                                                </div>
-                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
