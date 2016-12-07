@@ -233,7 +233,7 @@ class InvoiceController extends Controller {
         {   
                 
             
-                if($order_data[0]->date_shipped != '0000-00-00') {
+                if($order_data[0]->date_shipped != '0000-00-00' && $order_data[0]->date_shipped != NULL) {
                     $order_data[0]->date_shipped = date("m/d/Y", strtotime($order_data[0]->date_shipped));
                 }
                 else {
