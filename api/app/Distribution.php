@@ -27,7 +27,7 @@ class Distribution extends Model {
 
 	public function getDistSizeByProduct($product_id,$design_product_id)
 	{
-		$listArr = ['pd.id','pd.size','pd.distributed_qnty',DB::raw('SUM(pol.qnty_purchased - pol.short) as qnty_purchased'),'pd.remaining_qnty','pas.product_address_id'];
+		$listArr = ['pd.id','pd.size','pd.qnty as total_qnty','pd.distributed_qnty',DB::raw('SUM(pol.qnty_purchased - pol.short) as qnty_purchased'),'pd.remaining_qnty','pas.product_address_id'];
 		$where = ['pd.product_id' => $product_id];
 
 		$result = DB::table('purchase_detail as pd')
@@ -70,9 +70,10 @@ class Distribution extends Model {
 
 	public function getProductByAddress($id)
 	{
-		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id'];
+		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id',DB::raw('SUM(pol.qnty_purchased - pol.short) as qnty_purchased')];
 
 		$result = DB::table('purchase_detail as pd')
+					->leftJoin('purchase_order_line as pol','pol.purchase_detail','=','pd.id')
 					->leftJoin('product_address_size_mapping as pas','pd.id','=','pas.purchase_detail_id')
 					->select($listArr)
 					->where('pas.product_address_id','=',$id)

@@ -189,11 +189,11 @@ class ShippingController extends Controller {
     public function CreateBoxShipment()
     {
         $post = Input::all();
-        $box_arr = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $post[0]['shipping_id']),array());
+        $box_arr = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $post['shipping_items'][0]['shipping_id']),array());
 
         if(empty($box_arr))
         {
-            foreach ($post as $value) {
+            foreach ($post['shipping_items'] as $value) {
                 if($value['qnty'] < $value['max_pack'])
                 {
                     $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['qnty'], 'actual' => $value['qnty'], 'md' => '0', 'spoil' => '0');
@@ -202,21 +202,13 @@ class ShippingController extends Controller {
                 }
                 else
                 {
-                    //print_r($value);exit;
                     $remaining_qty = $value['qnty'] % $value['max_pack'];
                     $div2 = $value['qnty'] / $value['max_pack'];
                     $main_qty = ceil($div2);
-//                    print_r($main_qty);exit;
 
                     for ($i=1; $i <= $main_qty; $i++) {
-/*                        if($i == $main_qty)
-                        {
-                            $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $remaining_qty);
-                        }
-                        else
-                        {*/
-                            $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
-                        //}
+                        
+                        $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
                         $id = $this->common->InsertRecords('shipping_box',$insert_data);
                         $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
@@ -229,6 +221,7 @@ class ShippingController extends Controller {
         {
             $data = array("success"=>0,"message"=>ALREADY_BOX);
         }
+        $this->common->UpdateTableRecords('orders',array('id' => $post['order_id']),array('shipping_status' => '2'));
         return response()->json(["data" => $data]);
     }
     public function getBoxItems()
@@ -1065,6 +1058,8 @@ class ShippingController extends Controller {
 
                 $response = $shipment->submitShipment();
 
+                echo $shipment->debug();exit;
+
                 if(isset($response) && isset($response['error']))
                 {
                     $response = array(
@@ -1089,6 +1084,7 @@ class ShippingController extends Controller {
                 }
 
                 $this->common->UpdateTableRecords('shipping',array('id' => $post['shipping']['shipping_id']),array('cost_to_ship' => $response['charges'],'tracking_number'=>$response['trk_main']));
+                $this->common->UpdateTableRecords('orders',array('id' => $post['shipping']['order_id']),array('shipping_status' => '3'));
 
                 $response = array(
                         'success' => 1,
@@ -1110,5 +1106,49 @@ class ShippingController extends Controller {
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.api_label',$shipping)->render());
         PDF::Output('api_label.pdf');
+    }
+
+    public function unAllocateProduct()
+    {
+        $post = Input::all();
+
+        $total_sizes = $post['remaining_qnty'] + $post['old_distributed_qnty'];
+
+        if($post['old_distributed_qnty'] == $post['distributed_qnty'] && $post['remaining_qnty'] == 0)
+        {
+            $remaining_qnty = $post['distributed_qnty'];
+        }
+        else
+        {
+            $remaining_qnty = $total_sizes - $post['distributed_qnty'];
+        }
+
+        if($post['distributed_qnty'] > $total_sizes)
+        {
+            $response = array('success'=>0,'message'=>'You cannot unallocate more than '.$total_sizes.' quantity');
+            return response()->json($response);
+        }
+
+        $this->common->DeleteTableRecords('product_address_size_mapping',array('product_address_id' => $post['product_address_id'],'purchase_detail_id' => $post['purchase_detail_id']));
+
+        $product_address_size = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $post['product_address_id']));
+        $product_address = $this->common->GetTableRecords('product_address_mapping',array('id' => $post['product_address_id']));
+
+        if(empty($product_address_size))
+        {
+            $this->common->DeleteTableRecords('product_address_mapping',array('id' => $post['product_address_id']));
+        }
+
+        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('shipping_id' => $product_address[0]->shipping_id));
+
+        if(empty($shipping_data))
+        {
+            $this->common->DeleteTableRecords('shipping',array('id' => $product_address[0]->shipping_id));
+        }
+
+        $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['purchase_detail_id']),array('remaining_qnty' => $remaining_qnty));
+
+        $response = array('success'=>1,'message'=>'Product unallocated successfullly');
+        return response()->json($response);
     }
 }
