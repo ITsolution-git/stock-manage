@@ -1691,7 +1691,8 @@ a.editable-click:hover, a.editable-click:focus {
 .rush-box {
   border: solid 1px #de0000;
   float: left;
-  position: relative; }
+  //position: relative; 
+}
 
 .rush-strip {
   background-color: #de0000;
