@@ -223,7 +223,8 @@ class DistributionController extends Controller {
                     {
                         if($product_address_size_mapping[0]->distributed_qnty > $product['distributed_qnty'])
                         {
-                            $remaining_qnty = $product_address_size_mapping[0]->distributed_qnty - $product['distributed_qnty'];
+                            //$remaining_qnty = $product_address_size_mapping[0]->distributed_qnty - $product['distributed_qnty'];
+                            $remaining_qnty = $product['qnty_purchased'] - $product['distributed_qnty'];
                         }
                         else
                         {
