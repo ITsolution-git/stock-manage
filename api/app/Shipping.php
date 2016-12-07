@@ -88,17 +88,20 @@ class Shipping extends Model {
 
                 if($post['type'] == 'wait')
                 {
-                    $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
-                                        LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$shipping->id."' ");
-                
-                    foreach($purchase_detail as $row)
+                    if($shipping->distributed == '0' || $shipping->distributed == '')
                     {
-                        $value = DB::table('purchase_detail')
-                                ->where('id','=',$row->purchase_detail)
-                                ->update(array('remaining_qnty'=>$row->total));
-                    }
+                        $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
+                                            LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$shipping->id."' ");
+                    
+                        foreach($purchase_detail as $row)
+                        {
+                            $value = DB::table('purchase_detail')
+                                    ->where('id','=',$row->purchase_detail)
+                                    ->update(array('remaining_qnty'=>$row->total));
+                        }
 
-                    $shipping->distributed = 0;
+                        $shipping->distributed = 0;
+                    }
                 }
                 if($post['type'] == 'shipped')
                 {
@@ -265,6 +268,27 @@ class Shipping extends Model {
         return $result;
     }
 
+    public function getProductByAddress($data)
+    {
+        $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id as purchase_detail_id','pd.size','pas.distributed_qnty as old_distributed_qnty','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id'];
+        $where = ['pam.order_id' => $data['order_id'], 'pam.address_id' => $data['address_id']];
+
+        $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                    ->leftJoin('purchase_detail as pd','pas.purchase_detail_id','=','pd.id')
+                    ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
+                    ->leftJoin('products as p','pd.product_id','=','p.id')
+                    ->leftJoin('misc_type as mt','dp.size_group_id','=','mt.id')
+                    ->leftJoin('color as c','pd.color_id','=','c.id')
+                    ->select($listArr)
+                    ->where($where)
+                    ->where('pas.distributed_qnty','>','0')
+                    ->GroupBy('pd.id')
+                    ->get();
+        
+        return $result;
+    }
+
     public function getAllocatedAddress($data)
     {
         $result = DB::table('client_distaddress as cd')
@@ -287,27 +311,6 @@ class Shipping extends Model {
                     ->where('cd.client_id','=',$data->client_id)
                     ->get();
 
-        return $result;
-    }
-
-    public function getProductByAddress($data)
-    {
-        $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pas.distributed_qnty'];
-        $where = ['pam.order_id' => $data['order_id'], 'pam.address_id' => $data['address_id']];
-
-        $result = DB::table('product_address_mapping as pam')
-                    ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
-                    ->leftJoin('purchase_detail as pd','pas.purchase_detail_id','=','pd.id')
-                    ->leftJoin('design_product as dp','pd.design_product_id','=','dp.id')
-                    ->leftJoin('products as p','pd.product_id','=','p.id')
-                    ->leftJoin('misc_type as mt','dp.size_group_id','=','mt.id')
-                    ->leftJoin('color as c','pd.color_id','=','c.id')
-                    ->select($listArr)
-                    ->where($where)
-                    ->where('pas.distributed_qnty','>','0')
-                    ->GroupBy('pd.id')
-                    ->get();
-        
         return $result;
     }
 

@@ -43,7 +43,7 @@
                     $("#ajax_loader").hide();
                     $scope.unshippedProducts = result.data.unshippedProducts;
 
-                   if($scope.unshippedProducts.length == '0')
+                   /*if($scope.unshippedProducts.length == '0')
                    {
                         var UpdateArray = {};
                         UpdateArray.table ='orders';
@@ -54,7 +54,7 @@
                         {
                             
                         });
-                   }
+                   }*/
 
                    if($scope.address_id > 0)
                    {
@@ -171,7 +171,7 @@
             }
             if(productArr.distributed_qnty > 0)
             {
-                var UpdateArray = {};
+                /*var UpdateArray = {};
                 UpdateArray.table ='orders';
                 UpdateArray.data = {shipping_status:2};
                 UpdateArray.cond = {id:$scope.order_id};
@@ -179,7 +179,7 @@
                 $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                 {
                     
-                });
+                });*/
 
                 $("#ajax_loader").show();
 
@@ -271,6 +271,24 @@
             console.log($scope.order.client_id);
             var insert_params = {client_id:$scope.order.client_id};
             sessionService.openAddPopup($scope,path,insert_params,table);
+        }
+
+        $scope.unAllocateProduct = function(product)
+        {
+            //$("#ajax_loader").show();
+
+            $http.post('api/public/shipping/unAllocateProduct',product).success(function(result, status, headers, config) {
+                
+                if(result.success == '1') {
+                    $scope.shipOrder();
+                }
+                else
+                {
+                    var data = {"status": "error", "message": result.data.message}
+                    notifyService.notify(data.status, data.message);
+                }
+                $("#ajax_loader").hide();
+            });
         }
     }
 })();

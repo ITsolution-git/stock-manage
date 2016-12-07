@@ -142,6 +142,9 @@
 
         $scope.box_shipment = function(shipping_items)
         {
+            var box_arrray = {};
+            box_arrray.shipping_items = shipping_items;
+            box_arrray.order_id = $scope.shipping.order_id;
             
             if($scope.shipping.shipping_type_id == 0 || $scope.shipping.shipping_type_id == '')
             {
@@ -156,7 +159,7 @@
                     return false;
             }
             $("#ajax_loader").show();
-            $http.post('api/public/shipping/CreateBoxShipment',shipping_items).success(function(result) {
+            $http.post('api/public/shipping/CreateBoxShipment',box_arrray).success(function(result) {
 
                 if(result.data.success == '1') {
                     var data = {"status": "success", "message": "Boxes created Successfully."}

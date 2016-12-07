@@ -50,7 +50,7 @@
                                                     <md-option ng-selected="wait.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                                 </md-select>
                                                 </td>
-                                                <td>0/{{ wait.total}}</td>
+                                                <td>{{wait.distributed}}/{{wait.total}}</td>
                                                 <td ng-show="allow_access==1" class="text-center cursor-p" ui-sref="app.shipping.orderwaitship({id:wait.display_number})"><a>SHIP</a></td>
                                                 <td ng-show="allow_access==0" class="text-center cursor-p"><a>SHIP</a></td>
                                             </tr>

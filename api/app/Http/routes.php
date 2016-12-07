@@ -225,6 +225,7 @@ Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverv
 Route::post('shipping/createLabel', 'ShippingController@createLabel');
 Route::post('shipping/checkAddressValid', 'ShippingController@checkAddressValid');
 Route::post('shipping/vewLabelPDF', 'ShippingController@vewLabelPDF');
+Route::post('shipping/unAllocateProduct', 'ShippingController@unAllocateProduct');
 
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
