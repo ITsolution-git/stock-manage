@@ -57,7 +57,28 @@
             $http.get('api/public/order/calculateAll/'+order_id+'/'+company_id).success(function(result) 
             {
                 $scope.designProductData();
+                $scope.calculatePrice();
             });
+        }
+
+
+         $scope.calculatePrice = function()
+        {
+          var combine_array_id = {};
+                    combine_array_id.id = $scope.design_id;
+                    combine_array_id.company_id = sessionService.get('company_id');
+                    
+                    combine_array_id.position_id = 0;
+                    
+                    $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
+                       
+
+                        angular.forEach(result.data.order_design_position, function(value , key) {
+                            $scope.order_design_position[key].total_price = value.total_price;
+                        })
+
+                        
+                    });
         }
 
         $scope.orderDetail = function(){
@@ -210,6 +231,7 @@
                    
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
                     $scope.total_screen_fees = result.data.total_screen_fees;
+
                 }
                 else
                 {
@@ -319,6 +341,7 @@
                     });
                 }
                 $scope.designPositionNew();
+                $scope.calculatePrice();
 
             });
         }
