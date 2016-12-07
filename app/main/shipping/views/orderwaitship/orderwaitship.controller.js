@@ -272,5 +272,23 @@
             var insert_params = {client_id:$scope.order.client_id};
             sessionService.openAddPopup($scope,path,insert_params,table);
         }
+
+        $scope.unAllocateProduct = function(product)
+        {
+            //$("#ajax_loader").show();
+
+            $http.post('api/public/shipping/unAllocateProduct',product).success(function(result, status, headers, config) {
+                
+                if(result.success == '1') {
+                    $scope.shipOrder();
+                }
+                else
+                {
+                    var data = {"status": "error", "message": result.data.message}
+                    notifyService.notify(data.status, data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
     }
 })();
