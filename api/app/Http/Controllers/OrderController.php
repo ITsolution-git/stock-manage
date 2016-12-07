@@ -1015,7 +1015,7 @@ class OrderController extends Controller {
                         }
                         elseif($color_stitch_count >= $embroidery->range_low_8 && $color_stitch_count <= $embroidery->range_high_8)
                         {
-                            $switch_id = $embroidery.id;
+                            $switch_id = $embroidery->id;
                             $embroidery_field = 'pricing_8c';
                         }
                         if($color_stitch_count >= $embroidery->range_low_9 && $color_stitch_count <= $embroidery->range_high_9)
