@@ -178,9 +178,10 @@
                     combine_array_data.allEmbroidery = allEmbroidery;
 
                    if(price.id) {
+                    $("#ajax_loader").show();
                          
                     $http.post('api/public/admin/priceEdit',combine_array_data).success(function(result, status, headers, config) {
-  
+                      $("#ajax_loader").hide();
                       if(result.data.success == '1') {
 
                          var data = {"status": "success", "message": "Record Updated Successfully."}
