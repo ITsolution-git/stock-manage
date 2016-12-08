@@ -1302,3 +1302,7 @@ margin-top:30px;
   max-height: 220px;
   overflow-y: scroll;
 }
+.iph_scroll {
+  max-height: 500px;
+  overflow-y: auto;
+}
