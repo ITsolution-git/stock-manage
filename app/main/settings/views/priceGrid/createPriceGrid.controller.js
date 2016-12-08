@@ -7,7 +7,7 @@
         .controller('CreatePriceGridDialogController', CreatePriceGridDialogController);
 
     /** @ngInject */
-    function CreatePriceGridDialogController($mdDialog,$controller,$state,$scope,sessionService,$resource,$http,$stateParams)
+    function CreatePriceGridDialogController($mdDialog,$controller,$state,$scope,sessionService,$resource,$http,$stateParams,notifyService)
     {
         $scope.role_slug = sessionService.get('role_slug');
         if($scope.role_slug=='CA' || $scope.role_slug=='AM')
@@ -178,10 +178,15 @@
                     combine_array_data.allEmbroidery = allEmbroidery;
 
                    if(price.id) {
+                    $("#ajax_loader").show();
                          
                     $http.post('api/public/admin/priceEdit',combine_array_data).success(function(result, status, headers, config) {
-  
+                      $("#ajax_loader").hide();
                       if(result.data.success == '1') {
+
+                         var data = {"status": "success", "message": "Record Updated Successfully."}
+                         notifyService.notify(data.status, data.message);
+
                          window.history.back();
                        } 
                    

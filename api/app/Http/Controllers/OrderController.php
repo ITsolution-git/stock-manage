@@ -839,11 +839,13 @@ class OrderController extends Controller {
      public function editDesign()
     {
         $post = Input::all();
+        
        
        
         unset($post['designData']['order_number']);
         unset($post['designData']['is_complete']);
         unset($post['designData']['order_display_number']);
+        unset($post['designData']['affiliate_display_number']);
 
         if($post['designData']['hands_date'] != '')
         {

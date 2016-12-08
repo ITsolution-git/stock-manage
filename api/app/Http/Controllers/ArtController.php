@@ -489,12 +489,17 @@ class ArtController extends Controller {
                 //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
 
 
+                //PDF::AddPage('P','A4');
+                //PDF::writeHTML(view('pdf.shipping_manifest',$shipping)->render());
+                //PDF::Output('shipping_manifest.pdf');
+
+
                 PDF::AddPage('P','A4');
                 PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
            
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
-                PDF::Output($filename,'F');
+                
 
                 if(!empty($screenArray->flag) && $screenArray->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
@@ -506,8 +511,8 @@ class ArtController extends Controller {
                         $message->attach($filename);
                     });
                 }
-
-                return Response::download($filename);
+                PDF::Output($filename);
+                //return Response::download($filename);
 
             }
             else
