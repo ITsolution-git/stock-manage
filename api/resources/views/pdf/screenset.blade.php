@@ -276,12 +276,12 @@ foreach($data as $key_main=>$value_main)
 <table>
   <tr>
     <td align="center">
-        <img src="{{$company->mokup_image}}" title="Culture Studio" style="max-height: 490px;" alt="Culture Studio">
+        <img src="{{$company->mokup_image}}" title="Culture Studio" style="height: 480px;" alt="Culture Studio">
     </td>
   </tr>
 </table>
 <footer>
-      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt="">
+      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" style="height: 50px;" title="" alt="">
 </footer>
 </body>
 </html>
