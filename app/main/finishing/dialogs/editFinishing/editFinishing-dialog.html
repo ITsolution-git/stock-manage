@@ -27,32 +27,17 @@
                                 </div>
                         </div>
                         <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                <input placeholder="Start Time" name="" ui-event="" ng-model="finishing_data.start_time" ng-click="setTime(finishing_data,'start')" readonly="">
-                                <div ng-messages=" " role="alert" multiple>
-                                    <div ng-message="required">
-                                        <span>This field is required</span>
-                                    </div>
-                                </div>
-                            </md-input-container>
+                            <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                                <label for="chk1"   class="form-control">Start Time</label>
+                                <input kendo-time-picker ng-model="finishing_data.start_time" k-ng-model="t1" ng-change="setTime(finishing_data,'start')">
+                            </div>
+                            <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                                <label for="chk2"   class="form-control">End Time</label>
+                                <input kendo-time-picker ng-model="finishing_data.end_time" k-ng-model="t2" ng-change="setTime(finishing_data,'end')">
+                            </div>
 
                             <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                <input placeholder="Stop Time" name="" ui-event="" ng-model="finishing_data.end_time" ng-click="setTime(finishing_data,'end')" readonly="">
-                                <div ng-messages=" " role="alert" multiple>
-                                    <div ng-message="required">
-                                        <span>This field is required</span>
-                                    </div>
-                                </div>
-                            </md-input-container>
-
-                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                                <!-- <input placeholder="EST Completion Time" kendo-time-picker ng-model="finishing_data.est" k-ng-model="obj"/> -->
                                 <input placeholder="EST Completion Time" name="" ui-event="" ng-model="finishing_data.est" readonly="">
-                                <div ng-messages=" " role="alert" multiple>
-                                    <div ng-message="required">
-                                        <span>This field is required</span>
-                                    </div>
-                                </div>
                             </md-input-container>
                         </div>
                         <md-input-container class="md-block first-box settings-margin-0">
