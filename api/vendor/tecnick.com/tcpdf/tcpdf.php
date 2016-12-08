@@ -3318,7 +3318,7 @@ class TCPDF {
 	 * @param $fm (int) distance in user units
 	 * @public
 	 */
-	public function setFooterMargin($fm=10) {
+	public function setFooterMargin($fm=100) {
 		$this->footer_margin = $fm;
 	}
 
@@ -24468,6 +24468,16 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	protected function segSVGContentHandler($parser, $data) {
 		$this->svgtext .= $data;
 	}
+
+	public function setFooterCallback() 
+	{
+	    // Position at 15 mm from bottom
+	    $this->SetY(-15);
+	    // Set font
+	    $this->SetFont('helvetica', 'I', 8);
+	    // Page number
+	    $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+    }
 
 	// --- END SVG METHODS -----------------------------------------------------
 

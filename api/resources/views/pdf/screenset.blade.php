@@ -259,20 +259,6 @@ foreach($data as $key_main=>$value_main)
 <br>
 <hr style="border:1px solid #000;">
 <br>
-<?php if(!empty($options) && count($options)>0) {
-?>
-<table cellspacing="5" cellpadding="5">
-  <tr>
-    <?php foreach($options as $key_img=>$img_val)
-    { ?>
-    <td width="10%" height="20">
-        <img src="{{SITE_HOST}}/assets/images/etc/{{$key_img}}.png" title="Culture Studio"alt="Culture Studio">
-    </td>
-    <?php } ?>
-  </tr>
-</table>
-<?php } ?>
-
 <table>
   <tr>
     <td align="center">
@@ -281,7 +267,7 @@ foreach($data as $key_main=>$value_main)
   </tr>
 </table>
 <footer>
-      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" style="height: 50px;" title="" alt="">
+      <img src="{{SITE_HOST}}/assets/images/logos/stokkup-logo.png" style="height: 50px; float: left;" title="" alt="">
 </footer>
 </body>
 </html>

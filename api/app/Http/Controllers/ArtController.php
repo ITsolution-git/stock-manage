@@ -493,10 +493,17 @@ class ArtController extends Controller {
                 //PDF::writeHTML(view('pdf.shipping_manifest',$shipping)->render());
                 //PDF::Output('shipping_manifest.pdf');
 
-
+               
+                PDF::SetPrintFooter(true);
+                PDF::Footer();
                 PDF::AddPage('P','A4');
+
                 PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
-           
+
+
+               
+               
+
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
                 
@@ -511,7 +518,7 @@ class ArtController extends Controller {
                         $message->attach($filename);
                     });
                 }
-                PDF::Output($filename);
+                PDF::Output($filename,'D');
                 //return Response::download($filename);
 
             }
@@ -537,6 +544,7 @@ class ArtController extends Controller {
         {
             $pdf_data = $this->art->getPressInstructionPDFdata($screenArray->screen_id,$screenArray->company_id);
            // echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            $options = !empty($screenArray->options)?$screenArray->options:array();
             if(!empty($pdf_data['size']))
             {
                 
@@ -546,7 +554,7 @@ class ArtController extends Controller {
                 else { exec("chmod $file_path 0777"); }
                
                 PDF::AddPage('P','A4');
-                PDF::writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size']))->render());
+                PDF::writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size'],'options'=>$options))->render());
            
                 $pdf_url = "PresInstruction-".$screenArray->screen_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
