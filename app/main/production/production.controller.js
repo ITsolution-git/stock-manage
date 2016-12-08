@@ -362,7 +362,7 @@
 
         $scope.GetSchedulePositionDetail = function(position_id)
         {
-            //$("#ajax_loader").hide();
+            $("#ajax_loader").show();
             var companyData = {company_id:$scope.company_id,position_id:position_id};
 
             $http.post('api/public/production/GetSchedulePositionDetail',companyData).success(function(result) 
@@ -376,8 +376,9 @@
                 else
                 {
                     notifyService.notify('error',result.data.message);
+                    $("#ajax_loader").hide();
                 }
-                $("#ajax_loader").hide();
+                
             });
         }
 
