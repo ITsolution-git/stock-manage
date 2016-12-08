@@ -158,7 +158,12 @@ Route::get('purchase/GetPoReceived/{id}/{company_id}', 'PurchaseController@GetPo
 Route::post('purchase/purchasePDF', 'PurchaseController@purchasePDF');
 
 // ORDER CONTROLLER 
-Route::post('order/listOrder', 'OrderController@listOrder');
+//Route::post('order/listOrder', 'OrderController@listOrder');
+Route::post('order/listOrder',[
+   'middleware' => 'check',
+   'role' => array('AM','SU','CA'),
+   'uses' => 'OrderController@listOrder',
+]);
 Route::post('order/orderDetail', 'OrderController@orderDetail');
 Route::post('order/updatePositions', 'OrderController@updatePositions'); // UPDATE RECORD FOR ANY TABLE, @PARAMS: TABLE,COND, POST ARRAY.
 Route::post('order/deleteOrderCommon', 'OrderController@deleteOrderCommon');
