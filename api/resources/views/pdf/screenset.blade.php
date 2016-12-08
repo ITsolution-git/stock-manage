@@ -113,11 +113,13 @@
   <table cellspacing="5" cellpadding="5">
      <tr>
       <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?></td>
-      <!-- <td>w:<?php //echo $value_main[0][0]->screen_width; ?> X h:<?php //echo $value_main[0][0]->screen_height; ?></td> -->
+      
     </tr> 
     <tr>
-      <td width="40%">
-        <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height:120px; width:130px;" >
+      <td width="40%" style="line-height: -5px;">
+        <div style="line-height: -5px;">
+              <img src="<?php echo $value_main[0][0]->mokup_logo; ?>" style="height: 150px;" >
+        </div>
       </td>
       <td width="60%">
           <table border="1">
@@ -145,11 +147,11 @@
       </td>
     </tr>
   </table>
-<br><br>
+<br>
   
   <!-- <hr style="border:1px solid #000;"> -->
 
-<?php  if(($key_main+1)%3==0 && ($key_main+1)!=count($data))
+<?php  if(($key_main+1)%2==0 && ($key_main+1)!=count($data))
 { ?>
 <div style="page-break-before: always;"></div>
       <table class="header">
@@ -179,13 +181,13 @@
               </table>
           </td>
       </tr>
-    </table><br><br>
+    </table><br>
 <?php 
 }
 
 }
 ?>
-<br><br>
+
 <hr style="border:1px solid #000;">
 <table>
     <tr>
@@ -194,23 +196,17 @@
 <?php  
 foreach($data as $key_main=>$value_main)
 { ?>
-
-
-
-<?php  if(!empty($value_main[1])) 
-  {
-?>
-    
-          
-        <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
-          <tr>
-              <td align="left"><?php echo $not_value ?></td>
-          </tr>
-        <?php } ?>
-    
-<?php 
-  }  
-    }
+    <?php  if(!empty($value_main[1])) 
+    {
+    ?>
+    <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
+    <tr>
+        <td align="left"><?php echo $not_value ?></td>
+    </tr>
+    <?php } ?>
+    <?php 
+      }  
+  }
 ?>
 
 </table>
@@ -279,13 +275,13 @@ foreach($data as $key_main=>$value_main)
 
 <table>
   <tr>
-    <td>
-        <img src="{{$company->mokup_image}}" title="Culture Studio" height="500" width="535" alt="Culture Studio">
+    <td align="center">
+        <img src="{{$company->mokup_image}}" title="Culture Studio" style="height: 480px;" alt="Culture Studio">
     </td>
   </tr>
 </table>
 <footer>
-      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt="">
-    </footer>
+      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" style="height: 50px;" title="" alt="">
+</footer>
 </body>
 </html>
