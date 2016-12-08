@@ -671,25 +671,15 @@ public function create_dir($dir_path) {
                                         $switch_id = $embroidery.id;
                                         $embroidery_field = 'pricing_8c';
                                     }
-                                    if($color_stitch_count >= $embroidery->range_low_9 && $color_stitch_count <= $embroidery->range_high_9)
+                                    elseif($color_stitch_count >= $embroidery->range_low_9 && $color_stitch_count <= $embroidery->range_high_9)
                                     {
                                         $switch_id = $embroidery->id;
                                         $embroidery_field = 'pricing_9c';
                                     }
-                                    elseif($color_stitch_count >= $embroidery->range_low_10 && $color_stitch_count <= $embroidery->range_high_10)
+                                    elseif($color_stitch_count > $embroidery->range_high_9)
                                     {
                                         $switch_id = $embroidery->id;
                                         $embroidery_field = 'pricing_10c';
-                                    }
-                                    elseif($color_stitch_count >= $embroidery->range_low_11 && $color_stitch_count <= $embroidery->range_high_11)
-                                    {
-                                        $switch_id = $embroidery->id;
-                                        $embroidery_field = 'pricing_11c';
-                                    }
-                                    elseif($color_stitch_count >= $embroidery->range_low_12 && $color_stitch_count <= $embroidery->range_high_12)
-                                    {
-                                        $switch_id = $embroidery->id;
-                                        $embroidery_field = 'pricing_12c';
                                     }
                                 }
 
