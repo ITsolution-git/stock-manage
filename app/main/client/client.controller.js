@@ -10,6 +10,7 @@
 
     /** @ngInject */
     function ClientController($mdDialog, $document,sessionService,$resource,$scope,$stateParams, $http,notifyService,AllConstant) {
+
         var vm = this;
         // Data
         //console.log(sessionService.get('company_id'));
@@ -26,8 +27,14 @@
         };
         vm.searchQuery = "";
         // Methods
+        var originatorEv;
+         vm.openMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
 
         vm.openClientDialog = openClientDialog;
+       
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
         $scope.company_id = sessionService.get('company_id');
@@ -124,6 +131,40 @@
 //            return nRow;
 //        }
 
+
+
+    $scope.delete_client = function (ev,client_id)
+        {
+           
+            var UpdateArray = {};
+            UpdateArray.table ='client';
+            UpdateArray.data = {is_delete:0};
+            UpdateArray.cond = {client_id: client_id};
+            
+            
+            var permission = confirm(AllConstant.deleteMessage);
+
+            if (permission == true) 
+            {
+                $("#ajax_loader").show();
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success', result.data.message);
+                        $scope.reloadCallback();
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+            }
+        }
+
+
+
+
     }
     function AngularWayCtrl($resource) {
         var vmn = this;
@@ -138,6 +179,11 @@
             $state.go('app.client.list');
         }
     }
+
+
+
+
+
 
 
 })();
