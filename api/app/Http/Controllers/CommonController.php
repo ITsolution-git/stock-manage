@@ -1287,5 +1287,26 @@ class CommonController extends Controller {
     }
 
 
+     public function checkCompanyNameExist($name,$companyId)
+    {
+        if(!empty($name) && isset($companyId))
+        {
+            $getData = $this->common->checkNameExist($name,$companyId);
+            $count = count($getData);
+            $success = ($count>0)? '1':'2'; // 2 = EMAIL NOT EXISTS
+            $message  = ($count>0)? GET_RECORDS:NO_RECORDS;
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
+
+
 
 }
