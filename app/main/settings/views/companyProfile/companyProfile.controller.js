@@ -115,7 +115,7 @@ $scope.allShiftData =  function() {
 
 
 
-$scope.updateiph = function(column_name,id,value,table_name,match_condition)
+$scope.updateData = function(column_name,id,value,table_name,match_condition)
         {
 
             var position_main_data = {};
@@ -136,10 +136,10 @@ $scope.updateiph = function(column_name,id,value,table_name,match_condition)
         }
 
 
-$scope.addiph = function(){
-      
+$scope.addData = function(tableName){
+     
              var InserArray = {};
-            InserArray.table ='iph'
+            InserArray.table =tableName;
             InserArray.data ={company_id:sessionService.get('company_id')}
 
 
@@ -147,15 +147,20 @@ $scope.addiph = function(){
             $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
             {
                 notifyService.notify('success','Record added successfully');
-                $scope.alliphDataAll();   
+
+                if(tableName == 'iph') {
+                    $scope.alliphDataAll(); 
+                } else {
+                    $scope.allOrderSizeFactor();
+                }
+                  
                 
             });
         
     }
 
-
     
- $scope.removeIph =  function(id){
+ $scope.removeData =  function(id,tableName){
           
           var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
 
@@ -163,11 +168,16 @@ $scope.addiph = function(){
 
                 var combine_array_id = {};
                     combine_array_id.id = id;
+                    combine_array_id.tableName = tableName;
                     
-                    $http.post('api/public/admin/company/deleteIph',combine_array_id).success(function(result, status, headers, config) {
+                    $http.post('api/public/admin/company/deleteDataIphFactor',combine_array_id).success(function(result, status, headers, config) {
                        
                         if(result.data.success == '1') {
-                            $scope.alliphDataAll();  
+                            if(tableName == 'iph') {
+                                $scope.alliphDataAll(); 
+                            } else {
+                                $scope.allOrderSizeFactor();
+                            }
                         } 
                         
                     });
@@ -195,7 +205,32 @@ $scope.addiph = function(){
             }     
                 
         });
- }   
+ } 
+
+
+
+
+ $scope.allOrderSizeFactor =  function() {
+
+            var allData = {};
+        allData.table ='order_size_factor';
+        allData.sort ='id';
+        allData.sortcond ='desc';
+        allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.allfactorData = result.data.records;
+                
+            } else {
+                $scope.allfactorData = {};
+               
+            }     
+                
+        });
+ }  
 
 
 
@@ -205,6 +240,7 @@ $scope.addiph = function(){
    $scope.GetCompany();
    $scope.allShiftData();
    $scope.alliphDataAll();
+   $scope.allOrderSizeFactor();
 
 
 

@@ -39,7 +39,7 @@ Route::get('admin/company/getAffiliate/{company_id}/{affiliate_id}', 'CompanyCon
 Route::post('admin/company/addAffilite', 'CompanyController@addAffilite');
 Route::post('admin/company/UpdateAffilite', 'CompanyController@UpdateAffilite');
 Route::post('admin/company/GetAllApi', 'CompanyController@GetAllApi');
-Route::post('admin/company/deleteIph', 'CompanyController@deleteIph');
+Route::post('admin/company/deleteDataIphFactor', 'CompanyController@deleteDataIphFactor');
 
 
 // COMPANY USERS ROUTERS
