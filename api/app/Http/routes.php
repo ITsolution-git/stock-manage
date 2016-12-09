@@ -312,29 +312,127 @@ Route::post('finishing/FinishingBoardweekData','FinishingQueueController@Finishi
 Route::post('finishing/FinishingBoardMachineData','FinishingQueueController@FinishingBoardMachineData');
 
 // SHIPPING CONTROLLER
-Route::get('shipping/listShipping', 'ShippingController@listShipping');
-Route::post('shipping/listShipping', 'ShippingController@listShipping');
-Route::post('shipping/shippingDetail', 'ShippingController@shippingDetail');
-Route::post('shipping/getShippingOrders', 'ShippingController@getShippingOrders');
-Route::post('shipping/CreateBoxShipment', 'ShippingController@CreateBoxShipment');
-Route::post('shipping/updateShipping', 'ShippingController@updateShipping');
-Route::post('shipping/DeleteBox', 'ShippingController@DeleteBox');
-Route::post('shipping/addShippingItem', 'ShippingController@addShippingItem');
-Route::post('shipping/getBoxItems', 'ShippingController@getBoxItems');
+Route::get('shipping/listShipping',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ShippingController@listShipping'
+]);
+Route::post('shipping/listShipping',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@listShipping'
+]);
+Route::post('shipping/shippingDetail',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@shippingDetail'
+]);
+Route::post('shipping/getShippingOrders',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@getShippingOrders'
+]);
+Route::post('shipping/CreateBoxShipment',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@CreateBoxShipment'
+]);
+Route::post('shipping/updateShipping',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@updateShipping'
+]);
+Route::post('shipping/DeleteBox',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@DeleteBox'
+]);
+Route::post('shipping/addShippingItem',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@addShippingItem'
+]);
+Route::post('shipping/getBoxItems',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@getBoxItems'
+]);
 Route::post('shipping/createPDF', 'ShippingController@createPDF');
-Route::post('shipping/addRemoveAddressToPdf', 'ShippingController@addRemoveAddressToPdf');
-Route::post('shipping/shipOrder', 'ShippingController@shipOrder');
-Route::post('shipping/getProductByAddress', 'ShippingController@getProductByAddress');
-Route::post('shipping/addProductToShip', 'ShippingController@addProductToShip');
-Route::post('shipping/addAllProductToShip', 'ShippingController@addAllProductToShip');
-Route::post('shipping/getShippingAddress', 'ShippingController@getShippingAddress');
-Route::post('shipping/getShippingBoxes', 'ShippingController@getShippingBoxes');
-Route::post('shipping/getShippingOverview', 'ShippingController@getShippingOverview');
-Route::post('shipping/createLabel', 'ShippingController@createLabel');
-Route::post('shipping/checkAddressValid', 'ShippingController@checkAddressValid');
+Route::post('shipping/addRemoveAddressToPdf',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@addRemoveAddressToPdf'
+]);
+Route::post('shipping/shipOrder',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@shipOrder'
+]);
+Route::post('shipping/getProductByAddress',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@getProductByAddress'
+]);
+Route::post('shipping/addProductToShip',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@addProductToShip'
+]);
+Route::post('shipping/addAllProductToShip',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@addAllProductToShip'
+]);
+Route::post('shipping/getShippingAddress',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@getShippingAddress'
+]);
+Route::post('shipping/getShippingBoxes',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@getShippingBoxes'
+]);
+Route::post('shipping/getShippingOverview',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@getShippingOverview'
+]);
+Route::post('shipping/createLabel',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@createLabel'
+]);
+Route::post('shipping/checkAddressValid',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@checkAddressValid'
+]);
 Route::post('shipping/vewLabelPDF', 'ShippingController@vewLabelPDF');
-Route::post('shipping/unAllocateProduct', 'ShippingController@unAllocateProduct');
-
+Route::post('shipping/unAllocateProduct',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ShippingController@unAllocateProduct'
+]);
 // PRODUCT CONTROLLER
 Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
 Route::post('product/getProductCountByVendor', 'ProductController@getProductCountByVendor');
@@ -425,11 +523,36 @@ Route::post('affiliate/affiliateCalculation',[
 ]);
 
 //DISTRIBUTION ROUTERS
-Route::post('distribution/getDistProductAddress', 'DistributionController@getDistProductAddress');
-Route::post('distribution/addEditDistribute', 'DistributionController@addEditDistribute');
-Route::post('distribution/getDistSizeByProduct', 'DistributionController@getDistSizeByProduct');
-Route::post('distribution/getDistAddress', 'DistributionController@getDistAddress');
-Route::post('distribution/getProductByAddress', 'DistributionController@getProductByAddress');
+Route::post('distribution/getDistProductAddress',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'DistributionController@getDistProductAddress'
+]);
+Route::post('distribution/addEditDistribute',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'DistributionController@addEditDistribute'
+]);
+Route::post('distribution/getDistSizeByProduct',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'DistributionController@getDistSizeByProduct'
+]);
+Route::post('distribution/getDistAddress',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'DistributionController@getDistAddress'
+]);
+Route::post('distribution/getProductByAddress',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'DistributionController@getProductByAddress'
+]);
 
 Route::get('qbo/oauth','QuickBookController@qboOauth');
 Route::get('qbo/success','QuickBookController@qboSuccess');
