@@ -647,4 +647,17 @@ class Common extends Model {
         }
         return $allData;
     }
+    public function getUserRole($user_id)
+    {
+        $whereConditions = ['usr.status' => '1','usr.is_delete' => '1','usr.id' => $user_id];
+        $listArray = ['usr.id','usr.name','roles.slug as role'];
+
+        $Companyuser = DB::table('users as usr')
+                         ->Join('roles as roles', 'usr.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $Companyuser;
+    }
 }
