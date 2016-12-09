@@ -11,17 +11,18 @@ use App\Common;
 use App\Art;
 use DB;
 use File;
-use PDF;
+use TCPDF;
 use Request;
 use Response;
 
 class ArtController extends Controller { 
 
-    public function __construct(Art $art,Common $common) 
+    public function __construct(Art $art,Common $common, TCPDF $tdpdf ) 
     {
         parent::__construct();
         $this->art = $art;
         $this->common = $common;
+        $this->tdpdf = $tdpdf;
     }
 
     // ART LISTING PAGE
@@ -494,15 +495,19 @@ class ArtController extends Controller {
                 //PDF::Output('shipping_manifest.pdf');
 
                
-                PDF::SetPrintFooter(true);
-                PDF::Footer();
-                PDF::AddPage('P','A4');
+                //TCPDF::SetPrintFooter(true);
+               // TCPDF::Footer();
+                
+                $pdf = $this->tdpdf;
+                $pdf->setFooterData(array(0,64,0), array(0,64,128));
+                $image_file = SITE_HOST.'/assets/images/logos/stokkup-logo.png';
+                $pdf->Image($image_file, 10, 270, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
+                
 
-
-               
-               
+                $pdf->SetFooterMargin(7);
+                $pdf->AddPage('P','A4');
+                $pdf->writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
 
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
@@ -518,7 +523,7 @@ class ArtController extends Controller {
                         $message->attach($filename);
                     });
                 }
-                PDF::Output($filename,'D');
+                $pdf->Output($pdf_url);
                 //return Response::download($filename);
 
             }
