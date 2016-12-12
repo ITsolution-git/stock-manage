@@ -120,6 +120,8 @@ require_once(dirname(__FILE__).'/include/tcpdf_images.php');
 // TCPDF static methods and data
 require_once(dirname(__FILE__).'/include/tcpdf_static.php');
 
+require_once(app_path() . '/constants.php');
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /**
@@ -680,7 +682,7 @@ class TCPDF {
 	 * @since 5.9.174 (2012-07-25)
 	 * @protected
 	 */
-	protected $footer_line_color = array(0,0,0);
+	protected $footer_line_color = array(255,255,255);
 
 	/**
 	 * Text shadow data array.
@@ -3318,7 +3320,7 @@ class TCPDF {
 	 * @param $fm (int) distance in user units
 	 * @public
 	 */
-	public function setFooterMargin($fm=10) {
+	public function setFooterMargin($fm=100) {
 		$this->footer_margin = $fm;
 	}
 
@@ -3497,6 +3499,10 @@ class TCPDF {
 		} else {
 			$pagenumtxt = $w_page.$this->getPageNumGroupAlias().' / '.$this->getPageGroupAlias();
 		}
+		
+		$image_file = SITE_HOST.'/assets/images/logos/stokkup-logo.jpg';
+        $this->Image($image_file, 10, 280, 30, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+
 		$this->SetY($cur_y);
 		//Print page number
 		if ($this->getRTL()) {
@@ -24468,6 +24474,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	protected function segSVGContentHandler($parser, $data) {
 		$this->svgtext .= $data;
 	}
+
 
 	// --- END SVG METHODS -----------------------------------------------------
 

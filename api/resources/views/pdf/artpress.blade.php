@@ -144,8 +144,23 @@
               <td ></td>
               <td class="align-center font-bold border-w" >Ship/Pack</td>
             </tr>
+            <br>
+              <hr style="border:1px solid #000;">
+            <?php if(!empty($options) && count($options)>0) {
+              ?>
+              <tr>
+                <?php foreach($options as $key_img=>$img_val)
+                { ?>
+                <td width="10%" height="20">
+                    <img src="{{SITE_HOST}}/assets/images/etc/{{$key_img}}.png" title="Culture Studio"alt="Culture Studio">
+                </td>
+                <?php } ?>
+              </tr>
+              <?php } ?>
+
+
         </table>
-        <div style="height:10px;width:100%">&nbsp;</div>
+        
       </td>
     </tr>
 
@@ -164,7 +179,10 @@
       <td width="30%"> 
         <table>
           
-          <tr><td class="align-center"><img src="{{$color[0]->mokup_logo}}" title="Culture Studio" height="300" width="300" alt="Culture Studio"></td></tr>
+          <tr>
+          <td class="align-center">
+          <img src="{{$color[0]->mokup_logo}}" title="Culture Studio" style="height: 200px" alt="Culture Studio">
+          </td></tr>
 
         </table>
       </td>
@@ -202,14 +220,15 @@
           </table>
       </td>
     </tr>
+    
+
     <tr>
-      <td><br /><br />&nbsp;&nbsp;<b>Note:</b> {{$color[0]->note}}</td>
+      <td><br />&nbsp;&nbsp;<b>Note:</b> {{$color[0]->note}}</td>
     </tr>
   
   </table>
       </td>
     </tr>
   </table>
- 
 </body>
 </html>

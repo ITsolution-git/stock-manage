@@ -296,7 +296,9 @@
 			        {
 			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
 			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.suite = angular.isUndefined(apidata.district)?'':apidata.district;
 			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+
 			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
 			            {
 			                if($scope.all_scope.states_all[i].code == apidata.state)
@@ -372,6 +374,7 @@
 			        {
 			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
 			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.suite = angular.isUndefined(apidata.district)?'':apidata.district;
 			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
 			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
 			            {
