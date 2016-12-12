@@ -25,15 +25,11 @@ h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 table, caption, tbody, tfoot, thead, tr, th, td {
   margin: 0;
   padding: 0;
- 
- 
-
 }
 </style>
 <body style="padding:0; margin:0">
-
-    <table width="530" align="left" cellspacing="5" cellpadding="0" style="font-size:10px;">
-        <tr align="left" cellspacing="0" cellpadding="0">
+    <table width="530" align="left" cellspacing="0" cellpadding="0" style="font-size:10px;">
+        <tr>
             <td style="width:100%">
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="border-bottom:3px solid #000000; font-family: arial; font-size:11px;">
                     <tr>
@@ -65,133 +61,137 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                      <td style="height:15px;">&nbsp;</td>
                     </tr>
                 </table>
-                <table width="100%" border="0" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial;">
+                <table width="100%" border="0" align="center" cellspacing="0" cellpadding="0" style="font-family: arial;">
                     <tr>
                         <td style="height:15px;">&nbsp;</td>
                     </tr>
                 </table>
-                <table width="100%" border="0" align="center" border="0" cellspacing="0" cellpadding="0">
+                <table border="0" width="100%" align="center" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="48%" style="vertical-align:middle;  border-radius:20px; position:relative; height:100px;">
-                        	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-                        		<tr style="align:left;position:fixed;float:left;margin:0;padding:0;" border="0" cellspacing="0" cellpadding="0">
-                        			<td width="21"><img src="{{SITE_HOST}}/assets/images/etc/pdf-bill.png"  title="" alt="" ></td>
-                        			<td width="95%" valign="middle" style="border:1px solid #666; font-size:10px;">
-                        				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-                        					<tr>
-                        						<td height="5">&nbsp;</td>
-                        					</tr>
-                        					<tr><td><?php if(!empty($client_data)){?>{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}<?php } ?><br>@foreach ($addresses['result'] as $address)<?php if($address->address_billing == '1') {?>{{$address->address}}<br>{{$address->street}}<br>{{$address->city}}<br>{{$address->state_name}}<br>{{$address->postal_code}}<?php } ?>@endforeach</td></tr>
-                        				</table>
-                        			</td>
-                        		</tr>
-                        	</table>
+                          <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="21" style="border:1px solid #666;" bgcolor="#303440"><img src="{{SITE_HOST}}/assets/images/etc/pdf-bill.png"  title="" alt="" ></td>
+                              <td width="95%" valign="middle" style="border:1px solid #666; font-size:10px; height: 98px;">
+                                <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td height="5">&nbsp;</td>
+                                  </tr>
+                                  <tr>
+                                    <td><?php if(!empty($client_data)){?>{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}<?php } ?><br>@foreach ($addresses['result'] as $address)<?php if($address->address_billing == '1') {?>{{$address->address}}<br>{{$address->street}}<br>{{$address->city}}<br>{{$address->state_name}}<br>{{$address->postal_code}}<?php } ?>@endforeach
+                                    </td>
+                                  </tr>
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
                         </td>
                         <td width="4%"></td>
-                        <td width="48%" style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
-                        	<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-                        		<tr>
-                        			<td width="21"><img src="{{SITE_HOST}}/assets/images/etc/pdf-ship.png"   title="" alt=""></td>
-                        			<td width="95%" valign="middle" style="border:1px solid #666;font-size:10px;">
-                        				<table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-                        					<tr>
-                        						<td height="5">&nbsp;</td>
-                        					</tr>
-                        					<tr><td><?php if(!empty($client_data)){?>{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}<?php } ?><br>@foreach ($addresses['result'] as $address)<?php if($address->address_shipping == '1') {?>{{$address->address}}<br>{{$address->street}}<br>{{$address->city}}<br>{{$address->state_name}}<br>{{$address->postal_code}}<?php } ?>@endforeach</td></tr>
-                        					
-                        				</table>
-                        			</td>
-                        		</tr>
-                        	</table>
+                        <td width="48%" style="vertical-align:middle; height:100px;">
+                          <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td width="21" style="border:1px solid #666;" bgcolor="#303440"><img src="{{SITE_HOST}}/assets/images/etc/pdf-ship.png"   title="" alt=""></td>
+                              <td width="95%" valign="middle" style="border:1px solid #666;font-size:10px; height: 98px;">
+                                <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                                  <tr>
+                                    <td height="5">&nbsp;</td>
+                                  </tr>
+                                  <tr>
+                                    <td><?php if(!empty($client_data)){?>{{$client_data[0]->first_name}} {{$client_data[0]->last_name}}<?php } ?><br>@foreach ($addresses['result'] as $address)<?php if($address->address_shipping == '1') {?>{{$address->address}}<br>{{$address->street}}<br>{{$address->city}}<br>{{$address->state_name}}<br>{{$address->postal_code}}<?php } ?>@endforeach</td>
+                                  </tr>                                 
+                                </table>
+                              </td>
+                            </tr>
+                          </table>
                         </td>
                     </tr>
                 </table>
 
                  <table width="100%" border="0" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
-                 	<tr>
-                 		<td height="15">&nbsp;</td>
-                 	</tr>
+                  <tr>
+                    <td height="15">&nbsp;</td>
+                  </tr>
                  </table>
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" style="font-family: arial; font-size:10px; border-collapse:collapse;">
                     <tr>
                         <th width="10%" height="15" style="font-weight:bold; text-align:left;">Client PO</th>
-                        <th width="20%" height="15" style="font-weight:bold; text-align:left;">Account Manager</th>
-                        <th width="10%" height="15" style="font-weight:bold; text-align:left;">Terms</th>
+                        <th width="15%" height="15" style="font-weight:bold; text-align:left;">Account Manager</th>
+                        <th width="15%" height="15" style="font-weight:bold; text-align:left;">Terms</th>
                         <th width="15%" height="15" style="font-weight:bold; text-align:left;">Ship Via</th>
                         <th width="15%" height="15" style="font-weight:bold; text-align:left;">Ship Date</th>
                         <th width="15%" height="15" style="font-weight:bold; text-align:left;">In Hands Date</th>
                         <th width="15%" height="15" style="font-weight:bold; text-align:left;">Payment Due</th>
                     </tr>
                     <tr>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->custom_po}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->name}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_terms}}<?php } ?></td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->sns_shipping_name}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->date_shipped}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;">{{$order_data[0]->in_hands_by}}</td>
-                        <td height="20" style="border:1px solid #000; text-align:left; line-height:20px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_due_date}}<?php } ?></td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:13px; font-size: 10px;">{{$order_data[0]->custom_po}}</td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:13px; font-size: 10px;">{{$order_data[0]->name}}</td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:13px; font-size: 10px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_terms}}<?php } ?></td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:13px; font-size: 10px;">{{$order_data[0]->sns_shipping_name}}</td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:13px; font-size: 10px;">{{$order_data[0]->date_shipped}}</td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:13px; font-size: 10px;">{{$order_data[0]->in_hands_by}}</td>
+                        <td height="20" style="border:1px solid #000; text-align:left; line-height:13px; font-size: 10px;"><?php if(!empty($invoice_data)){?>{{$invoice_data[0]->payment_due_date}}<?php } ?></td>
                     </tr>
                 </table>
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
-                 	<tr>
-                 		<td height="15">&nbsp;</td>
-                 	</tr>
+                  <tr>
+                    <td height="15">&nbsp;</td>
+                  </tr>
                  </table>
 
 
-				<?php 
+        <?php 
 
                 if(!empty($all_design))
-				{
-						$len = count($all_design);
-				?>
-					
-					@foreach($all_design as $index => $design)
-							
-							
+        {
+            $len = count($all_design);
+        ?>
+          
+          @foreach($all_design as $index => $design)
+              
+              
 
-			                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" style="font-family: arial; font-size:10px; border-collapse:collapse;">
-			                    
-			                	
-			                    <tr>
-			                        <th width="30%" height="15" style="font-weight:bold; text-align:left;">Garment/Item Description</th>
-			                        <th width="15%" height="15" style="font-weight:bold; text-align:left;">Color</th>
-			                        <th width="37%" height="15" style="font-weight:bold; text-align:left;">Size/Quantities</th>
-			                        <th width="8%" height="15" style="font-weight:bold; text-align:left;">Qty</th>
-			                        <th width="10%" height="15" style="font-weight:bold; text-align:left;">Unit Price</th>
-			                    </tr>
-			                   
+                      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+                          
+                        
+                          <tr>
+                              <th width="30%" height="15" style="font-weight:bold; text-align:left;">Garment/Item Description</th>
+                              <th width="15%" height="15" style="font-weight:bold; text-align:left;">Color</th>
+                              <th width="37%" height="15" style="font-weight:bold; text-align:left;">Size/Quantities</th>
+                              <th width="8%" height="15" style="font-weight:bold; text-align:left;">Qty</th>
+                              <th width="10%" height="15" style="font-weight:bold; text-align:left;">Unit Price</th>
+                          </tr>
+                         
 
-			                    <?php $count = 1;?>
-			                    @foreach($design->products as $product)
+                          <?php $count = 1;?>
+                          @foreach($design->products as $product)
 
-			                    <?php if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} ?>
-			                    <tr style="background-color:<?php echo $color_bg?>;">
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->id}} - {{$product->product_name}}</td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->color_name}}</td>
-			                        <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">@foreach ($product->sizeData as $size){{$size->size}}:(<?php echo number_format($size->qnty); ?>)&nbsp;@endforeach</td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($product->total_qnty) ?></td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px;line-height:20px;">$<?php echo number_format($product->total_line_charge,2) ?></td>
-			                    </tr>
-			                     <?php $count++;?>
-			                    @endforeach
-			                    
-			                   
-			                    <tr>
-			                        <td height="20" colspan="3" style="border:1px solid #fff; border-right:1px solid #000; line-height:20px; font-size:9px; text-align:right; font-weight:bold">Total Qty&nbsp;&nbsp;</td>
-			                        <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($design->total_product_qnty) ?></td>
-			                        <td height="20" style="border:1px solid #fff; text-align:left; font-size:9px;">&nbsp;</td>
-			                    </tr>
-			                   
-			                </table>
+                          <?php if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} ?>
+                          <tr style="background-color:<?php echo $color_bg?>;">
+                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->id}} - {{$product->product_name}}</td>
+                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->color_name}}</td>
+                              <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">@foreach ($product->sizeData as $size){{$size->size}}:(<?php echo number_format($size->qnty); ?>)&nbsp;@endforeach</td>
+                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($product->total_qnty) ?></td>
+                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px;line-height:20px;">$<?php echo number_format($product->total_line_charge,2) ?></td>
+                          </tr>
+                           <?php $count++;?>
+                          @endforeach
+                          
+                         
+                          <tr>
+                              <td height="20" colspan="3" style="border:1px solid #fff; border-right:1px solid #000; line-height:20px; font-size:9px; text-align:right; font-weight:bold">Total Qty&nbsp;&nbsp;</td>
+                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($design->total_product_qnty) ?></td>
+                              <td height="20" style="border:1px solid #fff; text-align:left; font-size:9px;">&nbsp;</td>
+                          </tr>
+                         
+                      </table>
                            
-			                
-			                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
-			                 	<tr>
-			                 		<td height="15">&nbsp;</td>
-			                 	</tr>
-			                 </table>
-			                <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:15px; border-collapse:collapse;">
+                      
+                      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+                        <tr>
+                          <td height="15">&nbsp;</td>
+                        </tr>
+                       </table>
+                      <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:15px; border-collapse:collapse;">
                                 <tr>
                                     <!-- <td width="60%" style="border-bottom:2px solid #000;"> -->
                                        <td width="63%">
@@ -308,21 +308,21 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                                     </tr>
                                 </table>
 
-				                <table width="100%" align="center" border="0" cellspacing="0" cellpadding="5" style="font-family: arial; font-size:10px; border-collapse:collapse;">
-				                 	<tr>
-				                 		<td height="15">&nbsp;</td>
-				                 	</tr>
-				                 </table>
+                        <table width="100%" align="center" border="0" cellspacing="0" cellpadding="5" style="font-family: arial; font-size:10px; border-collapse:collapse;">
+                          <tr>
+                            <td height="15">&nbsp;</td>
+                          </tr>
+                         </table>
 
-				                 <?php if ($index != $len - 1) { ?>
-				                 	 <div style="page-break-before: always;"></div>
-				                 <?php } ?>
+                         <?php if ($index != $len - 1) { ?>
+                           <div style="page-break-before: always;"></div>
+                         <?php } ?>
         
-				 
+         
                  @endforeach
-				<?php 
-				}
-				?>
+        <?php 
+        }
+        ?>
 
             </td>
         </tr>
@@ -331,7 +331,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
     <br />
     <footer>
-    	<img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt="">
+      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt="">
     </footer>
 </body>
 </html>
