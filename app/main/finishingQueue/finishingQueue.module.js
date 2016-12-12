@@ -51,14 +51,14 @@
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',
             group : true,
-            weight: 1
+            weight: 9
         });
 
         msNavigationServiceProvider.saveItem('fuse.finishingQueue', {
             title: 'Finishing Queue',
             icon: 'icon-cart',
             state: 'app.finishingQueue',
-            weight   : 1
+            weight   : 9
         });
     }
 })();
