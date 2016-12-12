@@ -230,8 +230,5 @@
       </td>
     </tr>
   </table>
- <footer>
-      <img src="{{SITE_HOST}}/assets/images/logos/stokkup-logo.png" style="height: 30px; float: left;" title="" alt="">
-</footer>
 </body>
 </html>

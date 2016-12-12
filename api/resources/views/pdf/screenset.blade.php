@@ -266,8 +266,5 @@ foreach($data as $key_main=>$value_main)
     </td>
   </tr>
 </table>
-<footer>
-      <img src="{{SITE_HOST}}/assets/images/logos/stokkup-logo.png" style="height: 50px; float: left;" title="" alt="">
-</footer>
 </body>
 </html>
