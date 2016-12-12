@@ -371,7 +371,11 @@
 
         $scope.printPdf=function()
         {
-            var target;
+
+
+            if($scope.total_unit > 0)
+            {
+                var target;
             var form = document.createElement("form");
             form.action = 'api/public/invoice/createInvoicePdf';
             form.method = 'post';
@@ -395,6 +399,12 @@
 
             document.body.appendChild(form);
             form.submit();
+            } 
+            else
+            {
+                notifyService.notify('error','Please add atleast one product.');
+            }
+            
         };
 
         $scope.openEmailPopup = function (ev,approval) {
