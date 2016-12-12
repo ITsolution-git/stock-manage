@@ -127,6 +127,8 @@ class Client extends Model {
         {
           $value->fulladdress  = !empty($value->address2)?$value->address2." ":'';
           $value->fulladdress .= !empty($value->address)?$value->address:'' ; 
+          $value->fulladdress .= !empty($value->address_line2)?", ".$value->address_line2:'' ; 
+          $value->fulladdress .= !empty($value->suite)?", ".$value->suite:'' ; 
           $value->fulladdress .= !empty($value->city)?", ".$value->city:''; 
           $value->fulladdress .= !empty($value->state_name)?", ".$value->state_name:'';
           $value->fulladdress .= !empty($value->zipcode)?", ".$value->zipcode:'';
