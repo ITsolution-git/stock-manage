@@ -201,12 +201,13 @@ class InvoiceController extends Controller {
         }
         else
         {
+            print_r($order_id);exit;
             //$order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
 
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
-            print_r($order_data_all);exit;
+            
 
             $order_data_all['order'][0]->sns_shipping_name = '';
 
@@ -218,7 +219,7 @@ class InvoiceController extends Controller {
                 $order_data_all['order'][0]->sns_shipping_name = '2nd Day Air';
             } elseif ($order_data_all['order'][0]->sns_shipping == '16') {
                 $order_data_all['order'][0]->sns_shipping_name = '3 Day Select';
-            } elseif ($result['order'][0]->sns_shipping == '6') {
+            } elseif ($order_data_all['order'][0]->sns_shipping == '6') {
                 $order_data_all['order'][0]->sns_shipping_name = 'Will Call / PickUp';
             }
 
