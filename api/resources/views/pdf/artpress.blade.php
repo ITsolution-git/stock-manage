@@ -23,34 +23,29 @@
             <div style="width:100%;float:left;padding:15px 0;">
               <table>
                 <tr>
-                  <td align="left" width="20%"><img src="{{$color[0]->companyphoto}}" title="Culture Studio" alt="Culture Studio" /></td>
+                  <td align="left" width="20%"><img src="{{$color[0]->companyphoto}}" height="100" title="Culture Studio" alt="Culture Studio" /></td>
                   <td align="left" width="40%" style=" font-weight:bold">
-                     Job# {{$color[0]->order_id}}<br>
+                     Order Id: #{{$color[0]->order_id}}<br>
                      Job Name: {{$color[0]->order_name}}<br>
                      Client: {{$color[0]->client_company}}
                   </td>
-                  <td width="40%"  style="vertical-align:middle; position:relative; height:100px;">
-                      
-                      <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
-                          <td valign="middle" style="width:80%; height:100px; font-size:10px;">
-                            <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
-                              <tr>
-                                <td height="15">&nbsp;</td>
-                              </tr>
-                              <tr><td>{{$color[0]->street}} {{$color[0]->address}}<br>{{$color[0]->city}}, {{$color[0]->state_name}} {{$color[0]->postal_code}}</td></tr>
-                              <tr>
-                                <td height="15">&nbsp;</td>
-                              </tr>
-                            </table>
-                          </td>
-                        </tr>
-                      </table>
-                      
+                  <td width="40%" style="vertical-align:middle; height:100px;">
+                    <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td width="21" style="border:1px solid #666;" bgcolor="#303440"><img src="{{SITE_HOST}}/assets/images/etc/pdf-ship.png"   title="" alt=""></td>
+                        <td width="95%" valign="middle" style="border:1px solid #666;font-size:10px; height: 98px;">
+                          <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td height="5">&nbsp;</td>
+                            </tr>
+                            <tr><td>{{$color[0]->street}} {{$color[0]->address}}<br>{{$color[0]->city}}, {{$color[0]->state_name}} {{$color[0]->postal_code}}</td></tr>                                 
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
                   </td>
-              </tr>
-            </table>
+                </tr>
+              </table>
             </div>
             <div class="diff-border">&nbsp;</div>
           </td>
@@ -190,7 +185,7 @@
           <table>
            
             <tr style="font-weight: 12px">
-              <td class="align-center font-bold" ><b>#POS</b></td>
+              <td class="align-center font-bold" ><b>#HEAD</b></td>
               <td class="align-center font-bold" ><b>COLOR</b></td>
             <?php if($color[0]->placement_type!='45') { ?>
               <td class="align-center font-bold" ><b>PANTONE</b></td>

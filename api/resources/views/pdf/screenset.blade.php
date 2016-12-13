@@ -19,31 +19,30 @@
 
     <table class="header" cellpadding="5" cellspacing="5">
       <tr>
-          <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" style="padding:10px;" alt="Culture Studio"></td>
+          <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100"  alt="Culture Studio"></td>
           <td align="left" width="40%" class="font-bold">
-             Job# {{$company->order_id}}<br>
+             Order Id: #{{$company->order_id}}<br>
              Job Name: {{$company->order_name}}<br>
              Client: {{$company->client_company}}
           </td>
-          <td width="40%"  style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
-              <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
+           <td width="40%" style="vertical-align:middle; height:100px;">
+              <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
-                  <td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                  <td width="21" style="border:1px solid #666;" bgcolor="#303440"><img src="{{SITE_HOST}}/assets/images/etc/pdf-ship.png"   title="" alt=""></td>
+                  <td width="95%" valign="middle" style="border:1px solid #666;font-size:10px; height: 98px;">
                     <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td height="15">&nbsp;</td>
+                        <td height="5">&nbsp;</td>
                       </tr>
-                      <tr><td class="font-bold">{{$company->street}} {{$company->address}}<br>{{$company->city}}, {{$company->state_name}} {{$company->postal_code}}</td></tr>
                       <tr>
-                        <td height="15">&nbsp;</td>
-                      </tr>
+                        <td class="font-bold">{{$company->street}} {{$company->address}}<br>{{$company->city}}, {{$company->state_name}} {{$company->postal_code}}</td>
+                      </tr>                                 
                     </table>
                   </td>
                 </tr>
               </table>
-          </td>
-      </tr>
+            </td>
+          </tr>
     </table><br><br>
     
     <table width="100%" class="align-center" border="0" cellspacing="0" cellpadding="0" style="font-family: arial; font-size:10px; border-collapse:collapse;">
@@ -112,7 +111,8 @@
   ?>
   <table cellspacing="5" cellpadding="5">
      <tr>
-      <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?></td>
+      <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?> -
+      <?php echo $value_main[0][0]->screen_width ?>"W X <?php echo $value_main[0][0]->screen_height ?>"H </td>
       
     </tr> 
     <tr>
@@ -158,23 +158,24 @@
       <tr>
           <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100" width="100" alt="Culture Studio"></td>
           <td align="left" width="40%" class="font-bold">
-             Job# {{$company->order_id}}<br>
+             Order Id: #{{$company->order_id}}<br>
              Job Name: {{$company->order_name}}<br>
              Client: {{$company->client_company}}
           </td>
-          <td width="40%"  style="vertical-align:middle; border-radius:20px; position:relative; height:100px;">
-              <table width="100%" class="border-b" align="left" border="0" cellspacing="0" cellpadding="0">
+          <td width="40%" style="vertical-align:middle; height:100px;">
+              <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td style="width:20%; text-align:left;"><img style="display:block; line-height:0px;" src="{{SITE_HOST}}/assets/images/etc/ship.png" title="" alt="" height="100"></td>
-                  <td valign="middle" style="width:80%; height:100px; font-size:10px;">
+                  <td width="21" style="border:1px solid #666;" bgcolor="#303440">
+                    <img src="{{SITE_HOST}}/assets/images/etc/pdf-ship.png"   title="" alt="">
+                  </td>
+                  <td width="95%" valign="middle" style="border:1px solid #666;font-size:10px; height: 98px;">
                     <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0">
                       <tr>
-                        <td height="15">&nbsp;</td>
+                        <td height="5">&nbsp;</td>
                       </tr>
-                      <tr><td class="font-bold">{{$company->street}} {{$company->address}}<br>{{$company->city}}, {{$company->state_name}} {{$company->postal_code}}</td></tr>
                       <tr>
-                        <td height="15">&nbsp;</td>
-                      </tr>
+                        <td class="font-bold">{{$company->street}} {{$company->address}}<br>{{$company->city}}, {{$company->state_name}} {{$company->postal_code}}</td>
+                      </tr>                                 
                     </table>
                   </td>
                 </tr>
