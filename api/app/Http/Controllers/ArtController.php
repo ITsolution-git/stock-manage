@@ -476,11 +476,11 @@ class ArtController extends Controller {
         if(count($screenArray)>0)
         {
             $options = !empty($screenArray->options)?$screenArray->options:array();
-            $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
-            //echo "<pre>"; print_r($options); echo "</pre>"; die;
 
+            $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
-            
+
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
             if(!empty($pdf_data[0][0]))
             {
                 $email_array = explode(",",$screenArray->email);
@@ -552,10 +552,10 @@ class ArtController extends Controller {
             if(!empty($pdf_data['size']))
             {
                 
-                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+               /* $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
-                else { exec("chmod $file_path 0777"); }
+                else { exec("chmod $file_path 0777"); }*/
                
                 $pdf = $this->tdpdf;
                 $pdf->SetHeaderMargin(5);
@@ -565,8 +565,8 @@ class ArtController extends Controller {
                 $pdf->writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size'],'options'=>$options))->render());
            
                 $pdf_url = "PresInstruction-".$screenArray->screen_id.".pdf"; 
-                $filename = $file_path."/". $pdf_url;
-                $pdf->Output($filename);
+               // $filename = $file_path."/". $pdf_url;
+                $pdf->Output($pdf_url);
                 //return Response::download($filename);
             }
             else
