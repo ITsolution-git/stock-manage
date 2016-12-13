@@ -55,3 +55,5 @@ define('TAX_RATE',0);
 define('TOKEN_CODE',400);
 define('ERROR_CODE',0);
 define('SUCCESS_CODE',1);
+
+define('FOOTER_IMAGE',SITE_HOST.'/assets/images/logos/stokkup-logo.jpg');

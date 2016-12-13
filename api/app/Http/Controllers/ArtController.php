@@ -500,10 +500,10 @@ class ArtController extends Controller {
                
                
                // TCPDF::Footer();
-                
                 $pdf = $this->tdpdf;
                 $pdf->SetHeaderMargin(5);
                 $pdf->SetFooterMargin(10);
+                $pdf->FooterImg(FOOTER_IMAGE);
                 $pdf->SetAutoPageBreak(TRUE, 10);
                 $pdf->AddPage('P','A4');
                 $pdf->writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
@@ -556,14 +556,13 @@ class ArtController extends Controller {
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
                 else { exec("chmod $file_path 0777"); }*/
-               
                 $pdf = $this->tdpdf;
-                $pdf->SetHeaderMargin(5);
+                $pdf->FooterImg(FOOTER_IMAGE);
                 $pdf->SetFooterMargin(10);
                 $pdf->SetAutoPageBreak(TRUE, 10);
                 $pdf->AddPage('P','A4');
                 $pdf->writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size'],'options'=>$options))->render());
-           
+                
                 $pdf_url = "PresInstruction-".$screenArray->screen_id.".pdf"; 
                // $filename = $file_path."/". $pdf_url;
                 $pdf->Output($pdf_url);

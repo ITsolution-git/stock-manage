@@ -112,7 +112,7 @@
   <table cellspacing="5" cellpadding="5">
      <tr>
       <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?> -
-      <?php echo $value_main[0][0]->screen_width ?>"W X <?php echo $value_main[0][0]->screen_height ?>"H </td>
+      <?php echo (!empty($value_main[0][0]->screen_width))?$value_main[0][0]->screen_width:'-'; ?>"W X <?php echo (!empty($value_main[0][0]->screen_height))?$value_main[0][0]->screen_height:'-'; ?>"H </td>
       
     </tr> 
     <tr>

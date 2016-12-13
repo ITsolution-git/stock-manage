@@ -163,10 +163,11 @@
       <td>
           <div style="height:10px;width:100%">&nbsp;</div>
           <table>
-    <!-- <tr>
-      <td colspan="3" class="align-">PRESS DETAILS</td>
+    <tr>
+      <td colspan="3" class="align-">&nbsp;&nbsp;<b><?php echo (!empty($color[0]->position_name))?$color[0]->position_name:''; ?> -
+      <?php echo (!empty($color[0]->screen_width))?$color[0]->screen_width:'-'; ?>"W X <?php echo (!empty($color[0]->screen_height))?$color[0]->screen_height:'-'; ?>"H </b><br></td>
     </tr>
-    <tr >
+    <!-- <tr >
        <td width="30%" class="align-center"  style="border: 1px solid #000;">ART</td>
        <td width="70%" class="align-center" style="border: 1px solid #000;">PRESS SETUP</td>
     </tr> -->
