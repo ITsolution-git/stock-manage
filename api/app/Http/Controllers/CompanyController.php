@@ -423,5 +423,37 @@ class CompanyController extends Controller {
 		return response()->json(['data'=>$data]);
 	}
 
+
+	 public function deleteDataIphFactor()
+    {
+        $post = Input::all();
+       
+        if(!empty($post['id']))
+        {
+            
+                $record_data = $this->common->DeleteTableRecords($post['tableName'],array('id' => $post['id']));
+            
+           
+            if($record_data)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
+
 	
 }

@@ -20,15 +20,12 @@
                     </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="ATTN" name="attn" ng-model="params.attn"   >
-                </md-input-container>
-                
-                <md-input-container>
                     <input tabindex="2" vs-google-autocomplete="Gapi_options"
                         ng-model="Gapi_address.name"
                         vs-street-number="Gapi_address.components.streetNumber" 
                         vs-street="Gapi_address.components.street"
                         vs-city="Gapi_address.components.city"
+                        vs-district = "Gapi_address.components.district"
                         vs-state="Gapi_address.components.state"
                         vs-post-code="Gapi_address.components.postCode"
                         vs-country="Gapi_address.components.country"
@@ -51,6 +48,15 @@
                         </div>
                     </div>
                 </md-input-container>
+                 <md-input-container>
+                    <input placeholder="Street Address Line 2"  name="address_line2" ng-model="params.address_line2" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="Suite"  name="suite" ng-model="params.suite" >
+                </md-input-container>
+                <md-input-container>
+                    <input placeholder="ATTN" name="attn" ng-model="params.attn" >
+                </md-input-container>
                 <md-input-container>
                     <input placeholder="City*"  name="city" required ng-model="params.city"  >
                     <div ng-messages="clientForm.city.$error" role="alert" multiple>
@@ -59,7 +65,6 @@
                         </div>
                     </div>
                 </md-input-container>
-
                 <!---------      STATE      ---------------->
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                     <md-input-container flex=45>

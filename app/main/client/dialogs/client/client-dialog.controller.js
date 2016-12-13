@@ -7,7 +7,7 @@
         .controller('ClientDialogController', ClientDialogController);
 
     /** @ngInject */
-    function ClientDialogController($mdDialog,$controller,$state, Client, Clients, event,$scope,sessionService,$resource)
+    function ClientDialogController($mdDialog,$controller,$state, Client, Clients, event,$scope,sessionService,$resource,notifyService)
     {
         var vm = this;
 
@@ -108,7 +108,14 @@
                    $mdDialog.hide();
                    $state.go('app.client');
                    return false;
+                } else {
+
+                  var data = {"status": "error", "message": "Company Name already exists!"}
+                  notifyService.notify(data.status, data.message);
+                  return false;
                 }
+
+
                 closeDialog();
                 
             });

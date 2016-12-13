@@ -15,6 +15,12 @@
                         <md-tab label="Company Detail" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
                             <div ng-show="role_slug != 'AT' && role_slug != 'SU' " ng-include src="'app/main/settings/views/companyDetails/companyDetails.html'"></div>
                         </md-tab>
+                        <md-tab label="IPH" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-show="role_slug != 'AT' && role_slug != 'SU' " ng-include src="'app/main/settings/views/iph/iph.html'"></div>
+                        </md-tab>
+                        <md-tab label="Order Size Factor" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-show="role_slug != 'AT' && role_slug != 'SU' " ng-include src="'app/main/settings/views/orderSize/orderSize.html'"></div>
+                        </md-tab>
                     </md-tabs>
                 </md-content>
         </div>

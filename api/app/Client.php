@@ -40,7 +40,7 @@ class Client extends Model {
         }
     
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_id,c.display_number,c.client_id as id,c.client_company,cc.email,cc.first_name,cc.phone,cc.last_name,c.status,c.client_company as label')];
-        $whereConditions = ['c.company_id' => $post['company_id']];
+        $whereConditions = ['c.is_delete' => '1','c.company_id' => $post['company_id']];
 				$result =	DB::table('client as c')
         				 ->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
         				 ->select($listArray)
@@ -127,6 +127,8 @@ class Client extends Model {
         {
           $value->fulladdress  = !empty($value->address2)?$value->address2." ":'';
           $value->fulladdress .= !empty($value->address)?$value->address:'' ; 
+          $value->fulladdress .= !empty($value->address_line2)?", ".$value->address_line2:'' ; 
+          $value->fulladdress .= !empty($value->suite)?", ".$value->suite:'' ; 
           $value->fulladdress .= !empty($value->city)?", ".$value->city:''; 
           $value->fulladdress .= !empty($value->state_name)?", ".$value->state_name:'';
           $value->fulladdress .= !empty($value->zipcode)?", ".$value->zipcode:'';

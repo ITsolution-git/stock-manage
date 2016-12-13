@@ -35,6 +35,22 @@ class ClientController extends Controller {
 
 		$client = array(); $contact = array(); $address = array();
 		$post = Input::all();
+
+
+		$name = $this->common->checkCompanyNameExist($post['client_company'],$post['company_id'],0); // CHECK Company Name EXIST,
+
+
+		if(count($name)>0)
+			{
+				$message = "Company Name already exists!";
+				$success = 0;
+				$data = '';
+
+				$data = array("success"=>$success,"message"=>$message,"data"=>$data);
+		        return response()->json(['data'=>$data]);
+
+			}
+
 		
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
 		if(!empty($post['company_id']) && !empty($post['client_company']) && !empty($post['billing_email']))
@@ -212,7 +228,8 @@ class ClientController extends Controller {
                         array('key' => 'c.client_company', 'name' => 'Client Name'),
                         array('key' => 'cc.first_name', 'name' => 'Main Contact'),
                         array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
-                        array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
+                        array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false),
+                        array('key' => '', 'name' => 'Action', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
@@ -497,6 +514,23 @@ class ClientController extends Controller {
 	public function SaveClientInfo()
 	{
 		$post = Input::all();
+
+		$name = $this->common->checkCompanyNameExist($post['client_company'],$post['company_id'],$post['client_id']); // CHECK Company Name EXIST,
+
+
+		if(count($name)>0)
+			{
+				$message = "Company Name already exists!";
+				$success = 2;
+				$data = '';
+
+				$data = array("success"=>$success,"message"=>$message,"data"=>$data);
+		        return response()->json(['data'=>$data]);
+
+			}
+
+
+		
 		if(!empty($post['client_company']) && !empty($post['client_id']))
 		{
 			$post['pl_state'] = empty($post['pl_state'])?'':$post['pl_state'];

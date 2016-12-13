@@ -90,7 +90,6 @@
     }
 
 
-
 $scope.allShiftData =  function() {
 
             var allData = {};
@@ -111,12 +110,137 @@ $scope.allShiftData =  function() {
             }     
                 
         });
- }   
+ }
+
+
+
+
+$scope.updateData = function(column_name,id,value,table_name,match_condition)
+        {
+
+            var position_main_data = {};
+            position_main_data.table =table_name;
+            $scope.name_filed = column_name;
+          
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            position_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[match_condition] =  id;
+            position_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',position_main_data).success(function(result) {
+               return true;
+            });
+        }
+
+
+$scope.addData = function(tableName){
+     
+             var InserArray = {};
+            InserArray.table =tableName;
+            InserArray.data ={company_id:sessionService.get('company_id')}
+
+
+            // INSERT API CALL
+            $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
+            {
+                notifyService.notify('success','Record added successfully');
+
+                if(tableName == 'iph') {
+                    $scope.alliphDataAll(); 
+                } else {
+                    $scope.allOrderSizeFactor();
+                }
+                  
+                
+            });
+        
+    }
+
+    
+ $scope.removeData =  function(id,tableName){
+          
+          var permission = confirm("Are you sure want to delete this record ? Clicking Ok will delete record permanently.");
+
+            if (permission == true) {
+
+                var combine_array_id = {};
+                    combine_array_id.id = id;
+                    combine_array_id.tableName = tableName;
+                    
+                    $http.post('api/public/admin/company/deleteDataIphFactor',combine_array_id).success(function(result, status, headers, config) {
+                       
+                        if(result.data.success == '1') {
+                            if(tableName == 'iph') {
+                                $scope.alliphDataAll(); 
+                            } else {
+                                $scope.allOrderSizeFactor();
+                            }
+                        } 
+                        
+                    });
+              }
+
+        };
+
+ $scope.alliphDataAll =  function() {
+
+            var allData = {};
+        allData.table ='iph';
+        allData.sort ='id';
+        allData.sortcond ='desc';
+        allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.alliphData = result.data.records;
+                
+            } else {
+                $scope.alliphData = {};
+               
+            }     
+                
+        });
+ } 
+
+
+
+
+ $scope.allOrderSizeFactor =  function() {
+
+            var allData = {};
+        allData.table ='order_size_factor';
+        allData.sort ='id';
+        allData.sortcond ='desc';
+        allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.allfactorData = result.data.records;
+                
+            } else {
+                $scope.allfactorData = {};
+               
+            }     
+                
+        });
+ }  
+
+
+
+
 
 
    $scope.GetCompany();
    $scope.allShiftData();
-
+   $scope.alliphDataAll();
+   $scope.allOrderSizeFactor();
 
 
 

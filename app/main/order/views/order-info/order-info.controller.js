@@ -371,7 +371,12 @@
 
         $scope.printPdf=function()
         {
-            var target;
+
+
+
+            if($scope.total_unit > 0)
+            {
+                var target;
             var form = document.createElement("form");
             form.action = 'api/public/invoice/createInvoicePdf';
             form.method = 'post';
@@ -382,6 +387,12 @@
             invoice_id.name = 'invoice_id';
             invoice_id.setAttribute('value', $scope.order.invoice_id);
             form.appendChild(invoice_id);
+
+
+            var order_id = document.createElement('input');
+            order_id.name = 'order_id';
+            order_id.setAttribute('value', $scope.order_id);
+            form.appendChild(order_id);
 
             var company_id = document.createElement('input');
             company_id.name = 'company_id';
@@ -395,6 +406,12 @@
 
             document.body.appendChild(form);
             form.submit();
+            } 
+            else
+            {
+                notifyService.notify('error','Please add atleast one product.');
+            }
+            
         };
 
         $scope.openEmailPopup = function (ev,approval) {

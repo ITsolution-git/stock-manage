@@ -106,7 +106,7 @@ class InvoiceController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
         return response()->json($data);
     }
-    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id=0)
+    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id)
     {
     	$post = Input::all();
 
@@ -179,7 +179,7 @@ class InvoiceController extends Controller {
                 $order_data_all['order'][0]->sns_shipping_name = '2nd Day Air';
             } elseif ($order_data_all['order'][0]->sns_shipping == '16') {
                 $order_data_all['order'][0]->sns_shipping_name = '3 Day Select';
-            } elseif ($result['order'][0]->sns_shipping == '6') {
+            } elseif ($order_data_all['order'][0]->sns_shipping == '6') {
                 $order_data_all['order'][0]->sns_shipping_name = 'Will Call / PickUp';
             }
 
@@ -201,11 +201,13 @@ class InvoiceController extends Controller {
         }
         else
         {
+           
             //$order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
 
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
+            
 
             $order_data_all['order'][0]->sns_shipping_name = '';
 
@@ -217,7 +219,7 @@ class InvoiceController extends Controller {
                 $order_data_all['order'][0]->sns_shipping_name = '2nd Day Air';
             } elseif ($order_data_all['order'][0]->sns_shipping == '16') {
                 $order_data_all['order'][0]->sns_shipping_name = '3 Day Select';
-            } elseif ($result['order'][0]->sns_shipping == '6') {
+            } elseif ($order_data_all['order'][0]->sns_shipping == '6') {
                 $order_data_all['order'][0]->sns_shipping_name = 'Will Call / PickUp';
             }
 
@@ -535,7 +537,7 @@ class InvoiceController extends Controller {
     public function createInvoicePdf()
     {
         $post = Input::all();
-        $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+        $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1,$post['order_id']);
 
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
