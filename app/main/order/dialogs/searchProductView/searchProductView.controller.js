@@ -161,6 +161,7 @@
         }
 
         $scope.addProduct = function (productData,warehouse) {
+            $("#ajax_loader").show();
           
            /* if(size_group_id == 0)
             {
@@ -191,11 +192,13 @@
             {
                 var data = {"status": "error", "message": "Please enter quantity to add product"}
                 notifyService.notify(data.status, data.message);
+                $("#ajax_loader").hide();
             }
             else
             {
              $http.post('api/public/product/addProduct',combine_array_id).success(function(result) 
                 {
+                    $("#ajax_loader").hide();
                     if(result.data.success == 0)
                     {
                         var data = {"status": result.data.status, "message": result.data.message}
