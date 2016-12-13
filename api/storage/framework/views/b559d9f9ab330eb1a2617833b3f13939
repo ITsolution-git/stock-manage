@@ -272,9 +272,9 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                                                     <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; line-height:20px;">$<?php echo number_format($order_data[0]->rush_charge,2); ?>&nbsp;&nbsp;</td>
                                                 </tr>
                                                 <tr>
-                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; color:#ed1c24; line-height:20px;">Discount</td>
+                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px;line-height:20px;">Discount</td>
                                                     <td width="5%">&nbsp;</td>
-                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000; color:#ed1c24; line-height:20px;">-$<?php echo number_format($order_data[0]->discount,2); ?>&nbsp;&nbsp;</td>
+                                                    <td style="text-align:right; font-size:9px; font-weight:bold; padding:6px; border:1px solid #000;line-height:20px;">-$<?php echo number_format($order_data[0]->discount,2); ?>&nbsp;&nbsp;</td>
                                                 </tr>
                                                 <tr>
                                                     <td height="20" style="text-align:right; font-size:9px; font-weight:bold; padding:6px; line-height:20px;">Order Total</td>

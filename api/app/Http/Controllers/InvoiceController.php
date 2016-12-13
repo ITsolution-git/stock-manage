@@ -206,6 +206,7 @@ class InvoiceController extends Controller {
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
+            print_r($order_data_all);exit;
 
             $order_data_all['order'][0]->sns_shipping_name = '';
 
