@@ -263,8 +263,13 @@ class InvoiceController extends Controller {
 
         if($retutn_arr['company_data'][0]->photo != '')
         {
-            $retutn_arr['company_data'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
+
+            $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/staff/'.$staff[0]->id."/",$retutn_arr['company_data'][0]->photo);
+
+
+           // $retutn_arr['company_data'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
         }
+       
 
         $retutn_arr['addresses'] = $this->client->getAddress($order_data[0]->client_id);
         $retutn_arr['client_data'] = $this->common->GetTableRecords('client_contact',array('client_id' => $order_data[0]->client_id,'contact_main' => 1),array());
