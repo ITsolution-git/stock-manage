@@ -95,20 +95,21 @@ class FinishingController extends Controller {
         foreach ($result['allData'] as $data) {
             $inner_data = $this->finishing->getFinishingByOrder($data->order_id);
 
+
             foreach ($inner_data as $row) {
-                if($row->start_time != '00:00:00') {
+                if($row->start_time > 0) {
                     $row->start_time = date('h:i A', strtotime($row->start_time));
                 }
                 else {
                     $row->start_time = '';   
                 }
-                if($row->end_time != '00:00:00') {
+                if($row->end_time > 0) {
                     $row->end_time = date('h:i A', strtotime($row->end_time));
                 }
                 else {
                     $row->end_time = '';
                 }
-                if($row->est != '00:00:00') {
+                if($row->est > 0) {
                     $row->est = substr($row->est,0, -3).' hrs';
                 }
                 else
@@ -146,11 +147,24 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-
-
-        $finishingData['field'] = array('start_time' => date('H:i', strtotime($post['start_time'])),'end_time' => date('H:i', strtotime($post['end_time'])),'est' => $post['est'],'note'=>$post['note']);
+        $finishingData['field']['note'] = $post['note'];
+        $finishingData['field']['start_time'] = $post['start_time'];
+        $finishingData['field']['end_time'] = $post['end_time'];
+        $finishingData['field']['est'] = $post['est'];
+        
+        if($post['start_time'] != '')
+        {
+            $finishingData['field']['start_time'] = date('H:i', strtotime($post['start_time']));
+        }
+        if($post['end_time'] != '')
+        {
+            $finishingData['field']['end_time'] = date('H:i', strtotime($post['end_time']));
+        }
+        if($post['est'] != '')
+        {
+            $finishingData['field']['est'] = date('H:i', strtotime($post['est']));
+        }
         $finishingData['where'] = array('id' => $post['id']);
-
 
         $result = $this->finishing->updateFinishing($finishingData);
         
