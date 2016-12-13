@@ -112,6 +112,10 @@
                     $scope.finishing_data.end_time = '';
                     return false;
                 }
+                else if($scope.finishing_data.end_time == '')
+                {
+                    $scope.finishing_data.est = '';
+                }
                 else
                 {
                     var time = $scope.finishing_data.start_time;
