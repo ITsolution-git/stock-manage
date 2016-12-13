@@ -582,6 +582,20 @@ class TCPDF {
 	 */
 	protected $footer_margin;
 
+
+	/**
+	 * Footer Image for the each page bottom 
+	 * @protected
+	 */
+	protected $footer_image=0;
+
+	
+	/**
+	 * Footer Image Dimantion default image for stokkup is 30
+	 * @protected
+	 */
+	protected $footer_scale=30;
+	
 	/**
 	 * Original left margin value.
 	 * @protected
@@ -3500,8 +3514,11 @@ class TCPDF {
 			$pagenumtxt = $w_page.$this->getPageNumGroupAlias().' / '.$this->getPageGroupAlias();
 		}
 		
-		$image_file = SITE_HOST.'/assets/images/logos/stokkup-logo.jpg';
-        $this->Image($image_file, 10, 280, 30, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+		if(!empty($this->footer_image))
+		{
+	        $this->Image($this->footer_image, 10, 280,$this->footer_scale, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    	}
+
 
 		$this->SetY($cur_y);
 		//Print page number
@@ -3514,6 +3531,14 @@ class TCPDF {
 		}
 	}
 
+	public function FooterImg($img=0,$scale=30)
+	{
+		if(!empty($img))
+		{
+			$this->footer_image = $img;
+			$this->footer_scale = $scale;
+    	}
+	}
 	/**
 	 * This method is used to render the page header.
 	 * @protected
