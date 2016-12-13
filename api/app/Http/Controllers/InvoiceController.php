@@ -106,7 +106,7 @@ class InvoiceController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
         return response()->json($data);
     }
-    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id=0)
+    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id)
     {
     	$post = Input::all();
 
@@ -201,7 +201,7 @@ class InvoiceController extends Controller {
         }
         else
         {
-            print_r($order_id);exit;
+           
             //$order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
 
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
@@ -537,7 +537,7 @@ class InvoiceController extends Controller {
     public function createInvoicePdf()
     {
         $post = Input::all();
-        $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+        $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1,$post['order_id']);
 
         PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
