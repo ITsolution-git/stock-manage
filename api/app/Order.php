@@ -288,7 +288,8 @@ class Order extends Model {
             {
 
                
-               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup);
+               //$combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens) +($value->ink_charge_qnty * $value->ink_changes) + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup);
+               $combine_array['order_design_position'][$key]->total_price = ($value->foil_qnty * $value->foil) + ($value->number_on_dark_qnty * $value->number_on_dark) +($value->oversize_screens_qnty * $value->over_size_screens)  + ($value->number_on_light_qnty * $value->number_on_light) + ($value->discharge_qnty * $value->discharge) + ($value->speciality_qnty * $value->specialty) + ($value->press_setup_qnty * $value->press_setup);
                $combine_array['order_design_position'][$key]->total_price = round($combine_array['order_design_position'][$key]->total_price, 2);
                $combine_array['order_design_position'][$key]->position_header_name = $value->position_name;
                $combine_array['order_design_position'][$key]->qnty_header_name = $value->qnty;
@@ -304,15 +305,23 @@ class Order extends Model {
                  if($value->placement_type_name != ''){
                    $combine_array['order_design_position'][$key]->position_header_name .= '-'.$value->placement_type_name;
                  }*/
+
+
+                 $combine_array['order_design_position'][$key]->image_1_url_photo= $this->common->checkImageExist($data['company_id'].'/order_design_position/'.$value->id."/",$value->image_1);
+                 $combine_array['order_design_position'][$key]->image_2_url_photo= $this->common->checkImageExist($data['company_id'].'/order_design_position/'.$value->id."/",$value->image_2);
+                 $combine_array['order_design_position'][$key]->image_3_url_photo= $this->common->checkImageExist($data['company_id'].'/order_design_position/'.$value->id."/",$value->image_3);
+                 $combine_array['order_design_position'][$key]->image_4_url_photo= $this->common->checkImageExist($data['company_id'].'/order_design_position/'.$value->id."/",$value->image_4);
+
+
                  
-                $combine_array['order_design_position'][$key]->image_1_url_photo = (!empty($value->image_1))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_1:'';
+            /*    $combine_array['order_design_position'][$key]->image_1_url_photo = (!empty($value->image_1))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_1:'';
                 $combine_array['order_design_position'][$key]->image_2_url_photo = (!empty($value->image_2))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_2:'';
                 $combine_array['order_design_position'][$key]->image_3_url_photo = (!empty($value->image_3))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_3:'';
                 $combine_array['order_design_position'][$key]->image_4_url_photo = (!empty($value->image_4))?UPLOAD_PATH.$data['company_id'].'/order_design_position/'.$value->id."/".$value->image_4:'';
-                
+                */
                 $total_pos_qnty += $value->qnty;
-                $combine_array['order_design_position'][$key]->total_screen_fees = $value->screen_fees_qnty * $value->screen_fees;
-                $total_screen_fees += $value->screen_fees_qnty * $value->screen_fees;
+                $combine_array['order_design_position'][$key]->total_screen_fees = ($value->screen_fees_qnty * $value->screen_fees)+($value->ink_charge_qnty * $value->ink_changes);
+                $total_screen_fees += ($value->screen_fees_qnty * $value->screen_fees)+($value->ink_charge_qnty * $value->ink_changes);
 
                 $value->position_image = '';
                 
