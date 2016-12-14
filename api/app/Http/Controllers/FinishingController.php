@@ -95,26 +95,20 @@ class FinishingController extends Controller {
         foreach ($result['allData'] as $data) {
             $inner_data = $this->finishing->getFinishingByOrder($data->order_id);
 
-
             foreach ($inner_data as $row) {
-                if($row->start_time > 0) {
+                if(!is_null($row->start_time)) {
                     $row->start_time = date('h:i A', strtotime($row->start_time));
                 }
-                else {
-                    $row->start_time = '';   
-                }
-                if($row->end_time > 0) {
+                if(!is_null($row->end_time)) {
                     $row->end_time = date('h:i A', strtotime($row->end_time));
                 }
-                else {
-                    $row->end_time = '';
-                }
-                if($row->est > 0) {
-                    $row->est = substr($row->est,0, -3).' hrs';
-                }
-                else
-                {
-                    $row->est = '';   
+                if(!is_null($row->est)) {
+                    if($row->est > 0) {
+                        $row->est = substr($row->est,0, -3).' hrs';
+                    }
+                    else {
+                        $row->est = '24:00 hrs';
+                    }
                 }
             }
 
@@ -148,21 +142,30 @@ class FinishingController extends Controller {
         $post = Input::all();
 
         $finishingData['field']['note'] = $post['note'];
-        $finishingData['field']['start_time'] = $post['start_time'];
-        $finishingData['field']['end_time'] = $post['end_time'];
-        $finishingData['field']['est'] = $post['est'];
         
         if($post['start_time'] != '')
         {
             $finishingData['field']['start_time'] = date('H:i', strtotime($post['start_time']));
         }
+        else
+        {
+            $finishingData['field']['start_time'] = null;
+        }
         if($post['end_time'] != '')
         {
             $finishingData['field']['end_time'] = date('H:i', strtotime($post['end_time']));
         }
+        else
+        {
+            $finishingData['field']['end_time'] = null;
+        }
         if($post['est'] != '')
         {
             $finishingData['field']['est'] = date('H:i', strtotime($post['est']));
+        }
+        else
+        {
+            $finishingData['field']['est'] = null;
         }
         $finishingData['where'] = array('id' => $post['id']);
 

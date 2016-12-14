@@ -272,6 +272,10 @@ class CommonController extends Controller {
         //echo "<pre>"; print_r($post); echo "</pre>"; die;
         if(!empty($post['table']) && !empty($post['data']))
         {
+            if($post['table'] == 'client_distaddress' && isset($post['data']['order_id']))
+            {
+                unset($post['data']['order_id']);
+            }
             $result = $this->common->InsertRecords($post['table'],$post['data']);
             $id = $result;
             $message = INSERT_RECORD;

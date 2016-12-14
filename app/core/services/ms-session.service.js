@@ -209,11 +209,11 @@
 
 		function openAddPopup(scope,path,params,table)
 		{
+			console.log(params);
 			$("#ajax_loader").show();
 			$mdDialog.show({
                 controller:function ($scope, params, all_scope)
                 {
-                	console.log(params);
                 	$("#ajax_loader").hide();
                     $scope.params = params; 		//	GET PARAMETERS FOR POPUP
                     $scope.flag = 'add'; 		//	GET PARAMETERS FOR POPUP
@@ -244,6 +244,25 @@
 
                     $scope.closeDialog = function() 
                     { $mdDialog.hide(); } 
+
+                    $scope.InserAddressOrder = function(order_id,address_id)
+			        {
+			        	var InserAddressArray = {}; 		// INSERT RECORD ARRAY
+                		InserAddressArray.data = {'order_id':order_id,'address_id':address_id};
+                		InserAddressArray.table ='order_shipping_address_mapping';
+
+                		$http.post('api/public/common/InsertRecords',InserAddressArray).success(function(result) 
+			        	{ 
+			        		if(result.data.success=='1')
+		                    {
+		                    	notifyService.notify('success',result.data.message);
+		                    	$mdDialog.hide();
+		                    }
+			                else
+		                    { notifyService.notify('error',result.data.message); }
+		                    $("#ajax_loader").hide();
+                   		});
+			        }
                     
                     $scope.InsertTableData = function(insert_data,extra,cond)
 			        {
@@ -267,11 +286,20 @@
                 		
                 		//=============== SPECIAL CONDITIONS ==============
 
-                		//console.log(InserArray); return false;
 			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
 			        	{ 
 			        		if(result.data.success=='1')
-		                    { notifyService.notify('success',result.data.message); $mdDialog.hide();}
+		                    { 
+		                    	if(table == 'client_distaddress' && $scope.all_scope.order_id != undefined)
+		                    	{
+		                    		$scope.InserAddressOrder($scope.all_scope.order_id,result.data.id);
+		                    		$mdDialog.hide();
+		                    	}
+		                    	else
+		                    	{
+		                    		notifyService.notify('success',result.data.message);
+		                    	}
+		                    }
 			                else
 		                    { notifyService.notify('error',result.data.message); }
 		                    $("#ajax_loader").hide();

@@ -152,9 +152,16 @@
 
                     var time_diff = parseInt(strtime2) - parseInt(strtime1);
 
-                    var est = (new Date).clearTime()
-                      .addSeconds(time_diff)
-                      .toString('H:mm:ss');
+                    if(parseInt(time_diff) == '0')
+                    {
+                        est = '24:00:00';
+                    }
+                    else
+                    {
+                        var est = (new Date).clearTime()
+                          .addSeconds(time_diff)
+                          .toString('H:mm:ss');
+                    }
 
                     $scope.finishing_data.est = est;
                 }

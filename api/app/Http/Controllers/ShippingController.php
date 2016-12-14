@@ -526,6 +526,7 @@ class ShippingController extends Controller {
         foreach ($post['products'] as $product) {
 
             $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+            $order_address_data = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
             if(!empty($shipping_data)) {
 
@@ -558,7 +559,7 @@ class ShippingController extends Controller {
             else
             {
                 $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
-                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'display_number' => $display_number,'company_id' => $post['company_id']));
+                $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'display_number' => $display_number,'company_id' => $post['company_id'],'shipping_type_id' => $order_address_data[0]->shipping_type_id,'shipping_method' => $order_address_data[0]->shipping_method_id));
                 $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $product['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
                 $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $product['id'],'distributed_qnty' =>$product['remaining_qnty']));
             }
@@ -577,6 +578,7 @@ class ShippingController extends Controller {
         $post = Input::all();
 
         $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+        $order_address_data = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
         $remaining_qty = $post['product']['remaining_qnty'] - $post['product']['distributed_qnty'];
 
@@ -611,7 +613,7 @@ class ShippingController extends Controller {
         else
         {
             $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
-            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'company_id' => $post['company_id']));
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'company_id' => $post['company_id'],'shipping_type_id' => $order_address_data[0]->shipping_type_id,'shipping_method' => $order_address_data[0]->shipping_method_id));
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
             $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
         }
