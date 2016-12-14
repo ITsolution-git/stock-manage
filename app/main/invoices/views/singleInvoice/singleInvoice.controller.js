@@ -31,7 +31,7 @@
         {
             var invoice_data = {invoice_id:$scope.invoice_id,company_id :sessionService.get('company_id')};
         
-            $http.get('api/public/invoice/getInvoiceDetail/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result) {
+            $http.get('api/public/invoice/getInvoiceDetail/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0'+'/0').success(function(result) {
 
                 if(result.data.success == '0') {
                         $state.go('app.invoices');

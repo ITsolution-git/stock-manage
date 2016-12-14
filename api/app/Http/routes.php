@@ -305,7 +305,7 @@ Route::post('qbo/AddItem', 'QuickBookController@addItem');
 Route::post('qbo/updateInvoicePayment', 'QuickBookController@updateInvoicePayment');
 
 Route::post('invoice/listInvoice', 'InvoiceController@listInvoice');
-Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceDetail');
+Route::get('invoice/getInvoiceDetail/{invoice_id}/{company_id}/{type}/{order_id}', 'InvoiceController@getInvoiceDetail');
 Route::get('invoice/getInvoiceHistory/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceHistory');
 Route::get('invoice/getInvoicePayment/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoicePayment');
 Route::get('invoice/getInvoiceCards/{invoice_id}/{company_id}/{type}', 'InvoiceController@getInvoiceCards');
