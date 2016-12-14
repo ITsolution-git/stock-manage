@@ -75,7 +75,7 @@
                 'param1': 'page'
              },*/
             translate: 'Clients',
-            weight   : 1
+            weight   : 2
         });
     }
 })();
