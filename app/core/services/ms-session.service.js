@@ -209,7 +209,6 @@
 
 		function openAddPopup(scope,path,params,table)
 		{
-			console.log(params);
 			$("#ajax_loader").show();
 			$mdDialog.show({
                 controller:function ($scope, params, all_scope)

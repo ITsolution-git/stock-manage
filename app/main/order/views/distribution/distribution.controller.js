@@ -199,7 +199,7 @@
         }
         $scope.openInsertPopup = function(path,ev,table)
         {
-            var insert_params = {client_id:$scope.order.client_id};
+            var insert_params = {client_id:$scope.order.client_id,order_id:$scope.order_id};
             sessionService.openAddPopup($scope,path,insert_params,table);
         }
         vm.productSearch = null;
