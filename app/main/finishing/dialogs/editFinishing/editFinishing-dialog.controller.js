@@ -83,6 +83,7 @@
                 $scope.finishing_data.est = '';
             }
             $mdDialog.hide();
+            $state.go($state.current, '', {reload: true, inherit: false});
         };
 
         function closeDialog()
@@ -94,6 +95,7 @@
                 $scope.finishing_data.est = '';
             }
             $mdDialog.hide();
+            $state.go($state.current, '', {reload: true, inherit: false});
         }
 
         $scope.setTime = function (finishing,param)
