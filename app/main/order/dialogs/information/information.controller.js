@@ -7,8 +7,9 @@
         .controller('InformationController', InformationController);
 
     /** @ngInject */
-    function InformationController(order_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
+    function InformationController(order_id,client_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
+
         $scope.orderDetailInfo = function(order_id){
 
             var combine_array_id = {};
@@ -31,6 +32,51 @@
                
             });
           }
+
+$scope.addresscustomTexts = {buttonDefaultText: 'Select Address'};
+$scope.addressModel = [{id: '1'}, {id: '2'}];
+
+
+          $scope.selectedItemChange = function (client_id) {
+
+            /* 
+
+
+             if($scope.addressModel.length > 0) {
+
+              $scope.addressChecksettings = {externalIdProp: myCustomPropertyForTheObjectSale()}
+                function myCustomPropertyForTheObjectSale(){
+                    $scope.addressModel = [];
+                }
+
+
+                for (var i = 0; i < $scope.addressModel.length; i++) {              
+                   $scope.addressModel[i].id = null;
+                }
+            
+             }
+*/
+             
+
+                  var clientData = {};
+                  clientData.client_id =client_id;
+
+
+                  $http.post('api/public/order/GetAllClientsAddress',clientData).success(function(result)
+                  {   
+                      if(result.data.success=='1')
+                      {   
+                        $scope.allAddressData = result.data.records;
+
+                          
+                      } else {
+                          $scope.allAddressData = [];
+                         
+                      }     
+                          
+                  });
+
+        };
 
         var companyData = {};
         companyData.company_id =sessionService.get('company_id');
@@ -59,18 +105,9 @@
           });
 
 
-       /*    $scope.updateStartDate = function(){
-            $scope.minDate = new Date($scope.order_data.date_start);
-            $scope.minShipDate = new Date($scope.order_data.date_start);
-          }
-
-          $scope.updateshipDate = function(){
-            $scope.minShipDate = new Date($scope.order_data.date_shipped);
-          }
-*/
-
 
      $scope.orderDetailInfo(order_id);
+     $scope.selectedItemChange(client_id);
 
       $scope.cancel = function () {
             $mdDialog.hide();

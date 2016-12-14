@@ -141,6 +141,7 @@
              if($scope.addressModel.length > 0) {
 
               $scope.addressChecksettings = {externalIdProp: myCustomPropertyForTheObjectSale()}
+
                 function myCustomPropertyForTheObjectSale(){
                     $scope.addressModel = [];
                 }
@@ -184,6 +185,8 @@
 
 
         };
+
+        $scope.addresscustomTexts = {buttonDefaultText: 'Select Address'};
 
 
         $scope.cancel = function () {
