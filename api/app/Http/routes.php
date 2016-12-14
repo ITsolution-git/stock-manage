@@ -296,6 +296,8 @@ Route::post('order/GetAllClientsLowerCase', 'OrderController@GetAllClientsLowerC
 Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
 Route::post('payment/refundTransaction', 'PaymentController@refundTransaction');
 Route::post('order/updateInvoicePayment', 'OrderController@updateInvoicePayment');
+Route::post('order/GetAllClientsAddress', 'OrderController@GetAllClientsAddress');
+
 
 // FINISHING CONTROLLER 
 Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
