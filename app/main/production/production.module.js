@@ -100,7 +100,7 @@
                 'param1': 'page'
              },*/
             
-            weight   : 10
+            weight   : 1
         });
     }
 })();

@@ -647,9 +647,7 @@ class Common extends Model {
         }
         return $allData;
     }
-
-
-     public function checkCompanyNameExist($name,$companyid,$client_id)
+    public function checkCompanyNameExist($name,$companyid,$client_id)
     {
         $data = DB::table('client')->where('client_company','=',trim($name));
 
@@ -663,4 +661,17 @@ class Common extends Model {
         return $data;
     }
 
+    public function getUserRole($user_id)
+    {
+        $whereConditions = ['usr.status' => '1','usr.is_delete' => '1','usr.id' => $user_id];
+        $listArray = ['usr.id','usr.name','roles.slug as role'];
+
+        $Companyuser = DB::table('users as usr')
+                         ->Join('roles as roles', 'usr.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $Companyuser;
+    }
 }

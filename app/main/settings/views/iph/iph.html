@@ -15,19 +15,19 @@
                                     <tr>
                                         <th flex=15>IPH</th>
                                         <th class="text-center" flex=15>
-                                            <a href="#" class="add-attributes" ui-event="{ click : 'addData(\'iph\')'}"><span class="icon icon-plus"></span></a>
+                                            <a href="#" class="add-attributes" ui-event="{ click : 'addiph()'}"><span class="icon icon-plus"></span></a>
                                         </th>
                                     </tr>
                                     <tr ng-repeat="(key,iph) in alliphData">
                                         <td class="">
                                             <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.value" ui-event="{ change : 'updateData(\'value\',iph.id,iph.value,\'iph\',\'id\')' }">
+                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.value" ui-event="{ change : 'updateiph(\'value\',iph.id,iph.value,\'iph\',\'id\')' }">
                                             </md-input-container>
                                         </td>
                                         
 
                                         <td class="text-center">
-                                            <a href="#" class="remove-size remove-attrribute" ng-click="removeData(iph.id,'iph')"><span class="icon icon-close"></span></a>
+                                            <a href="#" class="remove-size remove-attrribute" ng-click="removeIph(iph.id)"><span class="icon icon-close"></span></a>
                                         </td>
                                     </tr>
                                 </table>
