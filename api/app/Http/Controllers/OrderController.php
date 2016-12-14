@@ -673,6 +673,7 @@ class OrderController extends Controller {
     public function addOrder()
     {
         $post = Input::all();
+
        
         $client_data = $this->client->GetclientDetail($post['orderData']['client']['client_id']);
 
@@ -708,9 +709,25 @@ class OrderController extends Controller {
 
            $insert_arr = array();
            $insert_arr['data'] = array('order_id' => $order_id, 'created_date' => date('Y-m-d'), 'updated_date' => date('Y-m-d'));
-
            $art_id = $this->common->InsertRecords('art',$insert_arr);
            $id = $art_id;
+
+
+
+            if(sizeof($post['addressModel'] > 0)) {
+
+                foreach($post['addressModel'] as $address){
+
+                     $add_arr = array();
+                       $add_arr['data'] = array('order_id' => $order_id,'address_id' => $address['id']);
+                       $add_id = $this->common->InsertRecords('order_shipping_address_mapping',$add_arr);
+
+                }
+
+            }
+                
+
+
 
            //$data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
            // send display number other then order Id
@@ -1807,6 +1824,27 @@ class OrderController extends Controller {
         $this->common->UpdateTableRecords('invoice',array('id' => $post['invoice_id']),array('payment_due_date' => $setDate,'payment_terms' => $post['payment']));
 
         $data = array("success"=>1,"message"=>UPDATE_RECORD,"invoice_id" => $post['invoice_id']);
+        return response()->json(['data'=>$data]);
+    }
+
+
+     public function GetAllClientsAddress(){
+       $post = Input::all();
+       
+
+      $result = $this->order->GetAllClientsAddress($post);
+
+
+       if (count($result) > 0) 
+        {
+            $data = array("success"=>1,"message"=>"Success",'records' => $result);
+        } 
+        else 
+        {
+            $data = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+
+        
         return response()->json(['data'=>$data]);
     }
 }
