@@ -45,7 +45,7 @@
             title: 'Finishing',
             icon: 'icon-cart',
             state: 'app.finishing',        
-            weight   : 12
+            weight   : 8
         });
     }
 })();

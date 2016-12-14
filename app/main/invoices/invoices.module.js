@@ -90,7 +90,7 @@
                 'param1': 'page'
              },*/
             
-            weight   : 1
+            weight   : 4
         });
 
 /*        msNavigationServiceProvider.saveItem('fuse.invoices.linktopay', {

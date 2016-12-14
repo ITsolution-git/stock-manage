@@ -58,7 +58,7 @@
             title: 'Finishing Queue',
             icon: 'icon-cart',
             state: 'app.finishingQueue',
-            weight   : 9
+            weight   : 11
         });
     }
 })();
