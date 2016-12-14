@@ -746,4 +746,21 @@ class Order extends Model {
         $returnData['count'] = $count[0]->Totalcount;
         return $returnData;
     }
+
+
+     public function GetAllClientsAddress($post)
+  {
+      
+       $listArray = ['id','description as label'];
+      $whereConditions = ['is_deleted' => "1",'client_id' => $post['client_id']];
+      $orderDetailData = DB::table('client_distaddress')
+         ->select($listArray)
+         ->where($whereConditions)
+         ->get();
+   
+         return $orderDetailData;
+
+  }
+
+
 }
