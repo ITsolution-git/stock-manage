@@ -9,6 +9,22 @@
     function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams,sessionService,notifyService)
     {
 
+
+
+         // change display number to design Id for fetching the order data
+          var design_data = {};
+           design_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           design_data.table ='order_design';
+          
+          $http.post('api/public/common/GetTableRecords',design_data).success(function(result) {
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.design_id = result.data.records[0].id;
+
+              } 
+          });
+
         
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
@@ -135,7 +151,7 @@
         $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,size_group_id,warehouse)
         {
             var check_data = {};
-            check_data.design_id = $stateParams.id;
+            check_data.design_id = $scope.design_id;
             check_data.product_id = product_id;
 
             $http.post('api/public/product/checkProductExist',check_data).success(function(result) {
@@ -176,7 +192,7 @@
         $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,product_name,description,vendor_name)
         {
             var check_data = {};
-            check_data.design_id = $stateParams.id;
+            check_data.design_id = $scope.design_id;
             check_data.product_id = product_id;
 
             $http.post('api/public/product/checkProductExist',check_data).success(function(result) {
