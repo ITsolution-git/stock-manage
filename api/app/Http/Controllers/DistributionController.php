@@ -77,6 +77,7 @@ class DistributionController extends Controller {
     public function getDistAddress()
     {
         $post = Input::all();
+        $post['id'] = $post['order_id'];
         $dist_addr = $this->distribution->getDistAddress($post);
 
         $client_distaddress = array();
