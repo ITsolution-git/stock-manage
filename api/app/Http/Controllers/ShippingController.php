@@ -1131,6 +1131,7 @@ class ShippingController extends Controller {
     public function unAllocateProduct()
     {
         $post = Input::all();
+        print_r($post);exit;
 
         $total_sizes = $post['remaining_qnty'] + $post['old_distributed_qnty'];
 
