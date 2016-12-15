@@ -1224,7 +1224,7 @@ class CommonController extends Controller {
                 array(
                     array('key' => '', 'name' => 'Asset','sortable' => false),
                     array('key' => 'ord.name', 'name' => 'Order Name'),
-                    array('key' => 'mt.value', 'name' => 'Poition'),
+                    array('key' => 'mt.value', 'name' => 'Position'),
                     array('key' => 'cl.client_company', 'name' => 'Client'),
                     array('key' => 'mt1.value', 'name' => 'Production Type'),
                     array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),

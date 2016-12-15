@@ -33,7 +33,9 @@ class DistributionController extends Controller {
 
         $order_data = $this->common->GetTableRecords('orders',array('id' => $post_all['order_id']),array());
 
-        $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $order_data[0]->client_id,'is_deleted'=>1),array());
+        $post_all['id'] = $post_all['order_id'];
+        $dist_addr = $this->distribution->getDistAddress($post_all);
+        unset($post_all['id']);
 
         $distribution_address = array();
         $client_distaddress = array();

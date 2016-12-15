@@ -220,7 +220,7 @@ class OrderController extends Controller {
 
         $finishing_count = $this->order->getFinishingCount($result['order'][0]->id);
         $total_shipped_qnty = $this->order->getShippedByOrder($data);
-        $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
+        $locations = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $result['order'][0]->id),array());
         $dist_location = count($locations);
         $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
         $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');

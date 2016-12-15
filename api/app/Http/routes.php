@@ -492,6 +492,7 @@ Route::post('art/change_sortcolor', 'ArtController@change_sortcolor');
 Route::post('art/change_sortscreen', 'ArtController@change_sortscreen');
 Route::post('art/ArtApprovalPDF', 'ArtController@ArtApprovalPDF');
 Route::post('art/PressInstructionPDF', 'ArtController@PressInstructionPDF');
+Route::post('art/PressInstructionAllPDF', 'ArtController@PressInstructionAllPDF');
 
 // AFFILIATES ROUTERS
 Route::post('affiliate/getAffiliateDetail',[
