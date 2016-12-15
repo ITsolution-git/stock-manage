@@ -742,12 +742,22 @@
         // ============= REMOVE CLIENT CONTACT  ============= // 
         $scope.SaveCompanyInfo = function(ArrsaveCompany)
         {
+           
+            ArrsaveCompany.company_id = $scope.company_id;
             //$("#ajax_loader").show();
             $http.post('api/public/client/SaveClientInfo',ArrsaveCompany).success(function(result) 
               {
                 if(result.data.success=='1')
                 {
                     $mdDialog.hide();
+
+                } else if(result.data.success =='2')
+                {
+                   
+                     var data = {"status": "error", "message": "Company Name already exists!"}
+                  notifyService.notify(data.status, data.message);
+                  return false;
+                    
                 }
                 else
                 {

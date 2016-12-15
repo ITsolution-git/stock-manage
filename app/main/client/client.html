@@ -53,6 +53,23 @@
                             <td>{{ client.first_name }} {{client.last_name}}</td>
                             <td>{{ client.phone }}</td>
                             <td>{{ client.email }}</td>
+
+                            <td class=""> 
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4"> 
+                                        <md-menu-item  ng-show="allow_access==1">
+                                            <md-button ng-click="delete_client($event,client.client_id)">
+                                                Remove Client
+                                            </md-button>
+                                        </md-menu-item>                                      
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+
+
                         </tr>
                     </tbody>
                 </table>

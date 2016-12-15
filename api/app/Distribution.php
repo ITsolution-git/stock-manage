@@ -45,8 +45,10 @@ class Distribution extends Model {
 
 	public function getDistAddress($data)
 	{
-		$result = DB::table('client_distaddress')
-					->where('client_id','=',$data['client_id'])
+		$result = DB::table('order_shipping_address_mapping as oa')
+					->leftJoin('client_distaddress as cd','oa.address_id','=','cd.id')
+					->select('cd.*','oa.id as order_adress_id','oa.shipping_type_id')
+					->where('oa.order_id','=',$data['id'])
 					->where('is_deleted','=',1);
 					if(isset($data['search']))
                     {

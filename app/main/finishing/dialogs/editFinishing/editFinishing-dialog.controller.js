@@ -83,6 +83,7 @@
                 $scope.finishing_data.est = '';
             }
             $mdDialog.hide();
+            $state.go($state.current, '', {reload: true, inherit: false});
         };
 
         function closeDialog()
@@ -94,6 +95,7 @@
                 $scope.finishing_data.est = '';
             }
             $mdDialog.hide();
+            $state.go($state.current, '', {reload: true, inherit: false});
         }
 
         $scope.setTime = function (finishing,param)
@@ -111,6 +113,10 @@
                     notifyService.notify(data.status, data.message);
                     $scope.finishing_data.end_time = '';
                     return false;
+                }
+                else if($scope.finishing_data.end_time == '')
+                {
+                    $scope.finishing_data.est = '';
                 }
                 else
                 {
@@ -148,9 +154,16 @@
 
                     var time_diff = parseInt(strtime2) - parseInt(strtime1);
 
-                    var est = (new Date).clearTime()
-                      .addSeconds(time_diff)
-                      .toString('H:mm:ss');
+                    if(parseInt(time_diff) == '0')
+                    {
+                        est = '24:00:00';
+                    }
+                    else
+                    {
+                        var est = (new Date).clearTime()
+                          .addSeconds(time_diff)
+                          .toString('H:mm:ss');
+                    }
 
                     $scope.finishing_data.est = est;
                 }

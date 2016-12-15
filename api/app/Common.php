@@ -647,4 +647,31 @@ class Common extends Model {
         }
         return $allData;
     }
+    public function checkCompanyNameExist($name,$companyid,$client_id)
+    {
+        $data = DB::table('client')->where('client_company','=',trim($name));
+
+        if(!empty($companyid))
+            {  $data= $data->where('company_id','=',trim($companyid)); }
+
+        if($client_id != 0)
+            {  $data= $data->where('client_id','<>',trim($client_id)); }
+        
+        $data = $data->get();
+        return $data;
+    }
+
+    public function getUserRole($user_id)
+    {
+        $whereConditions = ['usr.status' => '1','usr.is_delete' => '1','usr.id' => $user_id];
+        $listArray = ['usr.id','usr.name','roles.slug as role'];
+
+        $Companyuser = DB::table('users as usr')
+                         ->Join('roles as roles', 'usr.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $Companyuser;
+    }
 }

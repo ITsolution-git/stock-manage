@@ -11,17 +11,20 @@ use App\Common;
 use App\Art;
 use DB;
 use File;
-use PDF;
+use TCPDF;
 use Request;
 use Response;
+use App\StokkupPdf;
 
 class ArtController extends Controller { 
 
-    public function __construct(Art $art,Common $common) 
+    public function __construct(Art $art,Common $common, TCPDF $tdpdf, StokkupPdf $stokkupPdf ) 
     {
         parent::__construct();
         $this->art = $art;
         $this->common = $common;
+        $this->tdpdf = $tdpdf;
+        $this->stokkupPdf = $stokkupPdf;
     }
 
     // ART LISTING PAGE
@@ -469,15 +472,13 @@ class ArtController extends Controller {
     {
 
         $screenArray= json_decode($_POST['art']);
-        // echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
         if(count($screenArray)>0)
         {
             $options = !empty($screenArray->options)?$screenArray->options:array();
             $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
-            //echo "<pre>"; print_r($options); echo "</pre>"; die;
-
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
-            
+
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
             if(!empty($pdf_data[0][0]))
             {
                 $email_array = explode(",",$screenArray->email);
@@ -485,18 +486,15 @@ class ArtController extends Controller {
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
                 else { exec("chmod $file_path 0777"); }
-                
-                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
 
+                $pdf = $this->tdpdf;
+                $pdf->SetHeaderMargin(5);
+                $pdf->SetFooterMargin(10);
+                $pdf->FooterImg(FOOTER_IMAGE);
+                $pdf->SetAutoPageBreak(TRUE, 10);
+                $pdf->AddPage('P','A4');
+                $pdf->writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
 
-                //PDF::AddPage('P','A4');
-                //PDF::writeHTML(view('pdf.shipping_manifest',$shipping)->render());
-                //PDF::Output('shipping_manifest.pdf');
-
-
-                PDF::AddPage('P','A4');
-                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
-           
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
                 
@@ -511,9 +509,7 @@ class ArtController extends Controller {
                         $message->attach($filename);
                     });
                 }
-                PDF::Output($filename);
-                //return Response::download($filename);
-
+                $pdf->Output($pdf_url);
             }
             else
             {
@@ -537,25 +533,66 @@ class ArtController extends Controller {
         {
             $pdf_data = $this->art->getPressInstructionPDFdata($screenArray->screen_id,$screenArray->company_id);
            // echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            $options = !empty($screenArray->options)?$screenArray->options:array();
             if(!empty($pdf_data['size']))
             {
                 
-                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+               /* $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
-                else { exec("chmod $file_path 0777"); }
-               
-                PDF::AddPage('P','A4');
-                PDF::writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size']))->render());
-           
+                else { exec("chmod $file_path 0777"); }*/
+                $pdf = $this->tdpdf;
+                $pdf->FooterImg(FOOTER_IMAGE);
+                $pdf->SetFooterMargin(10);
+                $pdf->SetAutoPageBreak(TRUE, 10);
+                $pdf->AddPage('P','A4');
+                $pdf->writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size'],'options'=>$options))->render());
+                
                 $pdf_url = "PresInstruction-".$screenArray->screen_id.".pdf"; 
-                $filename = $file_path."/". $pdf_url;
-                PDF::Output($filename, 'F');
-                return Response::download($filename);
+               // $filename = $file_path."/". $pdf_url;
+                $pdf->Output($pdf_url);
+                //return Response::download($filename);
             }
             else
             {
                 $response = array('success' => 0, 'message' => "Error, Please check your Order detail for this screen.");
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
+
+    public function PressInstructionAllPDF()
+    {
+        $screenArray= json_decode($_POST['art']);
+        if(count($screenArray)>0)
+        {
+            $options = !empty($screenArray->options)?$screenArray->options:array();
+            $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
+            $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
+
+            //echo "<pre>"; print_r($options); echo "</pre>"; die;
+            if(!empty($pdf_data[0][0]))
+            {
+                $pdf = $this->tdpdf;
+                $pdf->SetHeaderMargin(5);
+                $pdf->SetFooterMargin(10);
+                $pdf->FooterImg(FOOTER_IMAGE);
+                $pdf->SetAutoPageBreak(TRUE, 10);
+                $pdf->AddPage('P','A4');
+                $pdf->writeHTML(view('pdf.artpress_all',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
+
+                $pdf_url = "PressInstructionAll-".$screenArray->order_id.".pdf"; 
+                $pdf->Output($pdf_url);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
                 return  response()->json(["data" => $response]);
             }
         }

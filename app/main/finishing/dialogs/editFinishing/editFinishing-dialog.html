@@ -29,11 +29,11 @@
                         <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
                             <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
                                 <label for="chk1"   class="form-control">Start Time</label>
-                                <input kendo-time-picker ng-model="finishing_data.start_time" k-ng-model="t1" ng-change="setTime(finishing_data,'start')">
+                                <input kendo-time-picker ng-model="finishing_data.start_time" k-ng-model="t1" ng-change="setTime(finishing_data,'start')" onkeydown="return false;">
                             </div>
                             <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
                                 <label for="chk2"   class="form-control">End Time</label>
-                                <input kendo-time-picker ng-model="finishing_data.end_time" k-ng-model="t2" ng-change="setTime(finishing_data,'end')">
+                                <input kendo-time-picker ng-model="finishing_data.end_time" k-ng-model="t2" ng-change="setTime(finishing_data,'end')" onkeydown="return false;">
                             </div>
 
                             <md-input-container class="md-block first-box settings-margin-0 margin-top-25">

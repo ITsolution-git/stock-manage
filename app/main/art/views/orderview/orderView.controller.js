@@ -310,7 +310,7 @@
                     $scope.printPdf=function(flag,email,options)
                     {
                         $mdDialog.hide();
-                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email,options:options}
+                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email}
                         if(flag=='1')
                         {
                             var k = confirm("Do you want to send Art approval PDF to client?");
@@ -352,6 +352,60 @@
                 }
             });
         }
+
+        $scope.Artpressall=function(ev)
+        {
+            if($scope.allow_access==0){return false;}
+            $mdDialog.show({
+                controller: function ($scope, params)
+                {
+                    $scope.params = params
+                    $scope.company_id=params.company_id;
+                    $scope.order_id=params.order_id;
+                    $scope.flag = 1;
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    }
+                    $scope.printPdf=function(options)
+                    {
+                        if($scope.allow_access==0){return false;}
+                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,options:options}
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/art/PressInstructionAllPDF';
+                        form.method = 'post';
+                        form.target = target || "_blank";
+                        form.style.display = 'none';
+
+                        var input_screenset = document.createElement('input');
+                        input_screenset.name = 'art';
+                        input_screenset.setAttribute('value', JSON.stringify(pass_array));
+                        form.appendChild(input_screenset);
+
+                        var input_pdf = document.createElement('input');
+                        input_pdf.name = 'pdf_token';
+                        input_pdf.setAttribute('value', 'pdf_token');
+                        form.appendChild(input_pdf);
+
+                        document.body.appendChild(form);
+                        form.submit();  
+                    };
+                },
+                controllerAs: 'vm',
+                templateUrl: 'app/main/art/dialogs/EmailPopup/artpress.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                }
+            });
+
+        };
+
+
         function generateArtForm(ev, settings) {
             if($scope.allow_access==0){return false;}
             $mdDialog.show({

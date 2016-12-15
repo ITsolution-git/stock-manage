@@ -29,6 +29,11 @@
                         }
                 });
 
+               $scope.addressModel = []; 
+               // $scope.example1data = [ {id: 1, label: "David"}, {id: 2, label: "Jhon"}, {id: 3, label: "Danny"}];
+
+
+
 
                 function querySearch (query) 
                                     {
@@ -60,7 +65,26 @@
 
 
                  $scope.save = function (orderData) {
+                 /* console.log($scope.addressModel);return false;
                   
+                $scope.addressArray = [];
+                angular.forEach($scope.addressModel, function(check){
+
+                    $scope.addressArray.push(check.id);
+                    console.log($scope.addressArray);
+                  })
+*/
+                
+
+
+                  
+                 /* $scope.addressArray = [];
+
+                   angular.forEach(addressModel, function(addressModel){
+                        $scope.addressArray.push(addressModel.id);
+                      })
+*/
+
               
                    if(orderData == undefined) {
 
@@ -77,13 +101,20 @@
                       var data = {"status": "error", "message": "Company should not be blank"}
                               notifyService.notify(data.status, data.message);
                               return false;
-                    }
+                    } /*else if(addressModel.length == 0) {
+
+                       var data = {"status": "error", "message": "Please select atleast 1 Address"}
+                              notifyService.notify(data.status, data.message);
+                              return false;
+
+                    }*/
 
               var combine_array_id = {};
              
               combine_array_id.orderData = orderData;
               combine_array_id.company_id = sessionService.get('company_id');
               combine_array_id.login_id = sessionService.get('user_id');
+              combine_array_id.addressModel = $scope.addressModel;
 
               
 
@@ -95,6 +126,68 @@
                     
                 });
         };
+
+
+          $scope.dropDownEnable = 0;
+
+
+      
+
+           $scope.selectedItemChange = function (item) {
+
+             $scope.dropDownEnable = 1;
+
+
+             if($scope.addressModel.length > 0) {
+
+              $scope.addressChecksettings = {externalIdProp: myCustomPropertyForTheObjectSale()}
+
+                function myCustomPropertyForTheObjectSale(){
+                    $scope.addressModel = [];
+                }
+
+
+                for (var i = 0; i < $scope.addressModel.length; i++) {              
+                   $scope.addressModel[i].id = null;
+                }
+            
+             }
+
+             
+
+
+            if(item != undefined) {
+
+                var clientData = {};
+                  clientData.client_id =item.client_id;
+
+
+                  $http.post('api/public/order/GetAllClientsAddress',clientData).success(function(result)
+                  {   
+                      if(result.data.success=='1')
+                      {   
+                        $scope.allAddressData = result.data.records;
+
+                          
+                      } else {
+                          $scope.allAddressData = [];
+                         
+                      }     
+                          
+                  });
+            } else {
+           
+              $scope.allAddressData = [];
+            }
+                
+                  
+
+
+
+        };
+
+        $scope.addresscustomTexts = {buttonDefaultText: 'Select Address'};
+
 
         $scope.cancel = function () {
             $mdDialog.hide();

@@ -220,7 +220,7 @@ class OrderController extends Controller {
 
         $finishing_count = $this->order->getFinishingCount($result['order'][0]->id);
         $total_shipped_qnty = $this->order->getShippedByOrder($data);
-        $locations = $this->common->GetTableRecords('client_distaddress',array('client_id' => $result['order'][0]->client_id),array());
+        $locations = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $result['order'][0]->id),array());
         $dist_location = count($locations);
         $purchase_orders = $this->order->getPoByOrder($result['order'][0]->id,'po');
         $recieve_orders = $this->order->getPoByOrder($result['order'][0]->id,'ro');
@@ -673,6 +673,7 @@ class OrderController extends Controller {
     public function addOrder()
     {
         $post = Input::all();
+
        
         $client_data = $this->client->GetclientDetail($post['orderData']['client']['client_id']);
 
@@ -708,9 +709,25 @@ class OrderController extends Controller {
 
            $insert_arr = array();
            $insert_arr['data'] = array('order_id' => $order_id, 'created_date' => date('Y-m-d'), 'updated_date' => date('Y-m-d'));
-
            $art_id = $this->common->InsertRecords('art',$insert_arr);
            $id = $art_id;
+
+
+
+            if(sizeof($post['addressModel'] > 0)) {
+
+                foreach($post['addressModel'] as $address){
+
+                     $add_arr = array();
+                       $add_arr['data'] = array('order_id' => $order_id,'address_id' => $address['id']);
+                       $add_id = $this->common->InsertRecords('order_shipping_address_mapping',$add_arr);
+
+                }
+
+            }
+                
+
+
 
            //$data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$order_id);
            // send display number other then order Id
@@ -1187,6 +1204,42 @@ class OrderController extends Controller {
      public function editOrder()
     {
         $post = Input::all();
+
+
+        $newAddressarray = array_column($post['addressModel'], 'id');
+        
+        $oldAddressarray = array_column($post['addressModelOld'], 'id');
+        
+
+        $addArrayDifference = array_diff($newAddressarray,$oldAddressarray);
+        $removeArrayDifference = array_diff($oldAddressarray,$newAddressarray);
+
+
+        if(sizeof($addArrayDifference > 0)) {
+
+            foreach($addArrayDifference as $address){
+                
+
+                      $add_arr = array();
+                       $add_arr['data'] = array('order_id' => $post['cond']['id'],'address_id' => $address);
+                       $add_id = $this->common->InsertRecords('order_shipping_address_mapping',$add_arr);
+
+                }
+
+        }
+
+
+        if(sizeof($removeArrayDifference > 0)) {
+
+            foreach($removeArrayDifference as $removeAddress){
+               
+               $deleteResult = $this->common->DeleteTableRecords('order_shipping_address_mapping',array('order_id'=>$post['cond']['id'], 'address_id'=>$removeAddress));
+
+                }
+
+        }
+
+        
 
         $orderdata = $this->common->GetTableRecords('orders',array('id'=>$post['cond']['id']));
 
@@ -1807,6 +1860,48 @@ class OrderController extends Controller {
         $this->common->UpdateTableRecords('invoice',array('id' => $post['invoice_id']),array('payment_due_date' => $setDate,'payment_terms' => $post['payment']));
 
         $data = array("success"=>1,"message"=>UPDATE_RECORD,"invoice_id" => $post['invoice_id']);
+        return response()->json(['data'=>$data]);
+    }
+
+
+     public function GetAllClientsAddress(){
+       $post = Input::all();
+       
+
+      $result = $this->order->GetAllClientsAddress($post);
+
+
+       if (count($result) > 0) 
+        {
+            $data = array("success"=>1,"message"=>"Success",'records' => $result);
+        } 
+        else 
+        {
+            $data = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+
+        
+        return response()->json(['data'=>$data]);
+    }
+
+
+     public function allOrderAddress(){
+       $post = Input::all();
+       
+
+      $result = $this->order->allOrderAddress($post);
+
+
+       if (count($result) > 0) 
+        {
+            $data = array("success"=>1,"message"=>"Success",'records' => $result);
+        } 
+        else 
+        {
+            $data = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+
+        
         return response()->json(['data'=>$data]);
     }
 }

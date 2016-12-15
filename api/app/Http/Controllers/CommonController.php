@@ -272,6 +272,10 @@ class CommonController extends Controller {
         //echo "<pre>"; print_r($post); echo "</pre>"; die;
         if(!empty($post['table']) && !empty($post['data']))
         {
+            if($post['table'] == 'client_distaddress' && isset($post['data']['order_id']))
+            {
+                unset($post['data']['order_id']);
+            }
             $result = $this->common->InsertRecords($post['table'],$post['data']);
             $id = $result;
             $message = INSERT_RECORD;
@@ -1220,7 +1224,7 @@ class CommonController extends Controller {
                 array(
                     array('key' => '', 'name' => 'Asset','sortable' => false),
                     array('key' => 'ord.name', 'name' => 'Order Name'),
-                    array('key' => 'mt.value', 'name' => 'Poition'),
+                    array('key' => 'mt.value', 'name' => 'Position'),
                     array('key' => 'cl.client_company', 'name' => 'Client'),
                     array('key' => 'mt1.value', 'name' => 'Production Type'),
                     array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
@@ -1284,6 +1288,27 @@ class CommonController extends Controller {
         $post = Input::all();
         $result = $this->common->GetMiscApprovalData($post);
         return $this->return_response($result);
+    }
+
+
+     public function checkCompanyNameExist($name,$companyId)
+    {
+        if(!empty($name) && isset($companyId))
+        {
+            $getData = $this->common->checkNameExist($name,$companyId);
+            $count = count($getData);
+            $success = ($count>0)? '1':'2'; // 2 = EMAIL NOT EXISTS
+            $message  = ($count>0)? GET_RECORDS:NO_RECORDS;
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
     }
 
 
