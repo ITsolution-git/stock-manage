@@ -1136,7 +1136,7 @@ md-card-content.custom-desc-box span {
     float: left; }
 
 img.screenset-img {
-  max-height: 150px;
+  height: 150px;
   width: auto;
   float: none;
   margin: auto; }

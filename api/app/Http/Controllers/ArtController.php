@@ -587,7 +587,7 @@ class ArtController extends Controller {
                 $pdf->AddPage('P','A4');
                 $pdf->writeHTML(view('pdf.artpress_all',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
 
-                $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
+                $pdf_url = "PressInstructionAll-".$screenArray->order_id.".pdf"; 
                 $pdf->Output($pdf_url);
             }
             else
