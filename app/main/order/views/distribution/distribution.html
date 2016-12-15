@@ -11,10 +11,6 @@
 
                     <md-card-content flex="90" layout="column">
                         <div layout="row" layout-wrap>
-<!--                             <div class="trans-box">
-                                <div>Customer PO</div>
-                                <span>{{vm.distInfo.customerPO}}</span>
-                            </div> -->
                             <div class="trans-box">
                                 <div>Sales</div>
                                 <span class="font-14 chrome-weight">{{order.sales_name}}</span>
@@ -37,20 +33,6 @@
                             </div>
                         </div>
                     </md-card-content>
-                    <!-- <div layout-align="end start"  flex="10" layout="row">
-                        <md-menu>
-                            <md-button aria-label="Main Contact Options" class="md-icon-button"  ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                            </md-button>
-                            <md-menu-content width="4">
-                                <md-menu-item>
-                                    <md-button>
-                                        Main Design Options
-                                    </md-button>
-                                </md-menu-item>
-                            </md-menu-content>
-                        </md-menu>
-                    </div> -->
                 </md-card>
             </div>
             <div layout="row" flex="100" class="m-b-20">
@@ -116,12 +98,6 @@
                                         Products
                                     </div>
                                     <div flex="45" class="text-right">
-                                        <!-- <md-button  class="bg-grey bg-green right-m-0 " >
-                                            DISTRIBUTE EVENLY
-                                        </md-button> -->
-                                        <!-- <md-button  class="bg-grey dark-bg right-m-0 " ng-click="vm.openaddAddressDialog($event)" ng-show="allow_access==1">
-                                            ADD NEW LOCATION
-                                        </md-button> -->
                                     </div>
                                 </div>
                                 <div class="ms-responsive-table-wrapper table-disrtri">
@@ -161,9 +137,6 @@
                                         Locations
                                     </div>
                                     <div flex="45" class="text-right">
-                                        <!-- <md-button  class="bg-grey bg-green right-m-0 " >
-                                            DISTRIBUTE EVENLY
-                                        </md-button> -->
                                         <md-button  class="bg-grey dark-bg right-m-0 " ng-click="openInsertPopup('client/views/forms/distribution_form.html',$event,'client_distaddress')" ng-show="allow_access==1">
                                             ADD NEW LOCATION
                                         </md-button>
@@ -176,7 +149,7 @@
                                         <th>ATTN</th>
                                         <th>Address</th>
                                         <th>Phone</th>
-                                        <th></th>
+                                        <th>Shipping Type</th>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="distlocation in distribution_address">
@@ -184,10 +157,12 @@
                                                 <td>{{ distlocation.attn}}  
                                                 <td>{{ distlocation.full_address}}</td>
                                                 <td>{{ distlocation.phone}}</td>
-                                                <td class="text-right"> 
-                                                    <!-- <md-button  class="bg-grey  dark-bg  right-m-0 blue-btn " >
-                                                        DISTRIBUTE
-                                                    </md-button> -->
+                                                <td> 
+                                                   <md-select ng-model="distlocation.shipping_type_id" placeholder="Shipping Type" class="mt-2 mb-0" name="shipping_type_id" ng-change="updateOrderShippingType('shipping_type_id',distlocation.shipping_type_id,distlocation.order_adress_id)">
+                                                        <md-option value="1" ng-selected="distlocation.shipping_type_id == 1">UPS</md-option>
+                                                        <md-option value="2" ng-selected="distlocation.shipping_type_id == 2">FEDEX</md-option>
+                                                        <md-option value="3" ng-selected="distlocation.shipping_type_id == 3">Local Messenger</md-option>
+                                                    </md-select>
                                                 </td>
                                             </tr>
                                         </tbody> 
@@ -200,15 +175,6 @@
                     </md-tab>
                 </md-tabs>
             </md-content>
-            <!-- <div layout-align="end center" layout="row" flex="100">
-                <md-button  class="bg-grey bg-green right-m-0 text-center line-hei " >
-                    VIEW ALLOCATED </br>PRODUCT
-                </md-button>
-            </div> -->
         </div>
-        <!-- <md-dialog-actions layout="row" layout-align="end center">
-            <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button>
-            <md-button class="md-accent md-raised ">Save</md-button>
-        </md-dialog-actions> -->
     </div>
 </div>

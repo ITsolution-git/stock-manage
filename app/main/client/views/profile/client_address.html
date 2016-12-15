@@ -28,6 +28,11 @@
                                             </th>
                                             <th class="secondary-text">
                                                 <div class="table-header">
+                                                    <span class="column-title">ATTN</span>
+                                                </div>
+                                            </th>
+                                            <th class="secondary-text">
+                                                <div class="table-header">
                                                     <span class="column-title">City</span>
                                                 </div>
                                             </th>
@@ -48,6 +53,7 @@
                                         <tr ng-repeat="address in Distribution_address">
                                             <td>{{address.description}}</td>
                                             <td>{{address.fulladdress}}</td>
+                                            <td>{{address.attn}}</td>
                                             <td>{{address.city}}</td>
                                             <td>{{address.state_name}}</td>
                                             <td>{{address.zipcode}}</td>

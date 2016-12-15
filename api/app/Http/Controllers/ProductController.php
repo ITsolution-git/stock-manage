@@ -877,7 +877,8 @@ public function create_dir($dir_path) {
                 
 
                 $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
-                $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
+               // $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
+                $calc_screen_fees =  ($screen_fees_qnty * $price_grid->screen_fees) + ($ink_charge_qnty * $price_grid->ink_changes);
                 $calc_foil =  $foil_qnty * $price_grid->foil;
                 $calc_number_on_dark =  $number_on_dark_qnty * $price_grid->number_on_dark;
                 $calc_oversize_screens =  $oversize_screens_qnty * $price_grid->over_size_screens;

@@ -262,10 +262,10 @@
                 });
             }
         }
-        $scope.printPdf=function()
+        $scope.printPdf=function(ev)
         {
             if($scope.allow_access==0){return false;}
-            var pass_array = {order_id:$scope.ScreenSets[0].order_id,company_id:$scope.company_id,screen_id:$scope.screenset_id }
+            var pass_array = {order_id:$scope.ScreenSets[0].order_id,company_id:$scope.company_id,screen_id:$scope.screenset_id}
             var target;
             var form = document.createElement("form");
             form.action = 'api/public/art/PressInstructionPDF';
@@ -277,16 +277,15 @@
             input_screenset.name = 'art';
             input_screenset.setAttribute('value', JSON.stringify(pass_array));
             form.appendChild(input_screenset);
-           
 
             var input_pdf = document.createElement('input');
             input_pdf.name = 'pdf_token';
             input_pdf.setAttribute('value', 'pdf_token');
             form.appendChild(input_pdf);
 
-
             document.body.appendChild(form);
             form.submit();  
+
         };
         $scope.UpdateTableField = function(field_value)
         {

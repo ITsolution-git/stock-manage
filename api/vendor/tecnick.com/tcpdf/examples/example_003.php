@@ -46,6 +46,8 @@ class MYPDF extends TCPDF {
 	public function Footer() {
 		// Position at 15 mm from bottom
 		$this->SetY(-15);
+		$image_file = K_PATH_IMAGES.'logo_example.jpg';
+		$this->Image($image_file, 10, 280, 15, '', 'JPG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 		// Set font
 		$this->SetFont('helvetica', 'I', 8);
 		// Page number

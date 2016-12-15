@@ -37,6 +37,7 @@
       <td width="30%">
           <table>
               <tr><td align="right"><b>Order Id #{{$company->ord_display}}</b></td></tr>
+              <tr><td align="right"><b>Receive PO #{{$company->po_display}}</b></td></tr>
               <tr><td align="right">{{$company->name_company}}</td></tr>
               <tr><td align="right">Attn:{{$company->first_name}} {{$company->last_name}}</td></tr>
           </table>

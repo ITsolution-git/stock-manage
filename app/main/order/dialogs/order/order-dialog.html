@@ -26,7 +26,7 @@
                       md-selected-item="order.client"
                       md-search-text-change="order.client"
                       md-search-text="order.client_company"
-                      md-selected-item-change=""
+                      md-selected-item-change="selectedItemChange(item)"
                       md-items="item in querySearch(order.client_company)"
                       md-item-text="item.client_company"
                       md-min-length="0"
@@ -46,16 +46,15 @@
                     <input placeholder="Job Name" ng-model="order.name">
                 </md-input-container>
 
-                <!-- <md-input-container class="md-block first-box" flex-gt-sm>
-                <label>S&S Shipping method</label>
-                    <md-select ng-model="order.sns_shipping">
-                        <md-option value="1">Ground</md-option>
-                        <md-option value="2">Next Day Air</md-option>
-                        <md-option value="3">2nd Day Air</md-option>
-                        <md-option value="16">3 Day Select</md-option>
-                        <md-option value="6">Will Call / PickUp</md-option>
-                    </md-select>
-                </md-input-container> -->
+               
+
+                 <div ng-if="dropDownEnable == 1">
+                        <div layout="column" >
+                           <div ng-dropdown-multiselect="" options="allAddressData" selected-model="addressModel" class="cheak-box-class client-address" extra-settings="addressChecksettings" translation-texts="addresscustomTexts"></div> 
+  
+                        </div>
+                 </div>
+
 
             </div>
         </md-dialog-content>

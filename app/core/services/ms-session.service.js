@@ -213,7 +213,6 @@
 			$mdDialog.show({
                 controller:function ($scope, params, all_scope)
                 {
-                	console.log(params);
                 	$("#ajax_loader").hide();
                     $scope.params = params; 		//	GET PARAMETERS FOR POPUP
                     $scope.flag = 'add'; 		//	GET PARAMETERS FOR POPUP
@@ -244,6 +243,25 @@
 
                     $scope.closeDialog = function() 
                     { $mdDialog.hide(); } 
+
+                    $scope.InserAddressOrder = function(order_id,address_id)
+			        {
+			        	var InserAddressArray = {}; 		// INSERT RECORD ARRAY
+                		InserAddressArray.data = {'order_id':order_id,'address_id':address_id};
+                		InserAddressArray.table ='order_shipping_address_mapping';
+
+                		$http.post('api/public/common/InsertRecords',InserAddressArray).success(function(result) 
+			        	{ 
+			        		if(result.data.success=='1')
+		                    {
+		                    	notifyService.notify('success',result.data.message);
+		                    	$mdDialog.hide();
+		                    }
+			                else
+		                    { notifyService.notify('error',result.data.message); }
+		                    $("#ajax_loader").hide();
+                   		});
+			        }
                     
                     $scope.InsertTableData = function(insert_data,extra,cond)
 			        {
@@ -267,11 +285,20 @@
                 		
                 		//=============== SPECIAL CONDITIONS ==============
 
-                		//console.log(InserArray); return false;
 			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
 			        	{ 
 			        		if(result.data.success=='1')
-		                    { notifyService.notify('success',result.data.message); $mdDialog.hide();}
+		                    { 
+		                    	if(table == 'client_distaddress' && $scope.all_scope.order_id != undefined)
+		                    	{
+		                    		$scope.InserAddressOrder($scope.all_scope.order_id,result.data.id);
+		                    		$mdDialog.hide();
+		                    	}
+		                    	else
+		                    	{
+		                    		notifyService.notify('success',result.data.message);
+		                    	}
+		                    }
 			                else
 		                    { notifyService.notify('error',result.data.message); }
 		                    $("#ajax_loader").hide();
@@ -296,7 +323,9 @@
 			        {
 			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
 			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.suite = angular.isUndefined(apidata.district)?'':apidata.district;
 			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+
 			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
 			            {
 			                if($scope.all_scope.states_all[i].code == apidata.state)
@@ -372,6 +401,7 @@
 			        {
 			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
 			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.suite = angular.isUndefined(apidata.district)?'':apidata.district;
 			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
 			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
 			            {
@@ -433,7 +463,7 @@
                 		if(extra=='client_contact'){ delete UpdateArray.data.id; }
                 		if(extra=='client_address'){ delete UpdateArray.data.id;delete UpdateArray.data.address_type;delete UpdateArray.data.state_name; }
                 		if(extra=='client_notes'){ delete UpdateArray.data.note_id; delete UpdateArray.data.name; delete UpdateArray.data.created_date;}
-                		if(extra=='client_distaddress'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
+                		if(extra=='client_distaddress'){delete UpdateArray.data.id;delete UpdateArray.data.state_name; delete UpdateArray.data.fulladdress}
                 		if(extra=='company_address'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
                 		//=============== SPECIAL CONDITIONS ==============
 

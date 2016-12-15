@@ -424,14 +424,14 @@ class CompanyController extends Controller {
 	}
 
 
-	 public function deleteIph()
+	 public function deleteDataIphFactor()
     {
         $post = Input::all();
        
         if(!empty($post['id']))
         {
             
-                $record_data = $this->common->DeleteTableRecords('iph',array('id' => $post['id']));
+                $record_data = $this->common->DeleteTableRecords($post['tableName'],array('id' => $post['id']));
             
            
             if($record_data)

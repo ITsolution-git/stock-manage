@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Redirect;
 use DB;
 
 use Request;
-use PDF;
+use TCPDF;
 
 class InvoiceController extends Controller { 
 
-    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company)
+    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company,TCPDF $tdpdf)
     {
         //parent::__construct();
         $this->common = $common;
@@ -28,6 +28,7 @@ class InvoiceController extends Controller {
         $this->invoice = $invoice;
         $this->client = $client;
         $this->company = $company;
+        $this->tdpdf = $tdpdf;
     }
 
     public function listInvoice()
@@ -106,7 +107,7 @@ class InvoiceController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
         return response()->json($data);
     }
-    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id=0)
+    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id)
     {
     	$post = Input::all();
 
@@ -179,7 +180,7 @@ class InvoiceController extends Controller {
                 $order_data_all['order'][0]->sns_shipping_name = '2nd Day Air';
             } elseif ($order_data_all['order'][0]->sns_shipping == '16') {
                 $order_data_all['order'][0]->sns_shipping_name = '3 Day Select';
-            } elseif ($result['order'][0]->sns_shipping == '6') {
+            } elseif ($order_data_all['order'][0]->sns_shipping == '6') {
                 $order_data_all['order'][0]->sns_shipping_name = 'Will Call / PickUp';
             }
 
@@ -201,11 +202,13 @@ class InvoiceController extends Controller {
         }
         else
         {
+           
             //$order_data = $this->common->GetTableRecords('orders',array('id' => $order_id,'company_id' => $company_id),array());
 
             $order_array = array('id'=>$order_id,'company_id' => $company_id);
 
             $order_data_all = $this->order->orderDetail($order_array);
+            
 
             $order_data_all['order'][0]->sns_shipping_name = '';
 
@@ -217,7 +220,7 @@ class InvoiceController extends Controller {
                 $order_data_all['order'][0]->sns_shipping_name = '2nd Day Air';
             } elseif ($order_data_all['order'][0]->sns_shipping == '16') {
                 $order_data_all['order'][0]->sns_shipping_name = '3 Day Select';
-            } elseif ($result['order'][0]->sns_shipping == '6') {
+            } elseif ($order_data_all['order'][0]->sns_shipping == '6') {
                 $order_data_all['order'][0]->sns_shipping_name = 'Will Call / PickUp';
             }
 
@@ -261,8 +264,13 @@ class InvoiceController extends Controller {
 
         if($retutn_arr['company_data'][0]->photo != '')
         {
-            $retutn_arr['company_data'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
+
+            $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/staff/'.$staff[0]->id."/",$retutn_arr['company_data'][0]->photo);
+
+
+           // $retutn_arr['company_data'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
         }
+       
 
         $retutn_arr['addresses'] = $this->client->getAddress($order_data[0]->client_id);
         $retutn_arr['client_data'] = $this->common->GetTableRecords('client_contact',array('client_id' => $order_data[0]->client_id,'contact_main' => 1),array());
@@ -535,11 +543,24 @@ class InvoiceController extends Controller {
     public function createInvoicePdf()
     {
         $post = Input::all();
-        $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1);
+        $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1,$post['order_id']);
 
-        PDF::AddPage('P','A4');
+        /*PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
         PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');
+
+*/
+
+        $pdf = $this->tdpdf;
+        $pdf->FooterImg(FOOTER_IMAGE);
+        $pdf->FooterImg(SITE_HOST."/assets/images/etc/footer-1.png",190);
+        $pdf->SetAutoPageBreak(TRUE, 10);
+        $pdf->AddPage('P','A4');
+        $pdf->writeHTML(view('pdf.invoice',$data)->render());
+        $pdf->Output('order_invoice_'.$post['invoice_id'].'.pdf');
+       
+
+
     }
 
     // get invoice history from payment history

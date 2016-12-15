@@ -424,7 +424,7 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.line_per_inch','ass.frame_size','ass.screen_width','acol.*','col.name as color_name','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','mt1.slug as placement_type','mt2.value as position_name','ca.street','ca.city','st.code as state_name','ca.postal_code')
+				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.line_per_inch','ass.frame_size','ass.screen_width','acol.*','col.name as color_name','col.color_code','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','mt1.slug as placement_type','mt2.value as position_name','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
@@ -483,7 +483,7 @@ class Art extends Model {
 	{
 		//echo $screen_id."-".$company_id;
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','inv.payment_due_date','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','col.color_code','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq','mt1.slug as placement_type',
+				->select('or.name as order_name','or.company_id','inv.payment_due_date','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.screen_width','ass.screen_height','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','col.color_code','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq','mt1.slug as placement_type','mt2.value as position_name',
 					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"),'ca.address','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
@@ -499,6 +499,7 @@ class Art extends Model {
 				->leftJoin('staff as stf','stf.user_id','=','usr.id')
 				->leftJoin('misc_type as mt','mt.id','=','acol.inq')
 				->leftJoin('misc_type as mt1','mt1.id','=','odp.placement_type')
+				->leftJoin('misc_type as mt2','mt2.id','=',DB::raw("odp.position_id AND mt2.type = 'position'"))
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
 				->leftJoin('client_address as ca','cl.client_id','=',DB::raw("ca.client_id AND ca.address_shipping = '1' "))
 				->leftJoin('state as st','st.id','=',"ca.state")

@@ -2,7 +2,7 @@
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview m-b-30">
         <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-               Receiving Order <a class="cursor-p" title="Go to Purchase order" ui-sref="app.purchaseOrder.companyPO({id:display_number})">{{ display_number}} </a> Job Number {{ po_data.ord_display}} Client Name: <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{ po_data.client_company}}</a>
+               Receiving Order <a class="cursor-p" title="Go to Purchase order" ui-sref="app.purchaseOrder.companyPO({id:po_display})">{{ display_number}} </a> Job Number {{ po_data.ord_display}} Client Name: <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{ po_data.client_company}}</a>
             </div>
             <div class="pull-right right-search-box">
                 <a class="pull-right common-header-links" ui-sref="app.receiving">BACK TO RECEIVING</a>

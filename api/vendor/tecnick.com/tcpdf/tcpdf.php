@@ -120,6 +120,8 @@ require_once(dirname(__FILE__).'/include/tcpdf_images.php');
 // TCPDF static methods and data
 require_once(dirname(__FILE__).'/include/tcpdf_static.php');
 
+require_once(app_path() . '/constants.php');
+
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 /**
@@ -580,6 +582,20 @@ class TCPDF {
 	 */
 	protected $footer_margin;
 
+
+	/**
+	 * Footer Image for the each page bottom 
+	 * @protected
+	 */
+	protected $footer_image=0;
+
+	
+	/**
+	 * Footer Image Dimantion default image for stokkup is 30
+	 * @protected
+	 */
+	protected $footer_scale=30;
+	
 	/**
 	 * Original left margin value.
 	 * @protected
@@ -680,7 +696,7 @@ class TCPDF {
 	 * @since 5.9.174 (2012-07-25)
 	 * @protected
 	 */
-	protected $footer_line_color = array(0,0,0);
+	protected $footer_line_color = array(255,255,255);
 
 	/**
 	 * Text shadow data array.
@@ -3318,7 +3334,7 @@ class TCPDF {
 	 * @param $fm (int) distance in user units
 	 * @public
 	 */
-	public function setFooterMargin($fm=10) {
+	public function setFooterMargin($fm=100) {
 		$this->footer_margin = $fm;
 	}
 
@@ -3493,10 +3509,17 @@ class TCPDF {
 		}
 		$w_page = isset($this->l['w_page']) ? $this->l['w_page'].' ' : '';
 		if (empty($this->pagegroups)) {
-			$pagenumtxt = $w_page.$this->getAliasNumPage().' / '.$this->getAliasNbPages();
+			$pagenumtxt = $w_page.$this->getAliasNumPage();//.' / '.$this->getAliasNbPages();
 		} else {
-			$pagenumtxt = $w_page.$this->getPageNumGroupAlias().' / '.$this->getPageGroupAlias();
+			$pagenumtxt = $w_page.$this->getPageNumGroupAlias();//.' / '.$this->getPageGroupAlias();
 		}
+		
+		if(!empty($this->footer_image))
+		{
+	        $this->Image($this->footer_image, 10, 280,$this->footer_scale, '', '', '', 'T', false, 300, '', false, false, 0, false, false, false);
+    	}
+
+
 		$this->SetY($cur_y);
 		//Print page number
 		if ($this->getRTL()) {
@@ -3508,6 +3531,14 @@ class TCPDF {
 		}
 	}
 
+	public function FooterImg($img=0,$scale=30)
+	{
+		if(!empty($img))
+		{
+			$this->footer_image = $img;
+			$this->footer_scale = $scale;
+    	}
+	}
 	/**
 	 * This method is used to render the page header.
 	 * @protected
@@ -24468,6 +24499,7 @@ Putting 1 is equivalent to putting 0 and calling Ln() just after. Default value:
 	protected function segSVGContentHandler($parser, $data) {
 		$this->svgtext .= $data;
 	}
+
 
 	// --- END SVG METHODS -----------------------------------------------------
 
