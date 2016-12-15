@@ -39,8 +39,8 @@
                  <div layout="column" layout-wrap="nowrap">
                     <md-input-container layout="row">
                         <label class="selectbox-label">Company</label>
-                        <md-select ng-model="order_data.client_id" flex="100">
-                            <md-option ng-selected="company.client_id==order_data.client_id" ng-repeat="company in allCompany" value="{{company.client_id}}">
+                        <md-select ng-model="order_data.client_id" flex="100" ng-change="selectedItemChange(order_data.client_id,0)">
+                            <md-option ng-selected="company.client_id==order_data.client_id"  ng-repeat="company in allCompany" value="{{company.client_id}}">
                                 {{company.client_company}}
                             </md-option>
                         </md-select>

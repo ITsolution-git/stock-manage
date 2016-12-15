@@ -235,6 +235,12 @@ Route::post('order/getDesignPositionDetail',[
    'action' => 'false',
    'uses' => 'OrderController@getDesignPositionDetail'
 ]);
+Route::post('order/editOrder',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'OrderController@editOrder'
+]);
 Route::post('order/orderDetailInfo',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
@@ -297,6 +303,7 @@ Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
 Route::post('payment/refundTransaction', 'PaymentController@refundTransaction');
 Route::post('order/updateInvoicePayment', 'OrderController@updateInvoicePayment');
 Route::post('order/GetAllClientsAddress', 'OrderController@GetAllClientsAddress');
+Route::post('order/allOrderAddress', 'OrderController@allOrderAddress');
 
 
 // FINISHING CONTROLLER 

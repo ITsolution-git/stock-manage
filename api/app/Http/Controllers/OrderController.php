@@ -1205,6 +1205,42 @@ class OrderController extends Controller {
     {
         $post = Input::all();
 
+
+        $newAddressarray = array_column($post['addressModel'], 'id');
+        
+        $oldAddressarray = array_column($post['addressModelOld'], 'id');
+        
+
+        $addArrayDifference = array_diff($newAddressarray,$oldAddressarray);
+        $removeArrayDifference = array_diff($oldAddressarray,$newAddressarray);
+
+
+        if(sizeof($addArrayDifference > 0)) {
+
+            foreach($addArrayDifference as $address){
+                
+
+                      $add_arr = array();
+                       $add_arr['data'] = array('order_id' => $post['cond']['id'],'address_id' => $address);
+                       $add_id = $this->common->InsertRecords('order_shipping_address_mapping',$add_arr);
+
+                }
+
+        }
+
+
+        if(sizeof($removeArrayDifference > 0)) {
+
+            foreach($removeArrayDifference as $removeAddress){
+               
+               $deleteResult = $this->common->DeleteTableRecords('order_shipping_address_mapping',array('order_id'=>$post['cond']['id'], 'address_id'=>$removeAddress));
+
+                }
+
+        }
+
+        
+
         $orderdata = $this->common->GetTableRecords('orders',array('id'=>$post['cond']['id']));
 
         if($post['orderDataDetail']['in_hands_by'] != '')
@@ -1833,6 +1869,27 @@ class OrderController extends Controller {
        
 
       $result = $this->order->GetAllClientsAddress($post);
+
+
+       if (count($result) > 0) 
+        {
+            $data = array("success"=>1,"message"=>"Success",'records' => $result);
+        } 
+        else 
+        {
+            $data = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+
+        
+        return response()->json(['data'=>$data]);
+    }
+
+
+     public function allOrderAddress(){
+       $post = Input::all();
+       
+
+      $result = $this->order->allOrderAddress($post);
 
 
        if (count($result) > 0) 

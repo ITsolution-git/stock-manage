@@ -10,6 +10,8 @@
     function InformationController(order_id,client_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
 
+$scope.client_id = client_id;
+$scope.order_id = order_id;
         $scope.orderDetailInfo = function(order_id){
 
             var combine_array_id = {};
@@ -34,30 +36,60 @@
           }
 
 $scope.addresscustomTexts = {buttonDefaultText: 'Select Address'};
-$scope.addressModel = [{id: '1'}, {id: '2'}];
 
 
-          $scope.selectedItemChange = function (client_id) {
+$scope.allOrderAddress = function (order_id) {
 
-            /* 
-
-
-             if($scope.addressModel.length > 0) {
-
-              $scope.addressChecksettings = {externalIdProp: myCustomPropertyForTheObjectSale()}
-                function myCustomPropertyForTheObjectSale(){
-                    $scope.addressModel = [];
-                }
+                  var addressData = {};
+                  addressData.order_id = order_id;
 
 
-                for (var i = 0; i < $scope.addressModel.length; i++) {              
-                   $scope.addressModel[i].id = null;
-                }
+                  $http.post('api/public/order/allOrderAddress',addressData).success(function(result)
+                  {   
+                      if(result.data.success=='1')
+                      {   
+                        $scope.addressModel = result.data.records;
+                        $scope.addressModelOld = angular.copy(result.data.records);
+
+                          
+                      } else {
+                          $scope.addressModel = [];
+                           $scope.addressModelOld = [];
+                         
+                      }     
+                          
+                  });
+
+};
+
+
+          $scope.selectedItemChange = function (client_id,company_change) {
+
+
             
-             }
-*/
-             
+                  if(company_change == 0) {
 
+                    if(client_id != $scope.client_id) {
+
+                       $scope.addressChecksettings = {externalIdProp: myCustomPropertyForTheObjectCompany()}
+                        function myCustomPropertyForTheObjectCompany(){
+                            $scope.addressModel = [];
+                        }
+
+
+                          for (var i = 0; i < $scope.addressModel.length; i++) {              
+                             $scope.addressModel[i].id = null;
+                          }
+                      } else {
+
+                        $scope.allOrderAddress($scope.order_id);
+                      }
+
+
+                     
+
+
+                  }
                   var clientData = {};
                   clientData.client_id =client_id;
 
@@ -104,10 +136,12 @@ $scope.addressModel = [{id: '1'}, {id: '2'}];
                     $scope.miscData = result.data.records;
           });
 
-
+    $scope.allOrderAddress(order_id);
 
      $scope.orderDetailInfo(order_id);
-     $scope.selectedItemChange(client_id);
+
+     $scope.selectedItemChange(client_id,1);
+     
 
       $scope.cancel = function () {
             $mdDialog.hide();
@@ -115,7 +149,7 @@ $scope.addressModel = [{id: '1'}, {id: '2'}];
 
         $scope.saveOrderInfo = function (orderDataDetail) {
          
-
+         
          var date_shipped;
          var date_start ;
          var in_hands_by;
@@ -158,6 +192,8 @@ $scope.addressModel = [{id: '1'}, {id: '2'}];
                 var order_data = {};
                 order_data.table ='orders'
                 order_data.orderDataDetail =orderDataDetail
+                order_data.addressModel =$scope.addressModel
+                order_data.addressModelOld = $scope.addressModelOld;
                 order_data.cond ={id:order_id}
             
                 $http.post('api/public/order/editOrder',order_data).success(function(result) {
