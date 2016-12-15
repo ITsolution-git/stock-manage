@@ -65,6 +65,7 @@
 
 
                  $scope.save = function (orderData) {
+                  $("#ajax_loader").show();
                  /* console.log($scope.addressModel);return false;
                   
                 $scope.addressArray = [];
@@ -89,16 +90,19 @@
                    if(orderData == undefined) {
 
                       var data = {"status": "error", "message": "Company and Job Name should not be blank"}
+                      $("#ajax_loader").hide();
                               notifyService.notify(data.status, data.message);
                               return false;
                     } else if(orderData.name == undefined) {
 
                       var data = {"status": "error", "message": "Name should not be blank"}
+                      $("#ajax_loader").hide();
                               notifyService.notify(data.status, data.message);
                               return false;
                     } else if(orderData.client == null) {
 
                       var data = {"status": "error", "message": "Company should not be blank"}
+                      $("#ajax_loader").hide();
                               notifyService.notify(data.status, data.message);
                               return false;
                     } /*else if(addressModel.length == 0) {
@@ -120,6 +124,7 @@
 
               $http.post('api/public/order/addOrder',combine_array_id).success(function(result) 
                 {
+                  $("#ajax_loader").hide();
                     $mdDialog.hide();
                     $state.go('app.order.order-info',{id: result.data.id});
                     return false;
