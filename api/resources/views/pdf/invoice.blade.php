@@ -327,11 +327,5 @@ table, caption, tbody, tfoot, thead, tr, th, td {
             </td>
         </tr>
     </table>
-
-
-    <br />
-    <footer>
-      <img src="{{SITE_HOST}}/assets/images/etc/footer-1.png" title="" alt="">
-    </footer>
 </body>
 </html>

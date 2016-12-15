@@ -15,11 +15,11 @@ use Illuminate\Support\Facades\Redirect;
 use DB;
 
 use Request;
-use PDF;
+use TCPDF;
 
 class InvoiceController extends Controller { 
 
-    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company)
+    public function __construct(Common $common, Order $order, Product $product, Invoice $invoice, Client $client,Company $company,TCPDF $tdpdf)
     {
         //parent::__construct();
         $this->common = $common;
@@ -28,6 +28,7 @@ class InvoiceController extends Controller {
         $this->invoice = $invoice;
         $this->client = $client;
         $this->company = $company;
+        $this->tdpdf = $tdpdf;
     }
 
     public function listInvoice()
@@ -544,9 +545,22 @@ class InvoiceController extends Controller {
         $post = Input::all();
         $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1,$post['order_id']);
 
-        PDF::AddPage('P','A4');
+        /*PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
         PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');
+
+*/
+
+        $pdf = $this->tdpdf;
+        $pdf->FooterImg(FOOTER_IMAGE);
+        $pdf->FooterImg(SITE_HOST."/assets/images/etc/footer-1.png",190);
+        $pdf->SetAutoPageBreak(TRUE, 10);
+        $pdf->AddPage('P','A4');
+        $pdf->writeHTML(view('pdf.invoice',$data)->render());
+        $pdf->Output('order_invoice_'.$post['invoice_id'].'.pdf');
+       
+
+
     }
 
     // get invoice history from payment history
