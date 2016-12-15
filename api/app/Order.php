@@ -763,4 +763,19 @@ class Order extends Model {
   }
 
 
+    public function allOrderAddress($post)
+  {
+      
+       $listArray = ['address_id as id'];
+      $whereConditions = ['order_id' => $post['order_id']];
+      $addDetailData = DB::table('order_shipping_address_mapping')
+         ->select($listArray)
+         ->where($whereConditions)
+         ->get();
+   
+         return $addDetailData;
+
+  }
+
+
 }
