@@ -139,21 +139,7 @@
               <td ></td>
               <td class="align-center font-bold border-w" >Ship/Pack</td>
             </tr>
-            <br>
-              <hr style="border:1px solid #000;">
-            <?php if(!empty($options) && count($options)>0) {
-              ?>
-              <tr>
-                <?php foreach($options as $key_img=>$img_val)
-                { ?>
-                <td width="10%" height="20">
-                    <img src="{{SITE_HOST}}/assets/images/etc/{{$key_img}}.png" title="Culture Studio"alt="Culture Studio">
-                </td>
-                <?php } ?>
-              </tr>
-              <?php } ?>
-
-
+           
         </table>
         
       </td>
