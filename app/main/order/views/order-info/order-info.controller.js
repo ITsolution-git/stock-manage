@@ -225,7 +225,7 @@
         }
 
 
-        function openinformationDialog(ev,order_id)
+        function openinformationDialog(ev,order_id,client_id)
         {
             $mdDialog.show({
                 controller: 'InformationController',
@@ -236,6 +236,7 @@
                 clickOutsideToClose: false,
                 locals: {
                     order_id: order_id,
+                    client_id: client_id,
                     event: ev
                 },
                 onRemoving : $scope.orderDetail
