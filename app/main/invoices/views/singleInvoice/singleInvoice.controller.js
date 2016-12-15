@@ -175,6 +175,11 @@
             form.target = target || "_blank";
             form.style.display = 'none';
 
+            var order_id = document.createElement('input');
+            order_id.name = 'order_id';
+            order_id.setAttribute('value', 0);
+            form.appendChild(order_id);
+
             var invoice_id = document.createElement('input');
             invoice_id.name = 'invoice_id';
             invoice_id.setAttribute('value', $scope.invoice_id);
