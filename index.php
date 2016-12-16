@@ -98,10 +98,12 @@
 
     <!-- <ms-theme-options></ms-theme-options> -->
     <script src="scripts/vendor.js"></script>
+   
     <!--<script src="scripts/mdPickers.min.js"></script>-->
     <!--<script src="scripts/multiselect/lodash.js"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>-->
     <script src="scripts/other/lodash.js"></script>
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
     <script>
      _.contains = _.includes;
     </script>
@@ -255,6 +257,8 @@
     <script src="app/main/settings/views/labor/labor.controller.js"></script>
     <script src="app/main/settings/dialogs/labor/addLabor.controller.js"></script>
     <script src="app/main/settings/views/machine/machine.controller.js"></script>
+    <script src="app/main/settings/views/emailTemplate/emailTemplate.controller.js"></script>
+    <script src="app/main/settings/views/emailTemplate/emailTemplateInfoController.js"></script>
 
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
