@@ -1871,5 +1871,8 @@ md-dialog.machine-dialog {
 .schedule-finishing-table.unscheduled .mac-slots {
   width: 100%; }
 
-
+md-content{
+  display: inline;
+  flex-wrap: wrap;
+}
 /*# sourceMappingURL=stokkup-custom-global.css.map */
