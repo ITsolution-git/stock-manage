@@ -1146,22 +1146,13 @@ class ShippingController extends Controller {
 
         $total_sizes = $post['remaining_qnty'] + $post['old_distributed_qnty'];
 
-        if($post['old_distributed_qnty'] == $post['distributed_qnty'] && $post['remaining_qnty'] == 0)
-        {
-            $remaining_qnty = $post['distributed_qnty'];
-        }
-        else
-        {
-            $remaining_qnty = $total_sizes - $post['distributed_qnty'];
-        }
-
         if($post['distributed_qnty'] > $post['old_distributed_qnty'])
         {
             $response = array('success'=>0,'message'=>'You cannot unallocate more than '.$post['old_distributed_qnty'].' quantity');
             return response()->json($response);
         }
 
-        if($remaining_qnty != $post['old_distributed_qnty'])
+        if($post['distributed_qnty'] != $post['old_distributed_qnty'])
         {
             $remaining_qnty = $post['old_distributed_qnty'] - $post['distributed_qnty'];
             $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $post['product_address_id'],'purchase_detail_id' => $post['purchase_detail_id']),array('distributed_qnty' => $remaining_qnty));            
