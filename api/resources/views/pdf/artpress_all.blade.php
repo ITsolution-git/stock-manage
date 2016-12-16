@@ -233,7 +233,7 @@ foreach($data as $key_main=>$value_main)
     foreach($data as $key_main=>$value_main)
     { 
     ?>
-        <td width="22%" class="line-height"> <?php echo $value_main[0][0]->position_name; ?> : <?php echo $value_main[0][0]->line_per_inch; ?> </td>
+        <td width="22%" class="line-height"> <?php echo $value_main[0][0]->position_name; ?> : <?php echo (!empty($value_main[0][0]->line_per_inch))?$value_main[0][0]->line_per_inch.'"':''; ?> <?php echo $value_main[0][0]->screen_location; ?> </td>
         <td width="1%"></td>  
          <?php if($t_count%4==0){ ?>
             </tr></table>

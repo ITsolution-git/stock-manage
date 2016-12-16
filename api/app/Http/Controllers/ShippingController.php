@@ -525,6 +525,12 @@ class ShippingController extends Controller {
 
         foreach ($post['products'] as $product) {
 
+            if($product['distributed_qnty'] > $product['remaining_qnty'])
+            {
+                $response = array('success'=>0,'message'=>'You cannot allocate more than '.$post['remaining_qnty'].' quantity');
+                return response()->json(['data'=>$response]);
+            }
+
             $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
             $order_address_data = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
@@ -586,6 +592,12 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
+        if($post['product']['distributed_qnty'] > $post['product']['remaining_qnty'])
+        {
+            $response = array('success'=>0,'message'=>'You cannot allocate more than '.$post['product']['remaining_qnty'].' quantity');
+            return response()->json(['data'=>$response]);
+        }
+
         $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
         $order_address_data = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
 
@@ -640,8 +652,8 @@ class ShippingController extends Controller {
         $success=1;
         $message=UPDATE_RECORD;
         
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
+        $response = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$response]);
     }
 
     public function getShippingAddress()
@@ -1134,37 +1146,24 @@ class ShippingController extends Controller {
 
         $total_sizes = $post['remaining_qnty'] + $post['old_distributed_qnty'];
 
-        if($post['old_distributed_qnty'] == $post['distributed_qnty'] && $post['remaining_qnty'] == 0)
+        if($post['distributed_qnty'] > $post['old_distributed_qnty'])
         {
-            $remaining_qnty = $post['distributed_qnty'];
-        }
-        else
-        {
-            $remaining_qnty = $total_sizes - $post['distributed_qnty'];
-        }
-
-        if($post['distributed_qnty'] > $total_sizes)
-        {
-            $response = array('success'=>0,'message'=>'You cannot unallocate more than '.$total_sizes.' quantity');
+            $response = array('success'=>0,'message'=>'You cannot unallocate more than '.$post['old_distributed_qnty'].' quantity');
             return response()->json($response);
         }
 
-        $this->common->DeleteTableRecords('product_address_size_mapping',array('product_address_id' => $post['product_address_id'],'purchase_detail_id' => $post['purchase_detail_id']));
-
-        $product_address_size = $this->common->GetTableRecords('product_address_size_mapping',array('product_address_id' => $post['product_address_id']));
-        $product_address = $this->common->GetTableRecords('product_address_mapping',array('id' => $post['product_address_id']));
-
-        if(empty($product_address_size))
+        if($post['distributed_qnty'] != $post['old_distributed_qnty'])
         {
-            $this->common->DeleteTableRecords('product_address_mapping',array('id' => $post['product_address_id']));
+            $remaining_qnty = $post['old_distributed_qnty'] - $post['distributed_qnty'];
+            $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $post['product_address_id'],'purchase_detail_id' => $post['purchase_detail_id']),array('distributed_qnty' => $remaining_qnty));            
+        }
+        else
+        {
+            $this->common->UpdateTableRecords('product_address_size_mapping',array('product_address_id' => $post['product_address_id'],'purchase_detail_id' => $post['purchase_detail_id']),array('distributed_qnty' => '0'));
         }
 
-        $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('shipping_id' => $product_address[0]->shipping_id));
-
-        if(empty($shipping_data))
-        {
-            $this->common->DeleteTableRecords('shipping',array('id' => $product_address[0]->shipping_id));
-        }
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('id' => $post['purchase_detail_id']));
+        $remaining_qnty = $purchase_detail[0]->remaining_qnty + $post['distributed_qnty'];
 
         $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['purchase_detail_id']),array('remaining_qnty' => $remaining_qnty));
 
