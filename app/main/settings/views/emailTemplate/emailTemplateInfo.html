@@ -11,20 +11,19 @@
                         
 
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Display Name" name="name" ng-model="allTemplateData.label" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'\',template_profile.name.$error)' }">
+                            <input placeholder="Display Name" name="name" ng-model="allTemplateData.label" required>
                             <div ng-messages="template_profile.name.$error" role="alert" multiple>
                                 <div ng-message="required">
                                     <span >This field is required</span>
                                 </div>
                             </div>
-                        </md-input-container>.
+                        </md-input-container>
 
-                        <div><textarea ng-model="allTemplateData.description"></textarea></div>
-
-
+                       <!--  <textarea ng-model="allTemplateData.description"></textarea> -->
+                       <textarea ui-tinymce="tinymceOptions" ng-model="allTemplateData.description"></textarea>
 
                         <div class="title" layout-padding  ng-show="allow_access==1">
-                            <button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" >
+                            <button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" ng-click="saveTemplate(allTemplateData)">
                                 SAVE
                             </button>
                         </div>

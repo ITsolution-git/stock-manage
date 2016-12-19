@@ -34,6 +34,7 @@
         <link rel="stylesheet" href="styles/app.css">
         <link rel="stylesheet" href="styles/stokkup-custom.css">
         <link rel="stylesheet" href="styles/stokkup-custom-global.css">
+        <link rel="stylesheet" href="styles/codepen.min.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
         
         <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
@@ -103,7 +104,8 @@
     <!--<script src="scripts/multiselect/lodash.js"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>-->
     <script src="scripts/other/lodash.js"></script>
-    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+    <!--<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>-->
+    <script src="scripts/tinymce.min.js"></script>
     <script>
      _.contains = _.includes;
     </script>
