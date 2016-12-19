@@ -779,7 +779,13 @@ public function create_dir($dir_path) {
                     }
                 }
 
-                $avg_garment_cost = $unit_cost/$line_qty;
+                $total_shipping_charge = 0;
+                if($price_grid->shipping_charge > 0)
+                {
+                    $total_shipping_charge = $line_qty * $price_grid->shipping_charge;
+                }
+
+                $avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
 
                 if($supplied > 0)
                 {
