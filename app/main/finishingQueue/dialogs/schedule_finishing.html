@@ -3,7 +3,7 @@
     	<form name="clientForm" class="md-inline-form" novalidate>
         	<md-toolbar class="md-accent md-hue-2">
 			    <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-			        <span class="title">Schedule Position</span>
+			        <span class="title">Schedule Finishing</span>
 			        <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
 			            <span>Close</span>
 			        </md-button>
@@ -14,7 +14,7 @@
 				<div flex=100 class="full-row pull-left mb-30 btm-border-row">
 	    			<md-input-container class="md-block date-input pull-left full-row m-0 newdatestyle" flex=70>      					
 	    			<span class="global-labels">Schedule Run Date</span>
-	                    <input kendo-date-picker k-ng-model="dateObject2" name="run_date" aria-label="true" ng-model="params.Position_scheduleData[0].run_date"  ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'finishing_schedule\',\'id\',params.Position_scheduleData[0].id,\'date\')' }" >
+	                    <input kendo-date-picker k-ng-model="dateObject2" name="run_date" aria-label="true" ng-model="Finishing_scheduleData.run_date"  >
 	                </md-input-container>
 	            	<div class="pull-right" flex=30>
 	            		<md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">change run date</md-button>
@@ -22,14 +22,14 @@
 	        	</div>
 
 	        	<div class="full-row pull-left" id="custChkboxes">
-	        		<div class="schedule-shifts" ng-repeat="shift in params.shift_data">
+	        		<div class="schedule-shifts" ng-repeat="shift in shift_data">
 	        			<h4 class="global-labels m-0 m-b-10">{{shift.shift_name}}</h4>
 	        			<div class="shift-units">
 	        				<span class="percent">80%</span>
 	        				<span class="machine-unit">capacity</span>
 	        			</div>
 	        			<div class="customChkbox md-raised">
-                            <input type="radio" ng-checked="shift.id==params.Position_scheduleData[0].shift_id" ng-value="shift.id" aria-label="true" name="shift_id" id="{{shift.id}}"  ui-event="{ click : 'UpdateTableData($event.target.name,shift.id,\'finishing_schedule\',\'id\',params.Position_scheduleData[0].id)' }"/>
+                            <input type="radio" ng-model="Finishing_scheduleData.shift_id" ng-checked="shift.id==Finishing_scheduleData.shift_id" ng-value="shift.id" aria-label="true" name="shift_id" id="{{shift.id}}"/>
                             <label for="{{shift.id}}" class="form-control" style="font-size: 11px">Schedule for {{shift.shift_name}}</label>
                         </div>
 	        		</div>
@@ -38,29 +38,27 @@
 	        	<div class="full-row pull-left">
 	        		<md-input-container class="full-row pull-left">
 	                    <span class="global-labels">Schedule to Machine</span>
-	                    <md-select ng-model="params.Position_scheduleData[0].machine_id" aria-label="true" name="machine_id" ng-change='UpdateTableData("machine_id",params.Position_scheduleData[0].machine_id,"finishing_schedule","id",params.Position_scheduleData[0].id)'>
+	                    <md-select ng-model="Finishing_scheduleData.machine_id" aria-label="true" name="machine_id">
 	                        <md-option value="0">
 	                            Select Machine
 	                        </md-option>
-	                        <md-option ng-repeat="machine in params.machine_data" value="{{machine.id}}" ng-selected={{"machine.id==params.Position_scheduleData[0].machine_id"}}>
+	                        <md-option ng-repeat="machine in machine_data" value="{{machine.id}}" ng-selected={{"machine.id==Finishing_scheduleData.machine_id"}}>
 	                            {{machine.machine_name}}
 	                        </md-option>
 	                    </md-select>
 	                </md-input-container>
 	        	</div>
 	        	<div class="full-row pull-left">
+	        		<md-checkbox  aria-label="Checkbox 1" ng-model="Finishing_scheduleData.rush_job">
+                        Mark as rush job
+                    </md-checkbox>
 	        	</div>
 	        	</div>
 			</md-dialog-content>
 
-			<!--  <md-dialog-actions layout="row" layout-align="end center">
-            
-                  <!--  <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button> -->
-                <!--  <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Cancel</md-button>
-
-                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Schedule</md-button> -->
-            
-        	<!-- </md-dialog-actions> --> 
+			<md-dialog-actions layout="row" layout-align="end center">
+                <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white" ng-click="scheduleFinishing()">Schedule</md-button>
+        	</md-dialog-actions> 
     	</form>
 	</div>
 </md-dialog>
