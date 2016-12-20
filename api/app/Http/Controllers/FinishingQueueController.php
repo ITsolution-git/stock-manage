@@ -242,6 +242,7 @@ class FinishingQueueController extends Controller {
     public function scheduleFinishing()
     {
         $post = Input::all();
+
         $post['run_date'] = date('Y-m-d',strtotime($post['run_date']));
 
         if(isset($post['id']))

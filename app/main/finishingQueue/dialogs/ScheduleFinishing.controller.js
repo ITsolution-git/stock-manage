@@ -31,14 +31,22 @@
             {
                 $scope.machine_data = result.data.machine_data;
                 $scope.shift_data = result.data.shift_data;
-                $scope.Finishing_scheduleData = result.data.Finishing_scheduleData[0];
-                if($scope.Finishing_scheduleData.rush_job == 1)
+                
+                if(result.data.Finishing_scheduleData.length > 0)
                 {
-                    $scope.Finishing_scheduleData.rush_job = true;
+                    $scope.Finishing_scheduleData = result.data.Finishing_scheduleData[0];
+                    if($scope.Finishing_scheduleData.rush_job == 1)
+                    {
+                        $scope.Finishing_scheduleData.rush_job = true;
+                    }
+                    else
+                    {
+                        $scope.Finishing_scheduleData.rush_job = false;
+                    }
                 }
                 else
                 {
-                    $scope.Finishing_scheduleData.rush_job = false;
+                    $scope.Finishing_scheduleData = {};
                 }
             }
             else
@@ -50,6 +58,22 @@
         
         $scope.scheduleFinishing = function()
         {
+            if($scope.Finishing_scheduleData.run_date == undefined || $scope.Finishing_scheduleData.run_date == '')
+            {
+                notifyService.notify('error','Please select start date');
+                return false;
+            }
+            if($scope.Finishing_scheduleData.shift_id == undefined || $scope.Finishing_scheduleData.shift_id == '')
+            {
+                notifyService.notify('error','Please select shift');
+                return false;
+            }
+            if($scope.Finishing_scheduleData.machine_id == undefined || $scope.Finishing_scheduleData.machine_id == '0')
+            {
+                notifyService.notify('error','Please select machine');
+                return false;
+            }
+
             if($scope.Finishing_scheduleData.rush_job == true)
             {
                 $scope.Finishing_scheduleData.rush_job = 1;                
