@@ -105,7 +105,8 @@
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>-->
     <script src="scripts/other/lodash.js"></script>
     <!--<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>-->
-    <script src="scripts/tinymce.min.js"></script>
+   <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+   <script src="scripts/other/tinymce.js"></script>
     <script>
      _.contains = _.includes;
     </script>
