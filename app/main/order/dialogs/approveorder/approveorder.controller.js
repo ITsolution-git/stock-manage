@@ -159,14 +159,14 @@
                                     }
 
                                     $mdDialog.hide();
-                                    $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
+                                    //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                                     $("#ajax_loader").hide();
                                   
                                 });
                         } else {
 
                              $mdDialog.hide();
-                             $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
+                            // $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                         }
                     }
                 });
@@ -225,7 +225,7 @@
                         }
 
                         $mdDialog.hide();
-                        $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
+                        //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                          $("#ajax_loader").hide();
                       
                     });
@@ -236,7 +236,7 @@
             if($scope.invoice_id > 0)
             {
                 $mdDialog.hide();
-                $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
+                //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
             }
         }
     }
