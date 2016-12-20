@@ -605,3 +605,4 @@ Route::post('production/SchedualBoardData','ProductionController@SchedualBoardDa
 Route::post('production/SchedualBoardweekData','ProductionController@SchedualBoardweekData');
 Route::post('production/SchedualBoardMachineData','ProductionController@SchedualBoardMachineData');
 Route::post('production/GetSchedulePositionDetail','ProductionController@GetSchedulePositionDetail');
+Route::post('production/SaveSchedulePosition','ProductionController@SaveSchedulePosition');
