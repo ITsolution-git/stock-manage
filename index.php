@@ -278,6 +278,7 @@
     <!-- Finishing Queue-->
     <script src="app/main/finishingQueue/finishingQueue.module.js"></script>
     <script src="app/main/finishingQueue/finishingQueue.controller.js"></script>
+    <script src="app/main/finishingQueue/dialogs/ScheduleFinishing.controller.js"></script>
 
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>
