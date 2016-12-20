@@ -295,22 +295,69 @@ Route::post('order/createInvoice',[
    'action' => 'false',
    'uses' => 'OrderController@createInvoice'
 ]);
-Route::post('order/paymentInvoiceCash', 'OrderController@paymentInvoiceCash');
+Route::post('order/paymentInvoiceCash',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'OrderController@paymentInvoiceCash'
+]);
 Route::post('order/paymentLinkToPay', 'OrderController@paymentLinkToPay');
 Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
-Route::post('order/GetAllClientsLowerCase', 'OrderController@GetAllClientsLowerCase');
+Route::post('order/GetAllClientsLowerCase',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'OrderController@GetAllClientsLowerCase'
+]);
 Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
-Route::post('payment/refundTransaction', 'PaymentController@refundTransaction');
-Route::post('order/updateInvoicePayment', 'OrderController@updateInvoicePayment');
-Route::post('order/GetAllClientsAddress', 'OrderController@GetAllClientsAddress');
-Route::post('order/allOrderAddress', 'OrderController@allOrderAddress');
-
+Route::post('payment/refundTransaction',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'PaymentController@refundTransaction'
+]);
+Route::post('order/updateInvoicePayment',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'OrderController@updateInvoicePayment'
+]);
+Route::post('order/GetAllClientsAddress',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'OrderController@GetAllClientsAddress'
+]);
+Route::post('order/allOrderAddress',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'OrderController@allOrderAddress'
+]);
 
 // FINISHING CONTROLLER 
-Route::get('finishing/listFinishing', 'FinishingController@listFinishing');
-Route::post('finishing/listFinishing', 'FinishingController@listFinishing');
-Route::post('finishing/updateFinishing', 'FinishingController@updateFinishing');
-Route::post('finishing/addRemoveToFinishing', 'FinishingController@addRemoveToFinishing');
+Route::post('finishing/listFinishing',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'FinishingController@listFinishing'
+]);
+Route::get('finishing/listFinishing',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'FinishingController@listFinishing'
+]);
+Route::post('finishing/updateFinishing',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'FinishingController@updateFinishing'
+]);
+Route::post('finishing/addRemoveToFinishing',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'FinishingController@addRemoveToFinishing'
+]);
 
 // FINISHING QUEUE CONTROLLER
 Route::get('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
