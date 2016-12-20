@@ -57,7 +57,10 @@
 
 				<div class="pull-left full-row">
 					<!-- <a  ng-click="getTab('photo')" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-camera"></i> photo approval</a> -->
-					<a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left" ui-event="{ click : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'id\',params.PositionDetail[0].position_id)' }"><i class="fa fa-check"></i> mark as complete</a>
+					<a href="#" id="mark_complete" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left" ui-event="{ click : 'UpdateTableData(\'mark_as_complete\',1,\'order_design_position\',\'id\',params.PositionDetail[0].position_id,\'\',\'mark_complete\')' }"><i class="fa fa-check"></i> 
+						<b ng-show="params.PositionDetail[0].mark_as_complete==0">mark as complete</b>
+						<b ng-show="params.PositionDetail[0].mark_as_complete==1">Completed</b>
+					</a>
 					<!-- <a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-calendar"></i> completion schedule</a> -->
 					<a href="#" ng-click="closeDialog()" class="stokkup-custom-btn1 stokkup-blue-btn text-white mb-20 pull-left">
 					   Close</a>
