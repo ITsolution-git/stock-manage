@@ -36,6 +36,7 @@ class ProductionController extends Controller {
 	    	}
 
 	    	$Position_scheduleData[0]->run_date = ($Position_scheduleData[0]->run_date=='0000-00-00')?'':date('m/d/Y',strtotime($Position_scheduleData[0]->run_date));
+	    	$Position_scheduleData[0]->rush_job = ($Position_scheduleData[0]->rush_job=='1')?true:false;
 
 
 	    	$machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0));  // GET MACHINE FROM COMPANU
@@ -192,7 +193,7 @@ class ProductionController extends Controller {
 	    return response()->json(['data'=>$data]);
     }
 
-    public function GetSchedulePositionDetail()
+    public function GetSchedulePositionDetail() // POPUP OF POSITION
     {
     	$post = Input::all();
     	if(!empty($post['company_id']) && !empty($post['position_id']))
@@ -204,6 +205,24 @@ class ProductionController extends Controller {
 	    else
 	    {
 	    	$data = array("success"=>0,"message"=>MISSING_PARAMS);
+	    }
+
+        return response()->json(['data'=>$data]);
+    }
+
+    public function SaveSchedulePosition()
+    {
+    	$post = Input::all();
+    	if(!empty($post['company_id']) && !empty($post['id']))
+	    {
+	    	//$post['rush_job']
+	    	$post['run_date'] = date('Y-m-d',strtotime($post['run_date']));
+	    	$machine_data = $this->common->UpdateTableRecords('position_schedule',array('id'=>$post['id']),array('machine_id'=>$post['machine_id'],'shift_id'=>$post['shift_id'],'run_date'=>$post['run_date'],'rush_job'=>$post['rush_job']));  
+	    	$data = array("success"=>'success',"message"=>UPDATE_RECORD);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>'error',"message"=>MISSING_PARAMS);
 	    }
 
         return response()->json(['data'=>$data]);

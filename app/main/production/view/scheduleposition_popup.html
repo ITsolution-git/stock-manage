@@ -1,7 +1,7 @@
-<!-- <div class="full-row pull-left rush-strip" style="width: 2%;">
+<div ng-show="params.PositionDetail[0].rush_job=='1'" class="full-row pull-left rush-strip" style="width: 2%;">
 		<span>Rush</span>
-</div>  rush-box -->
-<div class="inner-full-box ">
+</div>  
+<div class="inner-full-box"  ng-class="params.PositionDetail[0].rush_job==1 ?'rush-box':''">
 	<div flex=100 class="pull-left full-row">
 		<div flex=40 class="pull-left white-bg p-25 full-row mb-30">
 		<div class="scorecard">
