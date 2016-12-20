@@ -56,8 +56,8 @@
 				</div>
 
 				<div class="pull-left full-row">
-					<a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-camera"></i> photo approval</a>
-					<a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-check"></i> mark as complete</a>
+					<!-- <a  ng-click="getTab('photo')" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-camera"></i> photo approval</a> -->
+					<a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left" ui-event="{ click : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'id\',params.PositionDetail[0].position_id)' }"><i class="fa fa-check"></i> mark as complete</a>
 					<!-- <a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-calendar"></i> completion schedule</a> -->
 					<a href="#" ng-click="closeDialog()" class="stokkup-custom-btn1 stokkup-blue-btn text-white mb-20 pull-left">
 					   Close</a>
@@ -245,7 +245,6 @@
 				                </md-card>
 	                        </div>
 		                    </md-tab>
-						
 						<md-tab label="Completion Schedule" ng-click="getTab('Schedule')">
 		            	
 		            	<div class="pull-left pt-20 full-row">
@@ -288,8 +287,11 @@
 
 							</div>
 
-						</div>
-
+		            	</md-tab>
+		            	<md-tab label="Photo Approval" ng-click="getTab('photo')">
+		            		<div>
+                           			<img ng-src="{{params.PositionDetail[0].image_1}}" alt="No Image"  >
+				            </div>
 		            	</md-tab>
 	            	</md-tabs>
 	            </div>	
