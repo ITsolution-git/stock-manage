@@ -546,6 +546,14 @@ public function create_dir($dir_path) {
                 $total_screens = 0;
                 $total_press_setup = 0;
 
+                $avg_garment_cost = 0;
+                $avg_garment_price = 0;
+                $print_charges = 0;
+                $markup = 0;
+                $markup_default = 0;
+                $sales_total = 0;
+                $per_item = 0;
+
                 if(count($position_data) > 0)
                 {
                     foreach($position_data as $position) {
@@ -742,96 +750,95 @@ public function create_dir($dir_path) {
                             }
                         }
                     }
-                }
+                    if($product->markup > 0)
+                    {
+                        $markup = $product->markup;
+                    }
+                    else
+                    {
+                        $markup = 0;
+                    }
 
-                if($product->markup > 0)
-                {
-                    $markup = $product->markup;
-                }
-                else
-                {
-                    $markup = 0;
-                }
-
-                $avg_garment_cost = 0;
-                $markup_default = 0;
-                if(count($price_garment_mackup) > 0 && $position_qty > 0)
-                {
-                    foreach($price_garment_mackup as $value) {
-                        
-                        if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
-                        {
-                            $markup_default = $value->percentage;
+                    $avg_garment_cost = 0;
+                    $markup_default = 0;
+                    if(count($price_garment_mackup) > 0 && $position_qty > 0)
+                    {
+                        foreach($price_garment_mackup as $value) {
+                            
+                            if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
+                            {
+                                $markup_default = $value->percentage;
+                            }
                         }
                     }
-                }
 
-                $item_price = 0;
-                $line_qty = 0;
-                $unit_cost = 0;
-                foreach($purchase_detail as $pd) {
-                    if($pd->qnty > 0)
-                    {
-                        $price = $pd->price;
-                        //$sum = $price + $price_grid->shipping_charge;
-                        $unit_cost += $price * $pd->qnty;
-                        $line_qty += $pd->qnty;
+                    $item_price = 0;
+                    $line_qty = 0;
+                    $unit_cost = 0;
+                    foreach($purchase_detail as $pd) {
+                        if($pd->qnty > 0)
+                        {
+                            $price = $pd->price;
+                            //$sum = $price + $price_grid->shipping_charge;
+                            $unit_cost += $price * $pd->qnty;
+                            $line_qty += $pd->qnty;
+                        }
                     }
-                }
 
-                $total_shipping_charge = 0;
-                if($price_grid->shipping_charge > 0)
-                {
-                    $total_shipping_charge = $line_qty * $price_grid->shipping_charge;
-                }
+                    $total_shipping_charge = 0;
+                    if($price_grid->shipping_charge > 0)
+                    {
+                        $total_shipping_charge = $line_qty * $price_grid->shipping_charge;
+                    }
 
-                $avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
+                    $avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
 
-                if($supplied > 0)
-                {
-                    $avg_garment_cost = 0;
-                }
+                    if($supplied > 0)
+                    {
+                        $avg_garment_cost = 0;
+                    }
 
-                if($markup > 0)
-                {
-                    $garment_mackup = $markup/100;
-                }
-                else
-                {
-                    $garment_mackup = $markup_default/100;
-                }
+                    if($markup > 0)
+                    {
+                        $garment_mackup = $markup/100;
+                    }
+                    else
+                    {
+                        $garment_mackup = $markup_default/100;
+                    }
 
-                $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
+                    $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
 
-                if($product->extra_charges > 0)
-                {
-                    $extraCharges = $product->extra_charges;
-                }
-                else
-                {
-                    $extraCharges = 0;
-                }
+                    if($product->extra_charges > 0)
+                    {
+                        $extraCharges = $product->extra_charges;
+                    }
+                    else
+                    {
+                        $extraCharges = 0;
+                    }
 
-                if($product->override > 0)
-                {
-                    $per_item = $product->override;
-                }
-                else
-                {
-                    $per_item = $avg_garment_price + $print_charges + $extraCharges;
+                    if($product->override > 0)
+                    {
+                        $per_item = $product->override;
+                    }
+                    else
+                    {
+                        $per_item = $avg_garment_price + $print_charges + $extraCharges;
+                    }
+                    
+                    $sales_total = $per_item * $line_qty;
                 }
                 
-                $sales_total = $per_item * $line_qty;
-
                 $update_arr = array(
-                                    'avg_garment_cost' => round($avg_garment_cost,2),
-                                    'avg_garment_price' => round($avg_garment_price,2),
-                                    'print_charges' => round($print_charges,2),
-                                    'markup' => $markup,
-                                    'markup_default' => $markup_default,
-                                    'sales_total' => round($sales_total,2),
-                                    'total_line_charge' => round($per_item,2)
-                                    );
+                                        'avg_garment_cost' => round($avg_garment_cost,2),
+                                        'avg_garment_price' => round($avg_garment_price,2),
+                                        'print_charges' => round($print_charges,2),
+                                        'markup' => $markup,
+                                        'markup_default' => $markup_default,
+                                        'sales_total' => round($sales_total,2),
+                                        'total_line_charge' => round($per_item,2)
+                                        );
 
                 $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id,'product_id' => $product->product_id),$update_arr);
             }
