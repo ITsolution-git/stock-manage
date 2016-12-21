@@ -227,5 +227,17 @@ class ProductionController extends Controller {
 
         return response()->json(['data'=>$data]);
     }
+    public function GetRuntimeData($position_id)
+    {
+    	$per_screen = 0.167; // 10 MINUTES
+    	echo "Runspeed at  ->".$per_screen;
+    	$getRunspeed = $this->production->getRunspeed($position_id);
+    	echo "<br>  Runspeed at  ->".$getRunspeed;
+    	$getOrderImpression = $this->production->getOrderImpression($position_id);
+    	echo "<br>  ORDER SIZE  ->".$getOrderImpression;
+    	echo $getPositioncolors = $this->production->getPositioncolors($position_id);
+    	echo "<br>  Colors  ->".$getPositioncolors;
+    	//$getIPH = $this->production->getIPH($position_id);
+    }
 
 }

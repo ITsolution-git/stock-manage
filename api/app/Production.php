@@ -336,4 +336,51 @@ class Production extends Model {
         return $ret_array;
     }
 
+    public function getRunspeed($position_id)
+    {
+        $result = DB::table('order_design_position as odp')
+                    ->select('od.run_rate')
+                    ->leftJoin('order_design as od','od.id','=','odp.design_id')
+                    ->where('odp.id','=',$position_id)
+                    ->get();
+        $ret = 1;    
+        if(!empty($result[0]->run_rate))
+        {
+            $ret = $result[0]->run_rate/100;
+        }            
+        return $ret;
+    }
+
+    public function getOrderImpression($position_id)
+    {
+        $result = DB::table('order_design_position as odp')
+                    ->select(DB::raw('SUM(pol.qnty_purchased) as impression'))
+                    ->leftJoin('order_design as od','od.id','=','odp.design_id')
+                    ->leftJoin('orders as ord','ord.id','=','od.order_id')
+                    ->leftJoin('purchase_order as po','ord.id','=','po.order_id')
+                    ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+                    ->where('odp.id','=',$position_id)
+                    ->get();
+        $ret = 0;    
+        if(!empty($result[0]->impression))
+        {
+            $ret = $result[0]->impression;
+        }            
+        return $ret;
+    }
+    public function getPositioncolors($position_id)
+    {
+        $result = DB::table('artjob_screensets as ass')
+                    ->select(DB::raw('COUNT(col.id) as totalcolors'))
+                    ->leftJoin('artjob_screencolors as col','ass.id','=','col.screen_id')
+                    ->where('ass.positions','=',$position_id)
+                    ->get();
+        $ret = 0;    
+        if(!empty($result[0]->totalcolors))
+        {
+            $ret = $result[0]->totalcolors;
+        }            
+        return $ret;
+    }
+
  }
