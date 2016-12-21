@@ -4,15 +4,15 @@
         "title": "Stokkup",
         "contact": {
             "name": "codal api team",
-            "url": "http://new.stokkup.com/stokkup/"
+            "url": "app.stokkup.com"
         },
         "license": {
             "name": "Codal Systems",
-            "url": "http://new.stokkup.com/stokkup/"
+            "url": "app.stokkup.com"
         },
         "version": "1.0"
     },
-    "host": "new.stokkup.com/stokkup",
+    "host": "app.stokkup.com",
     
     "consumes": [
         "application/json",
