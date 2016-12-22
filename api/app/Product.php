@@ -78,11 +78,15 @@ class Product extends Model {
     public function getVendorProducts($data)
     {
         $product_id_array=array();
+        $search = '';
 
         //DB::statement('SET GLOBAL group_concat_max_len = 1000000');
         DB::statement('SET group_concat_max_len = 1000000');
 
-        $search = $data['where']['search'];
+        if(isset($data['where']['search']))
+        {
+            $search = $data['where']['search'];
+        }
 
         $sql = DB::table('products as p')
                 ->select(DB::raw('GROUP_CONCAT(id) as products'))
