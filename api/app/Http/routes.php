@@ -84,32 +84,106 @@ Route::post('admin/vendorDetail', 'VendorController@detail');
 Route::get('admin/VendorEdit/{id}', 'VendorController@detail');
 Route::post('admin/productVendor', 'VendorController@productVendor');
 
-// ADMIN PRODUCT ROUTERS
-Route::post('admin/product', 'ProductController@index');
-Route::post('admin/productAdd', 'ProductController@add');
-Route::post('admin/productDelete', 'ProductController@delete');
-Route::post('admin/productDetail', 'ProductController@detail');
-
 
 // ADMIN SETTING ROUTERS
-Route::post('admin/price', 'SettingController@price');
-Route::post('admin/priceDelete', 'SettingController@delete');
-Route::post('admin/priceGridDuplicate', 'SettingController@priceGridDuplicate');
-Route::post('admin/priceEdit', 'SettingController@priceEdit');
-Route::post('admin/priceDetail', 'SettingController@priceDetail');
-Route::get('admin/priceEdit/{id}', 'SettingController@priceDetail');
-Route::post('admin/priceGridPrimaryDuplicate', 'SettingController@priceGridPrimaryDuplicate');
-Route::post('admin/priceSecondary', 'SettingController@priceSecondary');
-Route::post('admin/downloadPricegridCSV', 'SettingController@downloadPricegridCSV');
-Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
-Route::get('admin/uploadSnsCSV', 'SettingController@uploadSnsCSV');
-Route::post('admin/downloadPriceGridExcel', 'SettingController@downloadPriceGridExcel');
+
+Route::post('admin/price',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'SettingController@price'
+]);
+
+Route::post('admin/priceDelete',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@delete'
+]);
+
+Route::post('admin/priceGridDuplicate',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@priceGridDuplicate'
+]);
+
+Route::post('admin/priceEdit',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@priceEdit'
+]);
+
+Route::post('admin/priceDetail',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'SettingController@priceDetail'
+]);
+
+Route::post('admin/priceEdit/{id}',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'SettingController@priceDetail'
+]);
+
+Route::post('admin/priceGridPrimaryDuplicate',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@priceGridPrimaryDuplicate'
+]);
+
+Route::post('admin/priceSecondary',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'SettingController@priceSecondary'
+]);
+
+Route::post('admin/downloadPricegridCSV',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@downloadPricegridCSV'
+]);
+
+Route::post('admin/uploadPricingCSV',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@uploadPricingCSV'
+]);
+
+Route::post('admin/uploadSnsCSV',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@uploadSnsCSV'
+]);
+
+Route::post('admin/downloadPriceGridExcel',[
+   'middleware' => 'check',
+   'role' => array('AM','CA'),
+   'action' => 'true',
+   'uses' => 'SettingController@downloadPriceGridExcel'
+]);
+
 Route::post('admin/getApprovedOrders', 'SettingController@getApprovedOrders');
 Route::post('admin/getPendingOrders', 'SettingController@getPendingOrders');
 Route::post('admin/getDeniedOrders', 'SettingController@getDeniedOrders');
 
 // ADMIN MISC ROUTERS
-Route::post('admin/miscSave', 'MiscController@miscSave');
+
+Route::post('admin/miscSave',[
+   'middleware' => 'check',
+   'role' => array('SM'),
+   'action' => 'false',
+   'uses' => 'MiscController@miscSave'
+]);
+
 Route::post('admin/placementSave', 'SettingController@placementSave');
 Route::post('admin/colorSave', 'SettingController@colorSave');
 Route::post('admin/colorInsert', 'SettingController@colorInsert');
@@ -118,7 +192,14 @@ Route::post('admin/colorInsert', 'SettingController@colorInsert');
 Route::get('common/type/{type}', 'CommonController@type');
 Route::get('common/staffRole', 'CommonController@getStaffRoles');
 Route::get('common/checkemail/{email}/{userid}', 'CommonController@checkemailExist');
-Route::post('common/getAllMiscData', 'CommonController@getAllMiscData');
+
+Route::post('common/getAllMiscData',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'CommonController@getAllMiscData'
+]);
+
+
 Route::post('common/getAllMiscDataWithoutBlank', 'CommonController@getAllMiscDataWithoutBlank');
 Route::get('common/GetMicType/{type}', 'CommonController@GetMicType');
 Route::get('common/getStaffList/{id}', 'CommonController@getStaffList');
@@ -488,24 +569,125 @@ Route::post('shipping/unAllocateProduct',[
    'uses' => 'ShippingController@unAllocateProduct'
 ]);
 // PRODUCT CONTROLLER
-Route::post('product/getProductByVendor', 'ProductController@getProductByVendor');
-Route::post('product/getProductCountByVendor', 'ProductController@getProductCountByVendor');
-Route::post('product/productDetailData', 'ProductController@productDetailData');
-Route::post('product/addProduct', 'ProductController@addProduct');
-Route::post('product/designProduct', 'ProductController@designProduct');
-Route::post('product/deleteAddProduct', 'ProductController@deleteAddProduct');
-Route::post('product/getCustomProduct', 'ProductController@getCustomProduct');
-Route::post('product/uploadCSV', 'ProductController@uploadCSV');
-Route::post('product/getProductDetailColorSize', 'ProductController@getProductDetailColorSize');
-Route::post('product/addcolorsize', 'ProductController@addcolorsize');
-Route::post('product/deleteSizeLink', 'ProductController@deleteSizeLink');
-Route::post('product/downloadCSV', 'ProductController@downloadCSV');
+
+Route::post('product/getProductByVendor',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@getProductByVendor'
+]);
+
+Route::post('product/getProductCountByVendor',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@getProductCountByVendor'
+]);
+
+Route::post('product/productDetailData',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@productDetailData'
+]);
+
+Route::post('product/addProduct',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@addProduct'
+]);
+
+Route::post('product/designProduct',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@designProduct'
+]);
+
+
+
+Route::post('product/deleteAddProduct',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@deleteAddProduct'
+]);
+
+
+Route::post('product/getCustomProduct',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ProductController@getCustomProduct'
+]);
+
+Route::post('product/uploadCSV',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ProductController@uploadCSV'
+]);
+
+Route::post('product/getProductDetailColorSize',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ProductController@getProductDetailColorSize'
+]);
+
+Route::post('product/addcolorsize',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ProductController@addcolorsize'
+]);
+
+Route::post('product/deleteSizeLink',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ProductController@deleteSizeLink'
+]);
+
+Route::post('product/downloadCSV',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ProductController@downloadCSV'
+]);
+
+Route::post('product/downloadCustomProductCSV',[
+   'middleware' => 'check',
+   'role' => 'ALL',
+   'uses' => 'ProductController@downloadCustomProductCSV'
+]);
+
+
 Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
-Route::post('product/getVendorByProductCount', 'ProductController@getVendorByProductCount');
-Route::post('product/getProductSize', 'ProductController@getProductSize');
-Route::post('product/checkProductExist', 'ProductController@checkProductExist');
-Route::post('product/findTotal', 'ProductController@findTotal');
-Route::post('product/downloadCustomProductCSV', 'ProductController@downloadCustomProductCSV');
+
+
+Route::post('product/getVendorByProductCount',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@getVendorByProductCount'
+]);
+
+Route::post('product/getProductSize',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@getProductSize'
+]);
+
+Route::post('product/checkProductExist',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@checkProductExist'
+]);
+
+Route::post('product/findTotal',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'false',
+   'uses' => 'ProductController@findTotal'
+]);
 
 // API CONTROLLER
 Route::get('api/GetCompanyApi/{company_id}', 'ApiController@GetCompanyApi');
