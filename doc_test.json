@@ -395,74 +395,41 @@
         "/api/public/common/UpdateTableRecords": {
             "post": {
                 "tags": [
-                    "Order"
-                ],
-                "summary": "Update Order Note",
-                "description": "Update Order Note",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Update Order Note",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/updateOrderNotes"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Update Order Note"
-                    },
-                    "default": {
-                        "description": "Update Order Note"
-                    }
-                }
-            }
-        },
-        "/api/public/common/DeleteTableRecords": {
-            "post": {
-                "tags": [
-                    "Setting",
-                    "Color",
-                    "API"
-                ],
-                "summary": "Delete Placement",
-                "description": "Delete Record",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Delete Record",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/DeleteTableRecords"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Delete Record"
-                    },
-                    "default": {
-                        "description": "Delete Record"
-                    }
-                }
-            }
-        },
-        "/api/public/common/getAllColorData": {
-            "get": {
-                "tags": [
                     "Color"
                 ],
-                "summary": "Get All colors",
-                "description": "Get All colors",
+                "summary": "Common Update",
+                "description": "All Update",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "All Update",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/allUpdate"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "Get All colors"
+                        "description": "All Update"
                     },
                     "default": {
-                        "description": "Get All colors"
+                        "description": "All Update"
                     }
                 }
             }
@@ -519,6 +486,48 @@
                     },
                     "default": {
                         "description": "Add vendor"
+                    }
+                }
+            }
+        },
+        "/api/public/common/getTestyRecords": {
+            "post": {
+                "tags": [
+                    "Color"
+                ],
+                "summary": "Common Listing",
+                "description": "All Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "All Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/allList"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All Listing"
+                    },
+                    "default": {
+                        "description": "All Listing"
                     }
                 }
             }
@@ -842,62 +851,6 @@
                     }
                 }
             }
-        },
-        "/api/public/admin/colorSave": {
-            "post": {
-                "tags": [
-                    "Color"
-                ],
-                "summary": "Color Update",
-                "description": "Color Update",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Color Update",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/colorSave"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Color Update"
-                    },
-                    "default": {
-                        "description": "Color Update"
-                    }
-                }
-            }
-        },
-        "/api/public/admin/colorInsert": {
-            "post": {
-                "tags": [
-                    "Color"
-                ],
-                "summary": "Color Add",
-                "description": "Color Add",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Color Add",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/colorInsert"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Color Add"
-                    },
-                    "default": {
-                        "description": "Color Add"
-                    }
-                }
-            }
         }
     },
     "definitions": {
@@ -1100,45 +1053,20 @@
             },
             "type": "object"
         },
-        "updateOrderNotes": {
+        "allUpdate": {
             "properties": {
                 "cond": {
-                    "required": [
-                        "note_id"
-                    ],
                     "properties": {
-                        "note_id": {
+                        "id": {
                             "type": "integer"
                         }
                     },
                     "type": "object"
                 },
                 "data": {
-                    "required": [
-                        "order_notes"
-                    ],
                     "properties": {
-                        "order_notes": {
+                        "name": {
                             "type": "string"
-                        }
-                    },
-                    "type": "object"
-                },
-                "table": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "DeleteTableRecords": {
-            "properties": {
-                "cond": {
-                    "required": [
-                        "id"
-                    ],
-                    "properties": {
-                        "id": {
-                            "type": "integer"
                         }
                     },
                     "type": "object"
@@ -1201,6 +1129,40 @@
                 },
                 "table": {
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "allList": {
+            "properties": {
+                "cond": {
+                    "properties": {
+                        "params": {
+                            "properties": {
+                                "filter": {
+                                    "properties": {
+                                        "function": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "page": {
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "page": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
                 }
             },
             "type": "object"
@@ -1356,40 +1318,6 @@
                 },
                 "id": {
                     "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "colorSave": {
-            "required": [
-                "updatedcolumn",
-                "id",
-                "columnname"
-            ],
-            "properties": {
-                "updatedcolumn": {
-                    "type": "string"
-                },
-                "columnname": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "colorInsert": {
-            "required": [
-                "updatedcolumn",
-                "columnname"
-            ],
-            "properties": {
-                "updatedcolumn": {
-                    "type": "string"
-                },
-                "columnname": {
-                    "type": "string"
                 }
             },
             "type": "object"
