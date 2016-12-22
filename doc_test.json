@@ -4,21 +4,48 @@
         "title": "Stokkup",
         "contact": {
             "name": "codal api team",
-            "url": "app.stokkup.com"
+            "url": "http://104.236.31.186/"
         },
         "license": {
             "name": "Codal Systems",
-            "url": "app.stokkup.com"
+            "url": "http://104.236.31.186/"
         },
         "version": "1.0"
     },
-    "host": "app.stokkup.com",
-    
+    "host": "localhost.stokkup.com",
     "consumes": [
         "application/json",
         "multipart/form-data"
     ],
     "paths": {
+        "/api/public/finishingQueue/listFinishing": {
+            "post": {
+                "tags": [
+                    "FinishingQueue"
+                ],
+                "summary": "FinishingQueue Listing",
+                "description": "FinishingQueue Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "FinishingQueue Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/finishingQueueList"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "FinishingQueue Listing"
+                    },
+                    "default": {
+                        "description": "FinishingQueue Listing"
+                    }
+                }
+            }
+        },
         "/api/public/art/listing/{company_id}": {
             "get": {
                 "tags": [
@@ -69,6 +96,34 @@
                     },
                     "default": {
                         "description": "Product Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/labor/laborDetail": {
+            "post": {
+                "tags": [
+                    "Labor"
+                ],
+                "summary": "Labor Detail",
+                "description": "Labor Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Labor Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/laborDetail"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Labor Detail"
+                    },
+                    "default": {
+                        "description": "Labor Detail"
                     }
                 }
             }
@@ -129,366 +184,6 @@
                 }
             }
         },
-        "/api/public/order/getOrderPositionDetail": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Order Position Tab Detail",
-                "description": "Order Position Tab Detail",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Order Position Tab Detail",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/OrderPositionDetail"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Order Position Tab Detail"
-                    },
-                    "default": {
-                        "description": "Order Position Tab Detail"
-                    }
-                }
-            }
-        },
-        "/api/public/order/getOrderLineDetail": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Order Line Tab Detail",
-                "description": "Order Line Tab Detail",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Order Line Tab Detail",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/OrderLineDetail"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Order Line Tab Detail"
-                    },
-                    "default": {
-                        "description": "Order Line Tab Detail"
-                    }
-                }
-            }
-        },
-        "/api/public/order/getOrderNoteDetails/{id}": {
-            "get": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Order Notes Data",
-                "description": "Order Notes Data",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Order Notes Data",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Order Notes Data"
-                    },
-                    "default": {
-                        "description": "Order Notes Data"
-                    }
-                }
-            }
-        },
-        "/api/public/order/deleteOrderNotes/{id}": {
-            "get": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Order Notes Delete",
-                "description": "Order Notes Delete",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Order Notes Delete",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Order Notes Delete"
-                    },
-                    "default": {
-                        "description": "Order Notes Delete"
-                    }
-                }
-            }
-        },
-        "/api/public/order/saveOrderNotes": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Add Notes in particular order",
-                "description": "Add Notes in particular order",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Add Notes in particular order",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/saveOrderNotes"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Add Notes in particular order"
-                    },
-                    "default": {
-                        "description": "Add Notes in particular order"
-                    }
-                }
-            }
-        },
-        "/api/public/order/deleteOrderLine": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Order Line Delete",
-                "description": "Order Line Delete",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Order Line Delete",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/deleteOrderLine"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Order Line Delete"
-                    },
-                    "default": {
-                        "description": "Order Line Delete"
-                    }
-                }
-            }
-        },
-        "/api/public/order/PODetail": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "PO Detail",
-                "description": "PO Detail",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "PO Detail",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/PODetail"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "PO Detail"
-                    },
-                    "default": {
-                        "description": "PO Detail"
-                    }
-                }
-            }
-        },
-        "/api/public/order/distributionDetail": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Order Line Tab Detail",
-                "description": "Order Line Tab Detail",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Order Line Tab Detail",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/distributionDetail"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Order Line Tab Detail"
-                    },
-                    "default": {
-                        "description": "Order Line Tab Detail"
-                    }
-                }
-            }
-        },
-        "/api/public/order/removeFromDistribute": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Distribution Delete",
-                "description": "Distribution Delete",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Distribution Delete",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/removeFromDistribute"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Distribution Delete"
-                    },
-                    "default": {
-                        "description": "Distribution Delete"
-                    }
-                }
-            }
-        },
-        "/api/public/order/updateDistributedQty": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Update Distributed Qty",
-                "description": "Update Distributed Qty",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Update Distributed Qty",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/updateDistributedQty"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Update Distributed Qty"
-                    },
-                    "default": {
-                        "description": "Update Distributed Qty"
-                    }
-                }
-            }
-        },
-        "/api/public/order/duplicatePoData": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Duplicate PO",
-                "description": "Duplicate PO",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Duplicate PO",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/duplicatePoData"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Duplicate PO"
-                    },
-                    "default": {
-                        "description": "Duplicate PO"
-                    }
-                }
-            }
-        },
-        "/api/public/order/getTaskList": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Get Task List",
-                "description": "Get Task List",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Get Task List",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/getTaskList"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get Task List"
-                    },
-                    "default": {
-                        "description": "Get Task List"
-                    }
-                }
-            }
-        },
-        "/api/public/order/getTaskDetails": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Get Task Details",
-                "description": "Get Task Details",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Get Task Details",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/getTaskDetails"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get Task Details"
-                    },
-                    "default": {
-                        "description": "Get Task Details"
-                    }
-                }
-            }
-        },
         "/api/public/order/getProductDetailColorSize/{id}": {
             "get": {
                 "tags": [
@@ -511,34 +206,6 @@
                     },
                     "default": {
                         "description": "Product Color Detail"
-                    }
-                }
-            }
-        },
-        "/api/public/order/AssignSize": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Assign color size to order line",
-                "description": "Assign color size to order line",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Assign color size to order line",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/AssignSize"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Assign color size to order line"
-                    },
-                    "default": {
-                        "description": "Assign color size to order line"
                     }
                 }
             }
@@ -571,34 +238,6 @@
                 }
             }
         },
-        "/api/public/order/deleteColorSize": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Delete Color Size",
-                "description": "Delete Color Size",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Delete Color Size",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/deleteColorSize"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Delete Color Size"
-                    },
-                    "default": {
-                        "description": "Delete Color Size"
-                    }
-                }
-            }
-        },
         "/api/public/order/sendEmail": {
             "post": {
                 "tags": [
@@ -623,34 +262,6 @@
                     },
                     "default": {
                         "description": "Send Email To User"
-                    }
-                }
-            }
-        },
-        "/api/public/order/orderImageDetail": {
-            "post": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Get Order Image Detail",
-                "description": "Get Order Image Detail",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Get Order Image Detail",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/orderImageDetail"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Get Order Image Detail"
-                    },
-                    "default": {
-                        "description": "Get Order Image Detail"
                     }
                 }
             }
@@ -727,6 +338,20 @@
                         "schema": {
                             "$ref": "#/definitions/miscList"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
                     }
                 ],
                 "responses": {
@@ -970,6 +595,20 @@
                         "schema": {
                             "$ref": "#/definitions/miscSave"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
                     }
                 ],
                 "responses": {
@@ -1262,6 +901,22 @@
         }
     },
     "definitions": {
+        "finishingQueueList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
         "productList": {
             "properties": {
                 "cond": {
@@ -1274,6 +929,21 @@
                         }
                     },
                     "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "laborDetail": {
+            "required": [
+                "company_id",
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -1315,211 +985,12 @@
             },
             "type": "object"
         },
-        "OrderPositionDetail": {
-            "required": [
-                "company_id",
-                "id"
-            ],
-            "properties": {
-                "company_id": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "OrderLineDetail": {
-            "required": [
-                "company_id",
-                "id"
-            ],
-            "properties": {
-                "company_id": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "saveOrderNotes  ": {
-            "properties": {
-                "data": {
-                    "required": [
-                        "order_notes"
-                    ],
-                    "properties": {
-                        "order_notes": {
-                            "type": "string"
-                        },
-                        "order_id": {
-                            "type": "integer"
-                        },
-                        "user_id": {
-                            "type": "integer"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "deleteOrderLine": {
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "PODetail": {
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "distributionDetail": {
-            "required": [
-                "client_id",
-                "order_id",
-                "address_id"
-            ],
-            "properties": {
-                "client_id": {
-                    "type": "integer"
-                },
-                "order_id": {
-                    "type": "integer"
-                },
-                "address_id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "removeFromDistribute": {
-            "required": [
-                "order_id"
-            ],
-            "properties": {
-                "order_id": {
-                    "type": "integer"
-                },
-                "address_id": {
-                    "type": "integer"
-                },
-                "item_id": {
-                    "type": "integer"
-                },
-                "shipping_id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "updateDistributedQty": {
-            "required": [
-                "id",
-                "qty"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "qty": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "duplicatePoData": {
-            "required": [
-                "po_id"
-            ],
-            "properties": {
-                "po_id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "getTaskList": {
-            "required": [
-                "order_id"
-            ],
-            "properties": {
-                "order_id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "getTaskDetails": {
-            "required": [
-                "id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "AssignSize": {
-            "required": [
-                "orderline_id",
-                "product_id",
-                "color_id",
-                "order_id"
-            ],
-            "properties": {
-                "orderline_id": {
-                    "type": "integer"
-                },
-                "product_id": {
-                    "type": "integer"
-                },
-                "color_id": {
-                    "type": "integer"
-                },
-                "order_id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
         "productDetail": {
             "required": [
                 "id"
             ],
             "properties": {
                 "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "deleteColorSize": {
-            "required": [
-                "color_id",
-                "product_id"
-            ],
-            "properties": {
-                "color_id": {
-                    "type": "integer"
-                },
-                "product_id": {
                     "type": "integer"
                 }
             },
@@ -1539,21 +1010,6 @@
                     "type": "integer"
                 },
                 "order_id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "orderImageDetail": {
-            "required": [
-                "id",
-                "company_id"
-            ],
-            "properties": {
-                "id": {
-                    "type": "integer"
-                },
-                "company_id": {
                     "type": "integer"
                 }
             },
