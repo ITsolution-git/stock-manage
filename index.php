@@ -37,11 +37,11 @@
         <link rel="stylesheet" href="styles/codepen.min.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
         
-<!--         <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
+        <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
         async defer></script>
         <script src="//fast.appcues.com/21130.js"></script>
         <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
- -->
+
         <script>
             var timer;
             function loadscreen()
