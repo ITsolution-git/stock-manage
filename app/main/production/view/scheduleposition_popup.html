@@ -24,17 +24,6 @@
 					<span class="pull-left">In hands by date:</span>
 					<span class="pull-right text-right"><b>{{params.PositionDetail[0].in_hands_by}}</b></span>
 				</div>
-
-				<div class="pull-left full-row mb-20">
-					<span class="pull-left">Estimated Run Time (ERT)</span>
-					<span class="pull-right text-right">--</span>
-				</div>
-
-				<div class="pull-left full-row mb-20">
-					<span class="pull-left">Impressions</span>
-					<span class="pull-right text-right">--</span>
-				</div>
-
 				<div class="pull-left full-row mb-20">
 					<span class="pull-left">
 						<span class="garment-logo m-t-20 stokkup-title-h4" ng-class="params.PositionDetail[0].screen_icon==2?'garment-logo':(params.PositionDetail[0].screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span> 
@@ -55,6 +44,10 @@
 					<span class="pull-right text-right">{{params.PositionDetail[0].machine_name}}</span>
 				</div>
 				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Impressions</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.getOrderImpression}}</span>
+				</div>
+				<div class="pull-left full-row mb-20">
 					<span class="pull-left">Setup Time:</span>
 					<span class="pull-right text-right">{{params.GetRuntimeData.setup_time}}</span>
 				</div>
@@ -64,8 +57,7 @@
 				</div>
 				<div class="pull-left full-row mb-20">
 					<span class="pull-left">Run Time:</span>
-					<span class="pull-right text-right">
-					{{params.GetRuntimeData.run_time}}</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.run_time}}</span>
 				</div>
 				<div class="pull-left full-row mb-20">
 					<span class="pull-left">Total Time:</span>
