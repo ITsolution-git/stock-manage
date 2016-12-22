@@ -54,6 +54,23 @@
 					<span class="pull-left">Machine Assigned To:</span>
 					<span class="pull-right text-right">{{params.PositionDetail[0].machine_name}}</span>
 				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Setup Time:</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.setup_time}}</span>
+				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Run Speed:</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.run_speed}}</span>
+				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Run Time:</span>
+					<span class="pull-right text-right">
+					{{params.GetRuntimeData.run_time}}</span>
+				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Total Time:</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.total_time}}</span>
+				</div>
 
 				<div class="pull-left full-row">
 					<!-- <a  ng-click="getTab('photo')" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-camera"></i> photo approval</a> -->

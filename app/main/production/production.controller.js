@@ -404,6 +404,7 @@
                 {
                     $scope.PositionDetail = result.data.PositionDetail;
                     $scope.GarmentDetail = result.data.GarmentDetail;
+                    $scope.GetRuntimeData = result.data.GetRuntimeData;
                     $scope.openEditPopup('production/view/scheduleposition_popup.html',$scope);
                 }
                 else

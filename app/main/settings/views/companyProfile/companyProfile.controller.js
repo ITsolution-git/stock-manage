@@ -189,8 +189,8 @@ $scope.addData = function(tableName){
 
             var allData = {};
         allData.table ='iph';
-        allData.sort ='id';
-        allData.sortcond ='desc';
+        allData.sort ='pos_no';
+        allData.sortcond ='asc';
         allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
 
         $http.post('api/public/common/GetTableRecords',allData).success(function(result)
@@ -214,8 +214,8 @@ $scope.addData = function(tableName){
 
             var allData = {};
         allData.table ='order_size_factor';
-        allData.sort ='id';
-        allData.sortcond ='desc';
+        allData.sort ='order_size';
+        allData.sortcond ='asc';
         allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id')}
 
         $http.post('api/public/common/GetTableRecords',allData).success(function(result)
