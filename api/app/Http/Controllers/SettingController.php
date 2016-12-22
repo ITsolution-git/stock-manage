@@ -741,7 +741,7 @@ class SettingController extends Controller {
                 $product_name = $product->title." - ".$product->styleName;
                 $description = $product->description;
 
-                $product_arr = array('id' => $product->styleID, 'part_number' => $product->partNumber, 'vendor_id' => 1, 'name' => $product_name, 'description' => $description, 'product_image' => $product->styleImage);
+                $product_arr = array('id' => $product->styleID, 'brand_name' => $product->brandName, 'part_number' => $product->partNumber, 'vendor_id' => 1, 'name' => $product_name, 'description' => $description, 'product_image' => $product->styleImage);
                 $product_id = $product->styleID;
 
                 if(empty($product_data))

@@ -157,9 +157,9 @@ Route::post('admin/uploadPricingCSV',[
    'uses' => 'SettingController@uploadPricingCSV'
 ]);
 
-Route::post('admin/uploadSnsCSV',[
+Route::get('admin/uploadSnsCSV',[
    'middleware' => 'check',
-   'role' => array('AM','CA'),
+   'role' => array('SA'),
    'action' => 'true',
    'uses' => 'SettingController@uploadSnsCSV'
 ]);
@@ -445,6 +445,10 @@ Route::get('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFi
 Route::post('finishingQueue/listFinishingQueue', 'FinishingQueueController@listFinishingQueue');
 Route::post('finishingQueue/GetShiftMachine','FinishingQueueController@GetShiftMachine');
 Route::post('finishingQueue/scheduleFinishing','FinishingQueueController@scheduleFinishing');
+
+Route::post('finishing/FinishingBoardData','FinishingQueueController@FinishingBoardData');
+Route::post('finishing/FinishingBoardweekData','FinishingQueueController@FinishingBoardweekData');
+Route::post('finishing/FinishingBoardMachineData','FinishingQueueController@FinishingBoardMachineData');
 
 // SHIPPING CONTROLLER
 Route::get('shipping/listShipping',[
