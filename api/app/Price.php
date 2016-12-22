@@ -440,43 +440,6 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
 
 
 
-    /**
-* Color Save          
-* @access public colorSave
-* @param  array $data
-* @return array $result
-*/
-    public function colorSave($data) {
-        
-         
-        $data[$data['columnname']] = $data['updatedcolumn'];
-        unset($data['columnname']);
-        unset($data['updatedcolumn']);
-        
-        $whereConditions = ['id' => $data['id']];
-        $result = DB::table('color')->where($whereConditions)->update($data);
-        return $result;
-    }
-
-
-    /**
-* color Insert          
-* @access public colorInsert
-* @param  array $data
-* @return array $result
-*/
-    public function colorInsert($data) {
-        
-         
-        $data[$data['columnname']] = $data['updatedcolumn'];
-        unset($data['columnname']);
-        unset($data['updatedcolumn']);
-        
-        $result = DB::table('color')->insert($data);
-        return $result;
-    }
-
-
     public function priceDetailExcel($priceId) {
 
         $wherePriceConditions = ['id' => $priceId];

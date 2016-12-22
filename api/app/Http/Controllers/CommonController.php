@@ -337,64 +337,76 @@ class CommonController extends Controller {
         }
      }
 
-/**
-* UPDATE record for any single table.
-* @params Table name, Condition array, Post array
-* @return json data
+
+  /** 
+* @SWG\Definition(
+*      definition="allUpdate",
+*      type="object",
+*     
+*      @SWG\Property(
+*          property="cond",
+*          type="object",
+*          
+*               @SWG\Property(
+*               property="id",
+*               type="integer",
+*
+*               )
+*
+*         ),
+*      @SWG\Property(
+*          property="data",
+*          type="object",
+*          
+*               @SWG\Property(
+*               property="name",
+*               type="string",
+*
+*               )
+*
+*         ),
+*         @SWG\Property(
+*          property="table",
+*          type="string"
+*
+*         )
+*
+*      )
+*  )
 */
 
-    /** 
- * @SWG\Definition(
- *      definition="updateOrderNotes",
- *      type="object",
- *     
- *      @SWG\Property(
- *          property="cond",
- *          type="object",
- *          required={"note_id"},
- *          @SWG\Property(
- *          property="note_id",
- *          type="integer",
- *         )
- *
- *      ),
- *
- *      @SWG\Property(
- *          property="data",
- *          type="object",
- *          required={"order_notes"},
- *          @SWG\Property(
- *          property="order_notes",
- *          type="string",
- *         )
- *         
- *
- *      ),
- *      @SWG\Property(
- *          property="table",
- *          type="string",
- *         )
- *  )
- */
 
- /**
+  /**
  * @SWG\Post(
  *  path = "/api/public/common/UpdateTableRecords",
- *  summary = "Update Order Note",
- *  tags={"Order"},
- *  description = "Update Order Note",
+ *  summary = "Common Update",
+ *  tags={"Color"},
+ *  description = "All Update",
  *  @SWG\Parameter(
  *     in="body",
  *     name="body",
- *     description="Update Order Note",
+ *     description="All Update",
  *     required=true,
- *     @SWG\Schema(ref="#/definitions/updateOrderNotes")
+ *     @SWG\Schema(ref="#/definitions/allUpdate")
  *  ),
- *  @SWG\Response(response=200, description="Update Order Note"),
- *  @SWG\Response(response="default", description="Update Order Note"),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="All Update"),
+ *  @SWG\Response(response="default", description="All Update"),
  * )
  */
-
      public function UpdateTableRecords()
      {
         $post = Input::all();
@@ -422,46 +434,6 @@ class CommonController extends Controller {
     */
 
 
-       /** 
- * @SWG\Definition(
- *      definition="DeleteTableRecords",
- *      type="object",
- *     
- *      @SWG\Property(
- *          property="cond",
- *          type="object",
- *          required={"id"},
- *          @SWG\Property(
- *          property="id",
- *          type="integer",
- *         )
- *
- *      ),
- *
- *      @SWG\Property(
- *          property="table",
- *          type="string",
- *         )
- *  )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/common/DeleteTableRecords",
- *  summary = "Delete Placement",
- *  tags={"Setting","Color","API"},
- *  description = "Delete Record",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Delete Record",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/DeleteTableRecords")
- *  ),
- *  @SWG\Response(response=200, description="Delete Record"),
- *  @SWG\Response(response="default", description="Delete Record"),
- * )
- */
 
      public function DeleteTableRecords()
      {
@@ -498,17 +470,6 @@ class CommonController extends Controller {
         return $result;
     }
 
-
- /**
- * @SWG\Get(
- *  path = "/api/public/common/getAllColorData",
- *  summary = "Get All colors",
- *  tags={"Color"},
- *  description = "Get All colors",
- *  @SWG\Response(response=200, description="Get All colors"),
- *  @SWG\Response(response="default", description="Get All colors"),
- * )
- */
 
      public function getAllColorData()
     {
@@ -926,11 +887,78 @@ class CommonController extends Controller {
         }
      }
 
-    /**
-    * Get record for any table with Total count and Pagination parameters.
-    * @params Testy Post data
-    * @return json data, with Testy parameters
-    */
+   /** 
+* @SWG\Definition(
+*      definition="allList",
+*      type="object",
+*     
+*      @SWG\Property(
+*          property="cond",
+*          type="object",
+*          
+*               @SWG\Property(
+*               property="params",
+*               type="object",
+*
+*                   @SWG\Property(
+*                   property="filter",
+*                   type="object",
+*                       @SWG\Property(
+*                       property="function",
+*                       type="string",
+*                       )
+*                     ),
+*                    @SWG\Property(
+*                    property="page",
+*                    type="object",
+*                       @SWG\Property(
+*                       property="count",
+*                       type="integer",
+*                       ),
+*                       @SWG\Property(
+*                       property="page",
+*                       type="integer",
+*                       )
+*               )
+*
+*         )
+*
+*      )
+*  )
+*/
+
+
+  /**
+ * @SWG\Post(
+ *  path = "/api/public/common/getTestyRecords",
+ *  summary = "Common Listing",
+ *  tags={"Color"},
+ *  description = "All Listing",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="All Listing",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/allList")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="All Listing"),
+ *  @SWG\Response(response="default", description="All Listing"),
+ * )
+ */
     public function getTestyRecords()
     {
         $post_all = Input::all();
