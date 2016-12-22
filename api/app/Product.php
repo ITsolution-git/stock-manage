@@ -82,44 +82,21 @@ class Product extends Model {
         //DB::statement('SET GLOBAL group_concat_max_len = 1000000');
         DB::statement('SET group_concat_max_len = 1000000');
 
-        if(isset($data['where']['search']))
-        {
-            $search = $data['where']['search'];
+        $search = $data['where']['search'];
 
-            $brand = DB::table('brand')
-                    ->select(DB::raw('GROUP_CONCAT(id) as brand_id'))
-                    ->where('brand_name', 'LIKE', '%'.$search.'%')
-                    ->get();
-
-            if($brand[0]->brand_id == '')
-            {
-                $brand = array();
-            }
-        }
-        else
-        {
-            $search = '';
-            $brand = array();
-        }
-
-        $sql = DB::table('products')
+        $sql = DB::table('products as p')
                 ->select(DB::raw('GROUP_CONCAT(id) as products'))
-                ->leftJoin('client_product_supplied','products.id','=',DB::raw("client_product_supplied.product_id AND client_product_supplied.client_id = ".$data['where']['client_id']));
+                ->leftJoin('client_product_supplied','p.id','=',DB::raw("client_product_supplied.product_id AND client_product_supplied.client_id = ".$data['where']['client_id']));
 
-        if(is_numeric($search) && $data['where']['vendor_id'] == 1)
+        if($data['where']['vendor_id'] == 1)
         {
-            $sql = $sql->orWhere('id','=',$search)
-            ->orWhere('name', 'LIKE', '%'.$search.'%');
-        }
-        else if($data['where']['vendor_id'] == 1 && count($brand)>0)
-        {
-            $brand_id_array = explode(",",$brand[0]->brand_id);
-
             if($search != '')
             {
-                $sql = $sql->Where(function($query) use($search)
+                $sql = $sql->orWhere(function($query) use($search)
                 {
-                    $query->orWhere('name', 'LIKE', '%'.$search.'%');
+                    $query->orWhere('p.name', 'LIKE', '%'.$search.'%');
+                    $query->orWhere('p.brand_name', 'LIKE', '%'.$search.'%');
+                    $query->orWhere('p.id','=',$search);
                 });
             }
         }
@@ -198,11 +175,11 @@ class Product extends Model {
 
         if(empty($data['fields']))
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.id,p.name,p.brand_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
         }
         else
         {
-            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS p.name as product_name,p.brand_name,p.product_image,p.description,v.name_company as vendor_name,p.vendor_id,c.color_front_image,c.id as color_id')];
         }
         
 

@@ -122,6 +122,23 @@
                         controller : 'laborController as vm'
                     }
                 }
+            }).state('app.settings.emailTemplate', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('AT,SU','false');
+                    }
+                },
+                url  : '/emailTemplate',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/emailTemplate/emailTemplate.html',
+                        controller : 'EmailTemplateController as vm'
+                    }
+                }
             })
             /*.state('app.settings.companyDetails', {
                 resolve: {
@@ -278,6 +295,14 @@
                         controller : 'approvalsController as vm'
                     }
                 }
+            }).state('app.settings.template-info', {
+                url  : '/template-info/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/emailTemplate/emailTemplateInfo.html',
+                        controller : 'emailTemplateInfoController as vm'
+                    }
+                }
             });
         // Navigation
        /* msNavigationServiceProvider.saveItem('fuse', {
@@ -385,6 +410,14 @@
             class      : 'navigation-dashboards project-dashboard',
             weight     : 12
 
+        });
+         msNavigationServiceProvider.saveItem('fuse.settings.emailTemplate', {
+            title      : 'Email Template',
+            state      : 'app.settings.emailTemplate',
+            stateParams: {'id': 13},
+            class      : 'navigation-dashboards project-dashboard',
+            
+            weight     : 13
         });
         
         /*

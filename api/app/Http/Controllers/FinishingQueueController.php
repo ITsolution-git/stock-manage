@@ -93,36 +93,6 @@ class FinishingQueueController extends Controller {
 
         $result = $this->finishingQueue->getFinishingdata($post);
 
-        /*foreach ($result['allData'] as $data) {
-            $inner_data = $this->finishingQueue->getFinishingByOrder($data->order_id);
-
-            foreach ($inner_data as $row) {
-                if($row->start_time != '00:00:00') {
-                    //$row->start_time = date('h:i A', strtotime($row->start_time));
-                    $start_time = explode(":", $row->start_time);
-                    $ampm = $start_time[0] >= 12 ? 'PM' : 'AM';
-                    $row->start_time = $row->start_time ." ". $ampm;
-                }
-                else {
-                    $row->start_time = '';   
-                }
-                if($row->end_time != '00:00:00') {
-                    //$row->end_time = date('h:i A', strtotime($row->end_time));
-                    $end_time = explode(":", $row->end_time);
-                    $ampm = $end_time[0] >= 12 ? 'PM' : 'AM';
-                    $row->end_time = $row->end_time ." ". $ampm;
-                }
-                else {
-                    $row->end_time = '';
-                }
-                if($row->est == '00:00:00') {
-                    $row->est = '';
-                }
-            }
-
-            $data->order_finishing = $inner_data;
-        }*/
-
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
@@ -146,21 +116,17 @@ class FinishingQueueController extends Controller {
         $post = Input::all();
         if(!empty($post['company_id']) && !empty($post['finishing_id']))
         {
-            $Position_scheduleData = $this->common->GetTableRecords('finishing_schedule',array('finishing_id'=>$post['finishing_id']));  // ADD FINISHING SCHECULE ENTRY IF NOT AND GET THAT RECORD
-            if(count($Position_scheduleData)==0)
-            {   
-                $this->common->InsertRecords('finishing_schedule',array('finishing_id'=>$post['finishing_id'],'is_active'=>1));
-                $Position_scheduleData = $this->common->GetTableRecords('finishing_schedule',array('finishing_id'=>$post['finishing_id']));
+            $Finishing_scheduleData = $this->common->GetTableRecords('finishing_schedule',array('finishing_id'=>$post['finishing_id']));  // ADD FINISHING SCHECULE ENTRY IF NOT AND GET THAT RECORD
+
+            if(!empty($Finishing_scheduleData))
+            {
+                $Finishing_scheduleData[0]->run_date = ($Finishing_scheduleData[0]->run_date=='0000-00-00')?'':date('m/d/Y',strtotime($Finishing_scheduleData[0]->run_date));
             }
-
-            $Position_scheduleData[0]->run_date = ($Position_scheduleData[0]->run_date=='0000-00-00')?'':date('m/d/Y',strtotime($Position_scheduleData[0]->run_date));
-
 
             $machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0));  // GET MACHINE FROM COMPANU
             $shift_data   = $this->common->GetTableRecords('company_shift',array('company_id'=>$post['company_id'],'is_delete'=>1)); // GET COMPANY SHIFT
-            
 
-            $data = array("success"=>1,"message"=>GET_RECORDS,"machine_data"=>$machine_data,'shift_data'=>$shift_data,'Position_scheduleData'=>$Position_scheduleData);
+            $data = array("success"=>1,"message"=>GET_RECORDS,"machine_data"=>$machine_data,'shift_data'=>$shift_data,'Finishing_scheduleData'=>$Finishing_scheduleData);
         }
         else
         {
@@ -271,5 +237,29 @@ class FinishingQueueController extends Controller {
             $data = array("success"=>0,"message"=>MISSING_PARAMS);
         }
         return response()->json(['data'=>$data]);
+    }
+
+    public function scheduleFinishing()
+    {
+        $post = Input::all();
+
+        $post['run_date'] = date('Y-m-d',strtotime($post['run_date']));
+
+        if(isset($post['id']))
+        {
+            $update_arr = array('machine_id' => $post['machine_id'], 'shift_id' => $post['shift_id'], 'run_date' => $post['run_date'], 'rush_job' => $post['rush_job']);
+            $this->common->UpdateTableRecords('finishing_schedule',array('id' => $post['id']),$update_arr);
+        }
+        else
+        {
+            $this->common->InsertRecords('finishing_schedule',$post);
+        }
+
+        $response = array(
+                            'success' => 1, 
+                            'message' => INSERT_RECORD
+                            );
+        
+        return response()->json(["data" => $response]);
     }
 }

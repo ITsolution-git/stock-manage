@@ -241,6 +241,17 @@ class Common extends Model {
                 
             }
         }
+        if($date_field=='checkbox')
+        {
+             foreach ($data as $key => $value) 
+            {
+                if(!empty($value))
+                {
+                    $data[$key] = ($value==true)?1:0;
+                }
+                
+            }
+        }
         if(isset($data['order_sns_status']))
         {
             $data['updated_date'] = CURRENT_DATETIME;

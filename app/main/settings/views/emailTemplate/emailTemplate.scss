@@ -1,0 +1,147 @@
+.trans-box {
+    md-input-container{
+        margin: 0
+    }
+    padding: 12px 13px;
+    width: 25%;
+    > div {
+        font-size: 14px;
+    }
+    > span{
+
+        color: #cccccc;
+        font-size: 12px;
+
+    }
+}
+.bg-grey{
+    background: #ccc;
+    color: #fff;
+    border-radius: initial;
+
+    width: 196px;
+}
+.info-order {
+    padding: 0;
+    .layout-row.md-default-theme {
+        margin: 0;
+    }
+    .f-52 {
+        font-size: 39px !important; 
+    }
+    .m-r-0{margin-right: 0 !important}
+
+}
+.order-info-page {
+    .dataTables_length{
+        display: none;
+    }
+    .dataTables_filter{
+        display: none
+    }
+    .bottom{
+        .left{display: none;}
+        .right{display: none;}
+
+    }
+    .top{
+        display: none;
+    }
+    .bottom{
+        display: none
+    }
+    th {
+        color: #6f6f6f;
+    }
+
+}
+.border-t-grey{
+    border-top: 1px solid rgba(0, 0, 0, 0.12)
+}
+.p-23{
+    padding: 23px;
+}
+.side-bar span{color: #777777;}
+button.dark-bg {
+    background: #999;
+    border-radius: initial;
+    span{
+        color: #fff !important;
+        font-size: 14px;
+    }
+}
+.content.order-info-page {
+    margin: 10px;
+    td{
+        padding: 0 24px !important;
+    }
+
+}
+.margin{margin: 10px}
+
+
+
+
+
+.m-l-20{margin-left:  20px !important;
+        md-card{
+            margin: 0 8px;
+            .card-box {
+                padding: 10px 0;
+            }
+
+        }
+
+
+}
+.m-l-20 md-card-title {
+    background: #eeeeee none repeat scroll 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 6px;
+}
+.text-left {
+    text-align: left !important;
+}
+.m-r-15{margin-right: 15px !important}
+.m-b-20{margin-bottom: 20px !important}
+.h2.semibold.f-52 {
+    font-size: 45px;
+}
+.m-l-20 md-card {
+    margin: 0;
+}
+.right-m-0{
+    margin-right: 0!important
+}
+.footer{background: #fff;   
+       position: relative;
+        width: 100%;
+        bottom: 0px;}
+.h2.text-semibold {
+    font-size: 17px !important;
+}
+.mr-top{margin-top: -17px}
+.font-18{font-size: 18px}
+md-card-content.recap > div:nth-child(7) span {
+    color: red;
+}
+.close-btn{  background: #fff none repeat scroll 0 0;
+    border: 1px solid #ddd;
+    min-width: 40px !important;
+    padding: 0 !important;
+    position: absolute;
+    right: 0;
+    top: -45px;
+    border-bottom: none;
+    border-radius: 0px !important
+}
+.slider {
+   
+    padding-top: 7px !important;
+}
+.mdslider md-slider{
+    margin-top: -13px
+    
+}

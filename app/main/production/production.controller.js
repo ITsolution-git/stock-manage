@@ -255,7 +255,40 @@
                     $scope.machine_data = result.data.machine_data;
                     $scope.shift_data = result.data.shift_data;
                     $scope.Position_scheduleData = result.data.Position_scheduleData;
-                    $scope.openEditPopup('production/view/schedule_position.html',$scope);
+                    
+                    $mdDialog.show({
+                        controller: function ($scope, params,position_id)
+                        {
+                            $scope.params = params;
+                            $scope.company_id = params.company_id;
+                            $scope.closeDialog = function() 
+                            {
+                                $mdDialog.hide();
+                            } 
+                            $scope.SaveSchedulePosition = function(data)
+                            {
+                                //console.log(data); return false;
+                                data.company_id = $scope.company_id;
+                                $http.post('api/public/production/SaveSchedulePosition',data).success(function(result) 
+                                {
+                                    $scope.closeDialog();
+                                    notifyService.notify(result.data.success,result.data.message);
+                                });
+                            }
+                        },
+                        controllerAs: 'vm',
+                        templateUrl: 'app/main/production/view/schedule_position.html',
+                        parent: angular.element($document.body),
+                        clickOutsideToClose: true,
+                        locals: 
+                        {
+                            params:$scope,
+                            position_id:position_id
+                        },
+                        onRemoving : $scope.reloadCallback
+                    });
+
+                    //$scope.openEditPopup('production/view/schedule_position.html',$scope);
 
                     //notifyService.notify('success',result.data.message);
                 }
@@ -371,6 +404,7 @@
                 {
                     $scope.PositionDetail = result.data.PositionDetail;
                     $scope.GarmentDetail = result.data.GarmentDetail;
+                    $scope.GetRuntimeData = result.data.GetRuntimeData;
                     $scope.openEditPopup('production/view/scheduleposition_popup.html',$scope);
                 }
                 else

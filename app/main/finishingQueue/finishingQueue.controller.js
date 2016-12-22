@@ -83,25 +83,19 @@
             sessionService.openEditPopup($scope,path,edit_params,'position_schedule');
         }
         
-        $scope.JobSchedualPopup = function (finishing_id)
+        $scope.JobSchedualPopup = function (ev,finishing_id)
         {
-            $("#ajax_loader").hide();
-            var companyData = {company_id:sessionService.get('company_id'),finishing_id:finishing_id};
-
-            $http.post('api/public/finishingQueue/GetShiftMachine',companyData).success(function(result) 
-            {
-                if(result.data.success=='1')
-                {
-                    $scope.machine_data = result.data.machine_data;
-                    $scope.shift_data = result.data.shift_data;
-                    $scope.Position_scheduleData = result.data.Position_scheduleData;
-                    $scope.openEditPopup('finishingQueue/dialogs/schedule_position.html',$scope);
+            $mdDialog.show({
+                controller: 'ScheduleFinishingController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/finishingQueue/dialogs/schedule_finishing.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    finishing_id: finishing_id,
+                    event: ev
                 }
-                else
-                {
-                    notifyService.notify('error',result.data.message);
-                }
-                $("#ajax_loader").hide();
             });
         }
     }
@@ -178,25 +172,19 @@
             sessionService.openEditPopup($scope,path,edit_params,'position_schedule');
         }
         
-        $scope.JobSchedualPopup = function (finishing_id)
+        $scope.JobSchedualPopup = function (ev,finishing_id)
         {
-            $("#ajax_loader").hide();
-            var companyData = {company_id:sessionService.get('company_id'),finishing_id:finishing_id};
-
-            $http.post('api/public/finishingQueue/GetShiftMachine',companyData).success(function(result) 
-            {
-                if(result.data.success=='1')
-                {
-                    $scope.machine_data = result.data.machine_data;
-                    $scope.shift_data = result.data.shift_data;
-                    $scope.Position_scheduleData = result.data.Position_scheduleData;
-                    $scope.openEditPopup('finishingQueue/dialogs/schedule_position.html',$scope);
+            $mdDialog.show({
+                controller: 'ScheduleFinishingController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/finishingQueue/dialogs/schedule_finishing.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    finishing_id: finishing_id,
+                    event: ev
                 }
-                else
-                {
-                    notifyService.notify('error',result.data.message);
-                }
-                $("#ajax_loader").hide();
             });
         }
     }
@@ -271,28 +259,6 @@
             // PATH WILL BE SET AFTER MAIN WITHOUT /
             var edit_params = {data:param,flag:'edit'};
             sessionService.openEditPopup($scope,path,edit_params,'position_schedule');
-        }
-        
-        $scope.JobSchedualPopup = function (finishing_id)
-        {
-            $("#ajax_loader").hide();
-            var companyData = {company_id:sessionService.get('company_id'),finishing_id:finishing_id};
-
-            $http.post('api/public/finishingQueue/GetShiftMachine',companyData).success(function(result) 
-            {
-                if(result.data.success=='1')
-                {
-                    $scope.machine_data = result.data.machine_data;
-                    $scope.shift_data = result.data.shift_data;
-                    $scope.Position_scheduleData = result.data.Position_scheduleData;
-                    $scope.openEditPopup('finishingQueue/dialogs/schedule_position.html',$scope);
-                }
-                else
-                {
-                    notifyService.notify('error',result.data.message);
-                }
-                $("#ajax_loader").hide();
-            });
         }
     }
     function FinishingBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter) 

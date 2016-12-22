@@ -147,7 +147,7 @@ class Production extends Model {
     {
 
        $positionInfo = DB::table('order_design_position as odp')
-                        ->select('ord.display_number as order_id','ord.name as order_name','cs.shift_name','odp.image_1','odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','mt2.value as production_type','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','ass.approval','ass.screen_active','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ass.screen_date, "%m/%d/%Y") as screen_date'),DB::raw('DATE_FORMAT(ass.production_date, "%m/%d/%Y") as production_date'),DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+                        ->select('ord.display_number as order_id','ord.name as order_name','cs.shift_name','odp.mark_as_complete','odp.image_1','odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','mt2.value as production_type','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','ass.approval','ass.screen_active','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ass.screen_date, "%m/%d/%Y") as screen_date'),DB::raw('DATE_FORMAT(ass.production_date, "%m/%d/%Y") as production_date'),DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'ps.rush_job','mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
                         ->leftjoin('order_design as od','odp.design_id','=','od.id')
                         ->leftjoin('orders as ord','ord.id','=','od.order_id')
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
@@ -336,4 +336,67 @@ class Production extends Model {
         return $ret_array;
     }
 
+    public function getRunspeed($position_id)
+    {
+        $result = DB::table('order_design_position as odp')
+                    ->select('od.run_rate')
+                    ->leftJoin('order_design as od','od.id','=','odp.design_id')
+                    ->where('odp.id','=',$position_id)
+                    ->get();
+        $ret = 1;    
+        if(!empty($result[0]->run_rate))
+        {
+            $ret = $result[0]->run_rate/100;
+        }            
+        return $ret;
+    }
+
+    public function getOrderImpression($position_id)
+    {
+        $result = DB::table('order_design_position as odp')
+                    ->select(DB::raw('SUM(pol.qnty_purchased) as impression'))
+                    ->leftJoin('order_design as od','od.id','=','odp.design_id')
+                    ->leftJoin('orders as ord','ord.id','=','od.order_id')
+                    ->leftJoin('purchase_order as po','ord.id','=','po.order_id')
+                    ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+                    ->where('odp.id','=',$position_id)
+                    ->get();
+        $ret = 0;    
+        if(!empty($result[0]->impression))
+        {
+            $ret = $result[0]->impression;
+        }            
+        return $ret;
+    }
+    public function getPositioncolors($position_id)
+    {
+        $result = DB::table('artjob_screensets as ass')
+                    ->select(DB::raw('COUNT(col.id) as totalcolors'))
+                    ->leftJoin('artjob_screencolors as col','ass.id','=','col.screen_id')
+                    ->where('ass.positions','=',$position_id)
+                    ->get();
+        $ret = 0;    
+        if(!empty($result[0]->totalcolors))
+        {
+            $ret = $result[0]->totalcolors;
+        }            
+        return $ret;
+    }
+
+    public function getfactor($orderSize,$company_id)
+    {
+        $result = DB::table('order_size_factor')
+                    ->where('company_id','=',$company_id)
+                    ->orderBy('order_size','ASC')
+                    ->get();
+        $ret = 1;                
+        foreach ($result as $key => $value) 
+        {
+            if($orderSize>=$value->order_size)
+            {
+                $ret= $value->factor;
+            }            
+        }
+        return $ret;
+    }
  }
