@@ -4,6 +4,7 @@
             <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
                 <div class="info-order" flex="100" ng-class="{'disable-click': role_slug != 'CA' && role_slug != 'FM'  }">
                     <md-card layout="row">
+
                     <md-card-content flex="50" layout="column"  >
                     <div class="attribute-box">
                         <table class="tbl-typ1">
@@ -28,7 +29,7 @@
                                 </td>
                                 
                                 <td class="text-center">
-                                    <a href="#" class="remove-size remove-attrribute" ng-click="removeIph(iph.id)"><span class="icon icon-close"></span></a>
+                                    <a href="#" class="remove-size remove-attrribute" ng-click="removeData(iph.id,'iph')"><span class="icon icon-close"></span></a>
                                 </td>
                             </tr>
                         </table>
