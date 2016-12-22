@@ -230,13 +230,16 @@ class ProductionController extends Controller {
     public function GetRuntimeData($position_id)
     {
     	$per_screen = 0.167; // 10 MINUTES
-    	echo "Runspeed at  ->".$per_screen;
     	$getRunspeed = $this->production->getRunspeed($position_id);
-    	echo "<br>  Runspeed at  ->".$getRunspeed;
     	$getOrderImpression = $this->production->getOrderImpression($position_id);
-    	echo "<br>  ORDER SIZE  ->".$getOrderImpression;
-    	echo $getPositioncolors = $this->production->getPositioncolors($position_id);
-    	echo "<br>  Colors  ->".$getPositioncolors;
+    	$getPositioncolors = $this->production->getPositioncolors($position_id);
+    	$iph = $this->common->GetTableRecords('position_schedule',array('position_id'=>$post['position_id']));
+
+    	echo "<br> Runspeed at ->".$getRunspeed*100;
+    	echo "<br> Order Size  ->".$getOrderImpression;
+    	echo "<br> Per screen  ->".$per_screen;
+    	echo "<br> Colors      ->".$getPositioncolors;
+
     	//$getIPH = $this->production->getIPH($position_id);
     }
 
