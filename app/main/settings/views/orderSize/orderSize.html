@@ -22,14 +22,17 @@
                                     <tr ng-repeat="(key,factorData) in allfactorData">
                                         <td class="">
                                             <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.order_size" ui-event="{ change : 'updateData(\'order_size\',factorData.id,factorData.order_size,\'order_size_factor\',\'id\')' }">
-                                            </md-input-container>
+                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.order_size"
+
+                                                ui-event="{ change : 'UpdateTableField(\'order_size\',factorData.order_size,\'order_size_factor\',\'id\',factorData.id)' }"
+
+                                             </md-input-container>
                                         </td>
 
 
                                         <td class="">
                                             <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.factor" ui-event="{ change : 'updateData(\'factor\',factorData.id,factorData.factor,\'order_size_factor\',\'id\')' }">
+                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.factor" ui-event="{ change : 'UpdateTableField(\'factor\',factorData.factor,\'order_size_factor\',\'id\',factorData.id)' }">
                                             </md-input-container>
                                         </td>
                                         

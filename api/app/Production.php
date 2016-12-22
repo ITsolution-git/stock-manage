@@ -383,4 +383,20 @@ class Production extends Model {
         return $ret;
     }
 
+    public function getfactor($orderSize,$company_id)
+    {
+        $result = DB::table('order_size_factor')
+                    ->where('company_id','=',$company_id)
+                    ->orderBy('order_size','ASC')
+                    ->get();
+        $ret = 1;                
+        foreach ($result as $key => $value) 
+        {
+            if($orderSize>=$value->order_size)
+            {
+                $ret= $value->factor;
+            }            
+        }
+        return $ret;
+    }
  }

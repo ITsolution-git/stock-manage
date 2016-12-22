@@ -833,4 +833,4 @@ Route::post('production/SchedualBoardweekData','ProductionController@SchedualBoa
 Route::post('production/SchedualBoardMachineData','ProductionController@SchedualBoardMachineData');
 Route::post('production/GetSchedulePositionDetail','ProductionController@GetSchedulePositionDetail');
 Route::post('production/SaveSchedulePosition','ProductionController@SaveSchedulePosition');
-Route::get('production/GetRuntimeData/{position_id}','ProductionController@GetRuntimeData');
+Route::get('production/GetRuntimeData/{position_id}/{company_id}','ProductionController@GetRuntimeData');

@@ -200,7 +200,8 @@ class ProductionController extends Controller {
 	    {
 	    	$PositionDetail= $this->production->GetPositionDetails($post['position_id'],$post['company_id']);
 	    	$GarmentDetail= $this->production->GetGarmentDetail($post['position_id'],$post['company_id']);
-			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail);
+	    	$GetRuntimeData= $this->GetRuntimeData($post['position_id'],$post['company_id']);
+			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail,'GetRuntimeData'=>$GetRuntimeData);
 	    }
 	    else
 	    {
@@ -227,19 +228,47 @@ class ProductionController extends Controller {
 
         return response()->json(['data'=>$data]);
     }
-    public function GetRuntimeData($position_id)
+    public function GetRuntimeData($position_id,$company_id)
     {
-    	$per_screen = 0.167; // 10 MINUTES
+    	$per_screen = 0.17; // 10 MINUTES
+    	$iph_value=1; // DEFAULT VALUE
     	$getRunspeed = $this->production->getRunspeed($position_id);
     	$getOrderImpression = $this->production->getOrderImpression($position_id);
     	$getPositioncolors = $this->production->getPositioncolors($position_id);
-    	$iph = $this->common->GetTableRecords('position_schedule',array('position_id'=>$post['position_id']));
+    	
+    	$factor = $this->production->getfactor($getOrderImpression,$company_id);
 
-    	echo "<br> Runspeed at ->".$getRunspeed*100;
+    	if($getPositioncolors>0)
+    	{
+	    	$iph = $this->common->GetTableRecords('iph',array('pos_no'=>$getPositioncolors,'company_id'=>$company_id));
+	    	if(isset($iph[0]->value))
+	    	{
+	    		$iph_value = $iph[0]->value;
+	    	}
+    	}
+    	$imps_adjusted = $iph_value * $factor * $getRunspeed;
+    	//$hrs_imps   = 1/$imps_adjusted;
+    	$hrs_imps= number_format((float)1/$imps_adjusted, 4, '.', '');
+    	$setup_time = $per_screen* $getPositioncolors;
+    	$run_speed = $imps_adjusted;
+    	$run_time = number_format((float)$getOrderImpression/$run_speed, 2, '.', '');
+    	$total_time = $setup_time+$run_time;
+
+
+    	/*echo "<br> Runspeed at ->".$getRunspeed*100;
     	echo "<br> Order Size  ->".$getOrderImpression;
     	echo "<br> Per screen  ->".$per_screen;
     	echo "<br> Colors      ->".$getPositioncolors;
-
+    	echo "<br> iph ->".$iph_value;
+		echo "<br> factor ->".$factor;
+		echo "<br> imps_adjusted->".$imps_adjusted;
+		echo "<br> Hrs of IMPS->".$hrs_imps;
+		echo "<br> Setup Time->".$setup_time;
+		echo "<br> Run speed>".$run_speed;
+		echo "<br> Run Time->".$run_time;
+		echo "<br> Total Time->".$total_time;*/
+		
+		return array('setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time);
     	//$getIPH = $this->production->getIPH($position_id);
     }
 
