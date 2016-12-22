@@ -43,19 +43,6 @@
                     $("#ajax_loader").hide();
                     $scope.unshippedProducts = result.data.unshippedProducts;
 
-                   /*if($scope.unshippedProducts.length == '0')
-                   {
-                        var UpdateArray = {};
-                        UpdateArray.table ='orders';
-                        UpdateArray.data = {shipping_status:3};
-                        UpdateArray.cond = {id:$scope.order_id};
-
-                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
-                        {
-                            
-                        });
-                   }*/
-
                    if($scope.address_id > 0)
                    {
                         var addr_arr = {};
@@ -171,16 +158,6 @@
             }
             if(productArr.distributed_qnty > 0)
             {
-                /*var UpdateArray = {};
-                UpdateArray.table ='orders';
-                UpdateArray.data = {shipping_status:2};
-                UpdateArray.cond = {id:$scope.order_id};
-
-                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
-                {
-                    
-                });*/
-
                 $("#ajax_loader").show();
 
                 var combine_array = {};
@@ -194,12 +171,17 @@
                     if(result.data.success == '1') {
                         $scope.shipOrder();
                     }
+                    else
+                    {
+                        var data = {"status": "error", "message": result.data.message}
+                        notifyService.notify(data.status, data.message);
+                    }
                     $("#ajax_loader").hide();
                 });
             }
             else
             {
-                var data = {"status": "error", "message": "Please enter valid qnty"}
+                var data = {"status": "error", "message": "Please enter valid quantity"}
                 notifyService.notify(data.status, data.message);
                 return false;
             }
@@ -274,20 +256,26 @@
 
         $scope.unAllocateProduct = function(product)
         {
-            //$("#ajax_loader").show();
-
-            $http.post('api/public/shipping/unAllocateProduct',product).success(function(result, status, headers, config) {
-                
-                if(result.success == '1') {
-                    $scope.shipOrder();
-                }
-                else
-                {
-                    var data = {"status": "error", "message": result.data.message}
-                    notifyService.notify(data.status, data.message);
-                }
-                $("#ajax_loader").hide();
-            });
+            if(product.distributed_qnty > 0)
+            {
+                $http.post('api/public/shipping/unAllocateProduct',product).success(function(result, status, headers, config) {
+                    
+                    if(result.success == '1') {
+                        $scope.shipOrder();
+                    }
+                    else
+                    {
+                        var data = {"status": "error", "message": result.message}
+                        notifyService.notify(data.status, data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please enter valid quantity"}
+                notifyService.notify(data.status, data.message);
+            }
         }
     }
 })();

@@ -1,7 +1,7 @@
-<!-- <div class="full-row pull-left rush-strip" style="width: 2%;">
+<div ng-show="params.PositionDetail[0].rush_job=='1'" class="full-row pull-left rush-strip" style="width: 2%;">
 		<span>Rush</span>
-</div>  rush-box -->
-<div class="inner-full-box ">
+</div>  
+<div class="inner-full-box"  ng-class="params.PositionDetail[0].rush_job==1 ?'rush-box':''">
 	<div flex=100 class="pull-left full-row">
 		<div flex=40 class="pull-left white-bg p-25 full-row mb-30">
 		<div class="scorecard">
@@ -54,10 +54,30 @@
 					<span class="pull-left">Machine Assigned To:</span>
 					<span class="pull-right text-right">{{params.PositionDetail[0].machine_name}}</span>
 				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Setup Time:</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.setup_time}}</span>
+				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Run Speed:</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.run_speed}}</span>
+				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Run Time:</span>
+					<span class="pull-right text-right">
+					{{params.GetRuntimeData.run_time}}</span>
+				</div>
+				<div class="pull-left full-row mb-20">
+					<span class="pull-left">Total Time:</span>
+					<span class="pull-right text-right">{{params.GetRuntimeData.total_time}}</span>
+				</div>
 
 				<div class="pull-left full-row">
-					<a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-camera"></i> photo approval</a>
-					<a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-check"></i> mark as complete</a>
+					<!-- <a  ng-click="getTab('photo')" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-camera"></i> photo approval</a> -->
+					<a href="#" id="mark_complete" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left" ui-event="{ click : 'UpdateTableData(\'mark_as_complete\',1,\'order_design_position\',\'id\',params.PositionDetail[0].position_id,\'\',\'mark_complete\')' }"><i class="fa fa-check"></i> 
+						<b ng-show="params.PositionDetail[0].mark_as_complete==0">mark as complete</b>
+						<b ng-show="params.PositionDetail[0].mark_as_complete==1">Completed</b>
+					</a>
 					<!-- <a href="#" class="stokkup-custom-btn1 stokkup-blue-btn text-white mr-10 mb-20 pull-left"><i class="fa fa-calendar"></i> completion schedule</a> -->
 					<a href="#" ng-click="closeDialog()" class="stokkup-custom-btn1 stokkup-blue-btn text-white mb-20 pull-left">
 					   Close</a>
@@ -245,7 +265,6 @@
 				                </md-card>
 	                        </div>
 		                    </md-tab>
-						
 						<md-tab label="Completion Schedule" ng-click="getTab('Schedule')">
 		            	
 		            	<div class="pull-left pt-20 full-row">
@@ -288,8 +307,11 @@
 
 							</div>
 
-						</div>
-
+		            	</md-tab>
+		            	<md-tab label="Photo Approval" ng-click="getTab('photo')">
+		            		<div>
+                           			<img ng-src="{{params.PositionDetail[0].image_1}}" alt="No Image"  >
+				            </div>
 		            	</md-tab>
 	            	</md-tabs>
 	            </div>	

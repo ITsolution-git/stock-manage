@@ -1,0 +1,47 @@
+<div class="main-design-page m-r-15 m-l-20">
+    <div class="header"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
+        </div>
+        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+            <div class="info-order" flex="100">
+                <form name="template_profile">
+                <md-card layout="row">
+                    <md-card-content flex="100" layout="column">
+                        <div class="title" layout-padding><span class="basicInfoStyle">TEMPLATE INFORMATION</span></div> 
+
+
+                        <div class="pull-right">
+                                <a class="pull-right common-header-links" ui-sref="app.settings.emailTemplate">BACK TO EMAIL TEMPLATE</a>
+                        </div>
+
+                        
+
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Display Name" name="name" ng-model="allTemplateData.label" required>
+                            <div ng-messages="template_profile.name.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+
+                       
+                      
+                       <textarea ui-tinymce="tinymceOptions" ng-model="allTemplateData.description"></textarea>
+                      
+
+
+                        <div class="title" layout-padding  ng-show="allow_access==1">
+                            <button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" ng-click="saveTemplate(allTemplateData)">
+                                SAVE
+                            </button>
+                        </div>
+                         
+                    </md-card-content>
+                    
+                </md-card>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

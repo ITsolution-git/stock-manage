@@ -84,6 +84,7 @@
             'angular-clipboard',
 
             // GOOGLE ADDRESS API
-            'vsGoogleAutocomplete'
+            'vsGoogleAutocomplete',
+            'ui.tinymce'
         ]);
 })();

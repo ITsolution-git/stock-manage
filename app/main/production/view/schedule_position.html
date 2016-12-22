@@ -29,7 +29,7 @@
 	        				<span class="machine-unit">capacity</span>
 	        			</div>
 	        			<div class="customChkbox md-raised">
-                            <input type="radio" ng-checked="shift.id==params.Position_scheduleData[0].shift_id" ng-value="shift.id" aria-label="true" name="shift_id" id="{{shift.id}}"  ui-event="{ click : 'UpdateTableData($event.target.name,shift.id,\'position_schedule\',\'id\',params.Position_scheduleData[0].id)' }"/>
+                            <input type="radio" ng-checked="shift.id==params.Position_scheduleData[0].shift_id" ng-value="shift.id" aria-label="true" name="shift_id" id="{{shift.id}}" ng-model="params.Position_scheduleData[0].shift_id" />
                             <label for="{{shift.id}}" class="form-control" style="font-size: 11px">Schedule for {{shift.shift_name}}</label>
                         </div>
 	        		</div>
@@ -49,18 +49,18 @@
 	                </md-input-container>
 	        	</div>
 	        	<div class="full-row pull-left">
+		        	<md-checkbox  ng-model="params.Position_scheduleData[0].rush_job" class="md-primary margin-0 p-l-20  ">
+	                    Mark as rush job
+	                </md-checkbox>
+
 	        	</div>
 	        	</div>
 			</md-dialog-content>
 
-			<!--  <md-dialog-actions layout="row" layout-align="end center">
-            
-                  <!--  <md-button ng-click="closeDialog()" class="md-primary md-hue-1 md-accent ">Save</md-button> -->
-                <!--  <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Cancel</md-button>
+			<md-dialog-actions layout="row" layout-align="end center">
+				 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white" ng-click="SaveSchedulePosition(params.Position_scheduleData[0])">Schedule</md-button>
+            </md-dialog-actions>
 
-                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Schedule</md-button> -->
-            
-        	<!-- </md-dialog-actions> --> 
     	</form>
 	</div>
 </md-dialog>

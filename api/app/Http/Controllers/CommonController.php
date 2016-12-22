@@ -152,6 +152,20 @@ class CommonController extends Controller {
  *     required=true,
  *     @SWG\Schema(ref="#/definitions/miscList")
  *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
  *  @SWG\Response(response=200, description="Miscdata Listing"),
  *  @SWG\Response(response="default", description="Miscdata Listing"),
  * )
