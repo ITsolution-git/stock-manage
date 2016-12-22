@@ -1,9 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
-
 require_once(app_path() . '/constants.php');
-
 use App\Product;
 use App\Common;
 use App\Order;
@@ -19,15 +16,12 @@ use DB;
 use Image;
 use Request;
 use Excel;
-
 class ProductController extends Controller {  
-
 /**
 * Create a new controller instance.      
 * @return void
 */
     public function __construct(Product $product,Common $common,Api $api,Order $order,Shipping $shipping) {
-
         parent::__construct();
         $this->product = $product;
         $this->common = $common;
@@ -35,21 +29,16 @@ class ProductController extends Controller {
         $this->order = $order;
         $this->shipping = $shipping;
     }
-
 /**
 * Product Listing controller        
 * @access public index
 * @return json data
 */
-
-
 /**
 * Product Listing controller        
 * @access public index
 * @return json data
 */
-
-
 /** 
  * @SWG\Definition(
  *      definition="productList",
@@ -67,7 +56,6 @@ class ProductController extends Controller {
  *      )
  *  )
  */
-
  /**
  * @SWG\Post(
  *  path = "/api/public/admin/product",
@@ -85,7 +73,6 @@ class ProductController extends Controller {
  *  @SWG\Response(response="default", description="Product Listing"),
  * )
  */
-
     public function index() {
         $post = Input::all();
         $result = $this->product->productList($post);
@@ -100,7 +87,6 @@ class ProductController extends Controller {
         
         return response()->json(["data" => $response]);
     }
-
 /**
 * Product Delete controller      
 * @access public delete
@@ -113,7 +99,6 @@ class ProductController extends Controller {
       
         if(!empty($post[0]))
         {
-
             $getData = $this->product->productDelete($post[0]);
             if($getData)
             {
@@ -133,9 +118,7 @@ class ProductController extends Controller {
         }
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
-
     }
-
 /**
 * Product Detail controller      
 * @access public detail
@@ -147,10 +130,7 @@ class ProductController extends Controller {
          $data = Input::all();
          
           $result = $this->product->productDetail($data);
-
-
           $result['product'][0]->all_url_photo = UPLOAD_PATH.$data['company_id'].'/product/'.$result["product"][0]->id.'/'.$result['product'][0]->photo;
-
            if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result['product']);
             } else {
@@ -158,36 +138,28 @@ class ProductController extends Controller {
             }
         
         return response()->json(["data" => $response]);
-
     }
-
 /**
 * Making the directory and given path     
 * @access public create_dir
 * @param  string $dir_path
 */
-
 public function create_dir($dir_path) {
-
         if (!file_exists($dir_path)) {
             mkdir($dir_path, 0777, true);
         } else {
            exec("chmod $dir_path 0777");
         }
     }
-
     public function getProductByVendor()
     {
         $post_all = Input::all();
         //print_r($post_all);exit;
         $records = array();
-
         $post = $post_all['cond']['params'];
-
         if(!isset($post['page']['page'])) {
              $post['page']['page']=1;
         }
-
         $post['range'] = 15;
         $post['start'] = ($post['page']['page'] - 1) * $post['range'];
         $post['limit'] = $post['range'];
@@ -198,15 +170,12 @@ public function create_dir($dir_path) {
         if(!isset($post['sorts']['sortBy'])) {
             $post['sorts']['sortBy'] = 'p.name';
         }
-
         $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'p.name';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
-
         $whereData = array();
         
         $whereData['vendor_id'] = $post['filter']['vendor_id'];
         $whereData['client_id'] = $post['filter']['client_id'];
-
         if($post['filter']['vendor_id'] != '')
         {
             if(isset($post['filter']['search']))
@@ -226,7 +195,6 @@ public function create_dir($dir_path) {
         {
             $whereData['size_id'] = $post['filter']['size_id'];
         }
-
         $data['where'] = $whereData;
         $data['paginate'] = $post;
         $data['fields'] = array();
@@ -234,7 +202,6 @@ public function create_dir($dir_path) {
         
         $result = $this->product->getVendorProducts($data);
         $count = (empty($result['count']))?'1':$result['count'];
-
         if(empty($result['count']))
         {
             $success = 0;
@@ -243,10 +210,8 @@ public function create_dir($dir_path) {
         {
             $success = 1;
         }
-
         //$count = $result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $count);
-
         
         if (count($result) > 0) {
             $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
@@ -254,12 +219,9 @@ public function create_dir($dir_path) {
            
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
-
-
         $data = array('header'=>$header,'rows' => $result['allData'],'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'category_filter' => $result['category_data'],'color_filter' => $result['color_data'],'size_filter' => $result['size_data'],'success'=>$success);
         return  response()->json($data);
     }
-
     public function productDetailData() {
  
         $data = Input::all();
@@ -274,10 +236,7 @@ public function create_dir($dir_path) {
         curl_setopt($curl,CURLOPT_USERPWD,$credential);
         $result = curl_exec($curl);
         curl_close($curl);
-
         $all_data = json_decode($result);
-
-
         if(empty($all_data))
         {
             $data_record = array("success"=>0,"message"=>"This product is no longer exists");
@@ -285,20 +244,16 @@ public function create_dir($dir_path) {
             return response()->json(["data" => $data_record]);
         }
        
-
         $allDetail = array();
         if($data['design_id'] != 0) {
             $allDetail = $this->product->getPurchaseDetail($data['design_product_id']);
         }
-
         
          
         foreach($all_data as $key => $data) {
-
          
          
         $color_data = $this->common->getColorId($data->colorName);
-
         if(empty($color_data))
         {
             $color_name = array(
@@ -315,26 +270,20 @@ public function create_dir($dir_path) {
                 );
             $result_color = $this->common->InsertRecords('color',$color_name);
             $color_data = $this->common->getColorId($data->colorName);
-
         }
-
             if(!empty($color_data))
             {
                 if($key == 0) {
                     $productAllData['colorSelection'] = $data->colorName;
                 }
-
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['color_id'] = $color_data[0]->id;
-
                 if(!isset($productAllData['colorData'][$data->colorName]['total'])) {
                     $productAllData['colorData'][$data->colorName]['total'] = 0;
                 }
-
                 if(!isset($productAllData['colorData'][$data->colorName]['total_qnty'])) {
                     $productAllData['colorData'][$data->colorName]['total_qnty'] = 0;
                 }
                 
-
                  
                 if(count($allDetail) > 0) {
                 
@@ -345,18 +294,13 @@ public function create_dir($dir_path) {
                 } else {
                     $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] = (int)0;
                 }
-
-
                   foreach ($data->warehouses as $warehouse_detail) {           
                         $productAllData['colorData'][$data->colorName]['sizes'][$key]['inventory'][$warehouse_detail->warehouseAbbr] = $warehouse_detail->qty;
                     }
-
                
                  
-
               //  $productAllData['colorData'][$data->colorName]['sizes'][$key]['warehouse'] = $warehouse;
                
-
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sizeName'] = $data->sizeName;
                 $productAllData['colorData'][$data->colorName]['sizes'][$key]['sku'] = $data->sku;
                 //$productAllData['colorData'][$data->colorName]['sizes'][$key]['caseQty'] = $data->caseQty;
@@ -367,11 +311,9 @@ public function create_dir($dir_path) {
                 $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
                 $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
                 $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
-
                 if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
                     $productAllData['colorData'][$data->colorName]['total'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] * $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'];
                 }
-
                 if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
                     $productAllData['colorData'][$data->colorName]['total_qnty'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'];
                 }
@@ -382,19 +324,14 @@ public function create_dir($dir_path) {
         return response()->json(["data" => $productAllData]);
     }
     
-
     public function getCustomProduct() {
-
        $post_all = Input::all();
         $records = array();
-
         $post = $post_all['cond']['params'];
         $post['company_id'] = $post_all['cond']['company_id'];
-
         if(!isset($post['page']['page'])) {
              $post['page']['page']=1;
         }
-
         $post['range'] = RECORDS_PER_PAGE;
         $post['start'] = ($post['page']['page'] - 1) * $post['range'];
         $post['limit'] = $post['range'];
@@ -405,50 +342,33 @@ public function create_dir($dir_path) {
         if(!isset($post['sorts']['sortBy'])) {
             $post['sorts']['sortBy'] = 'product.id';
         }
-
         $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'product.id';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
-
         $result = $this->product->getCustomProduct($post);
         
-
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
         $result['count'] = (empty($result['count']))?'1':$result['count'];
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
-
         $header = array(
                         0=>array('key' => 'product.id', 'name' => 'ID'),
                         1=>array('key' => 'product.name', 'name' => 'Name'),
                         2=>array('key' => 'v.name_company', 'name' => 'Vendor')
                         
                         );
-
-
             $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success' => $success);
         return  response()->json($data);
-
-
     }
-
     public function addProduct() {
-
         $post = Input::all();
-
-
         $post['created_date']=date('Y-m-d');
-
         /*$record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
         $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));*/
-
         $result = $this->product->addProduct($post);
-
         $order_data = $this->order->getOrderByDesign($post['id']);
-
         if($post['is_supply'] == 1)
         {
             $client_supplied_data = $this->common->GetTableRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
-
             if(empty($client_supplied_data))
             {
                 $this->common->InsertRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
@@ -458,17 +378,14 @@ public function create_dir($dir_path) {
         {
             $this->common->DeleteTableRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
         }
-
         $return = 1;
         $return = $this->orderCalculation($post['id']);
-
         if($post['action'] == 'Edit') {
             $message = 'Product updated successfully';
         }
         else{
             $message = 'Product added successfully';
         }
-
         if(is_array($return))
         {
             $data = array("success"=>0,"message"=>$message,"status"=>$return['status']);
@@ -480,19 +397,14 @@ public function create_dir($dir_path) {
             return response()->json(["data" => $data]);
         }
     }
-
     public function orderCalculation($design_id)
     {
         $order_data = $this->order->getOrderByDesign($design_id);
-
         $price_id = $order_data[0]->price_id;
         $order_id = $order_data[0]->id;
-
         $price_grid_data = $this->common->GetTableRecords('price_grid',array('status' => '1','id' => $price_id),array());
         $price_grid = $price_grid_data[0];
-
         $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
-
         if(!empty($design_product))
         {
             foreach ($design_product as $product) {
@@ -501,13 +413,10 @@ public function create_dir($dir_path) {
                 
                 $find = 'supplied';
                 $supplied = 0;
-
                 $product_name = strtolower($product_detail[0]->name);
-
                 if (strpos($product_name,$find) !== false || $product->is_supply > 0) {
                     $supplied = 1;
                 }
-
                 $total_qnty = 0;
                 $purchase_detail = array();
                 $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_product_id' => $product->id,'is_delete' => '1'),array());
@@ -515,18 +424,15 @@ public function create_dir($dir_path) {
                 foreach ($purchase_detail as $size) {
                     $total_qnty += $size->qnty;
                 }
-
                 $price_garment_mackup = $this->common->GetTableRecords('price_garment_mackup',array('price_id' => $price_id),array());
                 $price_screen_primary = $this->common->GetTableRecords('price_screen_primary',array('price_id' => $price_id),array());
                 $price_screen_secondary = $this->common->GetTableRecords('price_screen_secondary',array('price_id' => $price_id),array());
                 $price_direct_garment = $this->common->GetTableRecords('price_direct_garment',array('price_id' => $price_id),array());
                 $embroidery_switch_count = $this->common->GetTableRecords('embroidery_switch_count',array('price_id' => $price_id),array());
-
                 $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design_id,'is_delete' => '1','is_calculate'=>'1'),array());
                 $data = array();
                 $data['cond']['company_id'] = $order_data[0]->company_id;
                 $miscData = $this->common->getAllMiscDataWithoutBlank($data);
-
                 $color_stitch_count = 0;
                 $position_qty = 0;
                 $discharge_qnty = 0;
@@ -539,25 +445,14 @@ public function create_dir($dir_path) {
                 $press_setup_qnty = 0;
                 $screen_fees_qnty = 0;
                 $screen_fees_qnty_total = 0;
-
                 $print_charges = 0;
                 $os = 0;
                 $per_line_total = 0;
                 $total_screens = 0;
                 $total_press_setup = 0;
-
-                $avg_garment_cost = 0;
-                $avg_garment_price = 0;
-                $print_charges = 0;
-                $markup = 0;
-                $markup_default = 0;
-                $sales_total = 0;
-                $per_item = 0;
-
                 if(count($position_data) > 0)
                 {
                     foreach($position_data as $position) {
-
                         $color_stitch_count = $position->color_stitch_count;
                         $position_qty = $position_data[0]->qnty;
                         if($position_qty == 0 || $position_qty == '')
@@ -578,25 +473,19 @@ public function create_dir($dir_path) {
                         
                         
                         $screen_fees_qnty_total += $position->screen_fees_qnty;
-
                         $calc_descharge =  $discharge_qnty * $price_grid->discharge;
                         $calc_speciality =  $speciality_qnty * $price_grid->specialty;
                         $calc_foil =  $foil_qnty * $price_grid->foil;
-
                         $calc_ink_charge = $price_grid->ink_changes / $position_qty * $ink_charge_qnty;
                         $calc_number_on_dark = $price_grid->number_on_dark / $position_qty * $number_on_dark_qnty;
                         $calc_number_on_light = $price_grid->number_on_light / $position_qty * $number_on_light_qnty;
-
                         $calc_oversize =  $oversize_screens_qnty * $price_grid->over_size_screens;
                         $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
                         $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
-
                         $total_screens += $calc_screen_fees;
                         $total_press_setup += $calc_press_setup;
-
                         $calc_total = $calc_descharge + $calc_speciality + $calc_foil + $calc_ink_charge + $calc_number_on_dark + $calc_number_on_light;
                         $print_charges +=  $calc_total;
-
                         if($position->placement_type > 0)
                         {
                             $placement_type_id =  $position->placement_type;
@@ -607,7 +496,6 @@ public function create_dir($dir_path) {
                                 foreach($price_screen_primary as $primary) {
                                     
                                     $price_field = 'pricing_'.$color_stitch_count.'c';
-
                                     if($position_qty >= $primary->range_low && $position_qty <= $primary->range_high)
                                     {
                                         if(isset($primary->$price_field))
@@ -622,7 +510,6 @@ public function create_dir($dir_path) {
                                 foreach($price_screen_secondary as $secondary) {
                                     
                                     $price_field = 'pricing_'.$color_stitch_count.'c';
-
                                     if($position_qty >= $secondary->range_low && $position_qty <= $secondary->range_high)
                                     {
                                         if(isset($secondary->$price_field))
@@ -638,7 +525,6 @@ public function create_dir($dir_path) {
                                 foreach($embroidery_switch_count as $embroidery) {
                                     
                                     $price_field = 'pricing_'.$color_stitch_count.'c';
-
                                     if($color_stitch_count >= $embroidery->range_low_1 && $color_stitch_count <= $embroidery->range_high_1)
                                     {
                                         $switch_id = $embroidery->id;
@@ -690,11 +576,9 @@ public function create_dir($dir_path) {
                                         $embroidery_field = 'pricing_10c';
                                     }
                                 }
-
                                 if($switch_id > 0)
                                 {
                                     $price_screen_embroidery = $this->common->GetTableRecords('price_screen_embroidery',array('embroidery_switch_id' => $switch_id),array());
-
                                     foreach ($price_screen_embroidery as $embroidery2) {
                                         
                                         if($position_qty >= $embroidery2->range_low && $position_qty <= $embroidery2->range_high)
@@ -710,10 +594,8 @@ public function create_dir($dir_path) {
                                 {
                                     $dtg_size_id =  $position->dtg_size;
                                     $miscData['dir_to_garment_sz'][$dtg_size_id]->slug;
-
                                     $dtg_on_id = $position->dtg_on;
                                     $miscData['direct_to_garment'][$dtg_on_id]->slug;
-
                                     if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 17 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 16){
                                         $garment_field = 'pricing_1c';
                                     }
@@ -738,7 +620,6 @@ public function create_dir($dir_path) {
                                     else if($miscData['dir_to_garment_sz'][$dtg_size_id]->slug == 20 && $miscData['direct_to_garment'][$dtg_on_id]->slug == 15){
                                         $garment_field = 'pricing_8c';
                                     }
-
                                     foreach($price_direct_garment as $garment) {
                                         
                                         if($position_qty >= $garment->range_low && $position_qty <= $garment->range_high)
@@ -750,96 +631,85 @@ public function create_dir($dir_path) {
                             }
                         }
                     }
-                    if($product->markup > 0)
-                    {
-                        $markup = $product->markup;
-                    }
-                    else
-                    {
-                        $markup = 0;
-                    }
-
-                    $avg_garment_cost = 0;
-                    $markup_default = 0;
-                    if(count($price_garment_mackup) > 0 && $position_qty > 0)
-                    {
-                        foreach($price_garment_mackup as $value) {
-                            
-                            if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
-                            {
-                                $markup_default = $value->percentage;
-                            }
-                        }
-                    }
-
-                    $item_price = 0;
-                    $line_qty = 0;
-                    $unit_cost = 0;
-                    foreach($purchase_detail as $pd) {
-                        if($pd->qnty > 0)
+                }
+                if($product->markup > 0)
+                {
+                    $markup = $product->markup;
+                }
+                else
+                {
+                    $markup = 0;
+                }
+                $avg_garment_cost = 0;
+                $markup_default = 0;
+                if(count($price_garment_mackup) > 0 && $position_qty > 0)
+                {
+                    foreach($price_garment_mackup as $value) {
+                        
+                        if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
                         {
-                            $price = $pd->price;
-                            //$sum = $price + $price_grid->shipping_charge;
-                            $unit_cost += $price * $pd->qnty;
-                            $line_qty += $pd->qnty;
+                            $markup_default = $value->percentage;
                         }
                     }
-
-                    $total_shipping_charge = 0;
-                    if($price_grid->shipping_charge > 0)
+                }
+                $item_price = 0;
+                $line_qty = 0;
+                $unit_cost = 0;
+                foreach($purchase_detail as $pd) {
+                    if($pd->qnty > 0)
                     {
-                        $total_shipping_charge = $line_qty * $price_grid->shipping_charge;
+                        $price = $pd->price;
+                        //$sum = $price + $price_grid->shipping_charge;
+                        $unit_cost += $price * $pd->qnty;
+                        $line_qty += $pd->qnty;
                     }
-
-                    $avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
-
-                    if($supplied > 0)
-                    {
-                        $avg_garment_cost = 0;
-                    }
-
-                    if($markup > 0)
-                    {
-                        $garment_mackup = $markup/100;
-                    }
-                    else
-                    {
-                        $garment_mackup = $markup_default/100;
-                    }
-
-                    $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
-
-                    if($product->extra_charges > 0)
-                    {
-                        $extraCharges = $product->extra_charges;
-                    }
-                    else
-                    {
-                        $extraCharges = 0;
-                    }
-
-                    if($product->override > 0)
-                    {
-                        $per_item = $product->override;
-                    }
-                    else
-                    {
-                        $per_item = $avg_garment_price + $print_charges + $extraCharges;
-                    }
-                    
-                    $sales_total = $per_item * $line_qty;
+                }
+                $total_shipping_charge = 0;
+                if($price_grid->shipping_charge > 0)
+                {
+                    $total_shipping_charge = $line_qty * $price_grid->shipping_charge;
+                }
+                $avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
+                if($supplied > 0)
+                {
+                    $avg_garment_cost = 0;
+                }
+                if($markup > 0)
+                {
+                    $garment_mackup = $markup/100;
+                }
+                else
+                {
+                    $garment_mackup = $markup_default/100;
+                }
+                $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
+                if($product->extra_charges > 0)
+                {
+                    $extraCharges = $product->extra_charges;
+                }
+                else
+                {
+                    $extraCharges = 0;
+                }
+                if($product->override > 0)
+                {
+                    $per_item = $product->override;
+                }
+                else
+                {
+                    $per_item = $avg_garment_price + $print_charges + $extraCharges;
                 }
                 
+                $sales_total = $per_item * $line_qty;
                 $update_arr = array(
-                                        'avg_garment_cost' => round($avg_garment_cost,2),
-                                        'avg_garment_price' => round($avg_garment_price,2),
-                                        'print_charges' => round($print_charges,2),
-                                        'markup' => $markup,
-                                        'markup_default' => $markup_default,
-                                        'sales_total' => round($sales_total,2),
-                                        'total_line_charge' => round($per_item,2)
-                                        );
-
+                                    'avg_garment_cost' => round($avg_garment_cost,2),
+                                    'avg_garment_price' => round($avg_garment_price,2),
+                                    'print_charges' => round($print_charges,2),
+                                    'markup' => $markup,
+                                    'markup_default' => $markup_default,
+                                    'sales_total' => round($sales_total,2),
+                                    'total_line_charge' => round($per_item,2)
+                                    );
                 $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id,'product_id' => $product->product_id),$update_arr);
             }
         }
@@ -854,14 +724,11 @@ public function create_dir($dir_path) {
                                 'sales_total' => 0,
                                 'total_line_charge' => 0
                                 );
-
             $this->common->UpdateTableRecords('design_product',array('design_id' => $design_id),$update_arr);
         }
         
         $design_product_total = $this->order->getDesignTotal($order_id);
-
         $all_design = $this->common->GetTableRecords('order_design',array('order_id' => $order_id, 'is_delete' => '1'),array());
-
         $total_screens = 0;
         $total_press_setup = 0;
         $total_foil = 0;
@@ -871,13 +738,11 @@ public function create_dir($dir_path) {
         $total_number_on_light = 0;
         $total_discharge = 0;
         $total_speciality = 0;
-
         foreach ($all_design as $design) {
             
             $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $design->id,'is_delete' => '1'),array());
             
             foreach ($position_data as $row) {
-
                 $press_setup_qnty = $row->press_setup_qnty;
                 $screen_fees_qnty = $row->screen_fees_qnty;
                 $foil_qnty = $row->foil_qnty;
@@ -888,7 +753,6 @@ public function create_dir($dir_path) {
                 $discharge_qnty = $row->discharge_qnty;
                 $speciality_qnty = $row->speciality_qnty;
                 
-
                 $calc_press_setup =  $press_setup_qnty * $price_grid->press_setup;
                // $calc_screen_fees =  $screen_fees_qnty * $price_grid->screen_fees;
                 $calc_screen_fees =  ($screen_fees_qnty * $price_grid->screen_fees) + ($ink_charge_qnty * $price_grid->ink_changes);
@@ -899,7 +763,6 @@ public function create_dir($dir_path) {
                 $calc_number_on_light =  $number_on_light_qnty * $price_grid->number_on_light;
                 $calc_discharge =  $discharge_qnty * $price_grid->discharge;
                 $calc_speciality =  $speciality_qnty * $price_grid->specialty;
-
                 $total_screens += $calc_screen_fees;
                 $total_press_setup += $calc_press_setup;
                 $total_foil += $calc_foil;
@@ -911,14 +774,11 @@ public function create_dir($dir_path) {
                 $total_speciality += $calc_speciality;
             }
         }
-
         $order_charges_total =  $total_screens + $total_press_setup + $total_foil + $total_number_on_dark + $total_oversize_screens + $total_ink_charge + 
                                 $total_number_on_light + $total_discharge + $total_speciality + $order_data[0]->separations_charge + $order_data[0]->rush_charge + 
                                 $order_data[0]->distribution_charge + $order_data[0]->digitize_charge + $order_data[0]->shipping_charge +
                                 $order_data[0]->setup_charge + $order_data[0]->artwork_charge;
-
         $shipping = $this->shipping->getTotalShipCharge($order_id);
-
         if($shipping[0]->total > 0)
         {
             $item_shipping_charge = $shipping[0]->total;
@@ -927,9 +787,7 @@ public function create_dir($dir_path) {
         {
             $item_shipping_charge = 0;            
         }
-
         $order_total = $design_product_total + $order_charges_total + $item_shipping_charge - $order_data[0]->discount;
-
         if($order_data[0]->tax_rate > 0)
         {
             $tax = $order_total * $order_data[0]->tax_rate/100;
@@ -950,7 +808,6 @@ public function create_dir($dir_path) {
                 $tax_rate = $company_data[0]->tax_rate;
             }
         }
-
         if($tax == '')
         {
             $tax = 0;
@@ -958,7 +815,6 @@ public function create_dir($dir_path) {
         }
         $grand_total = $order_total + $tax;
         $balance_due = $grand_total - $order_data[0]->total_payments;
-
         $update_order_arr = array(
                                 'screen_charge' => $total_screens,
                                 'press_setup_charge' => $total_press_setup,
@@ -971,17 +827,13 @@ public function create_dir($dir_path) {
                                 'balance_due' => round($balance_due,2),
                                 'order_charges_total' => round($order_charges_total,2)
                                 );
-
         $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
         return true;
     }
-
      public function designProduct() {
  
         $data = Input::all();
         $result = $this->product->designProduct($data);
-
-
         if(empty($result))
         {
            $response = array(
@@ -990,8 +842,6 @@ public function create_dir($dir_path) {
                                 ); 
            return response()->json(["data" => $response]);
         }
-
-
             $response = array(
                                 'success' => 1, 
                                 'message' => GET_RECORDS,
@@ -1001,9 +851,7 @@ public function create_dir($dir_path) {
                                 );
         
         return response()->json(["data" => $response]);
-
     }
-
     public function deleteAddProduct()
     {
         $post = Input::all();
@@ -1016,7 +864,6 @@ public function create_dir($dir_path) {
             $this->common->DeleteTableRecords('purchase_detail',array('design_id' => $post['design_id'],'product_id' => $post['product_id']));
             //$this->common->DeleteTableRecords('order_item_mapping',array('design_id' => $post['design_id'],'product_id' => $post['product_id']));
             $order_data = $this->order->getOrderByDesign($post['design_id']);
-
             $message = DELETE_RECORD;
             $success = 1;
             
@@ -1029,9 +876,7 @@ public function create_dir($dir_path) {
         }
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
-
     }
-
     public function uploadCSV()
     {
         $post = Input::all();
@@ -1047,10 +892,7 @@ public function create_dir($dir_path) {
                 if($flag) { $flag = false; continue; }
                 
                 if($emapData[2] != '') {
-
                     if($emapData[0] != '') {
-
-
                            $vendor_data = $this->common->GetTableRecords('vendors',array('name_company' => trim($emapData[2]),'company_id' => $post['company_id']),array());
                            
                            if(count($vendor_data)>0) {
@@ -1066,7 +908,6 @@ public function create_dir($dir_path) {
                                   $result = $this->common->InsertRecords('vendors',$vendor_name);
                                   $vendor_id = $result;
                            }
-
                            $product_data = $this->common->GetTableRecords('products',array('name' => trim($emapData[0]),'company_id' => $post['company_id'],'vendor_id' => $vendor_id),array());
                            
                            if(count($product_data)>0) {
@@ -1139,17 +980,13 @@ public function create_dir($dir_path) {
             return redirect()->back();
         }
     }    
-
   }
-
-
     public function getProductDetailColorSize()
     {
         $post = Input::all();
         $result = $this->product->getProductDetailColorSize($post);
         return response()->json(["data" => $result]);
     }
-
      public function addcolorsize()
     {
         $post = Input::all();
@@ -1176,9 +1013,7 @@ public function create_dir($dir_path) {
         }
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
-
     }
-
     public function deleteSizeLink()
     {
         $post = Input::all();
@@ -1210,9 +1045,7 @@ public function create_dir($dir_path) {
         }
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
-
     }
-
     public function downloadCSV()
     {
             $path = base_path().'/'; // change the path to fit your websites document structure
@@ -1245,12 +1078,10 @@ public function create_dir($dir_path) {
             }
             fclose ($fd);
             exit;
-
     }
     public function checkSnsAuth()
     {
         $data = Input::all();
-
         if(isset($data['role_id']))
         {
             $result_api = $this->common->GetTableRecords('users',array('role_id'=>7));
@@ -1269,7 +1100,6 @@ public function create_dir($dir_path) {
         $result = curl_exec($curl);
         curl_close($curl);
         $response = json_decode($result);
-
         if(isset($response->message))
         {
             $data = array("success"=>0);
@@ -1284,7 +1114,6 @@ public function create_dir($dir_path) {
     {
         $data = Input::all();
         $count = $this->product->getProductCountByVendor($data['vendor_id']);
-
         if($count > 0)
         {
             $success = 1;
@@ -1301,7 +1130,6 @@ public function create_dir($dir_path) {
     {
         $data = Input::all();
         $result = $this->product->getVendorByProductCount($data['company_id']);
-
         if($result)
         {
             $success = 1;
@@ -1328,7 +1156,6 @@ public function create_dir($dir_path) {
     {
         $data = Input::all();
         $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $data['design_id'],'product_id' => $data['product_id'],'is_delete' => '1'),array());
-
         if(!empty($design_product))
         {
             $success = 1;
@@ -1340,16 +1167,13 @@ public function create_dir($dir_path) {
         $data = array("success"=>$success,"records"=>$design_product);
         return response()->json(['data'=>$data]);
     }
-
     public function findTotal() {
-
         $post = Input::all();
        
         $total = 0;
         $total_qnty = 0;
         
         foreach($post['productData'] as $key => $data) {
-
              if(isset($data['qnty'])) {
                 $total += $data['customerPrice'] * $data['qnty'];
                 $total_qnty += $data['qnty'];
@@ -1357,28 +1181,21 @@ public function create_dir($dir_path) {
              
         }
         
-
         $data = array("success"=>1,"message"=>'Data',"total"=>$total,"total_qnty"=>$total_qnty);
         return response()->json(["data" => $data]);
         
     }
-
      public function downloadCustomProductCSV()
     {
         $post = Input::all();
-
         $data = $this->product->productListDownload($post['company_id']);
         $array = json_decode(json_encode($data), True);
        // print_r($array);exit;
         return Excel::create('custom_product', function($excel) use ($array) {
-
             $excel->sheet('mySheet', function($sheet) use ($array)
-
             {
                 $sheet->fromArray($array);
             });
-
         })->download($post['type']);
-
     }
 }
