@@ -12,8 +12,7 @@ require_once(app_path() . '/constants.php');
  *      @SWG\Contact(name="codal api team", url="http://104.236.31.186/"),
  *      @SWG\License(name="Codal Systems", url="http://104.236.31.186/")
  *      ),
- *      host="localhost",
- *      basePath = "/stokkup",
+ *      host="localhost.stokkup.com",
  *      consumes = {"application/json", "multipart/form-data"}
  * )
  * 

@@ -57,6 +57,20 @@ class MiscController extends Controller {
  *     required=true,
  *     @SWG\Schema(ref="#/definitions/miscSave")
  *  ),
+ *      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
  *  @SWG\Response(response=200, description="Misc save data"),
  *  @SWG\Response(response="default", description="Misc save data"),
  * )
@@ -70,7 +84,7 @@ class MiscController extends Controller {
           $result = $this->misc->miscSave($data);
          
           if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
+            $response = array('success' => 1, 'message' => UPDATE_RECORD,'records' => $result);
         } 
         
         return response()->json(["data" => $response]);

@@ -136,7 +136,7 @@
                         $scope.invoice_display_number = result.data.display_number;
 
                         $mdDialog.hide();
-                        $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
+                        //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
 
                          if($scope.invoice == true && $scope.qb == true) {
 
