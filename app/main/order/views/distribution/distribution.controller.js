@@ -101,10 +101,12 @@
 
             var combine_array_id = {};
             combine_array_id.order_id = $scope.order_id;
+            $scope.controls = [];
 
             $http.post('api/public/distribution/getDistProductAddress',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.success == '1') {
+                    $scope.controls = [{}];
                    $scope.products = result.products;
                    $scope.distribution_address = result.distribution_address;
                 }
@@ -223,6 +225,10 @@
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
+                if(name == 'shipping_type_id')
+                {
+                    $scope.getDistProductAddress();
+                }
             });
         }
     }
