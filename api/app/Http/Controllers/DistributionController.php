@@ -39,9 +39,23 @@ class DistributionController extends Controller {
 
         $distribution_address = array();
         $client_distaddress = array();
+        
         foreach ($dist_addr as $addr) {
+        
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
             $distribution_address[] = $addr;
+            if($addr->shipping_type_id == 1)
+            {
+                $addr->method_arr = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => 1),array());
+            }
+            else if($addr->shipping_type_id == 2)
+            {
+                $addr->method_arr = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => 2),array());
+            }
+            else
+            {
+                $addr->method_arr = array();   
+            }
         }
 
         $products = $this->distribution->getAllDustributionProducts($post_all['order_id']);
