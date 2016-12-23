@@ -268,7 +268,7 @@ class ProductionController extends Controller {
 		echo "<br> Run Time->".$run_time;
 		echo "<br> Total Time->".$total_time;*/
 		
-		return array('setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time);
+		return array('setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time,'getOrderImpression'=>$getOrderImpression);
     	//$getIPH = $this->production->getIPH($position_id);
     }
 
