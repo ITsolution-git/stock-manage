@@ -165,10 +165,12 @@
                                                         <md-option value="3" ng-selected="distlocation.shipping_type_id == 3">Local Messenger</md-option>
                                                     </md-select>
                                                 </td>
-                                                <td>
-                                                    <md-select ng-model="distlocation.shipping_method_id" placeholder="Shipping Method" class="mt-2 mb-0" name="shipping_method_id">
-                                                        <md-option ng-repeat="method in distlocation.method_arr" ng-value="method.method_value">{{method.method_name}}</md-option>
-                                                    </md-select>
+                                                 <td>
+                                                    <div ng-repeat="control in controls">
+                                                        <md-select ng-model="distlocation.shipping_method_id" placeholder="Shipping Method" class="mt-2 mb-0" name="shipping_method_id" ng-change="updateOrderShippingType('shipping_method_id',distlocation.shipping_method_id,distlocation.order_adress_id)">
+                                                            <md-option ng-selected="distlocation.shipping_method_id==method.method_value" ng-repeat="method in distlocation.method_arr" ng-value="method.method_value">{{method.method_name}}</md-option>
+                                                        </md-select>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody> 

@@ -208,7 +208,21 @@ class ShippingController extends Controller {
 
                     for ($i=1; $i <= $main_qty; $i++) {
                         
-                        $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
+                        if($remaining_qty == 0)
+                        {
+                            $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
+                        }
+                        if($remaining_qty > 0)
+                        {
+                            if($i==$main_qty)
+                            {
+                                $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $remaining_qty);
+                            }
+                            else
+                            {
+                                $insert_data = array('shipping_id' => $value['shipping_id'], 'box_qnty' => $value['max_pack']);
+                            }
+                        }
                         $id = $this->common->InsertRecords('shipping_box',$insert_data);
                         $this->common->InsertRecords('box_product_mapping',array('box_id' => $id,'item_id' => $value['id']));
                     }
@@ -296,6 +310,9 @@ class ShippingController extends Controller {
             $message = MISSING_PARAMS;
             $success = 0;
         }
+
+
+
         $data = array("success"=>$success,"message"=>$message);
         return response()->json(['data'=>$data]);
     }
@@ -736,13 +753,15 @@ class ShippingController extends Controller {
 
          if(empty($shippingBoxes))
             {
-                  $response = array(
-                        'success' => 0, 
-                        'message' => "No Records Found",
-                        'shippingBoxes' => '',
-                        'total_box_qnty' => ''
-                    ); 
-                   return response()->json(["data" => $response]);
+                $shipping = $this->common->GetTableRecords('shipping',array('id' => $post['shipping_id']));
+                $this->common->UpdateTableRecords('orders',array('id' => $shipping[0]->order_id),array('shipping_status' => '1'));
+                $response = array(
+                    'success' => 0, 
+                    'message' => "No Records Found",
+                    'shippingBoxes' => '',
+                    'total_box_qnty' => ''
+                ); 
+               return response()->json(["data" => $response]);
             }
 
 
