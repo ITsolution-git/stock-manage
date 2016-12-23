@@ -150,7 +150,7 @@
 			//console.log(role);
 			if(role=='SA')
 			{
-				var ret_array = ['settings','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','client','order'];
+				var ret_array = ['settings','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','client','order','productionlist','finishingQueue'];
 				hide_menu(ret_array);
 			}
 			else if(role=='CA')
