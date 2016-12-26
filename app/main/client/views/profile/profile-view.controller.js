@@ -68,6 +68,7 @@
                 {   
                     vm.Response = result.data.records;
                     $scope.client_id = vm.Response.clientDetail.client_id;
+                    $scope.createdby_id = vm.Response.clientDetail.login_id;
                     $scope.mainaddress = vm.Response.clientDetail.address;
                     $scope.salesDetails =vm.Response.clientDetail.sales;
                     $scope.maincompcontact =vm.Response.clientDetail.contact;
@@ -86,6 +87,8 @@
                     $scope.Distribution_address= vm.Response.Distribution_address.result;
                     $scope.documents= vm.Response.documents;
                     $scope.companyUsers = vm.Response.companyUsers;
+
+                    if($scope.role_slug=='SM' && $scope.createdby_id!=$scope.login_id){$scope.allow_access = 0;} // Salesman can edit own record
                 }
                 $("#ajax_loader").hide();
             });
