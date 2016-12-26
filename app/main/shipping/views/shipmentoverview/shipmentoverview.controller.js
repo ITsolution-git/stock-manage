@@ -25,7 +25,11 @@
 
         var company_id = sessionService.get('company_id');
 
-        $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+
+         var combine_array_id = {};
+        combine_array_id.company_id = sessionService.get('company_id');
+
+        $http.post('api/public/common/getCompanyDetail',combine_array_id).success(function(result) {
                             
             if(result.data.success == '1') 
             {

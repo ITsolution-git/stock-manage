@@ -837,6 +837,54 @@ public function create_dir($dir_path) {
         $this->common->UpdateTableRecords('orders',array('id' => $order_id),$update_order_arr);
         return true;
     }
+
+
+    /** 
+ * @SWG\Definition(
+ *      definition="designProduct",
+ *      type="object",
+ *
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/product/designProduct",
+ *  summary = "Design Product",
+ *  tags={"Order"},
+ *  description = "Design Product",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Design Product",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/designProduct")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Design Product"),
+ *  @SWG\Response(response="default", description="Design Product"),
+ * )
+ */
+
      public function designProduct() {
  
         $data = Input::all();
@@ -1133,6 +1181,55 @@ public function create_dir($dir_path) {
         $data = array("success"=>$success);
         return response()->json(['data'=>$data]);
     }
+
+
+    /** 
+ * @SWG\Definition(
+ *      definition="vendorProduct",
+ *      type="object",
+ *     
+ *     
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *          )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/product/getVendorByProductCount",
+ *  summary = "Vendor Product Count",
+ *  tags={"Order"},
+ *  description = "Vendor Product Count",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Vendor Product Count",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/vendorProduct")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Vendor Product Count"),
+ *  @SWG\Response(response="default", description="Vendor Product Count"),
+ * )
+ */
+
+
     public function getVendorByProductCount()
     {
         $data = Input::all();

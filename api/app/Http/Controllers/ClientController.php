@@ -236,6 +236,57 @@ class ClientController extends Controller {
         return  response()->json($data);
     }
 
+
+    /** 
+ * @SWG\Definition(
+ *      definition="clientFilterData",
+ *      type="object",
+ *     
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         )
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/client/getClientFilterData",
+ *  summary = "Client Filter Data",
+ *  tags={"Order"},
+ *  description = "Client Filter Data",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Client Filter Data",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/clientFilterData")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Client Filter Data"),
+ *  @SWG\Response(response="default", description="Client Filter Data"),
+ * )
+ */
+
     public function getClientFilterData()
     {
     	$post = Input::all();

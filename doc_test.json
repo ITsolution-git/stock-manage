@@ -100,6 +100,90 @@
                 }
             }
         },
+        "/api/public/product/designProduct": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Design Product",
+                "description": "Design Product",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Design Product",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/designProduct"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Design Product"
+                    },
+                    "default": {
+                        "description": "Design Product"
+                    }
+                }
+            }
+        },
+        "/api/public/product/getVendorByProductCount": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Vendor Product Count",
+                "description": "Vendor Product Count",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Vendor Product Count",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vendorProduct"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Vendor Product Count"
+                    },
+                    "default": {
+                        "description": "Vendor Product Count"
+                    }
+                }
+            }
+        },
         "/api/public/labor/laborDetail": {
             "post": {
                 "tags": [
@@ -142,8 +226,22 @@
                         "description": "Order Listing",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/OrderList"
+                            "$ref": "#/definitions/orderList"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
                     }
                 ],
                 "responses": {
@@ -170,8 +268,22 @@
                         "description": "Order Detail",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/OrderDetail"
+                            "$ref": "#/definitions/orderDetail"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
                     }
                 ],
                 "responses": {
@@ -282,6 +394,20 @@
                         "schema": {
                             "$ref": "#/definitions/addOrder"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
                     }
                 ],
                 "responses": {
@@ -290,6 +416,347 @@
                     },
                     "default": {
                         "description": "Add Order"
+                    }
+                }
+            }
+        },
+        "/api/public/order/addDesign": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Add Design",
+                "description": "Add Design",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add Design",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/addDesign"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Add Design"
+                    },
+                    "default": {
+                        "description": "Add Design"
+                    }
+                }
+            }
+        },
+        "/api/public/order/designListing": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Design Listing",
+                "description": "Design Listing",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Design Listing",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/designListing"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Design Listing"
+                    },
+                    "default": {
+                        "description": "Design Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/order/designDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Design Detail",
+                "description": "Design Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Design Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/designDetail"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Design Detail"
+                    },
+                    "default": {
+                        "description": "Design Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/getDesignPositionDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Design Position Detail",
+                "description": "Design Position Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Design Position Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/orderDesignPosition"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Design Position Detail"
+                    },
+                    "default": {
+                        "description": "Design Position Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/calculateAll/{order_id}/{company_id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Calculation",
+                "description": "Order Calculation",
+                "parameters": [
+                    {
+                        "name": "order_id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "company_id",
+                        "in": "path",
+                        "description": "Company ID",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Calculation"
+                    },
+                    "default": {
+                        "description": "Order Calculation"
+                    }
+                }
+            }
+        },
+        "/api/public/order/addPosition": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Add Position",
+                "description": "Add Position",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Add Position",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/addPosition"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Add Position"
+                    },
+                    "default": {
+                        "description": "Add Position"
+                    }
+                }
+            }
+        },
+        "/api/public/order/GetAllClientsLowerCase": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get All Client",
+                "description": "Get All Client",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get All Client",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/allClient"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get All Client"
+                    },
+                    "default": {
+                        "description": "Get All Client"
+                    }
+                }
+            }
+        },
+        "/api/public/order/GetAllClientsAddress": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get All Client Address",
+                "description": "Get All Client Address",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Get All Client Address",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/allClientAddre3ss"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Get All Client Address"
+                    },
+                    "default": {
+                        "description": "Get All Client Address"
                     }
                 }
             }
@@ -364,6 +831,88 @@
                 }
             }
         },
+        "/api/public/common/getAllMiscDataWithoutBlank": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Miscdata Listing Without Blank Data",
+                "description": "Miscdata Listing Without Blank Data",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Miscdata Listing Without Blank Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/miscListWithoutBlank"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Miscdata Listing"
+                    },
+                    "default": {
+                        "description": "Miscdata Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/common/getStaffList/{id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Staff List",
+                "description": "Staff List",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Staff List",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Staff List"
+                    },
+                    "default": {
+                        "description": "Staff List"
+                    }
+                }
+            }
+        },
         "/api/public/common/InsertRecords": {
             "post": {
                 "tags": [
@@ -430,6 +979,48 @@
                     },
                     "default": {
                         "description": "All Update"
+                    }
+                }
+            }
+        },
+        "/api/public/common/getCompanyDetail": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Company Detail",
+                "description": "Company Detail",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Company Detail",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/companyDetail"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Company Detail"
+                    },
+                    "default": {
+                        "description": "Company Detail"
                     }
                 }
             }
@@ -532,6 +1123,48 @@
                 }
             }
         },
+        "/api/public/common/GetMiscApprovalData": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Misc Approval Data",
+                "description": "Misc Approval Data",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Misc Approval Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/miscListApproval"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Misc Approval Data"
+                    },
+                    "default": {
+                        "description": "Misc Approval Data"
+                    }
+                }
+            }
+        },
         "/api/public/admin/vendor": {
             "post": {
                 "tags": [
@@ -556,6 +1189,48 @@
                     },
                     "default": {
                         "description": "Vendor Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/affiliate/getAffiliateData": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Affiliate Data",
+                "description": "Affiliate Data",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Affiliate Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/affiliateData"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Affiliate Data"
+                    },
+                    "default": {
+                        "description": "Affiliate Data"
                     }
                 }
             }
@@ -680,6 +1355,48 @@
                     },
                     "default": {
                         "description": "Client Listing"
+                    }
+                }
+            }
+        },
+        "/api/public/client/getClientFilterData": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Client Filter Data",
+                "description": "Client Filter Data",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Client Filter Data",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/clientFilterData"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Client Filter Data"
+                    },
+                    "default": {
+                        "description": "Client Filter Data"
                     }
                 }
             }
@@ -886,6 +1603,28 @@
             },
             "type": "object"
         },
+        "designProduct": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "vendorProduct": {
+            "required": [
+                "company_id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
         "laborDetail": {
             "required": [
                 "company_id",
@@ -901,21 +1640,28 @@
             },
             "type": "object"
         },
-        "OrderList": {
+        "orderList": {
             "properties": {
                 "cond": {
-                    "required": [
-                        "client_id"
-                    ],
                     "properties": {
-                        "client_id": {
-                            "type": "integer"
-                        },
                         "company_id": {
                             "type": "integer"
                         },
-                        "sales_id": {
-                            "type": "integer"
+                        "params": {
+                            "properties": {
+                                "page": {
+                                    "properties": {
+                                        "count": {
+                                            "type": "integer"
+                                        },
+                                        "page": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            },
+                            "type": "object"
                         }
                     },
                     "type": "object"
@@ -923,9 +1669,8 @@
             },
             "type": "object"
         },
-        "OrderDetail": {
+        "orderDetail": {
             "required": [
-                "company_id",
                 "id"
             ],
             "properties": {
@@ -970,16 +1715,30 @@
         },
         "addOrder": {
             "properties": {
+                "addressModel": {
+                    "type": "object"
+                },
                 "orderData": {
                     "required": [
-                        "client_id"
+                        "client_company"
                     ],
                     "properties": {
-                        "client_id": {
-                            "type": "integer"
-                        },
-                        "job_name": {
+                        "client_company": {
                             "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "client": {
+                            "properties": {
+                                "client_company": {
+                                    "type": "string"
+                                },
+                                "client_id": {
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
                         }
                     },
                     "type": "object"
@@ -988,6 +1747,129 @@
                     "type": "integer"
                 },
                 "login_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "addDesign": {
+            "properties": {
+                "designData": {
+                    "required": [
+                        "client_company"
+                    ],
+                    "properties": {
+                        "design_name": {
+                            "type": "string"
+                        },
+                        "colors_count": {
+                            "type": "string"
+                        },
+                        "company_id": {
+                            "type": "integer"
+                        },
+                        "order_id": {
+                            "type": "integer"
+                        },
+                        "run_rate": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "designListing": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "designDetail": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "orderDesignPosition": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "addPosition": {
+            "properties": {
+                "positionData": {
+                    "required": [
+                        "position_id"
+                    ],
+                    "properties": {
+                        "position_id": {
+                            "type": "integer"
+                        },
+                        "placement_type": {
+                            "type": "integer"
+                        },
+                        "qnty": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "company_id": {
+                    "type": "integer"
+                },
+                "design_id": {
+                    "type": "integer"
+                },
+                "order_id": {
+                    "type": "integer"
+                },
+                "position": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "allClient": {
+            "required": [
+                "company_id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "allClientAddre3ss": {
+            "required": [
+                "client_id"
+            ],
+            "properties": {
+                "client_id": {
                     "type": "integer"
                 }
             },
@@ -1010,6 +1892,22 @@
             "type": "object"
         },
         "miscList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "miscListWithoutBlank": {
             "properties": {
                 "cond": {
                     "required": [
@@ -1073,6 +1971,17 @@
                 },
                 "table": {
                     "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "companyDetail": {
+            "required": [
+                "company_id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -1167,6 +2076,26 @@
             },
             "type": "object"
         },
+        "miscListApproval": {
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "is_delete": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "integer"
+                },
+                "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "vendorList": {
             "properties": {
                 "cond": {
@@ -1179,6 +2108,20 @@
                         }
                     },
                     "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "affiliateData": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
                 }
             },
             "type": "object"
@@ -1215,6 +2158,22 @@
             "type": "object"
         },
         "clientList": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "company_id"
+                    ],
+                    "properties": {
+                        "company_id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "clientFilterData": {
             "properties": {
                 "cond": {
                     "required": [
