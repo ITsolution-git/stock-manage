@@ -114,9 +114,13 @@
                                                     </md-card-content>
                                                 </div>
                                                 <div flex="20" class="pull-left mt-20 text-center">
-                                                    <md-button ng-show="allow_access==1" class="md-raised stokkup-custom-btn1 bg-grey mb-15" 
-                                                    ng-click="createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
-                                                    <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_display})">View Screen</md-button>
+                                                    <div class="pull-left box-layout-2 text-center">
+                                                        <md-button ng-show="allow_access==1" class="md-raised stokkup-custom-btn1 bg-grey mb-15" 
+                                                        ng-click="createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
+                                                    </div>
+                                                    <div class="pull-left box-layout-2 text-center">
+                                                        <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_display})">View Screen</md-button>
+                                                    </div>
                                                 </div>
                                                 <div flex=5 layout="row" dnd-handle class="dragiconscenter">
                                                     <span class="icon icon-menu fs22"></span>

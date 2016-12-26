@@ -1109,7 +1109,7 @@ class ShippingController extends Controller {
 
                 $response = $shipment->submitShipment();
 
-                echo $shipment->debug();exit;
+//                echo $shipment->debug();exit;
 
                 if(isset($response) && isset($response['error']))
                 {
