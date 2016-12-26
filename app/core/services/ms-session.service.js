@@ -175,7 +175,7 @@
 			}
 			else if(role=='SM')
 			{
-				var ret_array = ['settings','admin','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','order'];
+				var ret_array = ['admin'];
 				hide_menu(ret_array);
 			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
