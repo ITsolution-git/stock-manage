@@ -12,6 +12,9 @@
         var vm = this;
         $scope.display_number = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.role_slug = sessionService.get('role_slug');
+        $scope.allow_access=1;
 
         var misc_list_data = {};
         var condition_obj = {};
@@ -34,6 +37,8 @@
                     $scope.po_id = $scope.po_data.po_id;
                     $scope.poline = result.data.records.poline;
                     $scope.order_total = result.data.records.order_total[0];
+                    
+                    if($scope.role_slug=='SM' && $scope.user_id!=$scope.po_data.login_id){$scope.allow_access = 0;} // Salesman can edit own record
                 }
                 else
                 {
@@ -49,7 +54,7 @@
         $scope.changeLinedata = function (line_id,qnty_ordered,unit_price,qnty,ev)
         {
         
-
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -114,6 +119,7 @@
         $scope.changeDropship = function (vendor_instruction,ev)
         {
         
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -163,7 +169,7 @@
         }
         $scope.changeVendorcharge = function (vendor_charge,ev)
         {
-        
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -216,7 +222,7 @@
         $scope.changePoData = function (ev)
         {
         
-
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -296,6 +302,7 @@
         };
          $scope.CreateRo = function(po_id,extra)
          {
+            if($scope.allow_access==0){return false;}
             if(extra=='0')
             {
                 var UpdateArray = {};
@@ -327,6 +334,7 @@
 
         $scope.updateOrderStatus = function(name,value,id)
         {
+            if($scope.allow_access==0){return false;}
             var order_main_data = {};
 
             order_main_data.table ='orders';
@@ -362,7 +370,7 @@
 
         $scope.openClientEmailPopup = function(ev)
         {
-            
+            if($scope.allow_access==0){return false;}
             $mdDialog.show({
                 controller: function ($scope, params)
                 {

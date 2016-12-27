@@ -15,6 +15,7 @@
             $mdOpenMenu(ev);
         };
         $scope.company_id = sessionService.get('company_id');
+        $scope.user_id = sessionService.get('user_id');
         
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
@@ -83,7 +84,7 @@
     	}
     	$scope.openInsertPopup = function(ev, settings)
         {
-            var Insert_params = {company_id:$scope.company_id};
+            var Insert_params = {company_id:$scope.company_id, login_id:$scope.user_id};
             //OPEN POPUP WITH TO INSERT DATA// SCOPE, PATH INSIDE app/main FOLDER, CONDITION DATA, TABLE
             sessionService.openAddPopup($scope,'settings/dialogs/sales/addsales.html',Insert_params,'sales');
         }
