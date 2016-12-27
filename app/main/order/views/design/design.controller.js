@@ -379,10 +379,8 @@
 
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
-            notifyService.notify('error', 'S&S Activewear will be closed Monday, December 26 and Monday, January 2. We will close at 3:00 PM ET on Friday, December 23 and Friday, December 30.');
-            return false;
             originatorEv = ev;
-            //$mdOpenMenu(ev);
+            $mdOpenMenu(ev);
         };
 
         vm.dtInstanceCB = dtInstanceCB;

@@ -3,12 +3,10 @@
     "info": {
         "title": "Stokkup",
         "contact": {
-            "name": "codal api team",
-            "url": "http://104.236.31.186/"
+            "name": "codal api team"
         },
         "license": {
-            "name": "Codal Systems",
-            "url": "http://104.236.31.186/"
+            "name": "Codal Systems"
         },
         "version": "1.0"
     },
@@ -296,84 +294,86 @@
                 }
             }
         },
-        "/api/public/order/getProductDetailColorSize/{id}": {
-            "get": {
-                "tags": [
-                    "Order"
-                ],
-                "summary": "Product Color Detail",
-                "description": "Product Color Detail",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Product Color Detail",
-                        "required": true,
-                        "type": "integer"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Product Color Detail"
-                    },
-                    "default": {
-                        "description": "Product Color Detail"
-                    }
-                }
-            }
-        },
-        "/api/public/order/productDetail": {
+        "/api/public/order/updatePositions": {
             "post": {
                 "tags": [
                     "Order"
                 ],
-                "summary": "Get Product Detail",
-                "description": "Get Product Detail",
+                "summary": "Update Position",
+                "description": "Update Position",
                 "parameters": [
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Get Product Detail",
+                        "description": "In Data we have to specify the Column Name(Currently we are update color stitch count)",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/productDetail"
+                            "$ref": "#/definitions/updatePosition"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Get Product Detail"
+                        "description": "Update Position"
                     },
                     "default": {
-                        "description": "Get Product Detail"
+                        "description": "Update Position"
                     }
                 }
             }
         },
-        "/api/public/order/sendEmail": {
+        "/api/public/order/deleteOrderCommon": {
             "post": {
                 "tags": [
                     "Order"
                 ],
-                "summary": "Send Email To User",
-                "description": "Send Email To User",
+                "summary": "Delete Position",
+                "description": "Delete Position",
                 "parameters": [
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Send Email To User",
+                        "description": "Delete Position",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/sendEmail"
+                            "$ref": "#/definitions/deletePosition"
                         }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Send Email To User"
+                        "description": "Delete Position"
                     },
                     "default": {
-                        "description": "Send Email To User"
+                        "description": "Delete Position"
                     }
                 }
             }
@@ -546,6 +546,48 @@
                 }
             }
         },
+        "/api/public/order/editDesign": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Edit Design",
+                "description": "Edit Design",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Edit Design",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/editDesign"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Edit Design"
+                    },
+                    "default": {
+                        "description": "Edit Design"
+                    }
+                }
+            }
+        },
         "/api/public/order/getDesignPositionDetail": {
             "post": {
                 "tags": [
@@ -584,6 +626,132 @@
                     },
                     "default": {
                         "description": "Design Position Detail"
+                    }
+                }
+            }
+        },
+        "/api/public/order/editOrder": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Edit Order",
+                "description": "Edit Order",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Edit Order",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/editOrder"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Edit Order"
+                    },
+                    "default": {
+                        "description": "Edit Order"
+                    }
+                }
+            }
+        },
+        "/api/public/order/orderDetailInfo": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Order Detail All Info",
+                "description": "Order Detail All Info",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "Order Detail All Info",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/orderDetailInfo"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Detail All Info"
+                    },
+                    "default": {
+                        "description": "Order Detail All Info"
+                    }
+                }
+            }
+        },
+        "/api/public/order/updateOrderCharge": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Update Order Charge",
+                "description": "Update Order Charge",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "In Data we have to specify the Column Name(Currently we are update Rush Charge)",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/updateOrderCharge"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Update Order Charge"
+                    },
+                    "default": {
+                        "description": "Update Order Charge"
                     }
                 }
             }
@@ -757,6 +925,48 @@
                     },
                     "default": {
                         "description": "Get All Client Address"
+                    }
+                }
+            }
+        },
+        "/api/public/order/allOrderAddress": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "All Order Address",
+                "description": "All Order Address",
+                "parameters": [
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "description": "All Order Address",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/allOrderAddress"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
+                        "type": "string",
+                        "require": true
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "type": "integer",
+                        "require": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "All Order Address"
+                    },
+                    "default": {
+                        "description": "All Order Address"
                     }
                 }
             }
@@ -1683,32 +1893,80 @@
             },
             "type": "object"
         },
-        "productDetail": {
-            "required": [
-                "id"
-            ],
+        "updatePosition": {
             "properties": {
-                "id": {
-                    "type": "integer"
-                }
-            },
-            "type": "object"
-        },
-        "sendEmail": {
-            "required": [
-                "email",
-                "product_id",
-                "order_id"
-            ],
-            "properties": {
-                "email": {
-                    "type": "string"
+                "cond": {
+                    "required": [
+                        "id"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
                 },
-                "product_id": {
+                "data": {
+                    "required": [
+                        "color_stitch_count"
+                    ],
+                    "properties": {
+                        "color_stitch_count": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "company_id": {
+                    "type": "integer"
+                },
+                "design_id": {
                     "type": "integer"
                 },
                 "order_id": {
                     "type": "integer"
+                },
+                "table": {
+                    "type": "string"
+                },
+                "column_name": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "deletePosition": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "id"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "data": {
+                    "required": [
+                        "is_delete"
+                    ],
+                    "properties": {
+                        "is_delete": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "company_id": {
+                    "type": "integer"
+                },
+                "order_id": {
+                    "type": "integer"
+                },
+                "table": {
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -1805,6 +2063,42 @@
             },
             "type": "object"
         },
+        "editDesign": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "id"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "designData": {
+                    "required": [
+                        "client_company"
+                    ],
+                    "properties": {
+                        "design_name": {
+                            "type": "string"
+                        },
+                        "colors_count": {
+                            "type": "string"
+                        },
+                        "run_rate": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "orderDesignPosition": {
             "required": [
                 "id"
@@ -1815,6 +2109,128 @@
                 },
                 "id": {
                     "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "editOrder": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "id"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "addressModel": {
+                    "type": "object"
+                },
+                "addressModelOld": {
+                    "type": "object"
+                },
+                "orderDataDetail": {
+                    "required": [
+                        "name"
+                    ],
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "account_manager_id": {
+                            "type": "integer"
+                        },
+                        "approval_id": {
+                            "type": "integer"
+                        },
+                        "client_id": {
+                            "type": "integer"
+                        },
+                        "company_id": {
+                            "type": "integer"
+                        },
+                        "contact_main_id": {
+                            "type": "integer"
+                        },
+                        "custom_po": {
+                            "type": "string"
+                        },
+                        "date_shipped": {
+                            "type": "string"
+                        },
+                        "in_hands_by": {
+                            "type": "string"
+                        },
+                        "is_blind": {
+                            "type": "integer"
+                        },
+                        "date_start": {
+                            "type": "string"
+                        },
+                        "price_id": {
+                            "type": "integer"
+                        },
+                        "sales_id": {
+                            "type": "integer"
+                        },
+                        "sns_shipping": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "table": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "orderDetailInfo": {
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "company_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "updateOrderCharge": {
+            "properties": {
+                "cond": {
+                    "required": [
+                        "id"
+                    ],
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "data": {
+                    "required": [
+                        "rush_charge"
+                    ],
+                    "properties": {
+                        "rush_charge": {
+                            "type": "integer"
+                        }
+                    },
+                    "type": "object"
+                },
+                "company_id": {
+                    "type": "integer"
+                },
+                "table": {
+                    "type": "string"
                 }
             },
             "type": "object"
@@ -1870,6 +2286,17 @@
             ],
             "properties": {
                 "client_id": {
+                    "type": "integer"
+                }
+            },
+            "type": "object"
+        },
+        "allOrderAddress": {
+            "required": [
+                "order_id"
+            ],
+            "properties": {
+                "order_id": {
                     "type": "integer"
                 }
             },

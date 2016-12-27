@@ -299,11 +299,84 @@ class OrderController extends Controller {
 
     }
 
-    /**
-    * UPDATE record for any single table.
-    * @params Table name, Condition array, Post array
-    * @return json data
-    */
+    /** 
+ * @SWG\Definition(
+ *      definition="updatePosition",
+ *      type="object",
+ *     
+ *
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="data",
+ *          type="object",
+ *          required={"color_stitch_count"},
+ *          @SWG\Property(
+ *          property="color_stitch_count",
+ *          type="integer",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         ),
+ *       @SWG\Property(
+ *          property="design_id",
+ *          type="integer",
+ *        ),
+ *       @SWG\Property(
+ *          property="order_id",
+ *          type="integer",
+ *        ),
+ *       @SWG\Property(
+ *          property="table",
+ *          type="string",
+ *        ),
+ *         @SWG\Property(
+ *          property="column_name",
+ *          type="string",
+ *        )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/updatePositions",
+ *  summary = "Update Position",
+ *  tags={"Order"},
+ *  description = "Update Position",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="In Data we have to specify the Column Name(Currently we are update color stitch count)",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/updatePosition")
+ *  ),
+ *      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Update Position"),
+ *  @SWG\Response(response="default", description="Update Position"),
+ * )
+ */
      public function updatePositions()
      {
         $post = Input::all();
@@ -374,6 +447,79 @@ class OrderController extends Controller {
         }
         return response()->json(['data'=>$data]);
      }
+
+
+
+      /** 
+ * @SWG\Definition(
+ *      definition="deletePosition",
+ *      type="object",
+ *     
+ *
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="data",
+ *          type="object",
+ *          required={"is_delete"},
+ *          @SWG\Property(
+ *          property="is_delete",
+ *          type="integer",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         ),
+ *       @SWG\Property(
+ *          property="order_id",
+ *          type="integer",
+ *        ),
+ *       @SWG\Property(
+ *          property="table",
+ *          type="string",
+ *        )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/deleteOrderCommon",
+ *  summary = "Delete Position",
+ *  tags={"Order"},
+ *  description = "Delete Position",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Delete Position",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/deletePosition")
+ *  ),
+ *      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Delete Position"),
+ *  @SWG\Response(response="default", description="Delete Position"),
+ * )
+ */
      
      public function deleteOrderCommon()
      {
@@ -414,30 +560,6 @@ class OrderController extends Controller {
         return  response()->json($response);
     }
     
-    /**
-     * @SWG\Get(
-     *  path = "/api/public/order/getProductDetailColorSize/{id}",
-     *  summary = "Product Color Detail",
-     *  tags={"Order"},
-     *  description = "Product Color Detail",
-     *  @SWG\Parameter(
-     *     in="path",
-     *     name="id",
-     *     description="Product Color Detail",
-     *     type="integer",
-     *     required=true
-     *  ),
-     *  @SWG\Response(response=200, description="Product Color Detail"),
-     *  @SWG\Response(response="default", description="Product Color Detail"),
-     * )
-     */
-   
-    public function getProductDetailColorSize($id)
-    {
-        $result = $this->order->getProductDetailColorSize($id);
-        return $this->return_response($result);
-    }
-
      /**
    * Save Color size.
    * @return json data
@@ -468,108 +590,6 @@ class OrderController extends Controller {
 
     }
     
-    /** 
-     * @SWG\Definition(
-     *      definition="productDetail",
-     *      type="object",
-     *      required={"id"},
-     *      @SWG\Property(
-     *          property="id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/productDetail",
-     *  summary = "Get Product Detail",
-     *  tags={"Order"},
-     *  description = "Get Product Detail",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Get Product Detail",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/productDetail")
-     *  ),
-     *  @SWG\Response(response=200, description="Get Product Detail"),
-     *  @SWG\Response(response="default", description="Get Product Detail"),
-     * )
-     */
-
-    public function productDetail()
-    {
-        $post = Input::all();
-
-        $result = $this->order->getProductDetail($post['id']);
-
-
-        $colors = unserialize($result[0]->color_size_data);
-      //  print_r($colors);exit;
-        $color_all = array();
-        $colorData = array();
-        $colorName = array();
-
-        if(!empty($colors)) {
-            foreach($colors as $key=>$color) {
-                $all_data = $this->product->GetColorDeail(array('id'=>$key));
-                
-
-                 $colorData[]['id'] = (string)$key;
-                 $colorName[$key] = $all_data[0]->name;
-
-            }
-         }
-
-        $combine_array['colorData'] = $colorData;
-        $combine_array['allData'] = $colors;
-        $combine_array['product_data'] = $result;
-        $combine_array['color_name'] = $colorName;
-        
-      return response()->json(['data'=>$combine_array]);
-        
-        
-    }
-   
-
-    /** 
-     * @SWG\Definition(
-     *      definition="sendEmail",
-     *      type="object",
-     *      required={"email","product_id","order_id"},
-     *      @SWG\Property(
-     *          property="email",
-     *          type="string"
-     *      ),
-      *      @SWG\Property(
-     *          property="product_id",
-     *          type="integer"
-     *      ),
-        *    @SWG\Property(
-     *          property="order_id",
-     *          type="integer"
-     *      )
-     * )
-     */
-
-     /**
-     * @SWG\Post(
-     *  path = "/api/public/order/sendEmail",
-     *  summary = "Send Email To User",
-     *  tags={"Order"},
-     *  description = "Send Email To User",
-     *  @SWG\Parameter(
-     *     in="body",
-     *     name="body",
-     *     description="Send Email To User",
-     *     required=true,
-     *     @SWG\Schema(ref="#/definitions/sendEmail")
-     *  ),
-     *  @SWG\Response(response=200, description="Send Email To User"),
-     *  @SWG\Response(response="default", description="Send Email To User"),
-     * )
-     */
 
     public function sendEmail() {
 
@@ -1097,6 +1117,78 @@ class OrderController extends Controller {
 
     }
 
+
+      /** 
+ * @SWG\Definition(
+ *      definition="editDesign",
+ *      type="object",
+*
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="designData",
+ *          type="object",
+ *          required={"client_company"},
+ *
+ *          @SWG\Property(
+ *          property="design_name",
+ *          type="string",
+ *         ),
+ *           @SWG\Property(
+ *          property="colors_count",
+ *          type="string",
+ *         ),
+ *          @SWG\Property(
+ *          property="run_rate",
+ *          type="integer",
+ *         )
+ *      ),
+*       @SWG\Property(
+ *          property="table",
+ *          type="string",
+ *        ),
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/editDesign",
+ *  summary = "Edit Design",
+ *  tags={"Order"},
+ *  description = "Edit Design",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Edit Design",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/editDesign")
+ *  ),
+ *      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Edit Design"),
+ *  @SWG\Response(response="default", description="Edit Design"),
+ * )
+ */
+
      public function editDesign()
     {
         $post = Input::all();
@@ -1107,19 +1199,6 @@ class OrderController extends Controller {
         unset($post['designData']['is_complete']);
         unset($post['designData']['order_display_number']);
         unset($post['designData']['affiliate_display_number']);
-
-        if($post['designData']['hands_date'] != '')
-        {
-            $post['designData']['hands_date'] = date("Y-m-d", strtotime($post['designData']['hands_date']));
-        }
-        if($post['designData']['shipping_date'] != '')
-        {
-            $post['designData']['shipping_date'] = date("Y-m-d", strtotime($post['designData']['shipping_date']));
-        }
-        if($post['designData']['start_date'] != '')
-        {
-            $post['designData']['start_date'] = date("Y-m-d", strtotime($post['designData']['start_date']));
-        }
 
         unset($post['designData']['price_id']);
 
@@ -1499,6 +1578,131 @@ class OrderController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+
+    /** 
+ * @SWG\Definition(
+ *      definition="editOrder",
+ *      type="object",
+ *     
+ *
+  *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *         )
+ *      ),
+ *       @SWG\Property(
+ *          property="addressModel",
+ *          type="object",
+*         ),
+ *       @SWG\Property(
+ *          property="addressModelOld",
+ *          type="object",
+*         ),
+*
+ *      @SWG\Property(
+ *          property="orderDataDetail",
+ *          type="object",
+ *          required={"name"},
+ *          @SWG\Property(
+ *          property="name",
+ *          type="string",
+ *         ),
+ *           @SWG\Property(
+ *          property="account_manager_id",
+ *          type="integer",
+ *         ),
+ *         @SWG\Property(
+ *          property="approval_id",
+ *          type="integer",
+ *         ),
+ *         @SWG\Property(
+ *          property="client_id",
+ *          type="integer",
+ *         ),
+ *         @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         ),
+ *         @SWG\Property(
+ *          property="contact_main_id",
+ *          type="integer",
+ *         ),
+  *         @SWG\Property(
+ *          property="custom_po",
+ *          type="string",
+ *         ),
+   *         @SWG\Property(
+ *          property="date_shipped",
+ *          type="string",
+ *         ),
+    *         @SWG\Property(
+ *          property="in_hands_by",
+ *          type="string",
+ *         ),
+     *         @SWG\Property(
+ *          property="is_blind",
+ *          type="integer",
+ *         ),
+     *         @SWG\Property(
+ *          property="date_start",
+ *          type="string",
+ *         ),
+      *         @SWG\Property(
+ *          property="price_id",
+ *          type="integer",
+ *         ),
+       *         @SWG\Property(
+ *          property="sales_id",
+ *          type="integer",
+ *         ),
+        *         @SWG\Property(
+ *          property="sns_shipping",
+ *          type="integer",
+ *         )
+ *      ),
+  *       @SWG\Property(
+ *          property="table",
+ *          type="string",
+ *        )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/editOrder",
+ *  summary = "Edit Order",
+ *  tags={"Order"},
+ *  description = "Edit Order",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Edit Order",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/editOrder")
+ *  ),
+ *      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Edit Order"),
+ *  @SWG\Response(response="default", description="Edit Order"),
+ * )
+ */
+
      public function editOrder()
     {
         $post = Input::all();
@@ -1572,6 +1776,60 @@ class OrderController extends Controller {
 
     }
 
+
+    /** 
+ * @SWG\Definition(
+ *      definition="orderDetailInfo",
+ *      type="object",
+ *     
+ *     
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *          ),
+ *
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/orderDetailInfo",
+ *  summary = "Order Detail All Info",
+ *  tags={"Order"},
+ *  description = "Order Detail All Info",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Order Detail All Info",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/orderDetailInfo")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Order Detail All Info"),
+ *  @SWG\Response(response="default", description="Order Detail All Info"),
+ * )
+ */
+
     public function orderDetailInfo() {
  
         $data = Input::all();
@@ -1620,6 +1878,73 @@ class OrderController extends Controller {
         return response()->json(["data" => $response]);
 
     }
+
+
+/** 
+ * @SWG\Definition(
+ *      definition="updateOrderCharge",
+ *      type="object",
+ *
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="data",
+ *          type="object",
+ *          required={"rush_charge"},
+ *          @SWG\Property(
+ *          property="rush_charge",
+ *          type="integer",
+ *         )
+ *      ),
+ *      @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         ),
+ *       @SWG\Property(
+ *          property="table",
+ *          type="string",
+ *        )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/updateOrderCharge",
+ *  summary = "Update Order Charge",
+ *  tags={"Order"},
+ *  description = "Update Order Charge",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="In Data we have to specify the Column Name(Currently we are update Rush Charge)",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/updateOrderCharge")
+ *  ),
+ *      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Update Order Charge"),
+ *  @SWG\Response(response="default", description="Update Order Charge"),
+ * )
+ */
 
     public function updateOrderCharge() {
 
@@ -2342,6 +2667,54 @@ class OrderController extends Controller {
         
         return response()->json(['data'=>$data]);
     }
+
+
+
+    /** 
+ * @SWG\Definition(
+ *      definition="allOrderAddress",
+ *      type="object",
+ *     
+ *     
+ *          required={"order_id"},
+ *          @SWG\Property(
+ *          property="order_id",
+ *          type="integer",
+ *          )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/order/allOrderAddress",
+ *  summary = "All Order Address",
+ *  tags={"Order"},
+ *  description = "All Order Address",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="All Order Address",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/allOrderAddress")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="All Order Address"),
+ *  @SWG\Response(response="default", description="All Order Address"),
+ * )
+ */
 
 
      public function allOrderAddress(){
