@@ -704,6 +704,9 @@
           $scope.openSearchProductViewDialogView = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,design_product_id,size_group_id,warehouse)
         {
          
+             notifyService.notify('error', 'S&S Activewear will be closed Monday, December 26 and Monday, January 2. We will close at 3:00 PM ET on Friday, December 23 and Friday, December 30.');
+            return false;
+            
             $mdDialog.show({
                 controller: 'SearchProductViewController',
                 controllerAs: 'vm',
