@@ -16,11 +16,17 @@
                                     <span class="column-title">Label</span>
                                 </div>
                             </th>
+                            <th class="secondary-text">
+                                <div class="table-header">
+                                    <span class="column-title">Module SKU</span>
+                                </div>
+                            </th>
                         </tr>    
                     </thead>    
                    <tbody>
                         <tr class="cursor-p" ng-repeat="allTemplate_data in allTemplate">
                             <td class="" ui-sref="app.settings.template-info({id:allTemplate_data.id})">{{allTemplate_data.label}}</td>
+                            <td class="" ui-sref="app.settings.template-info({id:allTemplate_data.id})">{{allTemplate_data.slug}}</td>
                         </tr>
                     </tbody> 
                 </table>
