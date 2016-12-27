@@ -168,6 +168,60 @@ class AffiliateController extends Controller {
         return response()->json(["data" => $response]);
     }
 
+
+    /** 
+ * @SWG\Definition(
+ *      definition="affiliateData",
+ *      type="object",
+ *     
+ *     
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *          ),
+ *
+ *          required={"id"},
+ *          @SWG\Property(
+ *          property="id",
+ *          type="integer",
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/affiliate/getAffiliateData",
+ *  summary = "Affiliate Data",
+ *  tags={"Order"},
+ *  description = "Affiliate Data",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Affiliate Data",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/affiliateData")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Affiliate Data"),
+ *  @SWG\Response(response="default", description="Affiliate Data"),
+ * )
+ */
+
     public function getAffiliateData()
     {
         $data = Input::all();

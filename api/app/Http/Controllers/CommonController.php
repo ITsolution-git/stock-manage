@@ -178,6 +178,57 @@ class CommonController extends Controller {
         return $this->return_response($result);
     }
 
+
+    /** 
+ * @SWG\Definition(
+ *      definition="miscListWithoutBlank",
+ *      type="object",
+ *     
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         )
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/common/getAllMiscDataWithoutBlank",
+ *  summary = "Miscdata Listing Without Blank Data",
+ *  tags={"Order"},
+ *  description = "Miscdata Listing Without Blank Data",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Miscdata Listing Without Blank Data",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/miscListWithoutBlank")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Miscdata Listing"),
+ *  @SWG\Response(response="default", description="Miscdata Listing"),
+ * )
+ */
+
      public function getAllMiscDataWithoutBlank()
     {
         $post = Input::all();
@@ -198,10 +249,38 @@ class CommonController extends Controller {
         return $this->return_response($result);
      }
     
-    /**
-    * Get Array of field selection, condition and table name.
-    * @return json data
-    */
+/**
+* @SWG\Get(
+*  path = "/api/public/common/getStaffList/{id}",
+*  summary = "Staff List",
+*  tags={"Order"},
+*  description = "Staff List",
+*  @SWG\Parameter(
+*     in="path",
+*     name="id",
+*     description="Staff List",
+*     type="integer",
+*     required=true
+*  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+*  @SWG\Response(response=200, description="Staff List"),
+*  @SWG\Response(response="default", description="Staff List"),
+* )
+*/
+   
      public function getStaffList($company_id)
      {
 
@@ -506,11 +585,60 @@ class CommonController extends Controller {
         return response()->json(['data'=>$response]);
     }
 
+
+    /** 
+ * @SWG\Definition(
+ *      definition="companyDetail",
+ *      type="object",
+ *     
+ *     
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *          )
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/common/getCompanyDetail",
+ *  summary = "Company Detail",
+ *  tags={"Order"},
+ *  description = "Company Detail",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Company Detail",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/companyDetail")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Company Detail"),
+ *  @SWG\Response(response="default", description="Company Detail"),
+ * )
+ */
+
     public function getCompanyDetail()
     {
         $post = Input::all();
         
-        $listData = $this->common->getCompanyDetail($post[0]);
+        $listData = $this->common->getCompanyDetail($post['company_id']);
         return $this->return_response($listData);
     }
 
@@ -1324,6 +1452,78 @@ class CommonController extends Controller {
                     
                   }
     }
+
+
+
+    /** 
+ * @SWG\Definition(
+ *      definition="miscListApproval",
+ *      type="object",
+ *     
+ *     
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *          ),
+ *
+ *          required={"is_delete"},
+ *          @SWG\Property(
+ *          property="is_delete",
+ *          type="integer",
+ *
+ *      ),
+*
+*
+  *          required={"status"},
+ *          @SWG\Property(
+ *          property="status",
+ *          type="integer",
+ *
+ *      ),
+*
+*
+  *          required={"type"},
+ *          @SWG\Property(
+ *          property="type",
+ *          type="string",
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/common/GetMiscApprovalData",
+ *  summary = "Misc Approval Data",
+ *  tags={"Order"},
+ *  description = "Misc Approval Data",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Misc Approval Data",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/miscListApproval")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          require=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          require=true
+*      ),
+ *  @SWG\Response(response=200, description="Misc Approval Data"),
+ *  @SWG\Response(response="default", description="Misc Approval Data"),
+ * )
+ */
+
 
     public function GetMiscApprovalData()
     {
