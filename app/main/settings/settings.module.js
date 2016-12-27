@@ -199,7 +199,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL','true');
+                        return sessionService.AccessService('AT,SU,SM','false');
                     }
                 },
                 url  : '/integrations',
