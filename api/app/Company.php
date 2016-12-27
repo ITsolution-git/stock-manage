@@ -68,7 +68,8 @@ class Company extends Model {
     }
     public function InsertCompanyData($post)
     {
- 
+
+
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
       $string = $this->login->getString(6);
       $display_number =  $this->common->getDisplayNumber('users',$post['parent_id'],'parent_id','id');
@@ -318,6 +319,15 @@ class Company extends Model {
         $result_misc = DB::table('misc_type')->insert($miscDataArray);
 
         $make_folder = $this->makefolder($companyid);  
+
+
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
+        $statics = $this->common->GetTableRecords('company_static',array('slug_type'=>'email_templete'));
+        foreach ($statics as $key => $value) 
+        {
+            $this->common->InsertRecords('email_template',array('company_id'=>$companyid,'slug'=>$value->slug,'label'=>$value->slug));
+        }
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
 
         
 // Code for Default Misc data End
