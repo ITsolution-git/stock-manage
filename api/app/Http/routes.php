@@ -262,18 +262,6 @@ Route::post('order/deleteOrderCommon',[
    'action' => 'false',
    'uses' => 'OrderController@deleteOrderCommon'
 ]);
-Route::get('order/getProductDetailColorSize/{id}',[
-   'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
-   'uses' => 'OrderController@getProductDetailColorSize'
-]);
-Route::post('order/productDetail',[
-   'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
-   'uses' => 'OrderController@productDetail'
-]);
 Route::post('order/sendEmail',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
