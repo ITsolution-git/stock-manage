@@ -165,17 +165,17 @@
 			}			
 			else if(role=='AT')
 			{
-				var ret_array = ['customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid','settings.approvals'];
+				var ret_array = ['customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid','settings.approvals','settings.integrations'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SU')
 			{
-				var ret_array = ['purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals'];
+				var ret_array = ['purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals','settings.integrations'];
 				hide_menu(ret_array);
 			}
 			else if(role=='SM')
 			{
-				var ret_array = ['admin'];
+				var ret_array = ['admin','settings.integrations','settings.userManagement','settings.approvals'];
 				hide_menu(ret_array);
 			}
 			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
@@ -292,12 +292,12 @@
 		                    	if(table == 'client_distaddress' && $scope.all_scope.order_id != undefined)
 		                    	{
 		                    		$scope.InserAddressOrder($scope.all_scope.order_id,result.data.id);
-		                    		$mdDialog.hide();
 		                    	}
 		                    	else
 		                    	{
 		                    		notifyService.notify('success',result.data.message);
 		                    	}
+		                    	$mdDialog.hide();
 		                    }
 			                else
 		                    { notifyService.notify('error',result.data.message); }
