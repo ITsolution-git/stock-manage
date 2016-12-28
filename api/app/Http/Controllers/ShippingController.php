@@ -152,6 +152,15 @@ class ShippingController extends Controller {
             $result['shipping'][0]->fully_shipped = '';
         }
 
+        $result['shipping'][0]->fulladdress  = !empty($result['shipping'][0]->address2)?$result['shipping'][0]->address2." ":'';
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->address)?$result['shipping'][0]->address:'' ; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->address_line2)?", ".$result['shipping'][0]->address_line2:'' ; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->suite)?", ".$result['shipping'][0]->suite:'' ; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->city)?", ".$result['shipping'][0]->city:''; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->state_name)?", ".$result['shipping'][0]->state_name:'';
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->zipcode)?", ".$result['shipping'][0]->zipcode:'';
+        $result['shipping'][0]->fulladdress .= ' USA';
+
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if(!empty($result['shippingBoxes']))
@@ -687,7 +696,16 @@ class ShippingController extends Controller {
 
         foreach ($allAddress as $address) {
             
-            $address->full_address = $address->address2 ." ". $address->address ." ". $address->city ." ". $address->state ." ". $address->zipcode ." USA";
+            $address->full_address  = !empty($address->address2)?$address->address2." ":'';
+            $address->full_address .= !empty($address->address)?$address->address:'' ; 
+            $address->full_address .= !empty($address->address_line2)?", ".$address->address_line2:'' ; 
+            $address->full_address .= !empty($address->suite)?", ".$address->suite:'' ; 
+            $address->full_address .= !empty($address->city)?", ".$address->city:''; 
+            $address->full_address .= !empty($address->state)?", ".$address->state:'';
+            $address->full_address .= !empty($address->zipcode)?", ".$address->zipcode:'';
+            $address->full_address .= ' USA';
+
+            //$address->full_address = $address->address2 ." ". $address->address ." ". $address->city ." ". $address->state ." ". $address->zipcode ." USA";
             $address->selected = 0;
 
             $allocatedAddress2 = array();
