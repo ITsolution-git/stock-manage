@@ -137,6 +137,7 @@
 
                         $mdDialog.hide();
                         //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
+                        $window.location.reload();
 
                          if($scope.invoice == true && $scope.qb == true) {
 
@@ -161,11 +162,13 @@
                                     $mdDialog.hide();
                                     //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                                     $("#ajax_loader").hide();
+                                    $window.location.reload();
                                   
                                 });
                         } else {
 
                              $mdDialog.hide();
+                             $window.location.reload();
                             // $state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
                         }
                     }
@@ -226,6 +229,7 @@
 
                         $mdDialog.hide();
                         //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
+                        $window.location.reload();
                          $("#ajax_loader").hide();
                       
                     });
@@ -236,6 +240,7 @@
             if($scope.invoice_id > 0)
             {
                 $mdDialog.hide();
+                $window.location.reload();
                 //$state.go('app.invoices.singleInvoice',{id: $scope.invoice_display_number});
             }
         }

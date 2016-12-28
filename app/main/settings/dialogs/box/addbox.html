@@ -21,7 +21,7 @@
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Box Length *" required name="length"  ng-model="box.length" valid-number ng-maxlength="5">
+                            <input placeholder="Box Length *" required name="length"  ng-model="box.length" only-number ng-maxlength="5">
                             <div ng-messages="employeeform.length.$error" role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
@@ -29,7 +29,7 @@
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Box Width *" required name="width"  ng-model="box.width" valid-number ng-maxlength="5">
+                            <input placeholder="Box Width *" required name="width"  ng-model="box.width" only-number ng-maxlength="5">
                             <div ng-messages="employeeform.width.$error" role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
@@ -37,7 +37,7 @@
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Box Heigth *" required name="height"  ng-model="box.height" valid-number ng-maxlength="5">
+                            <input placeholder="Box Heigth *" required name="height"  ng-model="box.height" only-number ng-maxlength="5">
                             <div ng-messages="employeeform.height.$error" role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
@@ -45,7 +45,7 @@
                             </div>
                         </md-input-container>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Box Width *" required name="weight"  ng-model="box.weight" valid-number ng-maxlength="5">
+                            <input placeholder="Box Width *" required name="weight"  ng-model="box.weight" only-number ng-maxlength="5">
                             <div ng-messages="employeeform.weight.$error" role="alert" multiple>
                                 <div ng-message="required">
                                     <span>This field is required</span>
