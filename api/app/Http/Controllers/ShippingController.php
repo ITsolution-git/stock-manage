@@ -157,7 +157,7 @@ class ShippingController extends Controller {
         $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->address_line2)?", ".$result['shipping'][0]->address_line2:'' ; 
         $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->suite)?", ".$result['shipping'][0]->suite:'' ; 
         $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->city)?", ".$result['shipping'][0]->city:''; 
-        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->state_name)?", ".$result['shipping'][0]->state_name:'';
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->name)?", ".$result['shipping'][0]->name:'';
         $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->zipcode)?", ".$result['shipping'][0]->zipcode:'';
         $result['shipping'][0]->fulladdress .= ' USA';
 
@@ -701,7 +701,7 @@ class ShippingController extends Controller {
             $address->full_address .= !empty($address->address_line2)?", ".$address->address_line2:'' ; 
             $address->full_address .= !empty($address->suite)?", ".$address->suite:'' ; 
             $address->full_address .= !empty($address->city)?", ".$address->city:''; 
-            $address->full_address .= !empty($address->state)?", ".$address->state:'';
+            $address->full_address .= !empty($address->name)?", ".$address->name:'';
             $address->full_address .= !empty($address->zipcode)?", ".$address->zipcode:'';
             $address->full_address .= ' USA';
 
