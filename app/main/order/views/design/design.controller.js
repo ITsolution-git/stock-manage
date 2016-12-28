@@ -12,15 +12,9 @@
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
 
-        $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
-        {
-            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
-        }
-        else
-        {
-            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
-        }
+       $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.allowSA = 0;
 
 
         // change display number to design Id for fetching the order data
@@ -35,6 +29,23 @@
               {
                  
                   $scope.design_id = result.data.records[0].id;
+
+                  if($scope.role_slug == 'SM' && $scope.user_id == result.data.records[0].login_id) {
+
+                    $scope.allowSA = 1;
+                  } 
+
+
+                  if($scope.role_slug=='SU' || $scope.role_slug=='AT' || $scope.allowSA == 0)
+                    {
+                        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+                    }
+                    else
+                    {
+                        $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+                    }
+
+                    
                    $scope.designDetail();
                    $scope.designPosition();
 
