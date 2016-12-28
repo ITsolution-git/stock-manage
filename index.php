@@ -261,6 +261,7 @@
     <script src="app/main/settings/views/labor/labor.controller.js"></script>
     <script src="app/main/settings/dialogs/labor/addLabor.controller.js"></script>
     <script src="app/main/settings/views/machine/machine.controller.js"></script>
+    <script src="app/main/settings/views/box/box.controller.js"></script>
     <script src="app/main/settings/views/emailTemplate/emailTemplate.controller.js"></script>
     <script src="app/main/settings/views/emailTemplate/emailTemplateInfoController.js"></script>
 
