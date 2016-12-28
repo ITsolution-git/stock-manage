@@ -15,6 +15,7 @@ use App\Purchase;
 use App\Art;
 use App\Labor;
 use App\Machine;
+use App\Box;
 use App\Production;
 use DB;
 
@@ -27,7 +28,7 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Labor $labor, Machine $machine,Production $production) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Labor $labor, Machine $machine,Production $production,Box $box) 
     {
         parent::__construct();
         $this->common = $common;
@@ -39,6 +40,7 @@ class CommonController extends Controller {
         $this->order = $order;
         $this->labor = $labor;
         $this->machine = $machine;
+        $this->box = $box;
         $this->production = $production;
     }
 
@@ -1220,11 +1222,15 @@ class CommonController extends Controller {
                  0=>array('key' => '', 'name' => 'Notes','sortable' => false)
                 );
         }
-        if($post['filter']['function']=='machine_list') // VENDOR LISTING CONDITION
+        if($post['filter']['function']=='machine_list') // MACHINE LISTING CONDITION
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
                 $post['sorts']['sortBy'] = 'id';
+            }
+            if(!isset($post['sorts']['sortOrder']))
+            {
+                $post['sorts']['sortOrder'] = 'desc';
             }
             $result = $this->machine->machineList($post);
             $header = array(
@@ -1236,8 +1242,7 @@ class CommonController extends Controller {
                 array('key' => '', 'name' => 'Operation Status','sortable' => false),
                 array('key' => '', 'name' => 'Action','sortable' => false)
             );
-         }   
-
+         }
 
         if($post['filter']['function']=='labor_list') // RECEIVE PO LISTING CONDITION
         {
@@ -1275,6 +1280,27 @@ class CommonController extends Controller {
                 );
 
         }
+
+        if($post['filter']['function']=='box_list') // MACHINE LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            if(!isset($post['sorts']['sortOrder']))
+            {
+                $post['sorts']['sortOrder'] = 'desc';
+            }
+            $result = $this->box->boxList($post);
+            $header = array(
+                array('key' => 'box_type', 'name' => 'Box Type'),
+                array('key' => 'length', 'name' => 'Length'),
+                array('key' => 'width', 'name' => 'Width'),
+                array('key' => 'height', 'name' => 'Height'),
+                array('key' => 'weight', 'name' => 'Weight'),
+                array('key' => '', 'name' => 'Action','sortable' => false)
+            );
+         }
 
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
