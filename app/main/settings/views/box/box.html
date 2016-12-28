@@ -22,10 +22,10 @@
                     <tbody >
                         <tr ng-repeat="box in rows">
                             <td>{{box.box_type}}</td>
-                            <td>{{box.length | currency : '' : 2}}</td>
-                            <td>{{box.width | currency : '' : 2}}</td>
-                            <td>{{box.height | currency : '' : 2}}</td>
-                            <td>{{box.weight | currency : '' : 2}}</td>
+                            <td>{{box.length}}</td>
+                            <td>{{box.width}}</td>
+                            <td>{{box.height}}</td>
+                            <td>{{box.weight}}</td>
                             <td class=""> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">

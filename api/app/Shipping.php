@@ -218,7 +218,7 @@ class Shipping extends Model {
     public function getBoxItems($box_id)
     {
         $whereItemConditions = ['bi.box_id' => $box_id];
-        $listItemsArray = ['sb.md','sb.id as box_id','sb.spoil','sb.actual','sb.re_allocate_to','bi.id as box_item_id','bi.item_id','pd.id','pd.size','sb.box_qnty as boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
+        $listItemsArray = ['sb.md','sb.id as box_id','sb.box_setting_id','sb.spoil','sb.actual','sb.re_allocate_to','bi.id as box_item_id','bi.item_id','pd.id','pd.size','sb.box_qnty as boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
 
         $shippingBoxItems = DB::table('box_product_mapping as bi')
                         ->leftJoin('shipping_box as sb','bi.box_id','=','sb.id')
@@ -318,7 +318,7 @@ class Shipping extends Model {
     {
         $whereBoxConditions = ['sb.shipping_id' => $data['shipping_id']];
 
-        $listItemsArray = ['sb.id','sb.box_qnty','sb.tracking_number',DB::raw('COUNT(bi.id) as number_of_box'),'sb.box_qnty as boxed_qnty','c.name as color_name','p.description as product_desc','pd.size','sb.md','sb.spoil','sb.actual','mt.value as size_group_name','p.name as product_name'];
+        $listItemsArray = ['sb.id','sb.box_qnty','sb.tracking_number','sb.box_setting_id',DB::raw('COUNT(bi.id) as number_of_box'),'sb.box_qnty as boxed_qnty','c.name as color_name','p.description as product_desc','pd.size','sb.md','sb.spoil','sb.actual','mt.value as size_group_name','p.name as product_name'];
 
         $shippingBoxes = DB::table('shipping_box as sb')
                         ->leftJoin('box_product_mapping as bi','bi.box_id','=','sb.id')
