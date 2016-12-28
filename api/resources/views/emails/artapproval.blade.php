@@ -1,1 +1,3 @@
-Please find attachment of Art approval.
+Hi,
+
+{!! $email_text !!}

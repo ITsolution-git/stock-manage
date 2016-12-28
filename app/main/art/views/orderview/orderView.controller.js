@@ -302,6 +302,31 @@
                     $scope.mail=params.ScreenSets[0].billing_email;
                     $scope.company_id=params.company_id;
                     $scope.order_id=params.order_id;
+
+                    var companyData = {};
+                    companyData.table ='email_template';
+                    companyData.cond = {slug:'art_screen',company_id: $scope.company_id};
+                    $scope.tinymceOptions = {
+                         plugins: [
+                        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                        'searchreplace wordcount visualblocks visualchars code fullscreen',
+                        'insertdatetime media nonbreaking save table contextmenu directionality',
+                        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                      ],
+                      toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                      toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                      image_advtab: true,
+                      };
+
+                    // GET CLIENT TABLE CALL
+                    $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+                    {   
+                        if(result.data.success=='1')
+                        {   
+                            $scope.email_text = result.data.records[0].description;
+                        }
+                    });
+
                     //console.log($scope.mail);
                     $scope.closeDialog = function() 
                     {
@@ -310,7 +335,7 @@
                     $scope.printPdf=function(flag,email,options)
                     {
                         $mdDialog.hide();
-                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email}
+                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email,email_text:$scope.email_text}
                         if(flag=='1')
                         {
                             var k = confirm("Do you want to send Art approval PDF to client?");
