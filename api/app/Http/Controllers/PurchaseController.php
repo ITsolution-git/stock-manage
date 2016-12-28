@@ -472,4 +472,20 @@ class PurchaseController extends Controller {
         }
 
     }
+    public function getAllReceiveProducts()
+    {
+        $post = Input::all();
+        
+        if(!empty($post['company_id']) && !empty($post['po_id']) && !empty($post['product_id']))
+        {
+           $this->purchase->getAllReceiveProducts($post['company_id'],$post['po_id'],$post['product_id']); 
+           $response = array('success' => 1);
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+       return response()->json(["data" => $response]);
+
+    }
 }

@@ -691,6 +691,25 @@ class Purchase extends Model {
 
 		return $result;
     }
+    public function getAllReceiveProducts($company_id,$po_id,$product_id)
+    {
+    	$result =  DB::table('purchase_order as po')
+		  ->Join('purchase_order_line as pol','pol.po_id','=','po.po_id')
+		  ->Join('purchase_detail as pd','pd.id','=','pol.purchase_detail') 
+		  ->select('pol.qnty_ordered','pol.id')
+		  ->where('po.display_number','=',$po_id)
+		  ->where('po.company_id','=',$company_id)
+		  ->where('pd.product_id','=',$product_id)
+		  ->get();
+
+		foreach ($result as $key => $value) 
+		{
+		  		DB::table('purchase_order_line')
+		  		->where('id',$value->id)
+		  		->update(array('qnty_purchased'=>$value->qnty_ordered));
+		}  
+		return $result; 
+    }
 
 }
 

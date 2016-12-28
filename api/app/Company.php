@@ -493,6 +493,20 @@ class Company extends Model {
         $result = DB::table('users')->where('id','=',$post['id'])->update(array('name'=>$post['name'],'email'=>$post['email']));
 
         $result_address = DB::table('staff')->where('user_id','=',$post['id'])->update($new_post);
+
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
+        $statics = $this->common->GetTableRecords('company_static',array('slug_type'=>'email_templete'));
+        foreach ($statics as $key => $value) 
+        {
+            $email_data = $this->common->GetTableRecords('email_template',array('slug'=>$value->slug,'company_id'=>$post['id']));
+            if(empty($email_data[0]['slug']))
+            {
+                $this->common->InsertRecords('email_template',array('company_id'=>$post['id'],'slug'=>$value->slug,'label'=>$value->slug));
+            }
+        }
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
+
+
         return $result;
 
     }
