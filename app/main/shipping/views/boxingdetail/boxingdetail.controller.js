@@ -50,6 +50,7 @@
             $scope.box_items = [];
             var combine_array = {};
             combine_array.shipping_id = $scope.shipping_id;
+            combine_array.company_id = sessionService.get('company_id');
 
             $http.post('api/public/shipping/getShippingBoxes',combine_array).success(function(result) {
 
@@ -58,6 +59,7 @@
                 {
                     $scope.shippingBoxes =result.data.shippingBoxes;
                     $scope.total_box_qnty =result.data.total_box_qnty;
+                    $scope.boxType =result.data.boxType;
 
                     if($scope.shipping_box_id > 0)
                     {
@@ -97,9 +99,27 @@
             order_main_data.cond = angular.copy(condition_obj);
 
             $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
-                var data = {"status": "success", "message": "Data Updated Successfully."}
-                notifyService.notify(data.status, data.message);
+                /*var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);*/
                 $scope.getShippingBoxes();
+            });
+        }
+
+        $scope.changeBoxType = function(id,box_setting_id)
+        {
+            var order_main_data = {};
+            var obj = {};
+            obj['box_setting_id'] =  box_setting_id;
+            order_main_data.data = angular.copy(obj);
+            order_main_data.table = 'shipping_box';
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+                /*var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);*/
             });
         }
 
