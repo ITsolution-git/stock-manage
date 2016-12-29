@@ -14,14 +14,14 @@
         <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_stokkup_logo.png" />
 
  -->
-        <meta property="og:site_name" content="app.stokkup.com"/>
+        <meta property="og:locale" content="en_US" />
         <meta property="og:type" content="profile">
         <meta property="og:title" content="Stokkup">
-        <meta property="og:url" content="stokkup.com">
-        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_fb.jpg" />
+        <meta property="og:url" content="https://app.stokkup.com">
+        <meta property="og:site_name" content="app.stokkup.com" />
+        <meta property="og:image" content="//app.stokkup.com/assets/images/logos/og_fb.jpg" />
         <meta property="profile:first_name" content="Stokkup">
         <meta property="profile:last_name" content="Software">
-
 <!-- 
 
         <meta name="twitter:card" content="summary" />
