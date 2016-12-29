@@ -81,7 +81,7 @@ class Art extends Model {
 	{
 		$query = DB::table('artjob_screensets as ass')
 
-			->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.display_number','or.display_number as ord_displayId','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.positions','ass.display_number as screen_display','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','odp.image_1','art.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'or.approval_id')
+			->select('art.approval','or.name as order_name','or.company_id','or.created_date','cc.first_name','cc.last_name','cl.billing_email','cl.display_number','or.display_number as ord_displayId','cl.client_id','cl.client_company','mt.value as position_name','ass.screen_count','ass.screen_set','ass.positions','ass.display_number as screen_display','ass.id as screen_id','odp.color_stitch_count','ass.frame_size','ass.line_per_inch','ass.screen_width','ass.screen_height','odp.image_1','art.mokup_image','ass.screen_location','ass.screen_active','ass.order_id',DB::raw("(SELECT count(*) FROM artjob_screencolors WHERE screen_id=ass.id) as screen_total"),'or.approval_id')
 				->join('art as art','art.order_id','=','ass.order_id')
 				->join('orders as or','art.order_id','=','or.id')
 				->Join('client as cl', 'cl.client_id', '=', 'or.client_id')
@@ -154,7 +154,7 @@ class Art extends Model {
             $client_filter = $post['filter']['client'];
         }
         $admindata = DB::table('order_design_position as odp')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id,asc.display_number,ord.approval_id,ord.id as order_id'),DB::raw("(color_stitch_count+foil_qnty) as screen_total"))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS asc.screen_set,odp.id,odp.color_stitch_count,cl.client_company,mt.value,asc.screen_width,asc.id as screen_id,asc.display_number,ord.approval_id,ord.id as order_id'),DB::raw("(SELECT count(*) FROM artjob_screencolors WHERE screen_id=asc.id) as screen_total"))
 					->join('artjob_screensets as asc','asc.positions','=','odp.id')
 					->join('order_design as od','od.id','=','odp.design_id')
 					->join('orders as ord','ord.id','=','od.order_id')
@@ -211,7 +211,7 @@ class Art extends Model {
     public function GetScreenset_detail($position_id)
     {
     	$query = DB::table('artjob_screensets as ass')
-				->select(DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"),'ord.id as order_id','od.id as design_id','odp.color_stitch_count','mt.value','ass.*','ord.company_id')
+				->select(DB::raw("(SELECT count(*) FROM artjob_screencolors WHERE screen_id=ass.id) as screen_total"),'ord.id as order_id','od.id as design_id','odp.color_stitch_count','mt.value','ass.*','ord.company_id')
 				->join('order_design_position as odp','odp.id','=','ass.positions')
 				->join('order_design as od','odp.design_id','=','od.id')
 				->join('orders as ord','ord.id','=','od.order_id')
