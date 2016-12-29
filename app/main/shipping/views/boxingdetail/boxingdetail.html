@@ -52,6 +52,7 @@
                                             <th class="secondary-text" width="10%">MD</th>
                                             <th class="secondary-text" width="10%">Spoil</th>
                                             <th class="secondary-text" width="10%">Actual</th>
+                                            <th class="secondary-text" width="20%">Box Type</th>
                                             <th class="secondary-text" width="20%">Re-Allocate</th>
                                         </tr>
                                     </thead>
@@ -74,6 +75,11 @@
                                                 </md-input-container>
                                             </td>
                                             <td>{{ item.actual}}</td>
+                                            <td>
+                                                <md-select aria-label="box_setting_id" ng-model="box_setting_id" class="mrg6-TB" ng-change="changeBoxType(item.box_id,box_setting_id)">
+                                                    <md-option ng-selected="type.id == item.box_setting_id" ng-repeat="type in boxType" value="{{type.id}}">{{type.box_type}}</md-option>
+                                                </md-select>
+                                            </td>
                                             <td>
                                                 <md-select aria-label="shipping_box_id" ng-model="shipping_box_id" class="mrg6-TB" ng-change="reAllocate(shipping_box_id,item.box_item_id)">
                                                     <md-option ng-repeat="sbox in shippingBoxes" value="{{sbox.id}}">{{sbox.count}}</md-option>

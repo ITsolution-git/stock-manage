@@ -122,6 +122,23 @@
                         controller : 'laborController as vm'
                     }
                 }
+            }).state('app.settings.box', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('AT,SU','false');
+                    }
+                },
+                url  : '/box',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/box/box.html',
+                        controller : 'BoxController as vm'
+                    }
+                }
             }).state('app.settings.emailTemplate', {
                 resolve: {
                     checksession : function (sessionService,$state)
@@ -199,7 +216,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('ALL','true');
+                        return sessionService.AccessService('AT,SU,SM','false');
                     }
                 },
                 url  : '/integrations',
@@ -375,49 +392,55 @@
             class      : 'navigation-dashboards project-dashboard',
             weight     : 7
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.affiliate', {
-            title      : 'Affiliate',
-            state      : 'app.settings.affiliate',
+        msNavigationServiceProvider.saveItem('fuse.settings.box', {
+            title      : 'Box Settings',
+            state      : 'app.settings.box',
             stateParams: {'id': 8},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 8
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.integrations', {
-            title      : 'Integrations',
-            state      : 'app.settings.integrations',
+        msNavigationServiceProvider.saveItem('fuse.settings.affiliate', {
+            title      : 'Affiliate',
+            state      : 'app.settings.affiliate',
             stateParams: {'id': 9},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 9
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.vendor', {
-            title      : 'Vendor',
-            state      : 'app.settings.vendor',
+        msNavigationServiceProvider.saveItem('fuse.settings.integrations', {
+            title      : 'Integrations',
+            state      : 'app.settings.integrations',
             stateParams: {'id': 10},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 10
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.sales', {
-            title      : 'Sales',
-            state      : 'app.settings.sales',
+        msNavigationServiceProvider.saveItem('fuse.settings.vendor', {
+            title      : 'Vendor',
+            state      : 'app.settings.vendor',
             stateParams: {'id': 11},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 11
         });
-        msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
-            title      : 'S&S Approval',
-            state      : 'app.settings.approvals',
+        msNavigationServiceProvider.saveItem('fuse.settings.sales', {
+            title      : 'Sales',
+            state      : 'app.settings.sales',
             stateParams: {'id': 12},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 12
+        });
+        msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
+            title      : 'S&S Approval',
+            state      : 'app.settings.approvals',
+            stateParams: {'id': 13},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 13
 
         });
          msNavigationServiceProvider.saveItem('fuse.settings.emailTemplate', {
             title      : 'Email Template',
             state      : 'app.settings.emailTemplate',
-            stateParams: {'id': 13},
+            stateParams: {'id': 14},
             class      : 'navigation-dashboards project-dashboard',
-            
-            weight     : 13
+            weight     : 14
         });
         
         /*

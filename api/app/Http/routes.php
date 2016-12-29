@@ -238,6 +238,7 @@ Route::post('purchase/createPDF', 'PurchaseController@createPDF');
 Route::post('purchase/createPO', 'PurchaseController@createPO');
 Route::get('purchase/GetPoReceived/{id}/{company_id}', 'PurchaseController@GetPoReceived');
 Route::post('purchase/purchasePDF', 'PurchaseController@purchasePDF');
+Route::post('purchase/getAllReceiveProducts', 'PurchaseController@getAllReceiveProducts');
 
 // ORDER CONTROLLER 
 Route::post('order/listOrder',[
@@ -261,18 +262,6 @@ Route::post('order/deleteOrderCommon',[
    'role' => array('AT','SU'),
    'action' => 'false',
    'uses' => 'OrderController@deleteOrderCommon'
-]);
-Route::get('order/getProductDetailColorSize/{id}',[
-   'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
-   'uses' => 'OrderController@getProductDetailColorSize'
-]);
-Route::post('order/productDetail',[
-   'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
-   'uses' => 'OrderController@productDetail'
 ]);
 Route::post('order/sendEmail',[
    'middleware' => 'check',

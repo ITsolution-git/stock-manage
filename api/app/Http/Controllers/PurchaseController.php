@@ -33,7 +33,7 @@ class PurchaseController extends Controller {
     {
         $post = Input::all();
 
-        if(!empty($post['company_id']) && !empty($post['order_id']))
+        if(!empty($post['company_id']) && !empty($post['order_id']) && !empty($post['login_id']))
         {
             $po_type = !empty($post['po_type'])?$post['po_type']:'';
             $order_data = $this->purchase->getOrderData($post['company_id'],$post['order_id'],$po_type);
@@ -43,7 +43,7 @@ class PurchaseController extends Controller {
                 $this->common->UpdateTableRecords('purchase_order',array('order_id'=>$post['order_id']),array('is_active'=>0),'');
                 foreach ($order_data as $key=>$value) 
                 {
-                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key,'po',$post['company_id']);
+                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key,'po',$post['company_id'],$post['login_id']);
                     $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
                     /*if($purchase_order_id=='0')
                     {
@@ -470,6 +470,22 @@ class PurchaseController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
             return  response()->json(["data" => $response]);
         }
+
+    }
+    public function getAllReceiveProducts()
+    {
+        $post = Input::all();
+        
+        if(!empty($post['company_id']) && !empty($post['po_id']) && !empty($post['product_id']))
+        {
+           $this->purchase->getAllReceiveProducts($post['company_id'],$post['po_id'],$post['product_id']); 
+           $response = array('success' => 1);
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+       return response()->json(["data" => $response]);
 
     }
 }

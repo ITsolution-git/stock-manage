@@ -1,0 +1,69 @@
+<md-dialog class="task-dialog addEmployeeDialog" >
+    <form name="employeeform" class="md-inline-form" novalidate>
+        <div class="client-profile-page">
+            <md-toolbar class="md-accent md-hue-2">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                    <span class="title">Add Box</span>
+                    <md-button  ng-click="closeDialog()">
+                        <span>Cancel</span>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div ng-cloak>
+                <md-card-content layout="column" class="box-shadow-0">
+                    <div layout="row" layout-wrap>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
+                            <input placeholder="Box Type *" required name="box_type"  ng-model="box.box_type">
+                            <div ng-messages="employeeform.box_type.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Box Length *" required name="length"  ng-model="box.length" only-number ng-maxlength="5">
+                            <div ng-messages="employeeform.length.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Box Width *" required name="width"  ng-model="box.width" only-number ng-maxlength="5">
+                            <div ng-messages="employeeform.width.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Box Heigth *" required name="height"  ng-model="box.height" only-number ng-maxlength="5">
+                            <div ng-messages="employeeform.height.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Box Width *" required name="weight"  ng-model="box.weight" only-number ng-maxlength="5">
+                            <div ng-messages="employeeform.weight.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </md-card-content>
+            </div>
+        </div>
+        <table>
+            <tr>
+                <td class="p-16 td-500">
+                    <md-button class="bg-blue float-right"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="addBox(box)">
+                        SAVE
+                    </md-button>
+                </td>  
+            </tr>
+        </table>
+    </form>
+</md-dialog>

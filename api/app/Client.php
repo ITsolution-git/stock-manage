@@ -39,7 +39,7 @@ class Client extends Model {
             $search = $post['filter']['name'];
         }
     
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_id,c.display_number,c.client_id as id,c.client_company,cc.email,cc.first_name,cc.phone,cc.last_name,c.status,c.client_company as label')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS c.client_id,c.display_number,c.client_id as id,c.client_company,cc.email,cc.first_name,cc.phone,cc.last_name,c.status,c.client_company as label,c.login_id')];
         $whereConditions = ['c.is_delete' => '1','c.company_id' => $post['company_id']];
 				$result =	DB::table('client as c')
         				 ->leftJoin('client_contact as cc','c.client_id','=',DB::raw("cc.client_id AND cc.contact_main = '1' "))
@@ -196,6 +196,7 @@ class Client extends Model {
     		foreach ($retArray as $key => $value) 
     		{
           $result['client_id'] = $value->client_id;
+          $result['login_id']  = $value->login_id;
     			$result['main']['client_id'] = $value->client_id;
           $result['main']['qid'] = $value->qid;
     			$result['main']['client_company'] = $value->client_company;
@@ -250,6 +251,7 @@ class Client extends Model {
     			$result['sales']['salesweb'] =   (!empty($value->salesweb) && preg_match('/http/',$value->salesweb) == false) ? "http://".$value->salesweb:$value->salesweb;
     			$result['sales']['anniversarydate'] = $value->anniversarydate;
     			$result['sales']['salesperson'] = $value->salesperson;
+          $result['sales']['sales_credit'] = $value->sales_credit;
           $result['sales']['sales_name'] = $value->sales_name;
     			$result['sales']['salespricegrid'] = $value->salespricegrid;
           $result['sales']['price_grid'] = $value->price_grid;
@@ -580,6 +582,7 @@ public function saveTaxDoc($post)
           $result['sales']['anniversarydate'] = $value->anniversarydate;
           $result['sales']['salesperson'] = $value->salesperson;
           $result['sales']['sales_name'] = $value->sales_name;
+          $result['sales']['sales_credit'] = $value->sales_credit;
           $result['sales']['salespricegrid'] = $value->salespricegrid;
           $result['sales']['price_grid'] = $value->price_grid;
           $result['sales']['anniversarydate'] = ($result['sales']['anniversarydate']=='0000-00-00')? '': date('m/d/Y',strtotime($result['sales']['anniversarydate']));

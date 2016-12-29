@@ -47,7 +47,8 @@ class Distribution extends Model {
 	{
 		$result = DB::table('order_shipping_address_mapping as oa')
 					->leftJoin('client_distaddress as cd','oa.address_id','=','cd.id')
-					->select('cd.*','oa.id as order_adress_id','oa.shipping_type_id','oa.shipping_method_id')
+					->leftJoin('state as st','st.id','=','cd.state')
+					->select('cd.*','oa.id as order_adress_id','oa.shipping_type_id','oa.shipping_method_id','st.name')
 					->where('oa.order_id','=',$data['id'])
 					->where('is_deleted','=',1);
 					if(isset($data['search']))

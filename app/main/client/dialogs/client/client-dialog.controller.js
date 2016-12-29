@@ -95,6 +95,7 @@
          */
         function addNewClient(client_data)
         {
+            $("#ajax_loader").show();
             client_data.company_id = vm.company_id;
             var checkSession = $resource('api/public/client/addclient',null,{
                 AjaxCall : {
@@ -114,7 +115,7 @@
                   notifyService.notify(data.status, data.message);
                   return false;
                 }
-
+                $("#ajax_loader").hide();
 
                 closeDialog();
                 

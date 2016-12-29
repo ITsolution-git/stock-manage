@@ -11,6 +11,7 @@
     function OrderController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
 
         $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
         if($scope.role_slug=='SU' || $scope.role_slug=='AT')
         {
             $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
@@ -117,7 +118,6 @@
             this.searchOrder = null;
             jQuery('.dateFilter').prop("value", " ");
 
-            console.log(vm.statusCheckModal);
 
             $scope.filterOrders();
         }

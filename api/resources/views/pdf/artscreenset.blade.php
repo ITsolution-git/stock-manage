@@ -189,28 +189,44 @@
 }
 ?>
 
-<hr style="border:1px solid #000;">
-<table>
-    <tr>
-        <td align="left"><b>Notes</b></td>
-    </tr>
 <?php  
-foreach($data as $key_main=>$value_main)
-{ ?>
+  foreach($data as $key_main=>$value_main)
+  { ?>
     <?php  if(!empty($value_main[1])) 
     {
     ?>
-    <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
-    <tr>
-        <td align="left"><?php echo $not_value ?></td>
-    </tr>
-    <?php } ?>
+      <table>
+        <tr>
+            <td align="left"><b>Notes:</b></td>
+        </tr>
+        <?php foreach($value_main[1] as $note_key=>$not_value){ ?>
+        <tr>
+            <td align="left"><?php echo $not_value ?></td>
+        </tr>
+      <?php } ?>
+      </table>
     <?php 
-      }  
+    }  
   }
 ?>
 
+
+<?php  if(!empty($company->blind_text)) 
+{
+?>
+<table>
+    <tr>
+        <td align="left"><b>Blind Text:</b></td>
+    </tr>
+    <tr>
+        <td align="left"><?php echo $company->blind_text ?></td>
+    </tr>
 </table>
+<?php 
+  }  
+?>
+
+
 <div style="page-break-before: always;"></div>
 
 <!-- <table>

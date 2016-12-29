@@ -31,7 +31,7 @@ class Order extends Model {
         $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['company_id'],'order.parent_order_id' => '0'];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.display_number,order.name,order.created_date,order.approved_date,order.date_shipped,
-                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name,users.name as account_manager')];
+                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name,users.name as account_manager,order.login_id')];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
@@ -180,59 +180,6 @@ class Order extends Model {
         return $result;
     }
 
-/**
-* Product Color Size Details           
-* @access public getOrderNoteDetails
-* @param  int $productId
-* @return array $result
-*/ 
-
-     public function getProductDetailColorSize($id)
-    {
-       
-        $whereConditions = ['p.product_id' => $id,'p.status' => '1','p.is_delete' => '1','c.status' => '1','c.is_delete' => '1','pz.status' => '1','pz.is_delete' => '1'];
-        $listArray = ['p.id','p.product_id','p.color_id','p.size_id','p.price','c.name as color','pz.name as size'];
-
-        $productColorSizeData = DB::table('product_color_size as p')
-                         ->Join('color as c', 'c.id', '=', 'p.color_id')
-                         ->Join('product_size as pz', 'pz.id', '=', 'p.size_id')
-                         ->select($listArray)
-                         ->where($whereConditions)
-                         ->get();
-
-
-        $whereColorData = ['product_id' => $id];
-        $productMainData = DB::table('product_color_size')->where($whereColorData)->get();
-
-        $color_array = array();
-        $colorData = array();
-        foreach ($productMainData as $key=>$alldata){
-          
-            if(!in_array($alldata->color_id,$color_array)) {
-                array_push($color_array, $alldata->color_id); 
-                 $colorData[]['id'] = $alldata->color_id;
-            }
-        }
-
-        $combine_array['productColorSizeData'] = $productColorSizeData;
-        $combine_array['ColorData'] = $colorData;
-        return $combine_array;
-    }
-
-    public function GetProductColor($product_id)
-    {
-        $listArray = ['c.id','c.name'];
-
-        $productColorSizeData = DB::table('products as p')
-                         ->leftJoin('color as c', 'c.id', '=', 'p.color_id')
-                         ->select($listArray)
-                         ->where('p.product_id','=',$product_id)
-                         ->GroupBy('c.id')
-                         ->get();
-
-        return $productColorSizeData;
-    }
-
     /**
 * Order Detail           
 * @access public designDetail
@@ -244,7 +191,7 @@ class Order extends Model {
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number','o.affiliate_display_number'];
+        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number','o.affiliate_display_number','o.login_id'];
 
         $designDetailData = DB::table('order_design as od')
                          ->leftJoin('orders as o','od.order_id','=', 'o.id')
