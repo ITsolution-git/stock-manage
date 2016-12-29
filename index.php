@@ -18,7 +18,7 @@
         <meta property="og:type" content="profile">
         <meta property="og:title" content="Stokkup">
         <meta property="og:url" content="stokkup.com">
-        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_stokkup_logo_new.png" />
+        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_fb.jpg" />
         <meta property="profile:first_name" content="Stokkup">
         <meta property="profile:last_name" content="Software">
 
