@@ -2599,8 +2599,7 @@ class OrderController extends Controller {
         return response()->json(['data'=>$data]);
     }
 
-<<<<<<< HEAD
-=======
+
 
 
 /** 
@@ -2650,7 +2649,7 @@ class OrderController extends Controller {
  */
 
 
->>>>>>> fuse_php
+
      public function GetAllClientsAddress(){
        $post = Input::all();
        
