@@ -152,13 +152,24 @@
                             <td ui-sref="app.order.order-info({id:row.display_number})" class="cursor-p">{{ row.display_number}}</td>
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
-                            <td> 
+                            <td ng-show="role_slug=='SM'"> 
+
+                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.id)" ng-disabled="row.login_id != user_id">
+                                    <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                </md-select>
+
+                            </td>
+
+
+                            <td ng-show="role_slug!='SM'"> 
 
                                 <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.id)" ng-disabled="allow_access == '0'">
                                     <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                 </md-select>
 
                             </td>
+
+
                             <td ng-if="row.created_date != '0000-00-00'">{{ row.created_date | date:"M/d/yyyy" }}</td>
                             <td ng-if="row.created_date == '0000-00-00'"></td>
                             <td>{{ row.sales_name}}</td>
