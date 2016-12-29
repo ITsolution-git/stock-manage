@@ -12,15 +12,9 @@
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
 
-        $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
-        {
-            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
-        }
-        else
-        {
-            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
-        }
+       $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.allowSA = 0;
 
 
         // change display number to design Id for fetching the order data
@@ -34,7 +28,7 @@
               if(result.data.success == '1') 
               {
                  
-                  $scope.design_id = result.data.records[0].id;
+                  $scope.design_id = result.data.records[0].id;                    
                    $scope.designDetail();
                    $scope.designPosition();
 
@@ -111,6 +105,33 @@
                
                 $("#ajax_loader").hide();
                 if(result.data.success == '1') {
+
+
+                    if($scope.role_slug == 'SM' && $scope.user_id == result.data.records[0].login_id) {
+
+                         $scope.allowSA = 1;
+                    } 
+
+                    if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+                    {
+                        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+                    }
+                    else if($scope.role_slug =='SM' && $scope.allowSA == 1)
+                    {
+                        $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else if($scope.role_slug =='SM' && $scope.allowSA == 0)
+                    {
+                        $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else {
+
+                         $scope.allow_access = 1; // THESE ROLES CAN ALLOW TO EDIT
+                    }
+
+
+
+                    
                      
                     $scope.order_id = result.data.records[0].order_id;
                     $scope.price_id = result.data.records[0].price_id;
