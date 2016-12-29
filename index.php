@@ -7,19 +7,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
-        <meta property="og:site_name" content="app.stokkup.com"/>
+        <!-- <meta property="og:site_name" content="app.stokkup.com"/>
         <meta property="og:description" content="Stokkup" />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content="en_US" />
-        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_logo.png" />
+        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_stokkup_logo.png" />
 
-
+ -->
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="profile">
+        <meta property="og:title" content="Stokkup">
+        <meta property="og:url" content="https://app.stokkup.com">
+        <meta property="og:site_name" content="app.stokkup.com" />
+        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/stokkup-fb-logo.jpg" />
+        <meta property="og:first_name" content="Stokkup">
+        <meta property="og:last_name" content="Software">
+<!-- 
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="app.stokkup.com" />
         <meta name="twitter:description" content="app.stokkup.com" />
         <meta name="twitter:image" content="https://app.stokkup.com/assets/images/logos/og_logo.png" />
-
+ -->
 
 
 
