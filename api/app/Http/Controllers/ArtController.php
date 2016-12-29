@@ -472,18 +472,20 @@ class ArtController extends Controller {
     {
 
         $screenArray= json_decode($_POST['art']);
+        //echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
         if(count($screenArray)>0)
         {
             $options = !empty($screenArray->options)?$screenArray->options:array();
             $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
 
+            $email_text = $screenArray->email_text;
             //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
             if(!empty($pdf_data[0][0]))
             {
                 $email_array = explode(",",$screenArray->email);
                 $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
-               
+                    
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
                 else { exec("chmod $file_path 0777"); }
 
@@ -493,23 +495,24 @@ class ArtController extends Controller {
                 $pdf->FooterImg(FOOTER_IMAGE);
                 $pdf->SetAutoPageBreak(TRUE, 10);
                 $pdf->AddPage('P','A4');
-                $pdf->writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
+                $pdf->writeHTML(view('pdf.artscreenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
 
                 $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
                 $filename = $file_path."/". $pdf_url;
+                $pdf->Output($filename,'F');
                 
 
                 if(!empty($screenArray->flag) && $screenArray->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
 
-                    Mail::send('emails.artapproval', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
+                    Mail::send('emails.artapproval', ['email_text'=>$email_text], function($message) use ($pdf_data,$filename,$email_array)
                     {
                         $message->to($email_array);
                         $message->subject('Art Approval for the order '.$pdf_data[0][0][0]->order_name);
                         $message->attach($filename);
                     });
                 }
-                $pdf->Output($pdf_url);
+                return Response::download($filename);
             }
             else
             {

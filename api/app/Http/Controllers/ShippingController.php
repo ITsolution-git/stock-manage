@@ -152,6 +152,15 @@ class ShippingController extends Controller {
             $result['shipping'][0]->fully_shipped = '';
         }
 
+        $result['shipping'][0]->fulladdress  = !empty($result['shipping'][0]->address2)?$result['shipping'][0]->address2." ":'';
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->address)?$result['shipping'][0]->address:'' ; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->address_line2)?", ".$result['shipping'][0]->address_line2:'' ; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->suite)?", ".$result['shipping'][0]->suite:'' ; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->city)?", ".$result['shipping'][0]->city:''; 
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->name)?", ".$result['shipping'][0]->name:'';
+        $result['shipping'][0]->fulladdress .= !empty($result['shipping'][0]->zipcode)?", ".$result['shipping'][0]->zipcode:'';
+        $result['shipping'][0]->fulladdress .= ' USA';
+
         $shipping_type = $this->common->GetTableRecords('shipping_type',array(),array());
 
         if(!empty($result['shippingBoxes']))
@@ -687,7 +696,16 @@ class ShippingController extends Controller {
 
         foreach ($allAddress as $address) {
             
-            $address->full_address = $address->address2 ." ". $address->address ." ". $address->city ." ". $address->state ." ". $address->zipcode ." USA";
+            $address->full_address  = !empty($address->address2)?$address->address2." ":'';
+            $address->full_address .= !empty($address->address)?$address->address:'' ; 
+            $address->full_address .= !empty($address->address_line2)?", ".$address->address_line2:'' ; 
+            $address->full_address .= !empty($address->suite)?", ".$address->suite:'' ; 
+            $address->full_address .= !empty($address->city)?", ".$address->city:''; 
+            $address->full_address .= !empty($address->name)?", ".$address->name:'';
+            $address->full_address .= !empty($address->zipcode)?", ".$address->zipcode:'';
+            $address->full_address .= ' USA';
+
+            //$address->full_address = $address->address2 ." ". $address->address ." ". $address->city ." ". $address->state ." ". $address->zipcode ." USA";
             $address->selected = 0;
 
             $allocatedAddress2 = array();
@@ -751,25 +769,29 @@ class ShippingController extends Controller {
             $count++;
         }
 
-         if(empty($shippingBoxes))
-            {
-                $shipping = $this->common->GetTableRecords('shipping',array('id' => $post['shipping_id']));
-                $this->common->UpdateTableRecords('orders',array('id' => $shipping[0]->order_id),array('shipping_status' => '1'));
-                $response = array(
-                    'success' => 0, 
-                    'message' => "No Records Found",
-                    'shippingBoxes' => '',
-                    'total_box_qnty' => ''
-                ); 
-               return response()->json(["data" => $response]);
-            }
+        $boxType = $this->common->GetTableRecords('box_setting',array('company_id' => $post['company_id'],'is_delete' => '1'));
+
+        if(empty($shippingBoxes))
+        {
+            $shipping = $this->common->GetTableRecords('shipping',array('id' => $post['shipping_id']));
+            $this->common->UpdateTableRecords('orders',array('id' => $shipping[0]->order_id),array('shipping_status' => '1'));
+            $response = array(
+                'success' => 0, 
+                'message' => "No Records Found",
+                'shippingBoxes' => '',
+                'total_box_qnty' => '',
+                'boxType' => $boxType
+            ); 
+           return response()->json(["data" => $response]);
+        }
 
 
         $response = array(
                         'success' => 1, 
                         'message' => GET_RECORDS,
                         'shippingBoxes' => $shippingBoxes,
-                        'total_box_qnty' => count($shippingBoxes)
+                        'total_box_qnty' => count($shippingBoxes),
+                        'boxType' => $boxType
                     );
 
         return response()->json(["data" => $response]);
@@ -1009,10 +1031,22 @@ class ShippingController extends Controller {
                         $shipment->setParameter('debugMode', '0');
                     }*/
 
-                    $shipment->setParameter('length', '5');
-                    $shipment->setParameter('width', '5');
-                    $shipment->setParameter('height', '5');
-                    $shipment->setParameter('weight','5');
+                    if($box['box_setting_id'] > 0)
+                    {
+                        $boxType = $this->common->GetTableRecords('box_setting',array('id' => $box['box_setting_id']));
+                        $shipment->setParameter('length', $boxType[0]->length);
+                        $shipment->setParameter('width', $boxType[0]->width);
+                        $shipment->setParameter('height', $boxType[0]->height);
+                        $shipment->setParameter('weight',$boxType[0]->weight);
+                    }
+                    else
+                    {
+                        $shipment->setParameter('length', '5');
+                        $shipment->setParameter('width', '5');
+                        $shipment->setParameter('height', '5');
+                        $shipment->setParameter('weight','5');
+                    }
+
                     $shipment->setParameter('service', $post['shipping']['shipping_method']);
 
                     $shipment->setParameter('key', $result_api[0]->key);
@@ -1045,6 +1079,7 @@ class ShippingController extends Controller {
                     $count++;
                 }
                 $this->common->UpdateTableRecords('shipping',array('id' => $post['shipping']['shipping_id']),array('cost_to_ship' => $total_fedex_charge,'tracking_number'=>$main_tracking_number));
+                $this->common->UpdateTableRecords('orders',array('id' => $post['shipping']['order_id']),array('shipping_status' => '3'));
 
                 $response = array(
                         'success' => 1,
@@ -1099,10 +1134,22 @@ class ShippingController extends Controller {
                 $count = 1;
                 foreach ($post['shippingBoxes'] as $box) {
                     $package = new \RocketShipIt\Package('UPS');
-                    $package->setParameter('length','5');
-                    $package->setParameter('width','5');
-                    $package->setParameter('height','5');
-                    $package->setParameter('weight','5');
+
+                    if($box['box_setting_id'] > 0)
+                    {
+                        $boxType = $this->common->GetTableRecords('box_setting',array('id' => $box['box_setting_id']));
+                        $package->setParameter('length', $boxType[0]->length);
+                        $package->setParameter('width', $boxType[0]->width);
+                        $package->setParameter('height', $boxType[0]->height);
+                        $package->setParameter('weight',$boxType[0]->weight);
+                    }
+                    else
+                    {
+                        $package->setParameter('length','5');
+                        $package->setParameter('width','5');
+                        $package->setParameter('height','5');
+                        $package->setParameter('weight','5');
+                    }
 
                     $shipment->addPackageToShipment($package);
                 }

@@ -159,7 +159,7 @@ class Purchase extends Model {
                         DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),
                         DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
                       'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',
-                      DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*','ord.approval_id','usr1.name as account_manager','ca.street','ca.city','st.code as state_name','ca.postal_code','ca.address',DB::raw('DATE_FORMAT(inv.payment_due_date, "%m/%d/%Y") as payment_due_date'))
+                      DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','po.login_id','pol.*','ord.approval_id','usr1.name as account_manager','ca.street','ca.city','st.code as state_name','ca.postal_code','ca.address',DB::raw('DATE_FORMAT(inv.payment_due_date, "%m/%d/%Y") as payment_due_date'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
@@ -561,7 +561,7 @@ class Purchase extends Model {
 		return $result;
 		
 	}
-	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po',$company_id)
+	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po',$company_id,$login_id=0)
 	{
 		/*$check = DB::table('purchase_order')
 				->select('*')
@@ -577,7 +577,7 @@ class Purchase extends Model {
 		else 
 		{*/
 			$disp_id = $this->common->getDisplayNumber('purchase_order',$company_id,'company_id','po_id','yes');
-			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1,'company_id'=>$company_id,'display_number'=>$disp_id));
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1,'company_id'=>$company_id,'display_number'=>$disp_id,'login_id'=>$login_id));
 			$id = DB::getPdo()->lastInsertId();
         	return $id;	
 		//}		
@@ -690,6 +690,25 @@ class Purchase extends Model {
         }
 
 		return $result;
+    }
+    public function getAllReceiveProducts($company_id,$po_id,$product_id)
+    {
+    	$result =  DB::table('purchase_order as po')
+		  ->Join('purchase_order_line as pol','pol.po_id','=','po.po_id')
+		  ->Join('purchase_detail as pd','pd.id','=','pol.purchase_detail') 
+		  ->select('pol.qnty_ordered','pol.id')
+		  ->where('po.display_number','=',$po_id)
+		  ->where('po.company_id','=',$company_id)
+		  ->where('pd.product_id','=',$product_id)
+		  ->get();
+
+		foreach ($result as $key => $value) 
+		{
+		  		DB::table('purchase_order_line')
+		  		->where('id',$value->id)
+		  		->update(array('qnty_purchased'=>$value->qnty_ordered));
+		}  
+		return $result; 
     }
 
 }

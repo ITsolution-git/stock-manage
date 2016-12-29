@@ -50,7 +50,7 @@
                         </div>
                     </md-card-content>
                     <div layout-align="end start"  flex="5" layout="row">
-                        <md-menu>
+                        <md-menu ng-show="allow_access==1">
                             <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                         <div class="full-box md-default-theme white-bg layout-padding">
-                            <div flex="70" layout="column" >
+                            <div flex="70" layout="column"  ng-show="allow_access==1">
                                 <a href="javascript:;" ng-click="openClientEmailPopup()" class="pull-right stokkup-custom-btn1 stokkup-blue-btn text-white">Create PDF</a>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                         <td>{{ line_item.product_color}}</td>
                         <td>{{ line_item.qnty_ordered}} / {{ line_item.qnty_purchased}}</td>
                         <td>${{ line_item.unit_price}}</td>
-                        <td><a class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
+                        <td  ng-show="allow_access==1"><a class="cursor-p" ng-click="changeLinedata(line_item.id,line_item.qnty_ordered,line_item.unit_price,line_item.qnty)">VIEW</a></td> 
                     </tr>
                 </tbody> 
             </table>
@@ -144,7 +144,7 @@
                 <md-card-title-text class="stokkup-title-h4">
                     Dropship Instructions
                 </md-card-title-text>
-                <div>
+                <div  ng-show="allow_access==1">
                     <a class="common-header-links" ng-click="changeDropship(po_data.vendor_instruction)">EDIT</a>
                 </div>
             </md-card-title>
@@ -162,7 +162,7 @@
                     Notes
                 </md-card-title-text>
                 <div>
-                    <a class="common-header-links" ui-sref="app.purchaseOrder.viewNote({id:po_data.po_display})" >VIEW NOTES</a>
+                    <a class="common-header-links"  ng-show="allow_access==1" ui-sref="app.purchaseOrder.viewNote({id:po_data.po_display})" >VIEW NOTES</a>
                 </div>
             </md-card-title>
             <md-card-content  layout="column" layout-padding class="min-height">
@@ -208,8 +208,8 @@
                     <span class="small-headings mr-20">Total Amount</span>
                     <span class="small-results">${{ order_total.total_amount}}</span>
                 </div>
-                <div class="pull-right">
-                    <md-button aria-label="Back" ng-if="po_data.complete==0" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="stokkup-custom-btn1 stokkup-blue-btn">
+                <div class="pull-right" >
+                    <md-button aria-label="Back" ng-if="po_data.complete==0 && role_slug!='SM'"  ng-click="CreateRo(po_data.po_id,po_data.complete)" class="stokkup-custom-btn1 stokkup-blue-btn">
                         Create Receive PO
                     </md-button>
                     <md-button aria-label="Back" ng-if="po_data.complete==1" ng-click="CreateRo(po_data.po_id,po_data.complete)" class="stokkup-custom-btn1 stokkup-blue-btn">

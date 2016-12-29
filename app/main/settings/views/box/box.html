@@ -1,10 +1,10 @@
 <div class="content order-list-page puchase-order-page stockkup-content-table-container">
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20>Sales</div>
+            <div class="table-title-text" flex=20>Box Settings</div>
             <div class="pull-right right-search-box">
                 <div class="client-modal-title pull-right">
-                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="openInsertPopup($event)">ADD NEW</span>
+                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="addBox($event)">ADD BOX</span>
                 </div>
                 <div class="search-block pull-right">
                 <md-input-container class="md-block" flex-gt-sm>
@@ -16,16 +16,16 @@
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
-                 <table class="dataTable row-border">
+                 <table class="dataTable row-border hover">
 
                     <thead tasty-thead></thead>
                     <tbody >
-                        <tr ng-repeat="Sales in rows">
-                            <td class="">{{Sales.display_number}}</td>
-                            <td class="">{{Sales.sales_name}}</td>
-                            <td class="">{{Sales.sales_email}}</td>
-                            <td class="">{{Sales.sales_phone}}</td>
-                            <td class="">{{Sales.sales_created_date}}</td>
+                        <tr ng-repeat="box in rows">
+                            <td>{{box.box_type}}</td>
+                            <td>{{box.length}}</td>
+                            <td>{{box.width}}</td>
+                            <td>{{box.height}}</td>
+                            <td>{{box.weight}}</td>
                             <td class=""> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -33,20 +33,15 @@
                                     </md-button>
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
-                                            <md-button ng-click="openEditPopup($event,Sales)">
-                                                Edit Sales
+                                            <md-button ng-click="editBox($event,box.id)">
+                                                Edit Box
                                             </md-button>
                                         </md-menu-item>
-                                        <md-menu-item  ng-show="allow_access==1 && role_slug!='SM'">
-                                            <md-button ng-click="delete_sales($event,Sales.id)">
-                                                Remove Sales
+                                        <md-menu-item ng-show="allow_access==1">
+                                            <md-button ng-click="deleteBox($event,box.id)">
+                                                Delete Box
                                             </md-button>
-                                        </md-menu-item>  
-                                        <md-menu-item  ng-show="Sales.login_id==user_id && role_slug=='SM'">
-                                            <md-button ng-click="delete_sales($event,Sales.id)">
-                                                Remove Sales
-                                            </md-button>
-                                        </md-menu-item>                                      
+                                        </md-menu-item>
                                     </md-menu-content>
                                 </md-menu>
                             </td>
@@ -57,7 +52,7 @@
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-           <table class="dataTable row-border">
+           <table class="simple">
                 <thead>
                     <tr>
                         <th>No Records Found</th>

@@ -23,7 +23,7 @@
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT' || $scope.role_slug=='SM')
         {
             $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
         }
@@ -288,7 +288,26 @@
             });
         }
 
-
+        $scope.ReceiveProductsAll = function(product_id)
+        {
+            $("#ajax_loader").show();
+            var pass_array = {};
+            pass_array.company_id = $scope.company_id;
+            pass_array.po_id = $scope.display_number;
+            pass_array.product_id = product_id;
+            $http.post('api/public/purchase/getAllReceiveProducts',pass_array).success(function(result) {
+                if(result.data.success=='1')
+                {
+                    //notifyService.notify('success', result.data.message);
+                    $scope.GetPodata();
+                }
+                else
+                {
+                    notifyService.notify('error', result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }   
 
     }
     

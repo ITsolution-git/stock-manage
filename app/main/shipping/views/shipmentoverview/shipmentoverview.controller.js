@@ -25,7 +25,11 @@
 
         var company_id = sessionService.get('company_id');
 
-        $http.post('api/public/common/getCompanyDetail',company_id).success(function(result) {
+
+         var combine_array_id = {};
+        combine_array_id.company_id = sessionService.get('company_id');
+
+        $http.post('api/public/common/getCompanyDetail',combine_array_id).success(function(result) {
                             
             if(result.data.success == '1') 
             {
@@ -282,6 +286,11 @@
             shipping_id.name = 'shipping_id';
             shipping_id.setAttribute('value', $scope.shipping_id);
             form.appendChild(shipping_id);
+
+            var input_pdf = document.createElement('input');
+            input_pdf.name = 'pdf_token';
+            input_pdf.setAttribute('value', 'pdf_token');
+            form.appendChild(input_pdf);
 
             document.body.appendChild(form);
             form.submit();

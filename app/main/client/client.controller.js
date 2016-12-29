@@ -38,6 +38,7 @@
         vm.dtInstanceCB = dtInstanceCB;
         vm.searchTable = searchTable;
         $scope.company_id = sessionService.get('company_id');
+        $scope.user_id = sessionService.get('user_id');
         $scope.role_slug = sessionService.get('role_slug');
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
