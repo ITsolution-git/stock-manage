@@ -90,21 +90,24 @@ Route::post('admin/productVendor', 'VendorController@productVendor');
 Route::post('admin/price',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'SettingController@price'
 ]);
 
 Route::post('admin/priceDelete',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
-   'action' => 'true',
+   'action' => 'delete',
+   'flag' => 'true',
    'uses' => 'SettingController@delete'
 ]);
 
 Route::post('admin/priceGridDuplicate',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
-   'action' => 'true',
+   'action' => 'add',
+   'flag' => 'true',
    'uses' => 'SettingController@priceGridDuplicate'
 ]);
 
@@ -112,62 +115,71 @@ Route::post('admin/priceEdit',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
    'action' => 'true',
+   'flag' => 'true',
    'uses' => 'SettingController@priceEdit'
 ]);
 
 Route::post('admin/priceDetail',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'SettingController@priceDetail'
 ]);
 
 Route::post('admin/priceEdit/{id}',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'SettingController@priceDetail'
 ]);
 
 Route::post('admin/priceGridPrimaryDuplicate',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
-   'action' => 'true',
+   'action' => 'add',
+   'flag' => 'true',
    'uses' => 'SettingController@priceGridPrimaryDuplicate'
 ]);
 
 Route::post('admin/priceSecondary',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'SettingController@priceSecondary'
 ]);
 
 Route::post('admin/downloadPricegridCSV',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
-   'action' => 'true',
+   'action' => 'get',
+   'flag' => 'true',
    'uses' => 'SettingController@downloadPricegridCSV'
 ]);
 
 Route::post('admin/uploadPricingCSV',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
-   'action' => 'true',
+   'action' => 'add',
+   'flag' => 'true',
    'uses' => 'SettingController@uploadPricingCSV'
 ]);
 
 Route::get('admin/uploadSnsCSV',[
    'middleware' => 'check',
    'role' => array('SA'),
-   'action' => 'true',
+   'action' => 'add',
+   'flag' => 'true',
    'uses' => 'SettingController@uploadSnsCSV'
 ]);
 
 Route::post('admin/downloadPriceGridExcel',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
-   'action' => 'true',
+   'action' => 'get',
+   'flag' => 'true',
    'uses' => 'SettingController@downloadPriceGridExcel'
 ]);
 
@@ -180,7 +192,8 @@ Route::post('admin/getDeniedOrders', 'SettingController@getDeniedOrders');
 Route::post('admin/miscSave',[
    'middleware' => 'check',
    'role' => array('SM'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'MiscController@miscSave'
 ]);
 
@@ -254,31 +267,38 @@ Route::post('order/orderDetail',[
 Route::post('order/updatePositions',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'view',
+   'special_role' => array('SM'),
+   'special_action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@updatePositions'
 ]);
 Route::post('order/deleteOrderCommon',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'delete',
    'uses' => 'OrderController@deleteOrderCommon'
 ]);
 Route::post('order/sendEmail',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'send',
    'uses' => 'OrderController@sendEmail'
 ]);
 Route::post('order/addOrder',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'add',
    'uses' => 'OrderController@addOrder'
 ]);
 Route::post('order/addDesign',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'add',
    'uses' => 'OrderController@addDesign'
 ]);
 Route::post('order/designListing',[
@@ -294,7 +314,8 @@ Route::post('order/designDetail',[
 Route::post('order/editDesign',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@editDesign'
 ]);
 Route::post('order/getDesignPositionDetail',[
@@ -305,67 +326,78 @@ Route::post('order/getDesignPositionDetail',[
 Route::post('order/editOrder',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@editOrder'
 ]);
 Route::post('order/orderDetailInfo',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'view',
+   'flag' => 'false',
    'uses' => 'OrderController@orderDetailInfo'
 ]);
 Route::post('order/updateOrderCharge',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@updateOrderCharge'
 ]);
 Route::post('order/updateMarkup',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@updateMarkup'
 ]);
 Route::post('order/updateOverride',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@updateOverride'
 ]);
 Route::get('order/calculateAll/{order_id}/{company_id}',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@calculateAll'
 ]);
 Route::post('order/snsOrder',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@snsOrder'
 ]);
 Route::post('order/addPosition',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'OrderController@addPosition'
 ]);
 Route::post('order/addInvoice',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'OrderController@addInvoice'
 ]);
 Route::post('order/createInvoice',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'OrderController@createInvoice'
 ]);
 Route::post('order/paymentInvoiceCash',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'OrderController@paymentInvoiceCash'
 ]);
 Route::post('order/paymentLinkToPay', 'OrderController@paymentLinkToPay');
@@ -373,6 +405,7 @@ Route::post('payment/chargeCreditCard', 'PaymentController@chargeCreditCard');
 Route::post('order/GetAllClientsLowerCase',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
+   'action' => 'view',
    'action' => 'false',
    'uses' => 'OrderController@GetAllClientsLowerCase'
 ]);
@@ -380,24 +413,28 @@ Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
 Route::post('payment/refundTransaction',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
+   'action' => 'edit',
    'action' => 'false',
    'uses' => 'PaymentController@refundTransaction'
 ]);
 Route::post('order/updateInvoicePayment',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
+   'action' => 'edit',
    'action' => 'false',
    'uses' => 'OrderController@updateInvoicePayment'
 ]);
 Route::post('order/GetAllClientsAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
+   'action' => 'view',
    'action' => 'false',
    'uses' => 'OrderController@GetAllClientsAddress'
 ]);
 Route::post('order/allOrderAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
+   'action' => 'all',
    'action' => 'false',
    'uses' => 'OrderController@allOrderAddress'
 ]);
@@ -416,13 +453,15 @@ Route::get('finishing/listFinishing',[
 Route::post('finishing/updateFinishing',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'FinishingController@updateFinishing'
 ]);
 Route::post('finishing/addRemoveToFinishing',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'FinishingController@addRemoveToFinishing'
 ]);
 
@@ -450,18 +489,21 @@ Route::post('shipping/listShipping',[
 Route::post('shipping/shippingDetail',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ShippingController@shippingDetail'
 ]);
 Route::post('shipping/getShippingOrders',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ShippingController@getShippingOrders'
 ]);
 Route::post('shipping/CreateBoxShipment',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
+   'flag' => 'add',
    'action' => 'false',
    'uses' => 'ShippingController@CreateBoxShipment'
 ]);
@@ -469,24 +511,28 @@ Route::post('shipping/updateShipping',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
    'action' => 'false',
+   'flag' => 'edit',
    'uses' => 'ShippingController@updateShipping'
 ]);
 Route::post('shipping/DeleteBox',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'delete',
+   'flag' => 'false',
    'uses' => 'ShippingController@DeleteBox'
 ]);
 Route::post('shipping/addShippingItem',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'ShippingController@addShippingItem'
 ]);
 Route::post('shipping/getBoxItems',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ShippingController@getBoxItems'
 ]);
 Route::post('shipping/createPDF', 'ShippingController@createPDF');
@@ -494,42 +540,49 @@ Route::post('shipping/addRemoveAddressToPdf',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
    'action' => 'false',
+   'flag' => 'add',
    'uses' => 'ShippingController@addRemoveAddressToPdf'
 ]);
 Route::post('shipping/shipOrder',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ShippingController@shipOrder'
 ]);
 Route::post('shipping/getProductByAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ShippingController@getProductByAddress'
 ]);
 Route::post('shipping/addProductToShip',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'add',
    'uses' => 'ShippingController@addProductToShip'
 ]);
 Route::post('shipping/addAllProductToShip',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'add',
    'uses' => 'ShippingController@addAllProductToShip'
 ]);
 Route::post('shipping/getShippingAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'get',
    'uses' => 'ShippingController@getShippingAddress'
 ]);
 Route::post('shipping/getShippingBoxes',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'get',
    'uses' => 'ShippingController@getShippingBoxes'
 ]);
 Route::post('shipping/getShippingOverview',[
@@ -540,20 +593,23 @@ Route::post('shipping/getShippingOverview',[
 Route::post('shipping/createLabel',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'add',
    'uses' => 'ShippingController@createLabel'
 ]);
 Route::post('shipping/checkAddressValid',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'get',
    'uses' => 'ShippingController@checkAddressValid'
 ]);
 Route::post('shipping/vewLabelPDF', 'ShippingController@vewLabelPDF');
 Route::post('shipping/unAllocateProduct',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'delete',
+   'flag' => 'false',
    'uses' => 'ShippingController@unAllocateProduct'
 ]);
 // PRODUCT CONTROLLER
@@ -561,28 +617,32 @@ Route::post('shipping/unAllocateProduct',[
 Route::post('product/getProductByVendor',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'get',
    'uses' => 'ProductController@getProductByVendor'
 ]);
 
 Route::post('product/getProductCountByVendor',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'get',
    'uses' => 'ProductController@getProductCountByVendor'
 ]);
 
 Route::post('product/productDetailData',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ProductController@productDetailData'
 ]);
 
 Route::post('product/addProduct',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'ProductController@addProduct'
 ]);
 
@@ -597,7 +657,8 @@ Route::post('product/designProduct',[
 Route::post('product/deleteAddProduct',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'delete',
+   'flag' => 'false',
    'uses' => 'ProductController@deleteAddProduct'
 ]);
 
@@ -651,28 +712,32 @@ Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
 Route::post('product/getVendorByProductCount',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'ProductController@getVendorByProductCount'
 ]);
 
 Route::post('product/getProductSize',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ProductController@getProductSize'
 ]);
 
 Route::post('product/checkProductExist',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ProductController@checkProductExist'
 ]);
 
 Route::post('product/findTotal',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'ProductController@findTotal'
 ]);
 
@@ -712,37 +777,43 @@ Route::post('art/PressInstructionAllPDF', 'ArtController@PressInstructionAllPDF'
 Route::post('affiliate/getAffiliateDetail',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'no access',
+   'flag' => 'false',
    'uses' => 'AffiliateController@getAffiliateDetail'
 ]);
 Route::post('affiliate/addAffiliate',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'AffiliateController@addAffiliate'
 ]);
 Route::post('affiliate/getAffiliateData',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'AffiliateController@getAffiliateData'
 ]);
 Route::post('affiliate/getAffiliateList',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'AffiliateController@getAffiliateList'
 ]);
 Route::post('affiliate/getAffiliateDesignProduct',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'AffiliateController@getAffiliateDesignProduct'
 ]);
 Route::post('affiliate/affiliateCalculation',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'edit',
    'uses' => 'AffiliateController@affiliateCalculation'
 ]);
 
@@ -750,31 +821,36 @@ Route::post('affiliate/affiliateCalculation',[
 Route::post('distribution/getDistProductAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'DistributionController@getDistProductAddress'
 ]);
 Route::post('distribution/addEditDistribute',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'DistributionController@addEditDistribute'
 ]);
 Route::post('distribution/getDistSizeByProduct',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'DistributionController@getDistSizeByProduct'
 ]);
 Route::post('distribution/getDistAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'DistributionController@getDistAddress'
 ]);
 Route::post('distribution/getProductByAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
+   'action' => 'get',
+   'flag' => 'false',
    'uses' => 'DistributionController@getProductByAddress'
 ]);
 
