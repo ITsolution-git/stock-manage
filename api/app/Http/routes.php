@@ -283,14 +283,12 @@ Route::post('order/addDesign',[
 ]);
 Route::post('order/designListing',[
    'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
+   'role' => 'ALL',
    'uses' => 'OrderController@designListing'
 ]);
 Route::post('order/designDetail',[
    'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
+   'role' => 'ALL',
    'uses' => 'OrderController@designDetail'
 ]);
 Route::post('order/editDesign',[
@@ -301,8 +299,7 @@ Route::post('order/editDesign',[
 ]);
 Route::post('order/getDesignPositionDetail',[
    'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
+   'role' => 'ALL',
    'uses' => 'OrderController@getDesignPositionDetail'
 ]);
 Route::post('order/editOrder',[
@@ -447,8 +444,7 @@ Route::get('shipping/listShipping',[
 ]);
 Route::post('shipping/listShipping',[
    'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
+   'role' => 'ALL',
    'uses' => 'ShippingController@listShipping'
 ]);
 Route::post('shipping/shippingDetail',[
@@ -538,8 +534,7 @@ Route::post('shipping/getShippingBoxes',[
 ]);
 Route::post('shipping/getShippingOverview',[
    'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
+   'role' => 'ALL',
    'uses' => 'ShippingController@getShippingOverview'
 ]);
 Route::post('shipping/createLabel',[
@@ -593,8 +588,7 @@ Route::post('product/addProduct',[
 
 Route::post('product/designProduct',[
    'middleware' => 'check',
-   'role' => array('AT','SU'),
-   'action' => 'false',
+   'role' => 'ALL',
    'uses' => 'ProductController@designProduct'
 ]);
 
