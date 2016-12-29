@@ -10,7 +10,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost.stokkup.com",
+    "host": "qa2.stokkup.com",
     "consumes": [
         "application/json",
         "multipart/form-data"
