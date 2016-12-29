@@ -10,6 +10,9 @@
     function SpiltAffiliateController($document, $window, $timeout, $mdDialog, $stateParams, $scope, $http, sessionService, AllConstant)
     {
         $scope.NoImage = AllConstant.NoImage;
+         $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.allowSA = 0;
 
 
          // change display number to order Id for fetching the order data
@@ -25,6 +28,32 @@
                   $scope.vendorRecord =result.data.records;
                   $scope.order_id = result.data.records[0].id;
                   $scope.display_number = result.data.records[0].display_number;
+
+                  if($scope.role_slug == 'SM' && $scope.user_id == result.data.records[0].login_id) {
+
+                    $scope.allowSA = 1;
+                  } 
+
+
+
+                  if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+                    {
+                        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+                    }
+                    else if($scope.role_slug =='SM' && $scope.allowSA == 1)
+                    {
+                        $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else if($scope.role_slug =='SM' && $scope.allowSA == 0)
+                    {
+                        $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else {
+
+                         $scope.allow_access = 1; // THESE ROLES CAN ALLOW TO EDIT
+                    }
+
+
 
                     $scope.orderDetail();
                     $scope.affiliate();

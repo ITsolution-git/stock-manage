@@ -1772,9 +1772,9 @@ a.editable-click:hover, a.editable-click:focus {
   background-color: #e8e9ea;
   border: solid 1px #e0e1e3;
   margin: 0 0 10px 0;
-  text-align: center;
+  //text-align: center;
   font-weight: bold;
-  padding-top: 13%; }
+  padding: 1%; }
 
 .machine-full-slot {
   width: 100%;

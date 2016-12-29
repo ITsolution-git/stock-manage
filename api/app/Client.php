@@ -251,6 +251,7 @@ class Client extends Model {
     			$result['sales']['salesweb'] =   (!empty($value->salesweb) && preg_match('/http/',$value->salesweb) == false) ? "http://".$value->salesweb:$value->salesweb;
     			$result['sales']['anniversarydate'] = $value->anniversarydate;
     			$result['sales']['salesperson'] = $value->salesperson;
+          $result['sales']['sales_credit'] = $value->sales_credit;
           $result['sales']['sales_name'] = $value->sales_name;
     			$result['sales']['salespricegrid'] = $value->salespricegrid;
           $result['sales']['price_grid'] = $value->price_grid;
@@ -581,6 +582,7 @@ public function saveTaxDoc($post)
           $result['sales']['anniversarydate'] = $value->anniversarydate;
           $result['sales']['salesperson'] = $value->salesperson;
           $result['sales']['sales_name'] = $value->sales_name;
+          $result['sales']['sales_credit'] = $value->sales_credit;
           $result['sales']['salespricegrid'] = $value->salespricegrid;
           $result['sales']['price_grid'] = $value->price_grid;
           $result['sales']['anniversarydate'] = ($result['sales']['anniversarydate']=='0000-00-00')? '': date('m/d/Y',strtotime($result['sales']['anniversarydate']));
