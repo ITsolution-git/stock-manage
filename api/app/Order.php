@@ -31,7 +31,7 @@ class Order extends Model {
         $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['company_id'],'order.parent_order_id' => '0'];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.display_number,order.name,order.created_date,order.approved_date,order.date_shipped,
-                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name,users.name as account_manager')];
+                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name,users.name as account_manager,order.login_id')];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
@@ -191,7 +191,7 @@ class Order extends Model {
 
       
         $whereConditions = ['od.is_delete' => "1",'od.id' => $data['id']];
-        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number','o.affiliate_display_number'];
+        $listArray = ['od.*','o.order_number','o.is_complete','o.price_id','o.display_number as order_display_number','o.affiliate_display_number','o.login_id'];
 
         $designDetailData = DB::table('order_design as od')
                          ->leftJoin('orders as o','od.order_id','=', 'o.id')

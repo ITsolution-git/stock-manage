@@ -33,13 +33,22 @@
                   } 
 
 
-                  if($scope.role_slug=='SU' || $scope.role_slug=='AT' || $scope.allowSA == 0)
+
+                  if($scope.role_slug=='SU' || $scope.role_slug=='AT')
                     {
                         $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
                     }
-                    else
+                    else if($scope.role_slug =='SM' && $scope.allowSA == 1)
                     {
                         $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else if($scope.role_slug =='SM' && $scope.allowSA == 0)
+                    {
+                        $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else {
+
+                         $scope.allow_access = 1; // THESE ROLES CAN ALLOW TO EDIT
                     }
 
                     $scope.orderDetail();
