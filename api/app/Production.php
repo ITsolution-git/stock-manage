@@ -251,8 +251,9 @@ class Production extends Model {
 
     public function SchedualBoardData($company_id,$run_date)
     {
+
         $result = DB::table('position_schedule as ps')
-                    ->select('cs.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id')
+                    ->select('cs.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1')
                     ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
@@ -270,6 +271,7 @@ class Production extends Model {
         $ret_array = array();            
         foreach($result as $key=>$value)
         {
+            $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
             $ret_array[$value->machine_id]['machine_name'] = $value->machine_name;
             $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_name']=$value->shift_name;
             $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_data'][$value->position_id]=$value;
@@ -280,7 +282,7 @@ class Production extends Model {
     {
         //echo $start_date."=".$end_date; die();
         $result = DB::table('position_schedule as ps')
-                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
                     ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
@@ -299,6 +301,7 @@ class Production extends Model {
         $ret_array = array();            
         foreach($result as $key=>$value)
         {
+            $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
             $ret_array[$value->run_date]['date'] = date('l - m/d/Y',strtotime($value->run_date));
             $ret_array[$value->run_date]['date_data'][$value->shift_id]['shift_name']=$value->shift_name;
             $ret_array[$value->run_date]['date_data'][$value->shift_id]['shift_data'][$value->position_id]=$value;
@@ -310,7 +313,7 @@ class Production extends Model {
     {
         $where = (!empty($machine_id))?array('ps.machine_id'=>$machine_id):array();
         $result = DB::table('position_schedule as ps')
-                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
                     ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
@@ -329,6 +332,7 @@ class Production extends Model {
         $ret_array = array();            
         foreach($result as $key=>$value)
         {
+            $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
             $ret_array['shift_all'][]=$value;
             $ret_array['shifts'][$value->shift_id]['shift_name']=$value->shift_name;
             $ret_array['shifts'][$value->shift_id]['shift_data'][$value->position_id]=$value;

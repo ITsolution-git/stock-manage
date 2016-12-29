@@ -62,7 +62,10 @@
 					                        			<div ng-repeat="shift in schedule.machine_data" class="full-row pull-left p-10">
 					                        				<h4 class="text-center">{{shift.shift_name}}</h4>
 					                        				<div class="shift-post-card" ng-repeat="positions in shift.shift_data" ng-click="GetSchedulePositionDetail(positions.position_id)">
-					                        					{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}
+					                        					<div class="pull-left right-search-box">{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}</div>
+					                        					<div class="box-30">
+					                        						<img  ng-src="{{positions.image_1}}" style="height: 92px; width:100%">
+					                        					</div>
 					                        				</div>
 					                        			</div>
 
