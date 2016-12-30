@@ -443,7 +443,7 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
     public function priceDetailExcel($priceId) {
 
         $wherePriceConditions = ['id' => $priceId];
-        $listArrayData = ['name as Name'];
+        $listArrayData = ['name as Name','login_id'];
         $priceData = DB::table('price_grid')->select($listArrayData)->where($wherePriceConditions)->get();
 
 

@@ -404,6 +404,7 @@ class SettingController extends Controller {
 
                        $insert[0]['company_id'] = $_POST['company_id'];
                        $insert[0]['created_date'] = date('Y-m-d');
+                       $insert[0]['login_id'] = Session::get("user_id");
                        
 
                        $price_grid = $this->common->InsertRecords('price_grid',$insert[0]);
