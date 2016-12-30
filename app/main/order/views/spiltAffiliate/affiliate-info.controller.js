@@ -9,7 +9,12 @@
     /** @ngInject */
     function AffiliateInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
+        $scope.role_slug = sessionService.get('role_slug');
 
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        {
+            $state.go('app.order');
+        }
 
         // change display number to order Id for fetching the order data
         var order_data = {};

@@ -22,7 +22,7 @@ class Invoice extends Model {
 
         $this->common->getDisplayNumber('invoice',$post['company_id'],'company_id','id','yes');
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.name,client.client_company,o.display_number,i.id,i.display_number as invoice_display_number,i.qb_id,o.grand_total,o.in_hands_by,i.created_date,misc_type.value as approval,o.approval_id')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id as order_id,o.name,client.client_company,o.display_number,i.id,i.display_number as invoice_display_number,i.qb_id,o.grand_total,o.in_hands_by,i.created_date,misc_type.value as approval,o.approval_id,o.login_id')];
 
         $invoiceData = DB::table('invoice as i')
                         ->leftJoin('orders as o', 'o.id', '=', 'i.order_id')

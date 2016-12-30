@@ -11,8 +11,10 @@
     {
         var vm = this;
 
+        $scope.user_id = sessionService.get('user_id');
         $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU' || $scope.role_slug=='SM')
         {
             $scope.allow_access = 0;
         }

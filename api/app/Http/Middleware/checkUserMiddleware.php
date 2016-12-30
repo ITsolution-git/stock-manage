@@ -28,12 +28,24 @@ class checkUserMiddleware {
 
 		$action = $request->route()->getAction();
 
-		if($action['role'] == 'ALL')
+		if(isset($action['special_role']) && in_array($role, $action['special_role']))
+		{	
+			if($action['special_action'] == 'no access')
+			{
+				$data = json_encode(array("success"=>0,'message' =>'You have no rights to access this'));
+            	print_r($data);
+          		exit;
+			}
+			else
+			{
+				return $next($request);
+			}
+		}
+		else if($action['role'] == 'ALL')
 		{
 			return $next($request);
 		}
-
-		if($action['action'] == 'false')
+		else if($action['action'] == 'no access')
 		{
 			if(in_array($role, $action['role']))
 			{
@@ -47,17 +59,33 @@ class checkUserMiddleware {
 			}
 			
 		}
-		if($action['action'] == 'true')
+		else
 		{
-			if(in_array($role, $action['role']))
+			if($action['flag'] == 'true')
 			{
-				return $next($request);
+				if(in_array($role, $action['role']))
+				{
+					return $next($request);
+				}
+				else
+				{
+					$data = json_encode(array("success"=>0,'message' =>'You have no rights to access this'));
+	            	print_r($data);
+	          		exit;
+				}
 			}
-			else
+			if($action['flag'] == 'false')
 			{
-				$data = json_encode(array("success"=>0,'message' =>'You have no rights to access this'));
-            	print_r($data);
-          		exit;
+				if(in_array($role, $action['role']))
+				{
+					$data = json_encode(array("success"=>0,'message' =>'You have no rights to access this'));
+	            	print_r($data);
+	          		exit;
+				}
+				else
+				{
+					return $next($request);
+				}
 			}
 		}
 	}

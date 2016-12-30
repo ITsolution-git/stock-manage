@@ -13,6 +13,7 @@
         var misc_list_data = {};
         var condition_obj = {};
         condition_obj['company_id'] =  sessionService.get('company_id');
+        $scope.user_id = sessionService.get('user_id');
         misc_list_data.cond = angular.copy(condition_obj);
 
         $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
@@ -25,7 +26,7 @@
         $scope.currentTab = 'wait';
 
         $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU' || $scope.role_slug=='SM')
         {
             $scope.allow_access = 0;
         }
@@ -113,6 +114,18 @@
 
         $scope.company_id = sessionService.get('company_id');
 
+        $scope.user_id = sessionService.get('user_id');
+        $scope.role_slug = sessionService.get('role_slug');
+        
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU' || $scope.role_slug=='SM')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
 
         $scope.init = {
           'count': 10,
@@ -189,8 +202,17 @@
         
         $scope.company_id = sessionService.get('company_id');
 
-       
-
+        $scope.user_id = sessionService.get('user_id');
+        $scope.role_slug = sessionService.get('role_slug');
+        
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU' || $scope.role_slug=='SM')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
 
         $scope.tab = 'shipped';
 
