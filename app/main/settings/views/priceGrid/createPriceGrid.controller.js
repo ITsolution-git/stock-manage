@@ -9,7 +9,7 @@
     /** @ngInject */
     function CreatePriceGridDialogController($mdDialog,$controller,$state,$scope,sessionService,$resource,$http,$stateParams,notifyService)
     {
-        $scope.role_slug = sessionService.get('role_slug');
+        /*$scope.role_slug = sessionService.get('role_slug');
         if($scope.role_slug=='CA' || $scope.role_slug=='AM')
         {
             $scope.allow_access = 1; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
@@ -17,7 +17,12 @@
         else
         {
             $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
-        }
+        }*/
+
+
+         $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.allowSA = 0;
 
 
     $scope.priceDetail = function(){
@@ -28,6 +33,39 @@
             if(result.data.success == '1') {
                       
                      $scope.price = angular.copy(result.data.records[0]);
+
+                
+
+
+                     if($scope.role_slug == 'SM' && $scope.user_id == $scope.price.login_id) {
+
+                        $scope.allowSA = 1;
+                      } 
+
+
+
+                      if($scope.role_slug=='CA' || $scope.role_slug=='AM')
+                        {
+                            $scope.allow_access = 1; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+                        }
+                        else if($scope.role_slug =='SM' && $scope.allowSA == 1)
+                        {
+                            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+
+                        } else if($scope.role_slug =='SM' && $scope.allowSA == 0)
+                        {
+                            $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+
+                        } else {
+
+                             $scope.allow_access = 0; // THESE ROLES CAN ALLOW TO EDIT
+                        }
+
+
+
+
+
+
 
                      $scope.temp = result.data.records[0];
 
@@ -137,6 +175,9 @@
 
           $scope.duplicate = function (price,price_grid,price_primary,price_secondary,garment_mackup,garment,embroswitch,allEmbroidery) {
                           
+
+                            price.login_id = sessionService.get('user_id');
+
                             var combine_array_data = {};
                             combine_array_data.price = price;
                             combine_array_data.price_grid = price_grid;
