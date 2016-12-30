@@ -114,7 +114,7 @@ Route::post('admin/priceGridDuplicate',[
 Route::post('admin/priceEdit',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
-   'action' => 'true',
+   'action' => 'edit',
    'flag' => 'true',
    'uses' => 'SettingController@priceEdit'
 ]);
@@ -406,7 +406,7 @@ Route::post('order/GetAllClientsLowerCase',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
    'action' => 'view',
-   'action' => 'false',
+   'flag' => 'false',
    'uses' => 'OrderController@GetAllClientsLowerCase'
 ]);
 Route::get('invoice/linktopay/{link}', 'PaymentController@linktopay');
@@ -414,28 +414,28 @@ Route::post('payment/refundTransaction',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
    'action' => 'edit',
-   'action' => 'false',
+   'flag' => 'false',
    'uses' => 'PaymentController@refundTransaction'
 ]);
 Route::post('order/updateInvoicePayment',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
    'action' => 'edit',
-   'action' => 'false',
+   'flag' => 'false',
    'uses' => 'OrderController@updateInvoicePayment'
 ]);
 Route::post('order/GetAllClientsAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
    'action' => 'view',
-   'action' => 'false',
+   'flag' => 'false',
    'uses' => 'OrderController@GetAllClientsAddress'
 ]);
 Route::post('order/allOrderAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
    'action' => 'all',
-   'action' => 'false',
+   'flag' => 'false',
    'uses' => 'OrderController@allOrderAddress'
 ]);
 
@@ -503,15 +503,15 @@ Route::post('shipping/getShippingOrders',[
 Route::post('shipping/CreateBoxShipment',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'flag' => 'add',
-   'action' => 'false',
+   'flag' => 'false',
+   'action' => 'add',
    'uses' => 'ShippingController@CreateBoxShipment'
 ]);
 Route::post('shipping/updateShipping',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
-   'flag' => 'edit',
+   'action' => 'edit',
+   'flag' => 'false',
    'uses' => 'ShippingController@updateShipping'
 ]);
 Route::post('shipping/DeleteBox',[
@@ -539,8 +539,8 @@ Route::post('shipping/createPDF', 'ShippingController@createPDF');
 Route::post('shipping/addRemoveAddressToPdf',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
-   'action' => 'false',
-   'flag' => 'add',
+   'action' => 'add',
+   'flag' => 'false',
    'uses' => 'ShippingController@addRemoveAddressToPdf'
 ]);
 Route::post('shipping/shipOrder',[
