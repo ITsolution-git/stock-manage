@@ -115,39 +115,6 @@ class SettingController extends Controller {
     }
 
 
-/**
-* Price Delete controller      
-* @access public delete
-* @param  array $post
-* @return json data
-*/
-    public function delete()
-    {
-        $post = Input::all();
-       
-        if(!empty($post[0]))
-        {
-            $getData = $this->price->priceDelete($post[0]);
-            if($getData)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-
-    }
 
 /**
 * Price Grid Duplicate Controller       
@@ -345,39 +312,7 @@ class SettingController extends Controller {
 
     }
 
-    public function downloadPricegridCSV()
-    {
-            $path = base_path().'/'; // change the path to fit your websites document structure
-             
-            $dl_file = preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})", '', 'addpricegrid.xlsx'); // simple file name validation
-            $dl_file = filter_var($dl_file, FILTER_SANITIZE_URL); // Remove (more) invalid characters
-            $fullPath = $path.$dl_file;
-             
-            if ($fd = fopen ($fullPath, "r")) {
-                $fsize = filesize($fullPath);
-                $path_parts = pathinfo($fullPath);
-                $ext = strtolower($path_parts["extension"]);
-                switch ($ext) {
-                    case "pdf":
-                    header("Content-type: application/pdf");
-                    header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a file download
-                    break;
-                    // add more headers for other content types here
-                    default;
-                    header("Content-type: application/octet-stream");
-                    header("Content-Disposition: filename=\"".$path_parts["basename"]."\"");
-                    break;
-                }
-                header("Content-length: $fsize");
-                header("Cache-control: private"); //use this to open files directly
-                while(!feof($fd)) {
-                    $buffer = fread($fd, 2048);
-                    echo $buffer;
-                }
-            }
-            fclose ($fd);
-            exit;
-    }
+  
     public function uploadPricingCSV() {
 
 
@@ -698,6 +633,7 @@ class SettingController extends Controller {
         $array = json_decode(json_encode($data), True);
       
         unset($array['embroswitch'][0]['id']);
+        unset($array['price'][0]['login_id']);
 
        
         return Excel::create('price_grid', function($excel) use ($array) {

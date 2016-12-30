@@ -95,17 +95,12 @@ Route::post('admin/price',[
    'uses' => 'SettingController@price'
 ]);
 
-Route::post('admin/priceDelete',[
-   'middleware' => 'check',
-   'role' => array('AM','CA'),
-   'action' => 'delete',
-   'flag' => 'true',
-   'uses' => 'SettingController@delete'
-]);
 
 Route::post('admin/priceGridDuplicate',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
+   'special_role' => array('SM'),
+   'special_action' => 'add',
    'action' => 'add',
    'flag' => 'true',
    'uses' => 'SettingController@priceGridDuplicate'
@@ -114,6 +109,8 @@ Route::post('admin/priceGridDuplicate',[
 Route::post('admin/priceEdit',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
+   'special_role' => array('SM'),
+   'special_action' => 'edit',
    'action' => 'edit',
    'flag' => 'true',
    'uses' => 'SettingController@priceEdit'
@@ -139,6 +136,8 @@ Route::post('admin/priceGridPrimaryDuplicate',[
    'middleware' => 'check',
    'role' => array('AM','CA'),
    'action' => 'add',
+   'special_role' => array('SM'),
+   'special_action' => 'add',
    'flag' => 'true',
    'uses' => 'SettingController@priceGridPrimaryDuplicate'
 ]);
@@ -151,21 +150,8 @@ Route::post('admin/priceSecondary',[
    'uses' => 'SettingController@priceSecondary'
 ]);
 
-Route::post('admin/downloadPricegridCSV',[
-   'middleware' => 'check',
-   'role' => array('AM','CA'),
-   'action' => 'get',
-   'flag' => 'true',
-   'uses' => 'SettingController@downloadPricegridCSV'
-]);
 
-Route::post('admin/uploadPricingCSV',[
-   'middleware' => 'check',
-   'role' => array('AM','CA'),
-   'action' => 'add',
-   'flag' => 'true',
-   'uses' => 'SettingController@uploadPricingCSV'
-]);
+
 
 Route::get('admin/uploadSnsCSV',[
    'middleware' => 'check',
@@ -175,14 +161,8 @@ Route::get('admin/uploadSnsCSV',[
    'uses' => 'SettingController@uploadSnsCSV'
 ]);
 
-Route::post('admin/downloadPriceGridExcel',[
-   'middleware' => 'check',
-   'role' => array('AM','CA'),
-   'action' => 'get',
-   'flag' => 'true',
-   'uses' => 'SettingController@downloadPriceGridExcel'
-]);
-
+Route::post('admin/uploadPricingCSV', 'SettingController@uploadPricingCSV');
+Route::post('admin/downloadPriceGridExcel', 'SettingController@downloadPriceGridExcel');
 Route::post('admin/getApprovedOrders', 'SettingController@getApprovedOrders');
 Route::post('admin/getPendingOrders', 'SettingController@getPendingOrders');
 Route::post('admin/getDeniedOrders', 'SettingController@getDeniedOrders');

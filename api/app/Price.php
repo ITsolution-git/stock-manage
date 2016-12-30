@@ -29,25 +29,7 @@ class Price extends Model {
         return $priceData;
     }
 
-/**
-* Delete Price           
-* @access public priceDelete
-* @param  int $id
-* @return array $result
-*/ 
 
-    public function priceDelete($id)
-    {
-        if(!empty($id))
-        {
-            $result = DB::table('price_grid')->where('id','=',$id)->update(array("is_delete" => '0'));
-            return $result;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
 
 /**
