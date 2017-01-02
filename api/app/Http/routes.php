@@ -232,6 +232,7 @@ Route::post('purchase/createPO', 'PurchaseController@createPO');
 Route::get('purchase/GetPoReceived/{id}/{company_id}', 'PurchaseController@GetPoReceived');
 Route::post('purchase/purchasePDF', 'PurchaseController@purchasePDF');
 Route::post('purchase/getAllReceiveProducts', 'PurchaseController@getAllReceiveProducts');
+Route::post('purchase/DirectShipping', 'PurchaseController@DirectShipping');
 
 // ORDER CONTROLLER 
 Route::post('order/listOrder',[
