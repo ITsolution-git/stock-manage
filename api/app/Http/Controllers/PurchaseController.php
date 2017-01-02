@@ -488,4 +488,44 @@ class PurchaseController extends Controller {
        return response()->json(["data" => $response]);
 
     }
+
+    public function DirectShipping()
+    {
+        $post = Input::all();
+
+        if(!empty($post['company_id']) && !empty($post['order_id']) && !empty($post['login_id']))
+        {
+            $po_type = !empty($post['po_type'])?$post['po_type']:'';
+            $order_data = $this->purchase->getOrderData($post['company_id'],$post['order_id'],$po_type);
+            
+            if(count($order_data)>0)
+            {
+                $this->common->UpdateTableRecords('purchase_order',array('order_id'=>$post['order_id']),array('is_active'=>0),''); // DEACTIVE PREVIOUS PURCHASE ORDER AND RECEIVE ORDER
+
+                foreach ($order_data as $key=>$value) 
+                {
+                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key,'po',$post['company_id'],$post['login_id'],'1'); // CREATE PO VENDOR VICE
+                    $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
+                    foreach($order_data[$key] as $detail_key=>$detail_value) 
+                    {
+                        $purchase_order_line = $this->purchase->insert_purchase_order_line($detail_value,$purchase_order_id,'1'); // CREATE PI LINEITEM AND RECEIVE ITEMS
+                    }
+                }
+                $response = array('success' => 1, 'message' => "Direct Shipping Created.",'data'=>$order_data);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Please select Product.");
+            }
+        }
+        else
+        {
+            $order_data='';
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+       // print_r($post);exit;
+       return response()->json(["data" => $response]);
+    }
+
+    
 }

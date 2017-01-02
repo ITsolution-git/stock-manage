@@ -468,12 +468,11 @@
             }
         };
 
-       $scope.createPO = function() {
-            
+       $scope.createPO = function() 
+       {
             var permission = confirm("Do you want to create PO ?");
-
-            if(permission == true){
-
+            if(permission == true)
+            {
                 var condition_obj = {};
                 condition_obj.order_id = $scope.order_id;
                 condition_obj.company_id = sessionService.get('company_id');
@@ -486,7 +485,6 @@
                         $scope.orderDetail();
                         notifyService.notify('success',result.data.message);
                         $scope.order.is_complete = '0';
-
                     }
                     else
                     {
@@ -553,6 +551,32 @@
                 $("#ajax_loader").hide();
                 $scope.orderDetail();
             });
+        }
+
+        $scope.DirectShipping = function (order_id)
+        {
+            var permission = confirm("Do you want to create Direct Shipping ?");
+            if(permission == true)
+            {
+                var condition_obj = {};
+                condition_obj.order_id = $scope.order_id;
+                condition_obj.company_id = sessionService.get('company_id');
+                condition_obj.login_id = sessionService.get('user_id');
+
+                $http.post('api/public/purchase/DirectShipping',condition_obj).success(function(result) 
+                {
+                    if(result.data.success=='1')
+                    {
+                        $scope.orderDetail();
+                        notifyService.notify('success',result.data.message);
+                        $scope.order.is_complete = '0';
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                });
+            }
         }
     }
 })();

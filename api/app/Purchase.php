@@ -561,7 +561,7 @@ class Purchase extends Model {
 		return $result;
 		
 	}
-	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po',$company_id,$login_id=0)
+	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po',$company_id,$login_id=0,$complete=0)
 	{
 		/*$check = DB::table('purchase_order')
 				->select('*')
@@ -577,16 +577,19 @@ class Purchase extends Model {
 		else 
 		{*/
 			$disp_id = $this->common->getDisplayNumber('purchase_order',$company_id,'company_id','po_id','yes');
-			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1,'company_id'=>$company_id,'display_number'=>$disp_id,'login_id'=>$login_id));
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1,'company_id'=>$company_id,'display_number'=>$disp_id,'login_id'=>$login_id,'complete'=>$complete));
 			$id = DB::getPdo()->lastInsertId();
         	return $id;	
 		//}		
 
 	}
-	public function insert_purchase_order_line($post,$po_id)
+	public function insert_purchase_order_line($post,$po_id,$qnty_purchased=0)
 	{
 		$line_total = $post->price * $post->qnty;
-		$result = DB::table('purchase_order_line')->insert(array('po_id'=>$po_id,'purchase_detail'=>$post->id,'qnty_ordered'=>$post->qnty,'unit_price'=>$post->price,'line_total'=>$line_total));
+
+		if(!empty($qnty_purchased)){$qnty_purchased=$post->qnty;} // FOR DIRECT SHIPPING
+
+		$result = DB::table('purchase_order_line')->insert(array('po_id'=>$po_id,'purchase_detail'=>$post->id,'qnty_ordered'=>$post->qnty,'unit_price'=>$post->price,'line_total'=>$line_total,'qnty_purchased'=>$qnty_purchased));
 		$id = DB::getPdo()->lastInsertId();
         return $id;
 	}
