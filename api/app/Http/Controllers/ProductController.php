@@ -569,7 +569,7 @@ public function create_dir($dir_path) {
                                     }
                                     elseif($color_stitch_count >= $embroidery->range_low_8 && $color_stitch_count <= $embroidery->range_high_8)
                                     {
-                                        $switch_id = $embroidery.id;
+                                        $switch_id = $embroidery->id;
                                         $embroidery_field = 'pricing_8c';
                                     }
                                     elseif($color_stitch_count >= $embroidery->range_low_9 && $color_stitch_count <= $embroidery->range_high_9)
