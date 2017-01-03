@@ -13,7 +13,11 @@
         var order_data = {};
         order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
         order_data.table ='invoice';
-          
+
+        $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.allowSA = 1;
+
         $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
 
             if(result.data.success == '1') 
@@ -34,13 +38,18 @@
             $http.get('api/public/invoice/getInvoiceDetail/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0'+'/0').success(function(result) {
 
                 if(result.data.success == '0') {
-                        $state.go('app.invoices');
-                    } 
+                    $state.go('app.invoices');
+                }
 
                 $scope.allData = result.data.allData;
-                if(result.data.allData.order_data[0].grand_total > result.data.allData.order_data[0].total_payments){
+                if(result.data.allData.order_data[0].grand_total > result.data.allData.order_data[0].total_payments && $scope.role_slug != 'SM'){
                     $scope.showPaymentDetails = true;
-                }else{
+                }
+                else if($scope.role_slug == 'SM' && $scope.user_id != result.data.allData.order_data[0].login_id) {
+                    $scope.showPaymentDetails = false;
+                    $scope.allowSA = 0;
+                }
+                else{
                     $scope.showPaymentDetails = false;
                 }
 
@@ -48,25 +57,9 @@
             });
 
             $http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(resultHistory) {
-            //$http.get('api/public/invoice/getInvoiceHistory/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0',AllHeaders.header_config(sessionService.get('token'))).success(function(resultHistory) {
-
-                /*if(result.data.success == '0') {
-                        $state.go('app.invoices');
-                    }*/
                     
                 $scope.siData = resultHistory.data.allData;
             });
-
-            /*$http.get('api/public/invoice/getInvoicePayment/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
-
-                if(result123.data.success == '0') {
-                        $state.go('app.invoices');
-                }else{
-                    //$scope.spData = result123.data.allData[0];
-                    //alert(result123.data.allData[0].first_name+' : '+result123.data.allData[0].last_name+' : '+result123.data.allData[0].credit_card);
-                    //$scope.company = result123.data.allData[0];
-                }
-            });*/
 
             $http.get('api/public/invoice/getInvoiceCards/'+$scope.invoice_id+'/'+sessionService.get('company_id')+'/0').success(function(result123) {
 
