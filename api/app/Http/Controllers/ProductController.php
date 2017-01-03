@@ -34,45 +34,7 @@ class ProductController extends Controller {
 * @access public index
 * @return json data
 */
-/**
-* Product Listing controller        
-* @access public index
-* @return json data
-*/
-/** 
- * @SWG\Definition(
- *      definition="productList",
- *      type="object",
- *     
- *      @SWG\Property(
- *          property="cond",
- *          type="object",
- *          required={"company_id"},
- *          @SWG\Property(
- *          property="company_id",
- *          type="integer",
- *         )
- *
- *      )
- *  )
- */
- /**
- * @SWG\Post(
- *  path = "/api/public/admin/product",
- *  summary = "Product Listing",
- *  tags={"Product"},
- *  description = "Product Listing",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Product Listing",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/productList")
- *  ),
- *  @SWG\Response(response=200, description="Product Listing"),
- *  @SWG\Response(response="default", description="Product Listing"),
- * )
- */
+
     public function index() {
         $post = Input::all();
         $result = $this->product->productList($post);
@@ -871,14 +833,14 @@ public function create_dir($dir_path) {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Design Product"),
  *  @SWG\Response(response="default", description="Design Product"),
@@ -1215,14 +1177,14 @@ public function create_dir($dir_path) {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Vendor Product Count"),
  *  @SWG\Response(response="default", description="Vendor Product Count"),

@@ -217,14 +217,14 @@ class AffiliateController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Affiliate Data"),
  *  @SWG\Response(response="default", description="Affiliate Data"),

@@ -34,14 +34,7 @@ class SettingController extends Controller {
         $this->order = $order;
     }
 
-/**
-* Price Listing controller        
-* @access public price
-* @return json data
-*/
-
-
-/** 
+ /** 
  * @SWG\Definition(
  *      definition="priceList",
  *      type="object",
@@ -62,20 +55,35 @@ class SettingController extends Controller {
  /**
  * @SWG\Post(
  *  path = "/api/public/admin/price",
- *  summary = "Pricegrid Listing",
+ *  summary = "Price Grid Listing",
  *  tags={"Setting"},
- *  description = "Pricegrid Listing",
+ *  description = "Price Grid Listing",
  *  @SWG\Parameter(
  *     in="body",
  *     name="body",
- *     description="Pricegrid Listing",
+ *     description="Price Grid Listing",
  *     required=true,
  *     @SWG\Schema(ref="#/definitions/priceList")
  *  ),
- *  @SWG\Response(response=200, description="Pricegrid Listing"),
- *  @SWG\Response(response="default", description="Pricegrid Listing"),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="Price Grid Listing"),
+ *  @SWG\Response(response="default", description="Price Grid Listing"),
  * )
  */
+
 
     public function price() {
         $post = Input::all();
@@ -232,44 +240,6 @@ class SettingController extends Controller {
 * @return json data
 */
 
-
-/** 
- * @SWG\Definition(
- *      definition="placementSave",
- *      type="object",
- *      required={"updatedcolumn", "id","columnname"},
- *      @SWG\Property(
- *          property="updatedcolumn",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="columnname",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="id",
- *          type="integer"
- *      )
- * )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/admin/placementSave",
- *  summary = "Placement Update",
- *  tags={"Setting"},
- *  description = "Placement Update",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Placement Update",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/placementSave")
- *  ),
- *  @SWG\Response(response=200, description="Placement Update"),
- *  @SWG\Response(response="default", description="Placement Update"),
- * )
- */
 
 
 
