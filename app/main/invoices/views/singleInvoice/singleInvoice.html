@@ -32,7 +32,7 @@
                 
                 <md-input-container class="margin-0 p-l-0" layout="row">
                     <label  class="font-14 p-l-0">Order Status</label>
-                    <md-select ng-model="allData.order_data[0].approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',allData.order_data[0].approval_id,allData.order_data[0].id)" >
+                    <md-select ng-model="allData.order_data[0].approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',allData.order_data[0].approval_id,allData.order_data[0].id)" ng-disabled="allowSA==0">
                         <md-option ng-selected="allData.order_data[0].approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                     </md-select>
                 </md-input-container>

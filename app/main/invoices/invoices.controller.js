@@ -11,6 +11,9 @@
 
         $scope.user_id = sessionService.get('user_id');
         $scope.role_slug = sessionService.get('role_slug');
+
+        console.log($scope.user_id);
+        console.log($scope.role_slug);
         
         if($scope.role_slug=='SM')
         {

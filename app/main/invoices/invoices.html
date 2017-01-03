@@ -18,8 +18,7 @@
                     <thead tasty-thead></thead>
                     <tbody> 
                         <tr ng-repeat="inv in rows">
-                            <td ng-show="allow_access == '1' || inv.login_id == user_id" class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})">{{inv.display_number}}</td>
-                            <td ng-show="allow_access == '0'" class="text-center">{{inv.display_number}}</td>
+                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})">{{inv.display_number}}</td>
                             <td>{{inv.name}}</td>
                             <td>{{inv.client_company}}</td>
                             <td>{{inv.created_date}}</td>
@@ -30,8 +29,7 @@
                             <td><md-select aria-label="status" ng-model="inv.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',inv.approval_id,inv.order_id)" ng-disabled="allow_access == '0' && inv.login_id!=user_id">
                                     <md-option ng-selected="inv.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                 </md-select></td>
-                            <td ng-show="allow_access == '1' || inv.login_id == user_id" class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})"><a>Pay</a></td>
-                            <td ng-show="allow_access == '0'" class="cursor-p">&nbsp;</td>
+                            <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})"><a>Pay</a></td>
                             <td>
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
