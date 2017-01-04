@@ -187,25 +187,20 @@ public function create_dir($dir_path) {
     public function productDetailData() {
  
         $data = Input::all();
+
         $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
        
        // print_r($result_api[0]->password);exit;
         $credential = $result_api[0]->username.":".$result_api[0]->password;
  
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_HEADER, true);    // we want headers
-        curl_setopt($curl, CURLOPT_NOBODY, true);    // we don't need body
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($curl, CURLOPT_TIMEOUT,10);
         curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl,CURLOPT_USERPWD,$credential);
         $result = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
-        exit;
-
         $all_data = json_decode($result);
+         
         if(empty($all_data))
         {
             $data_record = array("success"=>0,"message"=>"This product is no longer exists");
