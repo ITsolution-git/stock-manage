@@ -70,34 +70,6 @@
                 }
             }
         },
-        "/api/public/admin/product": {
-            "post": {
-                "tags": [
-                    "Product"
-                ],
-                "summary": "Product Listing",
-                "description": "Product Listing",
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Product Listing",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/productList"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Product Listing"
-                    },
-                    "default": {
-                        "description": "Product Listing"
-                    }
-                }
-            }
-        },
         "/api/public/product/designProduct": {
             "post": {
                 "tags": [
@@ -119,15 +91,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -161,15 +133,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -231,15 +203,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -273,15 +245,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -315,15 +287,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -357,15 +329,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -399,15 +371,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -441,15 +413,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -483,15 +455,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -525,15 +497,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -567,15 +539,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -609,15 +581,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -651,15 +623,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -693,15 +665,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -735,15 +707,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -782,15 +754,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -824,15 +796,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -866,15 +838,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -908,15 +880,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -950,15 +922,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1020,15 +992,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1062,15 +1034,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1102,15 +1074,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1172,15 +1144,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1214,15 +1186,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1312,15 +1284,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1354,15 +1326,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1424,15 +1396,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1494,15 +1466,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1590,15 +1562,15 @@
                         "name": "Authorization",
                         "in": "header",
                         "description": "Authorization token",
-                        "type": "string",
-                        "require": true
+                        "required": true,
+                        "type": "string"
                     },
                     {
                         "name": "AuthUserId",
                         "in": "header",
                         "description": "Authorization User Id",
-                        "type": "integer",
-                        "require": true
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
@@ -1728,53 +1700,39 @@
                 "tags": [
                     "Setting"
                 ],
-                "summary": "Pricegrid Listing",
-                "description": "Pricegrid Listing",
+                "summary": "Price Grid Listing",
+                "description": "Price Grid Listing",
                 "parameters": [
                     {
                         "name": "body",
                         "in": "body",
-                        "description": "Pricegrid Listing",
+                        "description": "Price Grid Listing",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/priceList"
                         }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Pricegrid Listing"
                     },
-                    "default": {
-                        "description": "Pricegrid Listing"
-                    }
-                }
-            }
-        },
-        "/api/public/admin/placementSave": {
-            "post": {
-                "tags": [
-                    "Setting"
-                ],
-                "summary": "Placement Update",
-                "description": "Placement Update",
-                "parameters": [
                     {
-                        "name": "body",
-                        "in": "body",
-                        "description": "Placement Update",
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Authorization token",
                         "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/placementSave"
-                        }
+                        "type": "string"
+                    },
+                    {
+                        "name": "AuthUserId",
+                        "in": "header",
+                        "description": "Authorization User Id",
+                        "required": true,
+                        "type": "integer"
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Placement Update"
+                        "description": "Price Grid Listing"
                     },
                     "default": {
-                        "description": "Placement Update"
+                        "description": "Price Grid Listing"
                     }
                 }
             }
@@ -1782,22 +1740,6 @@
     },
     "definitions": {
         "finishingQueueList": {
-            "properties": {
-                "cond": {
-                    "required": [
-                        "company_id"
-                    ],
-                    "properties": {
-                        "company_id": {
-                            "type": "integer"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "productList": {
             "properties": {
                 "cond": {
                     "required": [
@@ -2685,25 +2627,6 @@
                         }
                     },
                     "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "placementSave": {
-            "required": [
-                "updatedcolumn",
-                "id",
-                "columnname"
-            ],
-            "properties": {
-                "updatedcolumn": {
-                    "type": "string"
-                },
-                "columnname": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
                 }
             },
             "type": "object"

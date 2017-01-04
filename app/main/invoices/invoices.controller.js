@@ -8,31 +8,21 @@
     function invoiceController($q,$mdDialog,$document,$mdSidenav,DTOptionsBuilder,DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
         var vm = this;
         vm.searchQuery = "";
-        // Data
-        //Datatable
-        vm.dtOptions = {
-            dom: '<"top">rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            pagingType: 'simple',
-            autoWidth: false,
-            responsive: true
-        };
-        // Methods
-        vm.dtInstanceCB = dtInstanceCB;
-        vm.searchTable = searchTable;
 
-        // -> Filter menu
-        function dtInstanceCB(dt) {
-            var datatableObj = dt.DataTable;
-            vm.tableInstance = datatableObj;
+        $scope.user_id = sessionService.get('user_id');
+        $scope.role_slug = sessionService.get('role_slug');
+
+        console.log($scope.user_id);
+        console.log($scope.role_slug);
+        
+        if($scope.role_slug=='SM')
+        {
+            $scope.allow_access = 0;
         }
-        function searchTable() {
-            var query = vm.searchQuery;
-            vm.tableInstance.search(query).draw();
+        else
+        {
+            $scope.allow_access = 1;
         }
-        vm.openMenu = function ($mdOpenMenu, ev) {
-            //originatorEv = ev;
-            $mdOpenMenu(ev);
-        };
 
         $scope.init = {
           'count': 10,

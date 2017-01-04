@@ -29,25 +29,7 @@ class Price extends Model {
         return $priceData;
     }
 
-/**
-* Delete Price           
-* @access public priceDelete
-* @param  int $id
-* @return array $result
-*/ 
 
-    public function priceDelete($id)
-    {
-        if(!empty($id))
-        {
-            $result = DB::table('price_grid')->where('id','=',$id)->update(array("is_delete" => '0'));
-            return $result;
-        }
-        else
-        {
-            return false;
-        }
-    }
 
 
 /**
@@ -443,7 +425,7 @@ public function priceEmbroEdit($price_embro,$priceId,$switchId) {
     public function priceDetailExcel($priceId) {
 
         $wherePriceConditions = ['id' => $priceId];
-        $listArrayData = ['name as Name'];
+        $listArrayData = ['name as Name','login_id'];
         $priceData = DB::table('price_grid')->select($listArrayData)->where($wherePriceConditions)->get();
 
 

@@ -34,45 +34,7 @@ class ProductController extends Controller {
 * @access public index
 * @return json data
 */
-/**
-* Product Listing controller        
-* @access public index
-* @return json data
-*/
-/** 
- * @SWG\Definition(
- *      definition="productList",
- *      type="object",
- *     
- *      @SWG\Property(
- *          property="cond",
- *          type="object",
- *          required={"company_id"},
- *          @SWG\Property(
- *          property="company_id",
- *          type="integer",
- *         )
- *
- *      )
- *  )
- */
- /**
- * @SWG\Post(
- *  path = "/api/public/admin/product",
- *  summary = "Product Listing",
- *  tags={"Product"},
- *  description = "Product Listing",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Product Listing",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/productList")
- *  ),
- *  @SWG\Response(response=200, description="Product Listing"),
- *  @SWG\Response(response="default", description="Product Listing"),
- * )
- */
+
     public function index() {
         $post = Input::all();
         $result = $this->product->productList($post);
@@ -225,25 +187,20 @@ public function create_dir($dir_path) {
     public function productDetailData() {
  
         $data = Input::all();
+
         $result_api = $this->api->getApiCredential($data['company_id'],'api.sns','ss_detail');
        
        // print_r($result_api[0]->password);exit;
         $credential = $result_api[0]->username.":".$result_api[0]->password;
  
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_HEADER, true);    // we want headers
-        curl_setopt($curl, CURLOPT_NOBODY, true);    // we don't need body
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($curl, CURLOPT_TIMEOUT,10);
         curl_setopt($curl, CURLOPT_URL, "https://api.ssactivewear.com/v2/products/?style=".$data['product_id']);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($curl,CURLOPT_USERPWD,$credential);
         $result = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
-        exit;
-
         $all_data = json_decode($result);
+         
         if(empty($all_data))
         {
             $data_record = array("success"=>0,"message"=>"This product is no longer exists");
@@ -569,7 +526,7 @@ public function create_dir($dir_path) {
                                     }
                                     elseif($color_stitch_count >= $embroidery->range_low_8 && $color_stitch_count <= $embroidery->range_high_8)
                                     {
-                                        $switch_id = $embroidery.id;
+                                        $switch_id = $embroidery->id;
                                         $embroidery_field = 'pricing_8c';
                                     }
                                     elseif($color_stitch_count >= $embroidery->range_low_9 && $color_stitch_count <= $embroidery->range_high_9)
@@ -871,14 +828,14 @@ public function create_dir($dir_path) {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Design Product"),
  *  @SWG\Response(response="default", description="Design Product"),
@@ -1215,14 +1172,14 @@ public function create_dir($dir_path) {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Vendor Product Count"),
  *  @SWG\Response(response="default", description="Vendor Product Count"),
