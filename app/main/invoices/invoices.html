@@ -26,11 +26,10 @@
                             <td>{{inv.in_hands_by}}</td>
                             <td ng-if="inv.qb_id == '0'"><a href="#" class="icon font-18"></a></td>
                             <td ng-if="inv.qb_id > '0'"><a target="_BLANK"href="{{quickbook_url}}{{inv.qb_id}}" class="icon  icon-rotate-3d font-18"></a></td>
-                            <td><md-select aria-label="status" ng-model="inv.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',inv.approval_id,inv.order_id)" ng-disabled="allow_access == '0'">
+                            <td><md-select aria-label="status" ng-model="inv.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',inv.approval_id,inv.order_id)" ng-disabled="allow_access == '0' && inv.login_id!=user_id">
                                     <md-option ng-selected="inv.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                 </md-select></td>
                             <td class="cursor-p" ui-sref="app.invoices.singleInvoice({id:inv.invoice_display_number})"><a>Pay</a></td>
-
                             <td>
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">

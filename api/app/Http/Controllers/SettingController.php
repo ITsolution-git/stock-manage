@@ -34,14 +34,7 @@ class SettingController extends Controller {
         $this->order = $order;
     }
 
-/**
-* Price Listing controller        
-* @access public price
-* @return json data
-*/
-
-
-/** 
+ /** 
  * @SWG\Definition(
  *      definition="priceList",
  *      type="object",
@@ -62,20 +55,35 @@ class SettingController extends Controller {
  /**
  * @SWG\Post(
  *  path = "/api/public/admin/price",
- *  summary = "Pricegrid Listing",
+ *  summary = "Price Grid Listing",
  *  tags={"Setting"},
- *  description = "Pricegrid Listing",
+ *  description = "Price Grid Listing",
  *  @SWG\Parameter(
  *     in="body",
  *     name="body",
- *     description="Pricegrid Listing",
+ *     description="Price Grid Listing",
  *     required=true,
  *     @SWG\Schema(ref="#/definitions/priceList")
  *  ),
- *  @SWG\Response(response=200, description="Pricegrid Listing"),
- *  @SWG\Response(response="default", description="Pricegrid Listing"),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="Price Grid Listing"),
+ *  @SWG\Response(response="default", description="Price Grid Listing"),
  * )
  */
+
 
     public function price() {
         $post = Input::all();
@@ -115,39 +123,6 @@ class SettingController extends Controller {
     }
 
 
-/**
-* Price Delete controller      
-* @access public delete
-* @param  array $post
-* @return json data
-*/
-    public function delete()
-    {
-        $post = Input::all();
-       
-        if(!empty($post[0]))
-        {
-            $getData = $this->price->priceDelete($post[0]);
-            if($getData)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-
-    }
 
 /**
 * Price Grid Duplicate Controller       
@@ -266,44 +241,6 @@ class SettingController extends Controller {
 */
 
 
-/** 
- * @SWG\Definition(
- *      definition="placementSave",
- *      type="object",
- *      required={"updatedcolumn", "id","columnname"},
- *      @SWG\Property(
- *          property="updatedcolumn",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="columnname",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="id",
- *          type="integer"
- *      )
- * )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/admin/placementSave",
- *  summary = "Placement Update",
- *  tags={"Setting"},
- *  description = "Placement Update",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Placement Update",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/placementSave")
- *  ),
- *  @SWG\Response(response=200, description="Placement Update"),
- *  @SWG\Response(response="default", description="Placement Update"),
- * )
- */
-
 
 
     public function placementSave() {
@@ -345,39 +282,7 @@ class SettingController extends Controller {
 
     }
 
-    public function downloadPricegridCSV()
-    {
-            $path = base_path().'/'; // change the path to fit your websites document structure
-             
-            $dl_file = preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})", '', 'addpricegrid.xlsx'); // simple file name validation
-            $dl_file = filter_var($dl_file, FILTER_SANITIZE_URL); // Remove (more) invalid characters
-            $fullPath = $path.$dl_file;
-             
-            if ($fd = fopen ($fullPath, "r")) {
-                $fsize = filesize($fullPath);
-                $path_parts = pathinfo($fullPath);
-                $ext = strtolower($path_parts["extension"]);
-                switch ($ext) {
-                    case "pdf":
-                    header("Content-type: application/pdf");
-                    header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a file download
-                    break;
-                    // add more headers for other content types here
-                    default;
-                    header("Content-type: application/octet-stream");
-                    header("Content-Disposition: filename=\"".$path_parts["basename"]."\"");
-                    break;
-                }
-                header("Content-length: $fsize");
-                header("Cache-control: private"); //use this to open files directly
-                while(!feof($fd)) {
-                    $buffer = fread($fd, 2048);
-                    echo $buffer;
-                }
-            }
-            fclose ($fd);
-            exit;
-    }
+  
     public function uploadPricingCSV() {
 
 
@@ -404,6 +309,7 @@ class SettingController extends Controller {
 
                        $insert[0]['company_id'] = $_POST['company_id'];
                        $insert[0]['created_date'] = date('Y-m-d');
+                       $insert[0]['login_id'] = Session::get("user_id");
                        
 
                        $price_grid = $this->common->InsertRecords('price_grid',$insert[0]);
@@ -697,6 +603,7 @@ class SettingController extends Controller {
         $array = json_decode(json_encode($data), True);
       
         unset($array['embroswitch'][0]['id']);
+        unset($array['price'][0]['login_id']);
 
        
         return Excel::create('price_grid', function($excel) use ($array) {

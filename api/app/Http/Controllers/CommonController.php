@@ -159,14 +159,14 @@ class CommonController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Miscdata Listing"),
  *  @SWG\Response(response="default", description="Miscdata Listing"),
@@ -217,14 +217,14 @@ class CommonController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Miscdata Listing"),
  *  @SWG\Response(response="default", description="Miscdata Listing"),
@@ -269,14 +269,14 @@ class CommonController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *  @SWG\Response(response=200, description="Staff List"),
 *  @SWG\Response(response="default", description="Staff List"),
@@ -475,14 +475,14 @@ class CommonController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="All Update"),
  *  @SWG\Response(response="default", description="All Update"),
@@ -622,14 +622,14 @@ class CommonController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Company Detail"),
  *  @SWG\Response(response="default", description="Company Detail"),
@@ -1076,14 +1076,14 @@ class CommonController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="All Listing"),
  *  @SWG\Response(response="default", description="All Listing"),
@@ -1536,14 +1536,14 @@ class CommonController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Misc Approval Data"),
  *  @SWG\Response(response="default", description="Misc Approval Data"),

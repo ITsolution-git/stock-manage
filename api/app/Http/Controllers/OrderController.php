@@ -92,14 +92,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Order Listing"),
  *  @SWG\Response(response="default", description="Order Listing"),
@@ -211,14 +211,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Order Detail"),
  *  @SWG\Response(response="default", description="Order Detail"),
@@ -364,14 +364,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Update Position"),
  *  @SWG\Response(response="default", description="Update Position"),
@@ -507,14 +507,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Delete Position"),
  *  @SWG\Response(response="default", description="Delete Position"),
@@ -753,14 +753,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Add Order"),
  *  @SWG\Response(response="default", description="Add Order"),
@@ -885,14 +885,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Add Design"),
  *  @SWG\Response(response="default", description="Add Design"),
@@ -964,14 +964,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Design Listing"),
  *  @SWG\Response(response="default", description="Design Listing"),
@@ -1062,14 +1062,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Design Detail"),
  *  @SWG\Response(response="default", description="Design Detail"),
@@ -1175,14 +1175,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Edit Design"),
  *  @SWG\Response(response="default", description="Edit Design"),
@@ -1252,14 +1252,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Design Position Detail"),
  *  @SWG\Response(response="default", description="Design Position Detail"),
@@ -1689,14 +1689,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Edit Order"),
  *  @SWG\Response(response="default", description="Edit Order"),
@@ -1816,14 +1816,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Order Detail All Info"),
  *  @SWG\Response(response="default", description="Order Detail All Info"),
@@ -1932,14 +1932,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Update Order Charge"),
  *  @SWG\Response(response="default", description="Update Order Charge"),
@@ -2051,14 +2051,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *  @SWG\Response(response=200, description="Order Calculation"),
 *  @SWG\Response(response="default", description="Order Calculation"),
@@ -2323,14 +2323,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Add Position"),
  *  @SWG\Response(response="default", description="Add Position"),
@@ -2546,14 +2546,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Get All Client"),
  *  @SWG\Response(response="default", description="Get All Client"),
@@ -2634,14 +2634,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Get All Client Address"),
  *  @SWG\Response(response="default", description="Get All Client Address"),
@@ -2704,14 +2704,14 @@ class OrderController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="All Order Address"),
  *  @SWG\Response(response="default", description="All Order Address"),

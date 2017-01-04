@@ -41,7 +41,7 @@ class AffiliateController extends Controller {
         $design_detail = array();
 
         foreach ($design_data as $design) {
-            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '0'),array());
+            $size_data = $this->common->GetTableRecords('purchase_detail',array('design_id' => $design->id,'is_delete' => '1'),array());
             if(!empty($size_data))
             {
                 foreach ($size_data as $size) {
@@ -67,6 +67,8 @@ class AffiliateController extends Controller {
     {
         $post = Input::all();
 
+        print_r($post);exit;
+
         $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id'],'parent_order_id' => '0'),array());
         unset($order_data[0]->id);
         $insert_arr = json_decode(json_encode($order_data[0]),true);
@@ -83,7 +85,11 @@ class AffiliateController extends Controller {
         $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $post['design_id']),array());
         unset($position_data[0]->id);
         unset($position_data[0]->design_id);
-        $position_insert_data = json_decode(json_encode($position_data[0]),true);
+
+        if(!empty($position_data))
+        {
+            $position_insert_data = json_decode(json_encode($position_data[0]),true);
+        }
 
         $order_item_mapping = $this->common->GetTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'design_id' => $post['design_id'],'product_id' => $design_product[0]->product_id),array());
 
@@ -108,7 +114,10 @@ class AffiliateController extends Controller {
 
         $position_insert_data['design_id'] = $design_id;
 
-        $design_product_id = $this->common->InsertRecords('order_design_position',$position_insert_data);
+        if(!empty($position_data))
+        {
+            $design_product_id = $this->common->InsertRecords('order_design_position',$position_insert_data);
+        }
 
         $extra_charges = 0;
         foreach($order_item_mapping as $item)
@@ -208,14 +217,14 @@ class AffiliateController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Affiliate Data"),
  *  @SWG\Response(response="default", description="Affiliate Data"),
@@ -588,83 +597,90 @@ class AffiliateController extends Controller {
                     }
                 }
             }
-
-            if($product->markup > 0)
-            {
-                $markup = $product->markup;
-            }
-            else
-            {
-                $markup = 0;
-            }
-
-            $avg_garment_cost = 0;
-            $markup_default = 0;
-            if(count($price_garment_mackup) > 0 && $position_qty > 0)
-            {
-                foreach($price_garment_mackup as $value) {
-                    
-                    if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
-                    {
-                        $markup_default = $value->percentage;
-                    }
-                }
-            }
-
-            $item_price = 0;
-            $line_qty = 0;
-            foreach($post['sizeData'] as $pd) {
-                if($pd['affiliate_qnty'] > 0)
-                {
-                    $price = $pd['price'];
-                    $sum = $price + $price_grid->shipping_charge;
-                    $avg_garment_cost += $sum;
-                    $line_qty += $pd['affiliate_qnty'];
-                }
-            }
-
-            if($avg_garment_cost == 0)
-            {
-                $avg_garment_cost = $price_grid->shipping_charge;
-            }
-
-            if($markup > 0)
-            {
-                $garment_mackup = $markup/100;
-            }
-            else
-            {
-                $garment_mackup = $markup_default/100;
-            }
-
-            $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
-
-            $per_item = $avg_garment_price + $print_charges;
-            $sales_total = $per_item * $line_qty;
-            
-            if($product->extra_charges > 0)
-            {
-                $extraCharges = $product->extra_charges;
-            }
-            else
-            {
-                $extraCharges = 0;
-            }
-
-            $sales_total2 = $sales_total + $extraCharges;
-
-            $calculatedData = array(
-                                'avg_garment_cost' => round($avg_garment_cost,2),
-                                'avg_garment_price' => round($avg_garment_price,2),
-                                'print_charges' => round($print_charges,2),
-                                'markup' => $markup,
-                                'markup_default' => $markup_default,
-                                'sales_total' => round($sales_total2,2),
-                                'total_line_charge' => round($per_item,2)
-                                );
-
-            $data = array("success"=>1,"message"=>"","calculatedData"=>$calculatedData);
-            return $data;
         }
+
+        if($product->markup > 0)
+        {
+            $markup = $product->markup;
+        }
+        else
+        {
+            $markup = 0;
+        }
+
+        $avg_garment_cost = 0;
+        $markup_default = 0;
+        if(count($price_garment_mackup) > 0 && $position_qty > 0)
+        {
+            foreach($price_garment_mackup as $value) {
+                
+                if($position_qty >= $value->range_low && $position_qty <= $value->range_high)
+                {
+                    $markup_default = $value->percentage;
+                }
+            }
+        }
+
+        $item_price = 0;
+        $line_qty = 0;
+        $unit_cost = 0;
+        foreach($post['sizeData'] as $pd) {
+            if($pd['affiliate_qnty'] > 0)
+            {
+                $price = $pd['price'];
+                $unit_cost += $price * $pd['affiliate_qnty'];
+                $line_qty += $pd['affiliate_qnty'];
+            }
+        }
+
+        $total_shipping_charge = 0;
+        
+        if($price_grid->shipping_charge > 0)
+        {
+            $total_shipping_charge = $line_qty * $price_grid->shipping_charge;
+        }
+        $avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
+
+        if($markup > 0)
+        {
+            $garment_mackup = $markup/100;
+        }
+        else
+        {
+            $garment_mackup = $markup_default/100;
+        }
+
+        $avg_garment_price = $avg_garment_cost * $garment_mackup + $avg_garment_cost;
+        if($product->extra_charges > 0)
+        {
+            $extraCharges = $product->extra_charges;
+        }
+        else
+        {
+            $extraCharges = 0;
+        }
+        if($product->override > 0)
+        {
+            $per_item = $product->override;
+        }
+        else
+        {
+            $per_item = $avg_garment_price + $print_charges + $extraCharges;
+        }
+                
+        $sales_total = $per_item * $line_qty;
+
+        $calculatedData = array(
+                            'avg_garment_cost' => round($avg_garment_cost,2),
+                            'avg_garment_price' => round($avg_garment_price,2),
+                            'print_charges' => round($print_charges,2),
+                            'markup' => $markup,
+                            'markup_default' => $markup_default,
+                            'sales_total' => round($sales_total,2),
+                            'total_line_charge' => round($per_item,2)
+                            );
+
+        $data = array("success"=>1,"message"=>"","calculatedData"=>$calculatedData);
+        return $data;
     }
 }

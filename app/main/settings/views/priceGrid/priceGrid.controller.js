@@ -12,7 +12,7 @@
     {
 
         $scope.role_slug = sessionService.get('role_slug');
-        if($scope.role_slug=='CA' || $scope.role_slug=='AM')
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='SM')
         {
             $scope.allow_access = 1; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
         }

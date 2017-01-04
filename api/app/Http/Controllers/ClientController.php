@@ -273,14 +273,14 @@ class ClientController extends Controller {
 *          type="string",
 *          name="Authorization",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
 *      @SWG\Parameter(
 *          description="Authorization User Id",
 *          type="integer",
 *          name="AuthUserId",
 *          in="header",
-*          require=true
+*          required=true
 *      ),
  *  @SWG\Response(response=200, description="Client Filter Data"),
  *  @SWG\Response(response="default", description="Client Filter Data"),
