@@ -2230,7 +2230,7 @@ class OrderController extends Controller {
             return response()->json(["data" => $data_record]);
         }
 
-
+        
         if($result['main']['qid'] == 0) {
           
           $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
@@ -2601,6 +2601,7 @@ class OrderController extends Controller {
 
 
 
+
 /** 
  * @SWG\Definition(
  *      definition="allClientAddre3ss",
@@ -2646,6 +2647,7 @@ class OrderController extends Controller {
  *  @SWG\Response(response="default", description="Get All Client Address"),
  * )
  */
+
 
 
      public function GetAllClientsAddress(){
@@ -2736,4 +2738,10 @@ class OrderController extends Controller {
         
         return response()->json(['data'=>$data]);
     }
+
 }
+
+
+
+    
+

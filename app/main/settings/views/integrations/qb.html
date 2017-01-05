@@ -31,9 +31,9 @@
 	                        <span ng-if="qb.is_sandbox==1">Yes</span>
 	                        <span ng-if="qb.is_sandbox==0">No</span> -->
 	                    </md-card-content>
-				    <span class="mt-20" ng-show="qb.consumer_key !='' && qb.consumer_secret_key !=''"><connect-to-quickbooks /></span>
+				    <span class="mt-20"><connect-to-quickbooks /></span>
 			        <span>
-			            <md-button ng-show="qb.ss =='0' && qb.consumer_key !='' && qb.consumer_secret_key !=''" class="md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple" ng-click="vm.qbActivewearSetup($event,qb.id)" >Setup</md-button>
+			            <md-button ng-show="qb.ss =='0'" class="md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple" ng-click="vm.qbActivewearSetup($event,qb.id)" >Setup</md-button>
 			        </span>
 	                </md-card>
 	            </div>
