@@ -101,6 +101,7 @@ class Production extends Model {
                 elseif($value->screen_active=='1'){$value->screen_icon='1';} 
                 else{$value->screen_icon='0';}
             	$value->in_hands_by =($value->in_hands_by=='0000-00-00' || $value->in_hands_by=='')?'':date('m/d/Y',strtotime($value->in_hands_by)) ;
+                $value->position_image= $this->common->checkImageExist($post['company_id'].'/order_design_position/'.$value->id."/",$value->image_1);
                 $value->run_date =($value->run_date=='0000-00-00' || $value->run_date=='')?'':date('m/d/Y',strtotime($value->run_date)) ;
                 $value->image_1= file_exists(FILEUPLOAD.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1)?UPLOAD_PATH.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1:'';
                 $value->garment = $this->CheckWarehouseQuantity($value->id);
@@ -108,7 +109,7 @@ class Production extends Model {
                 $value->imps = $calculation['imps'];
                 $value->run_speed = $calculation['run_speed'];
                 $value->screen_count = $this->getPositioncolors($value->id);
-                $value->position_image= $this->common->checkImageExist($post['company_id'].'/order_design_position/'.$value->id."/",$value->image_1);
+               
                 //echo "<pre>"; print_r($calculation); echo "</pre>"; die();
 
           	}
