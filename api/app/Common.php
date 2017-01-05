@@ -1,7 +1,7 @@
 <?php
 
 namespace App;
-
+ 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use DateTime;
@@ -95,7 +95,28 @@ class Common extends Model {
           
         return $allData;
     }
+    /**
+* Get All Misc type
+* @access public getAllMiscDataWithoutBlank
+* @return array $Misc
+*/
 
+    public function getAllMiscDataCompanyId($company_id) {
+        
+        $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $company_id];
+        $MiscData = DB::table('misc_type')->where($whereMiscConditions)->get();
+
+        $allData = array ();
+        foreach($MiscData as $data) {
+           
+           if($data->value != ''){
+            $allData[$data->id] = $data;
+           }
+
+        }
+
+        return $allData;
+    }
 
     /**
 * Get All Misc type
@@ -142,7 +163,7 @@ class Common extends Model {
        
 
 
-        $whereConditions = ['users.status' => '1','users.is_delete' => '1','roles.slug' => 'BC','users.parent_id' => $company_id];
+        $whereConditions = ['users.status' => '1','users.is_delete' => '1','roles.slug' => 'AM','users.parent_id' => $company_id];
         $listArray = ['users.id','users.name'];
 
         $brandCordinatorData = DB::table('users as users')
@@ -163,14 +184,18 @@ class Common extends Model {
 
         return $id;
     }
-    public function GetTableRecords($table,$cond,$notcond,$sort=0,$sortBy=0)
+    public function GetTableRecords($table,$cond,$notcond=array(),$sort=0,$sortBy=0,$select='')
     {
         $result = DB::table($table);
+        if(!empty($select))
+        {
+            $result =$result ->select($select);
+        }
         if(count($cond)>0)
         {
             foreach ($cond as $key => $value) 
             {
-                if(!empty($value))
+                //if(!empty($value))
                 $result =$result ->where($key,'=',$value);
             }
         }
@@ -216,7 +241,38 @@ class Common extends Model {
                 
             }
         }
-        
+        if($date_field=='checkbox')
+        {
+             foreach ($data as $key => $value) 
+            {
+                if(!empty($value))
+                {
+                    $data[$key] = ($value==true)?1:0;
+                }
+                
+            }
+        }
+        if(isset($data['order_sns_status']))
+        {
+            $data['updated_date'] = CURRENT_DATETIME;
+        }
+        if(isset($data['shipping_by']))
+        {
+            $data['shipping_by'] = date("Y-m-d", strtotime($data['shipping_by']));
+        }
+        if(isset($data['in_hands_by']) && $data['in_hands_by'] != '')
+        {
+            $data['in_hands_by'] = date("Y-m-d", strtotime($data['in_hands_by']));
+        }
+        if(isset($data['date_shipped']) && $data['date_shipped'] != '')
+        {
+            $data['date_shipped'] = date("Y-m-d", strtotime($data['date_shipped']));
+        }
+        if(isset($data['fully_shipped']))
+        {
+            $data['fully_shipped'] = date("Y-m-d", strtotime($data['fully_shipped']));
+        }
+
         $result = DB::table($table);
         if(count($cond)>0)
         {
@@ -328,9 +384,10 @@ class Common extends Model {
                          ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
                          ->leftJoin('staff as s', 'usr.id', '=', 's.user_id')
                          ->leftJoin('company_detail as cd', 'usr.id', '=', 'cd.company_id')
-                         ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id',
-                                    's.prime_address1','s.prime_address_city','s.prime_address_state','s.prime_address_country','s.prime_address_zip',
-                                    's.url','s.photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip')
+                         ->leftJoin('state as st', 'st.id', '=', 's.prime_address_state')
+                         ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','s.first_name','s.last_name',
+                                    's.prime_address1','s.prime_address_city','st.code as prime_address_state','s.prime_address_country','s.prime_address_zip','s.prime_phone_main as phone',
+                                    's.url','s.photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip','cd.url')
                          ->where('usr.id','=',$company_id)
                          ->where('usr.is_delete','=','1')
                          ->where('s.is_delete','=','1')
@@ -428,4 +485,204 @@ class Common extends Model {
         DB::table($table)->truncate();
     }
 
+    public function checkImageExist($path,$image='')
+    {
+        if(empty($image))
+        {
+            return NOIMAGE;
+        }
+        else
+        {
+            return file_exists(FILEUPLOAD.$path.$image)?UPLOAD_PATH.$path.$image:NOIMAGE;
+        }
+        
+    }
+    public function GetCompanyUsers($company_id)
+    {
+        $whereConditions = ['usr.status' => '1','usr.is_delete' => '1','usr.parent_id' => $company_id];
+        $listArray = ['usr.id','usr.name'];
+
+        $Companyuser = DB::table('users as usr')
+                         ->Join('roles as roles', 'usr.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->where('roles.slug','<>','CA')
+                         ->where('roles.slug','<>','SA')
+                         ->orderby('usr.name','ASC')
+                         ->get();
+
+        return $Companyuser;
+    }
+
+    public function setDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$lastId)
+    {
+          //echo $pkey; die();
+
+          $sec_number = DB::table($table.' as tb')
+                            ->where($comp_field,$company_id)
+                            ->where('display_number','=','0')
+                            ->orderby($pkey,'asc')
+                            ->get();
+
+            //echo count($sec_number); die();
+            if(count($sec_number)>0) // CHECK THE 0 DATA TO BE RESET
+            {
+                foreach ($sec_number as $key=>$value) 
+                {
+                   // echo $value->$pkey;
+                    $inc_id = $lastId+$key+1; // SET NEW ID BY INCREMENT OF LATEST ID
+                    $this->UpdateTableRecords($table,array($pkey=>$value->$pkey),array('display_number'=>$inc_id)) ;   // UPDATE NEW INCREMENTED ID     
+                }
+            }
+            else
+            {
+                $inc_id = $lastId;
+            }
+            //$this->getDisplayNumber($table,$company_id,$comp_field,$pkey); // CHECK AGAIN TO SET NEW DISPLAY ID
+            return $inc_id+1;
+           // die();
+    }
+    public function setAffiliateDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$lastId)
+    {
+          //echo $pkey; die();
+
+          $sec_number = DB::table($table.' as tb')
+                            ->where($comp_field,$company_id)
+                            ->where('affiliate_display_number','=','0')
+                            ->orderby($pkey,'asc')
+                            ->get();
+
+            //echo count($sec_number); die();
+            if(count($sec_number)>0) // CHECK THE 0 DATA TO BE RESET
+            {
+                foreach ($sec_number as $key=>$value) 
+                {
+                   // echo $value->$pkey;
+                    $inc_id = $lastId+$key+1; // SET NEW ID BY INCREMENT OF LATEST ID
+                    $this->UpdateTableRecords($table,array($pkey=>$value->$pkey),array('affiliate_display_number'=>$inc_id)) ;   // UPDATE NEW INCREMENTED ID     
+                }
+            }
+            else
+            {
+                $inc_id = $lastId;
+            }
+            //$this->getDisplayNumber($table,$company_id,$comp_field,$pkey); // CHECK AGAIN TO SET NEW DISPLAY ID
+            return $inc_id+1;
+           // die();
+    }
+    public function getDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$call="no")
+    {
+
+        $sec_number = DB::table($table.' as tb')
+                            ->select(DB::raw('MAX(tb.display_number) as disp_number'))
+                            ->where($comp_field,$company_id)
+                            ->get();
+        
+        if(empty($sec_number[0]->disp_number))
+        {
+            $lastId= 0; // THERE IS NO RECORD
+        }
+        else
+        {
+            $lastId= $sec_number[0]->disp_number+1; // THERE ARE RECORDS AND LATEST DISPLAY ID
+        }    
+
+        if($call=="yes")
+        {
+            $lastId = $this->setDisplayNumber($table,$company_id,$comp_field,$pkey,$sec_number[0]->disp_number); // RESET ALL UNALLOCATED ID
+            return $lastId; // RETURN LATEST INCREMENTED ID
+        }
+        else
+        {
+           if($lastId==0){$lastId=1;} 
+           return $lastId; // RETURN LATEST INCREMENTED ID
+        }
+    }
+    public function getAffiliateDisplayNumber($table,$company_id,$comp_field="company_id",$pkey="id",$call="no")
+    {
+
+        $sec_number = DB::table($table.' as tb')
+                            ->select(DB::raw('MAX(tb.affiliate_display_number) as disp_number'))
+                            ->where($comp_field,$company_id)
+                            ->get();
+        
+        if(empty($sec_number[0]->disp_number))
+        {
+            $lastId= 0; // THERE IS NO RECORD
+        }
+        else
+        {
+            $lastId= $sec_number[0]->disp_number+1; // THERE ARE RECORDS AND LATEST DISPLAY ID
+        }    
+
+        if($call=="yes")
+        {
+            $lastId = $this->setAffiliateDisplayNumber($table,$company_id,$comp_field,$pkey,$sec_number[0]->disp_number); // RESET ALL UNALLOCATED ID
+            return $lastId; // RETURN LATEST INCREMENTED ID
+        }
+        else
+        {
+           if($lastId==0){$lastId=1;} 
+           return $lastId; // RETURN LATEST INCREMENTED ID
+        }
+    }
+
+    public function GetMiscApprovalData($post)
+    {
+
+        $approvalData = DB::table('misc_type')
+                    ->select('*','value as label')
+                    ->where($post)
+                    ->whereNotIn('slug', ['137','569'])
+                    ->get();
+        
+        return $approvalData;
+    }
+    /**
+    * Get All Misc Production Data type
+    * @access public getAllMiscData
+    * @return array $Misc
+    */
+
+    public function getAllMiscDataProduction($client_id) {
+
+         $whereMiscConditions = ['status' => '1','is_delete' => '1','company_id' => $client_id,'type' => 'approval'];
+        $MiscData = DB::table('misc_type')->where($whereMiscConditions)->whereNotIn('slug', [137,149,150,151,568,569])->get();
+
+        $allData = array ();
+        
+        foreach($MiscData as $data) {
+           
+            $allData[] = $data->id;
+          
+        }
+        return $allData;
+    }
+    public function checkCompanyNameExist($name,$companyid,$client_id)
+    {
+        $data = DB::table('client')->where('client_company','=',trim($name));
+
+        if(!empty($companyid))
+            {  $data= $data->where('company_id','=',trim($companyid)); }
+
+        if($client_id != 0)
+            {  $data= $data->where('client_id','<>',trim($client_id)); }
+        
+        $data = $data->get();
+        return $data;
+    }
+
+    public function getUserRole($user_id)
+    {
+        $whereConditions = ['usr.status' => '1','usr.is_delete' => '1','usr.id' => $user_id];
+        $listArray = ['usr.id','usr.name','roles.slug as role'];
+
+        $Companyuser = DB::table('users as usr')
+                         ->Join('roles as roles', 'usr.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        return $Companyuser;
+    }
 }

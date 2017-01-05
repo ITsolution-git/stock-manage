@@ -46,6 +46,7 @@ class JsonSerializationTest extends BaseSerializationTest
             $outputs['array_strings'] = '["foo","bar"]';
             $outputs['array_booleans'] = '[true,false]';
             $outputs['array_integers'] = '[1,3,4]';
+            $outputs['array_empty'] = '{"array":[]}';
             $outputs['array_floats'] = '[1.34,3,6.42]';
             $outputs['array_objects'] = '[{"foo":"foo","moo":"bar","camel_case":"boo"},{"foo":"baz","moo":"boo","camel_case":"boo"}]';
             $outputs['array_mixed'] = '["foo",1,true,{"foo":"foo","moo":"bar","camel_case":"boo"},[1,3,true]]';
@@ -76,7 +77,7 @@ class JsonSerializationTest extends BaseSerializationTest
             $outputs['groups_foo'] = '{"foo":"foo","foobar":"foobar"}';
             $outputs['groups_foobar'] = '{"foo":"foo","foobar":"foobar","bar":"bar"}';
             $outputs['groups_default'] = '{"bar":"bar","none":"none"}';
-            $outputs['virtual_properties'] = '{"exist_field":"value","test":"other-name","virtual_value":"value","typed_virtual_property":1}';
+            $outputs['virtual_properties'] = '{"exist_field":"value","virtual_value":"value","test":"other-name","typed_virtual_property":1}';
             $outputs['virtual_properties_low'] = '{"low":1}';
             $outputs['virtual_properties_high'] = '{"high":8}';
             $outputs['virtual_properties_all'] = '{"low":1,"high":8}';
@@ -88,9 +89,12 @@ class JsonSerializationTest extends BaseSerializationTest
             $outputs['object_when_null'] = '{"text":"foo"}';
             $outputs['object_when_null_and_serialized'] = '{"author":null,"text":"foo"}';
             $outputs['date_time'] = '"2011-08-30T00:00:00+0000"';
+            $outputs['timestamp'] = '{"timestamp":1455148800}';
+            $outputs['timestamp_prev'] = '{"timestamp":"1455148800"}';
             $outputs['date_interval'] = '"PT45M"';
             $outputs['car'] = '{"km":5,"type":"car"}';
             $outputs['car_without_type'] = '{"km":5}';
+            $outputs['garage'] = '{"vehicles":[{"km":3,"type":"car"},{"km":1,"type":"moped"}]}';
             $outputs['tree'] = '{"tree":{"children":[{"children":[{"children":[],"foo":"bar"}],"foo":"bar"}],"foo":"bar"}}';
         }
 

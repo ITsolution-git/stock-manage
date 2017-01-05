@@ -1,167 +1,198 @@
-<style type="text/css">
-    .trans-box{width: 20% !important;}
-     .handles {
-            padding-left: 0px !important;
-        }
-        .handles li {
-            list-style: none;
-             padding-bottom: 10px !important;
-        }
-        .fs22 {
-            cursor: move;
-        }
-        li.disabled {
-            opacity: 0.5;
-        }
-        li.highlight {
-            background: #FEE25F;
-        }
-
-        li.sortable-placeholder {
-            border: 1px dashed #CCC;
-            background: none;
-        }
-</style>
-<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="header "  layout="column" >
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back" ui-sref="app.art">BACK TO ART</a>
-            <h2 flex="4" class="font-500">Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].order_id})">#{{ScreenSets[0].order_id}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].client_id})">{{ScreenSets[0].client_company}}</a></h2>
-
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=60>
+               Screen Sets for Order <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:ScreenSets[0].ord_displayId})">#{{ScreenSets[0].ord_displayId}}</a> for Client: <a class="cursor-p" title="Go to Client" ui-sref="app.client.profile({id:ScreenSets[0].display_number})">{{ScreenSets[0].client_company}}</a>
+            </div>
+            <div class="pull-right right-search-box">
+                 <a class="pull-right common-header-links" ui-sref="app.art">BACK TO ART</a> 
+            </div>
         </div>
-        <div class="order-information m-b-20 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="75" layout="column">
-                <div class="title mrg10-B"><span class="h2 text-semibold">Information</span></div>
-                 <md-card layout="row">
-                    <md-card-content flex="95" layout="column">
-                        <div layout="row" layout-wrap>
-                            <div class="trans-box">
-                                <div>Client</div>
-                                <span class="chrome-weight font-14">{{ScreenSets[0].client_company}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Order Name</div>
-                                <span class="chrome-weight font-14">{{ScreenSets[0].order_name}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Order Date</div>
-                                <span class="chrome-weight font-14">{{ScreenSets[0].created_date}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Contract</div>
-                                <span class="chrome-weight font-14">{{ScreenSets[0].first_name}} {{ScreenSets[0].last_name}}</span>
-                            </div>
+    </div>
+    <div class="inner-full-box mt-30">
+    <!--art order information box starts here -->
+    <div class="order-information m-b-45 pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
+        <div class="box-zerospace m-b-20 padding-0"><span class="stokkup-title-h4">Information</span></div>
+        <div class="info-order m-r-30" flex="73" layout="column">
+            <md-card layout="row">
+                <md-card-content flex="95" layout="column">
+                    <div layout="row" layout-wrap>
+                        <div class="trans-box">
+                            <div>Client</div>
+                            <span class="chrome-weight font-14">{{ScreenSets[0].client_company}}</span>
                         </div>
-                    </md-card-content>
-                   <!--  <div layout-align="end start"  flex="5" layout="row">
-                        <md-button class="md-icon-button" aria-label="View Details">
-                            <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                        </md-button>
-                    </div> -->
-                </md-card>
-            </div>
-            <div flex="25" layout="column">
-                 <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div>
-                <md-select ng-model="ScreenSets[0].approval" aria-label="Approval Status">
-                    <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}">Approved</md-option>
-                    <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}">Pending</md-option>
-                </md-select>
+                        <div class="trans-box">
+                            <div>Order Name</div>
+                            <span class="chrome-weight font-14">{{ScreenSets[0].order_name}}</span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Order Date</div>
+                            <span class="chrome-weight font-14">{{ScreenSets[0].created_date}}</span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Client Contact</div>
+                            <span class="chrome-weight font-14">{{ScreenSets[0].first_name}} {{ScreenSets[0].last_name}}</span>
+                        </div>
+                        <div class="trans-box">
+                            <div>Client Email</div>
+                            <span class="chrome-weight font-14">{{ScreenSets[0].billing_email}}</span>
+                        </div>
+
+                        
+                    </div>
+                </md-card-content>
+            </md-card>
+        </div>
+        <div flex="24" class="padding-30 white-bg text-center boxes-borderstyle approve-box">
+            <!--  <div class="title mrg10-B"><span class="h2 text-semibold">Approval Status</span></div> -->
+            <md-select ng-model="ScreenSets[0].approval" ng-class="{approvelabel : ScreenSets[0].approval==1}" ng-disabled="!(allow_access===1)" ng-change="UpdateTableField(ScreenSets[0].approval,ScreenSets[0].order_id)" aria-label="Approval Status">
+                <md-option value="1" ng-selected="{{ScreenSets[0].approval==1}}"><i class="fa fa-check-circle-o"></i>Approved</md-option>
+                <md-option value="0" ng-selected="{{ScreenSets[0].approval==0}}"><i class="fa fa-exclamation"></i>Pending</md-option>
+            </md-select>
+        </div>
+    </div>
+
+    <!--art order information box ends here -->
+
+    <!--screenset panel starts here -->
+    <div class="screensetbox pad0" layout="row" layout-align="start" layout-wrap flex layout-padding>
+        <div class="info-order box-zerospace">
+            <div class="title box-title m-b-20"><span class="stokkup-title-h4">Screen Set</span></div>
+                <div class="box-zerospace pull-left">
+                     <ul class="handles screenset-list-struct" dnd-list="ScreenSets_new.data_all"  dnd-inserted="change_sort()">
+                        <li ng-repeat="sets in ScreenSets_new.data_all"
+                            dnd-draggable="sets"
+                            dnd-moved="ScreenSets_new.data_all.splice($index, 1)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="ScreenSets_new.data_all.selected = sets"
+                            ng-class="{'selected': ScreenSets_new.data_all.selected === sets}">
+                            <dnd-nodrag>
+                            <table class="custom-table1">
+                                <tr>
+                                    <td width="100%">
+                                        <div class="box-zerospace white-bg"><div class="title screenset-titlebox"><span class="stokkup-title-h4 light-300 font-16">{{ sets.screen_set}}</span></div></div>
+                                        <div layout="row" class="box-zerospace pull-left" ng-show="sets.screen_active==1">
+                                                <div layout="row" flex="60" layout-wrap>
+                                                    <div class="trans-outer">
+                                                        <div class="trans-box">
+                                                            <div>Position</div>
+                                                            <span class="chrome-weight font-14">{{sets.position_name}}</span>
+                                                        </div>
+                                                        <div class="trans-box">
+                                                            <div>Number of Colors</div>
+                                                            <span class="chrome-weight font-14">{{sets.color_stitch_count}}</span>
+                                                        </div>
+                                                        <div class="trans-box">
+                                                            <div>Frame Size</div>
+                                                            <span class="chrome-weight font-14">{{sets.frame_size}}</span>
+                                                        </div>
+                                                        <div class="trans-box">
+                                                            <div>Width</div>
+                                                            <span class="chrome-weight font-14">{{sets.screen_width}}</span>
+                                                        </div>
+                                                        <div class="trans-box">
+                                                            <div>Print Location</div>
+                                                            <span class="chrome-weight font-14">{{sets.screen_location}}</span>
+                                                        </div>
+                                                        <div class="trans-box">
+                                                            <div>Number of Screens</div>
+                                                            <span class="chrome-weight font-14">{{sets.screen_total}}</span>
+                                                        </div>
+                                                        <div class="trans-box">
+                                                            <div>Lines Per Inch</div>
+                                                            <span class="chrome-weight font-14">{{sets.line_per_inch}}</span>
+                                                        </div>
+                                                        <div class="trans-box">
+                                                            <div>Height</div>
+                                                            <span class="chrome-weight font-14">{{sets.screen_height}}</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div flex="15" class="pull-left">
+                                                    <md-card-content layout="column" class="box-zerospace" style="padding: 3px;">
+                                                        <img   ng-src="{{sets.mokup_logo_url}}" alt="" class="screenset-img" />
+                                                    </md-card-content>
+                                                </div>
+                                                <div flex="20" class="pull-left mt-20 text-center">
+                                                    <div class="pull-left box-layout-2 text-center">
+                                                        <md-button ng-show="allow_access==1" class="md-raised stokkup-custom-btn1 bg-grey mb-15" 
+                                                        ng-click="createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
+                                                    </div>
+                                                    <div class="pull-left box-layout-2 text-center">
+                                                        <md-button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn" ui-sref="app.art.screensetView({id:sets.screen_display})">View Screen</md-button>
+                                                    </div>
+                                                </div>
+                                                <div flex=5 layout="row" dnd-handle class="dragiconscenter">
+                                                    <span class="icon icon-menu fs22"></span>
+                                                </div>
+                                            
+                                            <!-- <div layout-align="end start"  flex="5" layout="row">
+                                                <md-button  ng-click="vm.createNewScreen($event,sets.screen_id)" class="md-icon-button" aria-label="View Details">
+                                                    <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                                                </md-button>
+                                            </div> -->
+                                        </div>
+                                        <div layout="row" class="box-zerospace pull-left" ng-show="sets.screen_active==0">
+                                            <div layout="row" flex="65" layout-wrap>
+                                                    <div class="trans-outer">
+                                                        <div class="trans-box box-zerospace">
+                                                            <div>Screen Set Not Yet Created</div>
+                                                        </div>
+                                                    </div>       
+                                            </div>
+                                            <div flex="30" layout="column">
+                                                <div flex="25" class="text-right"><md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button m-t-10" ng-click="createNewScreen($event,sets.screen_id)">Create Screen Set</md-button></div>
+                                            </div>
+                                            <div flex=5 layout="row" dnd-handle class="dragiconscenter">
+                                                <span class="icon icon-menu fs22"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                    </dnd-nodrag>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
-    <div layout="row" class="pd10-R">
-        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">Screen Set</span></div></div>
-<!--         <div flex="25" class="text-right"><md-button class="md-raised md-primary" ng-click="vm.createNewScreen()">Create New Screen</md-button></div> -->
-    </div>
-    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15" >
-     <ul class="handles" dnd-list="ScreenSets_new.data_all"  dnd-inserted="change_sort()">
-            <li ng-repeat="sets in ScreenSets_new.data_all"
-                dnd-draggable="sets"
-                dnd-moved="ScreenSets_new.data_all.splice($index, 1)"
-                dnd-effect-allowed="move"
-                dnd-selected="ScreenSets_new.data_all.selected = sets"
-                ng-class="{'selected': ScreenSets_new.data_all.selected === sets}">
-                <dnd-nodrag>
-                <table class="tbl-typ2">
-                    <tr>
-                        <td width="97%">
-                            <div class="header-typ1">{{ sets.screen_set}}</div>
-                            <div layout="row"  ng-show="sets.screen_active==1">
-                                <div flex="95" layout="column">
-                                    <div layout="row" layout-wrap>
-                                        <div class="trans-box">
-                                            <div>Position</div>
-                                            <span class="chrome-weight font-14">{{sets.position_name}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Number of Colors</div>
-                                            <span class="chrome-weight font-14">{{sets.color_stitch_count}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Frame Size</div>
-                                            <span class="chrome-weight font-14">{{sets.frame_size}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Width</div>
-                                            <span class="chrome-weight font-14">{{sets.screen_width}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Edit Screen sets</md-button>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Print Location</div>
-                                            <span class="chrome-weight font-14">{{sets.screen_location}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Number of Screens</div>
-                                            <span class="chrome-weight font-14">{{sets.screen_total}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Lines Per Inch</div>
-                                            <span class="chrome-weight font-14">{{sets.line_per_inch}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <div>Height</div>
-                                            <span class="chrome-weight font-14">{{sets.screen_height}}</span>
-                                        </div>
-                                        <div class="trans-box">
-                                            <md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ui-sref="app.art.screensetView({id:sets.screen_id})">View Screen</md-button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div layout-align="end start"  flex="5" layout="row">
-                                    <md-button  ng-click="vm.createNewScreen($event,sets.screen_id)" class="md-icon-button" aria-label="View Details">
-                                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                </div> -->
-                            </div>
-                            <div layout="row" ng-show="sets.screen_active==0">
-                                <div flex="80" layout="column">
-                                    <div layout="row" layout-wrap>
-                                        <h1 style="color:#cccccc; padding-left: 10px;"> Screen Set Not Yet Created </h1>
-                                    </div>
-                                </div>
-                                <div flex="20" layout="column">
-                                    <div layout="row" layout-wrap style="margin-top: 10px;">
-                                    <div flex="25" class="text-right"><md-button class="md-raised md-primary" style="background-color: rgba(204, 204, 204, 1); color: #5e5e5e; " ng-click="vm.createNewScreen($event,sets.screen_id)">Create Screen Set</md-button></div>
-                                    </div>
-                                </div>
-                            </div>
+    <!--screenset panel ends here -->
 
-                        </td>
-                        <td width="3%" class="text-center" dnd-handle>
-                            <span class="icon icon-menu fs22"></span>
-                        </td>
-                    </tr>
-                </table>
-        </dnd-nodrag>
-        </li>
-        </ul>
-    </div>
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" ng-click="cancel()" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-        <div class="md-ripple-container" style=""></div>
-        </button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form" ng-click="printPdf()"><span class="ng-scope">Generate Art Approval Form</span></button>
+
+    <md-card class="margin-0 " flex="30">
+        <md-card-header layout-align="space-between center">
+            <md-card-header-text>
+            <span class="md-title">Mockup Image</span>
+            </md-card-header-text>
+            <md-menu ng-show="allow_access==1">
+                <md-button aria-label="Image Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item ng-click="ImagePopup('mokup_image','art','art',ScreenSets[0].mokup_image_url,'order_id',ScreenSets[0].order_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" >
+                        <md-button>
+                            Change Image
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-menu-item ng-click="deleteImage('mokup_image','art','art',ScreenSets[0].mokup_image,'order_id',ScreenSets[0].order_id,ScreenSets[0].order_id)">
+                        <md-button>
+                            Remove Image
+                        </md-button>
+                    </md-menu-item>
+
+
+                </md-menu-content>
+            </md-menu>
+        </md-card-header>
+        <md-card-content ng-click="ImagePopup('mokup_image','art','art',ScreenSets[0].mokup_image_url,'order_id',ScreenSets[0].order_id,ScreenSets[0].mokup_image,ScreenSets[0].order_id)" layout="column" layout-padding class="min-height">
+            <img   ng-src="{{ScreenSets[0].mokup_image_url}}" alt=""  class="popup-image"/>
+        </md-card-content>
+    </md-card> 
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace m-t-20" ng-show="allow_access==1">
+        <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" aria-label="PressInstruction" ng-click="Artpressall()"><span class="ng-scope">Generate PressInstruction</span></button>
+        <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" aria-label="Generate Art Approval Form" ng-click="openClientEmailPopup()"><span class="ng-scope">Art Approval</span></button>
+        
     </md-dialog-actions>
+    </div><!--inner full box ends here -->
 </div>

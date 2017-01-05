@@ -1,49 +1,57 @@
 <md-dialog class="task-dialog authorizeNetDialog" >
+<form name="integration_form" class="md-inline-form" novalidate>
     <div class="client-profile-page">
-    <md-toolbar class="md-accent md-hue-2">
+        <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">AUTHORIZE.NET API INTEGRATION</span>
-                <md-button  ng-click="closeDialog()">
-                    <span>Cancel</span>
-                </md-button>
+            <span class="title">AUTHORIZE.NET API INTEGRATION</span>
+            <md-button  ng-click="closeDialog()" class="close-stokkup-dialog">
+            <span>close</span>
+            </md-button>
             </div>
         </md-toolbar>
-    <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
-        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
-                <div layout="column"  flex="100">
 
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API url" name="api" ng-model="authorize.api" ui-event="">
+        
+           <md-dialog-content ms-scroll>
+            <div ng-cloak>
+            <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
+                <div layout="column"  flex="100" class="p-0 pt-15">
+                    <md-input-container class="md-block">
+                        <input placeholder="API url" name="api" ng-model="params.api" ui-event="">
                     </md-input-container>
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API username" readonly=""  onfocus="this.removeAttribute('readonly');" name="username" ng-model="authorize.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    <md-input-container class="md-block">
+                        <input placeholder="API username" name="username" ng-model="params.username" >
                     </md-input-container>
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API login *" name="login" readonly=""  onfocus="this.removeAttribute('readonly');" ng-model="authorize.login" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    <md-input-container class="md-block">
+                        <input placeholder="API login *" name="login"  ng-model="params.login">
                     </md-input-container>
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API Password" type="password" readonly=""  onfocus="this.removeAttribute('readonly');" name="password" ng-model="authorize.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    <md-input-container class="md-block">
+                        <input placeholder="API Password" type="password"  name="password" ng-model="params.password" >
                     </md-input-container>
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API transactionkey" name="transactionkey" ng-model="authorize.transactionkey" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    <md-input-container class="md-block">
+                        <input placeholder="API transactionkey" name="transactionkey" ng-model="params.transactionkey" >
                     </md-input-container>
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="API secretkey" name="secretkey" ng-model="authorize.secretkey" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'authorize_detail\',authorize.id)' }">
+                    <md-input-container class="md-block">
+                        <input placeholder="API secretkey" name="secretkey" ng-model="params.secretkey">
                     </md-input-container>
-
-                   
-
+                    <md-input-container layout="row">
+                        <label class="selectbox-label">Test Mode</label>
+                        <md-select name="is_live" ng-model="params.is_live" flex="100" >
+                            <md-option ng-selected="params.is_live==1" value="1">
+                                No
+                            </md-option>
+                            <md-option ng-selected="params.is_live==0" value="0">
+                                Yes
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
                 </div>
-                
-            </div>
-</div>
-<!--     <md-button class="bg-blue float-right" id="affiliateSaveBtn" ng-click="closeDialog()">
-            SAVE
-    </md-button> -->
+              </div>  
+            </div>  
+            </md-dialog-content>
+        
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'authorize_detail','id',params.id,'authorize')">SAVE</md-button>
+        </md-dialog-actions>
+    </div>
+</form>
 </md-dialog>

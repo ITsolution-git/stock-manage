@@ -1,35 +1,50 @@
 <md-dialog class="task-dialog ssActivewearDialog" >
-    <div class="client-profile-page">
-    <md-toolbar class="md-accent md-hue-2">
-            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">UPS API INTEGRATION</span>
-                <md-button    ng-click="closeDialog()">
-                    <span>Cancel</span>
-                </md-button>
-            </div>
-        </md-toolbar>
-    <div ng-cloak>
-    <md-card-content layout="column" class="box-shadow-0">
-    <form autocomplete="off">
-        <div layout="row" layout-wrap="nowrap" id="affiliateDialog" layout-padding layout-align="space-between start">
-                <div layout="column"  flex="100">
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="UPS Email" name="email" class="stop" readonly=""  ng-model="ups.email" onfocus="this.removeAttribute('readonly');" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
-                    </md-input-container>
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Access UserName *" type="text" name="username" readonly=""  onfocus="this.removeAttribute('readonly');" ng-model="ups.username" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
-                    </md-input-container>
-
-                    <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                        <input placeholder="Account Password" type="password" name="password"  onfocus="this.removeAttribute('readonly');" readonly=""  ng-model="ups.password" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'ups_detail\',ups.id)' }">
-                    </md-input-container>
+    <form name="integration_form" class="md-inline-form" novalidate>
+        <div class="client-profile-page">
+            <md-toolbar class="md-accent md-hue-2">
+                <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                    <span class="title">UPS API INTEGRATION</span>
+                    <md-button    ng-click="closeDialog()" class="close-stokkup-dialog">
+                        <span>close</span>
+                    </md-button>
                 </div>
+            </md-toolbar>
+            <div ng-cloak>
+                <md-dialog-content ms-scroll>
+                    <div layout="row" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
+                        <div layout="column"  flex="100" class="p-0 pt-15">
+                            <md-input-container class="md-block">
+                                <input placeholder="License Key" name="api" class="stop"  ng-model="params.api" >
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <input placeholder="Access UserName *" type="text" name="username" ng-model="params.username" >
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <input placeholder="Account Password" type="password" name="password"   ng-model="params.password" >
+                            </md-input-container>
+                            <md-input-container class="md-block">
+                                <input placeholder="Account Number" name="account_number" class="stop"  ng-model="params.account_number">
+                            </md-input-container>
+                            <md-input-container layout="row">
+                                <label class="selectbox-label">Test Mode</label>
+                                <md-select name="is_live" ng-model="params.is_live" flex="100" >
+                                    <md-option ng-selected="params.is_live==1" value="1">
+                                        No
+                                    </md-option>
+                                    <md-option ng-selected="params.is_live==0" value="0">
+                                        Yes
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </div>
+                </md-dialog-content>
             </div>
-        </form>
-</div>
-    <!-- <md-button class="bg-blue float-right" id="affiliateSaveBtn"  ng-click="closeDialog()">
-            SAVE
-    </md-button> -->
+            <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" id="affiliateSaveBtn" ng-click="UpdateTableData(params,'ups_detail','id',params.id,'ups')">
+                SAVE
+            </md-button>
+        </md-dialog-actions>
+        </div>
+    </form>
 </md-dialog>

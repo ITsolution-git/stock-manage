@@ -16,7 +16,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         },
                         shippingData: function (msApi)
                         {
@@ -35,7 +35,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/orderwaitship/:id',
@@ -50,7 +50,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/shipmentdetails/:id',
@@ -65,7 +65,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/boxingdetail/:id',
@@ -80,7 +80,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/shipmentoverview/:id',
@@ -111,7 +111,7 @@
             /*stateParams: {
                 'param1': 'page'
              },*/
-            weight   : 1
+            weight   : 9
         });
     }
 })();

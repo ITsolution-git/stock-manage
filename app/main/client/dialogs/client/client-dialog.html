@@ -3,27 +3,27 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Add New Client</span>
-                <md-button  ng-click="vm.closeDialog()">
+                <md-button  ng-click="vm.closeDialog()" class="close-stokkup-dialog md-button">
                     <span>Close</span>
                 </md-button>
             </div>
         </md-toolbar>
         <md-dialog-content ms-scroll>
-            <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
+            <div layout="column" layout-wrap="nowrap" class="client-add-modal popup-stokkup-modal" layout-padding>
                 <div class="content-heading" layout-padding>
                     <span class="md-title">Company Information</span>
                 </div>
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Company Name *" name="client_company" required ng-model="vm.client.client_company">
+                    <input placeholder="Company Name *" name="client_company" required ng-model="client.client_company">
                     <div ng-messages="clientForm.client_company.$error" role="alert" multiple>
-                        <div ng-message="required">
+                        <div ng-message="required" class="red-alert-msge">
                             <span>This field is required</span>
                         </div>
                     </div>
                 </md-input-container>
-                <md-input-container class="m-b-30">
+                <md-input-container>
                     <label>Type</label>
-                    <md-select ng-model="vm.client.client_companytype">
+                    <md-select ng-model="client.client_companytype">
                         <md-option value="0">
                             Select Type
                         </md-option>
@@ -32,35 +32,51 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
+
                 <md-input-container>
-                    <input placeholder="Street Address" ng-model="vm.client.pl_address">
+                    <input tabindex="2" vs-google-autocomplete="Gapi_options"
+                        ng-model="Gapi_address.name"
+                        vs-street-number="Gapi_address.components.streetNumber" 
+                        vs-street="Gapi_address.components.street"
+                        vs-city="Gapi_address.components.city"
+                        vs-state="Gapi_address.components.state"
+                        vs-post-code="Gapi_address.components.postCode"
+                        type="text" 
+                        name="Gapi_address"
+                        id="Gapi_address"
+                        aria-label="form-control" flex=70>
+                        <md-button tabindex="3"  class="md-accent md-raised api-focus border-radius-half" ng-click="GetAPIData(Gapi_address.components)" flex=20 >Use it</md-button>
+                </md-input-container>
+
+                <md-input-container>
+                    <input placeholder="Street Address" ng-model="client.pl_address">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Suite" ng-model="vm.client.pl_suite">
+                    <input placeholder="Suite" ng-model="client.pl_suite">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="City" ng-model="vm.client.pl_city">
+                    <input placeholder="City" ng-model="client.pl_city">
                 </md-input-container>
                 <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                    <md-input-container flex=45 class="m-b-20">
+                    <md-input-container flex=45>
                         <label>State</label>
-                        <md-select ng-model="vm.client.pl_state">
+                        <md-select ng-model="client.pl_state">
                             <md-option value="0">
                                 Select State
                             </md-option>
-                            <md-option ng-repeat="state_val in vm.states_all" value="{{state_val.id}}">
+                            <md-option ng-repeat="state_val in states_all" value="{{state_val.id}}">
                                 {{state_val.name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
                     <md-input-container flex="45">
-                        <input placeholder="Zip Code" ng-model="vm.client.pl_pincode">
+                        <input placeholder="Zip Code" ng-model="client.pl_pincode">
                     </md-input-container>
                 </div>
 
                 <md-input-container>
                     <label>Billing Email *</label>
-                    <input requiredname="email" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="vm.client.billing_email">
+                    <input requiredname="email" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="client.billing_email">
                     
                     <div ng-messages="clientForm.email.$error" role="alert" multiple>
                         <div ng-message="required">
@@ -73,14 +89,22 @@
                 </md-input-container>
 
                 <md-input-container>
-                    <input placeholder="Company Phone" ng-model="vm.client.company_phone">
+                    <input placeholder="Company Phone" only-number ng-maxlength="10" ng-minlength="10" ng-model="client.company_phone">
+                    <div ng-messages="clientForm.company_phone.$error" role="alert" multiple>
+                        <div ng-message="maxlength">
+                            <span >Phone number must be have 10 digits.</span>
+                        </div>
+                        <div ng-message="minlength">
+                            <span >Phone number must be have 10 digits.</span>
+                        </div>
+                    </div>
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Company Website URL" ng-model="vm.client.company_url">
+                    <input placeholder="Company Website URL" ng-model="client.company_url">
                 </md-input-container>
                 <md-input-container class="m-b-30">
                     <label>Desposition</label>
-                    <md-select ng-model="vm.client.client_desposition">
+                    <md-select ng-model="client.client_desposition">
                         <md-option value="0">
                             Select Desposition
                         </md-option>
@@ -89,23 +113,31 @@
                         </md-option>
                     </md-select>
                 </md-input-container>
-                <div class="content-heading p-t-30" layout-padding >
+                <div class="content-heading" layout-padding >
                     <span class="md-title">Main Contact Information</span>
                 </div>
                 <md-input-container class="first-box">
-                    <input placeholder="First Name" ng-model="vm.client.first_name">
+                    <input placeholder="First Name" ng-model="client.first_name">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Last Name" ng-model="vm.client.last_name">
+                    <input placeholder="Last Name" ng-model="client.last_name">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Location " ng-model="vm.client.location">
+                    <input placeholder="Location" ng-model="client.location">
                 </md-input-container>
                 <md-input-container>
-                    <input placeholder="Phone " ng-model="vm.client.phone">
+                    <input placeholder="Phone" only-number ng-maxlength="10" ng-minlength="10" ng-model="client.phone">
+                    <div ng-messages="clientForm.phone.$error" role="alert" multiple>
+                        <div ng-message="maxlength">
+                            <span >Phone number must be have 10 digits.</span>
+                        </div>
+                        <div ng-message="minlength">
+                            <span >Phone number must be have 10 digits.</span>
+                        </div>
+                    </div>
                 </md-input-container>
-                <md-input-container>
-                    <input placeholder="Email" ng-pattern="/^.+@.+\..+$/" name="email_main" ng-model="vm.client.email">
+                <md-input-container class="m-b-30">
+                    <input placeholder="Email" ng-pattern="/^.+@.+\..+$/" name="email_main" ng-model="client.email">
 
                     <div ng-messages="clientForm.email_main.$error" role="alert" multiple>
                         <div ng-message="pattern">
@@ -113,18 +145,18 @@
                         </div>
                     </div>
                 </md-input-container>
-                <div class="content-heading p-t-30" layout-padding >
+                <div class="content-heading" layout-padding >
                     <span class="md-title">Sales Information</span>
                 </div>
                 <md-input-container class="first-box">
-                    <input placeholder="Sales Web" ng-model="vm.client.salesweb">
+                    <input placeholder="Sales Web" ng-model="client.salesweb">
                 </md-input-container>
-                <md-input-container class="md-block date-input m-b-30">
-                    <input placeholder="Anniversary date" kendo-date-picker k-ng-model="dateObject2" ng-model="vm.client.anniversarydate"   >
+                <md-input-container class="md-block date-input">
+                    <input placeholder="Anniversary date" kendo-date-picker k-ng-model="dateObject2" ng-model="client.anniversarydate"   >
                 </md-input-container>
-                <md-input-container class="m-b-30">
+                <md-input-container>
                     <label>Sales Person</label>
-                    <md-select ng-model="vm.client.salesperson">
+                    <md-select ng-model="client.salesperson">
                         <md-option value="0">
                             Select Person
                         </md-option>
@@ -136,7 +168,7 @@
 
                 <md-input-container class="m-b-30">
                     <label>Default PriceGrid *</label>
-                    <md-select ng-model="vm.client.salespricegrid" name="salespricegrid" required>
+                    <md-select ng-model="client.salespricegrid" name="salespricegrid" required class="m-b-20">
                         <md-option value="">
                             Select PriceGrid
                         </md-option>
@@ -157,7 +189,7 @@
         <md-dialog-actions layout="row" layout-align="end center">
             
                     <!-- <md-button ng-click="vm.closeDialog()" class="md-primary md-hue-1 md-accent ">Cancel</md-button> -->
-                    <md-button class="md-accent md-raised " ng-disabled="clientForm.$invalid || clientForm.$pristine" ng-click="vm.addNewClient(vm.client)">Save</md-button>
+                    <md-button class="md-accent md-raised " ng-disabled="clientForm.$invalid || clientForm.$pristine" ng-click="vm.addNewClient(client)">Save</md-button>
              
         </md-dialog-actions>
     </form>

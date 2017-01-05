@@ -16,12 +16,11 @@
             var originatorEv;
             var vm = this ;
 
-            vm.ssActivewearDialog = ssActivewearDialog ;
+           /* vm.ssActivewearDialog = ssActivewearDialog ;
             vm.authorizeNet = authorizeNet ;
-            vm.upsDialog = upsDialog ;
-            vm.qbActivewearDialog = qbActivewearDialog ;
+            vm.upsDialog = upsDialog ;*/
             vm.qbActivewearSetup = qbActivewearSetup ;
-
+           // vm.fedexDialog = fedexDialog;
             
             vm.quickbookDisconnect = quickbookDisconnect;
 
@@ -30,61 +29,54 @@
                 $mdOpenMenu(ev);
             };
 
-            $scope.GetAllApi = function ()
+            // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+            $scope.role_slug = sessionService.get('role_slug');
+            if($scope.role_slug=='CA')
             {
-                $http.get('api/public/admin/company/getSnsAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.sns = result.data.data[0];
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
-                 $http.get('api/public/admin/company/getAuthorizeAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.authorize = result.data.data[0];
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
-                $http.get('api/public/admin/company/getUpsAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.ups = result.data.data[0];
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
-
-                 $http.get('api/public/admin/company/getQBAPI/'+$scope.company_id).success(function(result) 
-                {   
-                    if(result.data.success=='1')
-                    {
-                        $scope.qb = result.data.data[0];
-
-
-                    }
-                    else
-                    {
-                        notifyService.notify('error',result.data.message);
-                    }
-                    $("#ajax_loader").hide();
-                });
+                $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+            }
+            else
+            {
+                $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
             }
 
+             // AFTER INSERT CLIENT CONTACT, GET LAST INSERTED ID WITH GET THAT RECORD
+            var state = {};
+            state.table ='state';
+
+            $http.post('api/public/common/GetTableRecords',state).success(function(result) 
+            {   
+                if(result.data.success=='1')
+                {   
+                    $scope.states_all = result.data.records;
+                }
+            });
+
+
+            $scope.GetAllApi = function ()
+            {
+                $("#ajax_loader").show();
+                var CheckArray = {};
+                CheckArray.company_id = $scope.company_id;
+                $http.post('api/public/admin/company/GetAllApi',CheckArray).success(function(result) 
+                {   
+                    if(result.data.success=='1')
+                    {
+                        $scope.sns = result.data.data.sns;
+                        $scope.authorize = result.data.data.authorize;
+                        $scope.qb = result.data.data.qb;
+                        $scope.fedex = result.data.data.fedex;
+                        $scope.ups = result.data.data.ups;
+                        $scope.location_data = result.data.data.location;
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+
+            }
             $scope.GetAllApi();
 
             $scope.cancel = function () {
@@ -98,107 +90,132 @@
             {
                 $mdDialog.hide();
             }
+        
+//======================
+﻿        // DYNAMIC POPUP FOR INSERT RECORDS
+        $scope.openInsertPopup = function(path,ev,table)
+        {
+            var insert_params = {company_id:$scope.company_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
+        }
+        // DYNAMIC POPUP FOR UPDATE RECORDS
+        $scope.openEditPopup = function(path,param,ev,table)
+        {
+            var edit_params = {data:param}; // REQUIRED PARAMETERS
+            sessionService.openEditPopup($scope,path,edit_params,table);
+        }
+        // RETURN FUNCTION FROM POPUP.
+        $scope.returnFunction = function()
+        {
+            $scope.GetAllApi();
+        }
+//======================
+
+            // ============= UPDATE TABLE RECORD WITH CONDITION ============= // 
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+        {
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table =table_name;
             
-            function ssActivewearDialog(ev, settings)
+            $scope.name_filed = field_name;
+            var obj = {};
+            obj[$scope.name_filed] =  field_value;
+            UpdateArray.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj[cond_field] =  cond_value;
+            UpdateArray.cond = angular.copy(condition_obj);
+
+            if(param==1)
             {
-                $("#ajax_loader").show();
-                $mdDialog.show({
-                    controller: function ($scope,params)
-                    {
-                        $scope.params = params;
-                        $scope.sns = $scope.params.sns;
-                         $("#ajax_loader").hide();
+                notifyService.notify('error','Please select another Main Location first !');
+                return false;
+            }
+            if(extra=='remove_address')
+            {
+                var permission = confirm("Are you sure to delete this Record ?");
+                if (permission == true) 
+                {
 
-                        $scope.closeDialog = function() 
-                        {
-                            $mdDialog.hide();
-                        } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
-                        {
-                            var vm = this;
-                            var UpdateArray = {};
-                            UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
-
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                           });
-                        }
-
-                    },
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        params:$scope,
-                        event: ev
-                    }
-                });
+                }
+                else
+                {
+                    return false;
+                }
             }
 
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success', "Record Updated Successfully!");
+                    if(extra=='is_main') // SECOND CALL CONDITION WITH EXTRA PARAMS
+                    {
+                        $scope.UpdateTableField('is_main','1',table_name,'id',param,'','');
+                    }
+                    $scope.GetAllApi();
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+                
+            });
+        }
 
-             function qbActivewearDialog(ev, settings)
+
+            $scope.OpenForm = function (ev, all_data,path)
             {
                 $("#ajax_loader").show();
                 $mdDialog.show({
                     controller: function ($scope,params)
                     {
                         $scope.params = params;
-                        $scope.qb = $scope.params.qb;
-                         $("#ajax_loader").hide();
+                        $("#ajax_loader").hide();
 
                         $scope.closeDialog = function() 
                         {
                             $mdDialog.hide();
                         } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
+                        $scope.UpdateTableData = function(tableData,table_name,cond_field,cond_value,extra,extra_cond)
                         {
                             var vm = this;
                             var UpdateArray = {};
                             UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
+                            UpdateArray.data = tableData;
 
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
+                            var condition_obj = {};
+                            condition_obj[cond_field] =  cond_value;
+                            UpdateArray.cond = angular.copy(condition_obj);
+
+                            delete UpdateArray.data.id;
+
+                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                             {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
+                                if(result.data.success=='1')
+                                {
+                                    notifyService.notify('success',result.data.message);   
+                                }
+                                else
+                                {
+                                    notifyService.notify('error',result.data.message);
+                                }
+                                $mdDialog.hide();
                            });
                         }
 
                     },
                     controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/qbActivewear/qbActivewear-dialog.html',
+                    templateUrl: 'app/main/settings/dialogs/'+path,
                     parent: angular.element($document.body),
                     targetEvent: ev,
                     clickOutsideToClose: true,
                     locals: {
-                        params:$scope,
+                        params:all_data,
                         event: ev
-                    }
+                    },
+                    onRemoving : $scope.GetAllApi  
                 });
             }
 
@@ -214,110 +231,6 @@
               });
             }
 
-
-            
-
-            function authorizeNet(ev, settings)
-            {
-                $("#ajax_loader").show();
-                $mdDialog.show({
-                    controller: function ($scope,params)
-                    {
-                        $scope.params = params;
-                        $scope.authorize = $scope.params.authorize;
-                       $("#ajax_loader").hide();
-                        $scope.closeDialog = function() 
-                        {
-                            $mdDialog.hide();
-                        } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
-                        {
-                            var vm = this;
-                            var UpdateArray = {};
-                            UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
-
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                           });
-                        }
-
-                    },
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        params:$scope,
-                        event: ev
-                    }
-                });
-            }
-
-            function upsDialog(ev, settings)
-            {
-                $("#ajax_loader").show();
-                $mdDialog.show({
-                    controller: function ($scope,params)
-                    {
-                        $scope.params = params;
-                        $scope.ups = $scope.params.ups;
-                        $("#ajax_loader").hide();
-                        $scope.closeDialog = function() 
-                        {
-                            $mdDialog.hide();
-                        } 
-                        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_value)
-                        {
-                            var vm = this;
-                            var UpdateArray = {};
-                            UpdateArray.table =table_name;
-                            
-                            $scope.name_filed = field_name;
-                            var obj = {};
-                            obj[$scope.name_filed] =  field_value;
-                            UpdateArray.data = angular.copy(obj);
-                            UpdateArray.cond=  {id:cond_value};
-
-                            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
-                            if(result.data.success=='1')
-                            {
-                                notifyService.notify('success',result.data.message);   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',result.data.message);
-                            }
-                           });
-                        }
-
-
-                    },
-                    controllerAs: 'vm',
-                    templateUrl: 'app/main/settings/dialogs/ups/ups-dialog.html',
-                    parent: angular.element($document.body),
-                    targetEvent: ev,
-                    clickOutsideToClose: true,
-                    locals: {
-                        params:$scope,
-                        event: ev
-                    }
-                });
-            }
-
             function qbActivewearSetup(ev,id) {
 
                  var company_list_data = {};
@@ -331,7 +244,7 @@
                     $("#ajax_loader").hide();
                             if(result != '0')
                             {
-                                notifyService.notify('success',"Setup successful");   
+                                notifyService.notify('success',"Setup successfully");   
                             }
                             else
                             {
@@ -346,7 +259,6 @@
             }
         
     }
-
 
        
 })();

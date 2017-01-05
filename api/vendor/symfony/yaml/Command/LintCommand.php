@@ -30,6 +30,16 @@ class LintCommand extends Command
     private $parser;
     private $format;
     private $displayCorrectFiles;
+    private $directoryIteratorProvider;
+    private $isReadableProvider;
+
+    public function __construct($name = null, $directoryIteratorProvider = null, $isReadableProvider = null)
+    {
+        parent::__construct($name);
+
+        $this->directoryIteratorProvider = $directoryIteratorProvider;
+        $this->isReadableProvider = $isReadableProvider;
+    }
 
     /**
      * {@inheritdoc}
@@ -148,7 +158,7 @@ EOF
             }
         });
 
-        $io->writeln(json_encode($filesInfo, JSON_PRETTY_PRINT));
+        $io->writeln(json_encode($filesInfo, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
         return min($errors, 1);
     }
@@ -168,14 +178,6 @@ EOF
 
             yield $file;
         }
-    }
-
-    protected function getDirectoryIterator($directory)
-    {
-        return new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
-            \RecursiveIteratorIterator::LEAVES_ONLY
-        );
     }
 
     private function getStdin()
@@ -201,8 +203,32 @@ EOF
         return $this->parser;
     }
 
-    protected function isReadable($fileOrDirectory)
+    private function getDirectoryIterator($directory)
     {
-        return is_readable($fileOrDirectory);
+        $default = function ($directory) {
+            return new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($directory, \FilesystemIterator::SKIP_DOTS | \FilesystemIterator::FOLLOW_SYMLINKS),
+                \RecursiveIteratorIterator::LEAVES_ONLY
+            );
+        };
+
+        if (null !== $this->directoryIteratorProvider) {
+            return call_user_func($this->directoryIteratorProvider, $directory, $default);
+        }
+
+        return $default($directory);
+    }
+
+    private function isReadable($fileOrDirectory)
+    {
+        $default = function ($fileOrDirectory) {
+            return is_readable($fileOrDirectory);
+        };
+
+        if (null !== $this->isReadableProvider) {
+            return call_user_func($this->isReadableProvider, $fileOrDirectory, $default);
+        }
+
+        return $default($fileOrDirectory);
     }
 }

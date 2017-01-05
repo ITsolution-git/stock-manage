@@ -8,6 +8,24 @@
     /** @ngInject */
     function SearchProductController(data,$mdDialog,$document,$scope,$http,$state,AllConstant,$stateParams,sessionService,notifyService)
     {
+
+
+
+         // change display number to design Id for fetching the order data
+          var design_data = {};
+           design_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           design_data.table ='order_design';
+          
+          $http.post('api/public/common/GetTableRecords',design_data).success(function(result) {
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.design_id = result.data.records[0].id;
+
+              } 
+          });
+
+        
         $scope.productSearch = data.productSearch;
         $scope.vendor_id = data.vendor_id;
         $scope.vendors = data.vendors;
@@ -16,6 +34,7 @@
         $scope.size = true;
         $scope.NoImage = AllConstant.NoImage;
         $scope.product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/products/';
+        $scope.custom_product_base_path = AllConstant.base_path+'api/public/uploads/'+sessionService.get('company_id')+'/custom_image/';
 
         
         $scope.init = {
@@ -33,11 +52,13 @@
           'search': '',
           'category_id':'',
           'color_id':'',
-          'size_id':''
+          'size_id':'',
+          'client_id': ''
         };
 
         $scope.filterBy.vendor_id = $scope.vendor_id;
         $scope.filterBy.search = $scope.productSearch;
+        $scope.filterBy.client_id = data.client_id;
 
         $scope.filterBy.category_id = [];
         $scope.filterBy.color_id = [];
@@ -129,8 +150,9 @@
 
         $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,size_group_id,warehouse)
         {
+          
             var check_data = {};
-            check_data.design_id = $stateParams.id;
+            check_data.design_id = $scope.design_id;
             check_data.product_id = product_id;
 
             $http.post('api/public/product/checkProductExist',check_data).success(function(result) {
@@ -168,10 +190,10 @@
             });
         }
 
-        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
+        $scope.openAddProductDialog = function(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,product_name,description,vendor_name)
         {
             var check_data = {};
-            check_data.design_id = $stateParams.id;
+            check_data.design_id = $scope.design_id;
             check_data.product_id = product_id;
 
             $http.post('api/public/product/checkProductExist',check_data).success(function(result) {
@@ -196,7 +218,9 @@
                             color_id:color_id,
                             is_supply:is_supply,
                             vendor_id: $scope.vendor_id,
-                            size_group_id:size_group_id,
+                            product_name:product_name,
+                            description:description,
+                            vendor_name:vendor_name,
                             event: ev
                         },
                         onRemoving : $scope.reloadPage

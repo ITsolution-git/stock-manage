@@ -9,6 +9,7 @@
     /** @ngInject */
     function screenSetViewController($document,  $state,$window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
+
         var vm = this;
         $scope.company_id = sessionService.get('company_id');
 
@@ -17,17 +18,47 @@
             $scope.modelAsJson = angular.toJson(model, true);
         }, true);
        
-        $scope.screenset_id = $stateParams.id;
+        $scope.display_id = $stateParams.id;
+        //console.log($stateParams.id);
+        if($stateParams.id=='' || angular.isUndefined($stateParams.id))
+        {
+            notifyService.notify('error','Invalid Parameters.');
+            $state.go('app.art');
+            return false;
+        }
+
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+          var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+
 
         // INTIAL CALL TO RETRIVE ALL SCREENSET DATA
         $scope.GetOrderScreenSet = function() 
         {
             $("#ajax_loader").show();
-            $http.get('api/public/art/GetscreenColor/'+$scope.screenset_id).success(function(result) 
+            $http.get('api/public/art/GetscreenColor/'+$stateParams.id+'/'+$scope.company_id).success(function(result) 
             {
                 if(result.data.success == '1') 
                 {
                     $scope.ScreenSets = result.data.records;
+                    $scope.screenset_id = $scope.ScreenSets[0].screen_id;
+                    //console.log($scope.screenset_id);
                     $scope.ScreenSets_new = 
                     {
                         data_all: result.data.records,
@@ -52,6 +83,7 @@
         // DRAG AND DROP FUNCTION CALL WHEN EVEN CALL
         $scope.change_sort = function ()
         {
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $http.post('api/public/art/change_sortcolor',$scope.ScreenSets_new.data_all).success(function(result) 
             {
@@ -62,46 +94,15 @@
         // UPDATE COLOR SCREEN DETAIL
         $scope.UpdateColorScreen = function(ev, colordata) 
         {
+            if($scope.allow_access==0){return false;}
                 $mdDialog.show({
                     controller: function ($scope, params,colordata)
                                 {
                                     //alert(position_id);
                                     $scope.params = params;
                                     $scope.color_screen = colordata;
+                                    $scope.ink_array = params.miscData.art_type;
                                     //console.log($scope.color_screen); 
-                                    $scope.screen_allcolors = $scope.params.screen_allcolors;
-                                    $scope.simulateQuery = false;
-                                    $scope.isDisabled    = false;
-                                    $scope.states        = loadAll();
-                                    $scope.querySearch   = querySearch;
-                          
-                                    function querySearch (query) 
-                                    {
-                                        var results = query ? $scope.states.filter( createFilterFor(query) ) : $scope.states, deferred;
-                                        if ($scope.simulateQuery) 
-                                        {
-                                            deferred = $q.defer();
-                                            $timeout(function () { deferred.resolve( results ); }, Math.random() * 1000, false);
-                                            return deferred.promise;
-                                        } 
-                                        else 
-                                        {
-                                            return results;
-                                        }
-                                    }
-                                    function loadAll() 
-                                    {
-                                        var allStates = $scope.screen_allcolors;
-                                        return allStates;
-                                    }
-                                    function createFilterFor(query) 
-                                    {
-                                        var lowercaseQuery = angular.lowercase(query);
-                                        return function filterFn(state) 
-                                        {
-                                            return (state.name.indexOf(lowercaseQuery) === 0);
-                                        };
-                                    }
                                     $scope.closeDialog = function() 
                                     {
                                         $mdDialog.hide();
@@ -149,7 +150,7 @@
     // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name,extra_params) 
         {
-
+                if($scope.allow_access==0){return false;}
                 $scope.column_name=column_name;
                 $scope.table_name=table_name;
                 $scope.folder_name=folder_name;
@@ -260,6 +261,51 @@
  
                 });
             }
+        }
+        $scope.printPdf=function(ev)
+        {
+            if($scope.allow_access==0){return false;}
+            var pass_array = {order_id:$scope.ScreenSets[0].order_id,company_id:$scope.company_id,screen_id:$scope.screenset_id}
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/art/PressInstructionPDF';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var input_screenset = document.createElement('input');
+            input_screenset.name = 'art';
+            input_screenset.setAttribute('value', JSON.stringify(pass_array));
+            form.appendChild(input_screenset);
+
+            var input_pdf = document.createElement('input');
+            input_pdf.name = 'pdf_token';
+            input_pdf.setAttribute('value', 'pdf_token');
+            form.appendChild(input_pdf);
+
+            document.body.appendChild(form);
+            form.submit();  
+
+        };
+        $scope.UpdateTableField = function(field_value)
+        {
+            if($scope.allow_access==0){return false;}
+            var vm = this;
+            var UpdateArray = {};
+            UpdateArray.table ='artjob_screensets';
+            UpdateArray.data = {approval:field_value};
+            UpdateArray.cond = {id:$scope.screenset_id};
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+            {
+                if(result.data.success=='1')
+                {
+                    notifyService.notify('success', result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error', result.data.message);
+                }
+            });
         }
         
 

@@ -313,17 +313,21 @@ core.factory('notifyService', msNotify);
 core.factory('AllConstant', AllConstant);
     function AllConstant($browser,$location,$filter)
         {
-            var base_path = "http://"+$location.host()+$browser.baseHref();
+            var protocol = $location.protocol();
+            var base_path = protocol+"://"+$location.host()+$browser.baseHref();
             var constatnt = {
                   deleteMessage: 'Are you sure want to delete this record ?',
                   deleteImage: 'Are you sure want to delete this image ?',
                   deletePermanent: 'Are you sure want to delete this record ? Clicking Ok will delete record permanently.',
                   snsImport: 'Are you sure want to import S&S data? it will take more time.',
                   pagination: 15,
-                  NoImage: base_path+'api/public/images/noimage.jpg',
+                  NoImage: base_path+'api/public/images/noimage.png',
                   NoDocument: base_path+'api/public/images/nodocument.png',
                   currentdate : $filter('date')(new Date(), 'yyyy-MM-dd'),
-                  base_path:base_path
+                  currentyear : $filter('date')(new Date(), 'yyyy'),
+                  base_path:base_path,
+                  NO_ACCESS:'Sorry, You have no permission.',
+                  VALID_PHONE:/^\d{10}$/ // PHONE VALIDATION PATTERN
                 }
             return constatnt;
         }

@@ -9,13 +9,73 @@
     /** @ngInject */
     function OrderInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+        $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.allowSA = 0;
+
+         // change display number to order Id for fetching the order data
+          var order_data = {};
+           order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           order_data.table ='orders';
+          
+          $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+            
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.vendorRecord =result.data.records;
+                  $scope.order_id = result.data.records[0].id;
+                  
+
+                  if($scope.role_slug == 'SM' && $scope.user_id == result.data.records[0].login_id) {
+
+                    $scope.allowSA = 1;
+                  } 
+
+
+
+                  if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+                    {
+                        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+                    }
+                    else if($scope.role_slug =='SM' && $scope.allowSA == 1)
+                    {
+                        $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else if($scope.role_slug =='SM' && $scope.allowSA == 0)
+                    {
+                        $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else {
+
+                         $scope.allow_access = 1; // THESE ROLES CAN ALLOW TO EDIT
+                    }
+
+                    $scope.orderDetail();
+                    $scope.designDetail();
+                    $scope.listAffiliate();
+
+
+              } 
+              else
+              {
+                   $state.go('app.order');
+              }
+          });
+
+
+
+        
+        
+
+
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
             
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
-            $scope.order_id = $stateParams.id;
+            $scope.order_id = $scope.order_id;
             $scope.company_id = sessionService.get('company_id');
             
 
@@ -24,6 +84,10 @@
                     $("#ajax_loader").hide();
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
+                   if($scope.order.item_ship_charge == undefined || $scope.order.item_ship_charge == '')
+                   {
+                        $scope.order.item_ship_charge = 0;
+                   }
                 } else {
                     $state.go('app.order');
                 }
@@ -33,7 +97,7 @@
         $scope.designDetail = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
@@ -57,7 +121,7 @@
         $scope.listAffiliate = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/affiliate/getAffiliateData',combine_array_id).success(function(result, status, headers, config) {
@@ -71,12 +135,11 @@
             });
         }
 
-        $scope.orderDetail();
-        $scope.designDetail();
-        $scope.listAffiliate();
+      
 
         $scope.checkDesign = function()
         {
+
             if($scope.designs.length == 0)
             {
                 var data = {"status": "error", "message": "Please add design to split order"}
@@ -91,7 +154,7 @@
             }*/
             else
             {
-                $state.go('app.order.spiltAffiliate',{id: $scope.order_id});
+                $state.go('app.order.spiltAffiliate',{id: $stateParams.id});
             }
         }
        
@@ -184,7 +247,7 @@
         }
 
 
-        function openinformationDialog(ev,order_id)
+        function openinformationDialog(ev,order_id,client_id)
         {
             $mdDialog.show({
                 controller: 'InformationController',
@@ -195,6 +258,7 @@
                 clickOutsideToClose: false,
                 locals: {
                     order_id: order_id,
+                    client_id: client_id,
                     event: ev
                 },
                 onRemoving : $scope.orderDetail
@@ -217,20 +281,30 @@
             });
         }
         function openApproveOrderDialog(ev,order_number,sns_shipping,client_id) {
-            $mdDialog.show({
-                controller: 'approveOrderDiallogController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    order_number:order_number,
-                    sns_shipping:sns_shipping,
-                    client_id:client_id,
-                    event: ev
-                }
-            });
+            
+            if($scope.total_unit > 0)
+            {
+                $mdDialog.show({
+                    controller: 'approveOrderDiallogController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/order/dialogs/approveorder/approveorder.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        order_number:order_number,
+                        sns_shipping:sns_shipping,
+                        client_id:client_id,
+                        event: ev
+                    }
+                });
+            }
+            else
+            {
+                var data = {"status": "error", "message": "Please add product to approve order"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
         }
         $scope.updateOrderCharge = function(column_name,id,value,table_name,match_condition)
         {
@@ -255,7 +329,10 @@
         }
 
 
-        $http.post('api/public/common/getCompanyDetail',sessionService.get('company_id')).success(function(result) {
+        var combine_array_id = {};
+        combine_array_id.company_id = sessionService.get('company_id');
+
+        $http.post('api/public/common/getCompanyDetail',combine_array_id).success(function(result) {
             if(result.data.success == '1') 
             {
                 $scope.allCompanyDetail =result.data.records;
@@ -320,53 +397,86 @@
 
         $scope.printPdf=function()
         {
-            var target;
+
+
+
+            if($scope.total_unit > 0)
+            {
+                var target;
             var form = document.createElement("form");
-            form.action = 'api/public/order/savePDF';
+            form.action = 'api/public/invoice/createInvoicePdf';
             form.method = 'post';
             form.target = target || "_blank";
             form.style.display = 'none';
 
-            var input_order = document.createElement('input');
-            input_order.name = 'order';
-            input_order.setAttribute('value', JSON.stringify($scope.order));
-            form.appendChild(input_order);
+            var invoice_id = document.createElement('input');
+            invoice_id.name = 'invoice_id';
+            invoice_id.setAttribute('value', $scope.order.invoice_id);
+            form.appendChild(invoice_id);
 
-            var input_company_detail = document.createElement('input');
-            input_company_detail.name = 'company_detail';
-            input_company_detail.setAttribute('value', JSON.stringify($scope.allCompanyDetail));
-            form.appendChild(input_company_detail);
+
+            var order_id = document.createElement('input');
+            order_id.name = 'order_id';
+            order_id.setAttribute('value', $scope.order_id);
+            form.appendChild(order_id);
+
+            var company_id = document.createElement('input');
+            company_id.name = 'company_id';
+            company_id.setAttribute('value', sessionService.get('company_id'));
+            form.appendChild(company_id);
+
+            var input_pdf = document.createElement('input');
+            input_pdf.name = 'pdf_token';
+            input_pdf.setAttribute('value', 'pdf_token');
+            form.appendChild(input_pdf);
 
             document.body.appendChild(form);
-            form.submit();  
-        };
-
-        $scope.openEmailPopup = function (ev) {
-    
-            $mdDialog.show({
-                controller: 'openEmailController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/views/order-info/send-email.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    client_id: $scope.order.client_id,
-                    order_id: $stateParams.id,
-                    event: ev
-                  }
-            });
-        };
-
-       $scope.createPO = function() {
+            form.submit();
+            } 
+            else
+            {
+                notifyService.notify('error','Please add atleast one product.');
+            }
             
-            var permission = confirm("Please make sure that once you create PO, it can't be changed. You also would not be able to add new and edit existing Designs and Products.");
+        };
 
-            if(permission == true){
+        $scope.openEmailPopup = function (ev,approval) {
+    
+            if($scope.total_unit > 0)
+            {
+                $mdDialog.show({
+                    controller: 'openEmailController',
+                    controllerAs: 'vm',
+                    templateUrl: 'app/main/order/views/order-info/send-email.html',
+                    parent: angular.element($document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    locals: {
+                        client_id: $scope.order.client_id,
+                        order_id: $scope.order_id,
+                        display_number: $stateParams.id,
+                        paid: $scope.order.is_paid,
+                        balance: $scope.order.balance_due,
+                        approval: $scope.order.approval,
+                        event: ev
+                      }
+                });
+            }
+            else
+            {
+                notifyService.notify('error','Please add atleast one product.');
+            }
+        };
 
+       $scope.createPO = function() 
+       {
+            var permission = confirm("Do you want to create PO ?");
+            if(permission == true)
+            {
                 var condition_obj = {};
                 condition_obj.order_id = $scope.order_id;
                 condition_obj.company_id = sessionService.get('company_id');
+                condition_obj.login_id = sessionService.get('user_id');
 
                 $http.post('api/public/purchase/createPO',condition_obj).success(function(result) 
                 {
@@ -375,7 +485,6 @@
                         $scope.orderDetail();
                         notifyService.notify('success',result.data.message);
                         $scope.order.is_complete = '0';
-
                     }
                     else
                     {
@@ -383,6 +492,19 @@
                     }
                 });
             }
+        }
+
+        $scope.updateTax = function()
+        {
+            var UpdateArray = {};
+            UpdateArray.table ='orders';
+            UpdateArray.data = {tax_rate:$scope.order.tax_rate};
+            UpdateArray.cond = {id:$scope.order_id};
+
+            $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+            {
+                $scope.calculateAll($scope.order_id,$scope.company_id);
+            });
         }
 
         $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value)
@@ -410,6 +532,7 @@
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success','Record Deleted Successfully.');
+                        $scope.orderDetail();
                         $scope.designDetail();
                     }
                     else
@@ -428,6 +551,32 @@
                 $("#ajax_loader").hide();
                 $scope.orderDetail();
             });
+        }
+
+        $scope.DirectShipping = function (order_id)
+        {
+            var permission = confirm("Do you want to create Direct Shipping ?");
+            if(permission == true)
+            {
+                var condition_obj = {};
+                condition_obj.order_id = $scope.order_id;
+                condition_obj.company_id = sessionService.get('company_id');
+                condition_obj.login_id = sessionService.get('user_id');
+
+                $http.post('api/public/purchase/DirectShipping',condition_obj).success(function(result) 
+                {
+                    if(result.data.success=='1')
+                    {
+                        $scope.orderDetail();
+                        notifyService.notify('success',result.data.message);
+                        $scope.order.is_complete = '0';
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                });
+            }
         }
     }
 })();

@@ -11,16 +11,20 @@ use App\Common;
 use App\Art;
 use DB;
 use File;
-use PDF;
+use TCPDF;
 use Request;
 use Response;
+use App\StokkupPdf;
 
 class ArtController extends Controller { 
 
-    public function __construct(Art $art,Common $common) 
+    public function __construct(Art $art,Common $common, TCPDF $tdpdf, StokkupPdf $stokkupPdf ) 
     {
+        parent::__construct();
         $this->art = $art;
         $this->common = $common;
+        $this->tdpdf = $tdpdf;
+        $this->stokkupPdf = $stokkupPdf;
     }
 
     // ART LISTING PAGE
@@ -169,7 +173,7 @@ class ArtController extends Controller {
     public function ScreenSets()
     {
         $post = Input::all();
-        if(!empty($post['company_id']) && !empty($post['order_id']))
+        if(!empty($post['company_id']) && !empty($post['display_number']))
         {
             $scren_listing = $this->art->ScreenSets($post);
             if(count($scren_listing)>0)
@@ -280,7 +284,7 @@ class ArtController extends Controller {
                 foreach ($screen_colorpopup as $key => $value) 
                 {
                     $screen_colorpopup[$key]->color_name = (!empty($value->color_name))? $color_array[$value->color_name]:'';
-                    $screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
+                   // $screen_colorpopup[$key]->thread_color = (!empty($value->thread_color))? $color_array[$value->thread_color]:'';
                 }
             }
             if(count($screen_garments)>0)
@@ -348,6 +352,7 @@ class ArtController extends Controller {
                     foreach ($getColors as $value) 
                     {
                         $value->color_display_name = $color_array[$value->color_name];
+                        $value->thread_color = !empty($value->thread_color)? $value->thread_color:'';
                     }
                 }
             
@@ -361,11 +366,11 @@ class ArtController extends Controller {
         return  response()->json(["data" => $response]);
     }
 
-    public function GetscreenColor($screen_id)
+    public function GetscreenColor($screen_id,$company_id)
     {
-        if(!empty($screen_id))
+        if(!empty($screen_id) && !empty($company_id))
         {
-            $result = $this->art->GetscreenColor($screen_id);
+            $result = $this->art->GetscreenColor($screen_id,$company_id);
             $allcolors = array();
             if(count($result)>0)
             {
@@ -383,13 +388,13 @@ class ArtController extends Controller {
                     {
                         $value->color_name = $color_array[$value->color_name];
                     }
-                    $value->mokup_image_url = (!empty($value->mokup_image))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_image:'';
-                    $value->mokup_logo_url = (!empty($value->mokup_logo))?UPLOAD_PATH.$value->company_id.'/art/'.$value->order_id."/".$value->mokup_logo:'';
+                    $value->mokup_image_url= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
+                    $value->mokup_logo_url= $this->common->checkImageExist($value->company_id.'/order_design_position/'.$value->positions."/",$value->image_1);
 
-                    if(!empty($value->thread_color))
+                   /* if(!empty($value->thread_color))
                     {
                         $value->thread_display = $color_array[$value->thread_color];
-                    }
+                    }*/
                 }
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records'=>$result,'allcolors'=>$allcolors);            
             }
@@ -463,6 +468,65 @@ class ArtController extends Controller {
    * Save Color size.
    * @return json data
     */
+    public function ArtApprovalPDF()
+    {
+
+        $screenArray= json_decode($_POST['art']);
+        //echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
+        if(count($screenArray)>0)
+        {
+            $options = !empty($screenArray->options)?$screenArray->options:array();
+            $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
+            $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
+
+            $email_text = $screenArray->email_text;
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            if(!empty($pdf_data[0][0]))
+            {
+                $email_array = explode(",",$screenArray->email);
+                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+                    
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+
+                $pdf = $this->tdpdf;
+                $pdf->SetHeaderMargin(5);
+                $pdf->SetFooterMargin(10);
+                $pdf->FooterImg(FOOTER_IMAGE);
+                $pdf->SetAutoPageBreak(TRUE, 10);
+                $pdf->AddPage('P','A4');
+                $pdf->writeHTML(view('pdf.artscreenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
+
+                $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+                $pdf->Output($filename,'F');
+                
+
+                if(!empty($screenArray->flag) && $screenArray->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
+                {
+
+                    Mail::send('emails.artapproval', ['email_text'=>$email_text], function($message) use ($pdf_data,$filename,$email_array)
+                    {
+                        $message->to($email_array);
+                        $message->subject('Art Approval for the order '.$pdf_data[0][0][0]->order_name);
+                        $message->attach($filename);
+                    });
+                }
+                return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => NO_RECORDS);
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
     public function PressInstructionPDF()
     {
 
@@ -470,22 +534,64 @@ class ArtController extends Controller {
         
         if(count($screenArray)>0)
         {
-            $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
-            if(!empty($pdf_data[0]))
+            $pdf_data = $this->art->getPressInstructionPDFdata($screenArray->screen_id,$screenArray->company_id);
+           // echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            $options = !empty($screenArray->options)?$screenArray->options:array();
+            if(!empty($pdf_data['size']))
             {
-                //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
-                $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
+                
+               /* $file_path =  FILEUPLOAD.$screenArray->company_id."/art/".$screenArray->order_id;
                
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
-                else { exec("chmod $file_path 0777"); }
+                else { exec("chmod $file_path 0777"); }*/
+                $pdf = $this->tdpdf;
+                $pdf->FooterImg(FOOTER_IMAGE);
+                $pdf->SetFooterMargin(10);
+                $pdf->SetAutoPageBreak(TRUE, 10);
+                $pdf->AddPage('P','A4');
+                $pdf->writeHTML(view('pdf.artpress',array('color'=>$pdf_data['color'],'size'=>$pdf_data['size'],'options'=>$options))->render());
                 
-                PDF::AddPage('P','A4');
-                PDF::writeHTML(view('pdf.screenset',array('data'=>$pdf_data,'company'=>$pdf_data[0][0]))->render());
-           
-                $pdf_url = "ScreenApproval-".$screenArray->order_id.".pdf"; 
-                $filename = $file_path."/". $pdf_url;
-                PDF::Output($filename, 'F');
-                return Response::download($filename);
+                $pdf_url = "PresInstruction-".$screenArray->screen_id.".pdf"; 
+               // $filename = $file_path."/". $pdf_url;
+                $pdf->Output($pdf_url);
+                //return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Error, Please check your Order detail for this screen.");
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
+
+    public function PressInstructionAllPDF()
+    {
+        $screenArray= json_decode($_POST['art']);
+        if(count($screenArray)>0)
+        {
+            $options = !empty($screenArray->options)?$screenArray->options:array();
+            $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
+            $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
+
+            //echo "<pre>"; print_r($options); echo "</pre>"; die;
+            if(!empty($pdf_data[0][0]))
+            {
+                $pdf = $this->tdpdf;
+                $pdf->SetHeaderMargin(5);
+                $pdf->SetFooterMargin(10);
+                $pdf->FooterImg(FOOTER_IMAGE);
+                $pdf->SetAutoPageBreak(TRUE, 10);
+                $pdf->AddPage('P','A4');
+                $pdf->writeHTML(view('pdf.artpress_all',array('data'=>$pdf_data,'company'=>$pdf_data[0][0][0],'pdf_product'=>$pdf_product,'options'=>$options))->render());
+
+                $pdf_url = "PressInstructionAll-".$screenArray->order_id.".pdf"; 
+                $pdf->Output($pdf_url);
             }
             else
             {

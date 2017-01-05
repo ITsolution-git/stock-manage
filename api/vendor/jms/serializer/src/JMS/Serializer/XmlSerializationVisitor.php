@@ -224,7 +224,7 @@ class XmlSerializationVisitor extends AbstractVisitor
     {
         $v = $metadata->getValue($object);
 
-        if (null === $v && !$context->shouldSerializeNull()) {
+        if (null === $v && ! $context->shouldSerializeNull()) {
             return;
         }
 
@@ -233,7 +233,7 @@ class XmlSerializationVisitor extends AbstractVisitor
             $node = $this->navigator->accept($v, $metadata->type, $context);
             $this->revertCurrentMetadata();
 
-            if (!$node instanceof \DOMCharacterData) {
+            if ( ! $node instanceof \DOMCharacterData) {
                 throw new RuntimeException(sprintf('Unsupported value for XML attribute for %s. Expected character data, but got %s.', $metadata->name, json_encode($v)));
             }
             $attributeName = $this->namingStrategy->translateName($metadata);
@@ -243,7 +243,7 @@ class XmlSerializationVisitor extends AbstractVisitor
         }
 
         if (($metadata->xmlValue && $this->currentNode->childNodes->length > 0)
-            || (!$metadata->xmlValue && $this->hasValue)) {
+            || ( ! $metadata->xmlValue && $this->hasValue)) {
             throw new RuntimeException(sprintf('If you make use of @XmlValue, all other properties in the class must have the @XmlAttribute annotation. Invalid usage detected in class %s.', $metadata->class));
         }
 
@@ -266,7 +266,7 @@ class XmlSerializationVisitor extends AbstractVisitor
         }
 
         if ($metadata->xmlAttributeMap) {
-            if (!is_array($v)) {
+            if ( ! is_array($v)) {
                 throw new RuntimeException(sprintf('Unsupported value type for XML attribute map. Expected array but got %s.', gettype($v)));
             }
 
@@ -275,7 +275,7 @@ class XmlSerializationVisitor extends AbstractVisitor
                 $node = $this->navigator->accept($value, null, $context);
                 $this->revertCurrentMetadata();
 
-                if (!$node instanceof \DOMCharacterData) {
+                if ( ! $node instanceof \DOMCharacterData) {
                     throw new RuntimeException(sprintf('Unsupported value for a XML attribute map value. Expected character data, but got %s.', json_encode($v)));
                 }
 
@@ -285,7 +285,7 @@ class XmlSerializationVisitor extends AbstractVisitor
             return;
         }
 
-        if ($addEnclosingElement = (!$metadata->xmlCollection || !$metadata->xmlCollectionInline) && !$metadata->inline) {
+        if ($addEnclosingElement = ( ! $metadata->xmlCollection || ! $metadata->xmlCollectionInline) && ! $metadata->inline) {
             $elementName = $this->namingStrategy->translateName($metadata);
 
             if (null !== $metadata->xmlNamespace) {
@@ -414,7 +414,7 @@ class XmlSerializationVisitor extends AbstractVisitor
 
     private function attachNullNamespace()
     {
-        if (!$this->nullWasVisited) {
+        if ( ! $this->nullWasVisited) {
             $this->document->documentElement->setAttributeNS(
                 'http://www.w3.org/2000/xmlns/',
                 'xmlns:xsi',

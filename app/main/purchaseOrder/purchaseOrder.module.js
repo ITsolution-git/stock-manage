@@ -7,7 +7,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function config($stateProvider, msApiProvider, msNavigationServiceProvider)
     {
         // State
         $stateProvider
@@ -22,14 +22,14 @@
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 }
             }).state('app.purchaseOrder.companyPO', {
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 },
                 url  : '/companyPO/:id',
@@ -43,7 +43,7 @@
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 },
                 url  : '/viewNote/:id',
@@ -57,7 +57,7 @@
                 resolve: {
                    checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('SU','false');
                     },
                 },
                 url  : '/affiliatePO/:id',
@@ -68,14 +68,10 @@
                     }
                 }
             })
-             function searchTable() {
-            var query = vm.searchQuery;
-            vm.tableInstance.search(query).draw();
-        }
-            ;
+             
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/purchaseOrder');
+        //$translatePartialLoaderProvider.addPart('app/main/purchaseOrder');
 
         // Api
 
@@ -94,7 +90,7 @@
                 'param1': 'page'
              },*/
             
-            weight   : 1
+            weight   : 5
         });
     }
 })();

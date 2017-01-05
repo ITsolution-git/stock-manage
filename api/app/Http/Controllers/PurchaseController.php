@@ -11,14 +11,18 @@ use App\Order;
 use App\Product;
 use App\Common;
 use DB;
+use File;
 use PDF;
-
 use Request;
+use Response;
+use Mail;
+
 
 class PurchaseController extends Controller { 
 
     public function __construct(Purchase $purchase,Common $common,Product $product,Order $order) 
     {
+        parent::__construct();
         $this->purchase = $purchase;
         $this->product = $product;
         $this->order = $order;
@@ -29,29 +33,30 @@ class PurchaseController extends Controller {
     {
         $post = Input::all();
 
-        if(!empty($post['company_id']) && !empty($post['order_id']))
+        if(!empty($post['company_id']) && !empty($post['order_id']) && !empty($post['login_id']))
         {
             $po_type = !empty($post['po_type'])?$post['po_type']:'';
             $order_data = $this->purchase->getOrderData($post['company_id'],$post['order_id'],$po_type);
             
             if(count($order_data)>0)
             {
+                $this->common->UpdateTableRecords('purchase_order',array('order_id'=>$post['order_id']),array('is_active'=>0),'');
                 foreach ($order_data as $key=>$value) 
                 {
-                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key);
+                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key,'po',$post['company_id'],$post['login_id']);
                     $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
-                    if($purchase_order_id=='0')
+                    /*if($purchase_order_id=='0')
                     {
                         $response = array('success' => 0, 'message' => "Purchase order is already created.");
                         return response()->json(["data" => $response]);
                     }
                     else
-                    {
+                    {*/
                         foreach($order_data[$key] as $detail_key=>$detail_value) 
                         {
                             $purchase_order_line = $this->purchase->insert_purchase_order_line($detail_value,$purchase_order_id);
                         }
-                    }
+                    //}
                 }
                 $response = array('success' => 1, 'message' => "Purchase order created successfully.",'data'=>$order_data);
             }
@@ -180,23 +185,13 @@ class PurchaseController extends Controller {
         }
         else
         {
-            $this->purchase->Update_Ordertotal($po_id);
-            //$po = $this->purchase->GetPodata($po_id,$company_id);
+            $this->purchase->Update_Ordertotal($po_id,$company_id);
             $poline = $this->purchase->GetPoLinedata($po_id,$company_id);
 
-            //echo "<pre>"; print_r($poline); echo "</pre>"; die;
             if(count($poline)>0)
             {
                 
-                //c$unassign_order = $this->purchase->GetPoLinedata();
-
-                $order_total = $this->purchase->getOrdarTotal($po_id);
-                
-               // $received_total = $this->purchase->getreceivedTotal($po_id);
-               // $received_line = $this->purchase->GetPoReceived($po_id,$company_id);
-
-              //  $list_vendors = $this->common->getAllVendors($company_id);
-
+                $order_total = $this->purchase->getOrdarTotal($po_id,$company_id);
                 $po_data = $poline[0];
                 $result = array('po_data'=>$po_data,'poline'=>$poline,'order_total'=>$order_total);//,'received_total'=>$received_total,'received_line'=>$received_line,'order_id'=>$order_id,'list_vendors'=> $list_vendors );
                 $response = array('success' => 1, 'message' => GET_RECORDS,'records' => $result);
@@ -372,12 +367,165 @@ class PurchaseController extends Controller {
     }
     public function createPDF()
     {
-        $post = Input::all();
-        $ArrPoline['arr_poline'] = json_decode($post['arr_poline']);
-        //print_r($ArrPoline['arr_poline']);exit;
+        
+        $pdf_array= json_decode($_POST['receiving']);
+        
+        if(count($pdf_array)>0)
+        {
+            $pdf_data = $this->purchase->GetPoReceived($pdf_array->po_id,$pdf_array->company_id);
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+            if(count($pdf_data['receive'])>0)
+            {
+                $email_array = explode(",",$pdf_array->email);
+                $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
+               
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.receivepo',array('company'=>$pdf_data['po_data'],'receive_data'=>$pdf_data['receive']))->render());
+           
+                $pdf_url = "ReceivePO-".$pdf_array->po_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+                PDF::Output($filename, 'F');
 
-        PDF::AddPage('P','A4');
-        PDF::writeHTML(view('pdf.company_po',$ArrPoline)->render());
-        PDF::Output('company_po.pdf');
+                if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
+                {
+
+                    Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
+                    {
+                        $message->to($email_array);
+                        $message->subject('Receive order, for the Order '.$pdf_data['po_data']->order_name);
+                        $message->attach($filename);
+                    });
+                }
+
+                return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Error, No Product or Size selected.");
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
     }
+     public function PurchasePDF()
+    {
+        
+        $pdf_array= json_decode($_POST['purchase']);
+        
+        if(count($pdf_array)>0)
+        {
+            $order_total='';
+            $pdf_data = $this->purchase->GetPoLinedata($pdf_array->po_id,$pdf_array->company_id);
+            $positions_data = $this->purchase->GetPOpositions($pdf_array->po_id,$pdf_array->company_id);
+           // echo "<pre>"; print_r($positions_data); echo "</pre>"; die();
+            
+            if(count($pdf_data)>0)
+            {
+                $order_total = $this->purchase->getOrdarTotal($pdf_array->po_id,$pdf_array->company_id);
+                $email_array = explode(",",$pdf_array->email);
+                $pass_array = array('company'=>$pdf_data['0'],'po_data'=>$pdf_data,'order_total'=>$order_total,'positions'=>$positions_data);
+                
+                PDF::AddPage('P','A4');
+                PDF::writeHTML(view('pdf.purchasepo',$pass_array)->render());
+                PDF::Output("PurchaseOrder.pdf");
+                
+                //PDF::AddPage('P','A4');
+                //PDF::writeHTML(view('pdf.api_label',$shipping)->render());
+                //PDF::Output('api_label.pdf');
+
+                if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
+                {
+                    $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
+                    if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                    else { exec("chmod $file_path 0777"); }
+                    $pdf_url = "PurchaseOrder-".$pdf_array->po_id.".pdf"; 
+                    $filename = $file_path."/". $pdf_url;
+
+                    Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
+                    {
+                        $message->to($email_array);
+                        $message->subject('Purchase order, for the Order '.$pdf_data['0']->order_name);
+                        $message->attach($filename);
+                    });
+                }
+
+                //return Response::download($filename);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Sorry, No Products available for this Purchase.");
+                return  response()->json(["data" => $response]);
+            }
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+            return  response()->json(["data" => $response]);
+        }
+
+    }
+    public function getAllReceiveProducts()
+    {
+        $post = Input::all();
+        
+        if(!empty($post['company_id']) && !empty($post['po_id']) && !empty($post['product_id']))
+        {
+           $this->purchase->getAllReceiveProducts($post['company_id'],$post['po_id'],$post['product_id']); 
+           $response = array('success' => 1);
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+       return response()->json(["data" => $response]);
+
+    }
+
+    public function DirectShipping()
+    {
+        $post = Input::all();
+
+        if(!empty($post['company_id']) && !empty($post['order_id']) && !empty($post['login_id']))
+        {
+            $po_type = !empty($post['po_type'])?$post['po_type']:'';
+            $order_data = $this->purchase->getOrderData($post['company_id'],$post['order_id'],$po_type);
+            
+            if(count($order_data)>0)
+            {
+                $this->common->UpdateTableRecords('purchase_order',array('order_id'=>$post['order_id']),array('is_active'=>0),''); // DEACTIVE PREVIOUS PURCHASE ORDER AND RECEIVE ORDER
+
+                foreach ($order_data as $key=>$value) 
+                {
+                    $purchase_order_id = $this->purchase->insert_purchaseorder($post['order_id'],$key,'po',$post['company_id'],$post['login_id'],'1'); // CREATE PO VENDOR VICE
+                    $this->common->UpdateTableRecords('orders',array('id'=>$post['order_id']),array('is_complete'=>1),'');
+                    foreach($order_data[$key] as $detail_key=>$detail_value) 
+                    {
+                        $purchase_order_line = $this->purchase->insert_purchase_order_line($detail_value,$purchase_order_id,'1'); // CREATE PI LINEITEM AND RECEIVE ITEMS
+                    }
+                }
+                $response = array('success' => 1, 'message' => "Direct Shipping Created.",'data'=>$order_data);
+            }
+            else
+            {
+                $response = array('success' => 0, 'message' => "Please select Product.");
+            }
+        }
+        else
+        {
+            $order_data='';
+            $response = array('success' => 0, 'message' => MISSING_PARAMS);
+        }
+       // print_r($post);exit;
+       return response()->json(["data" => $response]);
+    }
+
+    
 }

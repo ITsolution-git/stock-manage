@@ -10,20 +10,35 @@
     function CompanyPOController($document, $window,$state, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
         var vm = this;
-        $scope.po_id = $stateParams.id;
+        $scope.display_number = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.role_slug = sessionService.get('role_slug');
+        $scope.allow_access=1;
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
 
         $scope.GetPodata = function ()
         {
             $("#ajax_loader").show();
-            $http.get('api/public/purchase/GetPodata/'+$scope.po_id+'/'+$scope.company_id).success(function(result) 
+            $http.get('api/public/purchase/GetPodata/'+$scope.display_number+'/'+$scope.company_id).success(function(result) 
             {
                 $("#ajax_loader").hide();
                 if(result.data.success=='1')
                 {
                     $scope.po_data = result.data.records.po_data;
+                    $scope.po_id = $scope.po_data.po_id;
                     $scope.poline = result.data.records.poline;
                     $scope.order_total = result.data.records.order_total[0];
+                    
+                    if($scope.role_slug=='SM' && $scope.user_id!=$scope.po_data.login_id){$scope.allow_access = 0;} // Salesman can edit own record
                 }
                 else
                 {
@@ -39,7 +54,7 @@
         $scope.changeLinedata = function (line_id,qnty_ordered,unit_price,qnty,ev)
         {
         
-
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -104,6 +119,7 @@
         $scope.changeDropship = function (vendor_instruction,ev)
         {
         
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -153,7 +169,7 @@
         }
         $scope.changeVendorcharge = function (vendor_charge,ev)
         {
-        
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -206,7 +222,7 @@
         $scope.changePoData = function (ev)
         {
         
-
+            if($scope.allow_access==0){return false;}
             $("#ajax_loader").show();
             $mdDialog.show({
                 controllerAs: $scope,
@@ -220,6 +236,8 @@
                     var vendor = {};
                     vendor.table ='vendors';
                     vendor.cond ={company_id:$scope.params.company_id};
+                    vendor.sort='name_company';
+                    vendor.sortcond='asc';
 
                     $http.post('api/public/common/GetTableRecords',vendor).success(function(result) 
                     {   
@@ -284,6 +302,7 @@
         };
          $scope.CreateRo = function(po_id,extra)
          {
+            if($scope.allow_access==0){return false;}
             if(extra=='0')
             {
                 var UpdateArray = {};
@@ -298,7 +317,7 @@
                     {
                         notifyService.notify('success', 'Receiving PO created.');
                         //$state.go('app.receiving.receivingInfo({id:po_id})');
-                        $state.go('app.receiving.receivingInfo',{id: po_id});
+                        $state.go('app.receiving.receivingInfo',{id: $scope.display_number});
                     }
                     else
                     {
@@ -309,9 +328,32 @@
             }
             else
             {
-                $state.go('app.receiving.receivingInfo',{id: po_id});
+                $state.go('app.receiving.receivingInfo',{id: $scope.display_number});
             }
-        } 
+        }
+
+        $scope.updateOrderStatus = function(name,value,id)
+        {
+            if($scope.allow_access==0){return false;}
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
 
 
         var originatorEv;
@@ -325,5 +367,64 @@
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
         }
+
+        $scope.openClientEmailPopup = function(ev)
+        {
+            if($scope.allow_access==0){return false;}
+            $mdDialog.show({
+                controller: function ($scope, params)
+                {
+                    $scope.mail=params.po_data.billing_email;
+                    $scope.company_id=params.company_id;
+
+                    $scope.closeDialog = function() 
+                    {
+                        $mdDialog.hide();
+                    }
+                    $scope.printPdf = function (flag,email)
+                    {
+                        if(flag=='1')
+                        {
+                            var k = confirm("Do you want to send PDF to client?");
+                            if(k==false)
+                            {
+                                return false;
+                            }
+                        }
+                        $mdDialog.hide();
+                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email };
+                        var target;
+                        var form = document.createElement("form");
+                        form.action = 'api/public/purchase/purchasePDF';
+                        form.method = 'post';
+                        form.target = target || "_blank";
+                        form.style.display = 'none';
+
+                        var input_screenset = document.createElement('input');
+                        input_screenset.name = 'purchase';
+                        input_screenset.setAttribute('value', JSON.stringify(pass_array));
+                        form.appendChild(input_screenset);
+
+                         var input_pdf = document.createElement('input');
+                        input_pdf.name = 'pdf_token';
+                        input_pdf.setAttribute('value', 'pdf_token');
+                        form.appendChild(input_pdf);
+
+                        document.body.appendChild(form);
+                        form.submit();  
+                    }
+                },
+                controllerAs: 'vm',
+                templateUrl: 'app/main/receiving/dialogs/EmailPopup.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                locals: {
+                    params:$scope,
+                    event: ev
+                }
+            });
+        }
+
     }
 })();

@@ -38,27 +38,40 @@
 						method : 'get'
 					}
 				});
-			logout.post(null, function(response) {
-				notifyService.notify('success',response.data.message);				
-				remove('useremail');
-                remove('role_slug');
-                remove('login_id');
-                remove('name');
-                remove('user_id');
-                remove('role_title');
-                remove('username');
-                remove('password');
-                remove('company_id');
-                remove('company');
-                $state.go('app.login');
+			logout.post(null, function(response) 
+			{
+				if(response.data.success=='1')
+	            { 
+					notifyService.notify('success',response.data.message);				
+					remove('useremail');
+	                remove('role_slug');
+	                remove('login_id');
+	                remove('name');
+	                remove('user_id');
+	                remove('role_title');
+	                remove('username');
+	                remove('password');
+	                remove('company_id');
+	                remove('company');
+	                remove('profile_photo');
+	                remove('token');
+	            }
+	            else
+	            {
+
+	            	notifyService.notify('error',response.data.message);	
+	            }
+	            $state.go('app.login');
 			},function(response) {
 				notifyService.notify('error',response.data.message);
 			});
 		}	
 
-		function AccessService(ret)
+		function AccessService(arr_role,access,refresh)
 		{
-				$http.get('api/public/auth/session').success(function(result) 
+				var pass_array={refresh:refresh};
+
+				$http.post('api/public/auth/session',pass_array).success(function(result) 
                 {  
 	           		
 	                if(result.data.success=='1')
@@ -71,17 +84,38 @@
 	                    set('name',result.data.name);
 	                    set('role_title',result.data.role_title);
 	                    set('login_id',result.data.login_id);
+	                    set('profile_photo',result.data.profile_photo);
+	                    set('token',result.data.token);
+	                    
+	                //======= HEADER AUTHORIZATION FOR TOKEN AND USERID =======
+				        $http.defaults.headers.common.Authorization = result.data.token;
+				        $http.defaults.headers.common.AuthUserId = result.data.user_id;
+				    //======= HEADER AUTHORIZATION FOR TOKEN AND USERID =======
+
 
 	                    var role = result.data.role_session;
 	                    checkRollMenu(result.data.role_session);
-	                    if(ret.indexOf(role) <= -1 && ret != 'ALL' && ret!='')
+	                    //console.log(arr_role+"--"+access); 
+	                    //console.log(arr_role.indexOf(role));
+	                    if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) || access=="true" )) // PERMISSION ALLOW
 			            {
 			               // console.log('error');
 			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
 			                notifyService.notify(data.status, data.message);
 			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
 			                return false;
+			                //$stateChangeStart.preventDefault();
 			            }
+			            if(arr_role.indexOf(role) >= 0 && arr_role != 'ALL' && arr_role!='' && access=="false") // PERMISSION NOT ALLOW
+			            {
+			               // console.log('error');
+			                var data = {"status": "error", "message": "You are Not authorized, Please wait"}
+			                notifyService.notify(data.status, data.message);
+			               	setTimeout(function(){  window.open('dashboard', '_self'); }, 1000);
+			                return false;
+			                //$stateChangeStart.preventDefault();
+			            }
+			            
 
 	                }
 	                else
@@ -100,89 +134,209 @@
             });
 
 		}
+		function hide_menu(ret_array)
+		{
+			//console.log(ret_array);
+			if(ret_array.length>0)
+			{
+				for(var i=0; i<ret_array.length; i++)
+				{
+					msNavigationService.deleteItem('fuse.'+ret_array[i]);
+				}
+			}
+		}
 		function checkRollMenu(role)
 		{
 			//console.log(role);
 			if(role=='SA')
 			{
-				msNavigationService.deleteItem('fuse.settings');
-				msNavigationService.deleteItem('fuse.art');
-				msNavigationService.deleteItem('fuse.client');
-				msNavigationService.deleteItem('fuse.order');
-				msNavigationService.deleteItem('fuse.invoices');
-				msNavigationService.deleteItem('fuse.purchaseOrder');
-				msNavigationService.deleteItem('fuse.receiving');
-				msNavigationService.deleteItem('fuse.finishing');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.shipping');
-				msNavigationService.deleteItem('fuse.dashboard');
-
+				var ret_array = ['settings','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','client','order','productionlist','finishingQueue'];
+				hide_menu(ret_array);
 			}
 			else if(role=='CA')
 			{
-				msNavigationService.deleteItem('fuse.admin');
+				var ret_array = ['admin'];
+				hide_menu(ret_array);
 			}
-			else if(role=='BC')
+			else if(role=='AM')
 			{
-				msNavigationService.deleteItem('fuse.admin');
-				msNavigationService.deleteItem('fuse.settings');
-			}
-			else if(role=='FM')
+				var ret_array = ['admin','settings.userManagement'];
+				hide_menu(ret_array);
+			}			
+			else if(role=='AT')
 			{
-				msNavigationService.deleteItem('fuse.admin');
-				msNavigationService.deleteItem('fuse.settings');
+				var ret_array = ['customProduct','admin','vendor','app.settings.companyDetails','settings.userManagement','settings.affiliate','settings.priceGrid','settings.approvals','settings.integrations'];
+				hide_menu(ret_array);
 			}
+			else if(role=='SU')
+			{
+				var ret_array = ['purchaseOrder','customProduct','admin','app.settings.companyDetails','settings.userManagement','settings.companyProfile','settings.affiliate','settings.priceGrid','settings.approvals','settings.integrations'];
+				hide_menu(ret_array);
+			}
+			else if(role=='SM')
+			{
+				var ret_array = ['admin','settings.integrations','settings.userManagement','settings.approvals'];
+				hide_menu(ret_array);
+			}
+			else if(role=='FM' || role=='PU' || role=='AD' || role=='SO' || role=='SC' || role=='PO' || role=='SH' || role=='RA')
+			{
+				var ret_array = ['admin','settings.approvals'];
+				hide_menu(ret_array);
+			}			
 			else
 			{
-				msNavigationService.deleteItem('fuse.settings');
-				msNavigationService.deleteItem('fuse.art');
-				msNavigationService.deleteItem('fuse.order');
-				msNavigationService.deleteItem('fuse.invoices');
-				msNavigationService.deleteItem('fuse.purchaseOrder');
-				msNavigationService.deleteItem('fuse.receiving');
-				msNavigationService.deleteItem('fuse.finishing');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.customProduct');
-				msNavigationService.deleteItem('fuse.shipping');
-				msNavigationService.deleteItem('fuse.admin');
+				var ret_array = ['settings','art','invoices','shipping','finishing','purchaseOrder','customProduct','receiving','admin','client','order'];
+				hide_menu(ret_array);
 			}
 		}
+		function Module_menu_hide(arr_role,access)
+		{
+			var role = get('role_slug');
+			//console.log(access);
+			if(arr_role.indexOf(role) <= -1 && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) || access=="true" )) // PERMISSION ALLOW
+            {
+                return false;
+            }
+            else if(arr_role.indexOf(role) >= 0  && arr_role != 'ALL' && arr_role!='' && (angular.isUndefined(access) ||access=="false" )) // PERMISSION NOT ALLOW
+            {
+                return false;
+            }
+            else
+            {
+            	return true;
+            }
+        }
 
 		function openAddPopup(scope,path,params,table)
 		{
 			$("#ajax_loader").show();
 			$mdDialog.show({
-                controller:function ($scope, params)
+                controller:function ($scope, params, all_scope)
                 {
                 	$("#ajax_loader").hide();
-                    $scope.params = params; // GET PARAMETERS FOR POPUP
+                    $scope.params = params; 		//	GET PARAMETERS FOR POPUP
+                    $scope.flag = 'add'; 		//	GET PARAMETERS FOR POPUP
+                    $scope.all_scope = all_scope; 	//	FULL SCOPE OF CONTROLLER DATA
+
+			        $scope.Gapi_options = { // GOOGLE ADDRESS API OPTIONS
+			        	componentRestrictions: { country: 'US' }
+			        };
+			        $scope.Gapi_address = { // GOOGLE ADDRESS API PARAMETERS
+			            name: '',
+			            place: '',
+			            components: {
+			              placeId: '',
+			              streetNumber: '', 
+			              street: '',
+			              city: '',
+			              state: '',
+			              countryCode: '',
+			              country: '',
+			              postCode: '',
+			              district: '',
+			              location: {
+			                lat: '',
+			                long: ''
+			                }
+			            }
+			        };
 
                     $scope.closeDialog = function() 
                     { $mdDialog.hide(); } 
+
+                    $scope.InserAddressOrder = function(order_id,address_id)
+			        {
+			        	var InserAddressArray = {}; 		// INSERT RECORD ARRAY
+                		InserAddressArray.data = {'order_id':order_id,'address_id':address_id};
+                		InserAddressArray.table ='order_shipping_address_mapping';
+
+                		$http.post('api/public/common/InsertRecords',InserAddressArray).success(function(result) 
+			        	{ 
+			        		if(result.data.success=='1')
+		                    {
+		                    	notifyService.notify('success',result.data.message);
+		                    	$mdDialog.hide();
+		                    }
+			                else
+		                    { notifyService.notify('error',result.data.message); }
+		                    $("#ajax_loader").hide();
+                   		});
+			        }
                     
                     $scope.InsertTableData = function(insert_data,extra,cond)
 			        {
 			        	$("#ajax_loader").show();
-			        	var InserArray = {}; // INSERT RECORD ARRAY
+			        	var InserArray = {}; 		// INSERT RECORD ARRAY
                 		InserArray.data = insert_data;
                 		InserArray.table =table;
 
                 		//=============== SPECIAL CONDITIONS ==============
                 		if(extra=='vendorcontact') { InserArray.data.vendor_id = $scope.params.vendor_id;}
                 		if(extra=='sales') { InserArray.data.company_id = $scope.params.company_id; InserArray.data.sales_created_date =AllConstant.currentdate;}
-                		if(extra=='artnote') { InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;}
+                		if(extra=='artnote') 
+                			{ InserArray.data.screenset_id = $scope.params.screenset_id; InserArray.data.note_date =AllConstant.currentdate;
+                			  if(InserArray.data.artapproval_display==true){InserArray.data.artapproval_display='1';} else {InserArray.data.artapproval_display='0';}	
+                			}
+                		if(extra=='client_contact'){InserArray.data.client_id=$scope.all_scope.client_id;}
+                		if(extra=='client_notes'){InserArray.data.client_id=$scope.all_scope.client_id; InserArray.data.user_id=$scope.all_scope.login_id;InserArray.data.created_date=AllConstant.currentdate;}
+                		if(extra=='client_distaddress'){InserArray.data.client_id=$scope.params.client_id;}
+                		if(extra=='company_address'){InserArray.data.company_id=$scope.all_scope.company_id;}
+                		if(extra=='Newcolor'){InserArray.data.company_id=$scope.all_scope.company_id; InserArray.data.status=1; InserArray.data.is_delete=1; InserArray.data.is_sns=1;}
+                		
                 		//=============== SPECIAL CONDITIONS ==============
 
 			        	$http.post('api/public/common/InsertRecords',InserArray).success(function(result) 
 			        	{ 
 			        		if(result.data.success=='1')
-		                    { notifyService.notify('success',result.data.message); $mdDialog.hide();}
+		                    { 
+		                    	if(table == 'client_distaddress' && $scope.all_scope.order_id != undefined)
+		                    	{
+		                    		$scope.InserAddressOrder($scope.all_scope.order_id,result.data.id);
+		                    	}
+		                    	else
+		                    	{
+		                    		notifyService.notify('success',result.data.message);
+		                    	}
+		                    	$mdDialog.hide();
+		                    }
 			                else
 		                    { notifyService.notify('error',result.data.message); }
 		                    $("#ajax_loader").hide();
                    		});
 			        }
+
+					$scope.LocationAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION 
+			        {
+			            $scope.params.address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber+", ";
+			            $scope.params.address = angular.isUndefined(apidata.street)?$scope.params.address:$scope.params.address+apidata.street;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.postal_code = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			        }
+			        $scope.DistributionAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION 
+			        {
+			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.suite = angular.isUndefined(apidata.district)?'':apidata.district;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.zipcode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			            $scope.params.country = angular.isUndefined(apidata.countryCode)?'':apidata.countryCode;
+			        }
+			        
 
                 },
                 templateUrl: 'app/main/'+path,
@@ -190,6 +344,7 @@
                 clickOutsideToClose: true,
                     locals: {
                         params:params,  // PARAMETERS PASS TO POPUP
+                        all_scope:scope
                     },
                 onRemoving : scope.returnFunction  // THIS FUNCTION WILL BE FIXED AND MUST BE PRESENT IN YOUR CONTROLLER
             });
@@ -198,10 +353,68 @@
 		{
 			$("#ajax_loader").show();
 			$mdDialog.show({
-                controller:function ($scope, params)
+                controller:function ($scope, params,all_scope)
                 {
                 	$("#ajax_loader").hide();
-                    $scope.params = params; // GET PARAMETERS FOR POPUP
+                    $scope.params = params.data; // GET PARAMETERS FOR POPUP
+                    $scope.flag = 'edit'; 		//	GET PARAMETERS FOR POPUP
+                    $scope.all_scope = all_scope; 	//	FULL SCOPE OF CONTROLLER DATA
+                    
+                    $scope.Gapi_options = { // GOOGLE ADDRESS API OPTIONS
+			        	componentRestrictions: { country: 'US' }
+			        };
+			        $scope.Gapi_address = { // GOOGLE ADDRESS API PARAMETERS
+			            name: '',
+			            place: '',
+			            components: {
+			              placeId: '',
+			              streetNumber: '', 
+			              street: '',
+			              city: '',
+			              state: '',
+			              countryCode: '',
+			              country: '',
+			              postCode: '',
+			              district: '',
+			              location: {
+			                lat: '',
+			                long: ''
+			                }
+			            }
+			        };
+
+			        $scope.LocationAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION
+			        {
+			        	$scope.params.address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber+", ";
+			            $scope.params.address = angular.isUndefined(apidata.street)?$scope.params.address:$scope.params.address+apidata.street;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.postal_code = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			        }
+			        $scope.DistributionAPI = function (apidata) // CLIENT LOCATION GOOGLE ADDRESS API CONDITION 
+			        {
+			        	$scope.params.address2 = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+			            $scope.params.address = angular.isUndefined(apidata.street)?'':apidata.street;
+			            $scope.params.suite = angular.isUndefined(apidata.district)?'':apidata.district;
+			            $scope.params.city = angular.isUndefined(apidata.city)?'':apidata.city;
+			            for(var i=0; i<$scope.all_scope.states_all.length; i++)
+			            {
+			                if($scope.all_scope.states_all[i].code == apidata.state)
+			                {
+			                    $scope.params.state = angular.isUndefined($scope.all_scope.states_all[i].id)?'':$scope.all_scope.states_all[i].id;
+			                }
+			            }
+			            $scope.params.zipcode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+			            $scope.params.country = angular.isUndefined(apidata.countryCode)?'':apidata.countryCode;
+			        }
+
+                   // console.log($scope.params); //return false;
                     $scope.UpdateTableData = function(field_name,field_value,table_name,cond_field,cond_value,extra,extra_cond)
 			        {
 			        	$("#ajax_loader").show();
@@ -216,11 +429,15 @@
 			            var condition_obj = {};
 			            condition_obj[cond_field] =  cond_value;
 			            UpdateArray.cond = angular.copy(condition_obj);
-                		
-                	$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+			            UpdateArray.date_field = extra;
+                		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
 			        	{
 		                    if(result.data.success=='1')
 		                    { 
+		                    	if(extra_cond=='mark_complete')
+		                    	{
+		                    		$('#mark_complete').html("Competed");
+		                    	}
 		                    	notifyService.notify('success', result.data.message);
 		                    	//$mdDialog.hide();
 		                    }
@@ -233,6 +450,7 @@
 			        }
 			        $scope.UpdateTableDataAll = function(tableData,table_name,cond_field,cond_value,extra,extra_cond)
 			        {
+			        	//console.log(tableData);return false;
 			        	$("#ajax_loader").show();
 			        	var UpdateArray = {};
 			            UpdateArray.table =table_name;
@@ -244,10 +462,15 @@
 
 			            //=============== SPECIAL CONDITIONS ==============
 			            if(extra=='vendorcontact' || extra=='sales' ) { delete UpdateArray.data.id; delete UpdateArray.data.sales_created_date;}
-                		//console.log(UpdateArray); return false;
                 		if(extra=='artnote'){ delete UpdateArray.data.id;}
+                		if(extra=='client_contact'){ delete UpdateArray.data.id; }
+                		if(extra=='client_address'){ delete UpdateArray.data.id;delete UpdateArray.data.address_type;delete UpdateArray.data.state_name; }
+                		if(extra=='client_notes'){ delete UpdateArray.data.note_id; delete UpdateArray.data.name; delete UpdateArray.data.created_date;}
+                		if(extra=='client_distaddress'){delete UpdateArray.data.id;delete UpdateArray.data.state_name; delete UpdateArray.data.fulladdress}
+                		if(extra=='company_address'){delete UpdateArray.data.id;delete UpdateArray.data.state_name;}
                 		//=============== SPECIAL CONDITIONS ==============
 
+                		//console.log(UpdateArray); return false;
                 		$http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
 			        	{
 		                    if(result.data.success=='1')
@@ -272,6 +495,7 @@
                 clickOutsideToClose: false,
                     locals: {
                         params:params,  // PARAMETERS PASS TO POPUP
+                        all_scope:scope
                     },
                 onRemoving : scope.returnFunction  // THIS FUNCTION WILL BE FIXED AND MUST BE PRESENT IN YOUR CONTROLLER
             });

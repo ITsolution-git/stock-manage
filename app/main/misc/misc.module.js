@@ -18,7 +18,7 @@
                         setTimeout(function(){ 
                            $(".settings-block").removeClass("collapsed");
                         }, 2000);
-                        return sessionService.AccessService('CA');
+                        return sessionService.AccessService('ALL','true');
                     }
                 },
                 url    : '/misc',
@@ -31,7 +31,7 @@
             });
 
        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/misc');
+        //$translatePartialLoaderProvider.addPart('app/main/misc');
 
        
       /*  // Navigation

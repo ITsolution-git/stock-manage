@@ -1,0 +1,236 @@
+<md-dialog class="task-dialog job-dialog">
+	<div flex=100 class="full-row pull-left">
+    	<form name="clientForm" class="md-inline-form" novalidate>
+        	<md-toolbar class="md-accent md-hue-2">
+			    <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+			        <span class="title">{{params.PositionDetail[0].position_name}} Position detail</span>
+			        <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
+			            <span>Close</span>
+			        </md-button>
+			    </div>
+			</md-toolbar>
+			<md-dialog-content ms-scroll>
+				<div class=" pull-left pt-20 full-row">
+					<div class="full-row">
+						<div class="pull-left full-row" flex=15>
+							<span class="global-labels text-capitalize">client name</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].client_company}}</span>
+						</div>
+
+						<div class="pull-left full-row" flex=15>
+							<span class="global-labels text-capitalize">due date</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].due_date}}</span>
+						</div>
+
+						<div class="pull-left full-row" flex=20>
+							<span class="global-labels text-capitalize">scheduled run date</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].run_date}}</span>
+						</div>
+
+						<div class="pull-left full-row" flex=15>
+							<span class="global-labels text-capitalize">press Assigned To</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].machine_name}}</span>
+						</div>
+
+						<div class="pull-left full-row" flex=10>
+							<span class="global-labels text-capitalize">Shift</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].shift_name}}</span>
+						</div>
+						<div class="pull-left full-row" flex=20>
+							<span class="global-labels text-capitalize">Print Location</span>
+							<span class="global-text pull-left full-row">{{params.PositionDetail[0].screen_location}}</span>
+						</div>
+	        		</div>
+	        	</div>
+	        	<div class="full-row pull-left m-t-20">
+	        		<md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+	                <!---Screen Sets Tab-->
+	                <div >
+	                    <md-tab label="screen sets" ng-click="getTab('wait')">
+	                       	<div flex=40 class="pull-left">
+	                       		<h4 class="stokkup-title-h4 text-uppercase m-t-20">screen set info</h4>
+	                       		<div class="full-row">
+	                       			<div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container>
+						                    <input placeholder="Screen Set Name" name="screen_set" ng-model="params.PositionDetail[0].screen_set" disabled="">
+						                </md-input-container>
+	                                </div>
+	                       			<div layout="column" flex=50 class="pull-left  shipcustomfield">
+	                                    <md-input-container class="zero-padding">
+						                    <input placeholder="Screen Count"  name="screen_total" ng-model="params.PositionDetail[0].screen_total" disabled="">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
+	                                    <md-input-container class="zero-padding">
+						                    <input placeholder="Number of Colors" name="color_stitch_count" ng-model="params.PositionDetail[0].color_stitch_count" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'position_id\',params.PositionDetail[0].position_id)' }">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=50 class="pull-left shipcustomfield">
+	                                    <md-input-container class="zero-padding">
+						                    <input placeholder="Width(inches)"  name="screen_width" ng-model="params.PositionDetail[0].screen_width" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
+	                                    <md-input-container class="zero-padding">
+						                    <input placeholder="Height(inches)" name="screen_height" ng-model="params.PositionDetail[0].screen_height" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
+						                </md-input-container>
+	                                </div>
+
+<!-- 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container class="zero-padding">
+						                    <input placeholder="Screen Resolution"  name="screen_resolution" ng-model="params.PositionDetail[0].screen_resolution">
+						                </md-input-container>
+	                                </div>
+
+	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container class="zero-padding">
+						                    <input placeholder="Screen Size" name="screen_size">
+						                </md-input-container>
+	                                </div>
+ -->
+	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                                    <md-input-container class="zero-padding">
+						                    <input placeholder="Notes" name="note" ng-model="params.PositionDetail[0].note" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'id\',params.PositionDetail[0].position_id)' }">
+						                </md-input-container>
+	                                </div>
+
+	                       		</div>
+	                       	</div>
+
+	                       	<div flex=60 class="pull-left pl-10 full-row">
+	                       	<h4 class="stokkup-title-h4 text-uppercase m-t-20 m-b-20">screen set screens</h4>
+		                       	<div class="full-row">
+	                            	<div class="ms-responsive-table-wrapper">
+							            <div>
+							                <table class="dataTable row-border">
+							                    <thead>
+							                    	<tr>
+							                    		<th>Color Name</th>
+							                    		<th>Pantone Color</th>
+							                    		<th>LPI</th>
+							                    		<th>Mesh</th>
+							                    		<th>Ink Type</th>
+							                    	</tr>
+							                    </thead>
+							                    <tbody>
+
+							                        <tr ng-repeat="color in params.PositionDetail">
+							                            <td>{{color.color_name}}</td>
+							                            <td>{{color.thread_color}}</td>
+							                            <td>{{color.line_per_inch}}</td>
+							                            <td>{{color.mesh_thread_count}}</td>
+							                            <td>{{color.inq}}</td>
+							                        </tr>
+							                    </tbody>
+							                </table>
+							            </div>
+							        </div>
+	                            </div>
+	                       	</div>                
+	                    </md-tab>
+	                </div>
+	                <!---Garment Info Tab-->
+	                <div>
+	                    <md-tab label="garment info" ng-click="getTab('progress')">
+
+	                    <div  ng-repeat="garment in params.GarmentDetail.receive">
+	                    	<div class="full-row pull-left pl-30 pr-30 m-t-20">
+	                    		<div class="mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row pull-left">Product</span>
+	                    			<span>{{garment.product.name}}</span>
+	                    		</div>
+
+	                    		<div class="pull-left mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row full-row pull-left">SKU</span>
+	                    			<span>{{garment.product.sku}}</span>
+	                    		</div>
+
+	                    		<!-- <div class="mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row full-row pull-left">Size Group</span>
+	                    			<span>Mens</span>
+	                    		</div> -->
+
+	                    		<div class="mr-20 full-row pull-left" flex=20>
+	                    			<span class="global-labels full-row full-row pull-left">Color</span>
+	                    			<span>{{garment.product.color_name}}</span>
+	                    		</div>
+	                    	</div>
+
+	                        <div class="trans-box mr-20 white-bg pull-left" flex=20 ng-repeat="data_line in garment.data">
+                                <div class="p-20 pull-left">
+                                    <span class="sizeColor mb-10 pull-left">{{data_line.size}}</span>
+                                    <div class="box-zerospace">
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Ordered</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">{{data_line.qnty_ordered}}</span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Received</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    {{data_line.qnty_purchased}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Defective</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    {{data_line.short}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <div class="text-center">________________</div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productYellow mb-0">{{data_line.short}} Defective</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">{{data_line.short_unit}} Units Short</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">{{data_line.over_unit}} Units Over</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <md-card layout="row" class="box-zerospace mh-0 m-t-0">
+			                    <md-card-content flex="50" layout="column">
+			                        <div layout="row" layout-wrap class="marginProduct">
+			                            <p class="font-14 chrome-weight"><span class="global-labels">Order Total:</span> {{garment.total_product}}</p>
+			                        </div>
+			                    </md-card-content>
+			                    <md-card-content flex="50" layout="column">
+			                        <div layout="row" layout-wrap class="marginProduct">
+			                            <p class="font-14 chrome-weight"><span class="global-labels">Order Received:</span> {{garment.total_received}}</p>
+			                        </div>
+			                    </md-card-content>
+			                </md-card>
+                        </div>
+	                    </md-tab>
+	                </div>
+	            	
+	            	</md-tabs>
+	            </div>	
+
+			</md-dialog-content>
+
+			 <!-- <md-dialog-actions layout="row" layout-align="end center">
+                 <md-button class="stokkup-custom-btn1 stokkup-blue-btn text-white">Schedule</md-button>
+        	</md-dialog-actions> -->
+    	</form>
+	</div>
+</md-dialog>

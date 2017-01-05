@@ -9,8 +9,14 @@ use Illuminate\Support\Facades\Redirect;
 use App\Common;
 use App\Company;
 use App\Vendor;
+use App\Client;
+use App\Order;
 use App\Purchase;
 use App\Art;
+use App\Labor;
+use App\Machine;
+use App\Box;
+use App\Production;
 use DB;
 
 use Request;
@@ -22,14 +28,20 @@ class CommonController extends Controller {
 * @return void
 */
 
-    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art ) 
+    public function __construct(Common $common, Company $company, Vendor $vendor, Purchase $purchase, Art $art, Client $client, Order $order, Labor $labor, Machine $machine,Production $production,Box $box) 
     {
+        parent::__construct();
         $this->common = $common;
         $this->company = $company;
         $this->vendor = $vendor;
         $this->purchase = $purchase;
         $this->art = $art;
-
+        $this->client = $client;
+        $this->order = $order;
+        $this->labor = $labor;
+        $this->machine = $machine;
+        $this->box = $box;
+        $this->production = $production;
     }
 
 /**
@@ -142,6 +154,20 @@ class CommonController extends Controller {
  *     required=true,
  *     @SWG\Schema(ref="#/definitions/miscList")
  *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
  *  @SWG\Response(response=200, description="Miscdata Listing"),
  *  @SWG\Response(response="default", description="Miscdata Listing"),
  * )
@@ -153,6 +179,57 @@ class CommonController extends Controller {
         $result = $this->common->getAllMiscData($post);
         return $this->return_response($result);
     }
+
+
+    /** 
+ * @SWG\Definition(
+ *      definition="miscListWithoutBlank",
+ *      type="object",
+ *     
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         )
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/common/getAllMiscDataWithoutBlank",
+ *  summary = "Miscdata Listing Without Blank Data",
+ *  tags={"Order"},
+ *  description = "Miscdata Listing Without Blank Data",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Miscdata Listing Without Blank Data",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/miscListWithoutBlank")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="Miscdata Listing"),
+ *  @SWG\Response(response="default", description="Miscdata Listing"),
+ * )
+ */
 
      public function getAllMiscDataWithoutBlank()
     {
@@ -174,10 +251,38 @@ class CommonController extends Controller {
         return $this->return_response($result);
      }
     
-    /**
-    * Get Array of field selection, condition and table name.
-    * @return json data
-    */
+/**
+* @SWG\Get(
+*  path = "/api/public/common/getStaffList/{id}",
+*  summary = "Staff List",
+*  tags={"Order"},
+*  description = "Staff List",
+*  @SWG\Parameter(
+*     in="path",
+*     name="id",
+*     description="Staff List",
+*     type="integer",
+*     required=true
+*  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+*  @SWG\Response(response=200, description="Staff List"),
+*  @SWG\Response(response="default", description="Staff List"),
+* )
+*/
+   
      public function getStaffList($company_id)
      {
 
@@ -262,6 +367,10 @@ class CommonController extends Controller {
         //echo "<pre>"; print_r($post); echo "</pre>"; die;
         if(!empty($post['table']) && !empty($post['data']))
         {
+            if($post['table'] == 'client_distaddress' && isset($post['data']['order_id']))
+            {
+                unset($post['data']['order_id']);
+            }
             $result = $this->common->InsertRecords($post['table'],$post['data']);
             $id = $result;
             $message = INSERT_RECORD;
@@ -309,64 +418,76 @@ class CommonController extends Controller {
         }
      }
 
-/**
-* UPDATE record for any single table.
-* @params Table name, Condition array, Post array
-* @return json data
+
+  /** 
+* @SWG\Definition(
+*      definition="allUpdate",
+*      type="object",
+*     
+*      @SWG\Property(
+*          property="cond",
+*          type="object",
+*          
+*               @SWG\Property(
+*               property="id",
+*               type="integer",
+*
+*               )
+*
+*         ),
+*      @SWG\Property(
+*          property="data",
+*          type="object",
+*          
+*               @SWG\Property(
+*               property="name",
+*               type="string",
+*
+*               )
+*
+*         ),
+*         @SWG\Property(
+*          property="table",
+*          type="string"
+*
+*         )
+*
+*      )
+*  )
 */
 
-    /** 
- * @SWG\Definition(
- *      definition="updateOrderNotes",
- *      type="object",
- *     
- *      @SWG\Property(
- *          property="cond",
- *          type="object",
- *          required={"note_id"},
- *          @SWG\Property(
- *          property="note_id",
- *          type="integer",
- *         )
- *
- *      ),
- *
- *      @SWG\Property(
- *          property="data",
- *          type="object",
- *          required={"order_notes"},
- *          @SWG\Property(
- *          property="order_notes",
- *          type="string",
- *         )
- *         
- *
- *      ),
- *      @SWG\Property(
- *          property="table",
- *          type="string",
- *         )
- *  )
- */
 
- /**
+  /**
  * @SWG\Post(
  *  path = "/api/public/common/UpdateTableRecords",
- *  summary = "Update Order Note",
- *  tags={"Order"},
- *  description = "Update Order Note",
+ *  summary = "Common Update",
+ *  tags={"Color"},
+ *  description = "All Update",
  *  @SWG\Parameter(
  *     in="body",
  *     name="body",
- *     description="Update Order Note",
+ *     description="All Update",
  *     required=true,
- *     @SWG\Schema(ref="#/definitions/updateOrderNotes")
+ *     @SWG\Schema(ref="#/definitions/allUpdate")
  *  ),
- *  @SWG\Response(response=200, description="Update Order Note"),
- *  @SWG\Response(response="default", description="Update Order Note"),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="All Update"),
+ *  @SWG\Response(response="default", description="All Update"),
  * )
  */
-
      public function UpdateTableRecords()
      {
         $post = Input::all();
@@ -394,46 +515,6 @@ class CommonController extends Controller {
     */
 
 
-       /** 
- * @SWG\Definition(
- *      definition="DeleteTableRecords",
- *      type="object",
- *     
- *      @SWG\Property(
- *          property="cond",
- *          type="object",
- *          required={"id"},
- *          @SWG\Property(
- *          property="id",
- *          type="integer",
- *         )
- *
- *      ),
- *
- *      @SWG\Property(
- *          property="table",
- *          type="string",
- *         )
- *  )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/common/DeleteTableRecords",
- *  summary = "Delete Placement",
- *  tags={"Setting","Color","API"},
- *  description = "Delete Record",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Delete Record",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/DeleteTableRecords")
- *  ),
- *  @SWG\Response(response=200, description="Delete Record"),
- *  @SWG\Response(response="default", description="Delete Record"),
- * )
- */
 
      public function DeleteTableRecords()
      {
@@ -471,17 +552,6 @@ class CommonController extends Controller {
     }
 
 
- /**
- * @SWG\Get(
- *  path = "/api/public/common/getAllColorData",
- *  summary = "Get All colors",
- *  tags={"Color"},
- *  description = "Get All colors",
- *  @SWG\Response(response=200, description="Get All colors"),
- *  @SWG\Response(response="default", description="Get All colors"),
- * )
- */
-
      public function getAllColorData()
     {
         $result = $this->common->getAllColorData();
@@ -517,11 +587,60 @@ class CommonController extends Controller {
         return response()->json(['data'=>$response]);
     }
 
+
+    /** 
+ * @SWG\Definition(
+ *      definition="companyDetail",
+ *      type="object",
+ *     
+ *     
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *          )
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/common/getCompanyDetail",
+ *  summary = "Company Detail",
+ *  tags={"Order"},
+ *  description = "Company Detail",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Company Detail",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/companyDetail")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="Company Detail"),
+ *  @SWG\Response(response="default", description="Company Detail"),
+ * )
+ */
+
     public function getCompanyDetail()
     {
         $post = Input::all();
         
-        $listData = $this->common->getCompanyDetail($post[0]);
+        $listData = $this->common->getCompanyDetail($post['company_id']);
         return $this->return_response($listData);
     }
 
@@ -898,11 +1017,78 @@ class CommonController extends Controller {
         }
      }
 
-    /**
-    * Get record for any table with Total count and Pagination parameters.
-    * @params Testy Post data
-    * @return json data, with Testy parameters
-    */
+   /** 
+* @SWG\Definition(
+*      definition="allList",
+*      type="object",
+*     
+*      @SWG\Property(
+*          property="cond",
+*          type="object",
+*          
+*               @SWG\Property(
+*               property="params",
+*               type="object",
+*
+*                   @SWG\Property(
+*                   property="filter",
+*                   type="object",
+*                       @SWG\Property(
+*                       property="function",
+*                       type="string",
+*                       )
+*                     ),
+*                    @SWG\Property(
+*                    property="page",
+*                    type="object",
+*                       @SWG\Property(
+*                       property="count",
+*                       type="integer",
+*                       ),
+*                       @SWG\Property(
+*                       property="page",
+*                       type="integer",
+*                       )
+*               )
+*
+*         )
+*
+*      )
+*  )
+*/
+
+
+  /**
+ * @SWG\Post(
+ *  path = "/api/public/common/getTestyRecords",
+ *  summary = "Common Listing",
+ *  tags={"Color"},
+ *  description = "All Listing",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="All Listing",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/allList")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="All Listing"),
+ *  @SWG\Response(response="default", description="All Listing"),
+ * )
+ */
     public function getTestyRecords()
     {
         $post_all = Input::all();
@@ -957,9 +1143,10 @@ class CommonController extends Controller {
             }
             $result = $this->company->GetCompanyData($post);
             $header = array(
-                0=>array('key' => 'usr.name', 'name' => 'Name'),
-                1=>array('key' => 'usr.email', 'name' => 'Email'),
-                2=>array('key' => 'usr.created_date', 'name' => 'Create Date'),
+                array('key' => 'usr.display_number', 'name' => '#No'),
+                array('key' => 'usr.name', 'name' => 'Name'),
+                array('key' => 'usr.email', 'name' => 'Email'),
+                array('key' => 'usr.created_date', 'name' => 'Create Date'),
                 );
 
         }
@@ -971,9 +1158,11 @@ class CommonController extends Controller {
             }
             $result = $this->vendor->vendorList($post);
             $header = array(
-                0=>array('key' => 'name_company', 'name' => 'Name'),
-                1=>array('key' => 'email', 'name' => 'Email'),
-                2=>array('key' => 'prime_phone_no', 'name' => 'Phone'),
+                array('key' => 'display_number', 'name' => '#No'),
+                array('key' => 'name_company', 'name' => 'Name'),
+                array('key' => 'email', 'name' => 'Email'),
+                array('key' => 'prime_phone_no', 'name' => 'Phone'),
+                array('key' => '', 'name' => 'Action','sortable' => false)
                 );
 
         }
@@ -981,16 +1170,35 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'po.po_id';
+                $post['sorts']['sortBy'] = 'ord.display_number';
             }
             $result = $this->purchase->ListPurchase($post);
+            $getAllPOdata = $this->purchase->getAllPOdata();
+
+
+            if(empty($result['allData']))
+            {
+                $result['allData'] = array('No Records found');
+            }
+            else
+            {
+                foreach($result['allData'] as $data) {
+
+                    if(array_key_exists($data->id, $getAllPOdata)) {
+                        $data->design_po = $getAllPOdata[$data->id];
+                    } else {
+                        $data->design_po = array();
+                    }
+                }
+            }
+
             $header = array(
-                0=>array('key' => 'po.po_id', 'name' => 'PO#'),
-                1=>array('key' => 'ord.id', 'name' => 'Order Id'),
-                2=>array('key' => 'po.po_type', 'name' => 'PO Type'),
-                3=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
-                5=>array('key' => 'po.date', 'name' => 'Created Date'),
+                array('key' => 'ord.display_number', 'name' => 'Order Id'),
+                array('key' => 'po.po_type', 'name' => 'PO Type'),
+                array('key' => 'cl.client_company', 'name' => 'Client'),
+                array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                array('key' => 'po.date', 'name' => 'Created Date'),
+                array('key' => '', 'name' => 'Operations', 'sortable' => false)
                 );
 
         }
@@ -1001,10 +1209,12 @@ class CommonController extends Controller {
                 $post['sorts']['sortBy'] = 'id';
             }
             $result = $this->purchase->getPurchaseNote($post);
+
+
             $header = array(
-                0=>array('key' => 'note.note_date', 'name' => 'Created date'),
-                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
-                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                array('key' => 'mt.value', 'name' => 'Position'),
+                array('key' => 'odp.note', 'name' => 'Note Name'),
+                array('key' => 'odp.description', 'name' => 'Note Description')
                 );
 
         }
@@ -1012,16 +1222,39 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'po.po_id';
+                $post['sorts']['sortBy'] = 'ord.display_number';
             }
             $result = $this->purchase->ListReceive($post);
+
+            $getAllReceivedata = $this->purchase->getAllReceivedata();
+
+
+            if(empty($result['allData']))
+                {
+                    $result['allData'] = array('No Records found');
+                }
+                else
+                {
+                    foreach($result['allData'] as $data) {
+
+                        if(array_key_exists($data->id, $getAllReceivedata)) {
+                            $data->design_po = $getAllReceivedata[$data->id];
+                        } else {
+                            $data->design_po = array();
+                        }
+                    }
+                }
+
+                
             $header = array(
-                0=>array('key' => 'po.po_id', 'name' => 'RO#'),
-                1=>array('key' => 'ord.id', 'name' => 'Order Id'),
-                2=>array('key' => 'po.po_type', 'name' => 'PO Type'),
-                3=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),
-                5=>array('key' => 'po.date', 'name' => 'Created Date'),
+               /* 0=>array('key' => 'po.po_id', 'name' => 'RO#'),*/
+                array('key' => 'ord.display_number', 'name' => 'Order Id'),
+                array('key' => 'po.po_type', 'name' => 'PO Type'),
+                array('key' => 'cl.client_company', 'name' => 'Client'),
+                /*4=>array('key' => 'v.name_company', 'name' => 'Vendor/Affiliate'),*/
+                array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                array('key' => 'po.date', 'name' => 'Created Date'),
+                array('key' => '', 'name' => 'Operations', 'sortable' => false),
                 );
 
         }
@@ -1033,11 +1266,11 @@ class CommonController extends Controller {
             }
             $result = $this->vendor->vendorContacts($post);
             $header = array(
-                0=>array('key' => 'first_name', 'name' => 'First Name'),
-                1=>array('key' => 'last_name', 'name' => 'Last Name'),
-                2=>array('key' => 'prime_email', 'name' => 'Email'),
-                3=>array('key' => 'prime_phone', 'name' => 'Phone'),
-                4=>array('key' => 'is_main', 'name' => 'Main')
+                array('key' => 'first_name', 'name' => 'First Name'),
+                array('key' => 'last_name', 'name' => 'Last Name'),
+                array('key' => 'prime_email', 'name' => 'Email'),
+                array('key' => 'prime_phone', 'name' => 'Phone'),
+                array('key' => 'is_main', 'name' => 'Main')
                 );
 
         }
@@ -1049,10 +1282,12 @@ class CommonController extends Controller {
             }
             $result = $this->vendor->SalesList($post);
             $header = array(
-                0=>array('key' => 'sales_name', 'name' => 'Name'),
-                1=>array('key' => 'sales_email', 'name' => 'Email'),
-                2=>array('key' => 'sales_phone', 'name' => 'Phone'),
-                3=>array('key' => 'sales_created_date', 'name' => 'Created Date')
+                array('key' => 'display_number', 'name' => '#No'),
+                array('key' => 'sales_name', 'name' => 'Name'),
+                array('key' => 'sales_email', 'name' => 'Email'),
+                array('key' => 'sales_phone', 'name' => 'Phone'),
+                array('key' => 'sales_created_date', 'name' => 'Created Date'),
+                array('key' => '', 'name' => 'Action','sortable' => false)
                 );
         }
         
@@ -1060,29 +1295,34 @@ class CommonController extends Controller {
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'ord.id';
+                $post['sorts']['sortBy'] = 'ord.display_number';
             }
             $result = $this->art->Listing($post);
             $header = array(
-                0=>array('key' => 'ord.id', 'name' => 'Order Id'),
+                0=>array('key' => 'ord.display_number', 'name' => 'Order Id'),
                 1=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets','sortable' => false)
+                2=>array('key' => 'ord.total_screen', 'name' => '#of Screen sets','sortable' => false),
+                3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),
+                4=>array('key' => '', 'name' => '','sortable' => false)
                 );
         }
         if($post['filter']['function']=='art_list_screen') // ART SCREEN LISTING CONDITION
         {
             if(!isset($post['sorts']['sortBy'])) 
             {
-                $post['sorts']['sortBy'] = 'ord.id';
+                $post['sorts']['sortBy'] = 'asc.display_number';
             }
-            $result = $this->art->Screen_Listing($post);
+            $result = $this->art->Screen_Listing($post); 
             $header = array(
-                0=>array('key' => 'ord.id', 'name' => 'Screen Set Name'),
-                1=>array('key' => 'mt.value', 'name' => 'Position'),
-                2=>array('key' => 'cl.client_company', 'name' => 'Client'),
-                3=>array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
-                4=>array('key' => 'screen_width', 'name' => '#of Screen'),
-                5=>array('key' => 'asc.screen_width', 'name' => 'Frame size')
+                array('key' => 'asc.display_number', 'name' => '#No'),
+                array('key' => 'ord.id', 'name' => 'Screen Set Name'),
+                array('key' => 'mt.value', 'name' => 'Position'),
+                array('key' => 'cl.client_company', 'name' => 'Client'),
+               /* 3=>array('key' => 'ord.approval_id', 'name' => 'Order Status', 'sortable' => false),*/
+                array('key' => 'odp.color_stitch_count', 'name' => '#of Color'),
+                array('key' => 'screen_width', 'name' => '#of Screen'),
+                array('key' => 'asc.screen_width', 'name' => 'Frame size'),
+                array('key' => '', 'name' => '','sortable' => false)
                 );
         }
         if($post['filter']['function']=='art_notes') // SCREENSET COLOR NOTE
@@ -1094,12 +1334,107 @@ class CommonController extends Controller {
             $result = $this->art->getArtColorNote($post);
             $header = array(
                 0=>array('key' => 'note.note_date', 'name' => 'Created date'),
-                1=>array('key' => 'note.note_title', 'name' => 'Note Name'),
-                2=>array('key' => 'note.note', 'name' => 'Note Description')
+                1=>array('key' => 'note.note_title', 'name' => 'Note Title'),
+                2=>array('key' => 'note.note', 'name' => 'Note Description'),
+                3=>array('key' => 'note.artapproval_display', 'name' => 'Show in Art Approval')
+                );
+        }
+        if($post['filter']['function']=='order_notes') // PURCHASE NOTES LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'odp.id';
+            }
+            $result = $this->order->getOrderNoteDetail($post);
+            $header = array(
+                 0=>array('key' => '', 'name' => 'Notes','sortable' => false)
+                );
+        }
+        if($post['filter']['function']=='machine_list') // MACHINE LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            if(!isset($post['sorts']['sortOrder']))
+            {
+                $post['sorts']['sortOrder'] = 'desc';
+            }
+            $result = $this->machine->machineList($post);
+            $header = array(
+                array('key' => 'machine_name', 'name' => 'Machine Name'),
+                array('key' => 'machine_type', 'name' => 'Machine Type'),
+                array('key' => 'run_rate', 'name' => 'Run Rate'),
+                array('key' => 'color_count', 'name' => 'Color/Head Count'),
+                array('key' => '', 'name' => 'Max Frame Size','sortable' => false),
+                array('key' => '', 'name' => 'Operation Status','sortable' => false),
+                array('key' => '', 'name' => 'Action','sortable' => false)
+            );
+         }
+
+        if($post['filter']['function']=='labor_list') // RECEIVE PO LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'l.id';
+            }
+            $result = $this->labor->laborList($post);
+            $header = array(
+                array('key' => 'l.shift_name', 'name' => 'Shift Name'),
+                array('key' => 'l.shift_start_time', 'name' => 'Shift Start Time','sortable' => false),
+                array('key' => 'l.shift_end_time', 'name' => 'Shift End Time','sortable' => false),
+                array('key' => 'l.total_shift_hours', 'name' => 'Total Shift Hours','sortable' => false),
+                array('key' => '', 'name' => 'Action','sortable' => false)
                 );
         }
 
-        
+        if($post['filter']['function']=='production_list') // PRODUCTION LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'odp.id';
+            }
+            $result = $this->production->GetProductionList($post);
+            $header = 
+                array(
+                    array('key' => '', 'name' => 'Asset','sortable' => false),
+                    array('key' => 'ord.name', 'name' => 'Order Name'),
+                    array('key' => 'mt.value', 'name' => 'Position'),
+                    array('key' => 'cl.client_company', 'name' => 'Client'),
+                    array('key' => 'mt1.value', 'name' => 'Production Type'),
+                    array('key' => '', 'name' => 'Run Speed','sortable' => false),
+                    array('key' => '', 'name' => 'Screen Count','sortable' => false),
+                    array('key' => '', 'name' => 'Imps','sortable' => false),                    
+/*                    array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
+*/                    array('key' => 'odp.mark_as_complete', 'name' => 'Status'),
+/*                    array('key' => '', 'name' => 'Run Date','sortable' => false),
+*/                    array('key' => '', 'name' => 'Thumbnail','sortable' => false),
+                    array('key' => '', 'name' => 'Dollar Value','sortable' => false),
+                    array('key' => '', 'name' => '','sortable' => false)
+                );
+
+        }
+
+        if($post['filter']['function']=='box_list') // MACHINE LISTING CONDITION
+        {
+            if(!isset($post['sorts']['sortBy'])) 
+            {
+                $post['sorts']['sortBy'] = 'id';
+            }
+            if(!isset($post['sorts']['sortOrder']))
+            {
+                $post['sorts']['sortOrder'] = 'desc';
+            }
+            $result = $this->box->boxList($post);
+            $header = array(
+                array('key' => 'box_type', 'name' => 'Box Type'),
+                array('key' => 'length', 'name' => 'Length'),
+                array('key' => 'width', 'name' => 'Width'),
+                array('key' => 'height', 'name' => 'Height'),
+                array('key' => 'weight', 'name' => 'Weight'),
+                array('key' => '', 'name' => 'Action','sortable' => false)
+            );
+         }
 
         $records = $result['allData'];
         $success = (empty($result['count']))?'0':1;
@@ -1111,6 +1446,143 @@ class CommonController extends Controller {
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$post['sorts']['sortBy'],'sortOrder' => $post['sorts']['sortOrder'],'success'=>$success,'message'=>$message);
         return  response()->json($data);
+    }
+
+
+    public function addEditClient()
+    {
+        $post = Input::all();
+        $result = $this->company->getQBAPI($post['company_id']);
+
+       if(empty($result)) {
+             return 0;
+         }
+
+         $result = $this->client->GetAllclientDetailCompany($post['company_id']);
+
+         foreach ($result as $key => $clientData) {
+            
+             if($clientData['main']['qid'] == 0) {
+
+                $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($clientData['main'],$clientData['contact']);
+                $this->common->UpdateTableRecords('client',array('client_id' => $key),array('qid' => $result_quickbook));
+
+               
+
+             } else {
+
+                $result_quickbook = app('App\Http\Controllers\QuickBookController')->updateCustomer($clientData['main'],$clientData['contact']);
+                
+             }
+         }
+
+          if($result_quickbook == '0') {
+                    return 0;
+                    
+                  } else {
+                    return 1;
+                    
+                  }
+    }
+
+
+
+    /** 
+ * @SWG\Definition(
+ *      definition="miscListApproval",
+ *      type="object",
+ *     
+ *     
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *          ),
+ *
+ *          required={"is_delete"},
+ *          @SWG\Property(
+ *          property="is_delete",
+ *          type="integer",
+ *
+ *      ),
+*
+*
+  *          required={"status"},
+ *          @SWG\Property(
+ *          property="status",
+ *          type="integer",
+ *
+ *      ),
+*
+*
+  *          required={"type"},
+ *          @SWG\Property(
+ *          property="type",
+ *          type="string",
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/common/GetMiscApprovalData",
+ *  summary = "Misc Approval Data",
+ *  tags={"Order"},
+ *  description = "Misc Approval Data",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Misc Approval Data",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/miscListApproval")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="Misc Approval Data"),
+ *  @SWG\Response(response="default", description="Misc Approval Data"),
+ * )
+ */
+
+
+    public function GetMiscApprovalData()
+    {
+        $post = Input::all();
+        $result = $this->common->GetMiscApprovalData($post);
+        return $this->return_response($result);
+    }
+
+
+     public function checkCompanyNameExist($name,$companyId)
+    {
+        if(!empty($name) && isset($companyId))
+        {
+            $getData = $this->common->checkNameExist($name,$companyId);
+            $count = count($getData);
+            $success = ($count>0)? '1':'2'; // 2 = EMAIL NOT EXISTS
+            $message  = ($count>0)? GET_RECORDS:NO_RECORDS;
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
     }
 
 

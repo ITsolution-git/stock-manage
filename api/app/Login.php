@@ -19,7 +19,7 @@ class Login extends Model {
     */
     public function verifylogin($email, $password) {
         $admindata = DB::table('users as usr')
-                    ->select('usr.id','usr.user_name','usr.email','usr.status','usr.name','r.title','r.slug','usr.name')
+                    ->select('usr.id','usr.user_name','usr.email','usr.status','usr.profile_photo','usr.name','r.title','r.slug','usr.name','usr.reset_password')
         			 ->leftjoin('roles as r','r.id', '=' ,'usr.role_id')
         			 ->where('usr.email', '=', $email)
         			 ->where('usr.password', '=', md5($password))
@@ -47,9 +47,9 @@ class Login extends Model {
     * @access public loginRecordUpdate
     * @param  $loginid
     */
-    public function loginRecordUpdate($loginid)
+    public function loginRecordUpdate($token)
     {
-        $result = DB::table('login_record')->where('login_id','=',$loginid)->update(array('logout_time'=>date('Y-m-d H:i:s')));
+        $result = DB::table('login_token')->where('token','=',$token)->delete();
     }
      /**
     * Forgot password          
@@ -78,7 +78,7 @@ class Login extends Model {
 
         DB::table('reset_password')->insert(['user_id'=>$user_id,'string'=>$string,'date_time'=>date('Y-m-d H:i:s'),'date_expire'=>date('Y-m-d H:i:s',strtotime('+6 hour')),'password'=>$password]);
         $link = $string."&".base64_encode($email);
-        $url = "http://".$_SERVER['HTTP_HOST']."/stokkup/reset/".$link; // LIVE
+        $url = "http://".$_SERVER['HTTP_HOST']."/reset/".$link; // LIVE
 
         //$url = Config::get('app.url')."/stokkup/#/access/reset-password/".$link; // LOCAL
         return $url;
@@ -115,7 +115,7 @@ class Login extends Model {
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
-        return $randomString;
+        return $randomString.time();
     }
 
     public function check_user_password($string,$email)
@@ -132,7 +132,7 @@ class Login extends Model {
     }
     public function change_password($string,$email,$password)
     {
-        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s')));
+        $result = DB::table('users')->where('email','=',$email)->update(array('password'=>md5($password),'updated_date'=>date('Y-m-d H:i:s'),'reset_password'=>'0'));
         $reset_password = DB::table('reset_password')->where('string','=',$string)->update(array('status'=>1));
         return 1;
     }
@@ -145,5 +145,17 @@ class Login extends Model {
                     ->select('*')
                     ->get();
         return $result;
+    }
+
+    public function verifyloginUser($email, $id) {
+        $admindata = DB::table('users as usr')
+                    ->select('usr.id','usr.user_name','usr.email','usr.status','usr.password','usr.profile_photo','usr.name','r.title','r.slug','usr.name','usr.reset_password')
+                     ->leftjoin('roles as r','r.id', '=' ,'usr.role_id')
+                     ->where('usr.email', '=', $email)
+                     ->where('usr.id', '=', $id)
+                     ->where('usr.is_delete','=','1')
+                     ->where('usr.status','=','1')
+                     ->get();
+        return $admindata;
     }
 }

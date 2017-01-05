@@ -12,8 +12,37 @@
         var vm = this;
         $scope.shipping_id = $stateParams.id;
 
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+        if($scope.shipping_id == '' || $scope.allow_access == '0') {
+            $state.go('app.shipping');
+            return false;
+        }
+
         $scope.box_items = [];
         $scope.shipping_box_id = 0;
+
+        $scope.shippingDetails = function()
+        {
+            var ship_data = {};
+            ship_data['table'] ='shipping';
+            ship_data.cond = {'id' : $scope.shipping_id};
+
+            $http.post('api/public/common/GetTableRecords',ship_data).success(function(result) {
+                if(result.data.success == 1)
+                {
+                    $scope.shipping =result.data.records[0];
+                }
+            });
+        }
 
         $scope.getShippingBoxes = function()
         {
@@ -21,6 +50,7 @@
             $scope.box_items = [];
             var combine_array = {};
             combine_array.shipping_id = $scope.shipping_id;
+            combine_array.company_id = sessionService.get('company_id');
 
             $http.post('api/public/shipping/getShippingBoxes',combine_array).success(function(result) {
 
@@ -28,16 +58,33 @@
                 if(result.data.success == '1') 
                 {
                     $scope.shippingBoxes =result.data.shippingBoxes;
+                    $scope.total_box_qnty =result.data.total_box_qnty;
+                    $scope.boxType =result.data.boxType;
 
                     if($scope.shipping_box_id > 0)
                     {
                         $scope.select_box($scope.shipping_box_id);
                     }
+                } else {
+                     $state.go('app.shipping');
+                     return false;
                 }
             });
         }
 
-        $scope.getShippingBoxes();
+        var allData = {};
+        allData.table ='shipping';
+        allData.cond ={display_number:$stateParams.id,company_id:sessionService.get('company_id')}
+
+        $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+        {   
+            if(result.data.success=='1')
+            {   
+                $scope.shipping_id = result.data.records[0].id;
+                $scope.shippingDetails();
+                $scope.getShippingBoxes();
+            }
+        });
 
         $scope.reAllocate = function(box_id,box_item_id)
         {
@@ -52,9 +99,27 @@
             order_main_data.cond = angular.copy(condition_obj);
 
             $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
-                var data = {"status": "success", "message": "Data Updated Successfully."}
-                notifyService.notify(data.status, data.message);
+                /*var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);*/
                 $scope.getShippingBoxes();
+            });
+        }
+
+        $scope.changeBoxType = function(id,box_setting_id)
+        {
+            var order_main_data = {};
+            var obj = {};
+            obj['box_setting_id'] =  box_setting_id;
+            order_main_data.data = angular.copy(obj);
+            order_main_data.table = 'shipping_box';
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+                /*var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);*/
             });
         }
 
@@ -107,6 +172,12 @@
         }
         $scope.delete_box = function(id)
         {
+            if($scope.shipping.tracking_number != '')
+            {
+                var data = {"status": "error", "message": "Label is already generated you can't delete boxes"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
             $scope.shipping_box_id = 0;
             $("#ajax_loader").show();
             $http.post('api/public/shipping/DeleteBox',id).success(function(result) {

@@ -16,6 +16,17 @@
         };
         $scope.company_id = sessionService.get('company_id');
 
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 1; // CAN BE EDIT BY ANYONE
+        }        
+
 
             	/* TESTY PAGINATION */     
         $scope.init = {
@@ -138,6 +149,8 @@
                     $("#ajax_loader").show();
 
                     $scope.params = params;
+
+                    $scope.allow_access = params.allow_access;
                     $scope.states_all = params.states_all;
 
                     var companyData = {};

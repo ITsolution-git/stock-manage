@@ -1,0 +1,43 @@
+<div class="main-design-page">
+    <div class="header"  layout="column">
+        <div class="inner-full-box top-30">
+            <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+                <div class="info-order" flex="100" ng-class="{'disable-click': role_slug != 'CA' && role_slug != 'FM'  }">
+                    <md-card layout="row">
+
+                    <md-card-content flex="50" layout="column"  >
+                    <div class="attribute-box">
+                        <table class="tbl-typ1">
+                            <tr>
+                                <th flex="50">Position Color</th>
+                                <th flex="50">IPH</th>
+                                 <th class="text-center" flex=15>
+                                            <a href="#" class="add-attributes" ui-event="{ click : 'addData(\'iph\')'}"><span class="icon icon-plus"></span></a>
+                                        </th>
+                            </tr>
+                            <tr ng-repeat="(key,iph) in alliphData">
+                                <td class="">
+                                    <md-input-container  class="md-icon-float md-default-theme md-input-invalid">
+                                    <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.pos_no"  ui-event="{ change : 'UpdateTableField(\'pos_no\',iph.pos_no,\'iph\',\'id\',iph.id)' }">
+                                    </md-input-container>
+                                </td>
+                                <td class="">
+                                    <md-input-container class="md-icon-float md-default-theme md-input-invalid">
+                                    <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.value" ui-event="{ change : 'UpdateTableField(\'value\',iph.value,\'iph\',\'id\',iph.id)' }">
+                                    </md-input-container>
+                                    
+                                </td>
+                                
+                                <td class="text-center">
+                                    <a href="#" class="remove-size remove-attrribute" ng-click="removeData(iph.id,'iph')"><span class="icon icon-close"></span></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

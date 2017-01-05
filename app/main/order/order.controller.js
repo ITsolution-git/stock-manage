@@ -8,7 +8,20 @@
 
     /** @ngInject */
 
-    function OrderController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService) {
+    function OrderController($q, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$http,sessionService,notifyService) {
+
+        $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
         var vm = this;
         vm.resetFilter = resetFilter;
         vm.showDatePicker = showDatePicker;
@@ -27,19 +40,37 @@
                   
               });
 
-       
-//1. sales rep
+
+        var misc_list_data = {};
+        var condition_obj = {};
+        condition_obj['company_id'] =  sessionService.get('company_id');
+        misc_list_data.cond = angular.copy(condition_obj);
+
+        $http.post('api/public/common/getAllMiscDataWithoutBlank',misc_list_data).success(function(result, status, headers, config) {
+                $scope.miscData = result.data.records;
+        });
+
+        var approval_data = {};
+        approval_data ={company_id :sessionService.get('company_id'),type:'approval','is_delete':1,'status':1};
+      
+        $http.post('api/public/common/GetMiscApprovalData',approval_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                vm.statusCheckData =result.data.records;
+            } 
+        });
+
         vm.salesCheckModal = [];
-       
-        //3. create date
         vm.createDate;
         vm.createdate = false;
         vm.companyfilter = false;
+        vm.orderStatusfilter = false;
          //4. company
         vm.companyCheckModal = [];
+        vm.statusCheckModal = [];
         //vm.companyCheckData = [{id: 1, "label": "Checkbox 1"}, {id: 2, "label": "Checkbox 2"}, {id: 3, "label": "Checkbox 3"}, {id: 4, "label": "Checkbox 4"}, {id: 5,  "label": "Checkbox 5"}, {id: 6, "label": "Checkbox 6"}, {id: 7, "label": "Checkbox 7"}, ];
         vm.searchOrder;
-        vm.ordersId = [{"id": "27"}, {"id": "35"}, {"id": "12"}];
         vm.orderfilter = false;
         vm.rangeFrom;
         vm.rangeTo;
@@ -56,13 +87,7 @@
 
         function resetFilter() {
 
-/*            for (var i = 0; i < this.salesCheckData.length; i++) {
-                this.salesCheckData[i].label = false;
-            }
-            for (var i = 0; i < this.companyCheckData.length; i++) {
-                this.companyCheckData[i].label = false;
-            }
-*/            vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = false;
+            vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = false;
             this.searchOrder = null;
             jQuery('.dateFilter').prop("value", " ");
            
@@ -74,16 +99,25 @@
             function myCustomPropertyForTheObjectSale(){
                 vm.salesCheckModal = [];
             }
+            vm.statusChecksettings = {externalIdProp: myCustomPropertyForTheObjectStatus()}
+            function myCustomPropertyForTheObjectStatus(){
+                vm.statusCheckModal = [];
+            }
             for (var i = 0; i < this.salesCheckModal.length; i++) {
                this.salesCheckModal[i].id = null;
             }
             for (var i = 0; i < vm.companyCheckModal.length; i++) {
                 vm.companyCheckModal[i].id = null;
 
+            }
+            for (var i = 0; i < vm.statusCheckModal.length; i++) {
+                vm.statusCheckModal[i].id = null;
+
             }   
             vm.shipDate = vm.createDate = vm.rangeFrom = vm.rangeTo = null;
             this.searchOrder = null;
             jQuery('.dateFilter').prop("value", " ");
+
 
             $scope.filterOrders();
         }
@@ -131,7 +165,8 @@
           'search': '',
           'seller': '',
           'client': '',
-          'created_date': ''
+          'created_date': '',
+          'status':''
         };
          $scope.search = function ($event){
             $scope.filterBy.name = $event.target.value;
@@ -157,6 +192,7 @@
             $scope.filterBy.seller = '';
             $scope.filterBy.client = '';
             $scope.filterBy.created_date = '';
+            $scope.filterBy.status = '';
             $scope.filterBy.temp = '';
             $scope.sellerArray = [];
 
@@ -179,11 +215,22 @@
                 $scope.filterBy.client = angular.copy($scope.clientArray);
             }
 
+            $scope.orderStatusArray = [];
+            angular.forEach(vm.statusCheckModal, function(status){
+                    $scope.orderStatusArray.push(status.id);
+            })
+            if($scope.orderStatusArray.length > 0)
+            {
+                flag = false;
+                $scope.filterBy.status = angular.copy($scope.orderStatusArray);
+            }
+
             if(vm.createDate != '' && vm.createDate != undefined && vm.createDate != false)
             {
                 flag = false;
                 $scope.filterBy.created_date = vm.createDate;
             }
+            
             if(flag == true)
             {
                 $scope.filterBy.temp = angular.copy(1);
@@ -244,7 +291,14 @@
 
         // -> Filter menu
         vm.toggle = true;
+        
         vm.openRightMenu = function () {
+            // if($('.md-sidenav-right').hasClass("md-closed")){
+            // $('body').addClass('filtershow');
+            // }
+            // if(!$('.md-sidenav-right').hasClass("md-closed")){
+            // $('body').removeClass('filtershow');
+            // }
             $mdSidenav('right').toggle();
         };
 
@@ -300,20 +354,31 @@
         function dtInstanceCB(dt) {
             var datatableObj = dt.DataTable;
             vm.tableInstance = datatableObj;
-//            jQuery('.dev-rdetail').on('click', function () {
-//                var $tr = $(this).closest('tr');
-//                var row = datatableObj.row($tr);
-//
-//                if (row.child.isShown()) {
-//                    row.child.hide();
-//                    $tr.removeClass('shown');
-//                } else {
-//                    var rowHtml=$tr.find("div.dev-rdetail-data").html();
-//                    row.child(rowHtml).show();
-//                    $tr.addClass('shown').next('tr').addClass('table-desc').children('td').addClass('collpas');
-//                }
-//            });
         }
+
+
+         $scope.updateOrderStatus = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='orders';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
     }
 
 

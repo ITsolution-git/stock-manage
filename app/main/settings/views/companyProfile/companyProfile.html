@@ -1,114 +1,124 @@
-<div class="main-design-page m-r-15 m-l-20 m-b-20">
+<div class="main-design-page">
     <div class="header"  layout="column">
-        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
-        </div>
-        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
-            <div class="info-order" flex="100">
-                <form name="copmpany_profile">
-                <md-card layout="row">
+
+        <div class="inner-full-box top-30">
+            <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+                <div class="info-order" flex="100" ng-class="{'disable-click': role_slug != 'CA'}">
+                    <form name="copmpany_profile">
+                    <md-card layout="row">
+                        <md-card-content flex="70" layout="column"  ng-class="{'disable-click': role_slug != 'CA'}">
+                            
+                            <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                                <input placeholder="Company Name" name="name" ng-model="company.name" required ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'\',\'required_field\')' }" >
+                                <div ng-messages="copmpany_profile.name.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span >This field is required</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container class="md-block first-box settings-margin-0">
+                                <input placeholder="Address" name="prime_address1" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
+                            </md-input-container>
                     
-                    <md-card-content flex="50" layout="column">
-                        
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Company Name" name="name" ng-model="company.name"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }" >
-                        </md-input-container>
-
-                        <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Address" name="prime_address1" ng-model="company.prime_address1" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
-                        </md-input-container>
-                
-                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                            <md-input-container flex="30">
-                                <input placeholder="City" ng-model="company.prime_address_city" name="prime_address_city" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
-                            </md-input-container>
-                            <md-input-container flex=30 class="m-b-20">
-                                <label>State</label>
-                                <md-select ng-model="company.prime_address_state" ng-change='UpdateTableField("prime_address_state",company.prime_address_state,"staff","id",company.staff_id,"staff")'>
-                                    <md-option value="0">
-                                        Select State
-                                    </md-option>
-                                    <md-option ng-repeat="state_val in states_all" value="{{state_val.id}}" ng-selected='{{state_val.id==company.prime_address_state}}' >
-                                        {{state_val.name}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                            <md-input-container flex="30">
-                                <input placeholder="Zip Code" ng-model="company.prime_address_zip" name="prime_address_zip" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
-                            </md-input-container>
-                        </div>
-
-                        <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Phone Number" name="prime_phone_main" valid-phone ng-maxlength="16" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
-
-                             <div ng-messages="copmpany_profile.prime_phone_main.$error" role="alert" multiple>
-                                <div ng-message="maxlength">
-                                    <span >Please enter valid phone number</span>
-                                </div>
+                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                <md-input-container style="margin-left: 10px;" flex="30">
+                                    <input placeholder="City" ng-model="company.prime_address_city" name="prime_address_city" ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                                </md-input-container>
+                                <md-input-container flex=30 class="m-b-20">
+                                    <label>State</label>
+                                    <md-select ng-model="company.prime_address_state" ng-change='UpdateTableProfile("prime_address_state",company.prime_address_state,"staff","id",company.staff_id,"staff")'>
+                                        <md-option value="0">
+                                            Select State
+                                        </md-option>
+                                        <md-option ng-repeat="state_val in states_all" value="{{state_val.id}}" ng-selected='{{state_val.id==company.prime_address_state}}' >
+                                            {{state_val.name}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
+                                <md-input-container flex="30">
+                                    <input placeholder="Zip Code" ng-model="company.prime_address_zip" name="prime_address_zip" ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                                </md-input-container>
                             </div>
 
-
-                        </md-input-container>
-
-                        <md-input-container class="md-block first-box settings-margin-0 ">
-                            <input placeholder="Email Address" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'check_email\')' }">
-
-                            <div ng-messages="copmpany_profile.email.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span >This field is required</span>
+                            <md-input-container class="md-block first-box settings-margin-0">
+                                <input placeholder="Phone Number" name="prime_phone_main" required ng-pattern="valid_phone"  ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',copmpany_profile.prime_phone_main.$error)' }">
+                                <div ng-messages="copmpany_profile.prime_phone_main.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                    <div ng-message="pattern">
+                                        <span>Phone number must have 10 digits.</span>
+                                    </div>
                                 </div>
-                                <div ng-message="pattern">
-                                    <span >Email must be a valid e-mail address</span>
+                            </md-input-container>
+
+                            <md-input-container class="md-block first-box settings-margin-0 ">
+                                <input placeholder="Email Address" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="company.email" ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'check_email\',copmpany_profile.email.$error)' }">
+                                <div ng-messages="copmpany_profile.email.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span >This field is required</span>
+                                    </div>
+                                    <div ng-message="pattern">
+                                        <span >Email must be a valid e-mail address</span>
+                                    </div>
                                 </div>
+                            </md-input-container>
+
+                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                <md-input-container  flex="25" >
+                                    <input placeholder="Tax Rate" ng-model="company.tax_rate" valid-number  name="tax_rate" ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                                </md-input-container>
+                                <md-input-container  flex="25" >
+                                     <input placeholder="Oversize Value" ng-model="company.oversize_value" valid-number name="oversize_value"  ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                                </md-input-container>
+                                <md-input-container  flex="25" >
+                                     <input placeholder="QB Cron Time" ng-model="company.cron_runtime" valid-number name="cron_runtime"  ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
+                                </md-input-container>
+                                <md-input-container flex="25" class="m-b-20">
+                                    <label>Gross Year</label>
+                                    <md-select ng-model="company.gross_year" ng-change='UpdateTableProfile("gross_year",company.gross_year,"staff","id",company.staff_id,"staff")'>
+                                        <md-option value="0">
+                                            Select Year
+                                        </md-option>
+                                        <md-option ng-repeat="(key,year) in YearRange" value="{{key}}" ng-selected='{{key==company.gross_year}}' >
+                                            {{key}}
+                                        </md-option>
+                                    </md-select>
+                                </md-input-container>
                             </div>
-
-
-                        </md-input-container>
-
-                        <md-input-container class="md-block first-box settings-margin-0 ">
-                            <input placeholder="Tax Rate" ng-model="company.tax_rate" valid-number  name="tax_rate" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
-                        </md-input-container>
-
-
-                        <md-input-container class="md-block first-box settings-margin-0">
-                             <input placeholder="Oversize Value" ng-model="company.oversize_value" valid-number name="oversize_value"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }" >
-                        </md-input-container>
-
-
-                    </md-card-content>
-
-                    <md-card-content flex="50" layout="column">
-
-                        <md-card-content flex="50" layout="column" class="max-height-350 m-b-30"  ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
-                            <img ng-if="company.company_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="popup-image" >
-                            <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="Image" class="popup-image" >
+                            <span class="pull-left">
+                                <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn mr-20" ng-click="qbClientSetup()" >Client Sync to Quickbook</md-button>
+                                 <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn" ng-click="qbUpdateInovice()" >Invoice Payments Sync to Quickbook
+                                </md-button>
+                            </span>
                         </md-card-content>
-
-                         <!-- <md-card-content flex="50" layout="column" class="min-height-300" >
-                           <div ng-drag="true" flex="50" layout="column"  style="border-style: dotted;"  ng-drag-success="" ng-center-anchor="true">
-                              <div class='button-wrapper' style='height:500px'>
-                                    <label>Tejas</label>
-                                    <input type="button" value="submit"  />
-                              </div>
-                            </div>  
-                        </md-card-content> -->
-
-                        <div class='container' ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo)">
-                            <div class='button-wrapper' style='height:200px'>
-                                <label class="text-center dragDropLabel">Drag & Drop your File here</label>
+                        <md-card-content flex="30" layout="column" class="m-r-10">
+                            <md-card-content flex="50" layout="column" class="max-height-350 m-b-30 company-pro-img-block"  ng-click="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo,'image',company.photo)">
+                                <img ng-if="company.company_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="company-pro-image" >
+                                <img ng-if="company.company_url_photo" ng-src="{{company.company_url_photo}}" alt="Image" class="company-pro-image" >
+                            </md-card-content>
+                            <div class="container" style="position: relative;">
+                                <input style="height: 100%;
+                                            left: 0;
+                                            position: absolute;
+                                            top: 0;
+                                            width: 100%;
+                                            z-index: 10;
+                                            cursor: pointer;
+                                            opacity: 0;
+                                            padding: 0 12px !important;
+                                            text-indent: -100%;" type="file" multiple="" accept="image/*" base-sixty-four-input ng-model="logo_image" ng-change="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo,'image_drag',logo_image)" style="">
+                                <div class='button-wrapper' style='height:200px'>
+                                    <label class="text-center dragDropLabel">Drag & Drop your File here</label>
                                 <!-- <input class="" type="button" value="submit"  /> -->
-                                <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
+                                    <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
+                                </div>
                             </div>
-                        </div>
-
-
-                    </md-card-content>
-
-                    
-            </md-card>
-            </form>
-        </div>
-                    </md-card-content>
-                </md-card>
+                        </md-card-content> 
+                    </md-card>
+                    </form>
+                </div>   
             </div>
         </div>
     </div>

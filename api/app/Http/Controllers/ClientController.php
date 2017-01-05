@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Client;
 use App\Common;
+use App\Company;
+
 use App\Art;
 use DB;
 
@@ -15,11 +17,13 @@ use Request;
 
 class ClientController extends Controller { 
 
-	public function __construct(Client $client,Common $common,Art $art) 
+	public function __construct(Client $client,Common $common,Art $art,Company $company) 
  	{
+ 		parent::__construct();
         $this->client = $client;
         $this->common = $common;
         $this->art = $art;
+        $this->company = $company;
     }
 
     /**
@@ -31,6 +35,22 @@ class ClientController extends Controller {
 
 		$client = array(); $contact = array(); $address = array();
 		$post = Input::all();
+
+
+		$name = $this->common->checkCompanyNameExist($post['client_company'],$post['company_id'],0); // CHECK Company Name EXIST,
+
+
+		if(count($name)>0)
+			{
+				$message = "Company Name already exists!";
+				$success = 0;
+				$data = '';
+
+				$data = array("success"=>$success,"message"=>$message,"data"=>$data);
+		        return response()->json(['data'=>$data]);
+
+			}
+
 		
 		//echo "<pre>"; print_r($post); echo "</pre>"; die;
 		if(!empty($post['company_id']) && !empty($post['client_company']) && !empty($post['billing_email']))
@@ -72,12 +92,19 @@ class ClientController extends Controller {
 			$contact['contact_main']='1';	// SET ACTIVE CONDITION
 			
        
+       		$result = $this->company->getQBAPI($post['company_id']);
+        
+	         if($result) {
+	          
+	          	$result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($client,$contact);
 
-       		$result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($client,$contact);
+		        if($result_quickbook != 0) {
+		        $client['qid']= $result_quickbook;
+	           }
+	         }
 
-	        if($result_quickbook != 0) {
-	        	$client['qid']= $result_quickbook;
-	        }
+
+       		
 
 
 			$result = $this->client->addclient($client,$contact);	// PASS ARRAY IN CLIENT MODEL TO INSERT.
@@ -197,15 +224,68 @@ class ClientController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => RECORDS_PAGE_RANGE,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        1=>array('key' => 'cc.first_name', 'name' => 'Main Contact'),
-                        2=>array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
-                        3=>array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false)
+        				array('key' => 'c.display_number', 'name' => '#No'),
+                        array('key' => 'c.client_company', 'name' => 'Client Name'),
+                        array('key' => 'cc.first_name', 'name' => 'Main Contact'),
+                        array('key' => 'cc.phone', 'name' => 'Contact phone', 'sortable' => false),
+                        array('key' => 'cc.email', 'name' => 'Contact Email', 'sortable' => false),
+                        array('key' => '', 'name' => 'Action', 'sortable' => false)
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return  response()->json($data);
     }
+
+
+    /** 
+ * @SWG\Definition(
+ *      definition="clientFilterData",
+ *      type="object",
+ *     
+ *      @SWG\Property(
+ *          property="cond",
+ *          type="object",
+ *          required={"company_id"},
+ *          @SWG\Property(
+ *          property="company_id",
+ *          type="integer",
+ *         )
+ *
+ *      )
+ *  )
+ */
+
+ /**
+ * @SWG\Post(
+ *  path = "/api/public/client/getClientFilterData",
+ *  summary = "Client Filter Data",
+ *  tags={"Order"},
+ *  description = "Client Filter Data",
+ *  @SWG\Parameter(
+ *     in="body",
+ *     name="body",
+ *     description="Client Filter Data",
+ *     required=true,
+ *     @SWG\Schema(ref="#/definitions/clientFilterData")
+ *  ),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="Client Filter Data"),
+ *  @SWG\Response(response="default", description="Client Filter Data"),
+ * )
+ */
 
     public function getClientFilterData()
     {
@@ -334,10 +414,12 @@ class ClientController extends Controller {
 		$id = $post['client_id'];
 		if(!empty($id) && !empty($post['company_id']))
 		{
-			$result = $this->client->GetclientDetail($id);
+			$result = $this->client->GetclientDetail($id,$post['company_id']);
 
 			if(count($result)>0)
 			{
+				$id = $result['client_id'];
+				$CompanyUsers = $this->common->getBrandCordinator($post['company_id']);
 				$StaffList = $this->common->getStaffList($post['company_id']);
 				$ArrCleintType=$this->common->TypeList('company');
 				$AddrTypeData = $this->common->GetMicType('address_type',$post['company_id']);
@@ -345,13 +427,13 @@ class ClientController extends Controller {
 				$allContacts=$this->client->getContacts($id);
 				$allclientnotes = $this->client->GetNoteDetails($id);
 				$Client_orders = $this->client->ListClientOrder($id);
-				$art_detail = '';//$this->art->Client_art_screen($post['client_id'],$post['company_id']);
+				$screenset_detail = $this->art->Client_art_screen($id,$post['company_id']);
 				$addressAll = $this->client->getAddress($id);
 				$Distribution_address = $this->client->GetDistributionAddress($id);
 				$documents = $this->client->getDocument($id,$post['company_id']);
 
 				$records = array('clientDetail'=>$result,'StaffList'=>$StaffList,'ArrCleintType'=>$ArrCleintType,'AddrTypeData'=>$AddrTypeData, 'Arrdisposition'=>$Arrdisposition,
-					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'art_detail' => $art_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents);
+					'allContacts'=>$allContacts,'allclientnotes'=>$allclientnotes,'Client_orders'=>$Client_orders,'screenset_detail' => $screenset_detail,'addressAll'=>$addressAll,'Distribution_address'=>$Distribution_address,'documents'=>$documents,'companyUsers'=>$CompanyUsers);
 	    		$data = array("success"=>1,"message"=>UPDATE_RECORD,'records'=>$records);
     		}
     		else
@@ -480,12 +562,41 @@ class ClientController extends Controller {
 		return response()->json(['data'=>$data]);
 	}
 
-	public function SaveCleintPlimp()
+	public function SaveClientInfo()
 	{
 		$post = Input::all();
-		$result = $this->client->SaveCleintPlimp($post['data'],$post['id']);
 
-    	$data = array("success"=>1,"message"=>UPDATE_RECORD);
+		$name = $this->common->checkCompanyNameExist($post['client_company'],$post['company_id'],$post['client_id']); // CHECK Company Name EXIST,
+
+
+		if(count($name)>0)
+			{
+				$message = "Company Name already exists!";
+				$success = 2;
+				$data = '';
+
+				$data = array("success"=>$success,"message"=>$message,"data"=>$data);
+		        return response()->json(['data'=>$data]);
+
+			}
+
+
+		
+		if(!empty($post['client_company']) && !empty($post['client_id']))
+		{
+			$post['pl_state'] = empty($post['pl_state'])?'':$post['pl_state'];
+			$post['pl_address'] = empty($post['pl_address'])?'':$post['pl_address'];
+			$post['pl_pincode'] = empty($post['pl_pincode'])?'':$post['pl_pincode'];
+			$post['pl_suite'] = empty($post['pl_suite'])?'':$post['pl_suite'];
+			$post['pl_city'] = empty($post['pl_city'])?'':$post['pl_city'];
+
+			$result = $this->client->SaveClientInfo($post,$post['client_id']);
+    		$data = array("success"=>1,"message"=>UPDATE_RECORD);
+    	}
+    	else
+    	{
+    		$data = array("success"=>0,"message"=>MISSING_PARAMS);
+    	}
 		return response()->json(['data'=>$data]);
 	}
 /**
@@ -831,6 +942,46 @@ public function saveTaxDoc()
         return response()->json(['data'=>$data]);
     }
 
+    public function setin_destribution()
+    {
+    	$post = Input::all();
+    	if(!empty($post['client_id']) && !empty($post['company_id']) && !empty($post['location']))
+        {
+        	$get_location  = $post['location']; 
+        	$check_location = $this->common->GetTableRecords('client_distaddress',array('location_id'=>$get_location['id']),array());
+        	
+        	//echo "<pre>"; print_r($check_location); echo "</pre>"; die;
+        	$set_data = array('client_id'=>$post['client_id'],
+        					  'location_id'=>$get_location['id'],
+        					  'address'=>$get_location['address'],
+        					  'address2'=>$get_location['street'],
+        					  'city'=>$get_location['city'],
+        					  'state'=>$get_location['state'],
+        					  'zipcode'=>$get_location['postal_code'],
+        					  'country'=>'USA'        					  
+        					  );
+
+        	if(count($check_location)>0)
+        	{
+        		$this->common->UpdateTableRecords('client_distaddress',array('location_id'=>$get_location['id']),$set_data);
+        	}
+        	else
+        	{
+        		$this->common->InsertRecords('client_distaddress',$set_data);
+        	}
+        	$message = UPDATE_RECORD;
+            $success = 1;
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
 
 
  } 

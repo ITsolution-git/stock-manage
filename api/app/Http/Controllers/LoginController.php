@@ -96,13 +96,18 @@ class LoginController extends Controller {
                 else
                 {
                     $session = array();
-                    $token = $this->login->getToken(10);
-                    $token .= $token.time();
-                    DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'date'=>date('Y-m-d H:i:s')]);
-                    
+                    $token = $this->login->getToken(10); // RANDOM STRING+CURRENT_TIMESTAMP
+
                     $company = $this->common->CompanyService($result[0]->id);
 
+                    $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
+
+                    $company[0]->company_id = (empty($company[0]->company_id))?0:$company[0]->company_id;
                     //echo "<pre>"; print_r($company); echo "</pre>"; die;
+                    DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'company_id'=>$company[0]->company_id,'date'=>date('Y-m-d H:i:s')]);
+                    
+
+                    //echo "<pre>"; print_r($result); echo "</pre>"; die;
                     Session::put('username',$result[0]->user_name);
                     Session::put('password', md5($password));
                     Session::put('useremail', $result[0]->email);
@@ -114,6 +119,12 @@ class LoginController extends Controller {
                     Session::put('login_id', $loginid);
                     Session::put('company_id',  $company[0]->company_id);
                     Session::put('company_name',  $company[0]->company_name);
+                    Session::put('profile_photo',  $result[0]->profile_photo);
+                    if($result[0]->reset_password=='1'){
+                        Session::put('reset_password',  $result[0]->reset_password);
+                    }
+                    
+                    Session::put('token',  $token);
                     
                     $session['name'] = $result[0]->name;
                     $session['username'] = $result[0]->user_name;
@@ -126,6 +137,11 @@ class LoginController extends Controller {
                     $session['token'] = $token;
                     $session['company_id'] = $company[0]->company_id;
                     $session['company_name'] = $company[0]->company_name;
+                    $session['profile_photo'] = $result[0]->profile_photo;
+                    if($result[0]->reset_password=='1'){
+                        $session['reset_password'] = $result[0]->reset_password;
+                    }
+                    
                     
 
                     $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
@@ -149,23 +165,19 @@ class LoginController extends Controller {
      *
      * @return Response
      */
-    public function logout() {
-
-       // if(!empty($token))
-       // {
-            if (!empty(Session::get("login_id"))) 
-            {
-                $loginid =Session::get("login_id");
-                $this->login->loginRecordUpdate($loginid);
-            }
-           // DB::table('login_token')->where('token','=',$token)->delete();
+    public function logout() 
+    {
+        if (!empty(Request::header('Authorization'))) 
+        {
+            $headers = Request::header('Authorization');
+            $this->login->loginRecordUpdate($headers);
             Session::flush(); 
             $response = array('success' => 1, 'message' => "Logout successfully.");
-/*        }
+        }
         else
         {
-            $response = array('success' => 0, 'message' => MISSING_PARAMS."- Token");
-        }*/
+            $response = array('success' => 0, 'message' => "Invalid Token");
+        }
         return response()->json(["data" => $response]);
     }
 
@@ -174,25 +186,22 @@ class LoginController extends Controller {
      *
      * @return Response
      */
-    public function check_session($token=0) {
+    public function check_session() 
+    {
+        $data = Input::all();
 
-/*        if(!empty($token))
-        {
-            $result = $this->login->check_session($token);
-            if(count($result)>0)
+            if(!empty($data['refresh']) && $data['refresh']==1)
             {
-                $response = array('success' => 1, 'message' => "session there",'records'=>$result[0]);
-             //   $response = array('success' => 1, 'message' =>"session there",);
+                Session::put('profile_photo', '');
+                $result = $this->common->GetTableRecords('users',array('id' => Session::get("user_id")),array());
+                $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.Session::get("company_id")."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.Session::get("company_id")."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
+
+                Session::put('profile_photo',  $result[0]->profile_photo);
+                $session['profile_photo'] = $result[0]->profile_photo;
+
+                //echo "<pre>"; print_r($result); echo "</pre>"; die;
             }
-            else
-            {
-                 $response = array('success' => 0, 'message' => NO_RECORDS);
-            }
-        }
-        else
-        {
-            $response = array('success' => 0, 'message' => LOGIN_WRONG);
-        }*/
+
             if (!empty(Session::get("useremail"))) {
                 //$result = $this->common->CompanyService(Session::get("user_id"));
             $response = array('success' => 1, 
@@ -205,7 +214,8 @@ class LoginController extends Controller {
                               "email" => Session::get("useremail"),
                               "role_session"=>Session::get("role_slug"),
                               "company_id"=>Session::get("company_id"),
-                              "token"=>$token
+                              "profile_photo"=>Session::get("profile_photo"),
+                              "token"=>Session::get("token")
                               );
         } else {
            $response = array('success' => 0, 'message' => LOGIN_WRONG);
@@ -369,6 +379,134 @@ class LoginController extends Controller {
             $response = array('success' => 0, 'message' => MISSING_PARAMS);
         }
          return response()->json(["data" => $response]);
+    }
+
+
+    public function loginUser() {
+ 
+        $data = Input::all();
+        
+
+        if(!empty($data['email']) && !empty($data['id']))
+        {
+            
+
+
+            $email = htmlentities(trim($data['email']));
+            $id = htmlentities($data['id']);
+            
+            $result = $this->login->verifyloginUser($email, $id);
+
+
+            if (count($result) > 0) 
+            {
+                if(empty($result[0]->title) || empty( $result[0]->slug) || empty($result[0]->email ))
+                {
+                    $response = array('success' => 0, 'message' => SOMETHING_WRONG);
+                }
+                else
+                {
+                    $oldLoginId = 0;
+                    $oldEmail = '';
+                    if($data['relogin'] == 0){
+                         $oldLoginId =Session::get("user_id");
+                         $oldEmail=Session::get("useremail");
+                    } 
+                   
+
+                  //     print_r($userId);exit;
+                  //   print_r($result[0]->id);exit;
+
+                   // $this->common->UpdateTableRecords('users',array('id' => $result[0]->id),array('user_login' => $userId));
+                  
+                   // $data = $this->logout();
+
+                    
+
+                    $session = array();
+                    $token = $this->login->getToken(10); // RANDOM STRING+CURRENT_TIMESTAMP
+
+                    $company = $this->common->CompanyService($result[0]->id);
+
+                    $result[0]->profile_photo = (!empty($result[0]->profile_photo) && file_exists(FILEUPLOAD.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo))?UPLOAD_PATH.$company[0]->company_id."/staff/".$result[0]->id."/".$result[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
+
+                    $company[0]->company_id = (empty($company[0]->company_id))?0:$company[0]->company_id;
+                    //echo "<pre>"; print_r($company); echo "</pre>"; die;
+                    DB::table('login_token')->insert(['token'=>$token,'user_id'=>$result[0]->id,'company_id'=>$company[0]->company_id,'date'=>date('Y-m-d H:i:s')]);
+                    
+
+                    //echo "<pre>"; print_r($result); echo "</pre>"; die;
+                    Session::put('username',$result[0]->user_name);
+                    Session::put('password', $result[0]->password);
+                    Session::put('useremail', $result[0]->email);
+                    Session::put('role_title', $result[0]->title);
+                    Session::put('role_slug', $result[0]->slug);
+                    Session::put('name', $result[0]->name);
+                    Session::put('user_id', $result[0]->id);
+                    $loginid = $this->login->loginRecord($result[0]->id);
+                    Session::put('login_id', $loginid);
+
+                     Session::put('oldLoginId', 0);
+                     Session::put('oldEmail', '');
+
+                    if($data['relogin'] == 0){
+
+                        Session::put('oldLoginId', $oldLoginId);
+                        Session::put('oldEmail', $oldEmail);
+                    
+                     }
+
+                    Session::put('company_id',  $company[0]->company_id);
+                    Session::put('company_name',  $company[0]->company_name);
+                    Session::put('profile_photo',  $result[0]->profile_photo);
+                    if($result[0]->reset_password=='1'){
+                        Session::put('reset_password',  $result[0]->reset_password);
+                    }
+                    
+                    Session::put('token',  $token);
+                    
+                    $session['name'] = $result[0]->name;
+                    $session['username'] = $result[0]->user_name;
+                    //$session['password'] = md5($password);
+                    $session['useremail'] = $result[0]->email;
+                    $session['role_title'] = $result[0]->title;
+                    $session['role_slug'] = $result[0]->slug;
+                    $session['login_id'] = $loginid;
+
+                     $session['oldLoginId'] = 0;
+                     $session['oldEmail'] = '';
+
+                    if($data['relogin'] == 0){
+
+                        $session['oldLoginId'] = $oldLoginId;
+                        $session['oldEmail'] = $oldEmail;
+                    }
+
+                    $session['user_id'] = $result[0]->id;
+                    $session['token'] = $token;
+                    $session['company_id'] = $company[0]->company_id;
+                    $session['company_name'] = $company[0]->company_name;
+                    $session['profile_photo'] = $result[0]->profile_photo;
+                    if($result[0]->reset_password=='1'){
+                        $session['reset_password'] = $result[0]->reset_password;
+                    }
+                    
+                    
+
+                    $response = array('records'=>$session,'success' => 1, 'message' => LOGIN_SUCCESS);
+                }
+            } 
+            else 
+            {
+                $response = array('success' => 0, 'message' => LOGIN_WRONG);
+            }
+
+        }
+        else
+        {
+            $response = array('success' => 0, 'message' => FILL_PARAMS);
+        }
+        return response()->json(["data" => $response]);
     }
 
 

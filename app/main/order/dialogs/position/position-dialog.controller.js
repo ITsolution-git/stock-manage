@@ -8,6 +8,22 @@
 /** @ngInject */
     function PositionDialogController(order_id,quantity,$stateParams,$scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService)
     {
+
+          // change display number to design Id for fetching the order data
+          var design_data = {};
+           design_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           design_data.table ='order_design';
+          
+          $http.post('api/public/common/GetTableRecords',design_data).success(function(result) {
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.design_id = result.data.records[0].id;
+
+              } 
+          });
+
+
       
             $scope.order_design_position={};
             $scope.order_design_position.qnty = quantity;
@@ -50,10 +66,10 @@
               var position_id = positionData.position_id
              
               combine_array_id.positionData = positionData;
-              combine_array_id.design_id = $stateParams.id;
+              combine_array_id.design_id = $scope.design_id;
               combine_array_id.order_id = order_id;
               combine_array_id.position = $scope.miscData.position[position_id].value;
-
+              combine_array_id.company_id = sessionService.get('company_id');
               
  
               $http.post('api/public/order/addPosition',combine_array_id).success(function(result) 

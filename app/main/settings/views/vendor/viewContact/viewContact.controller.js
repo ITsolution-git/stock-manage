@@ -14,7 +14,16 @@
          $scope.company_id = sessionService.get('company_id');
 
          $scope.v_id = $stateParams.id;
-
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU'  || $scope.role_slug=='AT' )
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 1; // CAN BE EDIT BY ANYONE
+        }
 
         /* STATE DATA*/   
         var state = {}; state.table ='state';
@@ -81,13 +90,13 @@
         // DYNAMIC POPUP FOR INSERT RECORDS
         $scope.openInsertPopup = function(path,ev)
         {
-            var insert_params = {states_all:$scope.states_all,vendor_id:$scope.v_id,flag:'add'};
+            var insert_params = {vendor_id:$scope.v_id};
             //OPEN POPUP WITH TO INSERT DATA// SCOPE, PATH FILE, CONDITION DATA, TABLE
             sessionService.openAddPopup($scope,path,insert_params,'vendor_contacts');
         }
         $scope.openEditPopup = function(path,param,ev)
         {
-            var edit_params = {states_all:$scope.states_all,data:param,flag:'edit'};
+            var edit_params = {data:param};
             // OPEN POPUP WITH DATA   // SCOPE, PATH FILE, DISPLAY DATA, TABLE
             sessionService.openEditPopup($scope,path,edit_params,'vendor_contacts');
         }

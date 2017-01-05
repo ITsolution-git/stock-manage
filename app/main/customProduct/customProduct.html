@@ -1,6 +1,6 @@
-<div class="content order-list-page custom-product-page">
-    <div class="simple-table-container md-whiteframe-4dp">
-        <div class="table-title " layout="row" layout-align="space-between center" flex="100">
+<div class="content order-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex="20" class="cursor-p" >
                 Custom Product
             </div>
@@ -15,23 +15,34 @@
                         <input type="file" name="file" id="file" class="upload" ng-model="file">
                         <md-tooltip md-direction="bottom">Upload CSV File</md-tooltip>
                         <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                        <input type="hidden" name="pdf_token" id="pdf_token" value="pdf_token">
                         <span>Upload CSV</span>
                     </div>
                     <a href="#" class="btn-typ-submit" ng-click="submitForm()">
                         <span class="icon icon-upload"></span>
                     </a>
                    </form>
-                     <form name="downloadcsv" id="downloadcsv" action="api/public/product/downloadCSV" method="post" enctype="multipart/form-data">
+
+                    <form name="downloadProductcsv" id="downloadProductcsv" action="api/public/product/downloadCustomProductCSV" method="post" enctype="multipart/form-data">
                     
-                        <a href="#" class="btn-typ-submit" ng-click="submitFormDownload()" class="btn-typ-submit">
-                            <span class="icon icon-download"></span>
-                            <md-tooltip md-direction="bottom">Download CSV Sample File</md-tooltip>
+                        <a href="#" class="btn-typ-submit" ng-click="submitProductFormDownload()" class="btn-typ-submit">
+                            <span>Download Product</span>
+                            <input type="hidden" name="company_id" id="company_id" value="{{company_id}}">
+                             <input type="hidden" name="type" id="type" value="csv">
+                             <input type="hidden" name="pdf_token" id="pdf_token" value="pdf_token">
+                            <md-tooltip md-direction="bottom">Download Custom Product</md-tooltip>
                         </a>
                    </form>
+
+
                 </div>
+
+
              <div class="order-modal-title " layout="row" layout-align="end center" flex="20" >
-                <span class="cursor-p" ui-sref="app.settings.custom-info({id:0})" >CREATE CUSTOM PRODUCT</span>
+                <span class="cursor-p stokkup-btn-style1" ui-sref="app.settings.custom-info({id:0})" >CREATE CUSTOM PRODUCT</span>
             </div>
+
+
         </div>
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >

@@ -12,8 +12,30 @@
         var vm = this;
          //vm.openaddNoteDialog = openaddNoteDialog;
          $scope.company_id = sessionService.get('company_id');
-         $scope.screenset_id = $stateParams.id;
+         $scope.display_number = $stateParams.id;
 
+            var companyData = {};
+            companyData.table ='artjob_screensets';
+            companyData.cond = {display_number: $stateParams.id,company_id:$scope.company_id};
+            // GET CLIENT TABLE CALL
+            $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+            {   
+                if(result.data.success=='1')
+                {   
+                    $scope.screenset_id =result.data.records[0].id;
+                }
+            });
+         
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
         //Dummy models data
      
                 /* TESTY PAGINATION */     
@@ -41,7 +63,8 @@
        $scope.getResource = function (params, paramsObj, search)
         {   
             $scope.params = params;
-            $scope.params.screenset_id = $scope.screenset_id;
+            $scope.params.display_number = $scope.display_number;
+            $scope.params.company_id = $scope.company_id;
             $scope.paramsObj = paramsObj;
 
             var company_data = {};

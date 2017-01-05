@@ -1,12 +1,13 @@
-<div class="main-design-page m-r-15 m-l-20 m-b-20">
+<div class="main-design-page">
     <div class="header"  layout="column">
-        
-        <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
-            <div class="info-order" flex="100">
-                
-                <md-card layout="row">
+
+        <div class="inner-full-box top-30">
+            <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+                <div class="info-order" flex="100" ng-class="{'disable-click': role_slug != 'CA' && role_slug != 'FM'  }">
+                    <form name="copmpany_profile">
+                    <md-card layout="row">
                     
-                    <md-card-content flex="50" layout="column">
+                    <md-card-content flex="70" layout="column"  >
                         
                         <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
                             <div class="table-title-text h2 text-semibold" flex=40>
@@ -17,7 +18,7 @@
 
                         <div class="div-1000" id="custChkboxes">
                             
-                            <div class="customChkbox md-raised btn-width-315 m-b-10" >
+                            <div class="customChkbox md-raised m-b-10" >
 
                                 <input type="checkbox" id="chk1" ng-if="company_data.screen_print=='1'" ng-click="UpdateTableField('screen_print','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" />
 
@@ -25,7 +26,7 @@
 
                                 <label for="chk1" class="form-control">SCREEN PRINTING</label>
                             </div>
-                            <div class="customChkbox md-raised btn-width-315 m-b-10">
+                            <div class="customChkbox md-raised m-b-10">
 
                                 <input type="checkbox" ng-if="company_data.embroidering=='1'" ng-click="UpdateTableField('embroidering','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk2" />
 
@@ -33,20 +34,20 @@
 
                                 <label for="chk2" class="form-control">EMBROIDERING</label>
                             </div>
-                            <div class="customChkbox md-raised btn-width-315 m-b-10">
+                            <div class="customChkbox md-raised m-b-10">
                                 <input type="checkbox" ng-if="company_data.packing=='1'" ng-click="UpdateTableField('packing','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk3"  />
 
                                 <input type="checkbox" ng-if="company_data.packing=='0'" ng-click="UpdateTableField('packing','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk3" />
 
                                 <label for="chk3" class="form-control">PACKAGING</label>
                             </div>
-                            <div class="customChkbox md-raised btn-width-315">
+                            <div class="customChkbox md-raised">
                                  <input type="checkbox" ng-if="company_data.shipping=='1'" ng-click="UpdateTableField('shipping','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk4"  />
 
                                 <input type="checkbox" ng-if="company_data.shipping=='0'" ng-click="UpdateTableField('shipping','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk4"  />
                                 <label for="chk4" class="form-control">SHIPPING</label>
                             </div>
-                            <div class="customChkbox md-raised btn-width-315">
+                            <div class="customChkbox md-raised">
                                 <input type="checkbox" ng-if="company_data.art_work=='1'" ng-click="UpdateTableField('art_work','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk5"  />
 
                                 <input type="checkbox" ng-if="company_data.art_work=='0'" ng-click="UpdateTableField('art_work','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk5"  />
@@ -69,19 +70,19 @@
 
                         <label class="margin-left-15">What shifts does your shop run?</label>
                         <div class="div-1000" id="custChkboxes1">
-                            <div class="customChkbox md-raised btn-width-315">
+                            <div class="customChkbox md-raised">
                                  <input type="checkbox" ng-if="company_data.first_shift=='1'" ng-click="UpdateTableField('first_shift','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk6"  />
 
                                 <input type="checkbox" ng-if="company_data.first_shift=='0'" ng-click="UpdateTableField('first_shift','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk6"  />
                                 <label for="chk6" class="form-control">FIRST SHIFT</label>
                             </div>
-                            <div class="customChkbox md-raised btn-width-315">
+                            <div class="customChkbox md-raised">
                                 <input type="checkbox" ng-if="company_data.second_shift=='1'" ng-click="UpdateTableField('second_shift','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk7"  />
 
                                 <input type="checkbox" ng-if="company_data.second_shift=='0'" ng-click="UpdateTableField('second_shift','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk7"  />
                                 <label for="chk7" class="form-control">SECOND SHIFT</label>
                             </div>
-                            <div class="customChkbox md-raised btn-width-315">
+                            <div class="customChkbox md-raised">
                                 <input type="checkbox" ng-if="company_data.third_shift=='1'" ng-click="UpdateTableField('third_shift','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk8"  />
 
                                 <input type="checkbox" ng-if="company_data.third_shift=='0'" ng-click="UpdateTableField('third_shift','1','company_info','id',company_data.id,'company_info','company_info')"  value="0" id="chk8"  />
@@ -93,12 +94,170 @@
                         <label class="margin-left-15 pad-top-25"> How large is your team?</label>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
                             <input placeholder="Numbers of team members" ng-model="company_data.team" name="team" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }">
-                        </div> 
+                            </md-input-container>
+                        
+
+                        </md-card-content> 
+
+                    </md-card>
 
 
-                    </md-card-content>
+                    <md-card layout="row">
                     
-                </md-card>
+                        <md-card-content flex="50" layout="column"  >
+                           
+                                    <div class="table-title paddingbottom-0 pad-top-25" layout="row" layout-align="space-between center">
+                                            <div class="table-title-text h2 text-semibold" flex=40>
+                                                <div class="title" layout-padding><span class="basicInfoStyle">DEFINE COMPANY SHIFTS</span></div>
+                                            </div>
+                                    </div>
+
+
+                                        <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+                                            <md-input-container class="md-block first-box" flex-gt-sm>
+                                                <input placeholder="Shift Name" flex="80" ng-model="company_shift.shift_name">
+                                            </md-input-container>
+                                        </div>
+
+                                        <div layout-wrap="nowrap" class="design-add-modal " layout-padding>
+
+                                            <label for="chk1"   class="form-control">Start Time</label>
+                                            <input kendo-time-picker ng-model="company_shift.shift_start_time" k-ng-model="t1">
+
+                                            <label for="chk2"   class="form-control">End Time</label>
+                                            <input kendo-time-picker ng-model="company_shift.shift_end_time" k-ng-model="t2">
+
+                                        </div>
+
+                                        <div>
+
+                                            <md-button  class="md-accent md-raised " ng-click="saveCompanyShift(company_shift)" type="button" >
+                                                    CREATE SHIFT
+                                            </md-button>
+
+                                        </div>
+                                
+                        </md-card-content> 
+
+                             <md-card-content flex="50" layout="column"  >
+                              <div class="simple-table-container md-whiteframe-4dp" ng-show="shiftDataDisplay==1">
+                                            <div class="ms-responsive-table-wrapper shift_scroll">
+                                                <table ms-responsive-table="" class="simple">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Shift Name</th>
+                                                            <th>Shift Start Time</th>
+                                                            <th>Shift End Time</th>
+                                                            <th>Operation</th>
+                                                            </tr>
+                                                        </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="shifts in allshiftData" class="ng-scope">
+                                                             <td>{{ shifts.shift_name}}</td>
+                                                            <td>{{ shifts.shift_start_time}}</td>
+                                                             <td>{{ shifts.shift_end_time}}</td>
+                                                            <td>
+                                                                <a href="#" class="remove-size" ng-click="delete_shift($event,shifts.id)"><span class="icon icon-close"></span></a>
+                                                    </td>
+                                                         </tr>
+                                                    </tbody>
+                                                 </table> 
+                                               </div>
+                                    </div>   
+                            </md-card-content> 
+
+                     </md-card>
+
+
+
+                     <md-card layout="row">
+                    
+                        <md-card-content flex="50" layout="column"  >
+                           
+                                    <div class="table-title paddingbottom-0 pad-top-25" layout="row" layout-align="space-between center">
+                                            <div class="table-title-text h2 text-semibold" flex=40>
+                                                <div class="title" layout-padding><span class="basicInfoStyle">DEPARTMENT ALLOWANCES</span></div>
+                                            </div>
+                                    </div>
+
+
+                                      <div class="simple-table-container md-whiteframe-4dp">
+                                            <div class="ms-responsive-table-wrapper">
+                                                <table ms-responsive-table="" class="simple">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Department/Event</th>
+                                                            <th>Allowance Days</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                        <tr class="ng-scope">
+                                                            <td>Created</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Created" valid-number ng-model="company_data.created_allowance" name="created_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Order Acknowledgement</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Order Acknowledgement" valid-number ng-model="company_data.order_acknowledgement_allowance" name="order_acknowledgement_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Garment Department</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Garment Department" valid-number ng-model="company_data.garment_department_allowance" name="garment_department_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Art Department</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Art Department" valid-number ng-model="company_data.art_department_allowance" name="art_department_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Production</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Production" valid-number ng-model="company_data.production_allowance" name="production_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Finishing</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Finishing" valid-number ng-model="company_data.finishing_allowance" name="finishing_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>Shipping</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="Shipping" valid-number ng-model="company_data.shipping_allowance" name="shipping_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                        <tr class="ng-scope">
+                                                            <td>In Hands</td>
+                                                            <td><md-input-container class="md-block">
+                                                                <input aria-label="In Hands" valid-number ng-model="company_data.in_hands_allowance" name="in_hands_allowance" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
+                                                            </md-input-container></td>
+                                                        </tr>
+                                                    </tbody>
+                                                 </table> 
+                                               </div>
+                                    </div> 
+
+
+                                
+                        </md-card-content> 
+
+                            
+
+                     </md-card>
+
+
+                        
+                    </form>
+
+                </div>   
             </div>
         </div>
     </div>

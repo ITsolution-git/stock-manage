@@ -10,6 +10,24 @@
     function AddDesignController(event_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
 
+
+      // change display number to order Id for fetching the order data
+          var order_data = {};
+           order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           order_data.table ='orders';
+          
+          $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+            
+              
+              if(result.data.success == '1') 
+              {
+                  $scope.vendorRecord =result.data.records;
+                  $stateParams.id = result.data.records[0].id;
+
+              }
+          });
+
+
           
           $scope.updateStartDate = function(){
             $scope.minDate = new Date($scope.design.start_date);
@@ -87,7 +105,8 @@
 
             } else {
 
-                designData.order_id = $stateParams.id;     
+                designData.order_id = $stateParams.id;
+                designData.company_id = sessionService.get('company_id'); 
                 var combine_array_id = {};
                 combine_array_id.designData = designData;
 
@@ -117,19 +136,7 @@
                 return (state.name.indexOf(lowercaseQuery) === 0);
             };
         }
-  vm.createDate1="",
-        vm.createDate2="",
-        vm.createDate3="",
-        vm.monthSelectorOptions = {
-            start: "year",
-            depth: "year"
-          };
-          vm.getType = function(x) {
-            return typeof x;
-          };
-          vm.isDate = function(x) {
-            return x instanceof Date;
-          };
+
        
     }
 })();

@@ -15,7 +15,7 @@
                 resolve: {
                     checksession : function (sessionService)
                     {
-                       return sessionService.AccessService('BC,CA');
+                        return sessionService.AccessService('ALL','true');
                     },
                 },
                 url    : '/finishing',
@@ -45,7 +45,7 @@
             title: 'Finishing',
             icon: 'icon-cart',
             state: 'app.finishing',        
-            weight   : 1
+            weight   : 8
         });
     }
 })();

@@ -1,4 +1,4 @@
-<div class="main-design-page m-r-15 m-l-20 m-b-20">
+<div class="main-design-page m-r-15 m-l-20">
     <div class="header"  layout="column">
         <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
         </div>
@@ -6,17 +6,51 @@
             <div class="info-order" flex="100">
                 <form name="user_profile">
                 <md-card layout="row">
-                    
-                    <md-card-content flex="50" layout="column">
+                    <md-card-content flex="70" layout="column">
                         <div class="title" layout-padding><span class="basicInfoStyle">BASIC INFORMATION</span></div>   
                         
-                        
+                        <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                            <md-input-container class="mrg10-L" flex="40">
+                                <input placeholder="First Name" ng-model="company.first_name" name="first_name" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.first_name.$error)' }" >
+                                <div ng-messages="user_profile.first_name.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                            </div>
+                            </md-input-container>
+                            <md-input-container flex="40" class="mrg10-R">
+                                <input placeholder="Last Name" ng-model="company.last_name" name="last_name" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.last_name.$error)' }" >
+                                <div ng-messages="user_profile.last_name.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                            </div>
+                            </md-input-container>
+                        </div>
+
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Name" name="name" ng-model="company.name" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\')' }">
+                            <input placeholder="Display Name" name="name" ng-model="company.name" required ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'\',user_profile.name.$error)' }">
+                            <div ng-messages="user_profile.name.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span >This field is required</span>
+                                </div>
+                            </div>
                         </md-input-container>
 
                         <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Email Address" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'check_email\')' }">
+                                <input placeholder="Phone Number" name="prime_phone_main" required ng-pattern="valid_phone"  ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\',\'\',user_profile.prime_phone_main.$error)' }">
+                                <div ng-messages="user_profile.prime_phone_main.$error" role="alert" multiple>
+                                    <div ng-message="required">
+                                        <span>This field is required</span>
+                                    </div>
+                                    <div ng-message="pattern">
+                                        <span>Phone number must have 10 digits.</span>
+                                    </div>
+                                </div>
+                            </md-input-container>
+                            
+                        <md-input-container class="md-block first-box settings-margin-0">
+                            <input placeholder="Email Address" type="email" name="email" required ng-pattern="/^.+@.+\..+$/" ng-model="company.email" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'check_email\',user_profile.email.$error)' }">
 
                             <div ng-messages="user_profile.email.$error" role="alert" multiple>
                                 <div ng-message="required">
@@ -29,29 +63,40 @@
 
                         </md-input-container>
 
-                        <md-input-container class="md-block first-box settings-margin-0">
-                            <input placeholder="Phone Number" name="prime_phone_main" valid-phone ng-maxlength="16" ng-model="company.prime_phone_main" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'staff\',\'id\',company.staff_id,\'company\')' }">
-                        </md-input-container>
 
-                         <div class="title" layout-padding><span class="basicInfoStyle">PASSWORD</span></div>   
-
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Password" type="password" value="*****" >
-                         </md-input-container> 
-
-              <!--            <div class="title" layout-padding>
+                       
+                        <!--<div class="title" layout-padding>
                             <span class="basicInfoStyle">CHANGE PASSWORD</span>
-                        </div>       -->
-                        <div class="title" layout-padding>
-                            <button class="edgePadding basicInfoStyle" ng-click="vm.openChangePasswordialog($event)" >
+                        </div> -->
+                        <div class="title" layout-padding  ng-show="allow_access==1">
+                            <button class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20" ng-click="vm.openChangePasswordialog($event)" >
                                 CHANGE PASSWORD
                             </button>
                         </div>
-
-                        
-                      
-
                     </md-card-content>
+                    <md-card-content flex="30" layout="column" class="m-r-10">
+                            <md-card-content flex="50" layout="column" class="max-height-350 m-b-30 company-pro-img-block"  ng-click="ImagePopup('profile_photo','staff','users',company.profile_url_photo,'id',company.id,company.profile_photo,'image',company.profile_photo)">
+                                <img ng-if="company.profile_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="company-pro-image" >
+                                <img ng-if="company.profile_url_photo" ng-src="{{company.profile_url_photo}}" alt="Image" class="company-pro-image" >
+                            </md-card-content>
+                            <div class="container" style="position: relative;">
+                                <input style="height: 100%;
+                                            left: 0;
+                                            position: absolute;
+                                            top: 0;
+                                            width: 100%;
+                                            z-index: 10;
+                                            cursor: pointer;
+                                            opacity: 0;
+                                            padding: 0 12px !important;
+                                            text-indent: -100%;" type="file" multiple="" accept="image/*" base-sixty-four-input ng-model="logo_image" ng-change="ImagePopup('profile_photo','staff','users',company.profile_url_photo,'id',company.id,company.profile_photo,'image_drag',logo_image)" style="">
+                                <div class='button-wrapper' style='height:200px'>
+                                    <label class="text-center dragDropLabel">Drag & Drop your File here</label>
+                                <!-- <input class="" type="button" value="submit"  /> -->
+                                    <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
+                                </div>
+                            </div>
+                    </md-card-content> 
                 </md-card>
                 </form>
             </div>

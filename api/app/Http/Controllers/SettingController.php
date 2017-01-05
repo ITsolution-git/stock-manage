@@ -6,6 +6,7 @@ require_once(app_path() . '/constants.php');
 
 use App\Price;
 use App\Common;
+use App\Order;
 use Input;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
@@ -24,21 +25,16 @@ class SettingController extends Controller {
 * Create a new controller instance.      
 * @return void
 */
-    public function __construct(Price $price,Common $common,Api $api) {
+    public function __construct(Price $price,Common $common,Api $api, Order $order) {
 
+        parent::__construct();
         $this->price = $price;
         $this->common = $common;
         $this->api = $api;
+        $this->order = $order;
     }
 
-/**
-* Price Listing controller        
-* @access public price
-* @return json data
-*/
-
-
-/** 
+ /** 
  * @SWG\Definition(
  *      definition="priceList",
  *      type="object",
@@ -59,20 +55,35 @@ class SettingController extends Controller {
  /**
  * @SWG\Post(
  *  path = "/api/public/admin/price",
- *  summary = "Pricegrid Listing",
+ *  summary = "Price Grid Listing",
  *  tags={"Setting"},
- *  description = "Pricegrid Listing",
+ *  description = "Price Grid Listing",
  *  @SWG\Parameter(
  *     in="body",
  *     name="body",
- *     description="Pricegrid Listing",
+ *     description="Price Grid Listing",
  *     required=true,
  *     @SWG\Schema(ref="#/definitions/priceList")
  *  ),
- *  @SWG\Response(response=200, description="Pricegrid Listing"),
- *  @SWG\Response(response="default", description="Pricegrid Listing"),
+*      @SWG\Parameter(
+*          description="Authorization token",
+*          type="string",
+*          name="Authorization",
+*          in="header",
+*          required=true
+*      ),
+*      @SWG\Parameter(
+*          description="Authorization User Id",
+*          type="integer",
+*          name="AuthUserId",
+*          in="header",
+*          required=true
+*      ),
+ *  @SWG\Response(response=200, description="Price Grid Listing"),
+ *  @SWG\Response(response="default", description="Price Grid Listing"),
  * )
  */
+
 
     public function price() {
         $post = Input::all();
@@ -112,39 +123,6 @@ class SettingController extends Controller {
     }
 
 
-/**
-* Price Delete controller      
-* @access public delete
-* @param  array $post
-* @return json data
-*/
-    public function delete()
-    {
-        $post = Input::all();
-       
-        if(!empty($post[0]))
-        {
-            $getData = $this->price->priceDelete($post[0]);
-            if($getData)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-
-    }
 
 /**
 * Price Grid Duplicate Controller       
@@ -263,44 +241,6 @@ class SettingController extends Controller {
 */
 
 
-/** 
- * @SWG\Definition(
- *      definition="placementSave",
- *      type="object",
- *      required={"updatedcolumn", "id","columnname"},
- *      @SWG\Property(
- *          property="updatedcolumn",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="columnname",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="id",
- *          type="integer"
- *      )
- * )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/admin/placementSave",
- *  summary = "Placement Update",
- *  tags={"Setting"},
- *  description = "Placement Update",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Placement Update",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/placementSave")
- *  ),
- *  @SWG\Response(response=200, description="Placement Update"),
- *  @SWG\Response(response="default", description="Placement Update"),
- * )
- */
-
 
 
     public function placementSave() {
@@ -318,154 +258,6 @@ class SettingController extends Controller {
 
 
 
-    /**
-* Color Update data       
-* @access public colorSave
-* @param  array $data
-* @return json data
-*/
-
-/** 
- * @SWG\Definition(
- *      definition="colorSave",
- *      type="object",
- *      required={"updatedcolumn", "id","columnname"},
- *      @SWG\Property(
- *          property="updatedcolumn",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="columnname",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="id",
- *          type="integer"
- *      )
- * )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/admin/colorSave",
- *  summary = "Color Update",
- *  tags={"Color"},
- *  description = "Color Update",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Color Update",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/colorSave")
- *  ),
- *  @SWG\Response(response=200, description="Color Update"),
- *  @SWG\Response(response="default", description="Color Update"),
- * )
- */
-
-
-    public function colorSave() {
-
-          $data = Input::all();
-          
-          $color = $this->common->checkExistData($data['updatedcolumn'],$data['id'],'name','color',0);
-
-           if(count($color)>0)
-            {
-                $message = "Color Exists";
-                $success = 2;
-                $data = array("success"=>$success,"message"=>$message,"id"=>0);
-                return response()->json(['data'=>$data]);
-            }
-
-          $result = $this->price->colorSave($data);
-         
-          if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
-        } 
-        
-        return response()->json(["data" => $response]);
-
-    }
-
-
-/**
-* color Insert data       
-* @access public colorInsert
-* @param  array $data
-* @return json data
-*/
-
-
-
-    /**
-* Color Update data       
-* @access public colorSave
-* @param  array $data
-* @return json data
-*/
-
-/** 
- * @SWG\Definition(
- *      definition="colorInsert",
- *      type="object",
- *      required={"updatedcolumn","columnname"},
- *      @SWG\Property(
- *          property="updatedcolumn",
- *          type="string"
- *      ),
- *      @SWG\Property(
- *          property="columnname",
- *          type="string"
- *      )
- * )
- */
-
- /**
- * @SWG\Post(
- *  path = "/api/public/admin/colorInsert",
- *  summary = "Color Add",
- *  tags={"Color"},
- *  description = "Color Add",
- *  @SWG\Parameter(
- *     in="body",
- *     name="body",
- *     description="Color Add",
- *     required=true,
- *     @SWG\Schema(ref="#/definitions/colorInsert")
- *  ),
- *  @SWG\Response(response=200, description="Color Add"),
- *  @SWG\Response(response="default", description="Color Add"),
- * )
- */
-
-
-    public function colorInsert() {
-
-          $data = Input::all();
-         
-
-          $color = $this->common->checkExistData($data['updatedcolumn'],0,'name','color',0);
-
-          if(count($color)>0)
-            {
-                $message = "Color Exists";
-                $success = 2;
-                $data = array("success"=>$success,"message"=>$message,"id"=>0);
-                return response()->json(['data'=>$data]);
-            }
-
-
-
-          $result = $this->price->colorInsert($data);
-         
-          if (count($result) > 0) {
-            $response = array('success' => 1, 'message' => INSERT_RECORD,'records' => $result);
-        } 
-        
-        return response()->json(["data" => $response]);
-
-    }
 
 
 /**
@@ -490,39 +282,7 @@ class SettingController extends Controller {
 
     }
 
-    public function downloadPricegridCSV()
-    {
-            $path = base_path().'/'; // change the path to fit your websites document structure
-             
-            $dl_file = preg_replace("([^\w\s\d\-_~,;:\[\]\(\).]|[\.]{2,})", '', 'addpricegrid.xlsx'); // simple file name validation
-            $dl_file = filter_var($dl_file, FILTER_SANITIZE_URL); // Remove (more) invalid characters
-            $fullPath = $path.$dl_file;
-             
-            if ($fd = fopen ($fullPath, "r")) {
-                $fsize = filesize($fullPath);
-                $path_parts = pathinfo($fullPath);
-                $ext = strtolower($path_parts["extension"]);
-                switch ($ext) {
-                    case "pdf":
-                    header("Content-type: application/pdf");
-                    header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a file download
-                    break;
-                    // add more headers for other content types here
-                    default;
-                    header("Content-type: application/octet-stream");
-                    header("Content-Disposition: filename=\"".$path_parts["basename"]."\"");
-                    break;
-                }
-                header("Content-length: $fsize");
-                header("Cache-control: private"); //use this to open files directly
-                while(!feof($fd)) {
-                    $buffer = fread($fd, 2048);
-                    echo $buffer;
-                }
-            }
-            fclose ($fd);
-            exit;
-    }
+  
     public function uploadPricingCSV() {
 
 
@@ -549,6 +309,7 @@ class SettingController extends Controller {
 
                        $insert[0]['company_id'] = $_POST['company_id'];
                        $insert[0]['created_date'] = date('Y-m-d');
+                       $insert[0]['login_id'] = Session::get("user_id");
                        
 
                        $price_grid = $this->common->InsertRecords('price_grid',$insert[0]);
@@ -599,7 +360,7 @@ class SettingController extends Controller {
 
                 foreach ($data[3] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_primary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_primary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'pricing_11c' => $value->pricing_11c,'pricing_12c' => $value->pricing_12c,'pricing_13c' => $value->pricing_13c,'pricing_14c' => $value->pricing_14c,'pricing_15c' => $value->pricing_15c,'pricing_16c' => $value->pricing_16c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
@@ -613,7 +374,7 @@ class SettingController extends Controller {
 
                 foreach ($data[4] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_secondary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_secondary',array('price_id' => $price_id,'range_high' => $value->high_range,'range_low' => $value->low_range,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'pricing_11c' => $value->pricing_11c,'pricing_12c' => $value->pricing_12c,'pricing_13c' => $value->pricing_13c,'pricing_14c' => $value->pricing_14c,'pricing_15c' => $value->pricing_15c,'pricing_16c' => $value->pricing_16c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
@@ -641,7 +402,7 @@ class SettingController extends Controller {
 
                 foreach ($data[6] as $key => $value) {
 
-                     $this->common->InsertRecords('price_screen_embroidery',array('price_id' => $price_id,'embroidery_switch_id' => $embroidery_switch_id,'range_low' => $value->range_low,'range_high' => $value->range_high,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
+                     $this->common->InsertRecords('price_screen_embroidery',array('price_id' => $price_id,'embroidery_switch_id' => $embroidery_switch_id,'range_low' => $value->range_low,'range_high' => $value->range_high,'pricing_1c' => $value->pricing_1c,'pricing_2c' => $value->pricing_2c,'pricing_3c' => $value->pricing_3c,'pricing_4c' => $value->pricing_4c,'pricing_5c' => $value->pricing_5c,'pricing_6c' => $value->pricing_6c,'pricing_7c' => $value->pricing_7c,'pricing_8c' => $value->pricing_8c,'pricing_9c' => $value->pricing_9c,'pricing_10c' => $value->pricing_10c,'created_date' => date('Y-m-d'),'updated_date' => date('Y-m-d')));
 
                  }
 
@@ -694,9 +455,8 @@ class SettingController extends Controller {
         $mtime = $mtime[1] + $mtime[0];
         $starttime = $mtime;*/
 
-        $result_api = $this->api->getApiCredential(28,'api.sns','ss_detail');
-
-        $credential = $result_api[0]->username.":".$result_api[0]->password;
+        $result_api = $this->common->GetTableRecords('users',array('role_id'=>7));
+        $credential = $result_api[0]->ss_username.":".$result_api[0]->ss_password;
  
         $curl = curl_init();
 
@@ -739,7 +499,7 @@ class SettingController extends Controller {
                 $product_name = $product->title." - ".$product->styleName;
                 $description = $product->description;
 
-                $product_arr = array('id' => $product->styleID, 'part_number' => $product->partNumber, 'vendor_id' => 1, 'name' => $product_name, 'description' => $description, 'product_image' => $product->styleImage);
+                $product_arr = array('id' => $product->styleID, 'brand_name' => $product->brandName, 'part_number' => $product->partNumber, 'vendor_id' => 1, 'name' => $product_name, 'description' => $description, 'product_image' => $product->styleImage);
                 $product_id = $product->styleID;
 
                 if(empty($product_data))
@@ -828,6 +588,291 @@ class SettingController extends Controller {
         $totaltime = ($endtime - $starttime);
         echo "This page was created in ".$totaltime." seconds";
         curl_close($curl);*/
+    }
+
+
+    public function downloadPriceGridExcel()
+    {
+       
+
+        $post = Input::all();
+       
+
+        $data = $this->price->priceDetailExcel($post['price_id']);
+        
+        $array = json_decode(json_encode($data), True);
+      
+        unset($array['embroswitch'][0]['id']);
+        unset($array['price'][0]['login_id']);
+
+       
+        return Excel::create('price_grid', function($excel) use ($array) {
+
+            $excel->sheet('PriceGrid', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['price']);
+
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+
+            $excel->sheet('Charges', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['charges']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Charges List', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allPriceGrid']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Screen Printing Primary', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allScreenPrimary']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Screen Printing Secondary', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allScreenSecondary']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Embroidery Header', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['embroswitch']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Embroidery Price', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allEmbroidery']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+            $excel->sheet('Direct To Garment', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allGarment']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+             $excel->sheet('Garment Markup', function($sheet) use ($array)
+
+            {
+                $sheet->fromArray($array['allGarmentMackup']);
+                $sheet->row(1, function ($row) {
+                        $row->setFontWeight('bold');
+                        $row->setAlignment('center');
+                        $row->setFontFamily('Arial');
+                        $row->setFontSize(10);
+                        
+                    });
+            });
+
+        })->download($post['type']);
+    }
+
+    public function getApprovedOrders()
+    {
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.updated_date';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+        $post['type'] = 'approved';
+
+        $result = $this->order->getApprovalOrders($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
+                        3=>array('key' => 'u.name', 'name' => 'Name'),
+                        4=>array('key' => '', 'name' => 'S&S Order Number'),
+                        5=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    public function getPendingOrders()
+    {
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.updated_date';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+        $post['type'] = 'pending';
+
+        $result = $this->order->getApprovalOrders($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
+                        3=>array('key' => '', 'name' => 'Status'),
+                        4=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    public function getDeniedOrders()
+    {
+        $post_all = Input::all();
+
+        $post = $post_all['cond']['params'];
+        $post['company_id'] = $post_all['cond']['company_id'];
+
+        if(!isset($post['page']['page'])) {
+             $post['page']['page']=1;
+        }
+
+        $post['range'] = RECORDS_PER_PAGE;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.updated_date';
+        }
+
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.updated_date';
+        $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
+        $post['type'] = 'denied';
+
+        $result = $this->order->getApprovalOrders($post);
+
+        $records = $result['allData'];
+        $success = (empty($result['count']))?'0':1;
+        $result['count'] = (empty($result['count']))?'1':$result['count'];
+        $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
+
+        $header = array(
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
+                        1=>array('key' => 'o.created_date', 'name' => 'Created Date'),
+                        2=>array('key' => '', 'name' => 'Order Total'),
+                        3=>array('key' => '', 'name' => 'Status'),
+                        4=>array('key' => 'null', 'name' => '', 'sortable' => false)
+                        );
+
+        $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
+        return $this->return_response($data);
+    }
+
+    /**
+    * Get Array
+    * @return json data
+    */
+    public function return_response($data)
+    {
+        if (count($data) > 0) 
+        {
+            $response = $data;
+        } 
+        else 
+        {
+            $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
+        }
+        return  response()->json($response);
     }
 }
 

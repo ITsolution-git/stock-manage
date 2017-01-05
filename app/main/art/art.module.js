@@ -7,7 +7,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function config($stateProvider, msApiProvider, msNavigationServiceProvider)
     {
         // State
         $stateProvider
@@ -23,7 +23,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                 }
             }) .state('app.screen', {
@@ -38,7 +38,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                 }
             }).state('app.art.orderView', {
@@ -46,7 +46,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                 },
                 url  : '/artOrderView/:id',
@@ -61,7 +61,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                 },
                 url  : '/screensetView/:id',
@@ -77,7 +77,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                 },
                 url  : '/notes/:id',
@@ -90,10 +90,10 @@
             });
 
        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/art');
+       //$translatePartialLoaderProvider.addPart('app/main/art');
 
         // Api
-        msApiProvider.register('ArtOrder', ['app/data/art/artOrder.json']);
+      //  msApiProvider.register('ArtOrder', ['app/data/art/artOrder.json']);
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
             title : '',
@@ -108,7 +108,7 @@
             /*stateParams: {
                 'param1': 'page'
              },*/
-            weight   : 1
+            weight   : 7
         });
     }
 })();

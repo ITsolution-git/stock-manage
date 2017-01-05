@@ -1,0 +1,3 @@
+Hi,
+
+{!! $email_text !!}

@@ -7,7 +7,7 @@
         .config(config);
 
     /** @ngInject */
-    function config($stateProvider, $translatePartialLoaderProvider, msApiProvider, msNavigationServiceProvider)
+    function config($stateProvider,  msApiProvider, msNavigationServiceProvider)
     {
         // State
         $stateProvider
@@ -23,7 +23,7 @@
                 resolve: {
                     checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('ALL','true');
                     },
                 }
             }).state('app.receiving.receivingInfo', {
@@ -36,14 +36,14 @@
             },resolve: {
                     checksession : function (sessionService)
                     {
-                        return sessionService.AccessService('CA,BC');
+                        return sessionService.AccessService('ALL','true');
                     }
                 }
         })
             ;
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/receiving');
+     //  $translatePartialLoaderProvider.addPart('app/main/receiving');
         // Api
 
         // Navigation
@@ -61,7 +61,7 @@
                 'param1': 'page'
              },*/
             
-            weight   : 1
+            weight   : 6
         });
     }
 })();

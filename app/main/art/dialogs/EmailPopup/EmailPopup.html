@@ -1,0 +1,34 @@
+<md-dialog class="task-dialog addAffiliateDialog" >
+<form name="artApproval">
+<div class="client-profile-page">
+<md-toolbar class="md-accent md-hue-2">
+    <div class="md-toolbar-tools" layout="row" layout-align="space-between"> <span class="title">Elements to Generate on Art Approval Form</span>
+        <md-button  ng-click="closeDialog()"> <span>CLOSE</span> </md-button>
+    </div>
+</md-toolbar>
+<md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" layout-padding layout-align="space-between start" class="popup-stokkup-modal">
+               <div layout="column"  flex="100" class="box-zerospace p-0 pt-15">
+                <md-input-container class="md-block">
+                    <input placeholder="Client Billing Email(Use comma separate for multiple.)" required="" ng-model="mail">
+                    <div ng-messages="artApproval.mail.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span>This field is required</span>
+                        </div>
+                     </div> 
+                </md-input-container>
+                </div>
+                <div layout="column"  flex="100" class="box-zerospace p-0 pt-15">
+                <md-input-container class="md-block">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="email_text"></textarea>
+                </md-input-container>
+                </div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('0','',options)">Create Approval</md-button>
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn" ng-click="printPdf('1',mail,options)" ng-disabled="artApproval.$invalid || artApproval.$pristine">Send to client</md-button>
+        </md-dialog-actions>
+</div>
+</form>
+</md-dialog>

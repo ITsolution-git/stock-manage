@@ -1,13 +1,16 @@
-<div class="content order-list-page puchase-order-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content order-list-page puchase-order-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20 class="cursor-p" >
                 Receiving
             </div>
-            <div class="search-block" flex=25>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                </md-input-container>
+            <div class="pull-right right-search-box">
+                <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="top-srch-label">Search Receiving...</label>
+                        <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div>
             </div>
            <!--  <md-icon md-font-icon="icon-filter-variant" flex="55" class="text-right m-r-30 "></md-icon>  -->
         </div>
@@ -17,16 +20,53 @@
 
                     <thead tasty-thead></thead>
                     <tbody >
-                        <tr ng-repeat="purchase in rows">
-                            <td class="">{{purchase.po_id}}</td>
-                            <td class="">{{purchase.id}}</td>
+                        <tr ng-repeat-start="purchase in rows">
+                            <!-- <td class="">{{purchase.po_id}}</td> -->
+                            <td class="">{{purchase.display_number}}</td>
                             <td class="">{{purchase.po_type}}</td>
                             <td class="">{{purchase.client_company}}</td>
-                            <td class="">{{purchase.name_company}}</td>
+                           <!--  <td class="">{{purchase.name_company}}</td> -->
+                            <td class=""><md-select aria-label="status" ng-model="purchase.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',purchase.approval_id,purchase.id)" ng-disabled="allow_access == '0'">
+                                    <md-option ng-selected="purchase.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                </md-select></td>
                             <td class=""> {{purchase.date}}</td>
-                            <td><a class="font-12" class="cursor-p" ui-sref="app.receiving.receivingInfo({id:purchase.po_id})">View</a></td> 
+                            <!-- <td class="viewbtn"><a class="cursor-p" ui-sref="app.receiving.receivingInfo({id:purchase.po_id})">View</a></td>  -->
                             <!-- <td class="" ui-sref="app.purchaseOrder.companyPO({id:purchase.po_id})"> View</td> -->
+
+                             <td class="accor" ng-show="purchase.design_po.length > 0">
+                                <button ng-if="purchase.expanded" ng-click="purchase.expanded = false"><md-icon md-font-icon="icon-minus"></md-icon></button>
+                                <button ng-if="!purchase.expanded" ng-click="purchase.expanded = true"><md-icon md-font-icon="icon-plus"></md-icon></button>
+                            </td>
+                            <td  ng-show="purchase.design_po.length == 0">
+                                &nbsp;
+                            </td>
+
                         </tr>
+
+
+
+                        <tr class="table-desc dev-rdetail-data"  ng-if="purchase.expanded" ng-repeat-end="">
+                                    <td colspan="8" class="collpas">
+                                    <table class="dataTable row-border" >
+                                        <thead>
+                                            <th>RO#</th>
+                                            <th>Vendor/Affiliate</th>
+                                            <th></th>
+                                            <!-- <th>Status</th> -->
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="po_data_all in purchase.design_po">
+                                                <td>{{po_data_all.display_number}}</td>
+                                                <td>{{po_data_all.name_company}}</td>
+                                                 <td class="viewbtn"><a class="cursor-p" ui-sref="app.receiving.receivingInfo({id:po_data_all.display_number})">VIEW</a></td> 
+                     
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                            </td>
+                        </tr>  
+
+
                     </tbody> 
                 </table>
                 <div tasty-pagination class="tasty-page"></div>

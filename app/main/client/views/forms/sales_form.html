@@ -3,7 +3,7 @@
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                 <span class="title">Edit Sales Details</span>
-                <md-button  ng-click="closeDialog()">
+                <md-button  ng-click="closeDialog()" class="close-stokkup-dialog md-button">
                     <span>Close</span>
                 </md-button>
             </div>
@@ -12,14 +12,14 @@
             <div layout="column" layout-wrap="nowrap" class="client-add-modal " layout-padding>
 
                 <md-input-container class="md-block first-box">
-                    <input placeholder="Sales Website" name="salesweb" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'sales\')' }"  ng-model="salesDetails.salesweb">
+                    <input placeholder="Credit Limit" name="sales_credit" valid-number ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'sales\')' }"  ng-model="salesDetails.sales_credit">
                 </md-input-container>
 
-                <md-input-container class="md-block date-input m-b-30">
+                <md-input-container class="md-block date-input">
                     <input placeholder="Anniversary date" kendo-date-picker k-ng-model="dateObject2" name="anniversarydate" ng-model="salesDetails.anniversarydate"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'client\',\'client_id\',client.client_id,\'date\')' }"  >
                 </md-input-container>
 
-                <md-input-container class="m-b-30">
+                <md-input-container>
                     <label>Sales Person</label>
                     <md-select ng-model="salesDetails.salesperson" name="client_companytype"  ng-change='UpdateTableField("salesperson",salesDetails.salesperson,"client","client_id",client.client_id,"sales")'>
                         <md-option value="0">

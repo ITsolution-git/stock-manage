@@ -8,11 +8,13 @@
             
 
     /** @ngInject */
-    function UserManagementController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
+    function UserManagementController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$rootScope,$resource,$http,$scope,$state,notifyService,AllConstant)
     {
+       
         var originatorEv;
         var vm = this ;
         $scope.company_id = sessionService.get('company_id');
+        $scope.role_slug = sessionService.get('role_slug');
 
         vm.openAddEmployeeDialog = openAddEmployeeDialog;
         //vm.openEditEmployeeDialog = openEditEmployeeDialog;
@@ -201,11 +203,12 @@
                 delete_data.cond = angular.copy(obj);
                 
                 delete_data.table = table;
-                delete_data.extra = extra;
+                delete_data.data = {is_delete:0};
+                //delete_data.extra = extra;
                 var permission = confirm(AllConstant.deleteMessage);
                 if (permission == true) 
                 {
-                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                    $http.post('api/public/common/UpdateTableRecords',delete_data).success(function(result) 
                     {
                         if(result.data.success=='1')
                         {
@@ -220,6 +223,79 @@
                     });
                 }
       }
+
+
+      
+
+
+         $scope.loginUser = function(id,email){
+          
+            var combine_array_id = {};
+            combine_array_id.id = id;
+            combine_array_id.email = email;
+            combine_array_id.company_id = sessionService.get('company_id');
+            combine_array_id.relogin = 0;
+
+            sessionService.remove('role_slug');
+
+            var login_user = $resource('api/public/admin/loginUser',null,{
+                post : {
+                    method : 'post'
+                }
+            });
+
+
+           login_user.post(combine_array_id,function(result) 
+            {   $("#ajax_loader").show();             
+                  if(result.data.success == '0') {
+                                  var data = {"status": "error", "message": "Please check Email and Password"}
+                                  notifyService.notify(data.status, data.message);
+                                  $state.go('app.login');
+                                  $("#ajax_loader").hide();
+                                  return false;
+
+                                } else {
+                                    
+
+                                   sessionService.set('oldLoginId',result.data.records.oldLoginId);
+                                   sessionService.set('oldEmail',result.data.records.oldEmail);
+                                   sessionService.set('useremail',result.data.records.useremail);
+                                   sessionService.set('role_slug',result.data.records.role_slug);
+                                   sessionService.set('login_id',result.data.records.login_id);
+                                   sessionService.set('name',result.data.records.name);
+                                   sessionService.set('user_id',result.data.records.user_id);
+                                   sessionService.set('role_title',result.data.records.role_title);
+                                   sessionService.set('username',result.data.records.username);
+                                   sessionService.set('password',result.data.records.password);
+                                   sessionService.set('company_id',result.data.records.company_id);
+                                   sessionService.set('company',result.data.records.company);
+                                   sessionService.set('profile_photo',result.data.records.profile_photo);
+                                   if(result.data.records.reset_password=='1'){
+                                    sessionService.set('reset_password',result.data.records.reset_password);
+                                   }else{
+                                    sessionService.set('reset_password','0');
+                                   }
+
+                                   sessionService.set('token',result.data.records.token);
+                                   
+                                   var data = {"status": "success", "message": "Login Successfully, Please wait..."}
+                                   notifyService.notify(data.status, data.message);
+                                   
+                                   //window.location.href = $state.go('app.client');
+                                    //$state.go('app.client');
+                                    
+                                   setTimeout(function(){ 
+                                        window.open('dashboard', '_self'); }, 1000);
+                                   // 
+                                    //window.location.reload();
+                                    return false;
+
+
+                                }
+
+                         
+            });
+        }
 
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;

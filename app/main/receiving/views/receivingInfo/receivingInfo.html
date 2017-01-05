@@ -1,150 +1,179 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20">
-    <div class="header "  layout="column">
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.receiving">BACK TO RECEIVING</a>
-            <h1 flex="4" class="font-500">Receiving <a class="cursor-p" title="Go to Purchase order" ui-sref="app.purchaseOrder.companyPO({id:po_data.po_id})">Purchase Order #{{ po_data.po_id}}</a> for {{ po_data.client_company}}: </h1>
-           <!--  <md-input-container md-no-float class="md-block" flex="3">
-                <input placeholder="">
-            </md-input-container> -->
-        </div>
-        <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <div class="info-order" flex="75">
-                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
-                <md-card layout="row"  >
-                    <md-card-content flex="80" layout="column">
-                        <div layout="row" layout-wrap>
-                            <div class="trans-box">
-                             <div>PO Type</div>
-                                <span class="chrome-weight font-14">{{ po_data.po_type}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Order Number</div>
-                                <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:po_data.order_id})"><span class="chrome-weight font-14">#{{ po_data.order_id}}</span></a>
-                            </div>
-                            <div class="trans-box">
-                                <div>Vendor</div>
-                                <span class="chrome-weight font-14">{{ po_data.name_company}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Main Contact</div>
-                                <span class="chrome-weight font-14">{{ po_data.mainContact}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Date Created</div>
-                                <span class="chrome-weight font-14">{{ po_data.date}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Ship Date</div>
-                                <span class="chrome-weight font-14">{{ po_data.ship_date}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Receive Date</div>
-                                <span class="chrome-weight font-14">{{ po_data.arrival_date}}</span>
-                            </div>
-                        </div>
-                    </md-card-content>
-<!--                     <div layout-align="end start"  flex="20" layout="row">
-                        <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openReceivingInformationDialog($event,order.id)">
-                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                        </md-button>
-                    </div>
- -->                </md-card>
+<div class="order-info-page company-po-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview m-b-30">
+        <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+               Receiving Order <a class="cursor-p" title="Go to Purchase order" ui-sref="app.purchaseOrder.companyPO({id:po_data.po_display})">{{ po_data.po_display}} </a> Job Number {{ po_data.ord_display}} Client Name: <a title="Go to Client" target="_blank"  ui-sref="app.client.profile({id:po_data.display_number})">{{ po_data.client_company}}</a>
+            </div>
+            <div class="pull-right right-search-box">
+                <a class="pull-right common-header-links" ui-sref="app.receiving">BACK TO RECEIVING</a>
             </div>
         </div>
-
-        <div class="content order-info-page m-b-20">
-            <div class="simple-table-container md-whiteframe-4dp">
-                <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
-                    <div class="table-title-text h2 text-semibold" flex=20>
-                        Products
+        <!--Information block of receiving page starts here-->
+        <div class="inner-full-box">
+            <div class="order-information mt-30 mb-45" layout="row" layout-align="start">
+                <div class="info-order box-zerospace">
+                    <div class="title mb-20"><span class="stokkup-title-h4">Information</span></div>
+                    <md-card layout="row" flex=85 class="box-zerospace pull-left">
+                        <md-card-content flex="90" layout="column">
+                            <div layout="row" layout-wrap>
+                                <div class="trans-box">
+                                 <div>PO Type</div>
+                                    <span class="chrome-weight font-14">{{ po_data.po_type}}</span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Order Number</div>
+                                    <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:po_data.ord_display})"><span class="chrome-weight font-14">#{{ po_data.ord_display}}</span></a>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Vendor</div>
+                                    <span class="chrome-weight font-14">{{ po_data.name_company}}</span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Main Contact</div>
+                                    <span class="chrome-weight font-14">{{ po_data.first_name}} {{ po_data.last_name}}</span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Date Created</div>
+                                    <span class="chrome-weight font-14">{{ po_data.date}}</span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Ship Date</div>
+                                    <span class="chrome-weight font-14">{{ po_data.date_shipped}}</span>
+                                </div>
+                                <div class="trans-box">
+                                    <div>Receive Date</div>
+                                    <span class="chrome-weight font-14">{{ po_data.arrival_date}}</span>
+                                </div>
+                            </div>
+                        </md-card-content>
+                        <div layout-align="end start"  flex="10" layout="row" ng-show="allow_access==1">
+                            <md-menu>
+                                <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="4">
+                                    <md-menu-item ng-click="changeReceiveData()">
+                                        <md-button>
+                                            Edit
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+                        </div>                
+                    </md-card>
+                    <div class="pull-right" flex="15"  ng-show="allow_access==1">
+                            <a href="javascript:;" ng-click="openClientEmailPopup()" class="pull-right stokkup-custom-btn1 stokkup-blue-btn text-white">Create PDF</a>
                     </div>
                 </div>
-             <div  ng-repeat="(key,line_item) in poline">
-                <md-card layout="row">
-                    <md-card-content flex="80" layout="column">
-                        <div layout="row" layout-wrap>
-                            <div class="trans-box">
-                                <span class="font-14 chrome-weight">Product</span>
-                                <div>{{line_item.product.product_name}}</div>
-                            </div>
-                            <div class="trans-box">
-                                <span class="font-14 chrome-weight">SKU</span>
-                                <div>{{line_item.product.sku}}</div>
-                            </div>
-                            <div class="trans-box">
-                                <span class="font-14 chrome-weight">Size Group</span>
-                                <div>Mens</div>
-                            </div>
-                            <div class="trans-box">
-                                <span class="font-14 chrome-weight">Color</span>
-                                <div>{{line_item.product.product_color}}</div>
-                            </div>
-                        </div>
-                    </md-card-content>
-                </md-card>
-                <md-card ng-class="{'disable-click': po_data.is_complete=='1'}" layout="row">
+            </div>
+            <!--products block starts here -->
+            <div class="order-info-page mb-30">
+                <h4 class="stokkup-title-h4 m-b-20">products</h4>
+                <div  ng-repeat="(key,line_item) in poline" class="m-0 box-zerospace transparent-bg">
+                    <md-card layout="row" class="mh-0 m-t-0 m-b-30 white-bg">
                     <md-card-content flex="100" layout="column">
                         <div layout="row" layout-wrap>
-                            <div class="trans-box" ng-repeat="(key,line_data) in line_item.data">
-                                <span class="sizeColor">{{line_data.size}}</span>
-                                <p class="font-14 chrome-weight fontStyle">Ordered &nbsp; &nbsp; &nbsp; {{line_data.qnty_ordered}}</p>
-                                <p class="font-14 chrome-weight fontStyle">Received &nbsp; &nbsp; 
-                                    <md-input-container>
-                                        <input ng-model="line_data.qnty_purchased" name="qnty_purchased" only-number ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_ordered,\'received\',line_data.short)' }" aria-label="qnty_purchased">
-                                    </md-input-container></p>
-                                <p class="font-14 chrome-weight fontStyle">Defective &nbsp; &nbsp; 
-                                     <md-input-container>
-                                        <input ng-model="line_data.short" only-number name="short"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_purchased,\'short\')' }" aria-label="short">
-                                    </md-input-container></p>
-                                </p>
-                                <p class="font-14 chrome-weight fontStyle">________________</p>
-                                <p class="productYellow">{{line_data.short}} Defective</p>
-                                <p class="productRed">{{line_data.short_unit}} Units Short</p>
-
+                            <div class="trans-box">
+                                <div>Product</div>
+                                <span class="chrome-weight font-14">{{line_item.product.product_name}}</span>
                             </div>
-
-                            <!-- <div class="trans-box" flex="80">
-                                <p class="font-14 chrome-weight" flex="40">Order Line Total: 500</p>
-                                <p class="font-14 chrome-weight" flex="40">Order Line Receiveds: 500</p>
-                            </div> -->
+                            <div class="trans-box">
+                                <div>SKU</div>
+                                <span class="chrome-weight font-14">{{line_item.product.sku}}</span>
+                            </div>
+                            <div class="trans-box">
+                                <div>Color</div>
+                                <span class="chrome-weight font-14">{{line_item.product.product_color}}</span>
+                            </div>
+                            <div class="trans-box">
+                                    <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn text-white" ng-click="ReceiveProductsAll(line_item.product.product_id)"  aria-label="Save">Receive All</button>
+                            </div>
                         </div>
                     </md-card-content>
-                </md-card>
-                <md-card layout="row" class="borderTopBottom">
+                    </md-card>
+                    <md-card ng-class="{'disable-click': po_data.is_complete=='1'}"  class="mh-0 m-t-0 m-b-20 transparent-bg noborder" layout="row">
+                    <md-card-content flex="100" layout="column" class="p-0">
+                        <div layout="row" layout-wrap>
+                            <div class="trans-box mr-20 white-bg" flex=20 ng-repeat="(key,line_data) in line_item.data">
+                                <div class="p-20 pull-left">
+                                    <span class="sizeColor mb-10 pull-left">{{line_data.size}}</span>
+                                    <div class="box-zerospace">
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Ordered</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">{{line_data.qnty_ordered}}</span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Received</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    <md-input-container>
+                                                        <input ng-model="line_data.qnty_purchased" name="qnty_purchased" only-number ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_ordered,\'received\',line_data.short)' }" aria-label="qnty_purchased">
+                                                    </md-input-container>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="mb-10 pull-left box-zerospace">
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="global-labels">Defective</span>
+                                            </div>
+                                            <div flex=50 class="pull-left box-zerospace">
+                                                <span class="font-14 chrome-weight fontStyle">
+                                                    <md-input-container>
+                                                        <input ng-model="line_data.short" only-number name="short"  ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,line_data.id,line_data.qnty_purchased,\'short\')' }" aria-label="short">
+                                                    </md-input-container>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <div class="text-center">________________</div>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productYellow mb-0">{{line_data.short}} Defective</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed mb-5 mt-5">{{line_data.short_unit}} Short</p>
+                                        </div>
+                                        <div flex=100 class="m-b-10 pull-left box-zerospace">
+                                            <p class="productRed m-0">{{line_data.over_unit}} Over</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>        
+                    </md-card-content>
+                    </md-card>
+                    <md-card layout="row" class="box-zerospace mh-0 m-t-0 mb-60">
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Total: {{line_item.total_product}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Total:</span> {{line_item.total_product}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Received: {{line_item.total_received}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Received:</span> {{line_item.total_received}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Defectives: {{line_item.total_defective}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Defectives:</span> {{line_item.total_defective}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight">Order Line Remaining: {{line_item.total_remains}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Summary:</span> {{line_item.total_remains}}</p>
                         </div>
                     </md-card-content>
-                </md-card>
- 
-                <md-card layout="row">
-                    <md-card-content flex="40" layout="column">
-                        <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight"> </p>
-                        </div>
-                    </md-card-content>
-                </md-card> 
-                
+                    </md-card>
+                </div>
             </div>
-
-            </div>
+            <!--products block ends here -->
         </div>
-
+        <!--Information block of receiving page ends here -->
     </div>
 </div>

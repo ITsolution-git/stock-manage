@@ -1,8 +1,8 @@
 <div class="order-info-page m-r-15 m-l-20 m-b-20">
     <div class="header "  layout="column">
         <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.order.spiltAffiliate({id:order.parent_order_id})">BACK</a>
-            <h1 flex="4" class="font-500">Affiliate PO #{{order.id}} for Company: {{order.client_company}}</h1>
+            <a class="link-back cursor-p" ui-sref="app.order.spiltAffiliate({id:order.display_number})">BACK</a>
+            <h1 flex="4" class="font-500">Affiliate PO #{{display_number}} for Company: {{order.client_company}}</h1>
         </div>
         <div class="order-information" layout="row" layout-align="start" layout-wrap flex layout-padding>
             <div class="info-order" flex="75">
@@ -12,7 +12,7 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Sales</div>
-                                <span class="font-14 chrome-weight">{{order.first_name}} &nbsp; {{ order.last_name}}</span>
+                                <span class="font-14 chrome-weight">{{order.sales_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>Blind</div>
@@ -39,14 +39,14 @@
                     </div>
                 </md-card>
             </div>
-            <div classs="" flex="25" layout-align="end end" layout="column">
+            <!-- <div classs="" flex="25" layout-align="end end" layout="column">
                 <md-button  class="bg-grey right-m-0 " ng-click="openEmailPopup($event)">
                     EMAIL
                 </md-button>
                 <md-button  class="bg-grey right-m-0 " ng-click="printPdf()">
                     PRINT
                 </md-button>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="content order-info-page m-b-20">
@@ -100,11 +100,11 @@
                     </thead>
                    <tbody class="scrollable" ms-scroll>
                         <tr ng-repeat="design in designs">
-                            <td class="cursor-p">{{ design.id}} </td>
+                            <td class="cursor-p">{{ design.display_number}} </td>
                             <td>{{ design.design_name}}</td>
                             <td>{{ design.total_qnty}}</td>
                             <td>{{ design.cnt}}</td>
-                            <td><a class="link-back cursor-p" ui-sref="app.order.affiliate-view({id:design.id})">VIEW</a></td>
+                            <td><a class="link-back cursor-p" ui-sref="app.order.affiliate-view({id:design.display_number})">VIEW</a></td>
                             <td></td>
                         </tr>
                     </tbody> 
@@ -118,7 +118,7 @@
     <div  layout="row" class="margin">
         <div flex="75" layout="column" class="">
             <div layout="row">
-                <md-card class="m-b-20 m-r-15" flex="33">
+               <md-card class="m-b-20 m-r-15" flex="33">
                     <md-card-title>
                         <md-card-title-text class="text-left">
                             Distribution
@@ -130,8 +130,9 @@
                         </div>
                         <div class="text-center"> <span class="font-18">Location</span></div>
                     </md-card-content>
+                    <md-divider ></md-divider>
                     <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <a>&nbsp;</a>
+                        <a></a>
                     </div>
                 </md-card>
                 <md-card class="m-b-20 m-r-15" flex="33">
@@ -142,31 +143,31 @@
                     </md-card-title>
                     <md-card-content  layout="column" layout-padding>
                         <div layout="row" layout-wrap layout-align="center center" flex="60">
-                            <span class="h2 semibold f-52">{{ vm.note.notes}}</span><br/>
+                            <span class="h2 semibold f-52">{{ order.notes_count}}</span><br/>
                         </div>
                         <div class="text-center"><span class="font-18">Total Notes</span></div>
                     </md-card-content>
                     <md-divider ></md-divider>
                     <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <a>VIEW NOTES</a>
+                        <a>&nbsp;</a>
                     </div>
                 </md-card>
-                <md-card class="m-b-20 m-r-15" flex="33">
-                    <md-card-title>
-                        <md-card-title-text class="text-left">
-                            Finishing
-                        </md-card-title-text>
-                    </md-card-title>
-                    <md-card-content  layout="column" layout-padding>
-                        <div layout="row" layout-wrap layout-align="center center" flex="60">
-                            <span class="h2 semibold f-52">{{ order.dist_location}}</span><br/>
-                        </div>
-                        <div class="text-center"> <span class="font-18">Location</span></div>
-                    </md-card-content>
-                    <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                        <a>View</a>
+                <md-card class="m-b-20 " flex="33">
+                <md-card-title>
+                    <md-card-title-text class="text-left">
+                        Finishing
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content  layout="column" layout-padding>
+                    <div layout="row" layout-wrap layout-align="center center" flex="60">
+                        <label class="h2 semibold f-52">{{ order.finishing_count}}</label>
                     </div>
-                </md-card>
+                </md-card-content>
+                <md-divider ></md-divider>
+                <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
+                    <a>&nbsp;</a>
+                </div>
+            </md-card>
             </div>
         </div>
         <div class="m-l-20 side-bar" flex="25" layout="column">
@@ -193,47 +194,57 @@
 
                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Screens</div>
-                        <span class="ng-binding">{{order.screen_charge}}</span>
+                        <span class="ng-binding">{{order.screen_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Press Setup</div>
-                        <span class="ng-binding">{{order.press_setup_charge}}</span>
+                        <span class="ng-binding">{{order.press_setup_charge | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Lines Total</div>
-                        <span class="ng-binding">{{order.order_line_total}}</span>
+                        <div class="ng-binding">Shipping Charge</div>
+                        <span class="ng-binding">{{order.shipping_charge | currency : $ : 2}}</span>
                     </div>
+
+                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Packing Charge</div>
+                        <span class="ng-binding">{{order.total_packing_charge | currency : $ : 2}}</span>
+                    </div>
+
+                    <!-- <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                        <div class="ng-binding">Lines Total</div>
+                        <span class="ng-binding">${{order.order_line_total}}</span>
+                    </div> -->
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Order Total</div>
-                        <span class="ng-binding">${{order.order_total}}</span>
+                        <span class="ng-binding">{{order.order_total | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax Rate</div>
+                        <div class="ng-binding">Tax Rate(%)</div>
                         <span class="ng-binding">{{order.tax_rate}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Tax</div>
-                        <span class="ng-binding">{{order.tax}}</span>
+                        <span class="ng-binding">{{order.tax | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Grand Total</div>
-                        <span class="ng-binding">${{order.grand_total}}</span>
+                        <span class="ng-binding">{{order.grand_total | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">{{order.total_payments}}</span>
+                        <span class="ng-binding">{{order.total_payments | currency : $ : 2}}</span>
                     </div>
 
                     <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                         <div class="ng-binding">Balance Due</div>
-                        <span class="ng-binding">${{order.balance_due}}</span>
+                        <span class="ng-binding">{{order.balance_due | currency : $ : 2}}</span>
                     </div>
 
                 </md-card-content>

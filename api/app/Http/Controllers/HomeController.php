@@ -9,11 +9,10 @@ require_once(app_path() . '/constants.php');
 /**
  * @SWG\Swagger(
  *      @SWG\Info(title="Stokkup", version="1.0",
- *      @SWG\Contact(name="codal api team", url="http://104.236.31.186/"),
- *      @SWG\License(name="Codal Systems", url="http://104.236.31.186/")
+ *      @SWG\Contact(name="codal api team"),
+ *      @SWG\License(name="Codal Systems")
  *      ),
- *      host="localhost",
- *      basePath = "/stokkup",
+ *      host="localhost.stokkup.com",
  *      consumes = {"application/json", "multipart/form-data"}
  * )
  * 

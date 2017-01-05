@@ -18,6 +18,7 @@ class FinishingController extends Controller {
 
     public function __construct(Finishing $finishing, Category $category, Common $common, Order $order)
     {
+        parent::__construct();
         $this->finishing = $finishing;
         $this->category = $category;
         $this->common = $common;
@@ -83,16 +84,34 @@ class FinishingController extends Controller {
              $post['sorts']['sortOrder']='desc';
         }
         if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'f.id';
+            $post['sorts']['sortBy'] = 'o.display_number';
         }
 
-        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'f.id';
+        $sort_by = $post['sorts']['sortBy'] ? $post['sorts']['sortBy'] : 'o.display_number';
         $sort_order = $post['sorts']['sortOrder'] ? $post['sorts']['sortOrder'] : 'desc';
 
         $result = $this->finishing->getFinishingdata($post);
 
         foreach ($result['allData'] as $data) {
             $inner_data = $this->finishing->getFinishingByOrder($data->order_id);
+
+            foreach ($inner_data as $row) {
+                if(!is_null($row->start_time)) {
+                    $row->start_time = date('h:i A', strtotime($row->start_time));
+                }
+                if(!is_null($row->end_time)) {
+                    $row->end_time = date('h:i A', strtotime($row->end_time));
+                }
+                if(!is_null($row->est)) {
+                    if($row->est > 0) {
+                        $row->est = substr($row->est,0, -3).' hrs';
+                    }
+                    else {
+                        $row->est = '24:00 hrs';
+                    }
+                }
+            }
+
             $data->order_finishing = $inner_data;
         }
 
@@ -102,47 +121,15 @@ class FinishingController extends Controller {
         $pagination = array('count' => $post['range'],'page' => $post['page']['page'],'pages' => 7,'size' => $result['count']);
 
         $header = array(
-                        0=>array('key' => 'o.id', 'name' => 'Order ID'),
+                        0=>array('key' => 'o.display_number', 'name' => 'Order ID'),
                         1=>array('key' => 'o.name', 'name' => 'Job Name'),
                         2=>array('key' => 'c.client_company', 'name' => 'Client'),
                         3=>array('key' => 'null', 'name' => 'Operations', 'sortable' => false),
+                        4=>array('key' => 'null', 'name' => 'Order Status', 'sortable' => false),
                         );
 
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success);
         return response()->json($data);
-    }
-    /**
-     * Delete Data
-     *
-     * @param  post.
-     * @return success message.
-     */
-    public function DeleteFinishing()
-    {
-        $post = Input::all();
-
-        if(!empty($post[0]))
-        {
-            $getData = $this->finishing->deleteFinishing($post[0]);
-            if($getData)
-            {
-                $message = DELETE_RECORD;
-                $success = 1;
-            }
-            else
-            {
-                $message = MISSING_PARAMS;
-                $success = 0;
-            }
-        }
-        else
-        {
-            $message = MISSING_PARAMS;
-            $success = 0;
-        }
-        $data = array("success"=>$success,"message"=>$message);
-        return response()->json(['data'=>$data]);
-
     }
 
     /**
@@ -154,7 +141,32 @@ class FinishingController extends Controller {
     {
         $post = Input::all();
 
-        $finishingData['field'] = array('start_time' => $post['start_time'],'end_time' => $post['end_time'],'est' => $post['est'],'note'=>$post['note']);
+        $finishingData['field']['note'] = $post['note'];
+        
+        if($post['start_time'] != '')
+        {
+            $finishingData['field']['start_time'] = date('H:i', strtotime($post['start_time']));
+        }
+        else
+        {
+            $finishingData['field']['start_time'] = null;
+        }
+        if($post['end_time'] != '')
+        {
+            $finishingData['field']['end_time'] = date('H:i', strtotime($post['end_time']));
+        }
+        else
+        {
+            $finishingData['field']['end_time'] = null;
+        }
+        if($post['est'] != '')
+        {
+            $finishingData['field']['est'] = date('H:i', strtotime($post['est']));
+        }
+        else
+        {
+            $finishingData['field']['est'] = null;
+        }
         $finishingData['where'] = array('id' => $post['id']);
 
         $result = $this->finishing->updateFinishing($finishingData);
@@ -178,32 +190,6 @@ class FinishingController extends Controller {
             $response = array('success' => 0, 'message' => NO_RECORDS,'records' => $result);
         }
         return  response()->json(["data" => $response]);
-    }
-
-    public function removeFinishingItem($post)
-    {
-        $category = $this->category->getCategoryByName($post['item_name']);
-
-        if(!empty($category))
-        {
-            $finishingData['table'] = 'finishing';
-            $finishingData['field'] = array('is_delete' => '1');
-            $finishingData['where'] = array('order_id' => $post['order_id'],'category_id' => $category[0]->id);
-
-            $result = $this->finishing->updateFinishing($finishingData);
-        }
-    }
-    public function addFinishingItem($post)
-    {
-        $category = $this->category->getCategoryByName($post['item_name']);
-
-        if(!empty($category))
-        {
-            //$finishingData = array('order_id' => $post['order_id'],'category_id' => $category[0]->id,'qty' => $post['total_qnty']);
-            $post['category_id'] = $category[0]->id;
-            unset($post['item_name']);
-            $result = $this->finishing->addFinishing($post);
-        }
     }
 
     public function addRemoveToFinishing()

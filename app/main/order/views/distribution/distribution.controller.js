@@ -9,13 +9,57 @@
     /** @ngInject */
     function DistributionController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='AT' || $scope.role_slug=='SU')
+        {
+            $scope.allow_access = 0;
+        }
+        else
+        {
+            $scope.allow_access = 1;
+        }
+
+        // change display number to order Id for fetching the order data
+        var order_data = {};
+        order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+        order_data.table ='orders';
+
+        $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                $scope.vendorRecord =result.data.records;
+                $scope.order_id = result.data.records[0].id;
+
+                $scope.orderDetail();
+                $scope.designDetail();
+                $scope.getDistProductAddress();
+            } 
+            else
+            {
+                $state.go('app.order');
+            }
+        });
+
+        var state_data = {};
+        state_data.table ='state';
+
+        $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
+
+            if(result.data.success == '1') 
+            {
+                $scope.states_all  = result.data.records;
+            } 
+        });
+
+          
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
             
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
-            $scope.order_id = $stateParams.id;
+            $scope.order_id = $scope.order_id;
             
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -32,7 +76,7 @@
         $scope.designDetail = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
@@ -56,11 +100,13 @@
         $scope.getDistProductAddress = function(){
 
             var combine_array_id = {};
-            combine_array_id.order_id = $stateParams.id;
+            combine_array_id.order_id = $scope.order_id;
+            $scope.controls = [];
 
             $http.post('api/public/distribution/getDistProductAddress',combine_array_id).success(function(result, status, headers, config) {
             
                 if(result.success == '1') {
+                    $scope.controls = [{}];
                    $scope.products = result.products;
                    $scope.distribution_address = result.distribution_address;
                 }
@@ -71,47 +117,13 @@
             });
         }
 
-        $scope.orderDetail();
-        $scope.designDetail();
-        $scope.getDistProductAddress();
-
-        $scope.reloadPage = function()
+        $scope.returnFunction = function()
         {
             $state.reload();
         }
 
         var vm = this;
         vm.openaddAddressDialog = openaddAddressDialog;
-        vm.distributionDistributed = {
-            "productshipped": "800",
-            "Total": "100",
-        };
-        vm.distributionLocation = {
-            "location": "231",
-        };
-        vm.distProducts = [
-            {productName: "Product Name 1", jobName: "Job Name1", job: "#", totalAllocated: "0/120", buttn: "Distributed"},
-            {productName: "Product Name 2", jobName: "Job Name1.1", job: "#", totalAllocated: "0/120", buttn: "Distributed"},
-            {productName: "Product Name 3", jobName: "Job Name1.2", job: "#", totalAllocated: "80/120", buttn: "Edit"}
-        ]
-
-                ;
-        vm.distlocations = [
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"},
-            {loactionName: "Location Name", ATTN: "Name", Address: "1234 N Main St. Chicago, IL 60611 - USA", Phone: "555-555-555"}
-        ]
-
-                ;
-        vm.distInfo = {
-            customerPO: "######",
-            sales: "Keval Baxi",
-            blind: "Yes",
-            accountManager: "Nancy McPhee",
-            mainContact: "Joshi Goodman",
-            priceGrid: "ABC Grid",
-        };
-
         vm.openAddProductDialog = openAddProductDialog;
         function openaddAddressDialog(ev, order)
         {
@@ -126,7 +138,7 @@
                     Orders: $scope.order,
                     event: ev
                 },
-                onRemoving : $scope.reloadPage
+                onRemoving : $scope.returnFunction
             });
         }
 
@@ -163,7 +175,7 @@
                     Orders: $scope.order,
                     event: ev
                 },
-                onRemoving : $scope.reloadPage
+                onRemoving : $scope.returnFunction
             });
         }
 
@@ -184,9 +196,40 @@
                     product_arr: product_array,
                     event: ev
                 },
-                onRemoving : $scope.reloadPage
+                onRemoving : $scope.returnFunction
             });
         }
+        $scope.openInsertPopup = function(path,ev,table)
+        {
+            var insert_params = {client_id:$scope.order.client_id,order_id:$scope.order_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
+        }
         vm.productSearch = null;
+
+        $scope.updateOrderShippingType = function(name,value,id)
+        {
+            var order_main_data = {};
+
+            order_main_data.table ='order_shipping_address_mapping';
+
+            $scope.name_filed = name;
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            order_main_data.data = angular.copy(obj);
+
+            var condition_obj = {};
+            condition_obj['id'] =  id;
+            order_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+                if(name == 'shipping_type_id')
+                {
+                    $scope.getDistProductAddress();
+                }
+            });
+        }
     }
 })();

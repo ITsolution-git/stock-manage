@@ -19,19 +19,20 @@
         vm.client_id = $stateParams.id;
         vm.company_id = sessionService.get('company_id');
         $scope.company_id = sessionService.get('company_id');
+        $scope.login_id = sessionService.get('user_id');
         $scope.client_id = vm.client_id ;
 
-
-        vm.documents = [
-        ];
-        vm.screenSets = [
-            
-        ];
-        vm.arts = [
-            
-        ];
-
-
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' || $scope.role_slug=='AT' || $scope.role_slug=='SH' || $scope.role_slug=='SM')
+        {
+            $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        
 
         vm.dtOptions = {
             dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
@@ -66,6 +67,8 @@
                 if(result.data.success=='1')
                 {   
                     vm.Response = result.data.records;
+                    $scope.client_id = vm.Response.clientDetail.client_id;
+                    $scope.createdby_id = vm.Response.clientDetail.login_id;
                     $scope.mainaddress = vm.Response.clientDetail.address;
                     $scope.salesDetails =vm.Response.clientDetail.sales;
                     $scope.maincompcontact =vm.Response.clientDetail.contact;
@@ -79,10 +82,13 @@
                     $scope.allclientnotes = vm.Response.allclientnotes;
                     $scope.Arrdisposition = vm.Response.Arrdisposition;
                     $scope.Client_orders = vm.Response.Client_orders;
-                    $scope.art_detail = vm.Response.art_detail;
+                    $scope.screenset_detail = vm.Response.screenset_detail;
                     $scope.addressAll=vm.Response.addressAll.result;
                     $scope.Distribution_address= vm.Response.Distribution_address.result;
                     $scope.documents= vm.Response.documents;
+                    $scope.companyUsers = vm.Response.companyUsers;
+
+                    if($scope.role_slug=='SM' && $scope.createdby_id!=$scope.login_id){$scope.allow_access = 0;} // Salesman can edit own record
                 }
                 $("#ajax_loader").hide();
             });
@@ -102,6 +108,7 @@
                 $scope.approval_all = Response.data.result.approval;
             }
         });
+
         vm.editCompanyInfo = editCompanyInfo;
         vm.editCompanyConatct=editCompanyConatct;
         vm.formPopup = 'app/main/client/views/forms';
@@ -112,6 +119,23 @@
              params.client = $scope.company_info;
 
             open_popup(ev,params,'CompanyInfo',popup_page);
+        }
+
+        $scope.setin_destribution = function (location)
+        {
+            $scope.dist_array = {client_id:$scope.client_id,company_id:$scope.company_id,location:location};
+            $http.post('api/public/client/setin_destribution',$scope.dist_array).success(function(result) 
+            {
+                if(result.data.success == '1') 
+                {
+                    $scope.getClientProfile();
+                    notifyService.notify('success',result.data.message);
+                }
+                else
+                {
+                    notifyService.notify('error',result.data.message);
+                }
+            });
         }
 
         $scope.getDocument = function (ev,id)
@@ -137,6 +161,27 @@
         {
             open_popup(ev,$scope,'CompanyInfo','tax_document');
         }
+
+
+//======================
+﻿        // DYNAMIC POPUP FOR INSERT RECORDS
+        $scope.openInsertPopup = function(path,ev,table)
+        {
+            var insert_params = {client_id:$scope.client_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
+        }
+        // DYNAMIC POPUP FOR UPDATE RECORDS
+        $scope.openEditPopup = function(path,param,ev,table)
+        {
+            var edit_params = {data:param}; // REQUIRED PARAMETERS
+            sessionService.openEditPopup($scope,path,edit_params,table);
+        }
+        // RETURN FUNCTION FROM POPUP.
+        $scope.returnFunction = function()
+        {
+            $scope.getClientProfile();
+        }
+//======================
 
 
 
@@ -297,18 +342,19 @@
 // ============= REMOVE TABLE RECORD WITH CONDITION ============= // 
         $scope.RemoveFields = function(table,cond_field,cond_value){
               
-                var delete_data = {};
-                
-                $scope.name_filed = cond_field;
-                var obj = {};
-                obj[$scope.name_filed] =  cond_value;
-                delete_data.cond = angular.copy(obj);
-                
-                delete_data.table =table;
+
+                var UpdateArray = {};
+                UpdateArray.table =table;
+                UpdateArray.data = {is_deleted:'0'}
+
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                UpdateArray.cond = angular.copy(condition_obj);
                 var permission = confirm("Are you sure to delete this Record ?");
+                
                 if (permission == true) 
                 {
-                    $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                    $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                     {
                         if(result.data.success=='1')
                         {
@@ -325,14 +371,15 @@
 // ============= REMOVE CLIENT LOCATION TABLE RECORD WITH NO MAIN,SHIIPING,BIllING ADDRESS CONDITION ============= // 
         $scope.RemoveLocationFields = function(table,cond_field,cond_value,main,shipping,billing){
               
-                var delete_data = {};
+                var UpdateArray = {};
+                UpdateArray.table =table;
+                UpdateArray.data = {is_deleted:'0'}
+
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                UpdateArray.cond = angular.copy(condition_obj);
                 
-                $scope.name_filed = cond_field;
-                var obj = {};
-                obj[$scope.name_filed] =  cond_value;
-                delete_data.cond = angular.copy(obj);
-                
-                delete_data.table =table;
+                UpdateArray.table =table;
                 if(main==0)
                 {
                     if(shipping==0)
@@ -342,7 +389,7 @@
                             var permission = confirm("Are you sure to delete this Record ?");
                             if (permission == true) 
                             {
-                                $http.post('api/public/common/DeleteTableRecords',delete_data).success(function(result) 
+                                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
                                 {
                                     if(result.data.success=='1')
                                     {
@@ -372,6 +419,46 @@
                 }
                 
       }
+
+// ============= REMOVE CLIENT CONTACT  ============= // 
+        $scope.RemoveContactFields = function(table,cond_field,cond_value,main){
+              
+                var UpdateArray = {};
+                UpdateArray.table =table;
+                UpdateArray.data = {is_deleted:'0'}
+
+                var condition_obj = {};
+                condition_obj[cond_field] =  cond_value;
+                UpdateArray.cond = angular.copy(condition_obj);
+                
+                UpdateArray.table =table;
+                if(main==0)
+                {
+                    var permission = confirm("Are you sure to delete this Record ?");
+                    if (permission == true) 
+                    {
+                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) 
+                        {
+                            if(result.data.success=='1')
+                            {
+                                notifyService.notify('success',result.data.message);
+                                $scope.getClientProfile();
+                            }
+                            else
+                            {
+                                notifyService.notify('error',result.data.message);
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    notifyService.notify('error','Please select another Main contact first !');
+                }
+                
+      }
+
+
 // ============= UPLOAD IMAGE ============= // 
         $scope.ImagePopup = function (column_name,folder_name,table_name,default_image,primary_key_name,primary_key_value,image_name) 
         {
@@ -486,11 +573,14 @@
                 });
             }
         }
+
+
     }
 
 
     function CompanyInfo($mdDialog, $stateParams,$resource,sessionService,$scope,Params,$http,$controller,$state,notifyService)
     {
+        $scope.validation_message = 'Please enter valid Input.';
         $("#ajax_loader").hide();
         $scope.client = Params.client;
         $scope.ArrCleintType = Params.ArrCleintType;
@@ -506,8 +596,77 @@
         $scope.client_id = Params.client_id;
         $scope.company_id = Params.company_id;
         $scope.client_tax = Params.client_tax;
-        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param)
+        $scope.companyUsers = Params.companyUsers;
+        
+
+        $scope.role_slug = sessionService.get('role_slug');
+        // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' || $scope.role_slug=='SM')
         {
+            $scope.allow_access = 1;  // THESE ROLE CAN ALLOW TO EDIT
+        }
+        else
+        {
+            $scope.allow_access = 0; // THESE ROLE CAN ALLOW TO EDIT, JUST CAN VIEW
+        }   
+
+        $scope.options = {
+        //types: ['(cities)'],
+        componentRestrictions: { country: 'US' }
+        };
+
+        $scope.GetAPIData = function (apidata)
+        {
+            $scope.client.pl_address = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber+", ";
+            $scope.client.pl_address = angular.isUndefined(apidata.street)?$scope.client.pl_address:$scope.client.pl_address+apidata.street;
+            //$scope.client.pl_suite = angular.isUndefined(apidata.streetNumber)?'':apidata.streetNumber;
+            $scope.client.pl_city = angular.isUndefined(apidata.city)?'':apidata.city;
+            for(var i=0; i<$scope.states_all.length; i++)
+            {
+                if($scope.states_all[i].code == apidata.state)
+                {
+                    $scope.client.state_id = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
+                    $scope.client.pl_state = angular.isUndefined($scope.states_all[i].id)?'':$scope.states_all[i].id;
+                }
+            }
+            $scope.client.pl_pincode = angular.isUndefined(apidata.postCode)?'':apidata.postCode;
+        }
+
+
+  
+        $scope.address = {
+            name: '',
+            place: '',
+            components: {
+              placeId: '',
+              streetNumber: '', 
+              street: '',
+              city: '',
+              state: '',
+              countryCode: '',
+              country: '',
+              postCode: '',
+              district: '',
+              location: {
+                lat: '',
+                long: ''
+                }
+            }
+        };
+
+
+
+
+        $scope.UpdateTableField = function(field_name,field_value,table_name,cond_field,cond_value,extra,param,validation)
+        {
+            //console.log(validation);
+            // console.log(Object.keys(validation).length);
+            if(!angular.isUndefined(validation) && Object.keys(validation).length>0 )
+            {
+                notifyService.notify('error',$scope.validation_message);
+                return false;
+            }
+            
             var vm = this;
             var UpdateArray = {};
             UpdateArray.table =table_name;
@@ -583,6 +742,35 @@
               });
         }
 
+        // ============= REMOVE CLIENT CONTACT  ============= // 
+        $scope.SaveCompanyInfo = function(ArrsaveCompany)
+        {
+           
+            ArrsaveCompany.company_id = $scope.company_id;
+            //$("#ajax_loader").show();
+            $http.post('api/public/client/SaveClientInfo',ArrsaveCompany).success(function(result) 
+              {
+                if(result.data.success=='1')
+                {
+                    $mdDialog.hide();
+
+                } else if(result.data.success =='2')
+                {
+                   
+                     var data = {"status": "error", "message": "Company Name already exists!"}
+                  notifyService.notify(data.status, data.message);
+                  return false;
+                    
+                }
+                else
+                {
+                    notifyService('error',result.data.message);
+                    $mdDialog.hide();
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+
         $scope.showtcprofileimg = false;
         $scope.onLoad=function()
         {
@@ -618,8 +806,7 @@
               });
 
         }
-       
-       
+
 
         }
 })();

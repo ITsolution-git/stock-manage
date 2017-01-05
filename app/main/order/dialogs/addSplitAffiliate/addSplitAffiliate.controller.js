@@ -70,17 +70,28 @@
 
         $scope.calculateAffiliate = function()
         {
-            if($scope.affiliate > 0)
+            if($scope.design_product_id == '0')
             {
-                var affiliate_data = {};
-                affiliate_data ={'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizeData':$scope.sizes}
-                $http.post('api/public/affiliate/affiliateCalculation',affiliate_data).success(function(result) {
-                    if(result.success == '1')
-                    {
-                        $scope.affiliate_invoice = result.affiliate_invoice;
-                        $scope.finalCalcualtion();
-                    }
-                });
+                var data = {"status": "error", "message": "Please select product"}
+                notifyService.notify(data.status, data.message);
+                $scope.affiliate = 0;
+                return false;
+            }
+            else
+            {
+                if($scope.affiliate > 0)
+                {
+                    var affiliate_data = {};
+                    affiliate_data ={'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizeData':$scope.sizes}
+                    $http.post('api/public/affiliate/affiliateCalculation',affiliate_data).success(function(result) {
+                        if(result.success == '1')
+                        {
+                            $scope.affiliate_invoice = result.calculatedData.sales_total;
+                            $scope.calculatedData = result.calculatedData;
+                            $scope.finalCalcualtion();
+                        }
+                    });
+                }
             }
         }
 
@@ -142,7 +153,7 @@
             {
                 var affiliate_data = {'order_id':$scope.order_id,'design_id':$scope.design,'affiliate_id':$scope.affiliate,'sizes':$scope.sizes,'design_product_id':$scope.design_product_id,
                                     'total_affiliate':$scope.total_affiliate,'additional_charges':$scope.additional_charges,'total_not_assign':$scope.total_not_assign,
-                                    'notes':$scope.notes,'shop_invoice':$scope.shop_invoice,'affiliate_invoice':$scope.affiliate_invoice,'total':$scope.total};
+                                    'notes':$scope.notes,'shop_invoice':$scope.shop_invoice,'affiliate_invoice':$scope.affiliate_invoice,'total':$scope.total,'calculatedData':$scope.calculatedData};
 
                 //$("#ajax_loader").show();
                 

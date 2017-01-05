@@ -23,15 +23,17 @@ class Company extends Model {
      *
      */
     public function GetCompanyData($post) {
+
+      $this->common->getDisplayNumber('users',1,'parent_id','id','yes');
        $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
 
         $admindata = DB::table('users as usr')
-        				 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
-        				 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
-        				 ->where('usr.is_delete','=','1')
+                 ->Join('roles as rol', 'usr.role_id', '=', 'rol.id')
+                 ->select(DB::raw('SQL_CALC_FOUND_ROWS usr.name,usr.created_date,usr.display_number,usr.user_name,usr.email,usr.remember_token,usr.status,rol.title,usr.id,usr.phone'))
+                 ->where('usr.is_delete','=','1')
                  ->where('rol.slug','=','CA')
                  ->where('usr.parent_id','=','1');
                  if($search != '')               
@@ -39,7 +41,8 @@ class Company extends Model {
                       $admindata = $admindata->Where(function($query) use($search)
                       {
                           $query->orWhere('usr.name', 'LIKE', '%'.$search.'%')
-                                ->orWhere('usr.email','LIKE', '%'.$search.'%');
+                                ->orWhere('usr.email','LIKE', '%'.$search.'%')
+                                ->orWhere('usr.display_number','=', $search);
                       });
                   }
                  $admindata = $admindata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
@@ -65,10 +68,12 @@ class Company extends Model {
     }
     public function InsertCompanyData($post)
     {
- 
+
+
       //echo "<pre>"; print_r($post); echo "</pre>"; die;
       $string = $this->login->getString(6);
-    	$result = DB::table('users')->insert(array('name'=>$post['name'],'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
+      $display_number =  $this->common->getDisplayNumber('users',$post['parent_id'],'parent_id','id');
+      $result = DB::table('users')->insert(array('name'=>$post['name'],'display_number'=>$display_number,'parent_id'=>$post['parent_id'],'email'=>$post['email'],'password'=>md5($string),'role_id'=>$post['role_id'],'created_date'=>date('Y-m-d')));
        $user_array = $post;
       
       $post['prime_address1']       = !empty($post['prime_address1'])?$post['prime_address1']:'';
@@ -315,10 +320,19 @@ class Company extends Model {
 
         $make_folder = $this->makefolder($companyid);  
 
+
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
+        $statics = $this->common->GetTableRecords('company_static',array('slug_type'=>'email_templete'));
+        foreach ($statics as $key => $value) 
+        {
+            $this->common->InsertRecords('email_template',array('company_id'=>$companyid,'slug'=>$value->slug,'label'=>$value->slug));
+        }
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
+
         
 // Code for Default Misc data End
 
-    	return $companyid ;
+      return $companyid ;
     }
 
     public function makeFolder($companyid){
@@ -349,6 +363,8 @@ class Company extends Model {
          $dir_path_tax = base_path() . "/public/uploads/" . $companyid.'/tax'; 
          $dir_path_vendor = base_path() . "/public/uploads/". $companyid.'/vendor'; 
          $dir_path_pdf = base_path() . "/public/uploads/". $companyid.'/pdf'; 
+         $dir_path_purchase = base_path() . "/public/uploads/". $companyid.'/purchase';
+         $dir_path_custom_image= base_path() . "/public/uploads/". $companyid.'/custom_image';
 
           $old_umask = umask(0);
 
@@ -359,6 +375,23 @@ class Company extends Model {
             } else {
                 exec("chmod $dir_path 0777");
             }
+
+            if (!file_exists($dir_path_custom_image)) {
+           
+              mkdir($dir_path_custom_image, 0777);
+            
+            } else {
+                exec("chmod $dir_path 0777");
+            }
+            
+            if (!file_exists($dir_path_purchase)) {
+           
+            mkdir($dir_path_purchase, 0777);
+            
+            } else {
+                exec("chmod $dir_path 0777");
+            }
+
 
            if (!file_exists($dir_path_art)) {
            
@@ -440,11 +473,11 @@ class Company extends Model {
     public function GetCompanybyId($id,$company_id)
     { 
       $whereConditions = ['usr.id' => $id,'usr.is_delete' => '1'];
-    	$admindata = DB::table('users as usr')
-        				 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
+      $admindata = DB::table('users as usr')
+                 ->leftJoin('roles as rol', 'usr.role_id', '=', 'rol.id')
                  ->leftJoin('staff as st', 'usr.id', '=', 'st.user_id')
                  ->leftJoin('state as state', 'state.id', '=', 'st.prime_address_state')
-        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.id as staff_id','st.prime_phone_main','state.name as state_name')
+        				 ->select('usr.name','usr.user_name','usr.email','usr.password','usr.profile_photo','usr.remember_token','usr.status','usr.id','usr.role_id','usr.phone','st.first_name','st.last_name','st.prime_address1','st.prime_address_city','st.prime_address_state','st.prime_address_country','st.prime_address_zip','st.url','st.photo','st.user_id','st.oversize_value','st.tax_rate','st.cron_runtime','st.id as staff_id','st.prime_phone_main','st.gross_year','state.name as state_name')
         				 ->where($whereConditions)
         				 ->get();
         return $admindata;
@@ -460,22 +493,36 @@ class Company extends Model {
         $result = DB::table('users')->where('id','=',$post['id'])->update(array('name'=>$post['name'],'email'=>$post['email']));
 
         $result_address = DB::table('staff')->where('user_id','=',$post['id'])->update($new_post);
+
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
+        $statics = $this->common->GetTableRecords('company_static',array('slug_type'=>'email_templete'));
+        foreach ($statics as $key => $value) 
+        {
+            $email_data = $this->common->GetTableRecords('email_template',array('slug'=>$value->slug,'company_id'=>$post['id']));
+            if(empty($email_data[0]['slug']))
+            {
+                $this->common->InsertRecords('email_template',array('company_id'=>$post['id'],'slug'=>$value->slug,'label'=>$value->slug));
+            }
+        }
+        /*================  DEFAULT EMAIL TEMPLETES MANAGE ENTRY ================*/
+
+
         return $result;
 
     }
     public function DeleteCompanyData($id)
     {
-    	if(!empty($id))
-    	{
-      		DB::table('users')->where('id','=',$id)->update(array("is_delete" => '0'));
-      		DB::table('users')->where('parent_id','=',$id)->update(array("is_delete" => '0'));
+      if(!empty($id))
+      {
+          DB::table('users')->where('id','=',$id)->update(array("is_delete" => '0'));
+          DB::table('users')->where('parent_id','=',$id)->update(array("is_delete" => '0'));
           DB::table('staff')->where('user_id','=',$id)->update(array("is_delete" => '0'));
-      		return 1;
-    	}
-    	else
-    	{
-    		  return false;
-    	}
+          return 1;
+      }
+      else
+      {
+          return false;
+      }
     }
     public function getCompanyInfo($company_id)
     {
@@ -493,6 +540,8 @@ class Company extends Model {
     }
     public function getAffiliate($company_id,$affilite_id)
     {
+        $this->common->getDisplayNumber('affiliates',$company_id,'company_id','id','yes');
+             
        $result = DB::table('affiliates as af')
                   ->select('af.*','pg.name as price_grid','pg.id as price_id')
                   ->leftJoin('price_grid as pg','pg.id','=','af.price_grid')
@@ -502,7 +551,8 @@ class Company extends Model {
               {
                 $result=  $result->where('af.id','=',$affilite_id);
               }
-              $result = $result->get();
+
+              $result = $result->orderBy('af.id','desc')->get();
 
               if(count($result)>0)
               {
@@ -521,6 +571,7 @@ class Company extends Model {
     }
     public function addAffilite($post)
     {
+      $post['display_number'] = $this->common->getDisplayNumber('affiliates',$post['company_id'],'company_id','id');
       $result = DB::table('affiliates')->insert($post);
       return $result;
     }
@@ -529,80 +580,18 @@ class Company extends Model {
        $result = DB::table('affiliates')->where('id',"=",$id)->update($post);
        return $result;
     }
-     public function getAuthorizeAPI($company_id)
+
+    public function getApiDetail($api_id,$table,$company_id)
     {
         $result = DB::table('api_link_table as alt')
-            ->select('ad.*')
-            ->Join('authorize_detail as ad','ad.link_id','=','alt.id')
+            ->select('fd.*')
+            ->Join($table.' as fd','fd.link_id','=','alt.id')
             ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",AUTHORIZED_ID)
+            ->where("alt.api_id","=",$api_id)
             ->get();
         return $result;
     }
-    public function InsertAuthorizeAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>AUTHORIZED_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('authorize_detail')->insert(array("link_id"=>$link_id));
 
-      return $result;
-    }
-     public function getUpsAPI($company_id)
-    {
-        $result = DB::table('api_link_table as alt')
-            ->select('ad.*')
-            ->Join('ups_detail as ad','ad.link_id','=','alt.id')
-            ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",UPS_ID)
-            ->get();
-        return $result;
-    }
-    public function InsertUpsAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>UPS_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('ups_detail')->insert(array("link_id"=>$link_id));
-
-      return $result;
-    }
-     public function getSnsAPI($company_id)
-    {
-        $result = DB::table('api_link_table as alt')
-            ->select('ad.*')
-            ->Join('ss_detail as ad','ad.link_id','=','alt.id')
-            ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",SNS_ID)
-            ->get();
-        return $result;
-    }
-    public function InsertSnsAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>SNS_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('ss_detail')->insert(array("link_id"=>$link_id));
-
-      return $result;
-    }
-
-     public function getQBAPI($company_id)
-    {
-        $result = DB::table('api_link_table as alt')
-            ->select('qd.*')
-            ->Join('quickbook_detail as qd','qd.link_id','=','alt.id')
-            ->where("alt.company_id","=",$company_id)
-            ->where("alt.api_id","=",QUICKBOOK_ID)
-            ->get();
-        return $result;
-    }
-    public function InsertQBAPI($company_id)
-    {
-      $result  = DB::table('api_link_table')->insert(array("api_id"=>QUICKBOOK_ID,"company_id"=>$company_id));
-      $link_id = DB::getPdo()->lastInsertId();
-      $result  = DB::table('quickbook_detail')->insert(array("link_id"=>$link_id));
-
-      return $result;
-    }
-    
     public function getColors($post)
     {
         $search = '';
@@ -657,6 +646,26 @@ class Company extends Model {
 
         return $returnData;
     }
+    public function getCompanyAddress($company_id)
+    {
+       $result = DB::table('company_address as ca')
+                    ->leftJoin('state as st','st.id','=','ca.state')
+                    ->select('st.name as state_name','ca.*')
+                    ->where('ca.company_id','=',$company_id)
+                    ->where('ca.is_deleted','=','1')
+                    ->get();
+        return $result;   
+    }       
     
+    public function getQBAPI($company_id)
+    {
+       $result = DB::table('api_link_table as alt')
+           ->select('qd.*')
+           ->Join('quickbook_detail as qd','qd.link_id','=','alt.id')
+           ->where("alt.company_id","=",$company_id)
+           ->where("alt.api_id","=",QUICKBOOK_ID)
+           ->get();
+       return $result;
+   }
 
 }

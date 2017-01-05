@@ -14,9 +14,10 @@ use Request;
 class CompanyController extends Controller {
 	public function __construct(Company $company, Common $common)
 	{
-$this->company = $company;
-$this->common = $common;
-}
+		parent::__construct();
+		$this->company = $company;
+		$this->common = $common;
+	}
 /**
 * Get All account list data
 *
@@ -125,9 +126,14 @@ $this->common = $common;
 			{
 				if(empty($getData[0]->staff_id))
 				{
-					$getData[0]->staff_id = $this->common->InsertRecords('staff',array('user_id'=>$id,'is_delete'=>1));
+					$getData[0]->staff_id = $this->common->InsertRecords('staff',array('user_id'=>$id,'is_delete'=>1,'created_date'=>"2016-07-07 07:07:07"));
 				}
-			$getData[0]->company_url_photo = UPLOAD_PATH.$id."/staff/".$getData[0]->staff_id."/".$getData[0]->photo;
+			$getData[0]->company_url_photo = UPLOAD_PATH.$company_id."/staff/".$getData[0]->staff_id."/".$getData[0]->photo;
+
+			//$getData[0]->profile_url_photo = UPLOAD_PATH.$company_id."/staff/".$getData[0]->id."/".$getData[0]->profile_photo;
+
+			$getData[0]->profile_url_photo = (!empty($getData[0]->profile_photo) && file_exists(FILEUPLOAD.$company_id."/staff/".$getData[0]->id."/".$getData[0]->profile_photo))?UPLOAD_PATH.$company_id."/staff/".$getData[0]->id."/".$getData[0]->profile_photo:"assets/images/avatars/profile-avatar.png";
+
 			$count = count($getData);
 			if($count>0)
 				{
@@ -244,7 +250,7 @@ $this->common = $common;
 					$pass = md5($post['password']);
 					if($pass==$company_data[0]->password)
 					{
-						$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($post['new_password']) )); // SUCCESS ANDY UPDATE PASSWORD
+						$this->common->UpdateTableRecords('users',array('id' => $post['user_id']),array('password' =>md5($post['new_password']), 'reset_password'=>'0')); // SUCCESS ANDY UPDATE PASSWORD
 						$message = "Password successfully changed.";
 						$success = 1;
 					}
@@ -374,63 +380,38 @@ $this->common = $common;
 		$data = array("success"=>$success,"message"=>$message);
 		return response()->json(['data'=>$data]);
 	}
-	public function getAuthorizeAPI($company_id)
+
+	public function checkAPIData($id,$table,$company_id)
 	{
-		if(!empty($company_id))
+		$ret = $this->company->getApiDetail($id,$table,$company_id); // GET API DETAILS
+
+		//echo "<pre>"; print_r($ret); echo "</pre>"; die;
+		if(count($ret)==0)
 		{
-			$result = $this->company->getAuthorizeAPI($company_id); // GET API DETAILS
-			if(count($result)==0)
-			{
-				$this->company->InsertAuthorizeAPI($company_id);
-				$result = $this->company->getAuthorizeAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
-			$success = 1;
+			$link_id = $this->common->InsertRecords('api_link_table',array("api_id"=>$id,"company_id"=>$company_id));
+			$this->common->InsertRecords($table,array("link_id"=>$link_id,'api_date'=>date("Y-m-d")));
+			$ret = $this->company->getApiDetail($id,$table,$company_id); // GET API DETAILS
 		}
-		else
-		{
-			$message = MISSING_PARAMS."- company_id";
-			$success = 0;
-			$result = '';
-		}
-		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
-		return response()->json(['data'=>$data]);
+		return $ret[0];
 	}
-	public function getUpsAPI($company_id)
+
+	public function GetAllApi()
 	{
-		if(!empty($company_id))
+		$post = Input::all();
+		if(!empty($post['company_id']))
 		{
-			$result = $this->company->getUpsAPI($company_id); // GET API DETAILS
-			if(count($result)==0)
-			{
-				$this->company->InsertUpsAPI($company_id);
-				$result = $this->company->getUpsAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
+			$company_id = $post['company_id'];
+			
+			$fedex = $this->checkAPIData(FEDEX_ID,'fedex_detail',$company_id); // GET API DETAILS
+			$qb = $this->checkAPIData(QUICKBOOK_ID,'quickbook_detail',$company_id); // GET API DETAILS
+			$sns = $this->checkAPIData(SNS_ID,'ss_detail',$company_id); // GET API DETAILS
+			$ups = $this->checkAPIData(UPS_ID,'ups_detail',$company_id); // GET API DETAILS
+			$authorize = $this->checkAPIData(AUTHORIZED_ID,'authorize_detail',$company_id); // GET API DETAILS
+			$location = $this->company->getCompanyAddress($company_id); // GET API DETAILS
+
 			$success = 1;
-		}
-		else
-		{
-			$message = MISSING_PARAMS."- company_id";
-			$success = 0;
-			$result = '';
-		}
-		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
-		return response()->json(['data'=>$data]);
-	}
-	public function getSnsAPI($company_id)
-	{
-		if(!empty($company_id))
-		{
-			$result = $this->company->getSnsAPI($company_id); // GET API DETAILS
-			//echo count($result);
-			if(count($result)==0)
-			{
-				$this->company->InsertSnsAPI($company_id);
-				$result = $this->company->getSnsAPI($company_id); // GET API DETAILS
-			}
 			$message = GET_RECORDS;
-			$success = 1;
+			$result = array("fedex"=>$fedex,"qb"=>$qb,"sns"=>$sns,"ups"=>$ups,"authorize"=>$authorize,"location"=>$location);
 		}
 		else
 		{
@@ -442,29 +423,37 @@ $this->common = $common;
 		return response()->json(['data'=>$data]);
 	}
 
-	public function getQBAPI($company_id)
-	{
-		if(!empty($company_id))
-		{
-			$result = $this->company->getQBAPI($company_id); // GET API DETAILS
-			//echo count($result);
-			if(count($result)==0)
-			{
-				$this->company->InsertSnsAPI($company_id);
-				$result = $this->company->InsertQBAPI($company_id); // GET API DETAILS
-			}
-			$message = GET_RECORDS;
-			$success = 1;
-		}
-		else
-		{
-			$message = MISSING_PARAMS."- company_id";
-			$success = 0;
-			$result = '';
-		}
-		$data = array("success"=>$success,"message"=>$message,'data'=>$result);
-		return response()->json(['data'=>$data]);
-	}
+
+	 public function deleteDataIphFactor()
+    {
+        $post = Input::all();
+       
+        if(!empty($post['id']))
+        {
+            
+                $record_data = $this->common->DeleteTableRecords($post['tableName'],array('id' => $post['id']));
+            
+           
+            if($record_data)
+            {
+                $message = DELETE_RECORD;
+                $success = 1;
+            }
+            else
+            {
+                $message = MISSING_PARAMS;
+                $success = 0;
+            }
+        }
+        else
+        {
+            $message = MISSING_PARAMS;
+            $success = 0;
+        }
+        $data = array("success"=>$success,"message"=>$message);
+        return response()->json(['data'=>$data]);
+
+    }
 
 	
 }

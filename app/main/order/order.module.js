@@ -23,7 +23,7 @@
                     checksession : function (sessionService,$stateParams,$state)
                     {
                         
-                       return sessionService.AccessService('BC,CA');
+                       return sessionService.AccessService('ALL','true');
                     }
                 }
             }).state('app.order.order-info', {
@@ -31,7 +31,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/order-info/:id',
@@ -46,7 +46,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/design/:id',
@@ -61,7 +61,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/distribution/:id',
@@ -71,12 +71,27 @@
                         controller : 'DistributionController as vm'
                     }
                 }
+            }).state('app.order.orderNotes', {
+                resolve: {
+                        checksession : function (sessionService,$stateParams,$state)
+                        {
+                            
+                           return sessionService.AccessService('ALL','true');
+                        }
+                    },
+                url  : '/orderNotes/:id',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/order/views/notes/notes.html',
+                        controller : 'NotesController as vm'
+                    }
+                }
             }).state('app.order.distributionProduct', {
                 resolve: {
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/distributionProduct/:id',
@@ -91,7 +106,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/spiltAffiliate/:id',
@@ -106,7 +121,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/affiliate-info/:id',
@@ -121,7 +136,7 @@
                         checksession : function (sessionService,$stateParams,$state)
                         {
                             
-                           return sessionService.AccessService('BC,CA');
+                           return sessionService.AccessService('ALL','true');
                         }
                     },
                 url  : '/affiliate-view/:id',
@@ -148,7 +163,7 @@
                 'param1': 'page'
              },*/
             
-            weight   : 1
+            weight   : 3
         });
     }
 })();

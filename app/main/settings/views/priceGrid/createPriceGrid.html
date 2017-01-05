@@ -3,7 +3,7 @@
     <div ng-cloak>
          <form name="priceForm" class="form-validation stokkupForm priceGrid" ng-submit="savePrice(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)">
         <md-content>
-            <div class="box-typ4 mrg15" layout="row">
+            <div class="box-typ4 mrg15" layout="row" ng-class="{'disable-click': allow_access==0}">
                 <div layout="column" flex="10" class="text-right mrg20-T"><label class="text-bold">Price Grid :</label></div>
                 <div layout="column" flex="50">
                     <md-input-container class="md-block first-box settings-margin-0">
@@ -15,8 +15,8 @@
                 <!-----------------Charges Tab-------------------->
                 <md-tab label="Charges">
                     <md-content class="md-padding">
-                        <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                        <div class="simple-table-container md-whiteframe-4dp" ng-class="{'disable-click': allow_access==0}">
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center" ng-show="allow_access==1">
                                 <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
@@ -183,7 +183,7 @@
                 <md-tab label="Charges List">
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                             <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                             <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center" ng-show="allow_access==1">
                                 <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
@@ -198,7 +198,7 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper innertab-scroll">
-                                <table class="simple" id="chargesList">
+                                <table class="simple" id="chargesList" ng-class="{'disable-click': allow_access==0}">
                     <thead>
                         <tr>
                             <th class="secondary-text">
@@ -258,7 +258,8 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click="addInput()" aria-label="a">
+                                            <md-button class="bg-blue" ng-click="addInput()" aria-label="a" ng-show="allow_access==1"
+>
                                                     ADD
                                             </md-button>
                                         </td>  
@@ -272,7 +273,7 @@
                 <md-tab label="Screen Printing Primary">
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                           <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                           <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center" ng-show="allow_access==1">
                                 <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
@@ -287,7 +288,7 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper innertab-scroll">
-                                <table class="simple" id="screenPrimary">
+                                <table class="simple" id="screenPrimary" ng-class="{'disable-click': allow_access==0}">
                     <thead>
                         <tr>
                             <th class="secondary-text pricewidth-10 pricePad-10">
@@ -494,7 +495,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close cursor-p" ng-click="removeScreenPrimary($index)"></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeScreenPrimary($index)" ng-show="allow_access==1"></i>
                             </td>
                         </tr>   
                                            
@@ -503,12 +504,12 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click="addScreenPrimary()">
+                                            <md-button class="bg-blue" ng-click="addScreenPrimary()" ng-show="allow_access==1">
                                                     ADD
                                             </md-button>
                                         </td>  
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click="duplicateprimary(allScreenPrimary)">
+                                            <md-button class="bg-blue" ng-click="duplicateprimary(allScreenPrimary)" ng-show="allow_access==1">
                                                     Duplicate Primary
                                             </md-button>
                                         </td>                                       
@@ -522,7 +523,7 @@
                 <md-tab label="Screen Printing Secondary">
                       <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center" ng-show="allow_access==1">
                                 <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
@@ -537,7 +538,7 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper innertab-scroll">
-                                <table class="simple" id="screenSecondary">
+                                <table class="simple" id="screenSecondary" ng-class="{'disable-click': allow_access==0}">
                     <thead>
                         <tr>
                             <th class="secondary-text pricewidth-10 pricePad-10 pricePad-10">
@@ -744,7 +745,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close cursor-p" ng-click="removeScreenSecondary($index)"></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeScreenSecondary($index)" ng-show="allow_access==1"></i>
                             </td>
                         </tr>   
                                            
@@ -753,7 +754,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click="addScreenSecondary()">
+                                            <md-button class="bg-blue" ng-click="addScreenSecondary()" ng-show="allow_access==1">
                                                     ADD
                                             </md-button>
                                         </td>                                        
@@ -767,7 +768,7 @@
                 <md-tab label="Embroidery">
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center" ng-show="allow_access==1">
                                 <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
@@ -782,7 +783,13 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper innertab-scroll">
-                                <div class="pd15 embroidery-sec">
+
+                                <div class="pd15 embroidery-sec" ng-class="{'disable-click': allow_access==0}">
+                                    <div layout="row" flex="100">
+                                        <div layout="column" flex="20" class="text-bold mrg10-T"></div> 
+                                        <div layout="column" flex="70" class="text-bold mrg10-T">Stitch Count</div> 
+                                        <div layout="column" flex="10" class="text-bold mrg10-T">Add'tl 1000</div>
+                                    </div>
                                     <div layout="row" flex="100">
                                         <div layout="column" flex="10" class="text-bold mrg10-T">Range</div>
                                         <div layout="column" flex="10" class="text-bold mrg10-T">Low</div>
@@ -838,6 +845,11 @@
                                                 <input placeholder=" " name="" ui-event="" aria-label="Low"  ng-model="embroswitch.range_low_9">
                                             </md-input-container>
                                         </div>
+                                        <div layout="column" flex="10">
+                                            <md-input-container class="md-block first-box settings-margin-0">
+                                                <input placeholder=" " name="" ui-event="" aria-label="Low"  ng-model="embroswitch.range_low_10">
+                                            </md-input-container>
+                                        </div>
                                         <div layout="column" flex="5">&nbsp;</div>
                                     </div>
                                     <div layout="row" flex="100">
@@ -886,6 +898,11 @@
                                         <div layout="column" flex="10">
                                             <md-input-container class="md-block first-box settings-margin-0">
                                                 <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="embroswitch.range_high_9">
+                                            </md-input-container>
+                                        </div>
+                                        <div layout="column" flex="10">
+                                            <md-input-container class="md-block first-box settings-margin-0">
+                                                <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="embroswitch.range_high_10">
                                             </md-input-container>
                                         </div>
                                         <div layout="column" flex="5">&nbsp;</div>
@@ -946,8 +963,13 @@
                                                 <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="price_embroidery.pricing_9c">
                                             </md-input-container>
                                         </div>
+                                        <div layout="column" flex="10">
+                                            <md-input-container class="md-block first-box settings-margin-0">
+                                                <input placeholder=" " name="" ui-event="" aria-label="Low" ng-model="price_embroidery.pricing_10c">
+                                            </md-input-container>
+                                        </div>
                                         <div layout="column" flex="5" class="text-center mrg10-T">
-                                            <i class="icon icon-close cursor-p f-red"  ng-click="removeEmbroidery($index)"></i>
+                                            <i class="icon icon-close cursor-p f-red"  ng-click="removeEmbroidery($index)" ng-show="allow_access==1"></i>
 
                                         </div>
                                     </div>
@@ -955,7 +977,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click="addEmbroidery()">
+                                            <md-button class="bg-blue" ng-click="addEmbroidery()" ng-show="allow_access==1">
                                                 Add
                                             </md-button>
                                         </td>                                        
@@ -969,7 +991,7 @@
                 <md-tab label="Direct to Garment">
                     <md-content class="md-padding">
                         <div class="simple-table-container md-whiteframe-4dp">
-                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center">
+                            <div class="table-title padding-panelTitle" layout="row" layout-align="space-between center" ng-show="allow_access==1">
                                 <div class="table-title-text" flex="40">
                                     <label class="priceGridTr">Price Increase by %</label>
                                     <md-input-container class="first-box settings-margin-0 font-13-priceGrid">
@@ -984,7 +1006,7 @@
                                 </div>
                             </div>
                             <div class="ms-responsive-table-wrapper innertab-scroll">
-                                <table class="simple" id="directToGarment">
+                                <table class="simple" id="directToGarment" ng-class="{'disable-click': allow_access==0}">
                     <thead>
                         <tr>
                             <th class="secondary-text pricewidth-10 pricePad-10 pricePad-10">
@@ -1103,7 +1125,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close cursor-p" ng-click="removeGarment($index)"></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeGarment($index)" ng-show="allow_access==1" ></i>
                             </td>
                         </tr>   
                                            
@@ -1112,7 +1134,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click="addGarment()">
+                                            <md-button class="bg-blue" ng-click="addGarment()" ng-show="allow_access==1">
                                                     ADD
                                             </md-button>
                                         </td>                                        
@@ -1128,7 +1150,7 @@
                         <div class="simple-table-container md-whiteframe-4dp">
                             
                             <div class="ms-responsive-table-wrapper innertab-scroll">
-                                <table class="simple" id="garmentMarkup">
+                                <table class="simple" id="garmentMarkup" ng-class="{'disable-click': allow_access==0}">
                     <thead>
                         <tr>
                             <th class="secondary-text pricewidth-10 pricePad-10 pricePad-10">
@@ -1167,7 +1189,7 @@
                                 </md-input-container>
                             </td>
                             <td class="pricewidth-10">
-                                <i class="icon icon-close cursor-p" ng-click="removeGarmentMackup($index)"></i>
+                                <i class="icon icon-close cursor-p" ng-click="removeGarmentMackup($index)" ng-show="allow_access==1"></i>
                             </td>
                         </tr>   
                                            
@@ -1176,7 +1198,7 @@
                                 <table> 
                                     <tr>
                                         <td class="p-16">
-                                            <md-button class="bg-blue" ng-click="addGarmentMackup()">
+                                            <md-button class="bg-blue" ng-click="addGarmentMackup()" ng-show="allow_access==1">
                                                     ADD
                                             </md-button>
                                         </td>                                        
@@ -1192,11 +1214,11 @@
         </md-content>
         <div class="float-right">
 
-                    <md-button class="bg-blue" ng-click="duplicate(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)" type="button" >
+                    <md-button ng-show="role_slug=='SM' || role_slug=='CA' || role_slug=='AM'"  class="bg-blue" ng-click="duplicate(price,allPriceGrid,allScreenPrimary,allScreenSecondary,allGarmentMackup,allGarment,embroswitch,allEmbroidery)" type="button" >
                             Duplicate Price Grid
                     </md-button>
 
-                    <md-button class="bg-blue" type="submit"  ng-disabled="priceForm.$invalid">
+                    <md-button ng-show="allow_access==1" class="bg-blue" type="submit"  ng-disabled="priceForm.$invalid">
                             SAVE
                     </md-button>
 

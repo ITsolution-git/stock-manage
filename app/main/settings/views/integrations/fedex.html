@@ -1,0 +1,42 @@
+<div class="content client-list-page stockkup-content-table-container custom-tabs-content">
+    <div class="md-whiteframe-4dp stokkup-main-tableview">
+	    <md-content class="">
+	        <div layout="row" layout-wrap="nowrap" class="client-live-nation p-30">
+	            <div flex-xs flex-gt-xs="50" layout="column">
+	                <md-card class="custom-fullbox-shadow">
+	                    <md-card-header layout-align="space-between center">
+	                        <md-card-header-text>
+	                            <span class="md-title">Fedex Information</span>
+	                        </md-card-header-text>
+	                        <md-menu  ng-show="allow_access==1">
+	                            <md-button aria-label="fedex Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+	                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+	                            </md-button>
+	                            <md-menu-content width="4" ng-click="OpenForm(ev,fedex,'fedex/fedex-dialog.html')">
+	                                <md-menu-item>
+	                                    <md-button>
+	                                        Edit
+	                                    </md-button>
+	                                </md-menu-item>
+	                            </md-menu-content>
+	                        </md-menu>
+	                    </md-card-header>
+	                    <md-card-content class="custom-desc-box">
+	                        <div class="h5 text-semibold">Key</div>
+	                        <span>{{fedex.key}}</span>
+	                        <div class="h5 text-semibold">Password</div>
+	                        <span>{{fedex.password}}</span>
+	                        <div class="h5 text-semibold">Account Number</div>
+	                        <span>{{fedex.account_number}}</span>
+	                        <div class="h5 text-semibold">Meter Number</div>
+	                        <span>{{fedex.meter_number}}</span>
+							<div class="h5 text-semibold">Test Mode</div>
+	                        <span ng-if="fedex.is_live==1">No</span>
+	                        <span ng-if="fedex.is_live==0">Yes</span>	                        
+	                    </md-card-content>
+	                </md-card>
+	            </div>
+	        </div>
+	    </md-content>
+	</div>
+</div>

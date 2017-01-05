@@ -20,6 +20,7 @@ class DistributionController extends Controller {
 
     public function __construct(Order $order,Common $common,Product $product, Distribution $distribution)
     {
+        parent::__construct();
         $this->order = $order;
         $this->common = $common;
         $this->product = $product;
@@ -32,13 +33,29 @@ class DistributionController extends Controller {
 
         $order_data = $this->common->GetTableRecords('orders',array('id' => $post_all['order_id']),array());
 
-        $dist_addr = $this->common->GetTableRecords('client_distaddress',array('client_id' => $order_data[0]->client_id),array());
+        $post_all['id'] = $post_all['order_id'];
+        $dist_addr = $this->distribution->getDistAddress($post_all);
+        unset($post_all['id']);
 
         $distribution_address = array();
         $client_distaddress = array();
+        
         foreach ($dist_addr as $addr) {
+        
             $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
             $distribution_address[] = $addr;
+            if($addr->shipping_type_id == 1)
+            {
+                $addr->method_arr = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => 1),array());
+            }
+            else if($addr->shipping_type_id == 2)
+            {
+                $addr->method_arr = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => 2),array());
+            }
+            else
+            {
+                $addr->method_arr = array();   
+            }
         }
 
         $products = $this->distribution->getAllDustributionProducts($post_all['order_id']);
@@ -74,6 +91,7 @@ class DistributionController extends Controller {
     public function getDistAddress()
     {
         $post = Input::all();
+        $post['id'] = $post['order_id'];
         $dist_addr = $this->distribution->getDistAddress($post);
 
         $client_distaddress = array();
@@ -171,10 +189,21 @@ class DistributionController extends Controller {
         }
 
         $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+        $order_address_data = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
+
+        $shipping_type_id = '';
+        $shipping_method_id = '';
+        
+        if(!empty($order_address_data))
+        {
+            $shipping_type_id = $order_address_data[0]->shipping_type_id;
+            $shipping_method_id = $order_address_data[0]->shipping_method_id;
+        }
 
         if(empty($shipping_data))
         {
-            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']));
+            $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
+            $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'company_id' => $post['company_id'],'shipping_type_id' => $shipping_type_id,'shipping_method' => $shipping_method_id));
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('product_id' => $post['product_id'], 'order_id' => $post['order_id'], 'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
         }
         else
@@ -221,7 +250,8 @@ class DistributionController extends Controller {
                     {
                         if($product_address_size_mapping[0]->distributed_qnty > $product['distributed_qnty'])
                         {
-                            $remaining_qnty = $product_address_size_mapping[0]->distributed_qnty - $product['distributed_qnty'];
+                            //$remaining_qnty = $product_address_size_mapping[0]->distributed_qnty - $product['distributed_qnty'];
+                            $remaining_qnty = $product['qnty_purchased'] - $product['distributed_qnty'];
                         }
                         else
                         {

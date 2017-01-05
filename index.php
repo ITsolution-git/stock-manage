@@ -1,24 +1,56 @@
 <!doctype html>
 <html ng-app="fuse">
     <head>
-        <base href="/stokkup/">
+        <base href="/">
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+        <!-- <meta property="og:site_name" content="app.stokkup.com"/>
+        <meta property="og:description" content="Stokkup" />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/og_stokkup_logo.png" />
+
+ -->
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="profile">
+        <meta property="og:title" content="Stokkup">
+        <meta property="og:url" content="https://app.stokkup.com">
+        <meta property="og:site_name" content="app.stokkup.com" />
+        <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/stokkup-fb-logo.jpg" />
+        <meta property="og:first_name" content="Stokkup">
+        <meta property="og:last_name" content="Software">
+<!-- 
+
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="app.stokkup.com" />
+        <meta name="twitter:description" content="app.stokkup.com" />
+        <meta name="twitter:image" content="https://app.stokkup.com/assets/images/logos/og_logo.png" />
+ -->
+
+
+
         <title>STOKKUP</title>
 
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <link rel="shortcut icon" type="image/x-icon" href="/stokkup/favicon.ico" />
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link rel="stylesheet" href="styles/font-awesome.min.css">
+        <link rel="stylesheet" href="styles/mdPickers.min.css">
         <link rel="stylesheet" href="styles/vendor.css">
-
         <link rel="stylesheet" href="styles/app.css">
         <link rel="stylesheet" href="styles/stokkup-custom.css">
-        <link rel="stylesheet" href="styles/mdPickers.min.css">
+        <link rel="stylesheet" href="styles/stokkup-custom-global.css">
+        <link rel="stylesheet" href="styles/codepen.min.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-
         
+        <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
+        async defer></script>
+        <script src="//fast.appcues.com/21130.js"></script>
+        <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+
         <script>
             var timer;
             function loadscreen()
@@ -73,12 +105,18 @@
 
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
 
+    
+
     <!-- <ms-theme-options></ms-theme-options> -->
     <script src="scripts/vendor.js"></script>
+   
     <!--<script src="scripts/mdPickers.min.js"></script>-->
     <!--<script src="scripts/multiselect/lodash.js"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>-->
     <script src="scripts/other/lodash.js"></script>
+    <!--<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>-->
+   
+   <script src="scripts/other/tinymce.js"></script>
     <script>
      _.contains = _.includes;
     </script>
@@ -171,9 +209,12 @@
     <script src="app/main/order/dialogs/addDesign/addDesign.controller.js"></script>
     <script src="app/main/order/dialogs/addAddress/addAddress.controller.js"></script>
     <script src="app/main/order/dialogs/information/information.controller.js"></script>
+    <script src="app/main/order/dialogs/information/affiliateInformation.controller.js"></script>
     <script src="app/main/order/dialogs/approveorder/approveorder.controller.js"></script>
     <script src="app/main/order/dialogs/position/position-dialog.controller.js"></script>
-    
+    <script src="app/main/order/views/notes/notes.controller.js"></script>
+    <script src="app/main/order/dialogs/editOrderNote/editOrderNote.controller.js"></script>
+
 
     <!-- CLIENT FILES START -->
     <script src="app/main/client/client.module.js"></script>    
@@ -198,6 +239,11 @@
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
     <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
+
+    <!--Production--> 
+    <script src="app/main/production/production.module.js"></script>
+    <script src="app/main/production/production.controller.js"></script>
+
     <!-- Settings -->
     <script src="app/main/settings/settings.module.js"></script>
     <script src="app/main/settings/settings.controller.js"></script>
@@ -220,6 +266,14 @@
     <script src="app/main/settings/views/vendor/vendor.controller.js"></script>
     <script src="app/main/settings/views/vendor/viewContact/viewContact.controller.js"></script>
     <script src="app/main/settings/views/sales/sales.controller.js"></script>
+    <script src="app/main/settings/views/approvals/approval.controller.js"></script>
+    <script src="app/main/settings/views/labor/labor.controller.js"></script>
+    <script src="app/main/settings/dialogs/labor/addLabor.controller.js"></script>
+    <script src="app/main/settings/views/machine/machine.controller.js"></script>
+    <script src="app/main/settings/views/box/box.controller.js"></script>
+    <script src="app/main/settings/views/emailTemplate/emailTemplate.controller.js"></script>
+    <script src="app/main/settings/views/emailTemplate/emailTemplateInfoController.js"></script>
+
 
     <script src="app/main/settings/dialogs/ssActivewear/ssActivewear-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/authorizeNet/authorizeNet-dialog.controller.js"></script>
@@ -231,6 +285,11 @@
     <script src="app/main/finishing/finishing.module.js"></script>
     <script src="app/main/finishing/finishing.controller.js"></script>
     <script src="app/main/finishing/dialogs/editFinishing/editFinishing-dialog.controller.js"></script>
+
+    <!-- Finishing Queue-->
+    <script src="app/main/finishingQueue/finishingQueue.module.js"></script>
+    <script src="app/main/finishingQueue/finishingQueue.controller.js"></script>
+    <script src="app/main/finishingQueue/dialogs/ScheduleFinishing.controller.js"></script>
 
     <!-- Art -->
     <script src="app/main/art/art.module.js"></script>
@@ -289,5 +348,10 @@
     <link rel="stylesheet" href="scripts/angular-xeditable/xeditable.css">
     <script src="scripts/drag/angular-dragdrop.js"></script>
     <script src="scripts/clipboard.js"></script>
+    <script src="scripts/other/vs-autocomplete-validator.js"></script>
+
+    
+
+
 </body>
 </html>

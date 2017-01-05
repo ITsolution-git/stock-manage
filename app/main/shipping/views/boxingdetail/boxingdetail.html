@@ -3,17 +3,17 @@
         <table class="tbl-typ2">
             <tr>
                 <td>
-                    <div class="header-typ1">Boxing Details for Shipment #{{shipping_id}}</div>
+                    <div class="header-typ1">Boxing Details for Shipment #{{shipping.display_number}}</div>
                     <div layout="row" class="pd10">
                         <div flex="30" layout="column" class="pd10-R bdr1-R">
-                            <div class="header-typ3">Box ID</div>
+                            <div class="header-typ3">Box ID <span class="pull-right">Total Box Count : {{total_box_qnty}}</span></div>
                             <div class="order-container" ms-scroll class="tbl-scroll-cntnr">
                                 <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="box in shippingBoxes" ng-class="{activeAddress: box.id==shipping_box_id}" ng-click="select_box(box.id)">
                                     <div layout="column" flex="90">
                                         <div layout="row" flex="100" class="mrg5-B">
                                             <div layout="column" flex="50" class="mrg10-R">
                                                 <div>Box ID</div>
-                                                <div class="gray-text">{{ box.id }}</div>
+                                                <div class="gray-text">{{ box.count }}</div>
                                             </div>
                                             <div layout="column" flex="50">
                                                 <div>Number of Box</div>
@@ -44,7 +44,7 @@
                                     <thead>
                                         <tr>
                                             <th class="secondary-text" width="10%">Box Item ID</th>
-                                            <th class="secondary-text" width="10%">Size Group</th>
+                                            <!-- <th class="secondary-text" width="10%">Size Group</th> -->
                                             <th class="secondary-text" width="10%">Product</th>
                                             <th class="secondary-text" width="10%">Product Color</th>
                                             <th class="secondary-text" width="10%">Size</th>
@@ -52,14 +52,15 @@
                                             <th class="secondary-text" width="10%">MD</th>
                                             <th class="secondary-text" width="10%">Spoil</th>
                                             <th class="secondary-text" width="10%">Actual</th>
+                                            <th class="secondary-text" width="20%">Box Type</th>
                                             <th class="secondary-text" width="20%">Re-Allocate</th>
                                         </tr>
                                     </thead>
                                     <tbody> 
                                         <tr ng-repeat="item in box_items" class="cursor-p">
-                                            <td>{{ item.box_item_id}}</td>
-                                            <td>{{ item.size_group_name}}</td>
-                                            <td>{{ item.name}}</td>
+                                            <td>{{ item.count}}</td>
+                                            <!-- <td>{{ item.size_group_name}}</td> -->
+                                            <td>{{ item.product_name}}</td>
                                             <td>{{ item.color_name}}</td>
                                             <td>{{ item.size}}</td>
                                             <td>{{ item.boxed_qnty}}</td>
@@ -75,8 +76,13 @@
                                             </td>
                                             <td>{{ item.actual}}</td>
                                             <td>
+                                                <md-select aria-label="box_setting_id" ng-model="box_setting_id" class="mrg6-TB" ng-change="changeBoxType(item.box_id,box_setting_id)">
+                                                    <md-option ng-selected="type.id == item.box_setting_id" ng-repeat="type in boxType" value="{{type.id}}">{{type.box_type}}</md-option>
+                                                </md-select>
+                                            </td>
+                                            <td>
                                                 <md-select aria-label="shipping_box_id" ng-model="shipping_box_id" class="mrg6-TB" ng-change="reAllocate(shipping_box_id,item.box_item_id)">
-                                                    <md-option ng-repeat="sbox in shippingBoxes" value="{{sbox.id}}">{{sbox.id}}</md-option>
+                                                    <md-option ng-repeat="sbox in shippingBoxes" value="{{sbox.id}}">{{sbox.count}}</md-option>
                                                 </md-select>
                                             </td>
                                         </tr>                    
@@ -90,8 +96,8 @@
         </table>
     </div>
     <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button aria-label="Back" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.shipmentdetails({id:shipping_id})"><span class="ng-scope">Back</span></button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save &amp; Print Labels" ui-sref="app.shipping.shipmentoverview({id:shipping_id})"><span class="ng-scope">Save &amp; Print Labels</span></button>
+        <button aria-label="Back" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.shipmentdetails({id:shipping.display_number})"><span class="ng-scope">Back</span></button>
+        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save &amp; Print Labels" ui-sref="app.shipping.shipmentoverview({id:shipping.display_number})"><span class="ng-scope">Save &amp; Print Labels</span></button>
         <!-- <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button> -->
     </md-dialog-actions>
 </div>

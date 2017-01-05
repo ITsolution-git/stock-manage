@@ -26,6 +26,7 @@ class ApiController extends Controller {
     */
     public function __construct(Login $login, Api $api) {
 
+        parent::__construct();
         $this->login = $login;
         $this->api = $api;
       

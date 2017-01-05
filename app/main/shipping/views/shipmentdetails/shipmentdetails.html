@@ -1,127 +1,186 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="simple-table-container md-whiteframe-4dp m-t-20 m-b-20 m-r-15 pd15" >
-        <table class="tbl-typ2">
+<div class="content client-list-page stockkup-content-table-container shipping-details-page">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=60>
+              Shipping Details for Shipment #{{shipping.shipping_display_number}}
+            </div>
+        </div>
+    </div>
+    <div class="inner-full-box mt-20">
+        <table class="tbl-typ2 notable-border">
             <tr>
                 <td>
-                    <div class="header-typ1">Shipping Details for Shipment #{{shipping.shipping_id}}</div>
-                    <div layout="row" class="pd10">
-                        <div flex="30" layout="column" class="pd10-R bdr1-R">
-                            <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <div>Shipping ID</div>
-                                    <div class="gray-text">{{ shipping.shipping_id }}</div>
-                                </div>
-                                <div layout="column" flex="50">
-                                    <md-select ng-model="company.prime_address_state" placeholder="Status" class="mrg6-TB">
-                                        <md-option value="0">Status</md-option>
-                                        <md-option>Pending</md-option>
-                                        <md-option>Approved</md-option>
+                    <div layout="row">
+                        <div layout="column" class="shipping-details-left mr-20 p-20 white-bg">
+                        <div class="box-zerospace">
+                            <div layout="column" flex="100" class="mb-20">
+                                    <md-select ng-model="shipping.approval_id" placeholder="Status" class="mrg6-TB" ng-change="updateShippingAll('approval_id',shipping.approval_id,shipping.order_id)">
+                                        <md-option ng-selected="shipping.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                                     </md-select>
+                            </div>
+                            <div layout="row" flex="100" class="mb-20">
+                                <div layout="column" flex="40">
+                                    <div class="global-labels">Shipping ID</div>
+                                    <div class="global-text">{{ shipping.shipping_display_number }}</div>
+                                </div>
+                            
+                                <div layout="column" flex="30">
+                                    <div class="global-labels">Order ID</div>
+                                    <div class="globa-text">{{ shipping.display_number }}</div>
+                                </div>
+                                <div layout="column" flex="30">
+                                    <div class="global-labels">Client ID</div>
+                                    <div class="global-text">{{ shipping.client_display_number }}</div>
                                 </div>
                             </div>
-                            <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <div>Order ID</div>
-                                    <div class="gray-text">{{ shipping.order_id }}</div>
-                                </div>
-                                <div layout="column" flex="50" class="mrg10-R">
-                                    <div>Client ID</div>
-                                    <div class="gray-text">{{ shipping.client_id }}</div>
-                                </div>
-                            </div>
-                            <div layout="row" flex="100" class="mrg5-B">
+                            <div layout="row" flex="100" class="mb-20">
                                 <div layout="column" flex="100">
-                                    <div>Client</div>
-                                    <div class="gray-text">{{ shipping.client_company }}</div>
+                                    <div class="global-labels">Client</div>
+                                    <div class="global-text">{{ shipping.client_company }}</div>
                                 </div>
-                            </div>
-                            <div layout="row" flex="100" class="mrg5-B">
                                 <div layout="column" flex="100">
-                                    <div>Client Distribution</div>
-                                    <div class="gray-text">Chris niswandee</div>
+                                    <div class="global-labels">Client Distribution</div>
+                                    <div class="global-text">{{ shipping.description}}</div>
                                 </div>
                             </div>
-                            <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="30" class="mrg10-R mrg15-T">
-                                    <md-select ng-model="shipping.boxing_type" placeholder="Boxing Type" class="mrg6-TB" name="boxing_type" ng-change="updateShippingAll('boxing_type',shipping.boxing_type,shipping.shipping_id)">
+                            <div layout="row" flex="100" class="mt-20">
+                                <div layout="column" flex="30" class="mrg10-R">
+                                    <md-select ng-model="shipping.boxing_type" placeholder="Boxing Type" class="mt-2 mb-0" name="boxing_type" ng-change="updateShippingAll('boxing_type',shipping.boxing_type,shipping.shipping_id)">
                                         <md-option value="">Boxing Type</md-option>
                                         <md-option ng-selected="shipping.boxing_type==0" value="0">Retail</md-option>
                                         <md-option ng-selected="shipping.boxing_type==1" value="1">Standard</md-option>
                                     </md-select>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100">
-                                        <input placeholder="Shipping By" name="Shipping By">
+                                <div layout="column" flex="35" class="mrg10-R shipcustomfield">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                        <input ng-if="shipping.shipping_by != '0000-00-00'" type="text" placeholder="Shipping By" ng-model="shipping.shipping_by" disabled="">
+                                        <input ng-if="shipping.shipping_by == '0000-00-00'" type="text" placeholder="Shipping By" disabled="">
                                     </md-input-container>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100">
-                                        <input placeholder="In Hands By" name="In Hands By">
+                                <div layout="column" flex="35" class="mrg10-R shipcustomfield">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                        <input ng-if="shipping.in_hands_by != '0000-00-00'" type="text" placeholder="In Hands By" ng-model="shipping.in_hands_by" disabled="">
+                                        <input ng-if="shipping.in_hands_by == '0000-00-00'" type="text" placeholder="In Hands By" disabled="">
                                     </md-input-container>
                                 </div>
                             </div>
-                            <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="30" class="mrg10-R mrg15-T">
-                                    <md-select ng-model="shipping.shipping_type_id" placeholder="Shipping Type" class="mrg6-TB" name="shipping_type_id" ng-change="updateShippingAll('shipping_type_id',shipping.shipping_type_id,shipping.shipping_id)">
+                            <div layout="row" flex="100" class="mt-20 mb-20">
+                                <div layout="column" flex="50" class="mrg10-R">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                    <span class="mb-20">Date Shipped</span>
+                                        <input aria-label="Date Shipped" class="mt-10" kendo-date-picker ng-model="shipping.date_shipped" k-ng-model="dateObject3" ui-event="{ change : 'UpdateShippingDate(\'date_shipped\',shipping.date_shipped,shipping.shipping_id)' }"/>
+                                    </md-input-container>
+                                </div>
+                                <div layout="column" flex="50" class="mrg10-R">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                    <span class="mb-20">Fully Shipped</span>
+                                        <input aria-label="Fully Shipped" class="mt-10" kendo-date-picker ng-model="shipping.fully_shipped" k-ng-model="dateObject4" ui-event="{ change : 'UpdateShippingDate(\'fully_shipped\',shipping.fully_shipped,shipping.shipping_id)' }"/>
+                                    </md-input-container>
+                                </div>
+                            </div>
+                            <div layout="row" flex="100" class="mt-20">
+                                <div layout="column" flex="100" class="mrg10-R">
+                                    <md-select ng-model="shipping.shipping_type_id" placeholder="Shipping Type" class="mt-2 mb-0" name="shipping_type_id" ng-change="updateShippingAll('shipping_type_id',shipping.shipping_type_id,shipping.shipping_id)">
                                         <md-option>Shipping Type</md-option>
                                         <md-option value="1" ng-selected="shipping.shipping_type_id == 1">UPS</md-option>
                                         <md-option value="2" ng-selected="shipping.shipping_type_id == 2">FEDEX</md-option>
+                                        <md-option value="3" ng-selected="shipping.shipping_type_id == 3">Local Messenger</md-option>
                                     </md-select>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100">
-                                        <input placeholder="Date Shipped" name="Date Shipped">
+                                
+                            </div>
+
+                            
+                            <div layout="row" flex="100" class="mt-20">
+                                <div layout="column" flex="50" class="mrg10-R pull-left" ng-show="shipping.shipping_type_id == 1">
+                                    <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="mt-2 mb-0" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
+                                        <md-option>Shipping Method</md-option>
+                                        <md-option value="14" ng-selected="shipping.shipping_method == '14'">UPS Next Day Air Early</md-option>
+                                        <md-option value="01" ng-selected="shipping.shipping_method == '01'">UPS Next Day Air</md-option>
+                                        <md-option value="13" ng-selected="shipping.shipping_method == '13'">UPS Next Day Air Saver</md-option>
+                                        <md-option value="59" ng-selected="shipping.shipping_method == '59'">UPS 2nd Day Air A.M.</md-option>
+                                        <md-option value="02" ng-selected="shipping.shipping_method == '02'">UPS 2nd Day Air</md-option>
+                                        <md-option value="12" ng-selected="shipping.shipping_method == '12'">UPS 3 Day Select</md-option>
+                                        <md-option value="03" ng-selected="shipping.shipping_method == '03'">UPS Ground</md-option>
+                                    </md-select>
+                                </div>
+
+
+                                <div layout="column" flex="50" class="mrg10-R" ng-show="shipping.shipping_type_id == 2">
+                                    <md-select ng-model="shipping.shipping_method" placeholder="Shipping Method" class="pull-left mt-2 mb-0" name="shipping_method" ng-change="updateShippingAll('shipping_method',shipping.shipping_method,shipping.shipping_id)">
+                                        <md-option>Shipping Method</md-option>
+                                        <md-option value="FIRST_OVERNIGHT" ng-selected="shipping.shipping_method == 'FIRST_OVERNIGHT'">FedEx First Overnight</md-option>
+                                        <md-option value="PRIORITY_OVERNIGHT" ng-selected="shipping.shipping_method == 'PRIORITY_OVERNIGHT'">FedEx Priority Overnight</md-option>
+                                        <md-option value="STANDARD_OVERNIGHT" ng-selected="shipping.shipping_method == 'STANDARD_OVERNIGHT'">FedEx Standard Overnight</md-option>
+                                        <md-option value="FEDEX_2_DAY" ng-selected="shipping.shipping_method == 'FEDEX_2_DAY'">FedEx 2Day</md-option>
+                                        <md-option value="FEDEX_EXPRESS_SAVER" ng-selected="shipping.shipping_method == 'FEDEX_EXPRESS_SAVER'">FedEx Express Saver</md-option>
+                                        <md-option value="FEDEX_GROUND" ng-selected="shipping.shipping_method == 'FEDEX_GROUND'">FedEx Ground</md-option>
+                                        <md-option value="GROUND_HOME_DELIVERY" ng-selected="shipping.shipping_method == 'GROUND_HOME_DELIVERY'">FedEx Home Delivery</md-option>
+                                    </md-select>
+                                </div>
+
+                                <div layout="column" flex="50" class="mrg10-R pull-left" ng-show="shipping.shipping_type_id == 3">
+                                      <md-input-container flex="50" class="margin-0">
+                                        <input placeholder="Shipping Method" ng-model="shipping.shipping_method"  ui-event="{ change : 'updateShippingAll(\'shipping_method\',shipping.shipping_method,shipping.shipping_id)' }">
                                     </md-input-container>
                                 </div>
-                                <div layout="column" flex="35" class="mrg10-R">
-                                    <md-input-container flex="100">
-                                        <input placeholder="Fully Shipped" name="Fully Shipped">
+
+                                <div layout="column" flex="50" class="pull-right">
+                                    <div layout="column" flex="100">
+                                    <div class="global-labels">Shipping Status</div>
+                                    <div ng-if="shipping.shipping_status == 1" class="global-text">Waiting To Ship</div>
+                                    <div ng-if="shipping.shipping_status == 2" class="global-text">Order In Process</div>
+                                    <div ng-if="shipping.shipping_status == 3" class="global-text">Shipped</div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div layout="row" flex="100" class="mt-20">
+                                <div layout="column" flex="100">
+                                    <md-input-container flex="100" class="margin-0">
+                                        <textarea aria-label="Address">{{shipping.fulladdress}}</textarea>
                                     </md-input-container>
                                 </div>
                             </div>
-                            <div layout="row" flex="100" class="mrg5-B">
+                            <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="100">
-                                    <md-input-container flex="100">
-                                        <textarea>{{shipping.description}} {{shipping.attn}} {{shipping.address}} {{shipping.address2}} {{shipping.city}} {{shipping.zipcode}} {{shipping.state}} {{shipping.country}}</textarea>
-                                    </md-input-container>
-                                </div>
-                            </div>
-                            <div layout="row" flex="100" class="mrg5-B">
-                                <div layout="column" flex="100">
-                                    <md-input-container flex="100">
+                                    <md-input-container flex="100" class="margin-0">
                                         <input placeholder="SKUs" name="SKUs">
                                     </md-input-container>
                                 </div>
                             </div>
-                            <div layout="row" flex="100" class="mrg5-B">
+                            <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="100">
-                                    <md-input-container flex="100">
-                                        <textarea placeholder="Note" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">{{shipping.shipping_note}}</textarea>
+                                    <md-input-container flex="100" class="margin-0">
+                                        <textarea aria-label="Note" placeholder="Note" ng-model="shipping.shipping_note" name="shipping_note" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">{{shipping.shipping_note}}</textarea>
                                     </md-input-container>
                                 </div>
                             </div>
-                            <div layout="row" flex="100" class="mrg5-B">
+                            <div layout="row" flex="100" class="mt-20">
                                 <div layout="column" flex="100">
-                                    <md-input-container flex="100">
-                                        <input placeholder="Cost To Ship" ng-model="shipping.cost_to_ship" name="cost_to_ship" ui-event="{ change : 'updateShippingAll($event.target.name,$event.target.value,shipping.shipping_id)'}">
-                                    </md-input-container>
+                                    <div class="global-labels">Cost To Ship</div>
+                                    <div class="global-texts">{{ shipping.cost_to_ship |  currency : $ : 2}}</div>
                                 </div>
                             </div>
                         </div>
-                        <div flex="70" layout="column" class="mrg10-L">
+                        </div>
+
+                        <div class="shipping-details-right p-20 white-bg" layout="column">
+                            <div class="box-zerospace">
                             <table class="tbl-typ2">
                                 <tr>
                                     <td>
-                                        <div class="header-typ1 font-13">
-                                            United Center
-                                            <div class="gray-text font-11 mrg5-T">Client Distribution ID: {{shipping.shipping_id}}</div>
+                                        <div class="layout-row pb-20">
+                                            <div class="stokkup-title-h4">United Center
+                                                <span class="global-labels">Client Distribution ID: {{shipping.shipping_display_number}}</span>
+                                            </div>
                                         </div>
-                                        <div class="pd10-LR tbl-scroll-cntnr" ms-scroll>
+                                        <div class="tbl-scroll-cntnr" ms-scroll>
                                             <div class="ms-responsive-table-wrapper">
-                                                <table class="simple hover simple-tbl1 tbl-typ3">
+                                                <table class="dataTable row-border">
                                                     <thead>
                                                         <tr>
-                                                            <th class="secondary-text" width="10%">Size Group</th>
+                                                            <!-- <th class="secondary-text" width="10%">Size Group</th> -->
                                                             <th class="secondary-text" width="10%">Product #</th>
                                                             <th class="secondary-text" width="10%">Color</th>
                                                             <th class="secondary-text" width="10%">Size</th>
@@ -134,7 +193,7 @@
                                                     </thead>
                                                     <tbody> 
                                                         <tr ng-repeat="item in shippingItems" class="cursor-p">
-                                                            <td>{{ item.misc_value}}</td>
+                                                            <!-- <td>{{ item.misc_value}}</td> -->
                                                             <td>{{ item.name}}</td>
                                                             <td>{{ item.color_name}}</td>
                                                             <td>{{ item.size}}</td>
@@ -155,15 +214,16 @@
                                     </td>
                                 </tr>
                             </table>
+                            </div>
                         </div>
                     </div>
                 </td>
             </tr>
         </table>
+        <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+            <button aria-label="Back" ng-click="cancel()" class="stokkup-custom-btn1 stokkup-blue-btn mb-30 mr-20" type="button" ui-sref="app.shipping.orderwaitship({id:shipping.display_number})"><span class="ng-scope">Back</span>
+            </button>
+            <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mb-30" aria-label="Box Shipment" ng-click="box_shipment(shippingItems)"><span class="ng-scope">Box Shipment</span></button>
+        </md-dialog-actions>
     </div>
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button aria-label="Back" ng-click="cancel()" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.orderwaitship({id:shipping.order_id})"><span class="ng-scope">Back</span>
-        </button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Box Shipment" ng-click="box_shipment(shippingItems)"><span class="ng-scope">Box Shipment</span></button>
-    </md-dialog-actions>
 </div>

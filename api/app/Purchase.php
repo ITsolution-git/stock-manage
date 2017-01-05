@@ -8,6 +8,7 @@ use DateTime;
 use App\Common;
 
 
+
 class Purchase extends Model {
 
 	public function __construct(Common $common) 
@@ -21,12 +22,13 @@ class Purchase extends Model {
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
         }
-
+        $this->common->getDisplayNumber('purchase_order',$post['company_id'],'company_id','po_id','yes');
 		$result = DB::table('purchase_order as po')
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date'))
+					->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.display_number,ord.id,ord.status,po.display_number as po_display,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id']);
@@ -39,10 +41,11 @@ class Purchase extends Model {
                                 ->orWhere('ord.id','LIKE', '%'.$search.'%')
                                 ->orWhere('cl.client_company','LIKE', '%'.$search.'%')
                                 ->orWhere('v.name_company','LIKE', '%'.$search.'%')
+                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                 ->orWhere('po.date','LIKE', '%'.$search.'%');
                       });
                   	}
-                 $result = $result->GroupBy('po.po_id')
+                 $result = $result->GroupBy('po.order_id')
 				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
 				 ->skip($post['start'])
                  ->take($post['range'])
@@ -69,9 +72,27 @@ class Purchase extends Model {
 		//echo "<pre>"; print_r($result); die();
 		return $returnData;
 	}
+
+	public function getAllPOdata()
+    {
+        $whereConditions = ['po.is_active' => '1'];
+        $listArray = ['po.po_id','po.display_number','po.order_id','po.vendor_id','v.name_company'];
+        $poData = DB::table('purchase_order as po')
+        				->leftJoin('vendors as v','v.id','=','po.vendor_id')
+                        ->select($listArray)
+                        ->where($whereConditions)->get();
+        $allData = array ();
+        foreach($poData as $data) {
+          
+            $allData[$data->order_id][] = $data;
+        }
+        return $allData;
+    }
+
+    // *****
 	function GetPodata($id,$company_id)
 	{
-		$result = DB::select("SELECT v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,pg.name,vc.id as contact_id, vc.first_name,vc.last_name,v.url,po.po_id,
+		$result = DB::select("SELECT v.name_company,cl.client_company,ord.id,ord.job_name,ord.client_id,cl.display_number,pg.name,vc.id as contact_id, vc.first_name,vc.last_name,v.url,po.po_id,
 							po.order_id,po.vendor_id,po.vendor_contact_id,po.po_type,po.shipt_block,po.vendor_charge,po.order_total,po.vendor_instruction,po.receive_note,po.complete,
 							DATE_FORMAT(po.ship_date, '%m/%d/%Y') as ship_date,
 							DATE_FORMAT(po.hand_date, '%m/%d/%Y') as hand_date,DATE_FORMAT(po.arrival_date, '%m/%d/%Y') as arrival_date,DATE_FORMAT(po.expected_date, '%m/%d/%Y') as expected_date,
@@ -100,6 +121,7 @@ class Purchase extends Model {
 		
 		return $result;
 	}
+	// *****
 	function ListSgData($id)
 	{
 		$result = DB::table('purchase_list as pl')
@@ -116,20 +138,33 @@ class Purchase extends Model {
 					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
 					->JOIN('order_design as od','od.id','=','pd.design_id')
 					->JOIN('orders as ord','od.order_id','=','ord.id')
-					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
+					->JOIN('users as usr','usr.id','=','ord.company_id')
+					->JOIN('staff as stf','stf.user_id','=','usr.id')
 				    ->JOIN('products as p','p.id','=','pd.product_id')
+				    ->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
+				    ->leftJoin('client_address as ca','cl.client_id','=',DB::raw("ca.client_id AND ca.address_shipping = '1' "))
+				    ->leftJoin('state as st','st.id','=',"ca.state")
+				    ->leftjoin('users as usr1','usr1.id','=','ord.account_manager_id')
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select('v.name_company','v.url','p.name as product_name','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',DB::raw('(select count(*) from purchase_notes where po_id=po.po_id) as total_note'),'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
-                      DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
-                      DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
-                      DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*' )
+					->leftjoin('invoice as inv','inv.order_id','=','ord.id')
+					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.billing_email','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.id as order_id','ord.custom_po','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',
+						DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
+						DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),
+                        DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),
+                        DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
+                        DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),
+                        DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
+                        DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),
+                        DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',
+                      DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','po.login_id','pol.*','ord.approval_id','usr1.name as account_manager','ca.street','ca.city','st.code as state_name','ca.postal_code','ca.address',DB::raw('DATE_FORMAT(inv.payment_due_date, "%m/%d/%Y") as payment_due_date'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
 					->where('pd.qnty','<>','')
-					->where('pol.po_id','=',$po_id)
+					->where('po.display_number','=',$po_id)
 					->Where('ord.company_id','=',$company_id)
 				  	->get();
 
@@ -140,19 +175,43 @@ class Purchase extends Model {
 			foreach ($result as $key=>$value) 
           	{
 	            $result[$key]->po_type =$check_array[$value->po_type] ;
+	            $result[$key]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
           	}
 			array_walk_recursive($result[0], function(&$item) {
 	            $item = str_replace(array('00/00/0000'),array(''), $item);
 	        });
-		}
 
-		return $result;
+    		$count_note = DB::table('purchase_order as po')
+			->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+			->leftJoin('purchase_detail as pd','pd.id','=','pol.purchase_detail')
+			->leftJoin('order_design_position as odp','pd.design_id','=','odp.design_id')
+			->select('*')
+			->where('odp.is_delete','=','1')
+			->where('pd.is_delete','=','1')
+			->where('po.display_number','=',$po_id)
+			->Where('po.company_id','=',$company_id)
+			->GroupBy('odp.id')
+			->get();
+
+			//echo "<pre>"; print_r(count($count_note)); echo "</pre>"; die;
+			$result[0]->total_notes = count($count_note);              
+			return $result;
+		}
 	}
-	function getOrdarTotal($po_id)
+	function getOrdarTotal($po_id,$company_id=0)
 	{
+		if(!empty($company_id))
+	    {
+	        $where = ['po.display_number'=>$po_id, 'po.company_id'=>$company_id];
+	    }
+	    else
+	    {
+	        $where = ['po.po_id'=>$po_id];
+	    }
+
 		$result = DB::table('purchase_order as po')
 					->LeftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-					->where('po.po_id','=',$po_id)
+					->where($where)
 				  	->where('pol.status','=','1')
 				  	->select(DB::raw('sum(pol.qnty_ordered) as ordered'),'po.order_total as total_amount')
 				  	->get();
@@ -177,12 +236,19 @@ class Purchase extends Model {
    		$this->Update_Ordertotal($po_id);
     	return $result;
 	}
-	function Update_Ordertotal($po_id)
+	function Update_Ordertotal($po_id,$company_id=0)
 	{
-
+		if(!empty($company_id))
+	    {
+	        $where = ['po.display_number'=>$po_id, 'po.company_id'=>$company_id];
+	    }
+	    else
+	    {
+	        $where = ['po.po_id'=>$po_id];
+	    }
 		$value = DB::table('purchase_order as po')
 					->leftJoin('purchase_order_line as pol','po.po_id','=','pol.po_id')
-					->where('po.po_id','=',$po_id)
+					->where($where)
 					->where('pol.status','=',1)
 					->select(DB::raw('sum(pol.line_total) as total'),'po.vendor_charge')
 					->get();
@@ -191,9 +257,9 @@ class Purchase extends Model {
 		if(count($value)>0)
 		{	
 			$sum = 	$value[0]->total + $value[0]->vendor_charge; 
-	   		$result = DB::table('purchase_order')
-	   						->where('po_id','=',$po_id)
-	   						->update(array('order_total'=>$sum));
+	   		$result = DB::table('purchase_order as po')
+	   						->where($where)
+	   						->update(array('po.order_total'=>$sum));
 	    	return $result;
     	}
 	}
@@ -233,76 +299,109 @@ class Purchase extends Model {
    						->update(array('short'=>$short,'over'=>$over));
     	 return $result;
 	}
-	function GetPoReceived($po_id,$company_id)
+	function GetPoReceived($po_id,$company_id=0)
 	{
-		
+		if(!empty($company_id))
+	    {
+	        $where = ['po.display_number'=>$po_id, 'po.company_id'=>$company_id];
+	    }
+	    else
+	    {
+	        $where = ['po.po_id'=>$po_id];
+	    }
+
+
 		$result = DB::table('purchase_order as po')
 					->JOIN('purchase_order_line as pol','pol.po_id','=','po.po_id')
 					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
 					->JOIN('order_design as od','od.id','=','pd.design_id')
 					->JOIN('orders as ord','od.order_id','=','ord.id')
+					->JOIN('users as usr','usr.id','=','ord.company_id')
+					->JOIN('staff as stf','stf.user_id','=','usr.id')
 					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
 				    ->JOIN('products as p','p.id','=','pd.product_id')
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select('v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty',
+					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','cl.display_number','cl.billing_email','po.vendor_instruction','po.vendor_charge','ord.display_number as ord_display','po.display_number as po_display','ord.name as order_name','ord.custom_po','c.name as product_color','pd.sku','pd.size','pd.qnty',
 						DB::raw('(select count(*) from purchase_notes where po_id=po.po_id) as total_note'),'po.po_id',
-						'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(po.ship_date, "%m/%d/%Y") as ship_date'),
+						'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
                       DB::raw('DATE_FORMAT(po.expected_date, "%m/%d/%Y") as expected_date'),DB::raw('DATE_FORMAT(po.created_for_date, "%m/%d/%Y") as created_for_date'),
                       DB::raw('DATE_FORMAT(po.vendor_arrival_date, "%m/%d/%Y") as vendor_arrival_date'),DB::raw('DATE_FORMAT(po.vendor_deadline, "%m/%d/%Y") as vendor_deadline'),
-                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*' )
+                      'po.vendor_party_bill','po.ship_to','po.vendor_instruction','po.receive_note',DB::raw('DATE_FORMAT(po.date, "%m/%d/%Y") as date'),'po.complete','pol.*','ord.approval_id')
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('pd.qnty','<>','0')
 					->where('pd.qnty','<>','')
-					->where('pol.po_id','=',$po_id)
-					->Where('ord.company_id','=',$company_id)
+					->where($where)
 				  	->get();
 
 		$check_array=array('po'=>'Purchase Order','sg'=>'Supplied Garments','ce'=>"Contract Embroidery",'cp'=>'Contract Print');
 		//echo "<pre>"; print_r($result); echo "</pre>"; die;
-		$temp = array();
+		$ret_array = array();
 		if(count($result)>0)
 		{
 
-			
-			$temp['po_data']=array();
+			$ret_array['po_data']=array();
 			foreach ($result as $key=>$value) 
           	{
           		array_walk_recursive($value, function(&$item) {
 	            	$item = str_replace(array('00/00/0000'),array(''), $item);
 	        	});
-	            $temp['receive'][$value->product_id]['data'][$value->size]= $value;
-	            $temp['receive'][$value->product_id]['product'] = $value;
-	            $temp['po_data']= $result[0];
+	        	$result[0]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+	            $ret_array['receive'][$value->product_id]['data'][$value->size]= $value;
+	            $ret_array['receive'][$value->product_id]['product'] = $value;
+	            $ret_array['po_data']= $result[0];
           	}
-          	foreach ($temp['receive'] as $key => $value) 
+          	$total_invoice = 0;
+          	foreach ($ret_array['receive'] as $key => $value) 
           	{
           		$total_order = 0;
           		$rec_qnty = 0;
           		$short = 0;
-          		foreach ($value['data'] as $key_temp => $value_temp) 
+          		foreach ($value['data'] as $key_ret_array => $value_ret_array) 
           		{
-          			$total_order += $value_temp->qnty_ordered;
-          			$rec_qnty += $value_temp->qnty_purchased;
-          			$short += $value_temp->short;
+          			$total_order += $value_ret_array->qnty_ordered;
+          			$rec_qnty += $value_ret_array->qnty_purchased;
+          			$short += $value_ret_array->short;
 
-          			$value['data'][$key_temp]->short_unit = ($value_temp->qnty_ordered - $value_temp->qnty_purchased);
-          			//$value['data'][$key_temp]['']
+          			if($value_ret_array->qnty_ordered>$value_ret_array->qnty_purchased)
+          			{
+          				$value['data'][$key_ret_array]->short_unit = ($value_ret_array->qnty_ordered - $value_ret_array->qnty_purchased);
+          				$value['data'][$key_ret_array]->over_unit = 0;
+          			}
+          			else
+          			{
+          				$value['data'][$key_ret_array]->short_unit = 0;
+          				$value['data'][$key_ret_array]->over_unit = ($value_ret_array->qnty_purchased- $value_ret_array->qnty_ordered);
+          			}
+          			
+          			$total_invoice += $value_ret_array->line_total;
+          			//$value['data'][$key_ret_array]['']
           		}
-          		$temp['receive'][$key]['total_product'] = $total_order;
-          		$temp['receive'][$key]['total_received'] = $rec_qnty;
-          		$temp['receive'][$key]['total_defective'] = $short;
-          		$temp['receive'][$key]['total_remains'] = $total_order -$rec_qnty;
-
+          		$ret_array['receive'][$key]['data'] = array_values($value['data']);
+          		$ret_array['receive'][$key]['total_product'] = $total_order;
+          		$ret_array['receive'][$key]['total_received'] = $rec_qnty;
+          		$ret_array['receive'][$key]['total_defective'] = $short;
+          		if($total_order>$rec_qnty)
+          		{
+          			$ret_array['receive'][$key]['total_remains'] = $total_order -$rec_qnty." Short";
+          		}
+          		else
+          		{
+          			$ret_array['receive'][$key]['total_remains'] = $rec_qnty -$total_order." Over";
+          		}
+          		
+          		$ret_array['po_data']->total_invoice = $total_invoice;
           	}
 
 
 	    }
-		return $temp;
+		return $ret_array;
 	}
 
+	// *****
 	function Update_shiftlock($post)
 	{
 		$result = DB::table('purchase_order')
@@ -359,33 +458,29 @@ class Purchase extends Model {
             $search = $post['filter']['name'];
         }
 
-		$result = DB::table('purchase_notes as note')
-					->select('*')
-					->where('note.is_deleted','=','1')
-					->where('note.po_id','=',$post['po_id']);
+		$result = DB::table('purchase_order as po')
+					->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
+					->leftJoin('purchase_detail as pd','pd.id','=','pol.purchase_detail')
+					->leftJoin('order_design_position as odp','pd.design_id','=','odp.design_id')
+					->leftJoin('misc_type as mt','mt.id','=','odp.position_id')
+					->select(DB::raw('SQL_CALC_FOUND_ROWS odp.note,mt.value,odp.description,odp.id,po.po_id'))
+					->where('odp.is_delete','=','1')
+					->where('pd.is_delete','=','1')
+					->where('po.display_number','=',$post['display_number'])
+					->where('po.company_id','=',$post['company_id']);
 
 					if($search != '')               
                   	{
-                      $result = $result->Where(function($query) use($search)
-                      {
-                          $query->orWhere('note.note_title', 'LIKE', '%'.$search.'%')
-                                ->orWhere('note.note','LIKE', '%'.$search.'%')
-                                ->orWhere('note.note_date','LIKE', '%'.$search.'%');
-                      });
+                        $result = $result->Where(function($query) use($search)
+                        {
+                            $query->orWhere('odp.note', 'LIKE', '%'.$search.'%');
+                        });
                   	}
-                 $result = $result->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
-				 ->skip($post['start'])
+                 $result = $result->GroupBy('odp.id')->skip($post['start'])
                  ->take($post['range'])
                  ->get();
 		
-		//echo "<pre>"; print_r($result); echo "</pre>"; die;
-        if(count($result)>0)
-        {
-          foreach ($result as $key=>$value) 
-          {
-          	$result[$key]->note_date = ($result[$key]->note_date=='0000-00-00' || empty($result[$key]->note_date))?date("m/d/Y"):date('m/d/Y',strtotime($value->note_date));
-          }
-        }
+
 		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
         $returnData = array();
         $returnData['allData'] = $result;
@@ -466,9 +561,9 @@ class Purchase extends Model {
 		return $result;
 		
 	}
-	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po')
+	public function insert_purchaseorder($order_id,$vendor_id,$po_type='po',$company_id,$login_id=0,$complete=0)
 	{
-		$check = DB::table('purchase_order')
+		/*$check = DB::table('purchase_order')
 				->select('*')
 				->where('order_id','=',$order_id)
 				->where('vendor_id','=',$vendor_id)
@@ -480,17 +575,21 @@ class Purchase extends Model {
 			return 0 ;
 		}
 		else 
-		{
-			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type));
+		{*/
+			$disp_id = $this->common->getDisplayNumber('purchase_order',$company_id,'company_id','po_id','yes');
+			$result = DB::table('purchase_order')->insert(array('order_id'=>$order_id,'vendor_id'=>$vendor_id,'date'=>CURRENT_DATE,'po_type'=>$po_type,'is_active'=>1,'company_id'=>$company_id,'display_number'=>$disp_id,'login_id'=>$login_id,'complete'=>$complete));
 			$id = DB::getPdo()->lastInsertId();
         	return $id;	
-		}		
+		//}		
 
 	}
-	public function insert_purchase_order_line($post,$po_id)
+	public function insert_purchase_order_line($post,$po_id,$qnty_purchased=0)
 	{
 		$line_total = $post->price * $post->qnty;
-		$result = DB::table('purchase_order_line')->insert(array('po_id'=>$po_id,'purchase_detail'=>$post->id,'qnty_ordered'=>$post->qnty,'unit_price'=>$post->price,'line_total'=>$line_total));
+
+		if(!empty($qnty_purchased)){$qnty_purchased=$post->qnty;} // FOR DIRECT SHIPPING
+
+		$result = DB::table('purchase_order_line')->insert(array('po_id'=>$po_id,'purchase_detail'=>$post->id,'qnty_ordered'=>$post->qnty,'unit_price'=>$post->price,'line_total'=>$line_total,'qnty_purchased'=>$qnty_purchased));
 		$id = DB::getPdo()->lastInsertId();
         return $id;
 	}
@@ -504,9 +603,10 @@ class Purchase extends Model {
 
 		$result = DB::table('purchase_order as po')
 					->leftJoin('orders as ord','po.order_id','=','ord.id')
+					->leftJoin('misc_type as misc_type','ord.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
 					->leftJoin('client as cl','ord.client_id','=','cl.client_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
-					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.id,ord.status,po.po_id,po.po_type,po.date'))
+					->select(DB::raw('SQL_CALC_FOUND_ROWS cl.client_company,v.name_company,ord.display_number,ord.id,ord.status,po.display_number as po_display,po.po_id,po.po_type,po.date,misc_type.value as approval,ord.approval_id'))
 					->where('ord.status','=','1')
 					->where('ord.is_delete','=','1')
 					->where('ord.company_id','=',$post['company_id'])
@@ -520,10 +620,11 @@ class Purchase extends Model {
                                 ->orWhere('ord.id','LIKE', '%'.$search.'%')
                                 ->orWhere('cl.client_company','LIKE', '%'.$search.'%')
                                 ->orWhere('v.name_company','LIKE', '%'.$search.'%')
+                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
                                 ->orWhere('po.date','LIKE', '%'.$search.'%');
                       });
                   	}
-                 $result = $result->GroupBy('po.po_id')
+                 $result = $result->GroupBy('po.order_id')
 				 ->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])
 				 ->skip($post['start'])
                  ->take($post['range'])
@@ -550,6 +651,68 @@ class Purchase extends Model {
 		//echo "<pre>"; print_r($result); die();
 		return $returnData;
 	}
+
+	public function getAllReceivedata()
+    {
+        $whereConditions = ['po.complete' => '1'];
+        $listArray = ['po.po_id','po.display_number','po.order_id','po.vendor_id','v.name_company'];
+        $poData = DB::table('purchase_order as po')
+        				->leftJoin('vendors as v','v.id','=','po.vendor_id')
+                        ->select($listArray)
+                        ->where($whereConditions)->get();
+        $allData = array ();
+        foreach($poData as $data) {
+          
+            $allData[$data->order_id][] = $data;
+        }
+        return $allData;
+    }
+    public function GetPOpositions($po_id,$company_id)
+    {
+    	//echo $po_id."=".$company_id;
+		$result =  DB::table('purchase_order as po')
+		  ->leftJoin('orders as ord','po.order_id','=','ord.id')
+		  ->Join('purchase_order_line as pol','pol.po_id','=','po.po_id')
+		  ->Join('purchase_detail as pd','pd.id','=','pol.purchase_detail') 
+		  ->leftJoin('order_design as od','od.id','=','pd.design_id')
+		  ->leftJoin('order_design_position as odp','od.id','=','odp.design_id')
+		  ->leftJoin('misc_type as mt','mt.id','=','odp.position_id')
+		  ->select('ord.id as order_id','odp.image_1','odp.id','mt.value as position_name','odp.note')
+		  ->where('po.display_number','=',$po_id)
+		  ->where('po.company_id','=',$company_id)
+		  ->where('odp.is_delete','=','1')
+		  ->where('od.is_delete','=','1')
+		  ->where('ord.is_delete','=','1')
+		  ->GroupBy('odp.id')
+		  ->get();
+
+		foreach($result as $key=>$value) 
+		{
+            $value->image_1 = $value->image_1;
+            $value->image_1 = $this->common->checkImageExist($company_id.'/order_design_position/'.$value->id."/",$value->image_1);
+        }
+
+		return $result;
+    }
+    public function getAllReceiveProducts($company_id,$po_id,$product_id)
+    {
+    	$result =  DB::table('purchase_order as po')
+		  ->Join('purchase_order_line as pol','pol.po_id','=','po.po_id')
+		  ->Join('purchase_detail as pd','pd.id','=','pol.purchase_detail') 
+		  ->select('pol.qnty_ordered','pol.id')
+		  ->where('po.display_number','=',$po_id)
+		  ->where('po.company_id','=',$company_id)
+		  ->where('pd.product_id','=',$product_id)
+		  ->get();
+
+		foreach ($result as $key => $value) 
+		{
+		  		DB::table('purchase_order_line')
+		  		->where('id',$value->id)
+		  		->update(array('qnty_purchased'=>$value->qnty_ordered));
+		}  
+		return $result; 
+    }
 
 }
 

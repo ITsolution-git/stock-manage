@@ -25,6 +25,8 @@ class Inline
 {
     const REGEX_QUOTED_STRING = '(?:"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"|\'([^\']*(?:\'\'[^\']*)*)\')';
 
+    public static $parsedLineNumber;
+
     private static $exceptionOnInvalidType = false;
     private static $objectSupport = false;
     private static $objectForMap = false;
@@ -311,7 +313,7 @@ class Inline
                 $output = $match[1];
                 $i += strlen($output);
             } else {
-                throw new ParseException(sprintf('Malformed inline YAML string (%s).', $scalar));
+                throw new ParseException(sprintf('Malformed inline YAML string: %s.', $scalar));
             }
 
             // a non-quoted string cannot start with @ or ` (reserved) nor with a scalar indicator (| or >)
@@ -320,7 +322,7 @@ class Inline
             }
 
             if ($output && '%' === $output[0]) {
-                @trigger_error('Not quoting a scalar starting with the "%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', E_USER_DEPRECATED);
+                @trigger_error(sprintf('Not quoting the scalar "%s" starting with the "%%" indicator character is deprecated since Symfony 3.1 and will throw a ParseException in 4.0.', $output), E_USER_DEPRECATED);
             }
 
             if ($evaluate) {
@@ -344,7 +346,7 @@ class Inline
     private static function parseQuotedScalar($scalar, &$i)
     {
         if (!preg_match('/'.self::REGEX_QUOTED_STRING.'/Au', substr($scalar, $i), $match)) {
-            throw new ParseException(sprintf('Malformed inline YAML string (%s).', substr($scalar, $i)));
+            throw new ParseException(sprintf('Malformed inline YAML string: %s.', substr($scalar, $i)));
         }
 
         $output = substr($match[0], 1, strlen($match[0]) - 2);
@@ -418,7 +420,7 @@ class Inline
             ++$i;
         }
 
-        throw new ParseException(sprintf('Malformed inline YAML string %s', $sequence));
+        throw new ParseException(sprintf('Malformed inline YAML string: %s.', $sequence));
     }
 
     /**
@@ -457,6 +459,14 @@ class Inline
             // key
             $key = self::parseScalar($mapping, $flags, array(':', ' '), array('"', "'"), $i, false);
 
+            if (false === $i = strpos($mapping, ':', $i)) {
+                break;
+            }
+
+            if (!isset($mapping[$i + 1]) || ' ' !== $mapping[$i + 1]) {
+                @trigger_error('Omitting the space after the colon that follows a mapping key definition is deprecated since version 3.2 and will throw a ParseException in 4.0.', E_USER_DEPRECATED);
+            }
+
             // value
             $done = false;
 
@@ -470,6 +480,8 @@ class Inline
                         // are processed sequentially.
                         if (!isset($output[$key])) {
                             $output[$key] = $value;
+                        } else {
+                            @trigger_error(sprintf('Duplicate key "%s" detected on line %d whilst parsing YAML. Silent handling of duplicate mapping keys in YAML is deprecated since version 3.2 and will throw \Symfony\Component\Yaml\Exception\ParseException in 4.0.', $key, self::$parsedLineNumber + 1), E_USER_DEPRECATED);
                         }
                         $done = true;
                         break;
@@ -481,6 +493,8 @@ class Inline
                         // are processed sequentially.
                         if (!isset($output[$key])) {
                             $output[$key] = $value;
+                        } else {
+                            @trigger_error(sprintf('Duplicate key "%s" detected on line %d whilst parsing YAML. Silent handling of duplicate mapping keys in YAML is deprecated since version 3.2 and will throw \Symfony\Component\Yaml\Exception\ParseException in 4.0.', $key, self::$parsedLineNumber + 1), E_USER_DEPRECATED);
                         }
                         $done = true;
                         break;
@@ -494,6 +508,8 @@ class Inline
                         // are processed sequentially.
                         if (!isset($output[$key])) {
                             $output[$key] = $value;
+                        } else {
+                            @trigger_error(sprintf('Duplicate key "%s" detected on line %d whilst parsing YAML. Silent handling of duplicate mapping keys in YAML is deprecated since version 3.2 and will throw \Symfony\Component\Yaml\Exception\ParseException in 4.0.', $key, self::$parsedLineNumber + 1), E_USER_DEPRECATED);
                         }
                         $done = true;
                         --$i;
@@ -507,7 +523,7 @@ class Inline
             }
         }
 
-        throw new ParseException(sprintf('Malformed inline YAML string %s', $mapping));
+        throw new ParseException(sprintf('Malformed inline YAML string: %s.', $mapping));
     }
 
     /**
@@ -632,7 +648,10 @@ class Inline
                         return (float) str_replace(array(',', '_'), '', $scalar);
                     case preg_match(self::getTimestampRegex(), $scalar):
                         if (Yaml::PARSE_DATETIME & $flags) {
-                            return new \DateTime($scalar, new \DateTimeZone('UTC'));
+                            $date = new \DateTime($scalar);
+                            $date->setTimeZone(new \DateTimeZone('UTC'));
+
+                            return $date;
                         }
 
                         $timeZone = date_default_timezone_get();

@@ -90,9 +90,9 @@
   padding: 5px;
 }
 
-#designTable tbody tr td {
-	padding-left: 1.2em !important;  /*or 15px*/
-}
+/*#designTable tbody tr td {
+	padding-left: 1.2em !important;  /*or 15px
+}*/
 
 
 .filterWidth {
@@ -258,9 +258,9 @@ hr .style1 {
       margin-top: 25px !important;
 }
 
-md-input-container > label {
+/*md-input-container > label {
   color : #000 !important;
-}
+}*/
 
 [md-theme="default"] .md-accent-bg {
     background-color: rgb(3,155,229);
@@ -609,6 +609,7 @@ table.simple.tbl-typ3  thead tr th:first-child, table.simple.tbl-typ3 thead tr t
 table.simple.tbl-typ3 tbody tr td, table.simple.tbl-typ3 tbody tr td:first-child { vertical-align: middle;}
 table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;} 
 .align-M { justify-content:center;}
+.align-R { justify-content:flex-end;}
 .align-self-C { align-self: center;}
 .header-typ1 { padding: 4px 10px; background: #F2F2F2; color: #000; font-size: 16px; font-weight: bold; width: 100%;}
 .col3-layout .trans-box { width: 33.333%;}
@@ -688,7 +689,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .loader,
 .loader:before,
 .loader:after {
-    background: #31c0be;
+    background: #9fa1a7;
     -webkit-animation: load1 1s infinite ease-in-out;
     animation: load1 1s infinite ease-in-out;
     width: 1em;
@@ -724,11 +725,11 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     0%,
     80%,
     100% {
-        box-shadow: 0 0 #31c0be;
+        box-shadow: 0 0 #9fa1a7;
         height: 4em;
     }
     40% {
-        box-shadow: 0 -2em #31c0be;
+        box-shadow: 0 -2em #9fa1a7;
         height: 5em;
     }
 }
@@ -736,11 +737,11 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     0%,
     80%,
     100% {
-        box-shadow: 0 0 #31c0be;
+        box-shadow: 0 0 #9fa1a7;
         height: 4em;
     }
     40% {
-        box-shadow: 0 -2em #31c0be;
+        box-shadow: 0 -2em #9fa1a7;
         height: 5em;
     }
 
@@ -906,13 +907,13 @@ md-button.on {
   color: #fff;
 }
 
-.ssActivewearDialog {
+/*.ssActivewearDialog {
   width: 25% !important ;
 }
 
 .authorizeNetDialog {
   width: 30% !important ;
-}
+}*/
 
 .btn-width-100 {
   width: 100% ;
@@ -1014,8 +1015,8 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
     border: 1px solid #ddd;
 }
 .btn-primary {
-    background-color: #3f51b5;
-    border-color: #3f51b5;
+    background-color: #4773d6;
+    border-color: #4773d6;
     color: #ffffff !important;
 }
 .newbox-typ {
@@ -1125,6 +1126,7 @@ ul[dnd-list] .dndPlaceholder {
 
 .text-bold {
   font-weight: bold !important;
+/*  color: #000 !important;*/
 }
 .text-bold-center {
   font-weight: bold;
@@ -1172,4 +1174,139 @@ ul[dnd-list] .dndPlaceholder {
 }
 .h100 {
   height: 100%;
+}
+.mrg40-T {
+  margin-top: 40px;
+}
+
+
+.k-picker-wrap, .k-picker-wrap .k-select,.k-picker-wrap .k-state-default{
+  border:0 none !important;
+}
+span.k-picker-wrap.k-state-border-down {
+  padding-bottom: 0;
+}
+
+ md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
+      padding-left: 0; 
+      -moz-transition:all ease-in-out 0.2s;
+      -webkit-transition:all ease-in-out 0.2s;
+      -ms-transition:all ease-in-out 0.2s;
+      -o-transition:all ease-in-out 0.2s;
+      transition:all ease-in-out 0.2s;}
+
+.m-b-45{
+  margin-bottom:45px;
+}
+.top-30{
+margin-top:30px;
+}
+.right-20{
+  margin-right:20px;
+}
+.number-box-height{
+  height:175px;
+}
+[md-theme="default"] .secondary-text, [md-theme="default"] .icon{
+  color:#6e7584;
+}
+/*css added by tejas */
+.pad-0-L {
+  padding-left: 0;
+}
+.divPO {
+    background-color: #fff;
+    border: 1px solid rgba(224, 225, 227, 0.7);
+    padding: 10px;
+}
+.shad-btm {
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 
+  0px 4px 5px 0px rgba(0, 0, 0, 0.14), 
+  0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+}
+.font-title {
+  color: #252932;
+  font-size: 18px;
+  font-weight: 400;
+}
+.m-15-L {
+  margin-left: 15px;
+}
+.m-15-LR {
+  margin: 0 15px;
+}
+.heading {
+  font-weight: 600;
+  font-size: 14px;
+  color: #6e7584 !important;
+}
+.subtitle {
+    font-weight: 400;
+    font-size: 13px;
+    color: #6e7584 !important;
+ }
+ .h-70 {
+  min-height: 70px;
+ }
+ /* css to remove bg from focus out on buttons */
+ a.md-button.md-default-theme:not([disabled]).md-focused, a.md-button:not([disabled]).md-focused, .md-button.md-default-theme:not([disabled]).md-focused, .md-button:not([disabled]).md-focused, md-tabs.md-default-theme .md-tab.md-focused, md-tabs .md-tab.md-focused{
+  background:transparent;
+  opacity:1 !important;
+ }
+ .client-live-nation.med-box md-card{
+  min-height:165px;
+ }
+/* .md-button{
+  color:#fff !important;
+ }*/
+ a.md-button.md-default-theme[disabled], a.md-button[disabled], a.md-button.md-default-theme.md-raised[disabled], a.md-button.md-raised[disabled], a.md-button.md-default-theme.md-fab[disabled], a.md-button.md-fab[disabled], a.md-button.md-default-theme.md-accent[disabled], a.md-button.md-accent[disabled], a.md-button.md-default-theme.md-warn[disabled], a.md-button.md-warn[disabled], .md-button.md-default-theme[disabled], .md-button[disabled], .md-button.md-default-theme.md-raised[disabled], .md-button.md-raised[disabled], .md-button.md-default-theme.md-fab[disabled], .md-button.md-fab[disabled], .md-button.md-default-theme.md-accent[disabled], .md-button.md-accent[disabled], .md-button.md-default-theme.md-warn[disabled], .md-button.md-warn[disabled]{
+  background-color:#9f9f9f !important;
+  color:#cdcfd3 !important;
+  border:solid 1px #9f9f9f;
+ }
+ a.md-button.md-default-theme.md-hue-1.md-accent, a.md-button.md-hue-1.md-accent, .md-button.md-default-theme.md-hue-1.md-accent, .md-button.md-hue-1.md-accent{
+  color:#fff !important;
+ }
+ .filter-footer .stokkup-custom-btn1{
+  padding:0 auto;
+ }
+.packing-info-box .hover-grey.active, .packing-info-box .hover-grey:hover{
+  background-color:#6e7584;
+  color:#fff;
+ }
+ .packing-info-box .hover-grey.active{
+  font-weight:600;
+ }
+ .md-sidenav-backdrop{
+  position:fixed;
+  top:0;
+  left:0;
+  height:100%;
+ }
+ .md-sidenav-backdrop .md-sidenav-right{
+  position:fixed;
+  height:100%;
+
+ }
+ .art-fixed-section{
+  width:100%;
+  max-height:88vh;
+  overflow-x:hidden;
+  overflow-y:scroll;
+ }
+.inset {
+  padding-left: 25px;
+  padding-top: 25px;
+}
+.shift_scroll {
+  max-height: 220px;
+  overflow-y: scroll;
+}
+.iph_scroll {
+  max-height: 500px;
+  overflow-y: auto;
+}
+.factor_scroll {
+  max-height: 500px;
+  overflow-y: auto;
 }

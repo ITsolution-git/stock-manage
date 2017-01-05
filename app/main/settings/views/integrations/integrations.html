@@ -1,4 +1,48 @@
-    <div class="content order-info-page m-b-20">
+    <div class="client-profile-page">
+    <div class="header header-bg-custom"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
+                <!--  <img ng-src="{{company_info.color_url_photo}}" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;"  alt=""  /> -->
+                 <!-- <img ng-if="company_info.color_logo == ''" ng-src="{{NoImage}}" alt="No Image" style="height: 100%; width: 100px;  margin-left: 15px; padding: 3px;" > -->
+            <h1 class="inner-page-heading">3RD PARTY SOFTWARE INTEGRATIONS</h1>
+        </div>
+    </div>
+
+    <div class="full-row pull-left">
+        
+            <div ng-cloak>
+                <md-content class="stokkup-custom-tabs">
+                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                        <!-----------------Company Info Tab-------------------->
+                        
+
+                        <md-tab label="QuickBook" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-include src="'app/main/settings/views/integrations/qb.html'"></div>
+                        </md-tab>
+                        <md-tab label="S&S" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-include src="'app/main/settings/views/integrations/sns.html'"></div>
+                        </md-tab>
+                        <md-tab label="Authorize" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-include src="'app/main/settings/views/integrations/authorize.html'"></div>
+                        </md-tab>
+                        <md-tab label="Ups" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-include src="'app/main/settings/views/integrations/ups.html'"></div>
+                        </md-tab>
+                        <md-tab label="Fedex" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-include src="'app/main/settings/views/integrations/fedex.html'"></div>
+                        </md-tab>
+                       <!--  <md-tab label="Shipping Address">
+                            <div ng-include src="'app/main/settings/views/integrations/address.html'"></div>
+                        </md-tab> -->
+                       
+                        <!-- <md-tab label="Art">
+                            <div ng-include src="'app/main/client/views/profile/client_art.html'"></div>
+                        </md-tab> -->
+                    </md-tabs>
+                </md-content>
+        </div>
+    </div>
+</div>
+    <!-- <div class="content order-info-page m-b-20">
         <div class="simple-table-container md-whiteframe-4dp">
             <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
                 <div class="table-title-text h2 text-semibold" flex=80>
@@ -14,18 +58,14 @@
                             <td class="integrationsTdWidth integrationsTd2">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.
                             </td>
-
-                          <!--   <td class=""><md-button class="btn-width-200 connectToQuickBooksBtn" ng-click="vm.quickbookActivewearDialog($event)"><img src="assets/images/integrations/connectToQuickBooks.png" class="" /></md-button></td>  -->
-
-
                        <td class="">
                             <span>
-                                <md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':qb.consumer_key=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':qb.consumer_key!=''}" ng-click="vm.qbActivewearDialog($event)" >CONNECT</md-button></md-button>
+                                <md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':qb.consumer_key=='' || qb.consumer_secret_key =='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':qb.consumer_key!='' && qb.consumer_secret_key !=''}" ng-click="vm.qbActivewearDialog($event)" >CONNECT</md-button></md-button>
                             </span>
-                            <span class="ml-10" ng-show="qb.consumer_key !=''"><connect-to-quickbooks /></span>
+                            <span class="ml-10" ng-show="qb.consumer_key !='' && qb.consumer_secret_key !=''"><connect-to-quickbooks /></span>
 
                             <span>
-                                <md-button ng-show="qb.ss =='0'" class="md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple" ng-click="vm.qbActivewearSetup($event,qb.id)" >Setup</md-button>
+                                <md-button ng-show="qb.ss =='0' && qb.consumer_key !='' && qb.consumer_secret_key !=''" class="md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple" ng-click="vm.qbActivewearSetup($event,qb.id)" >Setup</md-button>
                                 </md-button>
                             </span>
                             </td> 
@@ -54,9 +94,17 @@
 
                             <td class=""><md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':ups.username=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':ups.username!=''}"  ng-click="vm.upsDialog($event)">CONNECT</md-button></td>
                         </tr>
+                        <tr class="cursor-p">
+                            <td class="integrationsTd1"><img src="assets/images/integrations/fedex.png" height="105px" width="105px" /></td>
+                            <td class="integrationsTdWidth integrationsTd2">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget odio.
+                            </td>
+
+                            <td class=""><md-button ng-class="{'md-raised btn-width-200 md-button md-teal-theme md-ink-ripple':fedex.key=='', 'md-raised btn-width-200 md-accent md-hue-1 md-button md-teal-theme md-ink-ripple':fedex.key!=''}"  ng-click="vm.fedexDialog($event)">CONNECT</md-button></td>
+                        </tr>
                     </tbody> 
                 </table>
          
             </div>
         </div>
-    </div>
+    </div> -->

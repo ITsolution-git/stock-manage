@@ -20,7 +20,7 @@
                     }
                 },
                 resolve: {
-                    invoiceData: function (msApi)
+                   /* invoiceData: function (msApi)
                     {
                         return msApi.resolve('invoicesDetail@get');
                     },
@@ -31,9 +31,19 @@
                     purchaseOrderData: function (msApi)
                     {
                         return msApi.resolve('purchaseDetail@get');
+                    },*/
+                    checksession : function (sessionService)
+                    {
+                       return sessionService.AccessService('SU,AT','false');
                     }
                 }
             }).state('app.invoices.singleInvoice', {
+                resolve: {
+                    checksession : function (sessionService)
+                    {
+                       return sessionService.AccessService('SU,AT','false');
+                    },
+                },
                 url  : '/singleInvoice/:id',
                 views: {
                     'content@app': {
@@ -42,6 +52,12 @@
                     }
                 }
             }).state('app.invoices.linktopay', {
+                resolve: {
+                    checksession : function (sessionService)
+                    {
+                       return sessionService.AccessService('SU,AT','false');
+                    },
+                },
                 url  : '/linktopay',
                 views: {
                     'content@app': {
@@ -52,12 +68,12 @@
             });
 
        // Translation
-        $translatePartialLoaderProvider.addPart('app/main/invoices');
+      //  $translatePartialLoaderProvider.addPart('app/main/invoices');
 
         // Api
-        msApiProvider.register('invoicesDetail', ['app/data/invoices/invoiceData.json']);
+       /* msApiProvider.register('invoicesDetail', ['app/data/invoices/invoiceData.json']);
         msApiProvider.register('singleInvoicesDetail', ['app/data/invoices/singleInvoiceData.json']);
-        msApiProvider.register('purchaseDetail', ['app/data/invoices/paymenthistry.json']);
+        msApiProvider.register('purchaseDetail', ['app/data/invoices/paymenthistry.json']);*/
 
         // Navigation
         msNavigationServiceProvider.saveItem('fuse', {
@@ -67,22 +83,22 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.invoices', {
-           // title    : 'Invoices',
+            title    : 'Invoices',
             icon     : 'icon-file-document',
             state    : 'app.invoices',
             /*stateParams: {
                 'param1': 'page'
              },*/
             
-            weight   : 1
+            weight   : 4
         });
 
-        msNavigationServiceProvider.saveItem('fuse.invoices.linktopay', {
+/*        msNavigationServiceProvider.saveItem('fuse.invoices.linktopay', {
            // title      : 'Link To Pay',
             state      : 'app.invoices.linktopay',
             stateParams: {'id': 1},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 1
-        });
+        });*/
     }
 })();

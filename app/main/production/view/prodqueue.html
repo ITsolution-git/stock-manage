@@ -1,0 +1,276 @@
+<div class="filter-menu" >
+    <md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" layout="column">
+        <md-toolbar class=" filter-title">
+            <h1 class="md-toolbar-tools">Filter By</h1>
+        </md-toolbar>
+        <md-content class="flex-fix-bottom scrollable"  ms-scroll>
+            <div class="contant-filter filter-detail" >
+                <div layout="column" class="f-box-1 first-cheak">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.toggle" ng-click="vm.toggle = false">
+                            CLIENT
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.toggle" ng-click="vm.toggle = true">
+                            CLIENT
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div ng-if="vm.toggle" class="f-body scrollable pad0"  ms-scroll>
+                        <div layout="column" >
+                            <div ng-dropdown-multiselect="" options="clients" selected-model="vm.ClientModal" class="cheak-box-class" extra-settings="vm.salesChecksettings"></div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" class="f-box-1 first-cheak">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.ProductionType" ng-click="vm.ProductionType = false">
+                            PRODUCTION TYPE 
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.ProductionType" ng-click="vm.ProductionType = true">
+                            PRODUCTION TYPE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div ng-if="vm.ProductionType" class="f-body scrollable pad0"  ms-scroll>
+                        <div layout="column" >
+                            <div ng-dropdown-multiselect="" options="production_type" selected-model="vm.ProductionModal" class="cheak-box-class" extra-settings="vm.salesChecksettings"></div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" class="f-box-2">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.rundate" ng-click="vm.rundate = false">
+                            RUN DATE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.rundate" ng-click="vm.rundate = true">
+                            RUN DATE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div class="f-body" ng-if="vm.rundate">
+                        <div layout="column" >
+                            <div class="date-input width100">
+                                <input id="datepicker" kendo-date-picker ng-model="vm.rundate" k-ng-model="dateObject6" placeholder="Select Date"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" class="f-box-2">
+                    <div class="f-header">
+                        <span class="cursor-p" ng-if="vm.inhandDate" ng-click="vm.inhandDate = false">
+                            IN HAND DATE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-up"></md-icon>
+                            </button>
+                        </span>
+                        <span class="cursor-p" ng-if="!vm.inhandDate" ng-click="vm.inhandDate = true">
+                           IN HAND DATE
+                            <button>
+                                <md-icon md-font-icon="icon-menu-down"></md-icon>
+                            </button>
+                        </span>
+                        <md-divider ></md-divider>
+                    </div>
+                    <div class="f-body" ng-if="vm.inhandDate">
+                        <div layout="column" >
+                            <div class="date-input width100">
+                                <input id="datepicker1" kendo-date-picker ng-model="vm.inhandDate" k-ng-model="dateObject7" placeholder="Select Date"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </md-content>
+        <div class="filter-footer" layout="row">
+            <md-button class="stokkup-custom-btn1 stokkup-blue-btn md-button"  flex="50" ng-click="filterProduction()">APPLY FILTERS
+            </md-button>
+            <md-button ng-click="vm.resetFilter()" class="stokkup-custom-btn1 md-button bg-grey md-raised" flex="50">RESET FILTERS</md-button>
+
+        </div>
+    </md-sidenav>
+</div>
+<!--Filter ends here-->
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="tab-view-page simple-table-container stokkup-main-tableview">
+    	 <div class="table-title white-bg" flex=100 layout="row" layout-align="space-between center">
+            <div class="table-title-text" class="cursor-p">Production Queue</div>
+            <div class="pull-right right-search-box">
+                <div class="order-modal-title pull-right" ui-sref="app.scheduleboard" layout="row" layout-align="end center">
+                    <span class="cursor-p stokkup-btn-style1">view scheduled board</span>
+                </div>   
+                <md-icon  ng-click="vm.openRightMenu($event);"  md-menu-origin md-font-icon="icon-filter-variant" class="cursor-p"> <md-tooltip md-delay="demo.delayTooltip">
+              Filter By
+            </md-tooltip></md-icon>
+                 <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="top-srch-label">Search Production...</label>
+                        <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div>
+            </div>
+        </div>
+
+        <!--Table starts here -->
+            <div class="ms-responsive-table-wrapper" ng-show="success==1">
+               <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                 <table class="dataTable row-border hover">
+                    <thead tasty-thead></thead>
+                    <tbody >
+                        <tr ng-repeat="prod_data in rows">
+                            <td>
+                                <span class="garment-logo" ng-class="prod_data.screen_icon==2?'garment-logo':(prod_data.screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span>
+                                <span class="garment-logo" ng-class="prod_data.garment==0?'':' disabled'">G</span>
+                                <span ng-show="prod_data.image_1!=''" ng-click="DisplayMokup(prod_data.image_1)" class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td >{{prod_data.order_name}}</td>
+                            <td >{{prod_data.order_display}} - {{prod_data.value}}</td>
+                            <td >{{prod_data.client_company}}</td>
+                            <td >{{prod_data.production_type}}</td>
+                            <td >{{prod_data.run_speed}}</td>
+                            <td >{{prod_data.screen_count}}</td>
+                            <td >{{prod_data.imps}}</td>
+<!--                        <td >{{prod_data.in_hands_by}}</td>-->
+                            <td ng-show="prod_data.mark_as_complete==1">Complete</td>
+                            <td ng-show="prod_data.mark_as_complete==0">Not Complete</td>
+<!--                        <td >{{prod_data.run_date}}</td> -->
+                            <td ><img ng-src="{{prod_data.position_image}}" height="30" width="30"></td>
+                            <td >$</td>    
+                            <td class="prod-icons">
+                                    <a href="#"><i ng-click="JobSchedualPopup(prod_data.id)" class="fa fa-calendar"></i></a> 
+                                    <a href="#"><i class="fa fa-eye" ng-click="JobDetail(prod_data.id)"></i></a>
+                            </td>
+                        </tr>
+                    </tbody> 
+                </table>
+                <div tasty-pagination class="tasty-page"></div>
+            </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
+                <thead>
+                    <tr>
+                        <th>No Records Found</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+      <!--   <div class="ms-responsive-table-wrapper">
+            <div>
+                <table class="dataTable row-border">
+                    
+                    <thead>
+                    	<th>Assets</th>
+                    	<th>Order Name</th>
+                    	<th>Position</th>
+                    	<th>Client</th>
+                    	<th>Production Type</th>
+                    	<th>Run Date</th>
+                    	<th>In Hands Date</th>
+                    	<th>&nbsp;</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar" ng-click="vm.calendarpopup($event)"></i></a> <a href="#"><i class="fa fa-eye" ng-click="vm.jobpopup($event)"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo disabled">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo disabled">S</span>
+                            	<span class="garment-logo disabled">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                            	<span class="garment-logo">S</span>
+                            	<span class="garment-logo">G</span>
+                            	<span class="cam-logo"><a href="#"><i class="fa fa-camera"></i></a></span>
+                            </td>
+                            <td>Lalapalooza - Ticket RO</td>
+                            <td>Front</td>
+                            <td>[client name]</td>
+                            <td>Screenprint</td>
+                            <td>07/01/2016</td>
+                            <td>07/06/2016</td>
+                            <td class="prod-icons"><a href="#"><i class="fa fa-calendar"></i></a> <a href="#"><i class="fa fa-eye"></i></a></td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+                
+            </div>
+        </div> -->
+        <!--Table ends here -->
+    </div> 
+</div>
+<!--Finishing Queue page ends here 

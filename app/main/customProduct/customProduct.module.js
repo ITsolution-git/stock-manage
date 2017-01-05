@@ -18,7 +18,7 @@
                             setTimeout(function(){ 
                                $(".settings-block").removeClass("collapsed");
                             }, 2000);
-                            return sessionService.AccessService('CA');
+                            return sessionService.AccessService('ALL','true');
                         }
                     },
                 url    : '/customProduct',
@@ -45,7 +45,7 @@
             ;
 
         // Translation
-        $translatePartialLoaderProvider.addPart('app/main/customProduct');
+        //$translatePartialLoaderProvider.addPart('app/main/customProduct');
 
         msNavigationServiceProvider.saveItem('fuse.settings.customProduct', {
             title    : 'Custom Product',

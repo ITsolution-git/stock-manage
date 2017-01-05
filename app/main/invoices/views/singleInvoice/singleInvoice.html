@@ -1,815 +1,492 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="header "  layout="column" >
-        <div class="header-content realtive-positon" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back" ui-sref="app.invoices">BACK TO INVOICE</a>
-        </div>
-    </div>
-    <div layout="row" class="pd10-R">
-        <div flex="75"><div class="title mrg10-TB"><span class="h2 text-semibold">Demo INV-123897612</span></div></div>
-    </div>
-    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15" >
-        <div layout="row">
-            <div layout="column" flex="80">
-                <img src="assets/images/etc/company-logo.png" title="Company Name" alt="Company Name" height="110" width="210" />
+<div class="order-info-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview m-b-30">
+        <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+                INV-{{allData.order_data[0].display_number}}
             </div>
-            <div layout="column" flex="20">
-                <div class="font-14 mrg5-B">Shop Name</div>
-                <div class="font-14">Address</div>
-                <div class="gray-text mrg5-B">1234 N Main St.<br>Chicago, IL 60611</div>
-                <div class="font-14">Website</div>
-                <div><a href="#" title="" class="gray-text">www.url.com</a></div>
+            <div class="pull-right right-search-box">
+                <a class="pull-right common-header-links" ui-sref="app.invoices">BACK TO INVOICE</a>
             </div>
         </div>
-        <h2>Order Lines</h2>
-        <div class="ms-responsive-table-wrapper">
-            <table class="simple hover simple-tbl1">
-                <thead>
-                    <tr>
-                        <th class="secondary-text" width="15%">Order ID</th>
-                        <th class="secondary-text" width="20%">Estimated Shipping Date</th>
-                        <th class="secondary-text text-center" width="15%">Payment Status</th>
-                        <th class="secondary-text text-center" width="15%">Shipment Method</th>
-                        <th class="secondary-text text-center" width="20%">In Hands By</th>
-                        <th class="secondary-text text-center" width="15%">Action</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr ng-repeat="siD in pmntHistry" class="cursor-p">
-                        <td>{{ siD.orderId}}</td>
-                        <td>{{ siD.estimateDate}}</td>
-                        <td class="text-center">{{ siD.paymentStatus}}</td>
-                        <td class="text-center">{{ siD.shippingMethod}}</td>
-                        <td class="text-center">{{ siD.inHandsBy}}</td>
-                        <td class="text-center"><a>VIEW NOTES</a></td>
-                    </tr>                    
-                </tbody>
-            </table>
-        </div>
     </div>
-    <div layout="row">
-        <div layout="column" flex="75" class="md-whiteframe-4dp mrg15-R h100">
-            <div ng-cloak>
-                <md-content>
-                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
-                        <!-----------------Payment History Tab-------------------->
-                        <md-tab label="Payment History">
-                            <div class="ms-responsive-table-wrapper">
-                                <table class="simple hover simple-tbl1">
-                                    <thead>
-                                        <tr>
-                                            <th class="secondary-text" width="30%">Date</th>
-                                            <th class="secondary-text" width="30%">Amount Paid</th>
-                                            <th class="secondary-text" width="30%">Method Paid</th>
-                                            <th class="secondary-text" width="10%">&nbsp;</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                        <tr ng-repeat="pmntHis in siData" class="cursor-p">
-                                            <td>{{ pmntHis.date }}</td>
-                                            <td>{{ pmntHis.amountPaid }}</td>
-                                            <td>{{ pmntHis.methodPaid }}</td>
-                                            <td class="text-center"><a href="#" class="icon icon-cancel font-19 f-red"></a></td>
-                                        </tr>                    
-                                    </tbody>
-                                </table>
-                            </div>                    
-                        </md-tab>
-                        <!-----------------Pay By Credit Card-------------------->
-                        <md-tab label="Pay By Credit Card">
-                            <div class="ms-responsive-table-wrapper">
-                               <div class="pd15">
-                                   <div layout="row">
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="100">
-                                                     <input placeholder="Name On Card" name="Name On Card">
-                                                </md-input-container>
-                                                <md-input-container flex="100">
-                                                    <input placeholder="Credit Card Number" name="Credit Card Number">
-                                                </md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="MM">
-                                                        <md-option value="0">MM</md-option>
-                                                        <md-option>JAN</md-option>
-                                                        <md-option>FEB</md-option>
-                                                        <md-option>MAR</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex=30 class="m-b-20">
-                                                   <md-select ng-model="company.prime_address_state" placeholder="YY">
-                                                        <md-option value="0">YY</md-option>
-                                                        <md-option>12</md-option>
-                                                        <md-option>13</md-option>
-                                                        <md-option>14</md-option>
-                                                        <md-option>15</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="CVV">
-                                                </md-input-container>
-                                            </div>
-                                            <md-checkbox  aria-label="Checkbox 1">Store Credit Card for Future Payments</md-checkbox>
-                                       </div>
-                                       <div flex="10">&nbsp;</div>
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="75">
-                                                    <input placeholder="Street Address" name="Street Address">
-                                                </md-input-container>
-                                                <md-input-container flex="25">
-                                                    <input placeholder="Suite" name="Suite">
-                                                </md-input-container>
-                                            </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="40">
-                                                    <input placeholder="City" name="City">
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="State">
-                                                        <md-option value="0">State1</md-option>
-                                                        <md-option>State2</md-option>
-                                                        <md-option>State3</md-option>
-                                                        <md-option>State4</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="Zip" name="Zip">
-                                                </md-input-container>
-                                            </div>
-                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
-                                            </md-dialog-actions>
-                                       </div>
-                                   </div>
-                               </div>
-                            </div> 
-                        </md-tab>
-                        <!-----------------Pay By Cash-------------------->
-                        <md-tab label="Pay By Credit Card">
-                            <div class="ms-responsive-table-wrapper">
-                              <div class="pd15">
-                                   <div layout="row">
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Amount Paid</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="30">
-                                                     <input placeholder="$" name="$">
-                                                </md-input-container>
-                                            </div>
-                                            <md-dialog-actions layout="row" class="layout-row">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
-                                            </md-dialog-actions>
-                                       </div>
-                                   </div>
-                               </div>
-                            </div> 
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
+
+    <div class="inner-full-box">
+        <div class="order-information m-b-30 pad0 white-bg" layout="row" layout-align="start" layout-wrap flex layout-padding>
+            <div layout="column" flex="25" class="invoice-orderimg">
+                <img src="{{allData.company_data[0].photo}}" title="Company Logo" alt="Company Logo"  />
             </div>
-        </div>
-        <div class="m-r-15 side-bar" flex="25" layout="column">
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text class="text-left">Order Recap</md-card-title-text>
-                </md-card-title>
-                <md-card-content class="recap pd0">
 
-					<div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Total Qnty</div>
-                        <span class="ng-binding">70</span>
-                    </div>
-
-                   <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Screens</div>
-                        <span class="ng-binding">54</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Press Setup</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Digitize</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Art Work</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Seperations</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Rush</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Distribution</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Shipping</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Define</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Discount</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Lines Total</div>
-                        <span class="ng-binding">$325.0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Order Total</div>
-                        <span class="ng-binding">$325.0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax Rate</div>
-                        <span class="ng-binding">10.5</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax</div>
-                        <span class="ng-binding">4</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Grand Total</div>
-                        <span class="ng-binding">$5,976.81</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">5</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Balance Due</div>
-                        <span class="ng-binding">$2,500.98</span>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </div>
-    </div>
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg15-T">
-        <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
-        <button type="button" class="bg-grey md-accent md-raised md-button md-ink-ripple" aria-label="Link to Pay"><span class="ng-scope">Download</span></button>
-    </md-dialog-actions>
-
-    <!-- Tejas -->
-    <div class="simple-table-container md-whiteframe-4dp m-b-20 m-r-15 pd15 mrg15-T" >
-        <div layout="row">
-            <div layout="column" flex="40">
-                <img src="assets/images/etc/logo.png" title="Company Name" alt="Company Name" height="150" width="150" />
-            </div>
-            <div layout="column" flex="40">
-                <div class="font-14 mrg5-B text-bold text-bold-center">Culture Studio</div>
+            <div layout="column" flex="50">
+                <div class="font-14 mrg5-B text-bold text-bold-center">{{allData.company_data[0].name}}</div>
                 <div class="font-14 text-bold-center">Address</div>
-                <div class="gray-text mrg5-B text-bold-center">1151 W. 40th<br>Chicago, IL 60609<br>P:312 243-8304  F:312 243-9015</div>
+                <div class="gray-text mrg5-B text-bold-center">{{allData.company_data[0].prime_address1}}<br>{{allData.company_data[0].prime_address_city}}, {{allData.company_data[0].prime_address_state}} {{allData.company_data[0].prime_address_zip}}<br><span ng-if="allData.company_data[0].phone != ''">P: {{allData.company_data[0].phone}}</span></div>
                 <div class="font-14 text-bold-center">Website</div>
-                <div class="text-center"><a href="http://www.culturestudio.net" target="_blank" title="" class="gray-text">www.culturestudio.net</a></div>
+                <div class="text-center"><a href="{{allData.company_data[0].url}}" target="_blank" title="" class="common-header-links">{{allData.company_data[0].url}}</a></div>
             </div>
-            <div layout="column" flex="40">
-                <div class="font-14 mrg5-B text-bold-right">Order Acknowledgement # 33634</div>
-                <div class="font-14 mrg5-B text-bold-right">Created on: 05/11/2015</div>
-                <div class="font-14 mrg5-B text-bold-right">Job Name: My codal print</div>
-            </div>            
+
+            <div layout="column" flex="25">
+                <div class="font-14 mrg5-B text-bold-right">{{miscData.approval[allData.order_data[0].approval_id].value}} # {{allData.order_data[0].display_number}}</div>
+                <div class="font-14 mrg5-B text-bold-right">Created on: {{allData.invoice_data[0].created_date}}</div>
+                <div class="font-14 mrg5-B text-bold-right">Due Date: {{allData.invoice_data[0].payment_due_date}}</div>
+                <div class="font-14 mrg5-B text-bold-right">Job Name: {{allData.order_data[0].order_name}}</div>
+                
+                <md-input-container class="margin-0 p-l-0" layout="row">
+                    <label  class="font-14 p-l-0">Order Status</label>
+                    <md-select ng-model="allData.order_data[0].approval_id" flex="100"  class="select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',allData.order_data[0].approval_id,allData.order_data[0].id)" ng-disabled="allowSA==0">
+                        <md-option ng-selected="allData.order_data[0].approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
         </div>
 
-		<div class="ms-responsive-table-wrapper">
-			<table id="billtoShipto" class="mrg20-T" cellspacing="0" cellpadding="0">
-				<tr>
-					<td>
-						<table class="border-col">
-							<tr>
-								<td class="no-border width-50 pad-0"><img src="assets/images/etc/bill.png" alt="BILL TO" title="BILL TO"></td>
-								<td class="no-border pad10-T v-TOP">
-									<label class="font-14 text-bold">99 Riches Clothing</label><br>
-									<label class="font-14">Sasha Danilishen</label>
-								</td>
-							</tr>
-						</table>
-					</td>
-					<td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-					<td>
-						<table class="border-col">
-							<tr>
-								<td class="no-border width-50 pad-0"><img src="assets/images/etc/ship.png" alt="SHIP TO" title="SHIP TO"></td>
-								<td class="no-border pad10-T v-TOP">
-									<label class="font-14 text-bold">99 Riches Clothing</label><br>
-									<label class="font-14">Sasha Danilishen</label>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</div>
-
-        <div class="ms-responsive-table-wrapper mrg20-T">
-            <table class="simple hover simple-tbl1">
-                <thead>
+        <div class="order-design-block box-zerospace m-b-30 white-bg p-20">
+            <div class="ms-responsive-table-wrapper stockkup-content-table-container">
+                <table id="billtoShipto" class="mrg20-T" cellspacing="0" cellpadding="0">
                     <tr>
-                        <th class="secondary-text" width="15%">Customer PO</th>
-                        <th class="secondary-text" width="20%">Rep/Brand Co.</th>
-                        <th class="secondary-text text-center" width="15%">Terms</th>
-                        <th class="secondary-text text-center" width="15%">Ship Via</th>
-                        <th class="secondary-text text-center" width="10%">Ship Date</th>
-                        <th class="secondary-text text-center" width="10%">In Hands Date</th>
-                        <th class="secondary-text text-center" width="15%">Payment Due</th>
+                        <td>
+                            <table class="border-col">
+                                <tr>
+                                    <td class="no-border width-50 pad-0"><img src="assets/images/etc/bill.png" alt="BILL TO" title="BILL TO"></td>
+                                    <td class="no-border pad10-T v-TOP">
+                                        <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
+                                        <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_billing == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <table class="border-col">
+                                <tr>
+                                    <td class="no-border width-50 pad-0"><img src="assets/images/etc/ship.png" alt="SHIP TO" title="SHIP TO"></td>
+                                    <td class="no-border pad10-T v-TOP">
+                                        <label class="font-14 text-bold">{{allData.client_data[0].first_name}} {{allData.client_data[0].last_name}}</label><br>
+                                        <label class="font-14" ng-repeat="address in allData.addresses.result" ng-if="address.address_shipping == '1'">{{address.address}}<br>{{address.street}}<br>{{address.city}}<br>{{address.state_name}}<br>{{address.postal_code}}</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                     </tr>
-                </thead>
-                <tbody> 
-                    <tr class="cursor-p">
-                        <td></td>
-                        <td>Dark room/ Dana Laird</td>
-                        <td class="text-center"></td>
-                        <td class="text-center"></td>
-                        <td class="text-center">19/11/2015</td>
-                        <td class="text-center"></td>
+                </table>
+            </div>
+        </div>
+
+        <div class="order-design-block box-zerospace m-b-30">
+            <div class="title box-title">
+                <div class="flex-100 m-b-20" flex="100">
+                <span class="stokkup-title-h4 light-300">Shipping Detail</span>
+                </div>
+            </div>    
+            <div class="ms-responsive-table-wrapper stockkup-content-table-container white-bg">
+                <table class="simple hover simple-tbl1">
+                    <thead>
+                        <tr>
+                            <th class="secondary-text" width="15%">Order ID</th>
+                            <th class="secondary-text" width="20%">Estimated Shipping Date</th>
+                            <th class="secondary-text text-center" width="15%">Payment Status</th>
+                            <th class="secondary-text text-center" width="15%">Shipment Method</th>
+                            <th class="secondary-text text-center" width="20%">In Hands By</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="shipping in allData.shipping_detail">
+                        <td>{{allData.order_data[0].display_number}}</td>
+                        <td>{{shipping.shipping_by}}</td>
+                        <td class="text-center">Pending</td>
+                        <td class="text-center" ng-if="shipping.shipping_type_id == 0"></td>
+                        <td class="text-center" ng-if="shipping.shipping_type_id == 1">UPS</td>
+                        <td class="text-center" ng-if="shipping.shipping_type_id == 2">FEDEX</td>
+                        <td class="text-center">{{shipping.in_hands_by}}</td>
                     </tr>                    
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>           
         </div>
 
-        <!-- design1 -->
-        <h2 class="mrg20-T">Design: Ogee Job</h2>
-        <div class="ms-responsive-table-wrapper">
-            <table class="simple hover simple-tbl1">
-                <thead>
-                    <tr>
-                        <th class="secondary-text text-bold" width="25%">Position</th>
-                        <th class="secondary-text text-bold" width="15%">Type</th>
-                        <th class="secondary-text text-center text-bold" width="25%">Qty</th>
-                        <th class="secondary-text text-center text-bold" width="15%">Price</th>
-                        <th class="secondary-text text-center text-bold" width="20%">Image</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr class="cursor-p">
-                        <td height="72">Front</td>
-                        <td>Screen Print</td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">1.5</td>
-                        <td class="text-center"><img src="assets/images/etc/logo.png" title="Company Name" alt="Company Name" height="40" width="40" /></td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td height="72">Back</td>
-                        <td>Embroidery</td>
-                        <td class="text-center">215</td>
-                        <td class="text-center">5.76</td>
-                        <td class="text-center"><img src="assets/images/etc/logo.png" title="Company Name" alt="Company Name" height="40" width="40" /></td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td height="72">Black</td>
-                        <td>Screen Print</td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">1.5</td>
-                        <td class="text-center"></td>
-                    </tr>   
-                    <tr class="cursor-p">
-                        <td height="72">Back</td>
-                        <td>Embroidery</td>
-                        <td class="text-center">215</td>
-                        <td class="text-center">5.76</td>
-                        <td class="text-center"><img src="assets/images/etc/logo.png" title="Company Name" alt="Company Name" height="40" width="40" /></td>
-                    </tr>                   
-                </tbody>
-            </table>
+        <div class="order-design-block box-zerospace">
+            <div ng-repeat="design in allData.all_design" class="invoice-single-design">
+            <div class="title box-title">
+                <div class="flex-100 m-b-20" flex="100">
+                <span class="stokkup-title-h4 light-300">Design: {{design.design_name}}</span>
+                </div>
+            </div> 
+                <div class="ms-responsive-table-wrapper stockkup-content-table-container white-bg">
+                    <table class="simple hover simple-tbl1">
+                        <thead>
+                            <tr>
+                                <th class="secondary-text text-bold" width="25%">Position</th>
+                                <th class="secondary-text text-bold" width="15%">Type</th>
+                                <th class="secondary-text text-center text-bold" width="25%">Qty</th>
+                                <th class="secondary-text text-center text-bold" width="15%">Price</th>
+                                <th class="secondary-text text-center text-bold" width="20%">Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="position in design.positions.order_design_position">
+                                <td height="72">{{position.position_name}}</td>
+                                <td>{{position.placement_type_name}}</td>
+                                <td class="text-center">{{position.qnty}}</td>
+                                <td class="text-center">{{position.total_price | currency : $ : 2}}</td>
+                                <td class="text-center" ng-if="position.position_image != ''"><img src="{{position.position_image}}" title="Position Image" alt="Position Image" height="40" width="40" /></td>
+                                <td class="text-center" ng-if="position.position_image == ''"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="ms-responsive-table-wrapper stockkup-content-table-container white-bg">
+                    <table class="simple hover simple-tbl1">
+                        <thead>
+                            <tr>
+                                <th class="secondary-text text-bold" width="40%">Garment/Item Description</th>
+                                <th class="secondary-text text-center text-bold" width="10%">Color</th>
+                                <th class="secondary-text text-center text-bold" width="20%">Size/Quantities</th>
+                                <th class="secondary-text text-center text-bold" width="10%">Qty</th>
+                                <th class="secondary-text text-center text-bold" width="10%">Unit Price</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+                            <tr ng-repeat="product in design.products">
+                                <td>{{product.product_name}}</td>
+                                <td class="text-center">{{product.color_name}}</td>
+                                <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
+                                <td class="text-center">{{product.total_qnty}}</td>
+                                <td class="text-center">{{product.total_price | currency : $ : 2}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div layout="column" flex="50" class="box-zerospace m-b-30 mr-20 mt-30 white-bg">
+                    <md-card class="mrg10">
+                    <md-card-content class="recap">
+                        <div ng-repeat="position in design.positions.order_design_position">
+                            <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Position :</div>
+                                <span class="ng-binding global-heading-style">{{position.position_name}}</span>
+                            </div>
+                            <div ng-if="position.discharge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Discharge Ink @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].discharge | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.foil_qnty > 0"  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Foil @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].foil | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.ink_charge_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style">Ink Charge @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].ink_changes | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.number_on_dark_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style"># on Dark @ </div>
+                                <span class="ng-binding global-heading-style">{{allData.price_grid_data[0].number_on_dark | currency : $ : 2}}</span>
+                            </div>
+
+                            <div ng-if="position.number_on_light_qnty > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                <div class="ng-binding global-text-style"># on Light @ </div>
+                                <span class="ng-binding  global-heading-style">{{allData.price_grid_data[0].number_on_light | currency : $ : 2}}</span>
+                            </div>
+                        </div>
+                        <div>&nbsp;</div>
+                    </md-card-content>
+                    </md-card>
+                </div>
+
+                <div layout="column" class="box-zerospace m-b-30 mt-30 right-custom-box white-bg">
+                    <md-card class="mrg10">
+                        <md-card-content class="recap">
+                            <div ng-repeat="product in design.products">
+                                <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding global-heading-style"><b>Product :</b></div>
+                                    <span class="ng-binding global-text-style">{{product.product_name}}</span>
+                                </div>
+                                <div ng-repeat="oitem in product.order_items" ng-if="oitem.selected > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                                    <div class="ng-binding global-text-style">{{oitem.item}}</div>
+                                    <span class="ng-binding global-heading-style">{{oitem.charge | currency : $ : 2}}</span>
+                                </div>
+                            </div>
+                            <div>&nbsp;</div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div><!--repeat design box ends here -->
         </div>
-        <div class="ms-responsive-table-wrapper mrg20-T">
-            <table class="simple hover simple-tbl1">
-                <thead>
-                    <tr>
-                        <th class="secondary-text text-bold" width="40%">Garment/Item Description</th>
-                        <th class="secondary-text text-center text-bold" width="10%">Color</th>
-                        <th class="secondary-text text-center text-bold" width="20%">Size/Quantities</th>
-                        <th class="secondary-text text-center text-bold" width="10%">OS</th>
-                        <th class="secondary-text text-center text-bold" width="10%">Qty</th>
-                        <th class="secondary-text text-center text-bold" width="10%">Unit Price</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr class="cursor-p">
-                        <td>Americal Apparel poly cotton tee</td>
-                        <td class="text-center">Black</td>
-                        <td class="text-center">M:(10) XXL:(12)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">0.76</td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td>Americal Apparel poly cotton tee</td>
-                        <td class="text-center">Black</td>
-                        <td class="text-center">M:(10) XXL:(12)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">0.76</td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td>Americal Apparel poly cotton tee</td>
-                        <td class="text-center">Black</td>
-                        <td class="text-center">M:(10) XXL:(12)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">0.76</td>
-                    </tr>         
-                    <tr class="cursor-p">
-                        <td>Americal Apparel poly cotton tee</td>
-                        <td class="text-center">Black</td>
-                        <td class="text-center">M:(10) XXL:(12)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">0.76</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
-        <!-- design2 -->
-        <h2 class="mrg20-T">Design: Brew Job</h2>
-        <div class="ms-responsive-table-wrapper">
-            <table class="simple hover simple-tbl1">
-                <thead>
-                    <tr>
-                        <th class="secondary-text text-bold" width="25%">Position</th>
-                        <th class="secondary-text text-bold" width="15%">Type</th>
-                        <th class="secondary-text text-center text-bold" width="25%">Qty</th>
-                        <th class="secondary-text text-center text-bold" width="15%">Price</th>
-                        <th class="secondary-text text-center text-bold" width="20%">Image</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr class="cursor-p">
-                        <td height="72">Front</td>
-                        <td>Screen Print</td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">1.5</td>
-                        <td class="text-center"><img src="assets/images/etc/logo.png" title="Company Name" alt="Company Name" height="40" width="40" /></td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td height="72">Back</td>
-                        <td>Embroidery</td>
-                        <td class="text-center">215</td>
-                        <td class="text-center">5.76</td>
-                        <td class="text-center"><img src="assets/images/etc/logo.png" title="Company Name" alt="Company Name" height="40" width="40" /></td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td height="72">Black</td>
-                        <td>Screen Print</td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">1.5</td>
-                        <td class="text-center"></td>
-                    </tr>         
-                </tbody>
-            </table>
-        </div>
-        <div class="ms-responsive-table-wrapper mrg20-T">
-            <table class="simple hover simple-tbl1">
-                <thead>
-                    <tr>
-                        <th class="secondary-text text-bold" width="40%">Garment/Item Description</th>
-                        <th class="secondary-text text-center text-bold" width="10%">Color</th>
-                        <th class="secondary-text text-center text-bold" width="20%">Size/Quantities</th>
-                        <th class="secondary-text text-center text-bold" width="10%">OS</th>
-                        <th class="secondary-text text-center text-bold" width="10%">Qty</th>
-                        <th class="secondary-text text-center text-bold" width="10%">Unit Price</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    <tr class="cursor-p">
-                        <td>Americal Apparel poly cotton tee</td>
-                        <td class="text-center">Black</td>
-                        <td class="text-center">M:(10) XXL:(12)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">0.76</td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td>Americal Apparel poly cotton tee</td>
-                        <td class="text-center">Black</td>
-                        <td class="text-center">M:(10) XXL:(12)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">0.76</td>
-                    </tr>
-                    <tr class="cursor-p">
-                        <td>Americal Apparel poly cotton tee</td>
-                        <td class="text-center">Black</td>
-                        <td class="text-center">M:(10) XXL:(12)</td>
-                        <td class="text-center"></td>
-                        <td class="text-center">22</td>
-                        <td class="text-center">0.76</td>
-                    </tr>         
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div layout="row">
-        <div layout="column" flex="75" class="md-whiteframe-4dp mrg15-R h100">
-            <div ng-cloak>
-                <md-content>
-
-					<md-card flex="50" class="mrg10">
-		                
-		                <md-card-content class="recap">
-
-							<div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding">Folding @ </div>
-		                        <span class="ng-binding">.1</span>
-		                    </div>
-
-		                   <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding">Hang Tag @ </div>
-		                        <span class="ng-binding">.15</span>
-		                    </div>
-
-		                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding">Position : </div>
-		                        <span class="ng-binding">Front DATA 4</span>
-		                    </div>
-
-		                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding">DtG @ </div>
-		                        <span class="ng-binding">?</span>
-		                    </div>
-
-		                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding">Discharge Ink @ </div>
-		                        <span class="ng-binding">0</span>
-		                    </div>
-
-		                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding">Foil @ </div>
-		                        <span class="ng-binding">0</span>
-		                    </div>
-
-		                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding">Ink Charge @ </div>
-		                        <span class="ng-binding">0</span>
-		                    </div>
-
-		                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding"># on Dark @ </div>
-		                        <span class="ng-binding">0</span>
-		                    </div>
-
-		                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-		                        <div class="ng-binding"># on Light @ </div>
-		                        <span class="ng-binding">0</span>
-		                    </div>
-		                </md-card-content>
-		            </md-card>
-
-                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
-                        <!-----------------Payment History Tab-------------------->
-                        <md-tab label="Payment History">
-                            <div class="ms-responsive-table-wrapper">
-                                <table class="simple hover simple-tbl1">
-                                    <thead>
-                                        <tr>
-                                            <th class="secondary-text" width="30%">Date</th>
-                                            <th class="secondary-text" width="30%">Amount Paid</th>
-                                            <th class="secondary-text" width="30%">Method Paid</th>
-                                            <th class="secondary-text" width="10%">&nbsp;</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                        <tr ng-repeat="pmntHis in siData" class="cursor-p">
-                                            <td>{{ pmntHis.date }}</td>
-                                            <td>{{ pmntHis.amountPaid }}</td>
-                                            <td>{{ pmntHis.methodPaid }}</td>
-                                            <td class="text-center"><a href="#" class="icon icon-cancel font-19 f-red"></a></td>
-                                        </tr>                    
-                                    </tbody>
-                                </table>
-                            </div>                    
-                        </md-tab>
-                        <!-----------------Pay By Credit Card-------------------->
-                        <md-tab label="Pay By Credit Card">
-                            <div class="ms-responsive-table-wrapper">
-                               <div class="pd15">
-                                   <div layout="row">
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Credit Card Information</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="100">
-                                                     <input placeholder="Name On Card" name="Name On Card">
-                                                </md-input-container>
-                                                <md-input-container flex="100">
-                                                    <input placeholder="Credit Card Number" name="Credit Card Number">
-                                                </md-input-container>
+        <div class="box-layout-2">
+            <div flex="70" layout="column" class="right-20 pull-left box-layout-2">
+                <div class="full-row pull-left">
+                    <div ng-cloak class="box-zerospace" layout="row">
+                        <md-content class="box-zerospace">
+                        <md-tabs md-dynamic-height md-border-bottom class="custom-struct-2 stokkup-invoice-tabs box-layout-2">
+                                <!--Payment History Tab-->
+                                <md-tab label="Payment History">
+                                    <div layout="row" flex=100 class="p-30">
+                                    <div class="ms-responsive-table-wrapper box-zerospace">
+                                        <table class="simple hover simple-tbl1">
+                                            <thead>
+                                                <tr>
+                                                    <th class="secondary-text" width="30%">Date</th>
+                                                    <th class="secondary-text" width="30%">Amount Paid</th>
+                                                    <th class="secondary-text" width="30%">Method Paid</th>
+                                                    <th class="secondary-text" width="10%">&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                <tr ng-repeat="pmntHis in siData">
+                                                    <td>{{ pmntHis.payment_date  | date:"M/d/yyyy" }}</td>
+                                                    <td>{{ pmntHis.payment_amount | currency : $ : 2 }}</td>
+                                                    <td>{{ pmntHis.payment_method }}</td>
+                                                    <td class="text-center" class="cursor-p"><a href="#" ng-click="deleteHistory(pmntHis.payment_id, pmntHis.payment_method)" class="icon icon-cancel font-19 f-red"></a></td>
+                                                </tr>                    
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    </div>                   
+                                </md-tab>
+                                <!-- Pay By Credit Card-->
+                                <md-tab label="Pay By Credit Card" ng-disabled="!showPaymentDetails">
+                                    <div layout="row" flex=100 class="p-15">
+                                        <div class="box-layout-2">
+                                           <div layout="row">
+                                               <div layout="column" flex="45" class="m-r-30 p-20">
+                                                    <div class="title pull-left box-zerospace pb-20 stokkup-title-h4">
+                                                        Credit Card Information</div>
+                                                        <md-select class="m-t-20 m-b-0 p-b-20" placeholder="Saved Credit Cards" ng-change="getStoredProfile(company.savedCard)" name="Saved Credit Cards" aria-label="Saved Credit Cards" ng-model="company.savedCard">
+                                                            <md-option value="0">
+                                                                Saved Credit Cards
+                                                            </md-option>
+                                                            <md-option ng-repeat="cards in cardsAll" value="{{cards.payment_profile_id}}" >
+                                                                {{cards.card_number}}
+                                                            </md-option>
+                                                        </md-select>
+                                                        <input type="hidden" ng-model="company.cppdid">
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
+                                                        <md-input-container flex="50" class="margin-0 m-b-20" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                             <input placeholder="First Name On Card" name="First Name On Card" ng-model="company.creditFname">
+                                                        </md-input-container>
+                                                        <md-input-container class="margin-0 m-b-20" flex="50" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                             <input placeholder="Last Name On Card" name="Last Name On Card" ng-model="company.creditLname">
+                                                        </md-input-container>
+                                                        <md-input-container flex="100" class="margin-0 m-b-20" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                            <input placeholder="Credit Card Number" only-number="20" name="Credit Card Number" ng-model="company.creditCard">
+                                                        </md-input-container>
+                                                        <md-input-container flex="100" class="margin-0" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                            <input placeholder="Amount" name="Amount" only-number="20" ng-model="company.amount">
+                                                        </md-input-container>
+                                                        <div class="box-zerospace" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                            <md-input-container flex="35">
+                                                                <md-select ng-model="company.expMonth" placeholder="MM">
+                                                                    <md-option value="0">MM</md-option>
+                                                                    <md-option ng-selected="company.month==01" value="01">JAN</md-option>
+                                                                    <md-option ng-selected="company.month==02" value="02">FEB</md-option>
+                                                                    <md-option ng-selected="company.month==03" value="03">MAR</md-option>
+                                                                    <md-option ng-selected="company.month==04" value="04">APR</md-option>
+                                                                    <md-option ng-selected="company.month==05" value="05">MAY</md-option>
+                                                                    <md-option ng-selected="company.month==06" value="06">JUN</md-option>
+                                                                    <md-option ng-selected="company.month==07" value="07">JUL</md-option>
+                                                                    <md-option ng-selected="company.month==08" value="08">AUG</md-option>
+                                                                    <md-option ng-selected="company.month==09" value="09">SEP</md-option>
+                                                                    <md-option ng-selected="company.month==10" value="10">OCT</md-option>
+                                                                    <md-option ng-selected="company.month==11" value="11">NOV</md-option>
+                                                                    <md-option ng-selected="company.month==12" value="12">DEC</md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                            <md-input-container flex=35>
+                                                               <md-select ng-model="company.expYear" placeholder="YY">
+                                                                    <md-option value="0">YY</md-option>
+                                                                    <md-option ng-selected="company.year==16" value="16">16</md-option>
+                                                                    <md-option ng-selected="company.year==17" value="17">17</md-option>
+                                                                    <md-option ng-selected="company.year==18" value="18">18</md-option>
+                                                                    <md-option ng-selected="company.year==19" value="19">19</md-option>
+                                                                    <md-option ng-selected="company.year==20" value="20">20</md-option>
+                                                                    <md-option ng-selected="company.year==21" value="21">21</md-option>
+                                                                    <md-option ng-selected="company.year==22" value="22">22</md-option>
+                                                                    <md-option ng-selected="company.year==23" value="23">23</md-option>
+                                                                    <md-option ng-selected="company.year==24" value="24">24</md-option>
+                                                                    <md-option ng-selected="company.year==25" value="25">25</md-option>
+                                                                    <md-option ng-selected="company.year==26" value="26">26</md-option>
+                                                                    <md-option ng-selected="company.year==27" value="27">27</md-option>
+                                                                    <md-option ng-selected="company.year==28" value="28">28</md-option>
+                                                                    <md-option ng-selected="company.year==29" value="29">29</md-option>
+                                                                    <md-option ng-selected="company.year==30" value="30">30</md-option>
+                                                                </md-select>
+                                                            </md-input-container>
+                                                            <md-input-container flex=30>
+                                                                <input placeholder="CVV" name="CVV" only-number="10" ng-model="company.cvv">
+                                                            </md-input-container>
+                                                            <div flex=100>
+                                                            <md-checkbox  ng-show="company.savedCard == 0 || company.savedCard == null" aria-label="Checkbox 1" ng-model="company.storeCard">Store Credit Card for Future Payments</md-checkbox>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                               </div>
+                                               
+                                               <div layout="column" flex="45" class="p-20" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                    <div class="title pull-left box-zerospace pb-20 stokkup-title-h4">Billing Address</div>
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="pt-20">
+                                                        <md-input-container flex="75" class="margin-0">
+                                                            <input placeholder="Street Address" name="Street Address" ng-model="company.street">
+                                                        </md-input-container>
+                                                        <md-input-container flex="25" class="margin-0">
+                                                            <input placeholder="Suite" name="Suite" ng-model="company.suite">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div layout="row" layout-wrap="nowrap" layout-align="space-between start" class="pt-20">
+                                                        <md-input-container flex="100" class="margin-0 m-b-20">
+                                                            <input placeholder="City" name="City" ng-model="company.city">
+                                                        </md-input-container>
+                                                        <md-input-container flex="70" class="margin-0 m-b-20">
+                                                            <md-select placeholder="State" name="State" aria-label="State" ng-model="company.state">
+                                                                <md-option value="">
+                                                                    Select State
+                                                                </md-option>
+                                                                <md-option ng-repeat="state in states_all" value="{{state.code}}" >
+                                                                    {{state.name}}
+                                                                </md-option>
+                                                            </md-select>
+                                                        </md-input-container>
+                                                        <md-input-container flex="30" class="margin-0 m-b-20">
+                                                            <input placeholder="Zip" name="Zip" only-number="10" ng-model="company.zip">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <div layout="row" layout-wrap="end center" layout-align="space-between start">&nbsp;</div>
+                                                </div>
                                             </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="MM">
-                                                        <md-option value="0">MM</md-option>
-                                                        <md-option>JAN</md-option>
-                                                        <md-option>FEB</md-option>
-                                                        <md-option>MAR</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex=30 class="m-b-20">
-                                                   <md-select ng-model="company.prime_address_state" placeholder="YY">
-                                                        <md-option value="0">YY</md-option>
-                                                        <md-option>12</md-option>
-                                                        <md-option>13</md-option>
-                                                        <md-option>14</md-option>
-                                                        <md-option>15</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="CVV" name="CVV">
-                                                </md-input-container>
+                                            <div layout="row" class="box-layout-2" ng-show="company.savedCard == 0 || company.savedCard == null">
+                                                <div flex=100 class="pull-right m-r-30">
+                                                    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                                        <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20 text-uppercase" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Pay</span></button>
+                                                    </md-dialog-actions>
+                                                </div>
                                             </div>
-                                            <md-checkbox  aria-label="Checkbox 1">Store Credit Card for Future Payments</md-checkbox>
-                                       </div>
-                                       <div flex="10">&nbsp;</div>
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Billing Address</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="75">
-                                                    <input placeholder="Street Address" name="Street Address">
-                                                </md-input-container>
-                                                <md-input-container flex="25">
-                                                    <input placeholder="Suite" name="Suite">
-                                                </md-input-container>
+                                            
+                                            <div layout="row" class="box-layout-2" ng-hide="company.savedCard == 0 || company.savedCard == null">
+                                                <div flex=100 class="pull-right m-r-30">
+                                                    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                                        <button type="button" class="md-raised md-primary stokkup-custom-btn1 stokkup-blue-btn m-b-20 text-uppercase" aria-label="Pay by Credit Card via Authorized.net" ng-click="pay_creditCard(company)"><span class="ng-scope">Collect Money</span></button>
+                                                    </md-dialog-actions>
+                                                </div>
                                             </div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="40">
-                                                    <input placeholder="City" name="City">
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <md-select ng-model="company.prime_address_state" placeholder="State">
-                                                        <md-option value="0">State1</md-option>
-                                                        <md-option>State2</md-option>
-                                                        <md-option>State3</md-option>
-                                                        <md-option>State4</md-option>
-                                                    </md-select>
-                                                </md-input-container>
-                                                <md-input-container flex="30">
-                                                    <input placeholder="Zip" name="Zip">
-                                                </md-input-container>
+                                        </div>
+                                    </div>     
+                                </md-tab>
+                                <!-----------------Pay By Cash-------------------->
+                                <md-tab label="Pay By Cash" ng-disabled="!showPaymentDetails">
+                                    <div layout="row" flex=100>
+                                        <div class="box-zerospace">
+                                            <div class="p-30">
+                                           <div>
+                                                    <div class="title pb-20"><span class="stokkup-title-h4">Amount Paid</span></div>
+                                                    <div layout="row">
+                                                        <md-input-container flex=30 class="margin-0 m-b-20">
+                                                             <input placeholder="$" name="$" only-number ng-model="pay.cashAmount">
+                                                        </md-input-container>
+                                                    </div>
+                                                    <md-dialog-actions layout="row" class="layout-row">
+                                                        <!--<button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
+                                                        </button>-->
+                                                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Pay Cash" ng-click="pay_cash(pay)"><span class="ng-scope">Pay</span></button>
+                                                    </md-dialog-actions>
+                                           </div>
                                             </div>
-                                            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row mrg75-T">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
-                                            </md-dialog-actions>
-                                       </div>
-                                   </div>
-                               </div>
-                            </div> 
-                        </md-tab>
-                        <!-----------------Pay By Cash-------------------->
-                        <md-tab label="Pay By Credit Card">
-                            <div class="ms-responsive-table-wrapper">
-                              <div class="pd15">
-                                   <div layout="row">
-                                       <div layout="column" flex="45">
-                                            <div class="title" layout-padding><span class="basicInfoStyle">Amount Paid</span></div>
-                                            <div layout="row" layout-wrap="nowrap" layout-align="space-between start">
-                                                <md-input-container flex="30">
-                                                     <input placeholder="$" name="$">
-                                                </md-input-container>
-                                            </div>
-                                            <md-dialog-actions layout="row" class="layout-row">
-                                                <button type="button" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" aria-label="Cancel"><span class="ng-scope">Cancel</span>
-                                                </button>
-                                                <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Generate Art Approval Form"><span class="ng-scope">Pay</span></button>
-                                            </md-dialog-actions>
-                                       </div>
-                                   </div>
-                               </div>
-                            </div> 
-                        </md-tab>
-                    </md-tabs>
-                </md-content>
+                                        </div>
+                                    </div>
+                                </md-tab>
+                        </md-tabs>
+                        </md-content>
+                    </div>
+                </div>
+            </div>       
+            <div class="side-bar orderscreen-rightbar invoice-rightbar pull-right" flex="30" layout="column">
+                <md-card class="m-b-30">
+                    <md-card-title-text class="text-left stokkup-title-h4 m-b-20 light-300">
+                        Order Recap
+                    </md-card-title-text>
+                
+                    <md-card-content class="recap">
+                       <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Screens</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].screen_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Press Setup</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].press_setup_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Digitize</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].digitize_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Art Work</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].artwork_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Seperations</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].separations_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Rush</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].rush_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Distribution</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].distribution_charge | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Shipping</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].shipping_charge | currency : $ : 2}}</span> 
+                        </div>
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Discount</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].discount | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Order Total</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].order_total | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Tax Rate</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].tax_rate}}(%)</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Tax</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].tax | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Grand Total</div>
+                            <span class="ng-binding global-heading-style red-highlight">{{allData.order_data[0].grand_total | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Total Payments</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].total_payments | currency : $ : 2}}</span>
+                        </div>
+
+                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
+                            <div class="ng-binding global-text-style">Balance Due</div>
+                            <span class="ng-binding global-heading-style">{{allData.order_data[0].balance_due | currency : $ : 2}}</span>
+                        </div>
+                    </md-card-content>
+                    <div class="text-center m-t-20">
+                        <button ng-show="showPaymentDetails" type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="vm.linktopay()"><span class="ng-scope">Link to Pay</span></button>
+                        <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn approve-btn" aria-label="Link to Pay" ng-click="print_pdf()"><span class="ng-scope">Download</span></button>
+                    </div>
+                </md-card>
             </div>
-        </div>
-        <div class="m-r-15 side-bar h100" flex="25" layout="column">
-            <md-card>
-                <md-card-title>
-                    <md-card-title-text class="text-left">Order Recap</md-card-title-text>
-                </md-card-title>
-                <md-card-content class="recap pd0">
-					<div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Total Qnty</div>
-                        <span class="ng-binding">70</span>
-                    </div>
-
-                   <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Screens</div>
-                        <span class="ng-binding">54</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Press Setup</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Digitize</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Art Work</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Seperations</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Rush</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Distribution</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Shipping</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Define</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Discount</div>
-                        <span class="ng-binding">0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Lines Total</div>
-                        <span class="ng-binding">$325.0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Order Total</div>
-                        <span class="ng-binding">$325.0</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax Rate</div>
-                        <span class="ng-binding">10.5</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Tax</div>
-                        <span class="ng-binding">4</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Grand Total</div>
-                        <span class="ng-binding">$5,976.81</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Total Payments</div>
-                        <span class="ng-binding">5</span>
-                    </div>
-
-                    <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                        <div class="ng-binding">Balance Due</div>
-                        <span class="ng-binding">$2,500.98</span>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </div>
-    </div>
+        </div>              
+    </div><!--Inner full box ends here -->
 </div>

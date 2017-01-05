@@ -10,6 +10,18 @@
     /** @ngInject */
     function PriceGridController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,AllConstant,notifyService)
     {
+
+        $scope.role_slug = sessionService.get('role_slug');
+        if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='SM')
+        {
+            $scope.allow_access = 1; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+        }
+        else
+        {
+            $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+        }
+
+
         var originatorEv;
         var vm = this ;
         $scope.company_id = sessionService.get('company_id');
@@ -86,6 +98,36 @@
              
             document.getElementById('uploadPricecsv').submit();
                
+        }
+
+
+         $scope.print_excel = function(id)
+        {
+            var target;
+            var form = document.createElement("form");
+            form.action = 'api/public/admin/downloadPriceGridExcel';
+            form.method = 'post';
+            form.target = target || "_blank";
+            form.style.display = 'none';
+
+            var invoice_id = document.createElement('input');
+            invoice_id.name = 'price_id';
+            invoice_id.setAttribute('value', id);
+            form.appendChild(invoice_id);
+
+            var type = document.createElement('input');
+            type.name = 'type';
+            type.setAttribute('value', 'xlsx');
+            form.appendChild(type);
+
+            var input_pdf = document.createElement('input');
+            input_pdf.name = 'pdf_token';
+            input_pdf.setAttribute('value', 'pdf_token');
+            form.appendChild(input_pdf);
+
+
+            document.body.appendChild(form);
+            form.submit();
         }
 
     }

@@ -12,37 +12,157 @@
     function DesignController($window, $timeout,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log,AllConstant)
     {
 
+       $scope.role_slug = sessionService.get('role_slug');
+        $scope.user_id = sessionService.get('user_id');
+        $scope.allowSA = 0;
+
+
+        // change display number to design Id for fetching the order data
+          var design_data = {};
+           design_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
+           design_data.table ='order_design';
+          
+          $http.post('api/public/common/GetTableRecords',design_data).success(function(result) {
+            
+              
+              if(result.data.success == '1') 
+              {
+                 
+                  $scope.design_id = result.data.records[0].id;                    
+                   $scope.designDetail();
+                   $scope.designPosition();
+
+              } else {
+                $state.go('app.order');
+              }
+          });
+
+
+
         $scope.NoImage = AllConstant.NoImage;
         $scope.productSearch = '';
         $scope.vendor_id = 0;
         $scope.company_id = sessionService.get('company_id');
         $scope.valid_sns = 1;
+        $scope.getNextPrice = 0;
 
         $scope.calculateAll = function(order_id,company_id)
         {
             $http.get('api/public/order/calculateAll/'+order_id+'/'+company_id).success(function(result) 
             {
                 $scope.designProductData();
+                $scope.calculatePrice();
+            });
+        }
+
+
+         $scope.calculatePrice = function()
+        {
+          var combine_array_id = {};
+                    combine_array_id.id = $scope.design_id;
+                    combine_array_id.company_id = sessionService.get('company_id');
+                    
+                    combine_array_id.position_id = 0;
+                    
+                    $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
+                       
+
+                        angular.forEach(result.data.order_design_position, function(value , key) {
+                            $scope.order_design_position[key].total_price = value.total_price;
+                        })
+
+                        
+                    });
+        }
+
+        $scope.orderDetail = function(){
+            $("#ajax_loader").show();
+            
+            var combine_array_id = {};
+            combine_array_id.id = $scope.order_id;
+            combine_array_id.company_id = sessionService.get('company_id');
+
+            $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
+                if(result.data.success == '1') {
+                    $("#ajax_loader").hide();
+
+                   $scope.order = result.data.records[0];
+                   $scope.display_number = result.data.records[0]['display_number'];
+
+                   $scope.order_items = result.data.order_item;
+                } else {
+                    $state.go('app.order');
+                }
             });
         }
 
        $scope.designDetail = function(){
          $("#ajax_loader").show();
         var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             
             $http.post('api/public/order/designDetail',combine_array_id).success(function(result, status, headers, config) {
                
                 $("#ajax_loader").hide();
                 if(result.data.success == '1') {
+
+
+                    if($scope.role_slug == 'SM' && $scope.user_id == result.data.records[0].login_id) {
+
+                         $scope.allowSA = 1;
+                    } 
+
+                    if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+                    {
+                        $scope.allow_access = 0; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
+                    }
+                    else if($scope.role_slug =='SM' && $scope.allowSA == 1)
+                    {
+                        $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else if($scope.role_slug =='SM' && $scope.allowSA == 0)
+                    {
+                        $scope.allow_access = 0;  // THESE ROLES CAN ALLOW TO EDIT
+
+                    } else {
+
+                         $scope.allow_access = 1; // THESE ROLES CAN ALLOW TO EDIT
+                    }
+
+
+
+                    
                      
                     $scope.order_id = result.data.records[0].order_id;
                     $scope.price_id = result.data.records[0].price_id;
+
+
+
+                     var allData = {};
+                    allData.table ='price_grid';
+                    allData.cond ={id:result.data.records[0].price_id}
+
+                    
+                    $http.post('api/public/common/GetTableRecords',allData).success(function(result) 
+                    {   
+                        if(result.data.success=='1')
+                        {   
+                            $scope.all_price_grid = result.data.records[0];
+                        }
+                        else
+                        {
+                           $scope.all_price_grid = '';
+                        }
+                    });
+
+
+
                     $scope.order_number = result.data.records[0].order_number;
                     $scope.is_complete = result.data.records[0].is_complete;
                     $scope.designInforamtion = result.data.records[0];
 
                     $scope.calculateAll($scope.order_id,$scope.company_id);
+                    $scope.orderDetail();
 
                 } else {
                     $state.go('app.order');
@@ -51,21 +171,25 @@
             });
         }
 
-        $scope.designDetail();
+       
 
         $scope.designProductData = function(){
             $("#ajax_loader").show();
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             
             $http.post('api/public/product/designProduct',combine_array_id).success(function(result, status, headers, config) {
                 
                 $("#ajax_loader").hide();
                 if(result.data.success == '1') {
                     $scope.productData = result.data.productData;
+                    $scope.total_product = result.data.total_product;
+                    $scope.total_price = result.data.total_price;
                 }
                 else{
-                    $scope.productData = [];                    
+                    $scope.productData = [];
+                    $scope.total_product = 0;
+                    $scope.total_price = 0;
                 }
             });
         }
@@ -73,8 +197,9 @@
        $scope.designPosition = function(){
 
         var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             combine_array_id.company_id = sessionService.get('company_id');
+            combine_array_id.getNextPrice = $stateParams.getNextPrice;
             $scope.total_pos_qnty = 0;
             
             $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -87,21 +212,23 @@
 
                     $scope.order_design_position = result.data.order_design_position;
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
+                    $scope.total_screen_fees = result.data.total_screen_fees;
                 }
                 else{
                     $scope.order_design_position = [];
                     $scope.total_pos_qnty = 0;
+                    $scope.total_screen_fees = 0;
                 }
             });
         }
 
-        $scope.designPosition();
+        
 
         $scope.addPosition = function(){
 
             var position_data_insert = {};
             position_data_insert.table ='order_design_position'
-            position_data_insert.data ={design_id:$stateParams.id}
+            position_data_insert.data ={design_id:$scope.design_id}
 
             $http.post('api/public/common/InsertRecords',position_data_insert).success(function(result) {
                 
@@ -115,7 +242,7 @@
         $scope.designPositionNew = function(){
 
         var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.design_id;
             combine_array_id.company_id = sessionService.get('company_id');
             $scope.total_pos_qnty = 0;
             
@@ -124,6 +251,13 @@
                 if(result.data.success == '1') {
                    
                     $scope.total_pos_qnty = result.data.total_pos_qnty;
+                    $scope.total_screen_fees = result.data.total_screen_fees;
+
+                }
+                else
+                {
+                    $scope.total_pos_qnty = 0;
+                    $scope.total_screen_fees = 0;
                 }
             });
         }
@@ -142,7 +276,7 @@
             condition_obj[match_condition] =  id;
             position_main_data.cond = angular.copy(condition_obj);
             position_main_data.order_id = $scope.order_id;
-            position_main_data.design_id = $stateParams.id;
+            position_main_data.design_id = $scope.design_id;
             position_main_data.company_id = sessionService.get('company_id');
             position_main_data.column_name = $scope.name_filed;
             
@@ -150,47 +284,91 @@
                 position_main_data.position = $scope.miscData.position[value].value;
             } 
 
-
+            if(column_name == 'placement_type' || column_name == 'color_stitch_count' || column_name == 'qnty' || column_name == 'dtg_size' || column_name == 'dtg_on') {
+                $scope.getNextPrice = 1;
+            }
+            else {
+                $scope.getNextPrice = 0;
+            }
           
             $http.post('api/public/order/updatePositions',position_main_data).success(function(result) {
 
-                        if(result.data.success == '2') 
-
-                        {
-
-                             var data = {"status": "error", "message": "This position already exists in this design."}
-                             notifyService.notify(data.status, data.message);
-                            
-                             $scope.order_design_position[key].position_id = $scope.order_design_position[key].duplicate_position_id;
-                             return false;
-                        } 
+                if(result.data.success == '2')
+                {
+                     var data = {"status": "error", "message": "This position already exists in this design."}
+                     notifyService.notify(data.status, data.message);
+                    
+                     $scope.order_design_position[key].position_id = $scope.order_design_position[key].duplicate_position_id;
+                     return false;
+                } 
 
                 if(column_name == 'position_id') {
                     $scope.order_design_position[key].position_header_name = $scope.miscData.position[value].value;
                     $scope.order_design_position[key].duplicate_position_id = $scope.miscData.position[value].id;
-                  
                 }
-
+               
+               
                 if(column_name == 'color_stitch_count') {
-                    $scope.order_design_position[key].screen_fees_qnty = value;
+                    if($scope.miscData.placement_type[$scope.order_design_position[key].placement_type].slug != 45){
+                        $scope.order_design_position[key].screen_fees_qnty = value;
+                    }
+                    
                     $scope.order_design_position[key].stitch_header_name = value;
-                  
                 }
 
-                if(column_name == 'placement_type') {
-                    $scope.order_design_position[key].placement_header_name = $scope.miscData.placement_type[value].value;
+
+                if(column_name == 'placement_type' && $scope.miscData.placement_type[value].slug != 46) {
+                    $scope.order_design_position[key].dtg_size = 0;
+                    $scope.order_design_position[key].dtg_on = 0;
                 }
 
+               // $scope.order_design_position[key].total_price = ($scope.order_design_position[key].number_on_dark_qnty * $scope.all_price_grid['number_on_dark'] ) + ($scope.order_design_position[key].oversize_screens_qnty * $scope.all_price_grid['over_size_screens']) + ($scope.order_design_position[key].ink_charge_qnty * $scope.all_price_grid['ink_changes']) + ($scope.order_design_position[key].number_on_light_qnty * $scope.all_price_grid['number_on_light']) + ($scope.order_design_position[key].press_setup_qnty * $scope.all_price_grid['press_setup']) + ($scope.order_design_position[key].discharge_qnty * $scope.all_price_grid['discharge']) + ($scope.order_design_position[key].speciality_qnty * $scope.all_price_grid['specialty']) + ($scope.order_design_position[key].foil_qnty * $scope.all_price_grid['foil']);
+                $scope.order_design_position[key].total_price = ($scope.order_design_position[key].number_on_dark_qnty * $scope.all_price_grid['number_on_dark'] ) + ($scope.order_design_position[key].oversize_screens_qnty * $scope.all_price_grid['over_size_screens'])  + ($scope.order_design_position[key].number_on_light_qnty * $scope.all_price_grid['number_on_light']) + ($scope.order_design_position[key].press_setup_qnty * $scope.all_price_grid['press_setup']) + ($scope.order_design_position[key].discharge_qnty * $scope.all_price_grid['discharge']) + ($scope.order_design_position[key].speciality_qnty * $scope.all_price_grid['specialty']) + ($scope.order_design_position[key].foil_qnty * $scope.all_price_grid['foil']);
+                
+                if($scope.order_design_position[key].total_price > 0) {
+                    $scope.order_design_position[key].total_price = $scope.order_design_position[key].total_price.toFixed(2); 
+                   
+                }
+                
+                 $scope.order_design_position[key].total_screen_fees = ($scope.order_design_position[key].screen_fees_qnty * $scope.all_price_grid['screen_fees'])+($scope.order_design_position[key].ink_charge_qnty * $scope.all_price_grid['ink_changes']);
+                 $scope.order_design_position[key].total_screen_fees = $scope.order_design_position[key].total_screen_fees.toFixed(2);
+
+
+                
                 if(column_name == 'qnty') {
                     $scope.order_design_position[key].qnty_header_name = value ;
-                  
                 }
-
 
                 var data = {"status": "success", "message": "Positions Updated Successfully."}
                 notifyService.notify(data.status, data.message);
                 $scope.designProductData();
+
+                if(column_name == 'placement_type' || column_name == 'color_stitch_count' || column_name == 'qnty' || column_name == 'dtg_size' || column_name == 'dtg_on')
+                {
+                    var combine_array_id = {};
+                    combine_array_id.id = $scope.design_id;
+                    combine_array_id.company_id = sessionService.get('company_id');
+                    combine_array_id.getNextPrice = $scope.getNextPrice;
+                    combine_array_id.position_id = id;
+                    
+                    $http.post('api/public/order/getDesignPositionDetail',combine_array_id).success(function(result, status, headers, config) {
+                       
+                        $scope.order_design_position[key].color_stitch_count = result.data.position.color_stitch_count;
+                        $scope.order_design_position[key].screen_print_charge = result.data.position.screen_print_charge;
+                        $scope.order_design_position[key].direct_to_garment_charge = result.data.position.direct_to_garment_charge;
+                        $scope.order_design_position[key].embroidery_charge = result.data.position.embroidery_charge;
+                        $scope.order_design_position[key].screen_print_charge2 = result.data.position.screen_print_charge2;
+                        $scope.order_design_position[key].direct_to_garment_charge2 = result.data.position.direct_to_garment_charge2;
+                        $scope.order_design_position[key].embroidery_charge2 = result.data.position.embroidery_charge2;
+                        $scope.order_design_position[key].screen_print_charge_qnty = result.data.position.screen_print_charge_qnty;
+                        $scope.order_design_position[key].direct_to_garment_charge_qnty = result.data.position.direct_to_garment_charge_qnty;
+                        $scope.order_design_position[key].embroidery_charge_qnty = result.data.position.embroidery_charge_qnty;
+                        $scope.order_design_position[key].total_price = result.data.position.total_price;
+                    });
+                }
                 $scope.designPositionNew();
+                $scope.calculatePrice();
+
             });
         }
 
@@ -262,7 +440,7 @@
            
         
         
-        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,size_group_id)
+        function openAddProductDialog(ev,controller, file,product_id,operation,color_id,is_supply,design_product_id,vendor_id,product_name,description,vendor_name)
         {
             /*if($scope.order_design_position.length == '0')
             {
@@ -289,11 +467,13 @@
                 locals: {
                     product_id: product_id,
                     operation:operation,
-                    design_id:$stateParams.id,
+                    design_id:$scope.design_id,
                     color_id:color_id,
                     vendor_id:vendor_id,
                     is_supply:is_supply,
-                    size_group_id:size_group_id,
+                    product_name:product_name,
+                    description:description,
+                    vendor_name:vendor_name,
                     event: ev
                 },
                 onRemoving : $scope.designProductData
@@ -319,7 +499,7 @@
         {
             if($scope.vendor_id > 0)
             {
-                var data = {'productSearch': $scope.productSearch,'vendor_id': $scope.vendor_id, 'vendors': $scope.allVendors};
+                var data = {'productSearch': $scope.productSearch,'vendor_id': $scope.vendor_id, 'vendors': $scope.allVendors, 'client_id': $scope.order.client_id};
 
                 $mdDialog.show({
                     controller: 'SearchProductController',
@@ -388,12 +568,12 @@
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
             }
-            else if($scope.vendorProducts == 0)
+            /*else if($scope.vendorProducts == 0)
             {
                 var data = {"status": "error", "message": "No products available for this vendor"}
                 notifyService.notify(data.status, data.message);
                 $scope.productSearch = '';
-            }
+            }*/
             else if($scope.valid_sns == 0)
             {
                 var data = {"status": "error", "message": "Please enter valid credentials for S&S"}
@@ -560,7 +740,7 @@
                     operation:operation,
                     product_name:product_name,
                     colorName:colorName,
-                    design_id:$stateParams.id,
+                    design_id:$scope.design_id,
                     design_product_id:design_product_id,
                     size_group_id:size_group_id,
                     warehouse:warehouse,
@@ -578,7 +758,7 @@
             if (permission == true) {
 
                 var combine_array_id = {};
-                combine_array_id.design_id = $stateParams.id;
+                combine_array_id.design_id = $scope.design_id;
                 combine_array_id.product_id = product_id;
                     
                 $http.post('api/public/product/deleteAddProduct',combine_array_id).success(function(result, status, headers, config) {
@@ -596,7 +776,8 @@
             var override_data = {};
             override_data['productData'] = $scope.productData[product_id];
             override_data['company_id'] = sessionService.get('company_id');
-            override_data['design_id'] = $stateParams.id;
+            override_data['design_id'] = $scope.design_id;
+            override_data['order_id'] = $scope.order_id;
 
             $http.post('api/public/order/updateOverride',override_data).success(function(result) {
                 $scope.designProductData();
@@ -632,6 +813,7 @@
                         $scope.designDetail();
                         $scope.designPosition();
                         $scope.designProductData();
+                        $scope.orderDetail();
                     }
                     else
                     {
@@ -646,7 +828,7 @@
             var markup_data = {};
             markup_data['productData'] = $scope.productData[product_id];
             markup_data['company_id'] = sessionService.get('company_id');
-            markup_data['design_id'] = $stateParams.id;
+            markup_data['design_id'] = $scope.design_id;
 
             $http.post('api/public/order/updateMarkup',markup_data).success(function(result) {
                 $scope.designProductData();

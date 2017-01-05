@@ -1,26 +1,28 @@
-<div class="content order-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20 class="cursor-p" ng-click="vm.openaddDesignDialog($event)">
-                Finishing 
+            <div class="table-title-text" flex=20 ng-click="vm.openaddDesignDialog($event)">
+                Finishing
             </div>
-           
-            <div class="search-block" flex=40>
-                <md-input-container class="md-block" flex-gt-sm>
-                    <input ng-model="name" placeholder="Search" ui-event="{ change : 'search($event)' }">
-                </md-input-container>
+            <div class="pull-right right-search-box margin-0">
+                <div class="search-block pull-right">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label class="top-srch-label">Search Finishing...</label>
+                        <input ng-model="name" ui-event="{ change : 'search($event)' }">
+                    </md-input-container>
+                </div> 
             </div>
-           
         </div>
+
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
             <div tasty-table bind-resource-callback="getResource" bind-init="init" bind-filters="filterBy" bind-reload="reloadCallback" >
-                <table class="dataTable row-border hover">
+                <table class="dataTable row-border">
                     
                     <thead tasty-thead></thead>
                     <tbody>
                         <tr  ng-repeat-start="row in rows"  >
                             
-                            <td>{{ row.order_id}}</td>
+                            <td>{{ row.display_number}}</td>
                             <td>{{ row.name}}</td>
                             <td>{{ row.client_company}}</td>
                             
@@ -30,6 +32,11 @@
                             </td>
                             <td  ng-show="row.order_finishing.length == 0">
                                 &nbsp;
+                            </td>
+                            <td>
+                                <md-select aria-label="status" ng-model="row.approval_id" flex="100"  class="margin-0 select-width font-16 font-weight" ng-change="updateOrderStatus('approval_id',row.approval_id,row.order_id)" ng-disabled="allow_access == '0'">
+                                    <md-option ng-selected="row.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
+                                </md-select>
                             </td>
                         </tr>
                         <tr class="table-desc dev-rdetail-data"  ng-if="row.expanded" ng-repeat-end="">
@@ -56,8 +63,8 @@
                                             <td class="cursor-p">{{finishing.end_time}}</td>
                                             <td class="cursor-p">{{finishing.est}}</td>
                                             <td>
-                                                <md-input-container flex=30 class="m-b-20 m-t-25">
-                                                    <md-select ng-model="finishing.status" aria-label="r1" ng-change="changeStatus(finishing)">
+                                                <md-input-container flex=30 class="margin-0">
+                                                    <md-select ng-model="finishing.status" aria-label="r1" ng-change="changeStatus(finishing)" ng-disabled="allow_access == '0'">
                                                       <md-option ng-selected="{{finishing.status==1}}" value="1">
                                                         Yes
                                                        </md-option>
@@ -67,7 +74,8 @@
                                                     </md-select>                                
                                                 </md-input-container>
                                             </td>
-                                            <td class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">EDIT</a></td>
+                                            <td ng-show="allow_access == '1'" class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">EDIT</a></td>
+                                            <td ng-show="allow_access == '0'" class="cursor-p"><a ng-click="vm.editFinishing($event,finishing)">VIEW</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -79,7 +87,7 @@
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-           <table class="simple">
+           <table class="dataTable row-border">
                 <thead>
                     <tr>
                         <th>No Records Found</th>
@@ -87,5 +95,5 @@
                 </thead>
             </table>
         </div>
-    </div> 
+    </div>
 </div>

@@ -9,13 +9,44 @@
     /** @ngInject */
     function AffiliateInfoController($document, $window, $timeout, $mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService)
     {
+        $scope.role_slug = sessionService.get('role_slug');
+
+        if($scope.role_slug=='SU' || $scope.role_slug=='AT')
+        {
+            $state.go('app.order');
+        }
+
+        // change display number to order Id for fetching the order data
+        var order_data = {};
+        order_data.cond ={company_id :sessionService.get('company_id'),affiliate_display_number:$stateParams.id};
+        order_data.table ='orders';
+          
+        $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
+            
+            if(result.data.success == '1') 
+            {
+                $scope.vendorRecord =result.data.records;
+                $scope.order_id = result.data.records[0].id;
+                $scope.display_number = result.data.records[0].affiliate_display_number;
+
+                $scope.orderDetail();
+                $scope.designDetail();
+                $scope.listAffiliate();
+            } 
+            else
+            {
+                $state.go('app.order');
+            }
+        });
+
+          
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
             
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
-            $scope.order_id = $stateParams.id;
+            $scope.order_id = $scope.order_id;
             
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -32,7 +63,7 @@
         $scope.designDetail = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
@@ -50,7 +81,7 @@
         $scope.listAffiliate = function(){
 
             var combine_array_id = {};
-            combine_array_id.id = $stateParams.id;
+            combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/affiliate/getAffiliateList',combine_array_id).success(function(result, status, headers, config) {
@@ -64,9 +95,7 @@
             });
         }
 
-        $scope.orderDetail();
-        $scope.designDetail();
-        $scope.listAffiliate();
+       
 
         $scope.checkDesign = function()
         {
@@ -199,9 +228,9 @@
         function openinformationDialog(ev,order_id)
         {
             $mdDialog.show({
-                controller: 'InformationController',
+                controller: 'AffiliateInformationController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/information/information.html',
+                templateUrl: 'app/main/order/dialogs/information/affiliateInformation.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: false,
@@ -251,8 +280,10 @@
             });*/
         }
 
+         var combine_array_id = {};
+        combine_array_id.company_id = sessionService.get('company_id');
 
-        $http.post('api/public/common/getCompanyDetail',sessionService.get('company_id')).success(function(result) {
+        $http.post('api/public/common/getCompanyDetail',combine_array_id).success(function(result) {
             if(result.data.success == '1') 
             {
                 $scope.allCompanyDetail =result.data.records;
@@ -349,7 +380,7 @@
                 clickOutsideToClose: true,
                 locals: {
                     client_id: $scope.order.client_id,
-                    order_id: $stateParams.id,
+                    order_id: $scope.order_id,
                     event: ev
                   }
             });

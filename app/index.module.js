@@ -45,6 +45,7 @@
             // Receiving
             'app.receiving',
 
+            
             'ngTasty',
 
             // image uploading module
@@ -64,6 +65,12 @@
 
             //shipping
             'app.shipping',
+            
+            // Production
+            'app.production',
+
+            // Finishing Scheduling
+            'app.finishingQueue',
 
             // Navigation
             'app.navigation',
@@ -74,6 +81,10 @@
             //Misc data
             'app.misc',
             'xeditable',
-            'angular-clipboard'
+            'angular-clipboard',
+
+            // GOOGLE ADDRESS API
+            'vsGoogleAutocomplete',
+            'ui.tinymce'
         ]);
 })();

@@ -1,0 +1,42 @@
+<div class="main-design-page">
+    <div class="header"  layout="column">
+        <div class="inner-full-box top-30">
+            <div class="order-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
+                <div class="info-order" flex="100" ng-class="{'disable-click': role_slug != 'CA' && role_slug != 'FM'  }">
+                    <md-card layout="row">
+                    <md-card-content flex="25" layout="column"  >
+                    <div class="attribute-box">
+                        <table class="tbl-typ1">
+                            <tr>
+                                <th flex=15>Order Size</th>
+                                <th flex=15>Factor</th>
+                                <th class="text-center" flex=15>
+                                    <a href="#" class="add-attributes" ui-event="{ click : 'addData(\'order_size_factor\')'}"><span class="icon icon-plus"></span></a>
+                                </th>
+                            </tr>
+                            <tr ng-repeat="(key,factorData) in allfactorData">
+                                <td class="">
+                                    <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
+                                    <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.order_size"
+                                    ui-event="{ change : 'UpdateTableField(\'order_size\',factorData.order_size,\'order_size_factor\',\'id\',factorData.id)' }"
+                                    </md-input-container>
+                                </td>
+                                <td class="">
+                                    <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
+                                    <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.factor" ui-event="{ change : 'UpdateTableField(\'factor\',factorData.factor,\'order_size_factor\',\'id\',factorData.id)' }">
+                                    </md-input-container>
+                                </td>
+                                
+                                <td class="text-center">
+                                    <a href="#" class="remove-size remove-attrribute" ng-click="removeData(factorData.id,'order_size_factor')"><span class="icon icon-close"></span></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,40 @@
+<div class="content client-list-page stockkup-content-table-container custom-tabs-content">
+    <div class="md-whiteframe-4dp stokkup-main-tableview">
+	    <md-content class="">
+	        <div layout="row" layout-wrap="nowrap" class="client-live-nation p-30">
+	            <div flex-xs flex-gt-xs="50" layout="column">
+	                <md-card class="custom-fullbox-shadow">
+	                    <md-card-header layout-align="space-between center">
+	                        <md-card-header-text>
+	                            <span class="md-title">SNS Information</span>
+	                        </md-card-header-text>
+	                        <md-menu  ng-show="allow_access==1">
+	                            <md-button aria-label="sns Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+	                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+	                            </md-button>
+	                            <md-menu-content width="4" ng-click="OpenForm(ev,sns,'ssActivewear/ssActivewear-dialog.html')">
+	                                <md-menu-item>
+	                                    <md-button>
+	                                        Edit
+	                                    </md-button>
+	                                </md-menu-item>
+	                            </md-menu-content>
+	                        </md-menu>
+	                    </md-card-header>
+	                    <md-card-content class="custom-desc-box">
+	                        <div class="h5 text-semibold">Username</div>
+	                        <span>{{sns.username}}</span>
+	                        <div class="h5 text-semibold">API Key</div>
+	                        <span>{{sns.api_key}}</span>
+	                        <div class="h5 text-semibold">API Password</div>
+	                        <span>{{sns.password}}</span>
+	                        <div class="h5 text-semibold">Test Mode</div>
+	                        <span ng-if="sns.is_live==1">NO</span>
+	                        <span ng-if="sns.is_live==0">Yes</span>
+	                    </md-card-content>
+	                </md-card>
+	            </div>
+	        </div>
+	    </md-content>
+	</div>
+</div>

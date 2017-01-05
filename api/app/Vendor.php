@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use App\Common;
+use App\Login;
 
 class Vendor extends Model {
 
@@ -14,8 +16,15 @@ class Vendor extends Model {
 * @return array $staffData
 */
 
+     public function __construct( Common $common, Login $login)
+          {
+        $this->common = $common;
+        $this->login = $login;
+        }
+        
     public function vendorList($post) {
         
+        $this->common->getDisplayNumber('vendors',$post['company_id'],'company_id','id','yes');
                $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
@@ -153,7 +162,7 @@ class Vendor extends Model {
 
     public function SalesList($post) {
 
-       
+        $this->common->getDisplayNumber('sales',$post['company_id'],'company_id','id','yes');
         $search = '';
         if(isset($post['filter']['name'])) {
             $search = $post['filter']['name'];
@@ -170,6 +179,7 @@ class Vendor extends Model {
                           $query->orWhere('sales_name', 'LIKE', '%'.$search.'%')
                                 ->orWhere('sales_email','LIKE', '%'.$search.'%')
                                 ->orWhere('sales_phone','LIKE', '%'.$search.'%')
+                                ->orWhere('display_number','=', $search)
                                 ->orWhere('sales_created_date','LIKE', '%'.$search.'%');
                       });
                   }
