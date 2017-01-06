@@ -1409,7 +1409,7 @@ class CommonController extends Controller {
 */                    array('key' => 'odp.mark_as_complete', 'name' => 'Status'),
 /*                    array('key' => '', 'name' => 'Run Date','sortable' => false),
 */                    array('key' => '', 'name' => 'Thumbnail','sortable' => false),
-                    array('key' => '', 'name' => 'Dollar Value','sortable' => false),
+                    /*array('key' => '', 'name' => 'Dollar Value','sortable' => false),*/
                     array('key' => '', 'name' => '','sortable' => false)
                 );
 
