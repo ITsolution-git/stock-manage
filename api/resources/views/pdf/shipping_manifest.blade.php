@@ -174,7 +174,7 @@
                         {
                         ?>
                             <tr>
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$box->id}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$count}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->size}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->color_name}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->product_name}}</td>
@@ -187,7 +187,7 @@
                         {
                         ?>
                             <tr style="background-color:#b7c2e0;">
-                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$box->id}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:center; font-size:9px; line-height:20px;">{{$count}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->size}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->color_name}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$box->product_name}}</td>
