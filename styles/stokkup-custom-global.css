@@ -1778,7 +1778,7 @@ a.editable-click:hover, a.editable-click:focus {
 
 .machine-full-slot {
   width: 100%;
-  height: 500px;
+  height: 600px;
   overflow-y: scroll;
   border-right: solid 1px #efefef;
   background-color: #fff; }
