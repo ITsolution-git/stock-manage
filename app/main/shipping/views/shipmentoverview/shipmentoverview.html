@@ -125,7 +125,12 @@
                             <tr ng-repeat="box in shippingBoxes">
                                 <td>{{ box.count}}</td>
                                 <td>{{ box.boxed_qnty}}</td>
-                                <td>{{ box.tracking_number}}</td>
+                                <td ng-if="shipping.shipping_type_name != 'Freight'">{{ box.tracking_number}}</td>
+                                <td ng-if="shipping.shipping_type_name == 'Freight'">
+                                    <md-input-container flex="100" class="margin-0 date-input">
+                                        <input aria-label="true" name="tracking_number" ng-model="box.tracking_number"  ui-event="{ change : 'UpdateBoxData(box.tracking_number,box.id)' }" >
+                                    </md-input-container>
+                                </td>
                             </tr>                    
                         </tbody>
                     </table>

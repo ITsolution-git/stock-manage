@@ -306,5 +306,26 @@
             document.body.appendChild(form);
             form.submit();
         }
+
+        $scope.UpdateBoxData = function(value,id)
+        {
+            var box_data = {};
+            box_data.table ='shipping_box';
+            $scope.name_filed = 'tracking_number';
+            
+            var obj = {};
+            obj[$scope.name_filed] =  value;
+            box_data.data = angular.copy(obj);
+            var condition_obj = {};
+            
+            condition_obj['id'] =  id;
+            box_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',box_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
     }
 })();
