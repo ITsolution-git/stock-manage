@@ -42,7 +42,15 @@ class DistributionController extends Controller {
         
         foreach ($dist_addr as $addr) {
         
-            $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
+            $addr->full_address  = !empty($addr->address2)?$addr->address2." ":'';
+            $addr->full_address .= !empty($addr->address)?$addr->address:'' ; 
+            $addr->full_address .= !empty($addr->address_line2)?", ".$addr->address_line2:'' ; 
+            $addr->full_address .= !empty($addr->suite)?", ".$addr->suite:'' ; 
+            $addr->full_address .= !empty($addr->city)?", ".$addr->city:''; 
+            $addr->full_address .= !empty($addr->name)?", ".$addr->name:'';
+            $addr->full_address .= !empty($addr->zipcode)?", ".$addr->zipcode:'';
+            $addr->full_address .= ' USA';
+
             $distribution_address[] = $addr;
             if($addr->shipping_type_id == 1)
             {
@@ -100,7 +108,17 @@ class DistributionController extends Controller {
         foreach ($dist_addr as $addr) {
             
             $total_remaining_qnty = 0;
-            $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
+
+            $addr->full_address  = !empty($addr->address2)?$addr->address2." ":'';
+            $addr->full_address .= !empty($addr->address)?$addr->address:'' ; 
+            $addr->full_address .= !empty($addr->address_line2)?", ".$addr->address_line2:'' ; 
+            $addr->full_address .= !empty($addr->suite)?", ".$addr->suite:'' ; 
+            $addr->full_address .= !empty($addr->city)?", ".$addr->city:''; 
+            $addr->full_address .= !empty($addr->name)?", ".$addr->name:'';
+            $addr->full_address .= !empty($addr->zipcode)?", ".$addr->zipcode:'';
+            $addr->full_address .= ' USA';
+
+//            $addr->full_address = $addr->address ." ". $addr->address2 ." ". $addr->city ." ". $addr->state ." ". $addr->zipcode ." ".$addr->country;
 
             $result = $this->common->GetTableRecords('product_address_mapping',array('product_id' => $post['product_id'],'order_id' => $post['order_id']),array());
 

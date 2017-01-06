@@ -1402,8 +1402,14 @@ class CommonController extends Controller {
                     array('key' => 'mt.value', 'name' => 'Position'),
                     array('key' => 'cl.client_company', 'name' => 'Client'),
                     array('key' => 'mt1.value', 'name' => 'Production Type'),
-                    array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
-                    array('key' => '', 'name' => 'Run Date','sortable' => false),
+                    array('key' => '', 'name' => 'Run Speed','sortable' => false),
+                    array('key' => '', 'name' => 'Screen Count','sortable' => false),
+                    array('key' => '', 'name' => 'Imps','sortable' => false),                    
+/*                    array('key' => 'ord.in_hands_by', 'name' => 'In Hand date','sortable' => false),
+*/                    array('key' => 'odp.mark_as_complete', 'name' => 'Status'),
+/*                    array('key' => '', 'name' => 'Run Date','sortable' => false),
+*/                    array('key' => '', 'name' => 'Thumbnail','sortable' => false),
+                    array('key' => '', 'name' => 'Dollar Value','sortable' => false),
                     array('key' => '', 'name' => '','sortable' => false)
                 );
 

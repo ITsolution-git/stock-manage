@@ -34,7 +34,7 @@ class Production extends Model {
             $inhandDate_filter = $post['filter']['inhandDate'];
         }
         $production_data = DB::table('orders as ord')
-                        ->select(DB::raw('SQL_CALC_FOUND_ROWS ord.name as order_name,ord.display_number as order_display, ord.id as order_id,cl.client_company ,ord.in_hands_by,mt.value,odp.id,ass.id as screenset,ass.screen_active,ass.approval,mt1.value as production_type,odp.image_1,ps.run_date'))
+                        ->select(DB::raw('SQL_CALC_FOUND_ROWS ord.name as order_name,ord.display_number as order_display, ord.id as order_id,cl.client_company ,ord.in_hands_by,mt.value,odp.id,ass.id as screenset,ass.screen_active,ass.approval,mt1.value as production_type,odp.image_1,ps.run_date,odp.mark_as_complete'))
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
                         ->leftjoin('order_design as od','ord.id','=','od.order_id')
                         ->leftjoin('order_design_position as odp','odp.design_id','=','od.id')
@@ -101,9 +101,17 @@ class Production extends Model {
                 elseif($value->screen_active=='1'){$value->screen_icon='1';} 
                 else{$value->screen_icon='0';}
             	$value->in_hands_by =($value->in_hands_by=='0000-00-00' || $value->in_hands_by=='')?'':date('m/d/Y',strtotime($value->in_hands_by)) ;
+                $value->position_image= $this->common->checkImageExist($post['company_id'].'/order_design_position/'.$value->id."/",$value->image_1);
                 $value->run_date =($value->run_date=='0000-00-00' || $value->run_date=='')?'':date('m/d/Y',strtotime($value->run_date)) ;
                 $value->image_1= file_exists(FILEUPLOAD.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1)?UPLOAD_PATH.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1:'';
                 $value->garment = $this->CheckWarehouseQuantity($value->id);
+                $calculation = $this->GetRuntimeData($value->id,$post['company_id']);
+                $value->imps = $calculation['imps'];
+                $value->run_speed = $calculation['run_speed'];
+                $value->screen_count = $this->getPositioncolors($value->id);
+               
+                //echo "<pre>"; print_r($calculation); echo "</pre>"; die();
+
           	}
         }
         //echo "<pre>"; print_r($production_data); echo "</pre>"; die();
@@ -402,5 +410,48 @@ class Production extends Model {
             }            
         }
         return $ret;
+    }
+    public function GetRuntimeData($position_id,$company_id)
+    {
+        $per_screen = 0.17; // 10 MINUTES
+        $iph_value=1; // DEFAULT VALUE
+        $getRunspeed = $this->getRunspeed($position_id);
+        $getOrderImpression = $this->getOrderImpression($position_id);
+        $getPositioncolors = $this->getPositioncolors($position_id);
+        
+        $factor = $this->getfactor($getOrderImpression,$company_id);
+
+        if($getPositioncolors>0)
+        {
+            $iph = $this->common->GetTableRecords('iph',array('pos_no'=>$getPositioncolors,'company_id'=>$company_id));
+            if(isset($iph[0]->value))
+            {
+                $iph_value = $iph[0]->value;
+            }
+        }
+        $imps_adjusted = $iph_value * $factor * $getRunspeed;
+        //$hrs_imps   = 1/$imps_adjusted;
+        $hrs_imps= number_format((float)1/$imps_adjusted, 4, '.', '');
+        $setup_time = $per_screen* $getPositioncolors;
+        $run_speed = $imps_adjusted;
+        $run_time = number_format((float)$getOrderImpression/$run_speed, 2, '.', '');
+        $total_time = $setup_time+$run_time;
+
+
+        /*echo "<br> Runspeed at ->".$getRunspeed*100;
+        echo "<br> Order Size  ->".$getOrderImpression;
+        echo "<br> Per screen  ->".$per_screen;
+        echo "<br> Colors      ->".$getPositioncolors;
+        echo "<br> iph ->".$iph_value;
+        echo "<br> factor ->".$factor;
+        echo "<br> imps_adjusted->".$imps_adjusted;
+        echo "<br> Hrs of IMPS->".$hrs_imps;
+        echo "<br> Setup Time->".$setup_time;
+        echo "<br> Run speed>".$run_speed;
+        echo "<br> Run Time->".$run_time;
+        echo "<br> Total Time->".$total_time;*/
+        
+        return array('setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time,'getOrderImpression'=>$getOrderImpression,'imps'=>$imps_adjusted);
+        //$getIPH = $this->getIPH($position_id);
     }
  }

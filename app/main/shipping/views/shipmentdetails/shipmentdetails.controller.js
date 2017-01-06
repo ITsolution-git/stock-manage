@@ -68,6 +68,26 @@
                   $scope.miscData = result.data.records;
         });
 
+        $scope.updateTrackingNumber = function(id)
+        {
+            var box_data = {};
+            box_data.table ='shipping_box';
+            $scope.name_filed = 'tracking_number';
+            
+            var obj = {};
+            obj[$scope.name_filed] =  '';
+            box_data.data = angular.copy(obj);
+            var condition_obj = {};
+            
+            condition_obj['shipping_id'] =  id;
+            box_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',box_data).success(function(result) {
+
+
+            });
+        }
+
         $scope.updateShippingAll = function(name,value,id)
         {
             
@@ -105,9 +125,10 @@
 
             $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
 
-             if(name == 'shipping_type_id')
+                if(name == 'shipping_type_id')
                 {
-                     $scope.shipping.shipping_method = '';
+                    $scope.shipping.shipping_method = '';
+                    $scope.updateTrackingNumber(id);
                 }
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
