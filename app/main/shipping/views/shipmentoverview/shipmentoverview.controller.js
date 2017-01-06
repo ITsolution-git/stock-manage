@@ -76,6 +76,15 @@
                     if($scope.shipping.shipping_type_id == '3') {
                         $scope.shipping.shipping_type_name = 'Local Messenger';
                     }
+                    if($scope.shipping.shipping_type_id == '4') {
+                        $scope.shipping.shipping_type_name = 'Local Pickup';
+                    }
+                    if($scope.shipping.shipping_type_id == '5') {
+                        $scope.shipping.shipping_type_name = 'Freight';
+                    }
+                    if($scope.shipping.shipping_type_id == '6') {
+                        $scope.shipping.shipping_type_name = 'Other';
+                    }
 
                     if($scope.shipping.shipping_status == '1') {
                         $scope.shipping.shipping_status_name = 'Waiting To Ship';
