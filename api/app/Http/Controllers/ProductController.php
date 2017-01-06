@@ -676,7 +676,8 @@ public function create_dir($dir_path) {
                 {
                     $total_shipping_charge = $line_qty * $price_grid->shipping_charge;
                 }
-                $avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
+                //$avg_garment_cost = ($unit_cost/$line_qty) + $total_shipping_charge;
+                $avg_garment_cost = $unit_cost/$line_qty;
                 if($supplied > 0)
                 {
                     $avg_garment_cost = 0;
