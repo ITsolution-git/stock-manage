@@ -160,11 +160,11 @@
                  </table>
                 <table width="100%" align="center" border="0" cellspacing="0" cellpadding="2" style="font-family: arial; font-size:10px; border-collapse:collapse;">
                     <tr>
-                        <th width="10%" height="15" style="font-weight:bold; text-align:center;">Box</th>
-                        <th width="10%" height="15" style="font-weight:bold; text-align:left;">Size</th>
+                        <th width="7%" height="15" style="font-weight:bold; text-align:center;">Box</th>
+                        <th width="8%" height="15" style="font-weight:bold; text-align:left;">Size</th>
                         <th width="10%" height="15" style="font-weight:bold; text-align:left;">Color</th>
                         <th width="50%" height="15" style="font-weight:bold; text-align:left;">Description</th>
-                        <th width="10%" height="15" style="font-weight:bold; text-align:left;">Defect/Spoil</th>
+                        <th width="15%" height="15" style="font-weight:bold; text-align:left;">Defect/Spoil</th>
                         <th width="10%" height="15" style="font-weight:bold; text-align:center;">Qty</th>
                     </tr>
                     <?php $count = 1; ?>
