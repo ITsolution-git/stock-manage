@@ -404,8 +404,17 @@
                             <div layout="row" flex="55">
                                 <div layout="column" flex="100">
                                     <div class="global-labels mb-10">Size / Quantity</div>
-                                    <div layout="row" layout-wrap>
-                                        <div class="box-typ2" flex="20" ng-repeat="(key,DesignProductData) in product.sizeData">
+                                    <div layout="row" layout-wrap ng-repeat="(key,DesignProductData_all) in product.sizeData">
+                                        <div class="box-typ2" flex="10">
+                                            <table width="100%">
+                                                <tr>
+                                                    <th width="50%" class="color font-12">
+                                                        {{key}}
+                                                    </th>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <div class="box-typ2" flex="10" ng-repeat="(key_1,DesignProductData) in DesignProductData_all">
                                             <table width="100%">
                                                 <tr>
                                                     <td width="70%" class="text-right color font-12">

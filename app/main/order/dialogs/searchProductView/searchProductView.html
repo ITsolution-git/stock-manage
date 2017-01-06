@@ -110,10 +110,14 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="mrg20-T header-typ3">
-                                <span>TOTAL Quantity :- {{AllProductDetail[colorName].total_qnty}}</span>
+                            <div class="mrg20-T">
+                                <span>{{AllProductDetail[colorName].colorName}} Quantity :- {{AllProductDetail[colorName].total_qnty}}</span>
+                                <br>
+                                <span>TOTAL Quantity :- {{total_all}}</span>
                                 <br><br>
-                                <span ng-show="!is_supply">TOTAL COST :- {{AllProductDetail[colorName].total}}</span>
+                                <span ng-show="!is_supply">{{AllProductDetail[colorName].colorName}} COST :- {{AllProductDetail[colorName].total}}$</span>
+                                <br>
+                                <span ng-show="!is_supply">TOTAL COST :- {{total_price}}$</span>
                                 <md-checkbox  aria-label="Checkbox 1" ng-model="is_supply">
                                     These products are supplied garments
                                 </md-checkbox>
@@ -135,7 +139,7 @@
             </div>
         </md-dialog-content>
         <md-dialog-actions layout="row" layout-align="end center">
-            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail[colorName].sizes,warehouse)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
+            <md-button class="md-accent md-raised" ng-click="addProduct(AllProductDetail,warehouse)" ng-disabled="orderForm.$invalid">{{operation}} Product</md-button>
         </md-dialog-actions>
     </form>
 </md-dialog> 

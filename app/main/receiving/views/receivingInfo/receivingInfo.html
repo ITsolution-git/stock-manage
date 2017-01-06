@@ -69,7 +69,8 @@
             <!--products block starts here -->
             <div class="order-info-page mb-30">
                 <h4 class="stokkup-title-h4 m-b-20">products</h4>
-                <div  ng-repeat="(key,line_item) in poline" class="m-0 box-zerospace transparent-bg">
+                <div  ng-repeat="(keysome,line_item_all) in poline">
+                <div  ng-repeat="(key_color,line_item) in line_item_all" class="m-0 box-zerospace transparent-bg">
                     <md-card layout="row" class="mh-0 m-t-0 m-b-30 white-bg">
                     <md-card-content flex="100" layout="column">
                         <div layout="row" layout-wrap>
@@ -83,7 +84,7 @@
                             </div>
                             <div class="trans-box">
                                 <div>Color</div>
-                                <span class="chrome-weight font-14">{{line_item.product.product_color}}</span>
+                                <span class="chrome-weight font-14">{{key_color}}</span>
                             </div>
                             <div class="trans-box">
                                     <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn text-white" ng-click="ReceiveProductsAll(line_item.product.product_id)"  aria-label="Save">Receive All</button>
@@ -151,25 +152,26 @@
                     <md-card layout="row" class="box-zerospace mh-0 m-t-0 mb-60">
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight"><span class="global-labels">Order Total:</span> {{line_item.total_product}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Total:</span> {{line_item.summary.total_product}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight"><span class="global-labels">Order Received:</span> {{line_item.total_received}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Received:</span> {{line_item.summary.total_received}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight"><span class="global-labels">Order Defectives:</span> {{line_item.total_defective}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Defectives:</span> {{line_item.summary.total_defective}}</p>
                         </div>
                     </md-card-content>
                     <md-card-content flex="25" layout="column">
                         <div layout="row" layout-wrap class="marginProduct">
-                            <p class="font-14 chrome-weight"><span class="global-labels">Order Summary:</span> {{line_item.total_remains}}</p>
+                            <p class="font-14 chrome-weight"><span class="global-labels">Order Summary:</span> {{line_item.summary.total_remains}}</p>
                         </div>
                     </md-card-content>
                     </md-card>
+                </div>
                 </div>
             </div>
             <!--products block ends here -->

@@ -213,7 +213,8 @@ public function create_dir($dir_path) {
             $allDetail = $this->product->getPurchaseDetail($data['design_product_id']);
         }
         
-         
+        $productAllData['total_all'] = 0;
+        $productAllData['total_price'] =0;  
         foreach($all_data as $key => $data) {
          
          
@@ -237,6 +238,7 @@ public function create_dir($dir_path) {
         }
             if(!empty($color_data))
             {
+                
                 if($key == 0) {
                     $productAllData['colorSelection'] = $data->colorName;
                 }
@@ -275,16 +277,23 @@ public function create_dir($dir_path) {
                 $productAllData['colorData'][$data->colorName]['colorSideImage'] = $data->colorSideImage;
                 $productAllData['colorData'][$data->colorName]['colorBackImage'] = $data->colorBackImage;
                 $productAllData['colorData'][$data->colorName]['colorName'] = $data->colorName;
-                if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
+               
+                if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) 
+                {
                     $productAllData['colorData'][$data->colorName]['total'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] * $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'];
-                }
-                if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
                     $productAllData['colorData'][$data->colorName]['total_qnty'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'];
+                    //echo $productAllData['colorData'][$data->colorName]['total']."<br>";
+                    $productAllData['total_all']   += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'];
+                    $productAllData['total_price'] += $productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'] * $productAllData['colorData'][$data->colorName]['sizes'][$key]['customerPrice'];
+
                 }
+                /*if(isset($productAllData['colorData'][$data->colorName]['sizes'][$key]['qnty'])) {
+                    
+                }*/
                 
             }
         }
-      
+        //die();
         return response()->json(["data" => $productAllData]);
     }
     
@@ -325,6 +334,7 @@ public function create_dir($dir_path) {
     }
     public function addProduct() {
         $post = Input::all();
+        //echo "<pre>"; print_r($post); echo "</pre>"; die();
         $post['created_date']=date('Y-m-d');
         /*$record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
         $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));*/
