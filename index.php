@@ -1,7 +1,7 @@
 <!doctype html>
 <html ng-app="fuse">
     <head>
-        <base href="/">
+        <base href="/stokkup/">
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -22,7 +22,7 @@
         <meta property="og:image" content="https://app.stokkup.com/assets/images/logos/stokkup-fb-logo.jpg" />
         <meta property="og:first_name" content="Stokkup">
         <meta property="og:last_name" content="Software">
-<!-- 
+<!--
 
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content="app.stokkup.com" />
@@ -45,7 +45,7 @@
         <link rel="stylesheet" href="styles/stokkup-custom-global.css">
         <link rel="stylesheet" href="styles/codepen.min.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
-        
+
         <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
         async defer></script>
         <script src="//fast.appcues.com/21130.js"></script>
@@ -70,7 +70,7 @@
 
     <body md-theme="{{vm.themes.active.name}}" md-theme-watch ng-controller="IndexController as vm"
           class="{{state.current.bodyClass|| ''}}" data-custom-background data-off-canvas-nav onload="loadscreen();">
-  
+
 <!--   <div id="ajax_loader" class="overlay-loader">
     <div class="loader-background"></div>
     <img class="loader-icon spinning-cog" src="assets/images/loader/load2.gif">
@@ -79,7 +79,7 @@
 <div class="loaderouter" id="ajax_loader" style="display: hide;">
     <div class="loader">Loading...</div>
 </div>
-        <!-- SPLASH SCREEN 
+        <!-- SPLASH SCREEN
     <ms-splash-screen id="splash-screen">
         <div class="center">
             <div class="logo" style="width:15%">
@@ -105,17 +105,17 @@
 
     <div id="main" class="animate-slide-up" ui-view="main" layout="column"></div>
 
-    
+
 
     <!-- <ms-theme-options></ms-theme-options> -->
     <script src="scripts/vendor.js"></script>
-   
+
     <!--<script src="scripts/mdPickers.min.js"></script>-->
     <!--<script src="scripts/multiselect/lodash.js"></script>-->
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.11.2/lodash.js"></script>-->
     <script src="scripts/other/lodash.js"></script>
     <!--<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>-->
-   
+
    <script src="scripts/other/tinymce.js"></script>
     <script>
      _.contains = _.includes;
@@ -123,8 +123,8 @@
     <script src="scripts/multiselect/angularjs-dropdown-multiselect.min.js"></script>
     <script src="scripts/other/ngDraggable.js"></script>
     <script src="scripts/angular-xeditable/xeditable.min.js"></script>
-    
-    
+
+
     <!-- inject:js -->
 
     <script src="app/quick-panel/quick-panel.module.js"></script>
@@ -162,12 +162,12 @@
     <script src="app/core/services/ms-session.service.js"></script>
     <script src="app/core/services/ng-tasty-tpls.min.js"></script>
     <script src="app/core/services/ui-event.js"></script>
-    <script src="app/core/services/angular-base64-upload.js"></script>    
+    <script src="app/core/services/angular-base64-upload.js"></script>
     <script src="app/core/filters/tag.filter.js"></script>
     <script src="app/core/filters/basic.filter.js"></script>
     <script src="app/core/directives/highlight.directive.js"></script>
     <script src="app/core/config/fuse-config.provider.js"></script>
-    <script src="app/core/services/xeditable.js"></script> 
+    <script src="app/core/services/xeditable.js"></script>
 
     <script src="app/quick-panel/quick-panel.controller.js"></script>
     <script src="app/navigation/navigation.module.js"></script>
@@ -217,7 +217,7 @@
 
 
     <!-- CLIENT FILES START -->
-    <script src="app/main/client/client.module.js"></script>    
+    <script src="app/main/client/client.module.js"></script>
     <script src="app/main/client/views/profile/profile-view.controller.js"></script>
     <script src="app/main/client/dialogs/client/client-dialog.controller.js"></script>
     <script src="app/main/client/client.controller.js"></script>
@@ -235,12 +235,12 @@
     <script src="app/main/customProduct/customProduct.controller.js"></script>
     <script src="app/main/customProduct/dialogs/customProduct/customProduct-dialog.controller.js"></script>
 
-    <!--Receiving--> 
+    <!--Receiving-->
     <script src="app/main/receiving/receiving.module.js"></script>
     <script src="app/main/receiving/receiving.controller.js"></script>
     <script src="app/main/receiving/views/receivingInfo/receivingInfo.controller.js"></script>
 
-    <!--Production--> 
+    <!--Production-->
     <script src="app/main/production/production.module.js"></script>
     <script src="app/main/production/production.controller.js"></script>
 
@@ -350,7 +350,7 @@
     <script src="scripts/clipboard.js"></script>
     <script src="scripts/other/vs-autocomplete-validator.js"></script>
 
-    
+
 
 
 </body>
