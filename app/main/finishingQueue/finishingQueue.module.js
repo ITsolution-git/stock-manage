@@ -25,8 +25,8 @@
                         controller : 'FinishingQueueController as vm'
                     }
                 }
-            }).state('app.finishingBoard', {
-                url: '/finishingBoard',
+            }).state('app.finishingBoard_remove', {
+                url: '/finishingBoard_remove',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/finishingQueue/finishingBoard.html',
