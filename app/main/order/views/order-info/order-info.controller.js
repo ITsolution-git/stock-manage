@@ -578,5 +578,30 @@
                 });
             }
         }
+        $scope.ReOrder = function (order_id)
+        {
+            var permission = confirm("Do you want to create copy of this order ?");
+            if(permission == true)
+            {
+                var condition_obj = {};
+                condition_obj.order_id = $scope.order_id;
+                condition_obj.company_id = sessionService.get('company_id');
+                condition_obj.login_id = sessionService.get('user_id');
+
+                $("#ajax_loader").show();
+                $http.post('api/public/order/reOrder',condition_obj).success(function(result) 
+                {
+                    $("#ajax_loader").hide();
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success',result.data.message);
+                    }
+                    else
+                    {
+                        notifyService.notify('error',result.data.message);
+                    }
+                });
+            }
+        }
     }
 })();

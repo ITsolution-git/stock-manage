@@ -2646,8 +2646,6 @@ class OrderController extends Controller {
  *  @SWG\Response(response="default", description="Get All Client Address"),
  * )
  */
-
-
      public function GetAllClientsAddress(){
        $post = Input::all();
        
@@ -2667,8 +2665,6 @@ class OrderController extends Controller {
         
         return response()->json(['data'=>$data]);
     }
-
-
 
     /** 
  * @SWG\Definition(
@@ -2715,8 +2711,6 @@ class OrderController extends Controller {
  *  @SWG\Response(response="default", description="All Order Address"),
  * )
  */
-
-
      public function allOrderAddress(){
        $post = Input::all();
        
@@ -2734,6 +2728,101 @@ class OrderController extends Controller {
         }
 
         
+        return response()->json(['data'=>$data]);
+    }
+
+    public function reOrder()
+    {
+        $post = Input::all();
+        
+        $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id']),array());
+        unset($order_data[0]->id);
+        $order_data[0]->display_number = $this->common->getDisplayNumber('orders',$post['company_id'],'company_id','id');
+        $insert_arr = json_decode(json_encode($order_data[0]),true);
+        $order_id = $this->common->InsertRecords('orders',$insert_arr);
+
+        $address_data = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $post['order_id']),array());
+
+        if(!empty($address_data))
+        {
+            foreach ($address_data as $address) {
+                
+                unset($address->id);
+                $address->order_id = $order_id;
+                $insert_address = json_decode(json_encode($address),true);
+                $this->common->InsertRecords('order_shipping_address_mapping',$insert_address);
+            }
+        }
+        
+
+        $order_design = $this->common->GetTableRecords('order_design',array('order_id' => $post['order_id'], 'is_delete' => '1'),array());
+
+        if(!empty($order_design))
+        {
+            foreach ($order_design as $design) {
+                
+                $old_design_id = $design->id;
+                unset($design->id);
+                $design->display_number = $this->common->getDisplayNumber('order_design',$post['company_id'],'company_id','id');
+                $design->order_id = $order_id;
+                $insert_order_design = json_decode(json_encode($design),true);
+                $design_id = $this->common->InsertRecords('order_design',$insert_order_design);
+
+                $design_product = $this->common->GetTableRecords('design_product',array('design_id' => $old_design_id,'is_delete' => '1'),array());
+
+                if(!empty($design_product))
+                {
+                    foreach ($design_product as $product) {
+                        
+                        $old_design_product_id = $product->id;
+                        unset($product->id);
+                        $product->design_id = $design_id;
+                        $insert_design_product = json_decode(json_encode($product),true);
+                        $design_product_id = $this->common->InsertRecords('design_product',$insert_design_product);
+
+                        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('design_product_id' => $old_design_product_id,'is_delete' => '1'),array());
+
+                        if(!empty($purchase_detail))
+                        {
+                            foreach ($purchase_detail as $purchase) {
+
+                                unset($purchase->id);
+                                $purchase->design_product_id = $design_product_id;
+                                $purchase->design_id = $design_id;
+                                $insert_size = json_decode(json_encode($purchase),true);
+                                $purchase_detail_id = $this->common->InsertRecords('purchase_detail',$insert_size);
+                            }
+                        }
+
+                        $packing_item = $this->common->GetTableRecords('order_item_mapping',array('order_id' => $post['order_id'],'design_id' => $old_design_id,'product_id' => $product->product_id),array());
+
+                        if(!empty($packing_item))
+                        {
+                            foreach ($packing_item as $pack) {
+                                $pack->order_id = $order_id;
+                                $pack->design_id = $design_id;
+                                $packing = json_decode(json_encode($pack),true);
+                                $order_item_mapping_id = $this->common->InsertRecords('order_item_mapping',$packing);
+                            }
+                        }
+                    }
+                }
+
+                $position_data = $this->common->GetTableRecords('order_design_position',array('design_id' => $old_design_id),array());
+
+                if(!empty($position_data))
+                {
+                    foreach ($position_data as $position) {
+                        
+                        unset($position->id);
+                        $position->design_id = $design_id;
+                        $insert_design_position = json_decode(json_encode($position),true);
+                        $design_position_id = $this->common->InsertRecords('order_design_position',$insert_design_position);
+                    }
+                }
+            }
+        }
+        $data = array("success"=>1,"message"=>"Order Created Successfully");
         return response()->json(['data'=>$data]);
     }
 }
