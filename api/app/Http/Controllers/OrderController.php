@@ -596,6 +596,7 @@ class OrderController extends Controller {
         ini_set('memory_limit', '1024M');
         $post = Input::all();
         $email = trim($post['email']);
+        $name = $post['name'];
         $fromemail = trim($post['from_email']);
         $email_array = explode(",",$email);
         $subject = $post['subject'];
@@ -664,11 +665,12 @@ class OrderController extends Controller {
 
         foreach ($email_array as $email)
         {
-            Mail::send('emails.invoice', ['subject'=>$subject,'email'=>$email,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($subject,$file_path,$email)
+            Mail::send('emails.invoice', ['subject'=>$subject,'email'=>$email,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($subject,$file_path,$email,$name,$fromemail)
             {
 //                 $message->from('pdave@codal.com','Piyush Dave');
-                 $message->to($email)->subject($subject);
-                 $message->attach($file_path);
+                $message->replyTo($fromemail,$name);
+                $message->to($email)->subject($subject);
+                $message->attach($file_path);
             });                
         }
 
