@@ -11,14 +11,14 @@
     {
         // State
         $stateProvider
-            .state('app.finishingQueue', {
+            .state('app.finishingQueue_remove', {
                 resolve: {
                     checksession : function (sessionService)
                     {
                         return sessionService.AccessService('ALL','true');
                     },
                 },
-                url    : '/finishingQueue',
+                url    : '/finishingQueue_remove',
                 views  : {
                     'content@app': {
                         templateUrl: 'app/main/finishingQueue/finishingQueue.html',
@@ -55,7 +55,7 @@
         });
 
         msNavigationServiceProvider.saveItem('fuse.finishingQueue', {
-            title: 'Finishing Queue',
+            title: '',
             icon: 'icon-cart',
             state: 'app.finishingQueue',
             weight   : 11

@@ -350,51 +350,56 @@ class Purchase extends Model {
 	            	$item = str_replace(array('00/00/0000'),array(''), $item);
 	        	});
 	        	$result[0]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
-	            $ret_array['receive'][$value->product_id]['data'][$value->size]= $value;
-	            $ret_array['receive'][$value->product_id]['product'] = $value;
+	            $ret_array['receive'][$value->product_id][$value->product_color]['data'][$value->size]= $value;
+	            $ret_array['receive'][$value->product_id][$value->product_color]['product'] = $value;
 	            $ret_array['po_data']= $result[0];
           	}
+          	//echo "<pre>"; print_r($ret_array); echo "</pre>"; die;
           	$total_invoice = 0;
-          	foreach ($ret_array['receive'] as $key => $value) 
+          	foreach ($ret_array['receive'] as $key => $value_color) 
           	{
           		$total_order = 0;
           		$rec_qnty = 0;
           		$short = 0;
-          		foreach ($value['data'] as $key_ret_array => $value_ret_array) 
+          		foreach ($value_color as $key_color => $value_data) 
           		{
-          			$total_order += $value_ret_array->qnty_ordered;
-          			$rec_qnty += $value_ret_array->qnty_purchased;
-          			$short += $value_ret_array->short;
+	          		foreach ($value_data['data'] as $key_ret_array => $value_ret_array) 
+	          		{
+	          			$total_order += $value_ret_array->qnty_ordered;
+	          			$rec_qnty += $value_ret_array->qnty_purchased;
+	          			$short += $value_ret_array->short;
 
-          			if($value_ret_array->qnty_ordered>$value_ret_array->qnty_purchased)
-          			{
-          				$value['data'][$key_ret_array]->short_unit = ($value_ret_array->qnty_ordered - $value_ret_array->qnty_purchased);
-          				$value['data'][$key_ret_array]->over_unit = 0;
-          			}
-          			else
-          			{
-          				$value['data'][$key_ret_array]->short_unit = 0;
-          				$value['data'][$key_ret_array]->over_unit = ($value_ret_array->qnty_purchased- $value_ret_array->qnty_ordered);
-          			}
-          			
-          			$total_invoice += $value_ret_array->line_total;
-          			//$value['data'][$key_ret_array]['']
-          		}
-          		$ret_array['receive'][$key]['data'] = array_values($value['data']);
-          		$ret_array['receive'][$key]['total_product'] = $total_order;
-          		$ret_array['receive'][$key]['total_received'] = $rec_qnty;
-          		$ret_array['receive'][$key]['total_defective'] = $short;
-          		if($total_order>$rec_qnty)
-          		{
-          			$ret_array['receive'][$key]['total_remains'] = $total_order -$rec_qnty." Short";
-          		}
-          		else
-          		{
-          			$ret_array['receive'][$key]['total_remains'] = $rec_qnty -$total_order." Over";
-          		}
+	          			if($value_ret_array->qnty_ordered>$value_ret_array->qnty_purchased)
+	          			{
+	          				$value_ret_array->short_unit = ($value_ret_array->qnty_ordered - $value_ret_array->qnty_purchased);
+	          				$value_ret_array->over_unit = 0;
+	          			}
+	          			else
+	          			{
+	          				$value_ret_array->short_unit = 0;
+	          				$value_ret_array->over_unit = ($value_ret_array->qnty_purchased- $value_ret_array->qnty_ordered);
+	          			}
+	          			
+	          			$total_invoice += $value_ret_array->line_total;
+	          			//$value['data'][$key_ret_array]['']
+	          		}
+	          	
+	          		$ret_array['receive'][$key][$key_color]['data'] = array_values($ret_array['receive'][$key][$key_color]['data']);
+	          		$ret_array['receive'][$key][$key_color]['summary']['total_product'] = $total_order;
+	          		$ret_array['receive'][$key][$key_color]['summary']['total_received'] = $rec_qnty;
+	          		$ret_array['receive'][$key][$key_color]['summary']['total_defective'] = $short;
+	          		if($total_order>$rec_qnty)
+	          		{
+	          			$ret_array['receive'][$key][$key_color]['summary']['total_remains'] = $total_order -$rec_qnty." Short";
+	          		}
+	          		else
+	          		{
+	          			$ret_array['receive'][$key][$key_color]['summary']['total_remains'] = $rec_qnty -$total_order." Over";
+	          		}
           		
-          		$ret_array['po_data']->total_invoice = $total_invoice;
+          			$ret_array['po_data']->total_invoice = $total_invoice;
           	}
+          }
 
 
 	    }

@@ -96,6 +96,8 @@
             else
             {
                 $scope.AllProductDetail = Listdata.data.colorData;
+                $scope.total_all = Listdata.data.total_all;
+                $scope.total_price = Listdata.data.total_price;
                 $scope.colorName = colorName;
                 $scope.modelDisplay = '';
             }
@@ -113,6 +115,8 @@
             }
             else
             {
+                $scope.total_all = Listdata.data.total_all;
+                $scope.total_price = Listdata.data.total_price;
                 $scope.AllProductDetail = Listdata.data.colorData;
                 $scope.colorName = angular.copy(Listdata.data.colorSelection);
                 $scope.modelDisplay = '';
@@ -169,6 +173,7 @@
                 notifyService.notify(data.status, data.message);
                 return false;
             }*/
+            
             var combine_array_id = {};
             combine_array_id.id = $scope.design_id;
             combine_array_id.product_id = product_id;
@@ -181,13 +186,18 @@
             combine_array_id.design_product_id = design_product_id;
 
             $scope.execute = 0;
-            angular.forEach(productData, function(size) {
-                if(size.qnty > 0)
-                {
-                    $scope.execute = 1;
-                }
+            angular.forEach(productData, function(colorArray, key) {
+               //console.log(colorArray);console.log(key);
+                angular.forEach(colorArray.sizes, function(size) {
+                    //console.log(size);
+                    if(size.qnty > 0)
+                    {
+                        $scope.execute = 1;
+                    }
+                     return false;
+                });
             });
-            
+            //console.log($scope.execute); return false;
             if($scope.execute == 0)
             {
                 var data = {"status": "error", "message": "Please enter quantity to add product"}

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use DateTime;
-
+use App\Art;
 class Product extends Model {
 
 
@@ -14,6 +14,10 @@ class Product extends Model {
 * @access public productList
 * @return array $productData
 */
+    public function __construct(Art $art) 
+    {
+        $this->art = $art;
+    }
 
     public function productList($post) {
         
@@ -353,12 +357,12 @@ class Product extends Model {
 
 
        
-        $delete = DB::table('purchase_detail')->where('design_product_id','=',$design_product_id)->delete();
-
-        foreach($post['productData'] as $row) {
-
-
-
+    $delete = DB::table('purchase_detail')->where('design_product_id','=',$design_product_id)->delete();
+ 
+    foreach($post['productData'] as $key_color=>$row_color) 
+    {
+        foreach ($row_color['sizes'] as $key_size => $row) 
+        {
             $sku = 0;
             if(isset($row['sku'])) {
                 $sku = $row['sku'];
@@ -377,9 +381,9 @@ class Product extends Model {
                 $price = $row['customer_price'];
             }
             
-            if($row['qnty'] > 0) {
-
-                  $insert_purchase_array = array('design_id'=>$post['id'],
+            if($row['qnty'] > 0) 
+            {
+                $insert_purchase_array = array('design_id'=>$post['id'],
                 'design_product_id'=>$design_product_id,
                 'product_id'=>$post['product_id'],
                 'size'=>$row['sizeName'],
@@ -388,15 +392,12 @@ class Product extends Model {
                 'qnty'=>$row['qnty'],
                 'color_id'=>$row['color_id'],
                 'date'=>$post['created_date']);
-
             $result = DB::table('purchase_detail')->insert($insert_purchase_array);
-            
             }
-            
-              
         }
-        return true;
     }
+    return true;
+}
 
 
 /**
@@ -446,15 +447,17 @@ class Product extends Model {
 
                 $sizeData = DB::table('purchase_detail as pd')
                                      ->where('pd.design_product_id','=',$product->design_product_id)
+                                     ->select('c.name as color_name','pd.*')
+                                     ->leftJoin('color as c', 'pd.color_id', '=', 'c.id')
                                      ->get();
-                $product->sizeData = $sizeData;
+                
 
                 $product->total_qnty = 0;
                 $product->total_price = 0;
-                
                 foreach ($sizeData as $size) {
                     $product->total_price += $size->qnty * $size->price;
                     $product->total_qnty += $size->qnty;
+                    $product->sizeData[$size->color_name][] = $size;
                 }
                 $product->total_price = round($product->total_price,2);
 
