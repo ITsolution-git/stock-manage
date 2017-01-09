@@ -52,6 +52,14 @@
                                 </div>
                             </div>
                         </md-input-container>
+                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
+                            <input placeholder="Max Box Size *" required name="max_size"  ng-model="box.max_size" only-number ng-maxlength="5">
+                            <div ng-messages="employeeform.max_size.$error" role="alert" multiple>
+                                <div ng-message="required">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
+                        </md-input-container>
                     </div>
                 </md-card-content>
             </div>
