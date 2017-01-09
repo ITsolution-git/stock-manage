@@ -424,7 +424,7 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.line_per_inch','ass.frame_size','ass.screen_width','ass.screen_location','acol.*','col.name as color_name','col.color_code','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','cl.blind_text','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','mt1.slug as placement_type','mt2.value as position_name','ca.street','ca.city','st.code as state_name','ca.postal_code')
+				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','cl.is_blind','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.line_per_inch','ass.frame_size','ass.screen_width','ass.screen_location','acol.*','col.name as color_name','col.color_code','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','cl.blind_text','cl.b_w_logo','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','mt1.slug as placement_type','mt2.value as position_name','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
@@ -457,7 +457,16 @@ class Art extends Model {
 		{
 				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
 				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/order_design_position/'.$value->positions."/",$value->image_1);
-				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+				
+				if(!empty($value->is_blind))
+				{
+					$value->companyphoto= $this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$value->b_w_logo);
+				}
+				else
+				{
+					$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+				}
+				
 
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
 				$value->date_shipped  = (!empty($value->date_shipped)&& $value->date_shipped!='0000-00-00')?date("m/d/Y",strtotime($value->date_shipped)):'';
@@ -483,7 +492,7 @@ class Art extends Model {
 	{
 		//echo $screen_id."-".$company_id;
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.company_id','inv.payment_due_date','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.screen_width','ass.screen_height','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','col.color_code','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq','mt1.slug as placement_type','mt2.value as position_name',
+				->select('or.name as order_name','or.company_id','inv.payment_due_date','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','ass.screen_set','ass.screen_width','ass.screen_height','ass.id as screen_id','stf.id as staff_id','stf.photo as companyphoto','ass.mokup_image','odp.image_1','acol.*','acol.id as color_id','odp.design_id','odp.note','col.name as color_name','col.color_code','ass.positions','usr1.name as account_manager','usr.name as companyname','p.name as product_name','pdtl.product_id','cl.client_company','cl.is_blind','cl.b_w_logo','cl.client_id','pdtl.size','pdtl.qnty','col1.name as product_color','mt.value as inq','mt1.slug as placement_type','mt2.value as position_name',
 					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"),'ca.address','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('artjob_screencolors as acol','acol.screen_id','=','ass.id')
 				->join('order_design_position as odp','ass.positions','=','odp.id')	
@@ -522,7 +531,14 @@ class Art extends Model {
 
 				$value->mokup_image= $this->common->checkImageExist($value->company_id.'/art/'.$value->order_id."/",$value->mokup_image);
 				$value->mokup_logo= $this->common->checkImageExist($value->company_id.'/order_design_position/'.$value->positions."/",$value->image_1);
-				$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+				if(!empty($value->is_blind))
+				{
+					$value->companyphoto= $this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$value->b_w_logo);
+				}
+				else
+				{
+					$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+				}
 
 				$value->payment_due_date  = (!empty($value->payment_due_date)&& $value->payment_due_date!='0000-00-00')?date("m/d/Y",strtotime($value->payment_due_date)):'';
 				$value->in_hands_by  = (!empty($value->in_hands_by)&& $value->in_hands_by!='0000-00-00')?date("m/d/Y",strtotime($value->in_hands_by)):'';
