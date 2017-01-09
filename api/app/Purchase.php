@@ -183,7 +183,8 @@ class Purchase extends Model {
 				}
 				else
 				{
-					$result[$key]->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+
+					$result[$key]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
 				}
 
           	}
@@ -367,7 +368,8 @@ class Purchase extends Model {
 				}
 				else
 				{
-					$result[0]->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
+
+					$result[0]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->companyphoto);
 				}
 
 
