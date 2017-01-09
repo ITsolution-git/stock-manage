@@ -694,35 +694,36 @@ class Order extends Model {
         return $returnData;
     }
 
-
-     public function GetAllClientsAddress($post)
-  {
-      
-       $listArray = ['id','description as label'];
-      $whereConditions = ['is_deleted' => "1",'client_id' => $post['client_id']];
-      $orderDetailData = DB::table('client_distaddress')
-         ->select($listArray)
-         ->where($whereConditions)
-         ->get();
+    public function GetAllClientsAddress($post)
+    {
+        $listArray = ['id','description as label'];
+        $whereConditions = ['is_deleted' => "1",'client_id' => $post['client_id']];
+        $orderDetailData = DB::table('client_distaddress')
+        ->select($listArray)
+        ->where($whereConditions)
+        ->get();
    
-         return $orderDetailData;
-
-  }
-
+        return $orderDetailData;
+    }
 
     public function allOrderAddress($post)
-  {
-      
-       $listArray = ['address_id as id'];
-      $whereConditions = ['order_id' => $post['order_id']];
-      $addDetailData = DB::table('order_shipping_address_mapping')
-         ->select($listArray)
-         ->where($whereConditions)
-         ->get();
-   
-         return $addDetailData;
+    {
+        $listArray = ['address_id as id'];
+        $whereConditions = ['order_id' => $post['order_id']];
+        $addDetailData = DB::table('order_shipping_address_mapping')
+        ->select($listArray)
+        ->where($whereConditions)
+        ->get();
 
-  }
+        return $addDetailData;
+    }
 
-
+    public function reOrder($data)
+    {
+        /*$result = DB::select("INSERT INTO orders (display_number,affiliate_id,client_id,contact_main_id,price_id,account_manager_id,sales_id,name,
+                            approval_id,invoice_note,garment_link,created_date,updated_date,date_start,approved_date,date_shipped,shipping_by,
+                            in_hands_by,fully_shipped,due_date,separations_charge,rush_charge,shipping_charge,item_ship_charge,setup_charge,
+                            distribution_charge,digitize_charge,artwork_charge,discount,screen_charge,press_setup_charge,order_line_total,order_total,
+                            order_charges_total,tax_rate,tax,grand_total,total_payments,balance_due,total_affiliate,total_not_assign,) select 2, c1, c2, ... from your_table where id = 1");*/
+    }
 }

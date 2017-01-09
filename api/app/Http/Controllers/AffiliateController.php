@@ -67,8 +67,6 @@ class AffiliateController extends Controller {
     {
         $post = Input::all();
 
-        print_r($post);exit;
-
         $order_data = $this->common->GetTableRecords('orders',array('id' => $post['order_id'],'parent_order_id' => '0'),array());
         unset($order_data[0]->id);
         $insert_arr = json_decode(json_encode($order_data[0]),true);
