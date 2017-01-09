@@ -666,6 +666,7 @@ class OrderController extends Controller {
         {
             Mail::send('emails.invoice', ['subject'=>$subject,'email'=>$email,'payment_link' => $payment_link,'mailMessage'=>$post['mailMessage']], function($message) use ($subject,$file_path,$email)
             {
+//                 $message->from('pdave@codal.com','Piyush Dave');
                  $message->to($email)->subject($subject);
                  $message->attach($file_path);
             });                
