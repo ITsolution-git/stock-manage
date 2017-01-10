@@ -389,12 +389,15 @@ class PurchaseController extends Controller {
                 $filename = $file_path."/". $pdf_url;
                 PDF::Output($filename, 'F');
 
+                $login_email = $pdf_array->login_email;
+                $login_name = $pdf_array->login_name;
                 if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
 
-                    Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
+                    Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
                     {
                         $message->to($email_array);
+                        $message->replyTo($login_email,$login_name);
                         $message->subject('Receive order, for the Order '.$pdf_data['po_data']->order_name);
                         $message->attach($filename);
                     });
@@ -425,7 +428,7 @@ class PurchaseController extends Controller {
             $order_total='';
             $pdf_data = $this->purchase->GetPoLinedata($pdf_array->po_id,$pdf_array->company_id);
             $positions_data = $this->purchase->GetPOpositions($pdf_array->po_id,$pdf_array->company_id);
-           // echo "<pre>"; print_r($positions_data); echo "</pre>"; die();
+           // echo "<pre>"; print_r($pdf_array); echo "</pre>"; die();
             
             if(count($pdf_data)>0)
             {
@@ -433,25 +436,30 @@ class PurchaseController extends Controller {
                 $email_array = explode(",",$pdf_array->email);
                 $pass_array = array('company'=>$pdf_data['0'],'po_data'=>$pdf_data,'order_total'=>$order_total,'positions'=>$positions_data);
                 
+                $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
+                if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
+                else { exec("chmod $file_path 0777"); }
+                $pdf_url = "PurchaseOrder-".$pdf_array->po_id.".pdf"; 
+                $filename = $file_path."/". $pdf_url;
+
                 PDF::AddPage('P','A4');
                 PDF::writeHTML(view('pdf.purchasepo',$pass_array)->render());
-                PDF::Output("PurchaseOrder.pdf");
-                
+                PDF::Output($filename, 'F');
+
+
                 //PDF::AddPage('P','A4');
                 //PDF::writeHTML(view('pdf.api_label',$shipping)->render());
                 //PDF::Output('api_label.pdf');
 
                 if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
-                    $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
-                    if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
-                    else { exec("chmod $file_path 0777"); }
-                    $pdf_url = "PurchaseOrder-".$pdf_array->po_id.".pdf"; 
-                    $filename = $file_path."/". $pdf_url;
-
-                    Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array)
+                    
+                    $login_email = $pdf_array->login_email;
+                    $login_name = $pdf_array->login_name;
+                    Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
                     {
                         $message->to($email_array);
+                        $message->replyTo($login_email,$login_name);
                         $message->subject('Purchase order, for the Order '.$pdf_data['0']->order_name);
                         $message->attach($filename);
                     });
