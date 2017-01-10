@@ -1,72 +1,107 @@
-<div class="dprodct disrtubtd-pro-page orderitem-detail">
-    <md-content flex="100">
-        <div class="order-box-header"> {{product_name}}
-            <button type="button" class="md-button md-ink-ripple pull-right" ng-click="cancel()" aria-label="Cancel">
-                <span class="ng-scope"><span class="fa fa-times"></span></span>
-                <div class="md-ripple-container" style=""></div>
-            </button>
-        </div>
-        <div class="order-box-cntnr">
-            <div class="orderbox-head">Client Distribution Locations</div>
-            <div layout="row" flex="100">
-                <div layout="column" flex="60" class="mrg10-R">
-                    <div class="order-container pd10-R" ms-scroll>
+<md-dialog class="task-dialog search-product-view-dialog" aria-label="New order" flex="100">
+    <form name="orderInfoForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">{{product_name}}</span>
+                 <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-content flex="100">
+            <div class="order-box-cntnr">
+                <div class="orderbox-head">Client Distribution Locations</div>
+                
+                <div layout="row" flex="100">
+                    <div layout="column" flex="60" class="mrg10-R">
                         <md-input-container flex-gt-sm="" class="md-block flex-gt-sm md-default-theme">
                             <label for="input_10"> <md-icon md-font-icon="icon-magnify" class="ng-isolate-scope md-font icon-magnify material-icons md-default-theme" aria-hidden="true"></md-icon></label>
                             <input ng-model="searchQuery" class="ng-pristine ng-valid md-input ng-empty ng-touched" id="input_10" aria-invalid="false" ng-change="filterAddress()">
                         </md-input-container>
-                        <div class="box-typ3" ng-repeat="addrss in addresses">
-                            <div layout="row" flex="100" class="demo-select-all-checkboxes">
-                                <div layout="column" flex="20" class="align-M align-self-C">
-                                    <!-- <md-checkbox aria-label="Select" ng-true-value="1" ng-false-value="0" ng-model="addrss.is_selected" ng-checked="exists(addrss.id, selected_addresses)" ng-click="toggle(addrss.id, selected_addresses)"></md-checkbox> -->
-                                    <input type="radio" name="radio_btn" ng-model="addrss_id" value="addrss.id" ng-click="getProductByAddress(addrss.id)">
-                                </div>
-                                <div layout="column" flex="80">
-                                    <div class="font-13">{{addrss.description}}</div>
-                                    <div class="font-13">{{addrss.attn}}</div>
-                                    <div class="font-13">{{addrss.full_address}}</div>
-                                    <div class="font-13">{{addrss.phone}}</div>
+                    </div>
+                    
+                    <div class="order-container1" layout="column" flex="40" class="mrg10-L">
+                        <button type="button" class="bg-grey dark-bg right-m-0 md-button md-ink-ripple md-default-theme" ng-click="vm.openaddAddressDialog($event)" aria-label="ADD NEW LOCATION">
+                            <span class="ng-scope">ADD NEW LOCATION</span>
+                        </button>
+                    </div>
+                    
+                </div>
+                
+                <div layout="row" flex="100">
+                    <div layout="column" flex="100" class="mrg10-R">
+                        <div class="order-container pd10-R" ms-scroll>
+                            <div class="" ng-repeat="address in addresses">
+                                <div layout="row" flex="100" class="demo-select-all-checkboxes">
+                                    <div layout="column" flex="20" class="align-M align-self-C">
+                                        <!-- <md-checkbox aria-label="Select" ng-true-value="1" ng-false-value="0" ng-model="addrss.is_selected" ng-checked="exists(addrss.id, selected_addresses)" ng-click="toggle(addrss.id, selected_addresses)"></md-checkbox> -->
+                                        <input type="radio" name="radio_btn" ng-model="addrss_id" value="address.id" ng-click="getProductByAddress(address.id)">
+                                    </div>
+                                    <div layout="column" flex="100">
+                                        <div class="font-13">{{address.description}}</div>
+                                        <div class="font-13">{{address.attn}}</div>
+                                        <div class="font-13">{{address.full_address}}</div>
+                                        <div class="font-13">{{address.phone}}</div>
+                                        <div layout="column" class="">
+                                            <div layout="row" flex="100" ng-repeat="(key,products) in address.sizeArr">
+                                                <div layout="row" flex="10" class="size-color align-self-C">
+                                                    <label>{{key}}</label>
+                                                </div>
+                                                <div layout="row" flex="90">
+                                                    <div layout="column" ng-repeat="product in products">
+                                                    <!--<div layout="column" flex="75">&nbsp;</div>-->
+                                                        <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
+                                                            <label class="font-14">{{product.size}}</label>
+                                                            <input placeholder="" ng-model="product.distributed_qnty" only-number>
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="order-container1" layout="column" flex="40" class="mrg10-L">
-                    <button type="button" class="bg-grey dark-bg right-m-0 md-button md-ink-ripple md-default-theme" ng-click="vm.openaddAddressDialog($event)" aria-label="ADD NEW LOCATION">
-                        <span class="ng-scope">ADD NEW LOCATION</span>
-                    </button>
-                    <div layout="column" class="pad-10-15">
-                        <div layout="row" flex="100" class="mrg15-B" ng-repeat="product in products">
-                            <div layout="column" flex="75">&nbsp;</div>
-                            <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
-                                <label class="font-14">{{product.size}}</label>
-                                <input placeholder="" ng-model="product.distributed_qnty" only-number>
-                            </md-input-container>
-                        </div>
+                <div layout="row" flex="100" >
+                    <div layout="column" flex="50">
+                    </div>
+                    <div layout="column" flex="50" class="text-right">
+                        <button type="button" class="bg-grey bg-blue line-hei md-button md-ink-ripple md-default-theme allocate-btn" aria-label="ALLOCATE" ng-click="allocate()">
+                            <span class="ng-scope">ALLOCATE</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="remain-qtybox">
+                    <div class="orderbox-head">Remaining Quantities</div>
+                    <div>
+                        <md-input-container class="mrg0"  layout="column" flex="100" ng-repeat="(key,productData) in products">
+                            <div class="remaining-text"  ng-repeat="product in productData" flex="100" layout="row">
+                                <div layout="column" flex="20">
+                                    <strong>Product Name:</strong> {{product.product_name}}
+                                </div>
+                                
+                                <div layout="column" flex="20">
+                                    <strong>Size:</strong> {{product.size}}
+                                </div>
+                                
+                                <div layout="column" flex="20">
+                                    <strong>Color:</strong> {{product.color_name}}
+                                </div>
+                                
+                                <div layout="column" flex="20">
+                                    <strong>Remaning:</strong> {{product.remaining_qnty}}
+                                </div>
+                                
+                                <div layout="column" flex="20">
+                                    <strong>Allocated: </strong> {{product.allocated}}
+                                </div>
+                            </div>
+                        </md-input-container>
                     </div>
                 </div>
             </div>
-            <div layout="row" flex="100" class="mrg15-TB">
-                <div layout="column" flex="50">
-                    <!-- <button type="button" class="bg-grey bg-green right-m-0 text-center line-hei md-button md-ink-ripple md-default-theme" aria-label="DISTRIBUTE EVENLY">
-                        <span class="ng-scope">DISTRIBUTE EVENLY</span>
-                    </button> -->
-                </div>
-                <div layout="column" flex="50">
-                    <button type="button" class="bg-grey bg-blue line-hei md-button md-ink-ripple md-default-theme abs20-L" aria-label="ALLOCATE" ng-click="allocate()">
-                        <span class="ng-scope">ALLOCATE</span>
-                    </button>
-                </div>
-            </div>
-            <div class="remain-qtybox">
-                <div class="orderbox-head">Remaining Quantities</div>
-                <div layout="row" flex="100">
-                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="product in products">
-                        <label class="font-14">{{product.size}}</label>
-                        <input placeholder="" ng-model="product.remaining_qnty" disabled="">
-                    </md-input-container>
-                </div>
-            </div>
-        </div>
-    </md-content>
-</div>
+        </md-content>
+    </form>
+</md-dialog>
