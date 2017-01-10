@@ -2825,7 +2825,7 @@ class OrderController extends Controller {
                 }
             }
         }
-        $data = array("success"=>1,"message"=>"Order Created Successfully");
+        $data = array("success"=>1,"message"=>"Order created successfully. Please wait we are redirecting to you...","display_number"=>$order_data[0]->display_number);
         return response()->json(['data'=>$data]);
     }
 }
