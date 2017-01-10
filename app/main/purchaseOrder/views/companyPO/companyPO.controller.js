@@ -14,6 +14,8 @@
         $scope.company_id = sessionService.get('company_id');
         $scope.user_id = sessionService.get('user_id');
         $scope.role_slug = sessionService.get('role_slug');
+        $scope.login_email = sessionService.get('email');
+        $scope.login_name = sessionService.get('name');
         $scope.allow_access=1;
 
         var misc_list_data = {};
@@ -392,7 +394,7 @@
                             }
                         }
                         $mdDialog.hide();
-                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email };
+                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email,login_name:params.login_name,login_email:params.login_email };
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/purchase/purchasePDF';
