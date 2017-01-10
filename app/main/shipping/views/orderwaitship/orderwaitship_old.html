@@ -1,0 +1,169 @@
+<div class="content client-list-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=60>
+              Ship Order #{{display_number}}
+            </div>
+        </div>
+    </div>
+    <div class="inner-full-box">
+    <table class="tbl-typ2 mt-20">
+            <tr>
+                <td>
+                    <div layout="row" class="pd10">
+                        <div flex="30" layout="column" class="order-container">
+                            <div class="row mb-20">
+                            <div class="row pt-10 pb-20"><span class="stokkup-title-h4">Distribution Addresses</span></div>
+                            <md-input-container class="md-block m-0">
+                                <input ng-model="productSearch" placeholder="Search Locations" ng-change="getShippingAddress()">
+                            </md-input-container>
+                            <md-button class="stokkup-custom-btn1 stokkup-blue-btn mt-10" ng-click="openInsertPopup('client/views/forms/distribution_form.html',$event,'client_distaddress')">Create New Location</md-button>
+                            </div>
+
+
+                            <div class="row mb-20">
+                            <div class="stokkup-title-h4">Locations Products Allocated To</div>
+                            <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in assignAddresses" ng-click="getProductByAddress(addrss)">
+                                <div layout="column" flex="80">
+                                    <div class="font-12"><b>{{ addrss.description }}</b></div>
+                                    <div class="font-12">{{ addrss.attn}}</div>
+                                    <div class="font-12">{{ addrss.full_address }}</div>
+                                    <div class="font-12">{{ addrss.phone }}</div>
+                                </div>
+                                <div layout="column" flex="20" class="text-right">
+                                    <span class="icon icon-arrow-right font-18 mrg35-T"></span>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="row mb-20">
+                            <div class="stokkup-title-h4">Other Locations</div>
+                            <div class="card-box cursor-p hover-grey pd10" ng-class="{activeAddress :  address_id == addrss.id}" layout="row" ng-repeat="addrss in unAssignAddresses" ng-click="getProductByAddress(addrss)">
+                                <div layout="column" flex="80">
+                                    <div class="font-12"><b>{{ addrss.description }}</b></div>
+                                    <div class="font-12">{{ addrss.attn}}</div>
+                                    <div class="font-12">{{ addrss.full_address }}</div>
+                                    <div class="font-12">{{ addrss.phone }}</div>
+                                </div>
+                                <div layout="column" flex="20" class="text-right">
+                                    <span class="icon icon-arrow-right font-18 mrg35-T"></span>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        <div flex="35" layout="column" class="orderwait-midsection">
+                                <div layout="row">
+                                    <div class="row pt-10 pb-20"><span class="stokkup-title-h4" flex=70>Order Items</span></div>
+                                </div>
+                            <div class="order-container shipping-page-order pd15-LR" ms-scroll>
+                                <div class="box-typ3" ng-repeat="item in assignedItems">
+                                    <div layout="row" flex="100" class="demo-select-all-checkboxes">
+                                        <!-- <div layout="column" flex="10" class="align-M align-self-C">
+                                            <md-checkbox aria-label="Select"></md-checkbox>
+                                        </div> -->
+                                        <div layout="column" flex="100">
+                                            <div layout-wrap="" layout="row" class="layout-wrap layout-row">
+                                                <!-- <div class="trans-box">
+                                                    <div>Size Group</div>
+                                                    <span class="ng-binding">{{ item.misc_value }}</span>
+                                                </div> -->
+                                                <div class="trans-box">
+                                                    <div>Product#</div>
+                                                    <span class="ng-binding">{{ item.name }}</span> </div>
+                                                <div class="trans-box">
+                                                    <div>Size</div>
+                                                    <span class="ng-binding">{{ item.size }}</span>
+                                                </div>
+                                                <div class="trans-box">
+                                                    <div>Color</div>
+                                                    <span class="font-14 ng-binding">{{ item.color_name }}</span> </div>
+                                            </div>
+                                            <div layout="colum" flex="10" class="align-R" ng-click="unAllocateProduct(item)">
+                                                <a href="#" class="icon icon-arrow-right font-18"></a>
+                                            </div>
+                                            <div layout="row" flex="100">
+                                                <div layout="column" flex="100">
+                                                    <div class="pt-20 global-text">Quantity to distribute to location</div>
+                                                    <div class="search-block" flex=40>
+                                                        <md-input-container class="md-block" flex-gt-sm>
+                                                            <input aria-label="qtyOrdered" ng-model="item.distributed_qnty" >
+                                                        </md-input-container>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div flex="35" layout="column">
+                        <div class="mrg10-L order-container" ms-scroll>
+                            <div class="row pt-10 pb-20">
+                                <div flex=50 class="pull-left">
+                                    <span class="stokkup-title-h4">Shipment Items</span>
+                                </div>
+                                <div flex=50 class="pull-right">
+                                    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+                                        <a ng-show="unshippedProducts.length > 0" class="pull-right common-header-links" aria-label="Next" ng-click="addAllProducts()">Add All</a>
+                                    </md-dialog-actions>
+                                </div>
+                            </div>
+                            <div class="box-typ3" ng-repeat="product in unshippedProducts">
+                                <div layout="row" flex="100">
+                                    <div layout="colum" flex="10" class="align-M align-self-C text-center" ng-click="updateShipping(product)">
+                                        <a href="#" class="icon icon-arrow-left font-18"></a>
+                                    </div>
+                                    <div layout="column" flex="90">
+                                        <div class="ms-responsive-table-wrapper">
+                                            <table class="simple hover simple-tbl1 tbl-typ3">
+                                                <thead>
+                                                    <tr>
+                                                        <!-- <th class="secondary-text" width="30%">Size Group</th> -->
+                                                        <th class="secondary-text" width="30%">Product #</th>
+                                                        <th class="secondary-text" width="20%">Color</th>
+                                                        <th class="secondary-text" width="20%">Size</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody> 
+                                                    <tr class="cursor-p">
+                                                        <!-- <td>{{ product.misc_value}}</td> -->
+                                                        <td>{{ product.name}}</td>
+                                                        <td>{{ product.color_name}}</td>
+                                                        <td>{{ product.size}}</td>
+                                                    </tr>                    
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div>
+                                            <div layout="row" flex="100">
+                                                <div layout="column" flex="40" class="pd10">
+                                                    <div class="font-18 text-center">{{product.total}}</div>
+                                                    <div class="font-13 gray-text text-center">Qty Ordered</div>
+                                                </div>
+                                                <div layout="column" flex="60" class="pd10 bdr-1L">
+                                                    <div class="font-18 text-center">{{product.remaining_qnty}}</div>
+                                                    <div class="font-13 gray-text text-center">Remaining to Distribute</div>
+                                                </div>
+                                                <div layout="column" flex="60" class="pd10 bdr-1L">
+                                                    <md-input-container class="md-block md-input-container1" flex-gt-sm>
+                                                        <input aria-label="distributed_qnty" ng-model="product.distributed_qnty" only-number>
+                                                    </md-input-container>
+                                                    <div class="font-13 gray-text text-center">Qty to Distribute</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+    </table>
+    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
+            <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mb-30" aria-label="Next" ng-click="shippingDetails()"><span class="ng-scope">Next</span></button>
+        </md-dialog-actions>
+    </div>
+        
+</div>

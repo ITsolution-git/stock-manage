@@ -81,6 +81,7 @@
                 if(result.success == '1') {
                    $scope.addresses = result.addresses;
                    $scope.selected_addresses = result.selected_addresses;
+                   $scope.products = result.addresses[0].sizeArr;
 
                    if($scope.address_id > 0)
                    {
