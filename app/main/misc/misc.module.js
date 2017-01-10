@@ -21,7 +21,7 @@
                         return sessionService.AccessService('ALL','true');
                     }
                 },
-                url    : '/misc',
+                url    : '/field_manager',
                 views  : {
                     'content@app': {
                         templateUrl: 'app/main/misc/misc.html',
@@ -42,7 +42,7 @@
         });*/
 
         msNavigationServiceProvider.saveItem('fuse.settings.misc', {
-            title    : 'Misc',
+            title    : 'Field Manager',
             state    : 'app.settings.misc',
             stateParams: {
                 'param1': 'page'

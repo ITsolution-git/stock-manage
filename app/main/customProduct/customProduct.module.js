@@ -48,7 +48,7 @@
         //$translatePartialLoaderProvider.addPart('app/main/customProduct');
 
         msNavigationServiceProvider.saveItem('fuse.settings.customProduct', {
-            title    : 'Custom Product',
+            title    : 'Custom Products',
             state    : 'app.settings.customProduct',
             weight   : 10
         });
