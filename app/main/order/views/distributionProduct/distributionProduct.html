@@ -41,17 +41,27 @@
                                     <div class="font-13">{{addrss.full_address}}</div>
                                     <div class="font-13">{{addrss.phone}}</div>
                                     <div layout="column" class="" ng-init=getProductByAddress(addrss.id)>
-                                        <div layout="row" flex="100" >
-                                            <!--<div layout="column" flex="75">&nbsp;</div>-->
-                                            <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25"  ng-repeat="product in products">
-                                                <label class="font-14">{{product.size}}</label>
-                                                <input placeholder="" ng-model="product.distributed_qnty" only-number>
-                                            </md-input-container>
-                                            
+                                        <div layout="row" flex="100">
+                                            <div layout="row" flex="10" class="size-color">
+                                                <label>Blue</label>
+                                            </div>
+                                            <div layout="row" flex="90">
+                                                <div layout="column" ng-repeat="product in products">
+                                                <!--<div layout="column" flex="75">&nbsp;</div>-->
+                                                    <md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="25">
+                                                        <label class="font-14">{{product.size}}</label>
+                                                        <input placeholder="" ng-model="product.distributed_qnty" only-number>
+                                                    </md-input-container>
+                                                </div>
+
+                                            </div>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -70,14 +80,14 @@
             </div>
             <div class="remain-qtybox">
                 <div class="orderbox-head">Remaining Quantities</div>
-                <div layout="row" flex="100">
+                <div layout="row">
                     <!--<md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="product in products">
                         <label class="font-14">{{product.size}}</label>
                         <input placeholder="" ng-model="product.remaining_qnty" disabled="">
                     </md-input-container>-->
                     
-                    <md-input-container class="mrg0" flex="100">
-                        <div class="remaining-text" flex="100">
+                    <md-input-container class="mrg0">
+                        <div class="remaining-text">
                             <strong>Product Name:</strong> Gilden 5000
                             <strong>Size:</strong> M
                             <strong>Color:</strong> Green 
@@ -85,7 +95,7 @@
                             <strong>Allocated: </strong> 123
                         </div>
                         
-                        <div class="remaining-text" flex="100">
+                        <div class="remaining-text" flex="100" layout="row">
                             <strong>Product Name:</strong> Gilden 5000
                             <strong>Size:</strong> M
                             <strong>Color:</strong> Green 
@@ -93,7 +103,7 @@
                             <strong>Allocated: </strong> 123
                         </div>
                         
-                        <div class="remaining-text" flex="100">
+                        <div class="remaining-text" layout="row" flex="100">
                             <strong>Product Name:</strong> Gilden 5000
                             <strong>Size:</strong> M
                             <strong>Color:</strong> Green 
@@ -101,7 +111,7 @@
                             <strong>Allocated: </strong> 123
                         </div>
                         
-                        <div class="remaining-text" flex="100">
+                        <div class="remaining-text" layout="row" flex="100">
                             <strong>Product Name:</strong> Gilden 5000
                             <strong>Size:</strong> M
                             <strong>Color:</strong> Green 
