@@ -14,6 +14,8 @@
         vm.generateArtForm = generateArtForm;
         //vm.openClientEmailPopup = openClientEmailPopup;
         $scope.company_id = sessionService.get('company_id');
+        $scope.login_email = sessionService.get('email');
+        $scope.login_name = sessionService.get('name');
         $scope.display_number = $stateParams.id;
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
@@ -335,7 +337,7 @@
                     $scope.printPdf=function(flag,email,options)
                     {
                         $mdDialog.hide();
-                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email,email_text:$scope.email_text}
+                        var pass_array = {order_id:$scope.order_id,company_id:$scope.company_id,flag:flag,email:email,email_text:$scope.email_text,login_email:params.login_email,login_name:params.login_name}
                         if(flag=='1')
                         {
                             var k = confirm("Do you want to send Art approval PDF to client?");
