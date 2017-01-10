@@ -1316,3 +1316,6 @@ margin-top:30px;
 .mrg0 { margin: 0; padding: 0; }
 .remaining-text { border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0; }
 .size-color label{ font-size: 14px; font-weight: bold; padding: 0; }
+.allocate-btn {
+  padding: 7px 0;
+}
