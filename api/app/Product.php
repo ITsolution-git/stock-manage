@@ -454,6 +454,7 @@ class Product extends Model {
 
                 $product->total_qnty = 0;
                 $product->total_price = 0;
+                $product->sizeData = array();
                 foreach ($sizeData as $size) {
                     $product->total_price += $size->qnty * $size->price;
                     $product->total_qnty += $size->qnty;

@@ -1432,6 +1432,7 @@ class CommonController extends Controller {
                 array('key' => 'width', 'name' => 'Width'),
                 array('key' => 'height', 'name' => 'Height'),
                 array('key' => 'weight', 'name' => 'Weight'),
+                array('key' => 'max_size', 'name' => 'Max Qty'),
                 array('key' => '', 'name' => 'Action','sortable' => false)
             );
          }

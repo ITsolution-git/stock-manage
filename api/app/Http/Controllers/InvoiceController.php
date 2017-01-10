@@ -107,7 +107,7 @@ class InvoiceController extends Controller {
         $data = array('header'=>$header,'rows' => $records,'pagination' => $pagination,'sortBy' =>$sort_by,'sortOrder' => $sort_order,'success'=>$success,'quickbook_url' => $quickbook_url);
         return response()->json($data);
     }
-    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id)
+    public function getInvoiceDetail($invoice_id,$company_id,$type=0,$order_id=0)
     {
     	$post = Input::all();
 
@@ -262,12 +262,13 @@ class InvoiceController extends Controller {
         $retutn_arr['company_data'][0]->url = (!empty($retutn_arr['company_data'][0]->url) && preg_match('/http/',$retutn_arr['company_data'][0]->url) == false) ? "http://".$retutn_arr['company_data'][0]->url:$retutn_arr['company_data'][0]->url;
 
 
-        if($retutn_arr['company_data'][0]->photo != '')
+        if(!empty($order_data_all['order'][0]->client_blind))
         {
-
+            $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/client/'.$order_data_all['order'][0]->client_id."/",$order_data_all['order'][0]->b_w_logo);
+        }
+        else
+        {
             $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/staff/'.$staff[0]->id."/",$retutn_arr['company_data'][0]->photo);
-
-
            // $retutn_arr['company_data'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$retutn_arr['company_data'][0]->photo;
         }
        
@@ -414,7 +415,7 @@ class InvoiceController extends Controller {
                                                     }
                                                     elseif($position->color_stitch_count >= $embroidery->range_low_8 && $position->color_stitch_count <= $embroidery->range_high_8)
                                                     {
-                                                        $switch_id = $embroidery.id;
+                                                        $switch_id = $embroidery->id;
                                                         $embroidery_field = 'pricing_8c';
                                                     }
                                                     if($position->color_stitch_count >= $embroidery->range_low_9 && $position->color_stitch_count <= $embroidery->range_high_9)
