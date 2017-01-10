@@ -132,7 +132,7 @@ class DistributionController extends Controller {
                     $this->common->UpdateTableRecords('purchase_detail',array('id'=>$row->id),array('remaining_qnty'=>$row->qnty_purchased));
                     $row->remaining_qnty = $row->qnty_purchased;
                     $size_data = $this->distribution->getSingleSizeTotal(array('id'=>$row->id));
-                    $row->allocated = $size_data[0]->distributed_qnty;
+                    $row->allocated = $size_data[0]->distributed_qnty?$size_data[0]->distributed_qnty:'0';
                     $total_remaining_qnty += $row->qnty_purchased;
                     $addr->sizeArr[$row->color_name][] = $row;
                 }
@@ -162,7 +162,7 @@ class DistributionController extends Controller {
                     $total_remaining_qnty += $row->remaining_qnty;
                     $row->product_address_id = $product_address_id;
                     $size_data = $this->distribution->getSingleSizeTotal(array('id'=>$row->id));
-                    $row->allocated = $size_data[0]->distributed_qnty;
+                    $row->allocated = $size_data[0]->distributed_qnty?$size_data[0]->distributed_qnty:'0';
                     $addr->sizeArr[$row->color_name][] = $row;
                 }
                 //$addr->sizeArr = $products;
