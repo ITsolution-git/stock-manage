@@ -1,7 +1,26 @@
-<div style="height: 500px" class="ship-order-screen">
+<div class="ship-order-screen">
+    
+    <div class="simple-table-container stokkup-main-tableview m-b-20">
+        <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-100">
+                Ship Order Screen <a class="cursor-p" title="Go to Order">#117</a> for <a class="cursor-p" title="Go to Order">Client Name</a>
+            </div>
+        </div>
+    </div>
+    
+    <md-card class="m-0 location">
+        <md-card-header layout-align="space-between center">
+            <md-card-header-text>
+                <span class="md-title text-center"><a class="cursor-p" title="Location"># Distribution Locations</a> | Total QTY of the order</span>
+                <a class="stokkup-custom-btn1 stokkup-blue-btn text-white" href="">Change Distribution Settings</a>
+            </md-card-header-text>
+        </md-card-header>
+    </md-card>
+    
+    
     <md-content class="">
         <div layout="row" layout-wrap="nowrap" class="p-30">
-            <div flex-xs flex-gt-xs="25" layout="column">
+            <div flex-xs flex-gt-xs="33" layout="column">
                 <md-card class="custom-fullbox-shadow">
                     
                     <md-card-header layout-align="space-between center">
@@ -9,11 +28,11 @@
                             <span class="md-title">Disrbution Location Name</span>
                         </md-card-header-text>
                         
-                        <md-menu ng-if="maincompcontact.id != '0' && allow_access==1">
-                            <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
-                            <md-menu-content width="4"  ng-click="openEditPopup('client/views/forms/contact_form.html',maincompcontact,$event,'client_contact')">
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
                                 <md-menu-item>
                                     <md-button>
                                         Edit
@@ -26,12 +45,18 @@
                     
                     <md-card-content class="custom-desc-box">
                         
-                        <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
-                            <div class="ng-binding global-text-style">Screens</div>
-                            <span class="ng-binding global-heading-style">123</span>
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
                         </div>
                         
-                        <div class="h5 text-semibold">Product Name:</div>
+                        <div class="h5 text-semibold first">Product Name:</div>
                         <span>Gilden 5000 - T-shirts, Different Product</span>
                         
                         <div class="h5 text-semibold">Size:</div>
@@ -40,29 +65,690 @@
                         <div class="h5 text-semibold">Color(s):</div>
                         <span>Blue, Green</span>
                         
-                        <div class="h5 text-semibold">Method:</div>
-                        <span>FedEx - Ground</span>
-                        
-                        <!--<div class="h5 text-semibold">Date Shipping:</div>-->
+                        <!--<div class="h5 text-semibold">Method:</div>-->
                         <md-input-container class="md-block date-input md-input-has-value">
-                            <input placeholder="Date Shipping:"kendo-date-picker ng-model="" k-ng-model="" />
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
                         </md-input-container>
                         
                         <!--<div class="h5 text-semibold">SKU:</div>-->
-                        <md-input-container flex="100" class="margin-0 m-b-20">
-                            <input placeholder="SKU" name="SKU" ng-model="">
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
                         </md-input-container>
                         
                         <!--<div class="h5 text-semibold">Notes:</div>-->
-                        <md-input-container flex="100" class="margin-0 m-b-20 md-icon-float">
-                            <input placeholder="Notes" name="Notes" ng-model="">
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
                         </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
                         
                     </md-card-content>
                     
                     
                 </md-card>
             </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
+            <div flex-xs flex-gt-xs="33" layout="column">
+                <md-card class="custom-fullbox-shadow">
+                    
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title">Disrbution Location Name</span>
+                        </md-card-header-text>
+                        
+                        <md-menu  ng-show="allow_access==1">
+                            <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                            </md-button>
+                            <md-menu-content width="4" ng-click="vm.editCompanyInfo($event,'company_form')">
+                                <md-menu-item>
+                                    <md-button>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>
+                            </md-menu-content>
+                        </md-menu>
+                        
+                    </md-card-header>
+                    
+                    <md-card-content class="custom-desc-box">
+                        
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # 1/23</p>
+                            </div>
+                            
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: 122</p>
+                            </div>
+                            
+                        </div>
+                        
+                        <div class="h5 text-semibold first">Product Name:</div>
+                        <span>Gilden 5000 - T-shirts, Different Product</span>
+                        
+                        <div class="h5 text-semibold">Size:</div>
+                        <span>M: 10 L:39 XL: 128</span>
+                        
+                        <div class="h5 text-semibold">Color(s):</div>
+                        <span>Blue, Green</span>
+                        
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <label>Method:</label>
+                            <md-select ng-model="topping">
+                              <md-optgroup label="Method 1">
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                                <md-option>Method 1</md-option>
+                              </md-optgroup>
+                            </md-select>
+                        </md-input-container>
+                        
+                        <md-input-container class="md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU">
+                        </md-input-container>
+                        
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes">
+                        </md-input-container>
+                        
+                        <div flex=100 class="p-t-30 md-block status-chk">
+                            <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                        </div>
+                        
+                    </md-card-content>
+                    
+                    
+                </md-card>
+            </div>
+            
         </div>
     </md-content>
 </div>

@@ -11,6 +11,7 @@
     function ProfileViewController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
     {
 
+        
         $scope.NoImage = AllConstant.NoImage;
         $scope.NoDocument = AllConstant.NoDocument
         $scope.Current_date = AllConstant.currentdate;
