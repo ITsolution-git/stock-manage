@@ -9,7 +9,7 @@
                     
                     <md-card-content flex="70" layout="column"  >
                         
-                        <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+                       <!--  <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
                             <div class="table-title-text h2 text-semibold" flex=40>
                                 <div class="title" layout-padding><span class="basicInfoStyle">COMPANY CAPABILITIES</span></div>
                             </div>
@@ -54,13 +54,13 @@
                                 <label for="chk5" class="form-control">ART WORK</label>
                             </div>
                         </div> 
+ -->
 
-
-                        <div class="table-title paddingbottom-0 pad-top-25" layout="row" layout-align="space-between center">
+                        <!-- <div class="table-title paddingbottom-0 pad-top-25" layout="row" layout-align="space-between center">
                             <div class="table-title-text h2 text-semibold" flex=40>
                                 <div class="title" layout-padding><span class="basicInfoStyle">COMPANY WORKFLOW</span></div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <label class="margin-left-15">What type of machines does your shop run?</label>
 
@@ -68,7 +68,7 @@
                             <input placeholder="Types of machine" ng-model="company_data.type_of_machine" name="type_of_machine" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }" >
                         </md-input-container>
 
-                        <label class="margin-left-15">What shifts does your shop run?</label>
+                  <!--       <label class="margin-left-15">What shifts does your shop run?</label>
                         <div class="div-1000" id="custChkboxes1">
                             <div class="customChkbox md-raised">
                                  <input type="checkbox" ng-if="company_data.first_shift=='1'" ng-click="UpdateTableField('first_shift','0','company_info','id',company_data.id,'company_info','company_info')" checked="checked" value="1" id="chk6"  />
@@ -89,20 +89,20 @@
                                 <label for="chk8" class="form-control">THIRD SHIFT</label>
                             </div>
 
-                        </div> 
+                        </div>  -->
 
-                        <label class="margin-left-15 pad-top-25"> How large is your team?</label>
+               <!--          <label class="margin-left-15 pad-top-25"> How large is your team?</label>
                         <md-input-container class="md-block first-box settings-margin-0 margin-top-25 div-1000">
                             <input placeholder="Numbers of team members" ng-model="company_data.team" name="team" ui-event="{ change : 'UpdateTableField($event.target.name,$event.target.value,\'company_info\',\'id\',company_data.id,\'company_info\')' }">
                             </md-input-container>
-                        
+                         -->
 
                         </md-card-content> 
 
                     </md-card>
 
 
-                    <md-card layout="row">
+                   <!--  <md-card layout="row">
                     
                         <md-card-content flex="50" layout="column"  >
                            
@@ -166,7 +166,7 @@
                                     </div>   
                             </md-card-content> 
 
-                     </md-card>
+                     </md-card> -->
 
 
 
@@ -174,14 +174,14 @@
                     
                         <md-card-content flex="50" layout="column"  >
                            
-                                    <div class="table-title paddingbottom-0 pad-top-25" layout="row" layout-align="space-between center">
-                                            <div class="table-title-text h2 text-semibold" flex=40>
+                                    <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
+                                            <div class="table-title-text h2 text-semibold">
                                                 <div class="title" layout-padding><span class="basicInfoStyle">DEPARTMENT ALLOWANCES</span></div>
                                             </div>
                                     </div>
 
 
-                                      <div class="simple-table-container md-whiteframe-4dp">
+                                      <div class="simple-table-container ">
                                             <div class="ms-responsive-table-wrapper">
                                                 <table ms-responsive-table="" class="simple">
                                                     <thead>
