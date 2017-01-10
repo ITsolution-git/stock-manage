@@ -28,22 +28,17 @@
             <div layout="row" flex="100">
                 <div layout="column" flex="100" class="mrg10-R">
                     <div class="order-container pd10-R" ms-scroll>
-                        <div class="box-typ3" ng-repeat="addrss in addresses">
+                        <div class="box-typ3" ng-repeat="address in addresses">
                             <div layout="row" flex="100" class="demo-select-all-checkboxes">
-                                <!--<div layout="column" flex="20" class="align-M align-self-C">
-                                     <md-checkbox aria-label="Select" ng-true-value="1" ng-false-value="0" ng-model="addrss.is_selected" ng-checked="exists(addrss.id, selected_addresses)" ng-click="toggle(addrss.id, selected_addresses)"></md-checkbox> 
-
-                                    <input type="radio" name="radio_btn" ng-model="addrss_id" value="addrss.id" ng-click="getProductByAddress(addrss.id)">
-                                </div>-->
                                 <div layout="column" flex="100">
-                                    <div class="font-13">{{addrss.description}}</div>
-                                    <div class="font-13">{{addrss.attn}}</div>
-                                    <div class="font-13">{{addrss.full_address}}</div>
-                                    <div class="font-13">{{addrss.phone}}</div>
-                                    <div layout="column" class="" ng-init=getProductByAddress(addrss.id)>
-                                        <div layout="row" flex="100">
-                                            <div layout="row" flex="10" class="size-color">
-                                                <label>Blue</label>
+                                    <div class="font-13">{{address.description}}</div>
+                                    <div class="font-13">{{address.attn}}</div>
+                                    <div class="font-13">{{address.full_address}}</div>
+                                    <div class="font-13">{{address.phone}}</div>
+                                    <div layout="column" class="">
+                                        <div layout="row" flex="100" ng-repeat="(key,products) in address.sizeArr">
+                                            <div layout="row" flex="10" class="size-color align-self-C">
+                                                <label>{{key}}</label>
                                             </div>
                                             <div layout="row" flex="90">
                                                 <div layout="column" ng-repeat="product in products">
@@ -53,15 +48,11 @@
                                                         <input placeholder="" ng-model="product.distributed_qnty" only-number>
                                                     </md-input-container>
                                                 </div>
-
                                             </div>
                                         </div>
-                                        
                                     </div>
                                 </div>
                             </div>
-                            
-                            
                         </div>
                     </div>
                 </div>
@@ -80,14 +71,35 @@
             </div>
             <div class="remain-qtybox">
                 <div class="orderbox-head">Remaining Quantities</div>
-                <div layout="row">
+                <div>
                     <!--<md-input-container class="md-block m-r-15 mp-b-0" flex-gt-sm flex="15" ng-repeat="product in products">
                         <label class="font-14">{{product.size}}</label>
                         <input placeholder="" ng-model="product.remaining_qnty" disabled="">
                     </md-input-container>-->
-                    
-                    <md-input-container class="mrg0">
-                        <div class="remaining-text">
+                    <md-input-container class="mrg0"  layout="column" flex="100" ng-repeat="(key,productData) in products">
+                        <div class="remaining-text"  ng-repeat="product in productData" flex="100" layout="row">
+                            <div layout="column" flex="20">
+                                <strong>Product Name:</strong> {{product.product_name}}
+                            </div>
+                            
+                            <div layout="column" flex="20">
+                                <strong>Size:</strong> {{product.size}}
+                            </div>
+                            
+                            <div layout="column" flex="20">
+                                <strong>Color:</strong> {{product.color_name}}
+                            </div>
+                            
+                            <div layout="column" flex="20">
+                                <strong>Remaning:</strong> {{product.remaining_qnty}}
+                            </div>
+                            
+                            <div layout="column" flex="20">
+                                <strong>Allocated: </strong> {{product.distributed_qnty}}
+                            </div>
+                        </div>
+                        
+<!--                             <div class="remaining-text" flex="100">
                             <strong>Product Name:</strong> Gilden 5000
                             <strong>Size:</strong> M
                             <strong>Color:</strong> Green 
@@ -95,7 +107,7 @@
                             <strong>Allocated: </strong> 123
                         </div>
                         
-                        <div class="remaining-text" flex="100" layout="row">
+                        <div class="remaining-text" flex="100">
                             <strong>Product Name:</strong> Gilden 5000
                             <strong>Size:</strong> M
                             <strong>Color:</strong> Green 
@@ -103,23 +115,14 @@
                             <strong>Allocated: </strong> 123
                         </div>
                         
-                        <div class="remaining-text" layout="row" flex="100">
+                        <div class="remaining-text" flex="100">
                             <strong>Product Name:</strong> Gilden 5000
                             <strong>Size:</strong> M
                             <strong>Color:</strong> Green 
                             <strong>Remaning:</strong> 100
                             <strong>Allocated: </strong> 123
-                        </div>
-                        
-                        <div class="remaining-text" layout="row" flex="100">
-                            <strong>Product Name:</strong> Gilden 5000
-                            <strong>Size:</strong> M
-                            <strong>Color:</strong> Green 
-                            <strong>Remaning:</strong> 100
-                            <strong>Allocated: </strong> 123
-                        </div>
+                        </div> -->
                     </md-input-container>
-                    
                 </div>
             </div>
         </div>

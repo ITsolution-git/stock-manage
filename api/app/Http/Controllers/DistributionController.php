@@ -130,8 +130,9 @@ class DistributionController extends Controller {
                     $this->common->UpdateTableRecords('purchase_detail',array('id'=>$row->id),array('remaining_qnty'=>$row->qnty_purchased));
                     $row->remaining_qnty = $row->qnty_purchased;
                     $total_remaining_qnty += $row->qnty_purchased;
+                    $addr->sizeArr[$row->color_name][] = $row;
                 }
-                $addr->sizeArr = $products;
+//                $addr->sizeArr = $products;
             }
             else
             {
@@ -156,12 +157,13 @@ class DistributionController extends Controller {
                 foreach ($products as $row) {
                     $total_remaining_qnty += $row->remaining_qnty;
                     $row->product_address_id = $product_address_id;
+                    $addr->sizeArr[$row->color_name][] = $row;
                 }
-                $addr->sizeArr = $products;
+                //$addr->sizeArr = $products;
             }
             
             $addr->total_remaining_qnty = $total_remaining_qnty;
-            $distribution_address[$addr->id] = $addr;
+            $distribution_address[] = $addr;
         }
 
         $response = array(
