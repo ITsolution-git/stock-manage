@@ -1,157 +1,406 @@
-<div class="order-info-page company-po-page stockkup-content-table-container">
+<div class="order-info-page company-po-page stockkup-content-table-container ship-order-screen">
     <div class="simple-table-container stokkup-main-tableview m-b-30">
-        <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
+        <div class="table-title  layout-align-space-between-center layout-row bottom-shadow m-b-20" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-              Shipment Overview {{shipping.name}} #{{shipping.display_number}} for Company: {{shipping.client_company}}
+              Box Management Screen for <a class="cursor-p" title="Go to Order">Order #117</a> for <a class="cursor-p" title="Go to Order">Company Name</a>
             </div>
         </div>
-        <!--inner full box starts here -->
-        <div class="inner-full-box">
-            <div class="info-order mt-30" flex="100">
-            <div class="title m-b-20"><span class="stokkup-title-h4">Information</span></div>
-            <md-card layout="row">
-                <md-card-content flex="100" layout="column" class="p-30">
-                    <div layout="row" layout-wrap class="mrg10-B">
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Order ID</div>
-                            <span class="global-text">{{ shipping.display_number }}</span>
+     </div><!--simple table container box ends here -->
+
+     <div class="inner-full-box">
+
+        <md-card class="m-0 location">
+            <md-card-header layout-align="space-between center">
+                <md-card-header-text>
+                    <span class="md-title text-center"><a class="cursor-p" title="Location"># Distribution Locations</a> | Total QTY of the order</span>
+                </md-card-header-text>
+            </md-card-header>
+        </md-card>
+
+        <md-content class="">
+            <div layout="row" layout-wrap="nowrap" class="p-30 layout-align-center-center">
+
+                <a href="#" class="box-mang pad20-R"><i class="fa fa-angle-left" role="button"></i></a>
+
+                <div flex-xs flex-gt-xs="33" layout="column">
+                    <md-card class="custom-fullbox-shadow">
+                        <md-card-header layout-align="space-between center">
+                            <md-card-header-text>
+                                <span class="md-title">Distribution Location Name</span>
+                            </md-card-header-text>
+
+                            <md-menu  ng-show="allow_access==1">
+                                <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="4" ng-click="vm.openaddDesignDialog($event,design.id)">
+                                    <md-menu-item>
+                                        <md-button>
+                                            Edit
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                        </md-card-header>
+
+                        <md-card-content class="custom-desc-box">
+
+                            <div layout="row" flex="100">
+                                <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                    <p>Shipment # 1/23</p>
+                                </div>
+
+                                <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                    <p class="text-right">Total Qty: 122</p>
+                                </div>
+
+                            </div>
+
+                            <div class="h5 text-semibold first">Product Name:</div>
+                            <span>Gilden 5000 - T-shirts, Different Product</span>
+
+                            <div class="h5 text-semibold">Size:</div>
+                            <span>M: 10 L:39 XL: 128</span>
+
+                            <div class="h5 text-semibold">Color(s):</div>
+                            <span>Blue, Green</span>
+
+                            <!--<div class="h5 text-semibold">Method:</div>-->
+                            <md-input-container class="md-block date-input md-input-has-value">
+                                <label>Method:</label>
+                                <md-select ng-model="topping">
+                                  <md-optgroup label="Method 1">
+                                    <md-option>Method 1</md-option>
+                                    <md-option>Method 1</md-option>
+                                    <md-option>Method 1</md-option>
+                                  </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block date-input md-input-has-value">
+                                <input placeholder="Date Shipping:"kendo-date-picker  />
+                            </md-input-container>
+
+                            <!--<div class="h5 text-semibold">SKU:</div>-->
+                            <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                                <input placeholder="SKU" name="SKU">
+                            </md-input-container>
+
+                            <!--<div class="h5 text-semibold">Notes:</div>-->
+                            <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                                <input placeholder="Notes" name="Notes">
+                            </md-input-container>
+
+                            <div flex=100 class="p-t-30 md-block status-chk">
+                                <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                            </div>
+
+                        </md-card-content>
+
+                    </md-card>
+                </div>
+
+                <div flex-xs flex-gt-xs="33" layout="column">
+                    <md-card class="custom-fullbox-shadow">
+                        <md-card-header layout-align="space-between center">
+                            <md-card-header-text>
+                                <span class="md-title">Distribution Location Name</span>
+                            </md-card-header-text>
+
+                            <md-menu  ng-show="allow_access==1">
+                                <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="4" ng-click="vm.openaddDesignDialog($event,design.id)">
+                                    <md-menu-item>
+                                        <md-button>
+                                            Edit
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                        </md-card-header>
+
+                        <md-card-content class="custom-desc-box">
+
+                            <div layout="row" flex="100">
+                                <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                    <p>Shipment # 1/23</p>
+                                </div>
+
+                                <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                    <p class="text-right">Total Qty: 122</p>
+                                </div>
+
+                            </div>
+
+                            <div class="h5 text-semibold first">Product Name:</div>
+                            <span>Gilden 5000 - T-shirts, Different Product</span>
+
+                            <div class="h5 text-semibold">Size:</div>
+                            <span>M: 10 L:39 XL: 128</span>
+
+                            <div class="h5 text-semibold">Color(s):</div>
+                            <span>Blue, Green</span>
+
+                            <!--<div class="h5 text-semibold">Method:</div>-->
+                            <md-input-container class="md-block date-input md-input-has-value">
+                                <label>Method:</label>
+                                <md-select ng-model="topping">
+                                  <md-optgroup label="Method 1">
+                                    <md-option>Method 1</md-option>
+                                    <md-option>Method 1</md-option>
+                                    <md-option>Method 1</md-option>
+                                  </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container class="md-block date-input md-input-has-value">
+                                <input placeholder="Date Shipping:"kendo-date-picker  />
+                            </md-input-container>
+
+                            <!--<div class="h5 text-semibold">SKU:</div>-->
+                            <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                                <input placeholder="SKU" name="SKU">
+                            </md-input-container>
+
+                            <!--<div class="h5 text-semibold">Notes:</div>-->
+                            <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                                <input placeholder="Notes" name="Notes">
+                            </md-input-container>
+
+                            <div flex=100 class="p-t-30 md-block status-chk">
+                                <md-checkbox aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                            </div>
+
+                        </md-card-content>
+
+                    </md-card>
+                </div>
+
+                <a href="#" class="box-mang pad20-L"><i class="fa fa-angle-right" role="button"></i></a>
+
+
+            </div>
+        </md-content>
+
+        <md-card  flex="100" class="mrg15-B">
+            <md-card-header layout="row"  layout-align="space-between center" flex="100" class="layout-align-space-between-center text-center">
+                <md-card-header-text>
+                    <span class="md-title">Number of Units: <mark>122</mark></span>
+                    <span class="md-title">Number of Units Boxed: <mark>82</mark></span>
+                </md-card-header-text>
+            </md-card-header>
+        </md-card>
+
+        <div layout="column" flex="50" class="box-zerospace m-b-20">
+            <md-card class="m-0" flex="100">
+                <md-card-content class="recap">
+                    <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                        <div layout="column" flex="35">
+                            <strong>Product Name:</strong> Women's Basic Polo - 532089
                         </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Order Name</div>
-                            <span class="global-text">{{ shipping.name }}</span>
+
+                        <div layout="column" flex="15">
+                            <strong>Size:</strong> S
                         </div>
+
                         <div layout="column" flex="20">
-                            <div class="global-labels">Shipping By</div>
-                            <span class="global-text" ng-if="shipping.date_shipped != '0000-00-00'">{{ shipping.date_shipped | date:"M/d/yyyy" }}</span>
-                            <span class="global-text" ng-if="shipping.date_shipped == '0000-00-00'"></span>
+                            <strong>Color:</strong> White
                         </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">In Hand By</div>
-                            <span class="global-text" ng-if="shipping.in_hands_by != '0000-00-00'">{{ shipping.in_hands_by | date:"M/d/yyyy" }}</span>
-                            <span class="global-text" ng-if="shipping.in_hands_by == '0000-00-00'"></span>
+
+                        <div layout="column" flex="15">
+                            <strong>Remaning:</strong> 10
                         </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Status</div>
-                            <span class="global-text">{{ shipping.approval }}</span>
+
+                        <div layout="column" flex="15">
+                            <strong>Boxed: </strong> 123
                         </div>
-                    </div>
-                    <div layout="row" class="mrg10-B">
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Shipping Status</div>
-                           <span class="global-text">{{ shipping.shipping_status_name}}</span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Location</div>
-                            <span class="global-text">{{ shipping.description }}</span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Box Type</div>
-                            <span class="global-text">{{ shipping.boxing_type }}</span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Shipping Type</div>
-                            <span class="global-text">{{ shipping.shipping_type_name }}</span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Shipping Cost</div>
-                            <span class="global-text">{{ shipping.cost_to_ship | currency : $ : 2}}</span>
-                        </div>
-                    </div>
-                    <div layout="row">
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Client ID</div>
-                            <span class="global-text">{{ shipping.client_display_number }}</span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Client Name</div>
-                            <span class="global-text">{{ shipping.client_company }}</span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Fully Shipped</div>
-                            <span class="global-text">{{ shipping.distributed }}/{{ shipping.total }}</span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Date Shipped</div>
-                            <span class="global-text"></span>
-                        </div>
-                        <div layout="column" flex="20">
-                            <div class="global-labels">Tracking Number</div>
-                            <span class="global-text">{{shipping.tracking_number}}</span>
-                        </div>
-                    </div>
-                    <div layout-align="end" layout="row" ng-show="allow_access==1 && shipping.login_id==user_id">
-                        <a ui-sref="app.shipping.shipmentdetails({id: shipping.shipping_display_number})">EDIT</a>
-                    </div>
+                    </md-checkbox>
                 </md-card-content>
             </md-card>
-            </div>
-
-            <div class="box-zerospace mt-30">
-                <h4 class="stokkup-title-h4 m-b-20">Products Allocated to {{shipping.description}}</h4>
-                <div class="ms-responsive-table-wrapper tbl-scroll-cntnr white-bg m-b-30" ms-scroll>
-                    <table class="simple hover simple-tbl1">
-                        <thead>
-                            <tr>
-                                <!-- <th class="secondary-text" width="20%">Size Group</th> -->
-                                <th class="secondary-text" width="20%">Product Name</th>
-                                <th class="secondary-text" width="40%">Product Number</th>
-                                <th class="secondary-text" width="20%">Description</th>
-                            </tr>
-                        </thead>
-                        <tbody> 
-                            <tr ng-repeat="item in shippingItems">
-                                <!-- <td>{{ item.misc_value}}</td> -->
-                                <td>{{ item.name}}</td>
-                                <td>{{ item.product_id}}</td>
-                                <td ng-bind-html="item.description"></td>
-                            </tr>                    
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="box-zerospace m-b-30">
-                <h4 class="stokkup-title-h4 m-b-20">Boxed Shipments</h4>
-                <div class="ms-responsive-table-wrapper tbl-scroll-cntnr white-bg" ms-scroll>
-                    <table class="simple hover simple-tbl1">
-                        <thead>
-                            <tr>
-                                <th class="secondary-text" width="30%">Box ID</th>
-                                <th class="secondary-text" width="30%">Units Packed</th>
-                                <th class="secondary-text" width="40%">Tracking Number</th>
-                            </tr>
-                        </thead>
-                        <tbody> 
-                            <tr ng-repeat="box in shippingBoxes">
-                                <td>{{ box.count}}</td>
-                                <td>{{ box.boxed_qnty}}</td>
-                                <td ng-if="shipping.shipping_type_name != 'Freight'">{{ box.tracking_number}}</td>
-                                <td ng-if="shipping.shipping_type_name == 'Freight'">
-                                    <md-input-container flex="100" class="margin-0 date-input">
-                                        <input aria-label="true" name="tracking_number" ng-model="box.tracking_number"  ui-event="{ change : 'UpdateBoxData(box.tracking_number,box.id)' }" >
-                                    </md-input-container>
-                                </td>
-                            </tr>                    
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="box-zerospace m-b-30">
-                <h4 class="stokkup-title-h4 m-b-20">Printing Option</h4>
-                <div layout="row" class="white-bg p-30 box-zerospace">
-                    <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="print_pdf('manifest')"><span class="ng-scope">Packing slip</span></button>
-                    <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="print_pdf('report')"><span class="ng-scope">Manifest</span></button>
-                    <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn mr-20" aria-label="Print" ng-click="print_pdf('label')"><span class="ng-scope">Carton Label</span></button>
-                </div>    
-            </div>
-            <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row box-zerospace pull-right mb-20" ng-show="allow_access==1 && shipping.login_id==user_id">
-                <button aria-label="Back" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" type="button" ui-sref="app.shipping.boxingdetail({id:display_number})"><span class="ng-scope">Back</span></button>
-                <button ui-sref="app.shipping.shipmentdetails({id:display_number})" type="button" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" aria-label="Save" ng-show="shippingBoxes.length == '0'"><span class="ng-scope">Create Boxes</span></button>
-                <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number != ''" type="button" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" aria-label="Print" ng-click="printLAbel()"><span class="ng-scope">Confirm & Print</span></button>
-                <button ng-hide="shipping.shipping_type_id == 3 || shipping.tracking_number == ''" type="button" class="stokkup-custom-btn1 stokkup-blue-btn ml-20" aria-label="Print" ng-click="viewLabelPDF()"><span class="ng-scope">Print Label</span></button>
-            </md-dialog-actions>
         </div>
-        <!--inner full box ends here -->
-    </div><!--simple table container box ends here -->
-</div><!--shippment overview ends here -->
+
+        <div layout="column" flex="50" class="box-zerospace m-b-20">
+            <md-card class="m-0" flex="100">
+                <md-card-content class="recap">
+                    <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                        <div layout="column" flex="35">
+                            <strong>Product Name:</strong> Women's Basic Polo - 532089
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Size:</strong> S
+                        </div>
+
+                        <div layout="column" flex="20">
+                            <strong>Color:</strong> White
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Remaning:</strong> 10
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Boxed: </strong> 123
+                        </div>
+                    </md-checkbox>
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <div layout="column" flex="50" class="box-zerospace m-b-20">
+            <md-card class="m-0" flex="100">
+                <md-card-content class="recap">
+                    <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                        <div layout="column" flex="35">
+                            <strong>Product Name:</strong> Women's Basic Polo - 532089
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Size:</strong> S
+                        </div>
+
+                        <div layout="column" flex="20">
+                            <strong>Color:</strong> White
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Remaning:</strong> 10
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Boxed: </strong> 123
+                        </div>
+                    </md-checkbox>
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <div layout="column" flex="50" class="box-zerospace m-b-20">
+            <md-card class="m-0" flex="100">
+                <md-card-content class="recap">
+                    <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                        <div layout="column" flex="35">
+                            <strong>Product Name:</strong> Women's Basic Polo - 532089
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Size:</strong> S
+                        </div>
+
+                        <div layout="column" flex="20">
+                            <strong>Color:</strong> White
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Remaning:</strong> 10
+                        </div>
+
+                        <div layout="column" flex="15">
+                            <strong>Boxed: </strong> 123
+                        </div>
+                    </md-checkbox>
+                </md-card-content>
+            </md-card>
+        </div>
+
+        <div class="ship_order_btn layout-align-center-center total-btn">
+            <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20">Auto - Add All - Large</a>
+            <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20">Add Box</a>
+        </div>
+
+        <md-content class="">
+            <div layout="row" layout-wrap="nowrap" class="p-30 boxes">
+                <div flex-xs flex-gt-xs="33" layout="column">
+                    <md-card class="custom-fullbox-shadow">
+
+                        <md-card-header layout-align="space-between center">
+                            <md-card-header-text>
+                                <span class="md-title">Box ID: 1</span>
+                            </md-card-header-text>
+
+                            <div class="delete-box"><a href="javascript">X</a></div>
+
+                            <md-menu  ng-show="allow_access==1">
+                                <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                    <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                </md-button>
+                                <md-menu-content width="4" ng-click="vm.openaddDesignDialog($event,design.id)">
+                                    <md-menu-item>
+                                        <md-button>
+                                            Edit
+                                        </md-button>
+                                    </md-menu-item>
+                                </md-menu-content>
+                            </md-menu>
+
+                        </md-card-header>
+
+                        <md-card-content class="custom-desc-box">
+
+                            <div layout="row" flex="100">
+                                <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                    <p>Status: Shipped</p>
+                                </div>
+                            </div>
+
+                            <div class="h5 text-semibold first">Product Name:</div>
+                            <span>Gilden 5000 - T-shirts, Different Product</span>
+
+                            <div class="h5 text-semibold">Size:</div>
+                            <span>M: 10 L:39 XL: 128</span>
+
+                            <div class="h5 text-semibold">Color(s):</div>
+                            <span>Blue</span>
+
+                            <md-input-container flex="100" class="md-block m-b-20">
+                                <input placeholder="Missing" name="Missing">
+                            </md-input-container>
+
+                            <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                                <input placeholder="Spoiled" name="Spoiled">
+                            </md-input-container>
+
+                            <!--<div class="h5 text-semibold">Method:</div>-->
+                            <md-input-container class="md-block date-input md-input-has-value m-t-0">
+                                <label>Box Type</label>
+                                <md-select ng-model="topping">
+                                  <md-optgroup label="Method 1">
+                                    <md-option>Method 1</md-option>
+                                    <md-option>Method 1</md-option>
+                                    <md-option>Method 1</md-option>
+                                  </md-optgroup>
+                                </md-select>
+                            </md-input-container>
+
+                            <div class="h5 text-semibold p-t-0">Tracking Number</div>
+                            <span>1234567890</span>
+
+                            <div layout="row" flex="100" class="m-t-20">
+                                <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                    <md-input-container flex="100" class="md-block margin-0 m-b-20 units">
+                                        <input placeholder="Units" name="Units">
+                                    </md-input-container>
+                                </div>
+
+                                <div layout-align="space-between" class="mark-select text-right " layout="column" flex="50">
+                                    <md-checkbox aria-label="Checkbox 1"></md-checkbox>
+                                </div>
+
+                            </div>
+
+                        </md-card-content>
+
+
+                    </md-card>
+                </div>
+            </div>
+        </md-content>
+
+
+    </div>
+
+</div><!--ship-order-screen ends here -->

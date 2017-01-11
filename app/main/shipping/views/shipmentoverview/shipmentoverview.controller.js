@@ -11,9 +11,20 @@
     {
         var vm = this;
 
+         /*var slidesInSlideshow = 4;
+         var slidesTimeIntervalInMs = 3000;
+
+         $scope.slideshow = 1;
+         var slideTimer =
+         $timeout(function interval() {
+             $scope.slideshow = ($scope.slideshow % slidesInSlideshow) + 1;
+             slideTimer = $timeout(interval, slidesTimeIntervalInMs);
+             }, slidesTimeIntervalInMs);*/
+
+
         $scope.user_id = sessionService.get('user_id');
         $scope.role_slug = sessionService.get('role_slug');
-        
+
         if($scope.role_slug=='AT' || $scope.role_slug=='SU' || $scope.role_slug=='SM')
         {
             $scope.allow_access = 0;
@@ -32,11 +43,11 @@
         combine_array_id.company_id = sessionService.get('company_id');
 
         $http.post('api/public/common/getCompanyDetail',combine_array_id).success(function(result) {
-                            
-            if(result.data.success == '1') 
+
+            if(result.data.success == '1')
             {
                 $scope.allCompanyDetail =result.data.records;
-            } 
+            }
             else
             {
                 $scope.allCompanyDetail=[];
@@ -54,7 +65,7 @@
             $http.post('api/public/shipping/getShippingOverview',combine_array).success(function(result) {
 
                 $("#ajax_loader").hide();
-                if(result.data.success == '1') 
+                if(result.data.success == '1')
                 {
                     $scope.shippingBoxes =result.data.shippingBoxes;
                     $scope.shippingItems =result.data.shippingItems;
@@ -108,9 +119,9 @@
         allData.cond ={display_number:$stateParams.id,company_id:sessionService.get('company_id')}
 
         $http.post('api/public/common/GetTableRecords',allData).success(function(result)
-        {   
+        {
             if(result.data.success=='1')
-            {   
+            {
                 $scope.shipping_id = result.data.records[0].id;
                 $scope.display_number = result.data.records[0].display_number;
                 $scope.getShippingOverview();
@@ -312,12 +323,12 @@
             var box_data = {};
             box_data.table ='shipping_box';
             $scope.name_filed = 'tracking_number';
-            
+
             var obj = {};
             obj[$scope.name_filed] =  value;
             box_data.data = angular.copy(obj);
             var condition_obj = {};
-            
+
             condition_obj['id'] =  id;
             box_data.cond = angular.copy(condition_obj);
 
