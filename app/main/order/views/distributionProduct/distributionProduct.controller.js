@@ -26,15 +26,15 @@
                 $state.go('app.order');
             }
       });
-
         $scope.Addresses = Addresses;
-        $scope.product_name = product_arr.product_name;
+        $scope.product_name = product_arr.name;
 
         $scope.searchQuery = '';
         $scope.address_id = 0;
         $scope.product_id = product_arr.product_id;
         $scope.design_product_id = product_arr.design_product_id;
         $scope.products = [];
+        $scope.allocatedProducts = [];
 
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
@@ -81,6 +81,7 @@
                 if(result.success == '1') {
                    $scope.addresses = result.addresses;
                    $scope.selected_addresses = result.selected_addresses;
+                   $scope.products = result.display_arr.sizeArr;
 
                    if($scope.address_id > 0)
                    {
@@ -140,7 +141,7 @@
         $scope.getProductByAddress = function(address_id)
         {
             $scope.address_id = address_id;
-            $scope.products = $scope.addresses[$scope.address_id].sizeArr;
+            $scope.allocatedProducts = $scope.addresses[$scope.address_id].sizeArr;
         }
 
         $scope.allocate = function()
@@ -158,7 +159,7 @@
             combine_array.company_id = sessionService.get('company_id')
 //            combine_array.address_ids = $scope.selected_addresses;
             combine_array.address_id = $scope.address_id;
-            combine_array.products = $scope.products;
+            combine_array.allocatedProducts = $scope.allocatedProducts;
             combine_array.action = action;
 
             $("#ajax_loader").show();

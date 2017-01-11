@@ -1028,6 +1028,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 }
 .orderitem-detail {
   width: 631px;
+    max-height: 600px;
 }
 .order-box-header {
   background: #f2f2f2 none repeat scroll 0 0;
@@ -1080,6 +1081,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 }
 .dprodct.disrtubtd-pro-page.orderitem-detail .mrg15-TB.layout-row.flex-100 {
   min-height: 47px;
+    position: relative;
 }
 .order-box-header button.md-button.md-ink-ripple.pull-right {
   min-width: 1px;
@@ -1309,4 +1311,11 @@ margin-top:30px;
 .factor_scroll {
   max-height: 500px;
   overflow-y: auto;
+}
+
+.mrg0 { margin: 0; padding: 0; }
+.remaining-text { border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0; }
+.size-color label{ font-size: 14px; font-weight: bold; padding: 0; }
+.allocate-btn {
+  padding: 7px 0;
 }

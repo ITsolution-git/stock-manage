@@ -52,18 +52,18 @@ return [
 			'prefix'   => '',
 		],
 
-		'mysql' => [
-			'driver'    => 'mysql',
-			'host'      => env('DB_HOST', 'localhost'),
-			'database'  => env('DB_DATABASE', 'stokkup_new'),
-			'username'  => env('DB_USERNAME', 'root'),
-			'password'  => env('DB_PASSWORD', 'stokkdb@1357'),
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
-			'strict'    => false,
-		],
-
+'mysql' => [
+                        'driver'    => 'mysql',
+                        'host'      => env('DB_HOST', 'stokkuplive.cagpmtmc0vub.us-east-1.rds.amazonaws.com'),
+                        'database'  => env('DB_DATABASE', 'stokkuplive'),
+                        'username'  => env('DB_USERNAME', 'stokkuplive'),
+                        'password'  => env('DB_PASSWORD', 'Amren341221'),
+                        'charset'   => 'utf8',
+                        'collation' => 'utf8_unicode_ci',
+                        'port'      => env('DB_PORT', 3306),
+                        'prefix'    => '',
+                        'strict'    => false,
+                ],
 /*		'mysql' => [
 			'driver'    => 'mysql',
 			'host'      => env('DB_HOST', '192.168.1.13'),
