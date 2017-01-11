@@ -595,6 +595,9 @@
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success',result.data.message);
+                        setTimeout(function(){ 
+                           $state.go('app.order.order-info',{id: result.data.display_number});
+                        }, 5000);
                     }
                     else
                     {

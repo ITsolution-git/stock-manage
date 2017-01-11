@@ -104,6 +104,8 @@ class DistributionController extends Controller {
 
         $client_distaddress = array();
         $selected_addresses = array();
+
+        $displayArr = array();
         
         foreach ($dist_addr as $addr) {
             
@@ -129,9 +131,12 @@ class DistributionController extends Controller {
                 foreach ($products as $row) {
                     $this->common->UpdateTableRecords('purchase_detail',array('id'=>$row->id),array('remaining_qnty'=>$row->qnty_purchased));
                     $row->remaining_qnty = $row->qnty_purchased;
+                    $size_data = $this->distribution->getSingleSizeTotal(array('id'=>$row->id));
+                    $row->allocated = $size_data[0]->distributed_qnty?$size_data[0]->distributed_qnty:'0';
                     $total_remaining_qnty += $row->qnty_purchased;
+                    $addr->sizeArr[$row->color_name][] = $row;
                 }
-                $addr->sizeArr = $products;
+//                $addr->sizeArr = $products;
             }
             else
             {
@@ -156,19 +161,24 @@ class DistributionController extends Controller {
                 foreach ($products as $row) {
                     $total_remaining_qnty += $row->remaining_qnty;
                     $row->product_address_id = $product_address_id;
+                    $size_data = $this->distribution->getSingleSizeTotal(array('id'=>$row->id));
+                    $row->allocated = $size_data[0]->distributed_qnty?$size_data[0]->distributed_qnty:'0';
+                    $addr->sizeArr[$row->color_name][] = $row;
                 }
-                $addr->sizeArr = $products;
+                //$addr->sizeArr = $products;
             }
             
             $addr->total_remaining_qnty = $total_remaining_qnty;
             $distribution_address[$addr->id] = $addr;
+            $displayArr = $addr;
         }
 
         $response = array(
                         'success' => 1, 
                         'message' => GET_RECORDS,
                         'addresses' => $distribution_address,
-                        'selected_addresses' => $selected_addresses
+                        'selected_addresses' => $selected_addresses,
+                        'display_arr' => $displayArr
                         );
 
         return response()->json($response);        
@@ -177,9 +187,16 @@ class DistributionController extends Controller {
     public function addEditDistribute()
     {
         $post = Input::all();
-
         $total = 0;
-        foreach ($post['products'] as $product) {
+        $products = array();
+
+        foreach ($post['allocatedProducts'] as $colorData) {
+            foreach ($colorData as $product) {
+                $products[] = $product;
+            }
+        }
+
+        foreach ($products as $product) {
 
             $size_data = $this->distribution->getSingleSizeTotal($product);
 
@@ -238,7 +255,7 @@ class DistributionController extends Controller {
             }
         }
 
-        foreach ($post['products'] as $product) {
+        foreach ($products as $product) {
 
             $size_data = $this->distribution->getSingleSizeTotal($product);
 

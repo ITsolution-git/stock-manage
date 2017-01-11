@@ -202,7 +202,7 @@
                         return sessionService.AccessService('AT,SU','false');
                     }
                 },
-                url  : '/affiliate',
+                url  : '/affiliates',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/affiliate/affiliate.html',
@@ -400,7 +400,7 @@
             weight     : 8
         });
         msNavigationServiceProvider.saveItem('fuse.settings.affiliate', {
-            title      : 'Affiliate',
+            title      : 'Affiliates',
             state      : 'app.settings.affiliate',
             stateParams: {'id': 9},
             class      : 'navigation-dashboards project-dashboard',
@@ -421,14 +421,14 @@
             weight     : 11
         });
         msNavigationServiceProvider.saveItem('fuse.settings.sales', {
-            title      : 'Sales',
+            title      : '',
             state      : 'app.settings.sales',
             stateParams: {'id': 12},
             class      : 'navigation-dashboards project-dashboard',
             weight     : 12
         });
         msNavigationServiceProvider.saveItem('fuse.settings.approvals', {
-            title      : 'S&S Approval',
+            title      : 'S&S Approvals',
             state      : 'app.settings.approvals',
             stateParams: {'id': 13},
             class      : 'navigation-dashboards project-dashboard',
@@ -436,7 +436,7 @@
 
         });
          msNavigationServiceProvider.saveItem('fuse.settings.emailTemplate', {
-            title      : 'Email Template',
+            title      : 'Email Templates',
             state      : 'app.settings.emailTemplate',
             stateParams: {'id': 14},
             class      : 'navigation-dashboards project-dashboard',
