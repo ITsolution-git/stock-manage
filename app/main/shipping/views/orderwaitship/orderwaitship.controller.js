@@ -9,8 +9,14 @@
     /** @ngInject */
     function orderWaitController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
+        
         var vm = this;
-
+        var originatorEv;
+        vm.openMenu = function ($mdOpenMenu, ev) {
+            originatorEv = ev;
+            $mdOpenMenu(ev);
+        };
+        
         $scope.address_id = 0;
         $scope.shipping_id = 0;
         $scope.productSearch = '';
