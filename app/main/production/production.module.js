@@ -19,7 +19,7 @@
                         controller : 'ProductionController as vm'
                     }
                 },
-               
+
                 resolve: {
                     checksession : function (sessionService)
                     {
@@ -99,7 +99,7 @@
             /*stateParams: {
                 'param1': 'page'
              },*/
-            
+
             weight   : 10
         });
     }

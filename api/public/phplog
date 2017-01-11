@@ -4793,3 +4793,628 @@
  Mon, 05 Dec 2016 00:40:35 -0600 INFO : [_sendRequest] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createTransactionResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1480920033</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><transactionResponse><responseCode>1</responseCode><authCode>CKTS3P</authCode><avsResultCode>P</avsResultCode><cvvResultCode /><cavvResultCode /><transId>60011699452</transId><refTransID>60011699452</refTransID><transHash>9DB6D6647636EED21FBED279EFA3E533</transHash><testRequest>0</testRequest><accountNumber>XXXX0002</accountNumber><accountType>AmericanExpress</accountType><messages><message><code>1</code><description>This transaction has been approved.</description></message></messages><transHashSha2 /></transactionResponse></createTransactionResponse>
  Mon, 05 Dec 2016 00:40:35 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
  Mon, 05 Dec 2016 00:40:35 -0600 INFO : [execute] (/var/www/html/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Fri, 23 Dec 2016 00:26:25 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Fri, 23 Dec 2016 00:26:25 -0600 DEBUG : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\CreateTransactionRequest Object
+(
+    [transactionRequest:net\authorize\api\contract\v1\CreateTransactionRequest:private] => net\authorize\api\contract\v1\TransactionRequestType Object
+        (
+            [transactionType:net\authorize\api\contract\v1\TransactionRequestType:private] => authCaptureTransaction
+            [amount:net\authorize\api\contract\v1\TransactionRequestType:private] => 200
+            [currencyCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [payment:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\PaymentType Object
+                (
+                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                        (
+                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-0005
+                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                        )
+
+                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                )
+
+            [profile:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [solution:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [callId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [authCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [refTransId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [splitTenderId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [order:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\OrderType Object
+                (
+                    [invoiceNumber:net\authorize\api\contract\v1\OrderType:private] => INV - 144
+                    [description:net\authorize\api\contract\v1\OrderType:private] => Payment for Invoice Number: 144
+                )
+
+            [lineItems:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [tax:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [duty:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [shipping:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [taxExempt:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [poNumber:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customer:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [billTo:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                (
+                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Santvana
+                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => S
+                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => Feltz Printing Service
+                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => #24 Dairy Circle
+                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => CS
+                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CT
+                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 12122
+                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => USA
+                )
+
+            [shipTo:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customerIP:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [cardholderAuthentication:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [retail:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [employeeId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [transactionSettings:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [userFields:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+        )
+
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1482474385
+)
+
+ Fri, 23 Dec 2016 00:26:25 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Fri, 23 Dec 2016 00:26:25 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://api2.authorize.net/xml/v1/request.api
+ Fri, 23 Dec 2016 00:26:25 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1482474385]]></refId>
+  <transactionRequest>
+    <transactionType><![CDATA[authCaptureTransaction]]></transactionType>
+    <amount>200</amount>
+    <payment>
+      <creditCard>
+        <cardNumber>xxxx-0005</cardNumber>
+        <expirationDate>xxxx</expirationDate>
+        <cardCode>xxxx</cardCode>
+      </creditCard>
+    </payment>
+    <order>
+      <invoiceNumber><![CDATA[INV - 144]]></invoiceNumber>
+      <description><![CDATA[Payment for Invoice Number: 144]]></description>
+    </order>
+    <billTo>
+      <firstName><![CDATA[Santvana]]></firstName>
+      <lastName><![CDATA[S]]></lastName>
+      <company><![CDATA[Feltz Printing Service]]></company>
+      <address><![CDATA[#24 Dairy Circle]]></address>
+      <city><![CDATA[CS]]></city>
+      <state><![CDATA[CT]]></state>
+      <zip><![CDATA[12122]]></zip>
+      <country><![CDATA[USA]]></country>
+    </billTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+ Fri, 23 Dec 2016 00:26:25 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Fri, 23 Dec 2016 00:26:25 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Fri, 23 Dec 2016 00:26:26 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><ErrorResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Error</resultCode><message><code>E00003</code><text>The 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' element is invalid - The value XX is invalid according to its datatype 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' - The Pattern constraint failed.</text></message></messages></ErrorResponse>
+ Fri, 23 Dec 2016 00:26:26 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Fri, 23 Dec 2016 00:26:26 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Fri, 23 Dec 2016 00:26:45 -0600 DEBUG : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\CreateTransactionRequest Object
+(
+    [transactionRequest:net\authorize\api\contract\v1\CreateTransactionRequest:private] => net\authorize\api\contract\v1\TransactionRequestType Object
+        (
+            [transactionType:net\authorize\api\contract\v1\TransactionRequestType:private] => authCaptureTransaction
+            [amount:net\authorize\api\contract\v1\TransactionRequestType:private] => 200
+            [currencyCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [payment:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\PaymentType Object
+                (
+                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                        (
+                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-8431
+                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                        )
+
+                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                )
+
+            [profile:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [solution:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [callId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [authCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [refTransId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [splitTenderId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [order:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\OrderType Object
+                (
+                    [invoiceNumber:net\authorize\api\contract\v1\OrderType:private] => INV - 144
+                    [description:net\authorize\api\contract\v1\OrderType:private] => Payment for Invoice Number: 144
+                )
+
+            [lineItems:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [tax:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [duty:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [shipping:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [taxExempt:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [poNumber:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customer:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [billTo:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                (
+                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Santvana
+                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => S
+                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => Feltz Printing Service
+                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => #24 Dairy Circle
+                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => CS
+                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CT
+                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 12122
+                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => USA
+                )
+
+            [shipTo:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customerIP:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [cardholderAuthentication:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [retail:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [employeeId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [transactionSettings:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [userFields:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+        )
+
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1482474405
+)
+
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://api2.authorize.net/xml/v1/request.api
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1482474405]]></refId>
+  <transactionRequest>
+    <transactionType><![CDATA[authCaptureTransaction]]></transactionType>
+    <amount>200</amount>
+    <payment>
+      <creditCard>
+        <cardNumber>xxxx-8431</cardNumber>
+        <expirationDate>xxxx</expirationDate>
+        <cardCode>xxxx</cardCode>
+      </creditCard>
+    </payment>
+    <order>
+      <invoiceNumber><![CDATA[INV - 144]]></invoiceNumber>
+      <description><![CDATA[Payment for Invoice Number: 144]]></description>
+    </order>
+    <billTo>
+      <firstName><![CDATA[Santvana]]></firstName>
+      <lastName><![CDATA[S]]></lastName>
+      <company><![CDATA[Feltz Printing Service]]></company>
+      <address><![CDATA[#24 Dairy Circle]]></address>
+      <city><![CDATA[CS]]></city>
+      <state><![CDATA[CT]]></state>
+      <zip><![CDATA[12122]]></zip>
+      <country><![CDATA[USA]]></country>
+    </billTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><ErrorResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Error</resultCode><message><code>E00003</code><text>The 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' element is invalid - The value XX is invalid according to its datatype 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' - The Pattern constraint failed.</text></message></messages></ErrorResponse>
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Fri, 23 Dec 2016 00:26:45 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Fri, 23 Dec 2016 00:27:02 -0600 DEBUG : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\CreateTransactionRequest Object
+(
+    [transactionRequest:net\authorize\api\contract\v1\CreateTransactionRequest:private] => net\authorize\api\contract\v1\TransactionRequestType Object
+        (
+            [transactionType:net\authorize\api\contract\v1\TransactionRequestType:private] => authCaptureTransaction
+            [amount:net\authorize\api\contract\v1\TransactionRequestType:private] => 200
+            [currencyCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [payment:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\PaymentType Object
+                (
+                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                        (
+                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1000
+                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                        )
+
+                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                )
+
+            [profile:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [solution:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [callId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [authCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [refTransId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [splitTenderId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [order:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\OrderType Object
+                (
+                    [invoiceNumber:net\authorize\api\contract\v1\OrderType:private] => INV - 144
+                    [description:net\authorize\api\contract\v1\OrderType:private] => Payment for Invoice Number: 144
+                )
+
+            [lineItems:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [tax:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [duty:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [shipping:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [taxExempt:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [poNumber:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customer:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [billTo:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                (
+                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Santvana
+                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => S
+                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => Feltz Printing Service
+                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => #24 Dairy Circle
+                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => CS
+                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CT
+                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 12122
+                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => USA
+                )
+
+            [shipTo:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customerIP:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [cardholderAuthentication:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [retail:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [employeeId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [transactionSettings:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [userFields:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+        )
+
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1482474422
+)
+
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://api2.authorize.net/xml/v1/request.api
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1482474422]]></refId>
+  <transactionRequest>
+    <transactionType><![CDATA[authCaptureTransaction]]></transactionType>
+    <amount>200</amount>
+    <payment>
+      <creditCard>
+        <cardNumber>xxxx-1000</cardNumber>
+        <expirationDate>xxxx</expirationDate>
+        <cardCode>xxxx</cardCode>
+      </creditCard>
+    </payment>
+    <order>
+      <invoiceNumber><![CDATA[INV - 144]]></invoiceNumber>
+      <description><![CDATA[Payment for Invoice Number: 144]]></description>
+    </order>
+    <billTo>
+      <firstName><![CDATA[Santvana]]></firstName>
+      <lastName><![CDATA[S]]></lastName>
+      <company><![CDATA[Feltz Printing Service]]></company>
+      <address><![CDATA[#24 Dairy Circle]]></address>
+      <city><![CDATA[CS]]></city>
+      <state><![CDATA[CT]]></state>
+      <zip><![CDATA[12122]]></zip>
+      <country><![CDATA[USA]]></country>
+    </billTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><ErrorResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Error</resultCode><message><code>E00003</code><text>The 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' element is invalid - The value XX is invalid according to its datatype 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' - The Pattern constraint failed.</text></message></messages></ErrorResponse>
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Fri, 23 Dec 2016 00:27:02 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Fri, 23 Dec 2016 00:27:40 -0600 DEBUG : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\CreateTransactionRequest Object
+(
+    [transactionRequest:net\authorize\api\contract\v1\CreateTransactionRequest:private] => net\authorize\api\contract\v1\TransactionRequestType Object
+        (
+            [transactionType:net\authorize\api\contract\v1\TransactionRequestType:private] => authCaptureTransaction
+            [amount:net\authorize\api\contract\v1\TransactionRequestType:private] => 200
+            [currencyCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [payment:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\PaymentType Object
+                (
+                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                        (
+                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1000
+                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                        )
+
+                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                )
+
+            [profile:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [solution:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [callId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [authCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [refTransId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [splitTenderId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [order:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\OrderType Object
+                (
+                    [invoiceNumber:net\authorize\api\contract\v1\OrderType:private] => INV - 144
+                    [description:net\authorize\api\contract\v1\OrderType:private] => Payment for Invoice Number: 144
+                )
+
+            [lineItems:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [tax:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [duty:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [shipping:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [taxExempt:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [poNumber:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customer:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [billTo:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                (
+                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Santvana
+                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => S
+                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => Feltz Printing Service
+                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => #24 Dairy Circle
+                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => CS
+                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => CT
+                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 12122
+                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => USA
+                )
+
+            [shipTo:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customerIP:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [cardholderAuthentication:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [retail:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [employeeId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [transactionSettings:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [userFields:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+        )
+
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1482474460
+)
+
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1482474460]]></refId>
+  <transactionRequest>
+    <transactionType><![CDATA[authCaptureTransaction]]></transactionType>
+    <amount>200</amount>
+    <payment>
+      <creditCard>
+        <cardNumber>xxxx-1000</cardNumber>
+        <expirationDate>xxxx</expirationDate>
+        <cardCode>xxxx</cardCode>
+      </creditCard>
+    </payment>
+    <order>
+      <invoiceNumber><![CDATA[INV - 144]]></invoiceNumber>
+      <description><![CDATA[Payment for Invoice Number: 144]]></description>
+    </order>
+    <billTo>
+      <firstName><![CDATA[Santvana]]></firstName>
+      <lastName><![CDATA[S]]></lastName>
+      <company><![CDATA[Feltz Printing Service]]></company>
+      <address><![CDATA[#24 Dairy Circle]]></address>
+      <city><![CDATA[CS]]></city>
+      <state><![CDATA[CT]]></state>
+      <zip><![CDATA[12122]]></zip>
+      <country><![CDATA[USA]]></country>
+    </billTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><ErrorResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><messages><resultCode>Error</resultCode><message><code>E00003</code><text>The 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' element is invalid - The value XX is invalid according to its datatype 'AnetApi/xml/v1/schema/AnetApiSchema.xsd:cardCode' - The Pattern constraint failed.</text></message></messages></ErrorResponse>
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Fri, 23 Dec 2016 00:27:40 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 112) - Request Serialization Begin
+ Fri, 23 Dec 2016 00:31:20 -0600 DEBUG : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 113) - net\authorize\api\contract\v1\CreateTransactionRequest Object
+(
+    [transactionRequest:net\authorize\api\contract\v1\CreateTransactionRequest:private] => net\authorize\api\contract\v1\TransactionRequestType Object
+        (
+            [transactionType:net\authorize\api\contract\v1\TransactionRequestType:private] => authCaptureTransaction
+            [amount:net\authorize\api\contract\v1\TransactionRequestType:private] => 200
+            [currencyCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [payment:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\PaymentType Object
+                (
+                    [creditCard:net\authorize\api\contract\v1\PaymentType:private] => net\authorize\api\contract\v1\CreditCardType Object
+                        (
+                            [cardCode:net\authorize\api\contract\v1\CreditCardType:private] => xxxx
+                            [isPaymentToken:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cryptogram:net\authorize\api\contract\v1\CreditCardType:private] => 
+                            [cardNumber:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx-1000
+                            [expirationDate:net\authorize\api\contract\v1\CreditCardSimpleType:private] => xxxx
+                        )
+
+                    [bankAccount:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [trackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [encryptedTrackData:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [payPal:net\authorize\api\contract\v1\PaymentType:private] => 
+                    [opaqueData:net\authorize\api\contract\v1\PaymentType:private] => 
+                )
+
+            [profile:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [solution:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [callId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [authCode:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [refTransId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [splitTenderId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [order:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\OrderType Object
+                (
+                    [invoiceNumber:net\authorize\api\contract\v1\OrderType:private] => INV - 144
+                    [description:net\authorize\api\contract\v1\OrderType:private] => Payment for Invoice Number: 144
+                )
+
+            [lineItems:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [tax:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [duty:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [shipping:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [taxExempt:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [poNumber:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customer:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [billTo:net\authorize\api\contract\v1\TransactionRequestType:private] => net\authorize\api\contract\v1\CustomerAddressType Object
+                (
+                    [phoneNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [faxNumber:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [email:net\authorize\api\contract\v1\CustomerAddressType:private] => 
+                    [firstName:net\authorize\api\contract\v1\NameAndAddressType:private] => Santvana
+                    [lastName:net\authorize\api\contract\v1\NameAndAddressType:private] => S
+                    [company:net\authorize\api\contract\v1\NameAndAddressType:private] => Feltz Printing Service
+                    [address:net\authorize\api\contract\v1\NameAndAddressType:private] => Dairy Circle
+                    [city:net\authorize\api\contract\v1\NameAndAddressType:private] => Az
+                    [state:net\authorize\api\contract\v1\NameAndAddressType:private] => AZ
+                    [zip:net\authorize\api\contract\v1\NameAndAddressType:private] => 456562
+                    [country:net\authorize\api\contract\v1\NameAndAddressType:private] => USA
+                )
+
+            [shipTo:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [customerIP:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [cardholderAuthentication:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [retail:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [employeeId:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [transactionSettings:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+            [userFields:net\authorize\api\contract\v1\TransactionRequestType:private] => 
+        )
+
+    [merchantAuthentication:net\authorize\api\contract\v1\ANetApiRequestType:private] => net\authorize\api\contract\v1\MerchantAuthenticationType Object
+        (
+            [name:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 93Yd4M9fU
+            [transactionKey:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => xxxx
+            [sessionToken:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [password:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [impersonationAuthentication:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [fingerPrint:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+            [mobileDeviceId:net\authorize\api\contract\v1\MerchantAuthenticationType:private] => 
+        )
+
+    [refId:net\authorize\api\contract\v1\ANetApiRequestType:private] => ref1482474680
+)
+
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 115) - Request  Serialization End
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 75) -  Url: https://apitest.authorize.net/xml/v1/request.api
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 77) - Request to AnetApi: 
+<?xml version="1.0" encoding="UTF-8"?>
+<createTransactionRequest xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd">
+  <merchantAuthentication>
+    <name><![CDATA[93Yd4M9fU]]></name>
+    <transactionKey>xxxx</transactionKey>
+  </merchantAuthentication>
+  <refId><![CDATA[ref1482474680]]></refId>
+  <transactionRequest>
+    <transactionType><![CDATA[authCaptureTransaction]]></transactionType>
+    <amount>200</amount>
+    <payment>
+      <creditCard>
+        <cardNumber>xxxx-1000</cardNumber>
+        <expirationDate>xxxx</expirationDate>
+        <cardCode>xxxx</cardCode>
+      </creditCard>
+    </payment>
+    <order>
+      <invoiceNumber><![CDATA[INV - 144]]></invoiceNumber>
+      <description><![CDATA[Payment for Invoice Number: 144]]></description>
+    </order>
+    <billTo>
+      <firstName><![CDATA[Santvana]]></firstName>
+      <lastName><![CDATA[S]]></lastName>
+      <company><![CDATA[Feltz Printing Service]]></company>
+      <address><![CDATA[Dairy Circle]]></address>
+      <city><![CDATA[Az]]></city>
+      <state><![CDATA[AZ]]></state>
+      <zip><![CDATA[456562]]></zip>
+      <country><![CDATA[USA]]></country>
+    </billTo>
+  </transactionRequest>
+</createTransactionRequest>
+
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 89) - Sending 'XML' Request type
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 94) - Sending http request via Curl
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [_sendRequest] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/util/HttpClient.php : 96) - Response from AnetApi: ﻿<?xml version="1.0" encoding="utf-8"?><createTransactionResponse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="AnetApi/xml/v1/schema/AnetApiSchema.xsd"><refId>ref1482474680</refId><messages><resultCode>Ok</resultCode><message><code>I00001</code><text>Successful.</text></message></messages><transactionResponse><responseCode>1</responseCode><authCode>7K18D5</authCode><avsResultCode>Y</avsResultCode><cvvResultCode>P</cvvResultCode><cavvResultCode>2</cavvResultCode><transId>60013324086</transId><refTransID /><transHash>5C7A698231FA0FE4176631DF348104EE</transHash><testRequest>0</testRequest><accountNumber>XXXX1000</accountNumber><accountType>AmericanExpress</accountType><messages><message><code>1</code><description>This transaction has been approved.</description></message></messages><transHashSha2 /></transactionResponse></createTransactionResponse>
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 125) - Response De-Serialization Begin
+ Fri, 23 Dec 2016 00:31:20 -0600 INFO : [execute] (/var/www/stokkup/api/vendor/authorizenet/authorizenet/lib/net/authorize/api/controller/base/ApiOperationBase.php : 127) - Response De-Serialization End
