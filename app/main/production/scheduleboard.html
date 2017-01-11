@@ -35,6 +35,15 @@
                               <div class="unscheduled-lot">
                                 <div class="slot">
                                   <div class="p-5 full-row pull-left slot-header">
+
+                                        <div class='wrapper'>
+                                          <div class='container' dragula='"another-bag"' dragula-model='many'>
+                                            <div ng-repeat='text in many' ng-bind='text'></div>
+                                          </div>
+                                          <div class='container' dragula='"another-bag"' dragula-model='many2'>
+                                            <div ng-repeat='text in many2' ng-bind='text'></div>
+                                          </div>
+                                        </div>
                                     <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">unscheduled</span>
 
                                     <div class="full-row pull-left mt-10 p-5 mb-5">
@@ -338,4 +347,5 @@
             </md-tabs>
         </md-content>
     </div>
+
 </div>

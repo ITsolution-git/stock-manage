@@ -3,7 +3,7 @@
     'use strict';
 
     angular
-        .module('app.production', [])
+        .module('app.production', [angularDragula(angular)])
         .config(config);
 
     /** @ngInject */

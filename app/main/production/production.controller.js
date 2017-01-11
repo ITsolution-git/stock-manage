@@ -413,6 +413,8 @@
                                   "screen_icon":3,
                                   "garment":1}];
 
+        $scope.many = ['The', 'possibilities', 'are', 'endless!'];
+        $scope.many2 = ['Explore', 'them'];
         if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
         {
             $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT

@@ -6,6 +6,8 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+        <script src="scripts/drangula/angular-dragula.js"></script>
+        <link rel="stylesheet" href="scripts/drangula/dragula.css" />
 
         <!-- <meta property="og:site_name" content="app.stokkup.com"/>
         <meta property="og:description" content="Stokkup" />
