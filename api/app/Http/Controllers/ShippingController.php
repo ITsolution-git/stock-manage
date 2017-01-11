@@ -109,8 +109,8 @@ class ShippingController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Order ID'),
                         1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        2=>array('key' => '', 'name' => 'Shipping Status', 'sortable' => false),
+                        3=>array('key' => 'o.shipping_status', 'name' => 'Status'),
                         4=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 
