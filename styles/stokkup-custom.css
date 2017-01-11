@@ -1319,3 +1319,26 @@ margin-top:30px;
 .allocate-btn {
   padding: 7px 0;
 }
+
+.ship-order-screen md-card-content.custom-desc-box .h5{ padding-top: 15px; }
+.ship-order-screen .shp-code p { font-size: 16px; font-weight: bold; margin: 0 }
+.ship-order-screen .date-input span.k-widget.k-datepicker { width: 100%; }
+.ship-order-screen .stokkup-main-tableview .table-title {     padding: 10px 55px; border-bottom: none; min-height: 60px; }
+.ship-order-screen .stokkup-main-tableview .table-title .table-title-text {     color: #252932; font-size: 20px; font-weight: 300; }
+.ship-order-screen .stokkup-main-tableview .table-title .table-title-text a{
+ font-weight: 400;   
+}
+.ship-order-screen .status-chk .md-label span {     font-size: 14px; font-weight: bold; margin: 0; }
+
+
+.location { position: relative; padding: 20px 0;}
+.location .md-title { font-size: 14px; }
+.location .stokkup-blue-btn{ position: absolute; right: 25px; top: 25px; }
+
+.ship-order-screen .md-title{ font-size: 16px; font-weight: bold;  }
+.ship_order_btn { width: 100%; text-align: right}
+
+@media (max-width: 1200px) {
+    .location .stokkup-blue-btn { font-size: 12px; padding: 0 20px; }
+    .ship-order-screen .shp-code p { font-size: 13px; }
+}
