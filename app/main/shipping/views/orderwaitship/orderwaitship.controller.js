@@ -9,14 +9,14 @@
     /** @ngInject */
     function orderWaitController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
-        
+
         var vm = this;
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
             originatorEv = ev;
             $mdOpenMenu(ev);
         };
-        
+
         $scope.address_id = 0;
         $scope.shipping_id = 0;
         $scope.productSearch = '';
@@ -43,7 +43,7 @@
             var combine_array = {};
             combine_array.order_id = $scope.order_id;
             $("#ajax_loader").show();
-            
+
             $http.post('api/public/shipping/shipOrder',combine_array).success(function(result, status, headers, config) {
                 if(result.data.success == '1') {
                     $("#ajax_loader").hide();
@@ -61,14 +61,34 @@
             });
         }
 
+        var vm = this;
+        vm.openaddDesignDialog = openaddDesignDialog;
+
+        function openaddDesignDialog(ev, event_id)
+        {
+            $mdDialog.show({
+                controllerAs: 'vm',
+                templateUrl: 'app/main/shipping/dialogs/orderwaitship/orderwaitship.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                locals: {
+                    event_id: event_id,
+                    event: ev
+                 },
+                 onRemoving : $scope.designDetail
+            });
+        }
+
+
         var allData = {};
         allData.table ='orders';
         allData.cond ={display_number:$stateParams.id,company_id:sessionService.get('company_id')}
 
         $http.post('api/public/common/GetTableRecords',allData).success(function(result)
-        {   
+        {
             if(result.data.success=='1')
-            {   
+            {
                 $scope.order_id = result.data.records[0].id;
                 $scope.display_number = result.data.records[0].display_number;
                 $scope.getDetail();
@@ -80,12 +100,12 @@
 
         $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
 
-            if(result.data.success == '1') 
+            if(result.data.success == '1')
             {
                 $scope.states_all  = result.data.records;
-            } 
+            }
         });
-        
+
         $scope.getDetail = function()
         {
             var combine_array_id = {};
@@ -103,9 +123,9 @@
                 } else {
                     $state.go('app.shipping');
                 }
-            });    
+            });
         }
-        
+
         $scope.getProductByAddress = function(address)
         {
             $scope.address_id = address.id;
@@ -123,9 +143,9 @@
                 var combine_array = {};
                 combine_array.address_id = $scope.address_id;
                 combine_array.order_id = $scope.order_id;
-                
+
                 $http.post('api/public/shipping/getProductByAddress',combine_array).success(function(result, status, headers, config) {
-                    
+
                     if(result.data.success == '1') {
                         $("#ajax_loader").hide();
                         $scope.assignedItems = result.data.products;
@@ -142,9 +162,9 @@
             combine_array.search = $scope.productSearch;
             combine_array.address_id = $scope.address_id;
             $("#ajax_loader").show();
-            
+
             $http.post('api/public/shipping/getShippingAddress',combine_array).success(function(result, status, headers, config) {
-                
+
                 if(result.data.success == '1') {
                     $scope.assignAddresses = result.data.assignAddresses;
                     $scope.unAssignAddresses = result.data.unAssignAddresses;
@@ -173,7 +193,7 @@
                 combine_array.company_id = sessionService.get('company_id');
 
                 $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
-                    
+
                     if(result.data.success == '1') {
                         $scope.shipOrder();
                     }
@@ -210,7 +230,7 @@
             $("#ajax_loader").show();
 
             $http.post('api/public/shipping/addAllProductToShip',combine_array).success(function(result, status, headers, config) {
-                
+
                 if(result.data.success == '1') {
                     $scope.shipOrder();
                 }
@@ -241,7 +261,7 @@
             {
                 var data = {"status": "error", "message": "Please assign product to address"}
                 notifyService.notify(data.status, data.message);
-                return false;   
+                return false;
             }
             else
             {
@@ -265,7 +285,7 @@
             if(product.distributed_qnty > 0)
             {
                 $http.post('api/public/shipping/unAllocateProduct',product).success(function(result, status, headers, config) {
-                    
+
                     if(result.success == '1') {
                         $scope.shipOrder();
                     }
