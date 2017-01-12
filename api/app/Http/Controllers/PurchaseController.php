@@ -393,14 +393,17 @@ class PurchaseController extends Controller {
                 $login_name = $pdf_array->login_name;
                 if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
-
-                    Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
+                    foreach ($email_array as $email)
                     {
-                        $message->to($email_array);
-                        $message->replyTo($login_email,$login_name);
-                        $message->subject('Receive order, for the Order '.$pdf_data['po_data']->order_name);
-                        $message->attach($filename);
-                    });
+
+                        Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email,$login_email,$login_name)
+                        {
+                            $message->to(trim($email));
+                            $message->replyTo($login_email,$login_name);
+                            $message->subject('Receive order, for the Order '.$pdf_data['po_data']->order_name);
+                            $message->attach($filename);
+                        });
+                    }
                 }
 
                 return Response::download($filename);
@@ -456,16 +459,19 @@ class PurchaseController extends Controller {
                     
                     $login_email = $pdf_array->login_email;
                     $login_name = $pdf_array->login_name;
-                    Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
+                    foreach ($email_array as $email)
                     {
-                        $message->to($email_array);
-                        $message->replyTo($login_email,$login_name);
-                        $message->subject('Purchase order, for the Order '.$pdf_data['0']->order_name);
-                        $message->attach($filename);
-                    });
+                        Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email,$login_email,$login_name)
+                        {
+                            $message->to(trim($email));
+                            $message->replyTo($login_email,$login_name);
+                            $message->subject('Purchase order, for the Order '.$pdf_data['0']->order_name);
+                            $message->attach($filename);
+                        });
+                    }
                 }
 
-                //return Response::download($filename);
+                return Response::download($filename);
             }
             else
             {

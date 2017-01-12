@@ -18,7 +18,7 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.login_id,o.display_number,o.name,c.client_company,misc_type.value as approval,o.approval_id')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.login_id,o.display_number,o.name,o.shipping_status,c.client_company,misc_type.value as approval,o.approval_id')];
 
 
         $shippingData = DB::table('orders as o')
@@ -30,26 +30,30 @@ class Shipping extends Model {
                         ->where('o.is_complete','=','1')
                         ->where('po.is_active','=','1')
                         ->where('o.company_id','=',$post['company_id']);
-                        
-                        if($post['type'] == 'wait')
-                        {
-                            $shippingData = $shippingData->where('pol.qnty_purchased','>',0);
-                            $shippingData = $shippingData->Where('o.shipping_status', '=', 1);
+
+                        if(isset($post['filter']['status'])) {
+                            $shippingData = $shippingData->where('o.shipping_status','=',$post['filter']['status']);
                         }
-                        elseif($post['type'] == 'progress')
+                        
+                        //if($post['type'] == 'wait')
+                        //{
+                            $shippingData = $shippingData->where('pol.qnty_purchased','>',0);
+                            //$shippingData = $shippingData->Where('o.shipping_status', '=', 1);
+                        //}
+                        /*elseif($post['type'] == 'progress')
                         {
                             $shippingData = $shippingData->where('o.shipping_status','=',2);
                         }
                         else
                         {
                             $shippingData = $shippingData->where('o.shipping_status','=',3);
-                        }
+                        }*/
                         if($search != '')
                         {
                             $shippingData = $shippingData->Where(function($query) use($search)
                             {
                                 $query->orWhere('o.display_number', 'LIKE', '%'.$search.'%')
-                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')   
+//                                ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')   
                                 ->orWhere('c.client_company', 'LIKE', '%'.$search.'%');
                             });
                         }
@@ -86,47 +90,19 @@ class Shipping extends Model {
                 
                 $shipping->distributed = $total_distributed[0]->distributed;
 
-                if($post['type'] == 'wait')
+                if($shipping->distributed == '0' || $shipping->distributed == '')
                 {
-                    if($shipping->distributed == '0' || $shipping->distributed == '')
+                    $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
+                                        LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$shipping->id."' ");
+                
+                    foreach($purchase_detail as $row)
                     {
-                        $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
-                                            LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$shipping->id."' ");
-                    
-                        foreach($purchase_detail as $row)
-                        {
-                            $value = DB::table('purchase_detail')
-                                    ->where('id','=',$row->purchase_detail)
-                                    ->update(array('remaining_qnty'=>$row->total));
-                        }
+                        $value = DB::table('purchase_detail')
+                                ->where('id','=',$row->purchase_detail)
+                                ->update(array('remaining_qnty'=>$row->total));
+                    }
 
-                        $shipping->distributed = 0;
-                    }
-                }
-                if($post['type'] == 'shipped')
-                {
-                    if(!empty($shippingData))
-                    {
-                        foreach ($shippingData as $shipping)
-                        {
-                            $shipping_data = DB::table('shipping as s')
-                                                ->leftJoin('orders as o', 's.order_id', '=', 'o.id')
-                                                ->select('s.id','o.date_shipped as shipping_by','o.in_hands_by','s.display_number')
-                                                ->where('s.order_id','=',$shipping->id)
-                                                ->get();
-                            
-                            if(empty($shipping_data))
-                            {
-                                $shipping->shipping_created = 0;
-                                $shipping->shipping_data = array();
-                            }
-                            else
-                            {
-                                $shipping->shipping_created = 1;
-                                $shipping->shipping_data = $shipping_data;
-                            }
-                        }
-                    }
+                    $shipping->distributed = 0;
                 }
             }
         }
