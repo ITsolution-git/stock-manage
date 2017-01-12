@@ -387,7 +387,7 @@
                                   "machine_id":"7",
                                   "shift_id":"3",
                                   "run_date":"2017-01-06",
-                                  "rush_job":"1",
+                                  "rush_job":"0",
                                   "is_active":"1",
                                   "image_1":"http:\/\/159.203.166.240\/api\/public\/uploads\/100002\/order_design_position\/723\/order_design_position-logo-1483584749.jpeg",
                                   //mock data
@@ -412,9 +412,21 @@
                                   "completed":0,
                                   "screen_icon":3,
                                   "garment":1}];
+         $scope.$on('day-bag.drag', function (e, el) {
+           el.removeClass('ex-moved');
+         });
 
-        $scope.many = ['The', 'possibilities', 'are', 'endless!'];
-        $scope.many2 = ['Explore', 'them'];
+         $scope.$on('day-bag.drop', function (e, el) {
+           el.addClass('ex-moved');
+         });
+
+         $scope.$on('day-bag.over', function (e, el, container) {
+           container.addClass('ex-over');
+         });
+
+         $scope.$on('day-bag.out', function (e, el, container) {
+           container.removeClass('ex-over');
+         });
         if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM' || $scope.role_slug=='PU' )
         {
             $scope.allow_access = 1;  // THESE ROLES CAN ALLOW TO EDIT

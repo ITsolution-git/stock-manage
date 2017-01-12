@@ -35,15 +35,6 @@
                               <div class="unscheduled-lot">
                                 <div class="slot">
                                   <div class="p-5 full-row pull-left slot-header">
-
-                                        <div class='wrapper'>
-                                          <div class='container' dragula='"another-bag"' dragula-model='many'>
-                                            <div ng-repeat='text in many' ng-bind='text'></div>
-                                          </div>
-                                          <div class='container' dragula='"another-bag"' dragula-model='many2'>
-                                            <div ng-repeat='text in many2' ng-bind='text'></div>
-                                          </div>
-                                        </div>
                                     <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">unscheduled</span>
 
                                     <div class="full-row pull-left mt-10 p-5 mb-5">
@@ -56,24 +47,26 @@
                                     </div>
                                   </div>
                                   <div class="slot-content">
-                                    <div class="full-row pull-left p-5 shift-container">
+                                    <div  >
                                       <h4 class="text-center shift-name">No shift as no alloc</h4>
-                                      <div class="shift-card"  ng-repeat="positions in positionsArray" ng-class="positions.rush_job==1?'rush-card':''"  ng-click="GetSchedulePositionDetail(positions.position_id)">
-                                        <div ng-show="positions.rush_job==1" class="position-rush-stripe"><span>rush</span></div>
-                                        <div class="pull-left position-text">
-                                          <span class="position-title">{{positions.name}} - company</span>
-                                          <br/>
-                                          <span>Due Date: 2/15/2017</span>
-                                          <br/>
-                                          <span>ERT: 1.56</span>
-                                          <br/>
-                                          <!-- //just mock-up -->
-                                          <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
-                                          <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')" >S</span>
-                                          <span class="garment-logo stokkup-title-h4 small" style="bottom:5px" ng-class="positions.garment==0?'':' disabled'">G</span>
-                                        </div>
-                                        <div class="position-image">
-                                          <img  ng-src="{{positions.image_1}}">
+                                      <div dragula='"day-bag"' class="full-row pull-left p-5 shift-container">
+                                        <div class="shift-card" ng-repeat="positions in positionsArray" ng-class="positions.rush_job==1?'rush-card':''"  ng-click="GetSchedulePositionDetail(positions.position_id)">
+                                          <div ng-show="positions.rush_job==1" class="position-rush-stripe"><span>rush</span></div>
+                                          <div class="pull-left position-text">
+                                            <span class="position-title">{{positions.name}} - company</span>
+                                            <br/>
+                                            <span>Due Date: 2/15/2017</span>
+                                            <br/>
+                                            <span>ERT: 1.56</span>
+                                            <br/>
+                                            <!-- //just mock-up -->
+                                            <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
+                                            <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')" >S</span>
+                                            <span class="garment-logo stokkup-title-h4 small" style="bottom:5px" ng-class="positions.garment==0?'':' disabled'">G</span>
+                                          </div>
+                                          <div class="position-image">
+                                            <img  ng-src="{{positions.image_1}}">
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
@@ -83,7 +76,6 @@
                               </div>
 	                        		<table class="scheduled-table">
                                 <tr>
-
 	                        				<td ng-repeat="schedule in SchedualData">
                                     <div class="slot">
                                       <div class="p-5 full-row pull-left slot-header">
@@ -110,12 +102,26 @@
                                         </div>
                                       </div>
                                       <div class="slot-content">
-                                        <div ng-repeat="shift in schedule.machine_data" class="full-row pull-left p-10">
-                                          <h4 class="text-center">{{shift.shift_name}}</h4>
-                                          <div class="shift-post-card" ng-repeat="positions in shift.shift_data" ng-click="GetSchedulePositionDetail(positions.position_id)">
-                                            <div class="pull-left right-search-box">{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}</div>
-                                            <div class="box-30">
-                                              <img  ng-src="{{positions.image_1}}" style="height: 92px; width:100%">
+                                        <div ng-repeat="shift in schedule.machine_data"  >
+                                          <h4 class="text-center shift-name">No shift as no alloc</h4>
+                                          <div dragula='"day-bag"'  class="full-row pull-left p-5 shift-container">
+                                            <div class="shift-card"   ng-repeat="positions in shift.shift_data" ng-class="positions.rush_job==1?'rush-card':''"  ng-click="GetSchedulePositionDetail(positions.position_id)">
+                                              <div ng-show="positions.rush_job==1" class="position-rush-stripe"><span>rush</span></div>
+                                              <div class="pull-left position-text">
+                                                <span class="position-title">{{positions.name}} - company</span>
+                                                <br/>
+                                                <span>Due Date: 2/15/2017</span>
+                                                <br/>
+                                                <span>ERT: 1.56</span>
+                                                <br/>
+                                                <!-- //just mock-up -->
+                                                <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
+                                                <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')" >S</span>
+                                                <span class="garment-logo stokkup-title-h4 small" style="bottom:5px" ng-class="positions.garment==0?'':' disabled'">G</span>
+                                              </div>
+                                              <div class="position-image">
+                                                <img  ng-src="{{positions.image_1}}">
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
@@ -149,12 +155,14 @@
                                         </div>
                                       </div>
                                       <div class="slot-content">
-                                        <div ng-repeat="shift in schedule.machine_data" class="full-row pull-left p-10">
+                                        <div ng-repeat="shift in [{'shift_name':'Shift 1'},{'shift_name':'Shift 2'},{'shift_name':'Shift 3'}]">
                                           <h4 class="text-center">{{shift.shift_name}}</h4>
-                                          <div class="shift-post-card" ng-repeat="positions in shift.shift_data" ng-click="GetSchedulePositionDetail(positions.position_id)">
-                                            <div class="pull-left right-search-box">{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}</div>
-                                            <div class="box-30">
-                                              <img  ng-src="{{positions.image_1}}" style="height: 92px; width:100%">
+                                          <div  dragula='"day-bag"'   class="full-row pull-left p-5 shift-container">
+                                            <div class="shift-post-card" ng-repeat="positions in shift.shift_data"  ng-click="GetSchedulePositionDetail(positions.position_id)">
+                                              <div class="pull-left right-search-box">{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}</div>
+                                              <div class="box-30">
+                                                <img  ng-src="{{positions.image_1}}" style="height: 92px; width:100%">
+                                              </div>
                                             </div>
                                           </div>
                                         </div>
