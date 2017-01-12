@@ -374,4 +374,56 @@ class Shipping extends Model {
         
         return $result;
     }
+
+    public function getShippingOrdersDetail($order_id)
+    {
+        $result = DB::table('shipping as s')
+                    ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
+                    ->select('cd.description','s.*')
+                    ->where('s.order_id','=',$order_id)
+                    ->GroupBy('s.address_id')
+                    ->get();
+
+        return $result;
+    }
+
+    public function getShippingProducts($shipping_id)
+    {
+        $returnData = array();
+
+        $productData = DB::table('product_address_mapping as pam')
+                        ->leftJoin('products as p', 'pam.product_id', '=', 'p.id')
+                        ->select('p.id','p.name as product_name')
+                        ->where('pam.shipping_id','=',$shipping_id)
+                        ->GroupBy('p.id')
+                        ->get();
+
+        $total_qnty = 0;
+        if(!empty($productData))
+        {
+            foreach ($productData as $product) {
+                
+                $result = DB::table('product_address_mapping as pam')
+                    ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
+                    ->leftJoin('purchase_detail as pd','pas.purchase_detail_id','=','pd.id')
+                    ->leftJoin('color as c', 'pd.color_id', '=', 'c.id')
+                    ->select('pd.size','pas.distributed_qnty as qnty','c.name as color_name')
+                    ->where('pam.shipping_id','=',$shipping_id)
+                    ->where('pam.product_id','=',$product->id)
+                    ->GroupBy('pas.purchase_detail_id')
+                    ->get();
+
+                foreach ($result as $row) {
+            
+                    $total_qnty += $row->qnty;
+                    $product->sizeData[$row->color_name][] = $row;
+                }
+            }
+        }
+
+        $returnData['productData'] = $productData;
+        $returnData['total_qnty'] = $total_qnty;
+
+        return $returnData;
+    }
 }

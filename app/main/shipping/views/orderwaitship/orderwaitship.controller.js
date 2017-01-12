@@ -44,20 +44,19 @@
             combine_array.order_id = $scope.order_id;
             $("#ajax_loader").show();
 
-            $http.post('api/public/shipping/shipOrder',combine_array).success(function(result, status, headers, config) {
+            $http.post('api/public/shipping/getShippingOrdersDetail',combine_array).success(function(result, status, headers, config) {
                 if(result.data.success == '1') {
-                    $("#ajax_loader").hide();
-                    $scope.unshippedProducts = result.data.unshippedProducts;
-
-                   if($scope.address_id > 0)
-                   {
-                        var addr_arr = {};
-                        addr_arr.id = $scope.address_id;
-                        addr_arr.shipping_id = $scope.shipping_id;
-                        $scope.getProductByAddress(addr_arr);
-                        $scope.getShippingAddress();
-                   }
+                    $scope.assignAddresses = result.data.shippingData;
+                    $scope.no_of_locations = result.data.shippingData.length;
                 }
+                else
+                {
+                    $scope.shippingData = [];
+                    $scope.no_of_locations = '0';
+                }
+                $scope.total_order_qty = result.data.total_order_qty;
+                $scope.undistributed_qty = result.data.undistributed_qty;
+                $("#ajax_loader").hide();
             });
         }
 
@@ -95,7 +94,7 @@
             }
         });
 
-        var state_data = {};
+/*        var state_data = {};
         state_data.table ='state';
 
         $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
@@ -105,7 +104,7 @@
                 $scope.states_all  = result.data.records;
             }
         });
-
+*/
         $scope.getDetail = function()
         {
             var combine_array_id = {};
@@ -118,7 +117,7 @@
                     $("#ajax_loader").hide();
                    $scope.order = result.data.records[0];
                    $scope.order_items = result.data.order_item;
-                   $scope.getShippingAddress();
+                   //$scope.getShippingAddress();
                    $scope.shipOrder();
                 } else {
                     $state.go('app.shipping');

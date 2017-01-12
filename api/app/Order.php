@@ -94,7 +94,7 @@ class Order extends Model {
       
         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
-        $listArray = ['order.*','order.name as order_name','client.client_company','client.is_blind as client_blind','misc_type.value as approval','sales.sales_name',
+        $listArray = ['order.*','order.name as order_name','client.client_company','client.is_blind as client_blind','misc_type.value as approval','sales.sales_name','client.display_number as client_display_number',
                       'users.name','cc.first_name as client_first_name','i.id as invoice_id','client.b_w_logo',
                       'cc.last_name as client_last_name','price_grid.name as price_grid_name','a.approval as art_approval'];
 
@@ -388,7 +388,12 @@ class Order extends Model {
                          ->where($whereConditions)
                          ->get();
 
-        return $qntyData;
+        if($qntyData[0]->total == '')
+        {
+            $qntyData[0]->total = 0;
+        }
+
+        return $qntyData[0]->total;
     }
     public function getShippedByOrder($data)
     {
@@ -399,6 +404,11 @@ class Order extends Model {
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
+
+        if($qntyData[0]->total == '')
+        {
+            $qntyData[0]->total = 0;
+        }
 
         return $qntyData[0]->total;
     }

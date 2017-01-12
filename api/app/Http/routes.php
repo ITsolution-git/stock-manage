@@ -481,6 +481,13 @@ Route::post('shipping/shippingDetail',[
    'flag' => 'false',
    'uses' => 'ShippingController@shippingDetail'
 ]);
+Route::post('shipping/getShippingOrdersDetail',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'get',
+   'flag' => 'false',
+   'uses' => 'ShippingController@getShippingOrdersDetail'
+]);
 Route::post('shipping/getShippingOrders',[
    'middleware' => 'check',
    'role' => array('AT','SU'),

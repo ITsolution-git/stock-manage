@@ -28,6 +28,7 @@ class ShippingController extends Controller {
         $this->common = $common;
         $this->api = $api;
         $this->company = $company;
+        $this->order = $order;
     }
 
     /**
@@ -1239,5 +1240,38 @@ class ShippingController extends Controller {
 
         $response = array('success'=>1,'message'=>'Product unallocated successfullly');
         return response()->json($response);
+    }
+
+    public function getShippingOrdersDetail()
+    {
+        $post = Input::all();
+
+        $shippingData = $this->shipping->getShippingOrdersDetail($post['order_id']);
+
+        $count = 1;
+        foreach ($shippingData as $shipping) {
+            
+            $productData = $this->shipping->getShippingProducts($shipping->id);
+            $shipping->shippingType = $this->common->GetTableRecords('shipping_type',array(),array());
+            $shipping->productData = $productData['productData'];
+            $shipping->total_qnty = $productData['total_qnty'];
+            $shipping->count = $count;
+            $count++;
+        }
+
+        $total_order_qty = $this->order->getTotalQntyByOrder(array('id'=>$post['order_id']));
+        $total_shipped_qnty = $this->order->getShippedByOrder(array('id'=>$post['order_id']));
+
+        $undistributed_qty = $total_order_qty - $total_shipped_qnty;
+
+        if(!empty($shippingData))
+        {
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'undistributed_qty'=>$undistributed_qty,'shippingData'=>$shippingData);
+        }
+        else
+        {
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'undistributed_qty'=>$undistributed_qty,'shippingData'=>$shippingData);
+        }
+        return response()->json(["data" => $response]);
     }
 }
