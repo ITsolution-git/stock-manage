@@ -248,18 +248,21 @@
             } 
         }
 
-         $scope.findTotal = function(productData,inventory)
+         $scope.findTotal = function(productData,inventory,allProducts)
         {
          
           /* if(inventory == undefined || inventory == 0) {
             return false;
            }*/
-
+         var combine_array_id={};
          combine_array_id.productData = productData;
+         combine_array_id.allProducts = allProducts;
          $http.post('api/public/product/findTotal',combine_array_id).success(function(result) 
             {
                 $scope.AllProductDetail[$scope.colorName].total = result.data.total;
                 $scope.AllProductDetail[$scope.colorName].total_qnty = result.data.total_qnty;
+                $scope.total_all = result.data.summary_total;
+                $scope.total_price = result.data.summary_price;
                 
             });
            

@@ -1,5 +1,5 @@
 
-<md-dialog class="task-dialog search-product-view-dialog" aria-label="New order" flex="70">
+<md-dialog class=" search-product-view-dialog" aria-label="New order" flex="70">
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
@@ -9,7 +9,7 @@
                 </md-button>
             </div>
         </md-toolbar>
-        <md-dialog-content ms-scroll>
+        <md-dialog-content >
             <div layout="row" layout-wrap="nowrap"  layout-padding layout-align="space-between start">
                 <div layout="column" flex="30">
                     <div class="md-whiteframe-1dp filter-product-image " layout="row" layout-align="center center">
@@ -80,7 +80,7 @@
                                             </td>
                                             <td class="pd5">
                                                 <md-input-container class="md-block" flex-gt-sm >
-                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,sizedata.inventory[warehouse])">
+                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,sizedata.inventory[warehouse],AllProductDetail)">
                                                 </md-input-container>
 
                                             </td>
@@ -99,7 +99,7 @@
                                             </td>
                                             <td class="pd5">
                                                 <md-input-container class="md-block" flex-gt-sm >
-                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,1)">
+                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,1,AllProductDetail)">
                                                 </md-input-container>
 
                                             </td>
@@ -113,9 +113,10 @@
                             <div class="mrg20-T">
                                 <span>{{AllProductDetail[colorName].colorName}} Quantity :- {{AllProductDetail[colorName].total_qnty}}</span>
                                 <br>
-                                <span>TOTAL Quantity :- {{total_all}}</span>
-                                <br><br>
                                 <span ng-show="!is_supply">{{AllProductDetail[colorName].colorName}} COST :- {{AllProductDetail[colorName].total}}$</span>
+                                <br><br>
+                                
+                                <span>TOTAL Quantity :- {{total_all}}</span>
                                 <br>
                                 <span ng-show="!is_supply">TOTAL COST :- {{total_price}}$</span>
                                 <md-checkbox  aria-label="Checkbox 1" ng-model="is_supply">
