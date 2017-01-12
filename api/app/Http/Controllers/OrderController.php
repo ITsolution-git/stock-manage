@@ -601,7 +601,7 @@ class OrderController extends Controller {
         $email_array = explode(",",$email);
         $subject = $post['subject'];
 
-
+        //echo "<pre>"; print_r($email_array); echo "</pre>"; die();
         if(!isset($post['mailMessage'])){
           $post['mailMessage'] = '';
         }
@@ -669,7 +669,7 @@ class OrderController extends Controller {
             {
 //                 $message->from('pdave@codal.com','Piyush Dave');
                 $message->replyTo($fromemail,$name);
-                $message->to($email)->subject($subject);
+                $message->to(trim($email))->subject($subject);
                 $message->attach($file_path);
             });                
         }
