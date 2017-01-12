@@ -471,7 +471,7 @@ class PurchaseController extends Controller {
                     }
                 }
 
-                //return Response::download($filename);
+                return Response::download($filename);
             }
             else
             {
