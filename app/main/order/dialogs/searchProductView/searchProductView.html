@@ -80,7 +80,7 @@
                                             </td>
                                             <td class="pd5">
                                                 <md-input-container class="md-block" flex-gt-sm >
-                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,sizedata.inventory[warehouse])">
+                                                    <input aria-label="qnty" ng-model="sizedata.qnty" type="number"   ng-min="0" ng-max="{{sizedata.inventory[warehouse]  ? sizedata.inventory[warehouse] : 0}}" ng-class="{'red':orderForm.input.$invalid}" name="qnty_{{sizedata.sizeName}}" ng-change="findTotal(AllProductDetail[colorName].sizes,sizedata.inventory[warehouse],AllProductDetail)">
                                                 </md-input-container>
 
                                             </td>
