@@ -169,7 +169,14 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                           <tr style="background-color:<?php echo $color_bg?>;">
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo e($product->id); ?> - <?php echo e($product->product_name); ?></td>
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo e($product->color_name); ?></td>
-                              <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php foreach($product->sizeData as $size): ?><?php echo e($size->size); ?>:(<?php echo number_format($size->qnty); ?>)&nbsp;<?php endforeach; ?></td>
+                              <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php foreach ($product->sizeData as $colorData)
+                              {
+                               foreach ($colorData as $size)
+                               {
+                              ?>
+                                <?php echo e($size->size); ?>:(<?php echo number_format($size->qnty); ?>)&nbsp;
+                                <?php } }?>
+                              </td>
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($product->total_qnty) ?></td>
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px;line-height:20px;">$<?php echo number_format($product->total_line_charge,2) ?></td>
                           </tr>

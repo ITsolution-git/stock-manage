@@ -109,8 +109,8 @@ class ShippingController extends Controller {
         $header = array(
                         0=>array('key' => 'o.id', 'name' => 'Order ID'),
                         1=>array('key' => 'c.client_company', 'name' => 'Client Name'),
-                        2=>array('key' => 'o.approval_id', 'name' => 'Order Status', 'sortable' => false),
-                        3=>array('key' => 'null', 'name' => 'Status', 'sortable' => false),
+                        2=>array('key' => '', 'name' => 'Shipping Status', 'sortable' => false),
+                        3=>array('key' => 'o.shipping_status', 'name' => 'Status'),
                         4=>array('key' => '', 'name' => '', 'sortable' => false)
                         );
 
@@ -339,7 +339,11 @@ class ShippingController extends Controller {
 
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
 
-        if($shipping['company_detail'][0]->photo != '')
+        if(!empty($shipping['shipping']->is_blind))
+        {
+            $shipping['company_detail'][0]->photo = $this->common->checkImageExist($company_id.'/client/'.$shipping['shipping']->client_id."/",$shipping['shipping']->b_w_logo);
+        }
+        else
         {
             $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
         }

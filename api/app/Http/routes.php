@@ -275,6 +275,13 @@ Route::post('order/addOrder',[
    'action' => 'add',
    'uses' => 'OrderController@addOrder'
 ]);
+Route::post('order/reOrder',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'flag' => 'false',
+   'action' => 'add',
+   'uses' => 'OrderController@reOrder'
+]);
 Route::post('order/addDesign',[
    'middleware' => 'check',
    'role' => array('AT','SU'),

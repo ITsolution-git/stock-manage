@@ -52,6 +52,9 @@
 
 
         $scope.sendMail = function (email,mailMessage,subject) {
+            
+
+
             if(email == '') {
                   var data = {"status": "error", "message": "Email should not be blank"}
                   notifyService.notify(data.status, data.message);
@@ -70,6 +73,7 @@
             combine_array.order_id = order_id;
             combine_array.company_id = sessionService.get('company_id');
             combine_array.from_email = sessionService.get('email');
+            combine_array.name = sessionService.get('name');
             combine_array.mailMessage = mailMessage;
             combine_array.invoice_id = $scope.invoice.id;
             combine_array.paid = paid;

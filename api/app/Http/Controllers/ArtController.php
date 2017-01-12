@@ -480,7 +480,7 @@ class ArtController extends Controller {
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
 
             $email_text = $screenArray->email_text;
-            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
+           // echo "<pre>"; print_r($screenArray); echo "</pre>"; die;
             if(!empty($pdf_data[0][0]))
             {
                 $email_array = explode(",",$screenArray->email);
@@ -501,13 +501,16 @@ class ArtController extends Controller {
                 $filename = $file_path."/". $pdf_url;
                 $pdf->Output($filename,'F');
                 
+                $login_email = $screenArray->login_email;
+                $login_name = $screenArray->login_name;
 
                 if(!empty($screenArray->flag) && $screenArray->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
 
-                    Mail::send('emails.artapproval', ['email_text'=>$email_text], function($message) use ($pdf_data,$filename,$email_array)
+                    Mail::send('emails.artapproval', ['email_text'=>$email_text], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
                     {
                         $message->to($email_array);
+                        $message->replyTo($login_email,$login_name);
                         $message->subject('Art Approval for the order '.$pdf_data[0][0][0]->order_name);
                         $message->attach($filename);
                     });

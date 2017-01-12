@@ -20,6 +20,8 @@
         vm.openReceivingInformationDialog = openReceivingInformationDialog;
         $scope.display_number = $stateParams.id;
         $scope.company_id = sessionService.get('company_id');
+        $scope.login_email = sessionService.get('email');
+        $scope.login_name = sessionService.get('name');
 
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
@@ -254,7 +256,7 @@
                             }
                         }
                         $mdDialog.hide();
-                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email };
+                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email,login_name:params.login_name,login_email:params.login_email };
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/purchase/createPDF';

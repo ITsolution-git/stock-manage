@@ -72,11 +72,13 @@
             <th width="10%"  class="align-center font-bold" height="15">Over</th>
             
         </tr>
-        <?php foreach($receive_data as $key_main=>$value_main)
+  <?php foreach($receive_data as $key_all=>$value_all)
+        {
+          foreach($value_all as $key_main=>$value_main)
           {$count=1; ?>
           <hr style="border:1px solid #000;">
             <?php foreach($value_main['data'] as $key=>$value)
-            { 
+            {  
               if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} 
               ?>
               <tr style="background-color:<?php echo $color_bg; ?>;" >
@@ -93,14 +95,19 @@
             <?php $count++; } ?>
             <hr style="border:1px solid #000;">
               <tr>
-                <td><b>Order Total: <?php echo (!empty($value_main['total_product']))?$value_main['total_product']:0; ?></b></td>
-                <td colspan="3"><b>Order Received: <?php echo (!empty($value_main['total_received']))?$value_main['total_received']:0; ?></b></td>
-                <td colspan="2"><b>Order Defectives: <?php echo (!empty($value_main['total_defective']))?$value_main['total_defective']:0; ?></b></td>
-                <td colspan="2"><b>Summary: <?php echo (!empty($value_main['total_remains']))?$value_main['total_remains']:0; ?></b></td>
+                
+                <td><b>Order Total: <?php echo (!empty($value_main['summary']['total_product']))?$value_main['summary']['total_product']:0; ?></b></td>
+
+                <td colspan="3"><b>Order Received: <?php echo (!empty($value_main['summary']['total_received']))?$value_main['summary']['total_received']:0; ?></b></td>
+
+                <td colspan="2"><b>Order Defectives: <?php echo (!empty($value_main['summary']['total_defective']))?$value_main['summary']['total_defective']:0; ?></b></td>
+                
+                <td colspan="2"><b>Summary: <?php echo (!empty($value_main['summary']['total_remains']))?$value_main['summary']['total_remains']:0; ?></b></td>
               </tr>
 
           <?php 
           }
+        }
           ?>
        
   </table>
