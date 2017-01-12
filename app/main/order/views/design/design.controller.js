@@ -162,7 +162,6 @@
                     $scope.designInforamtion = result.data.records[0];
 
                     $scope.calculateAll($scope.order_id,$scope.company_id);
-                    $scope.orderDetail();
 
                 } else {
                     $state.go('app.order');
@@ -191,6 +190,7 @@
                     $scope.total_product = 0;
                     $scope.total_price = 0;
                 }
+                $scope.orderDetail();
             });
         }
 
