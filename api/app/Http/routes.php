@@ -806,6 +806,13 @@ Route::post('affiliate/affiliateCalculation',[
 ]);
 
 //DISTRIBUTION ROUTERS
+Route::post('distribution/getDistributionDetail',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'get',
+   'flag' => 'false',
+   'uses' => 'DistributionController@getDistributionDetail'
+]);
 Route::post('distribution/getDistProductAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),

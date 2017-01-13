@@ -390,6 +390,7 @@ class Product extends Model {
                 'sku'=>$sku,
                 'price'=>$price,
                 'qnty'=>$row['qnty'],
+                'remaining_qnty'=>$row['qnty'],
                 'color_id'=>$row['color_id'],
                 'date'=>$post['created_date']);
             $result = DB::table('purchase_detail')->insert($insert_purchase_array);

@@ -322,4 +322,83 @@ class DistributionController extends Controller {
 
         $this->distribution->getProductByAddress($post);
     }
+
+    public function getDistributionDetail()
+    {
+        $post = Input::all();
+
+        $distribution_address = array();
+        $orderProducts = array();
+
+        $total_order_qty = $this->order->getTotalQntyByOrder(array('id'=>$post['order_id']));
+        $total_shipped_qnty = $this->order->getShippedByOrder(array('id'=>$post['order_id']));
+
+        $undistributed_qty = $total_order_qty - $total_shipped_qnty;
+
+        $post['page']['page']=1;
+
+        $post['range'] = 2;
+        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+        
+        if(!isset($post['sorts']['sortOrder'])) {
+             $post['sorts']['sortOrder']='desc';
+        }
+        if(!isset($post['sorts']['sortBy'])) {
+            $post['sorts']['sortBy'] = 'o.id';
+        }
+
+        $distributionData = $this->distribution->getOrderDistributionAddress($post['order_id']);
+
+        foreach ($distributionData as $addr) {
+            
+            $total_remaining_qnty = 0;
+
+            $addr->full_address  = !empty($addr->address2)?$addr->address2." ":'';
+            $addr->full_address .= !empty($addr->address)?$addr->address:'' ; 
+            $addr->full_address .= !empty($addr->address_line2)?", ".$addr->address_line2:'' ; 
+            $addr->full_address .= !empty($addr->suite)?", ".$addr->suite:'' ; 
+            $addr->full_address .= !empty($addr->city)?", ".$addr->city:''; 
+            $addr->full_address .= !empty($addr->name)?", ".$addr->name:'';
+            $addr->full_address .= !empty($addr->zipcode)?", ".$addr->zipcode:'';
+            $addr->full_address .= ' USA';
+
+            $addr->is_selected = 0;
+            $addr->shippingType = $this->common->GetTableRecords('shipping_type',array(),array());
+
+            if($addr->shipping_type_id == 1 || $addr->shipping_type_id == 2)
+            {
+                $addr->shippingMethod = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => $addr->shipping_type_id),array());
+            }
+            else
+            {
+                $addr->shippingMethod = array();
+            }
+
+            $addr->products = $this->distribution->getProductByAddress($addr->id,$post['order_id']);
+
+            if(empty($addr->products))
+            {
+                $addr->products = $this->distribution->getProductByOrder($post['order_id']);
+                $orderProducts = $addr->products;
+                $addr->addressTotalProducts = 0;
+            }
+            else
+            {
+                $rderProducts = $this->distribution->getProductByOrder($post['order_id']);
+                $addr->addressTotalProducts = $this->distribution->getTotalDistributedOrderAddress($addr->id,$post['order_id']);
+            }
+            $distribution_address[$addr->id] = $addr;
+        }
+
+        if(!empty($shippingData))
+        {
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts);
+        }
+        else
+        {
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts);
+        }
+        return response()->json(["data" => $response]);
+    }
 }

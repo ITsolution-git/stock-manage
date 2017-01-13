@@ -2,10 +2,10 @@
     <div class="simple-table-container stokkup-main-tableview">
         <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-              Distrubution for ABX <a class="cursor-p" title="Go to Order">#123</a> for Company: <a class="cursor-p" title="Go to Order">XYZ</a>
+              Distrubution for ABX <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:order.display_number})">#{{order.display_number}}</a> for Company: <a class="cursor-p" title="Go to Order" ui-sref="app.client.profile({id:order.client_display_number})">{{order.client_company}}</a>
             </div>
             <div class="pull-right right-search-box">
-                <a class="pull-right common-header-links">BACK TO ORDER INFO</a>
+                <a class="pull-right common-header-links" ui-sref="app.order.order-info({id:order.display_number})">BACK TO ORDER INFO</a>
             </div>
         </div>
      </div>
@@ -22,7 +22,7 @@
                     </md-card-header>
 
                     <md-card-content class="custom-desc-box">
-                        <h3 class="title">100/200</h3>
+                        <h3 class="title">{{total_shipped_qnty}}/{{total_order_qty}}</h3>
                         <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white ">Export CSV</a>
                     </md-card-content>
                 </md-card>
@@ -31,32 +31,17 @@
             <div flex-xs flex-gt-xs="50" layout="column" class="pd30-LR layout-align-center-center">
                 <div class="distri-box">
                     <a href="#" class="box-mang dist-next-prev left"><i class="fa fa-angle-left" role="button"></i></a>
-                    <div flex-xs flex-gt-xs="50" layout="column" class="layout-align-center-center">
-                        <md-card class="custom-fullbox-shadow text-center active">
+                    <div ng-repeat="dist in distributionData" flex-xs flex-gt-xs="50" layout="column" class="layout-align-center-center" ng-click="getProductByAddress(dist.id)">
+                        <md-card class="custom-fullbox-shadow text-center" ng-class="{'active': dist.is_selected>0}">
                             <md-card-header layout-align="space-between center">
                                 <md-card-header-text>
-                                    <span class="md-title ">Disrbution Location Name</span>
-                                    <span class="sub-title">Address: 11 E Hubbard St Chicago IL 60611</span>
+                                    <span class="md-title ">{{dist.description}}</span>
+                                    <span class="sub-title">{{dist.full_address}}</span>
                                 </md-card-header-text>
                             </md-card-header>
 
                             <md-card-content class="custom-desc-box">
-                                <h3 class="title f-24">Total: 123</h3>
-                            </md-card-content>
-                        </md-card>
-                    </div>
-
-                    <div flex-xs flex-gt-xs="50" layout="column" class="layout-align-center-center">
-                        <md-card class="custom-fullbox-shadow text-center">
-                            <md-card-header layout-align="space-between center">
-                                <md-card-header-text>
-                                    <span class="md-title ">Disrbution Location Name</span>
-                                    <span class="sub-title">Address: 11 E Hubbard St Chicago IL 60611</span>
-                                </md-card-header-text>
-                            </md-card-header>
-
-                            <md-card-content class="custom-desc-box">
-                                <h3 class="title f-24">Total: 123</h3>
+                                <h3 class="title f-24">Total: {{dist.addressTotalProducts}}</h3>
                             </md-card-content>
                         </md-card>
                     </div>
@@ -80,122 +65,37 @@
 
     <md-content class="product-select">
         <div layout="row" layout-wrap="nowrap" class="p-20">
-            <div layout="column" flex="50" class="box-zerospace m-b-10">
+            <div layout="column" flex="50" class="box-zerospace m-b-10" ng-repeat="product in orderProducts">
                 <md-card class="m-0" flex="100">
                     <md-card-content class="recap">
                         <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
                             <div layout="column" flex="35">
-                                <strong>Product Name:</strong> Women's Basic Polo - 532089
+                                <strong>Product Name:</strong> {{product.product_name}}
                             </div>
 
                             <div layout="column" flex="15">
-                                <strong>Size:</strong> S
+                                <strong>Size:</strong> {{product.size}}
                             </div>
 
                             <div layout="column" flex="20">
-                                <strong>Color:</strong> White
+                                <strong>Color:</strong> {{product.color_name}}
                             </div>
 
                             <div layout="column" flex="15">
-                                <strong>Remaning:</strong> 10
+                                <strong>Remaning:</strong> {{product.remaining_qnty}}
                             </div>
 
-                            <div layout="column" flex="15">
-                                <strong>Distributed: </strong> 123
+                            <div layout="column" flex="15" ng-init="product.distributed_qnty = product.distributed_qnty == null ? '0' : product.distributed_qnty">
+                                <strong>Distributed: </strong> {{product.distributed_qnty}}
                             </div>
                         </md-checkbox>
                     </md-card-content>
                 </md-card>
             </div>
-
-            <div layout="column" flex="50" class="box-zerospace m-b-10">
-                <md-card class="m-0" flex="100">
-                    <md-card-content class="recap">
-                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
-                            <div layout="column" flex="35">
-                                <strong>Product Name:</strong> Women's Basic Polo - 532089
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Size:</strong> S
-                            </div>
-
-                            <div layout="column" flex="20">
-                                <strong>Color:</strong> White
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Remaning:</strong> 10
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Distributed: </strong> 123
-                            </div>
-                        </md-checkbox>
-                    </md-card-content>
-                </md-card>
-            </div>
-
-            <div layout="column" flex="50" class="box-zerospace m-b-10">
-                <md-card class="m-0" flex="100">
-                    <md-card-content class="recap">
-                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
-                            <div layout="column" flex="35">
-                                <strong>Product Name:</strong> Women's Basic Polo - 532089
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Size:</strong> S
-                            </div>
-
-                            <div layout="column" flex="20">
-                                <strong>Color:</strong> White
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Remaning:</strong> 10
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Distributed: </strong> 123
-                            </div>
-                        </md-checkbox>
-                    </md-card-content>
-                </md-card>
-            </div>
-
-            <div layout="column" flex="50" class="box-zerospace m-b-10">
-                <md-card class="m-0" flex="100">
-                    <md-card-content class="recap">
-                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
-                            <div layout="column" flex="35">
-                                <strong>Product Name:</strong> Women's Basic Polo - 532089
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Size:</strong> S
-                            </div>
-
-                            <div layout="column" flex="20">
-                                <strong>Color:</strong> White
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Remaning:</strong> 10
-                            </div>
-
-                            <div layout="column" flex="15">
-                                <strong>Distributed: </strong> 123
-                            </div>
-                        </md-checkbox>
-                    </md-card-content>
-                </md-card>
-            </div>
-
         </div>
     </md-content>
 
-    <div class="ms-responsive-table-wrapper distri-record white-bg">
+    <div class="ms-responsive-table-wrapper distri-record white-bg" ng-if="addressProducts.length > 0">
         <div>
             <table class="simple hover simple-tbl1">
                 <thead>
@@ -208,74 +108,35 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Gilden 5000</td>
-                        <td>M</td>
-                        <td>Blue</td>
+                    <tr ng-repeat="product in addressProducts">
+                        <td>{{product.product_name}}</td>
+                        <td>{{product.size}}</td>
+                        <td>{{product.color_name}}</td>
                         <td>
                             <md-input-container class="m-0">
-                                <input value="123">
+                                <input aria-label="true" ng-model="product.distributed_qnty">
                             </md-input-container>
                         </td>
-                        <td>Location</td>
+                        <td>{{location}}}</td>
                     </tr>
-
-                    <tr>
-                        <td>Gilden 5000</td>
-                        <td>M</td>
-                        <td>Blue</td>
-                        <td>
-                            <md-input-container class="m-0">
-                                <input value="123">
-                            </md-input-container>
-                        </td>
-                        <td>Location</td>
-                    </tr>
-
-                    <tr>
-                        <td>Gilden 5000</td>
-                        <td>M</td>
-                        <td>Blue</td>
-                        <td>
-                            <md-input-container class="m-0">
-                                <input value="123">
-                            </md-input-container>
-                        </td>
-                        <td>Location</td>
-                    </tr>
-
-                    <tr>
-                        <td>Gilden 5000</td>
-                        <td>M</td>
-                        <td>Blue</td>
-                        <td>
-                            <md-input-container class="m-0">
-                                <input value="123">
-                            </md-input-container>
-                        </td>
-                        <td>Location</td>
-                    </tr>
-
                 </tbody>
             </table>
 
         </div>
     </div>
 
-    <div layout="row" layout-wrap="nowrap" class="layout-align-center-center shipping-select">
+    <div layout="row" layout-wrap="nowrap" class="layout-align-center-center shipping-select" ng-if="address_id > 0">
         <md-input-container class="m-15-LR">
           <label>Shipping Type</label>
-          <md-select ng-model="shipping_type">
-            <md-option value="1">One</md-option>
-            <md-option value="2">Two</md-option>
+          <md-select ng-model="distributionData[address_id].shipping_type_id" ng-change="updateShippingType(distributionData[address_id].shipping_type_id)">
+            <md-option ng-selected="distributionData[address_id].shipping_type_id == stype.id" value="{{stype.id}}" ng-repeat="stype in shippingType">{{stype.name}}</md-option>
           </md-select>
         </md-input-container>
 
         <md-input-container class="m-15-LR">
           <label>Shipping Meathod</label>
-          <md-select ng-model="shipping_Meathod">
-            <md-option value="1">One</md-option>
-            <md-option value="2">Two</md-option>
+          <md-select ng-model="distributionData[address_id].shipping_method" ng-change="updateShippingMethod(distributionData[address_id].shipping_method)">
+            <md-option ng-selected="distributionData[address_id].shipping_method == smethod.id" value="{{smethod.id}}" ng-repeat="smethod in shippingMethod">{{smethod.method_name}}</md-option>
           </md-select>
         </md-input-container>
 

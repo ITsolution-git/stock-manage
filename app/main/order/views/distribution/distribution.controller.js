@@ -19,8 +19,11 @@
             $scope.allow_access = 1;
         }
 
-        $scope.shipping_type;
-        $scope.shipping_Meatho;
+        $scope.shippingType = [];
+        $scope.shippingMethod = [];
+        $scope.addressProducts = [];
+        $scope.location = '';
+        $scope.address_id = 0;
 
         // change display number to order Id for fetching the order data
         var order_data = {};
@@ -35,23 +38,11 @@
                 $scope.order_id = result.data.records[0].id;
 
                 $scope.orderDetail();
-                $scope.designDetail();
-                $scope.getDistProductAddress();
+                $scope.getDistributionDetail();
             }
             else
             {
                 $state.go('app.order');
-            }
-        });
-
-        var state_data = {};
-        state_data.table ='state';
-
-        $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
-
-            if(result.data.success == '1')
-            {
-                $scope.states_all  = result.data.records;
             }
         });
 
@@ -76,48 +67,35 @@
             });
         }
 
-        $scope.designDetail = function(){
-
-            var combine_array_id = {};
-            combine_array_id.id = $scope.order_id;
-            combine_array_id.company_id = sessionService.get('company_id');
-
-            $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
-
-                if(result.data.success == '1') {
-                   $scope.designs = result.data.records.all_design;
-                   $scope.total_unit = result.data.records.total_unit;
-                }
-                else {
-                    $scope.designs = [];
-                    $scope.total_unit = 0;
-                }
-
-                if($scope.total_unit == undefined)
-                {
-                    $scope.total_unit = 0;
-                }
-            });
-        }
-
-        $scope.getDistProductAddress = function(){
+        $scope.getDistributionDetail = function(){
 
             var combine_array_id = {};
             combine_array_id.order_id = $scope.order_id;
             $scope.controls = [];
 
-            $http.post('api/public/distribution/getDistProductAddress',combine_array_id).success(function(result, status, headers, config) {
+            $http.post('api/public/distribution/getDistributionDetail',combine_array_id).success(function(result, status, headers, config) {
 
-                if(result.success == '1') {
+                if(result.data.success == '1') {
                     $scope.controls = [{}];
-                   $scope.products = result.products;
-                   $scope.distribution_address = result.distribution_address;
+                    $scope.distributionData = result.data.distributionData;
                 }
                 else {
-                    $scope.products = [];
-                    $scope.distribution_address = [];
+                    $scope.distributionData = [];
                 }
+                $scope.total_order_qty = result.data.total_order_qty;
+                $scope.total_shipped_qnty = result.data.total_shipped_qnty;
+                $scope.orderProducts = result.data.orderProducts;
             });
+        }
+
+        $scope.getProductByAddress = function(address_id)
+        {
+            $scope.address_id = address_id;
+            $scope.addressProducts = $scope.distributionData[$scope.address_id].products;
+            $scope.distributionData[$scope.address_id].is_selected = 1;
+            $scope.location = $scope.distributionData[$scope.address_id].description;
+            $scope.shippingType = $scope.distributionData[$scope.address_id].shippingType;
+            $scope.shippingMethod = $scope.distributionData[$scope.address_id].shippingMethod;
         }
 
         $scope.returnFunction = function()
@@ -127,21 +105,8 @@
 
         var vm = this;
         vm.openaddAddressDialog = openaddAddressDialog;
-        vm.openaddDistributionDialog = openaddDistributionDialog;
-        vm.openAddProductDialog = openAddProductDialog;
 
         var vm = this;
-
-        function openaddDistributionDialog(ev)
-        {
-            $mdDialog.show({
-                controllerAs: $scope,
-                templateUrl: 'app/main/order/dialogs/distribution/distribution.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-            });
-        }
 
         function openaddAddressDialog(ev, order)
         {
@@ -160,93 +125,83 @@
             });
         }
 
-        var originatorEv;
-        vm.openMenu = function ($mdOpenMenu, ev) {
-            originatorEv = ev;
-            $mdOpenMenu(ev);
-        };
-        vm.dtOptions = {
-            dom: '<"top"f>rt<"bottom"<"left"<"length"l>><"right"<"info"i><"pagination"p>>>',
-            pagingType: 'simple',
-            autoWidth: false,
-            responsive: true
-        };
-        vm.dtInstanceCB = dtInstanceCB;
-        vm.openAddProductDialog = openAddProductDialog;
-        vm.createDistribution = createDistribution;
-        //methods
-        function dtInstanceCB(dt) {
-            var datatableObj = dt.DataTable;
-            vm.tableInstance = datatableObj;
-        }
-
-        function openAddProductDialog(ev, order)
+        $scope.getShippingMethod = function(id)
         {
-            $mdDialog.show({
-                controller: 'AddProductController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/addProduct/addProduct.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    Orders: $scope.order,
-                    event: ev
-                },
-                onRemoving : $scope.returnFunction
+            var shipping_method_data = {};
+            shipping_method_data.cond ={shipping_type_id:id};
+            shipping_method_data.table ='shipping_method';
+
+            $http.post('api/public/common/GetTableRecords',shipping_method_data).success(function(result) {
+
+                if(result.data.success == '1')
+                {
+                    $scope.shippingMethod = $scope.vendorRecord =result.data.records;
+                }
+                else
+                {
+                    $scope.shippingMethod
+                }
             });
         }
 
-        function createDistribution(ev,action,product_array)
+        $scope.updateShippingType = function(id)
         {
-            $mdDialog.show({
-                controller: 'DistributionProductController',
-                controllerAs: 'vm',
-                templateUrl: 'app/main/order/views/distributionProduct/distributionProduct.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    Addresses: $scope.distribution_address,
-                    action: action,
-                    order_id: $scope.order_id,
-                    client_id: $scope.order.client_id,
-                    product_arr: product_array,
-                    event: ev
-                },
-                onRemoving : $scope.returnFunction
-            });
-        }
-        $scope.openInsertPopup = function(path,ev,table)
-        {
-            var insert_params = {client_id:$scope.order.client_id,order_id:$scope.order_id};
-            sessionService.openAddPopup($scope,path,insert_params,table);
-        }
-        vm.productSearch = null;
-
-        $scope.updateOrderShippingType = function(name,value,id)
-        {
-            var order_main_data = {};
-
-            order_main_data.table ='order_shipping_address_mapping';
-
-            $scope.name_filed = name;
-            var obj = {};
-            obj[$scope.name_filed] =  value;
-            order_main_data.data = angular.copy(obj);
-
+            var stype_main_data = {};
             var condition_obj = {};
-            condition_obj['id'] =  id;
-            order_main_data.cond = angular.copy(condition_obj);
 
-            $http.post('api/public/common/UpdateTableRecords',order_main_data).success(function(result) {
+            if($scope.distributionData[$scope.address_id].shipping_id > 0)
+            {
+                stype_main_data.table ='shipping';
+                condition_obj['id'] =  $scope.distributionData[$scope.address_id].shipping_id;
+            }
+            else
+            {
+                stype_main_data.table ='order_shipping_address_mapping';
+                condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
+            }
+
+            $scope.name_filed = 'shipping_type_id';
+            var obj = {};
+            obj[$scope.name_filed] =  id;
+            stype_main_data.data = angular.copy(obj);
+            
+            stype_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',stype_main_data).success(function(result) {
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
-                if(name == 'shipping_type_id')
-                {
-                    $scope.getDistProductAddress();
-                }
+                $scope.getShippingMethod(id);
+            });
+        }
+
+        $scope.updateShippingMethod = function(id)
+        {
+            var smethod_main_data = {};
+            var condition_obj = {};
+
+            if($scope.distributionData[$scope.address_id].shipping_id > 0)
+            {
+                smethod_main_data.table ='shipping';
+                condition_obj['id'] =  $scope.distributionData[$scope.address_id].shipping_id;
+            }
+            else
+            {
+                smethod_main_data.table ='order_shipping_address_mapping';
+                condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
+            }
+
+            $scope.name_filed = 'shipping_method';
+            var obj = {};
+            obj[$scope.name_filed] =  id;
+            smethod_main_data.data = angular.copy(obj);
+            
+            smethod_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',smethod_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
             });
         }
     }
