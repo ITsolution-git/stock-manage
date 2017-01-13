@@ -54,6 +54,10 @@
 	font-size:11px;
 	min-height: 160px;
 }
+.slot .machine-slot-header{
+	min-height:100px;
+}
+
 .slot .slot-header>div{
 	background-color: #f4f4f5;
 }
@@ -73,6 +77,24 @@
 }
 
 .slot .slot-header .shift-box span{
+	font-size:11px;
+	line-height:12px;
+}
+
+
+.slot .slot-header .machine-capacity-box {
+	width:60%;
+	margin:0px 20%;
+	padding: 10px;
+	float:left;
+}
+.slot .slot-header .machine-capacity-box h6{
+	margin:0px;
+	font-size:20px;
+	line-height:20px;
+}
+
+.slot .slot-header .machine-capacity-box span{
 	font-size:11px;
 	line-height:12px;
 }

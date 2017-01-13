@@ -247,6 +247,7 @@
     <!--Production-->
     <script src="app/main/production/production.module.js"></script>
     <script src="app/main/production/production.controller.js"></script>
+    <script src="app/main/production/production.directive.js"></script>
 
     <!-- Settings -->
     <script src="app/main/settings/settings.module.js"></script>

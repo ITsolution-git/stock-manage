@@ -418,6 +418,7 @@
 
          $scope.$on('day-bag.drop', function (e, el) {
            el.addClass('ex-moved');
+           console.log(e, el);
          });
 
          $scope.$on('day-bag.over', function (e, el, container) {
@@ -551,7 +552,7 @@
                 $("#ajax_loader").hide();
             });
         }
-         $scope.SchedualBoardMachineData = function(run_date,machine_id)
+         $scope.SchedualBoardMachineData = function(run_date,machine_id=0)
         {
             //console.log(machine_id);
             $("#ajax_loader").show();
@@ -564,7 +565,14 @@
 
             $http.post('api/public/production/SchedualBoardMachineData',schedule_data).success(function(result)
             {
-                if(result.data.success=='1')
+                // if($scope.machine_id == 0)
+                // {
+                //     $scope.getmachine_data = 1;
+                //     $scope.currentmachine_date = result.data.current_date;
+                //     $scope.prevmachine_date = result.data.prev_date;
+                //     $scope.nextmachine_date = result.data.next_date;
+                // }
+                 if(result.data.success=='1')
                 {
                     $scope.getmachine_data = 1;
                     $scope.SchedualmachineData = result.data.SchedualBoardMachineData;
