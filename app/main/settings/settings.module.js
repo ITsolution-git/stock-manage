@@ -253,7 +253,7 @@
                         return sessionService.AccessService('ALL','true');
                     }
                 },
-                url  : '/vendor',
+                url  : '/vendors',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/vendor/vendor.html',
@@ -414,7 +414,7 @@
             weight     : 10
         });
         msNavigationServiceProvider.saveItem('fuse.settings.vendor', {
-            title      : 'Vendor',
+            title      : 'Vendors',
             state      : 'app.settings.vendor',
             stateParams: {'id': 11},
             class      : 'navigation-dashboards project-dashboard',
