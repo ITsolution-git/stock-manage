@@ -8,17 +8,20 @@
         </div>
     </div>
 
-    <md-card class="m-0 location">
+    <md-card class="m-0 location pd0">
         <md-card-header layout-align="space-between center">
             <md-card-header-text>
                 <span class="md-title text-center"><a class="cursor-p" title="Location">#{{no_of_locations}} Distribution Locations</a> | {{total_order_qty}} Units</span>
-            </md-card-header-text>
-        </md-card-header>
-        <md-card-header layout-align="space-between center">
-            <md-card-header-text>
                 <span class="md-title text-center">You have {{undistributed_qty}} QTY undistributed <a class="cursor-p" title="Location">Click Here</a> to Fix That </span>
             </md-card-header-text>
         </md-card-header>
+        <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right">Change Distribution</a>
+
+        <!-- <md-card-header layout-align="space-between center">
+            <md-card-header-text>
+                <span class="md-title text-center">You have {{undistributed_qty}} QTY undistributed <a class="cursor-p" title="Location">Click Here</a> to Fix That </span>
+            </md-card-header-text>
+        </md-card-header> -->
     </md-card>
 
 
@@ -53,14 +56,17 @@
                                 <p class="text-right">Total Qty: {{address.total_qnty}}</p>
                             </div>
                         </div>
-                        <div ng-repeat="product in address.productData">
-                            <div class="h5 text-semibold first">Product Name:</div>
-                            <span>{{product.product_name}}</span>
 
-                            <div ng-repeat="(key,color_data) in product.sizeData">
+                        <div class="product-height scrollable" ms-scroll>
+                            <div ng-repeat="product in address.productData" class="product-data">
+                                <div class="h5 first">Product Name:</div>
+                                <span class="text-semibold">{{product.product_name}}</span>
 
-                                <div class="h5 text-semibold">Color: {{key}}</div>
-                                <span class="h5 text-semibold">Size: </span><span ng-repeat="size_data in color_data"> {{size_data.size}}:{{size_data.qnty}} </span>
+                                <div ng-repeat="(key,color_data) in product.sizeData">
+
+                                    <div class="h5">Color: <span class="text-semibold">{{key}}</span></div>
+                                    <span class="h5">Size: </span><span ng-repeat="size_data in color_data" class="text-semibold"> {{size_data.size}}:{{size_data.qnty}} </span>
+                                </div>
                             </div>
                         </div>
 
@@ -98,7 +104,7 @@
                 </md-card>
             </div>
 
-            
+
 
             <div class="pull-right ship_order_btn">
                 <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right">Next</a>
