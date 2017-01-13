@@ -1,191 +1,284 @@
-<div class="main-distribution-page m-r-15 m-l-20 m-b-20">
-    <div class="header"  layout="column">
-        <div class="header-content" layout="row" layout-align="start" layout-wrap flex layout-padding>
-            <a class="link-back cursor-p" ui-sref="app.order.order-info({id:order.display_number})">BACK TO ORDER INFO</a>
-            <h1 flex="4">{{order.order_name}}  #{{order.display_number}} for Company: {{order.client_company}}</h1>
+<div class="stockkup-content-table-container ship-order-screen distrbution-company">
+    <div class="simple-table-container stokkup-main-tableview">
+        <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-70">
+              Distrubution for ABX <a class="cursor-p" title="Go to Order">#123</a> for Company: <a class="cursor-p" title="Go to Order">XYZ</a>
+            </div>
+            <div class="pull-right right-search-box">
+                <a class="pull-right common-header-links">BACK TO ORDER INFO</a>
+            </div>
         </div>
-        <div class="distribution-information m-b-20" layout="row" layout-align="start" layout-wrap flex >
-            <div class="info-disribution m-b-20" flex="100" >
-                <div class="title" layout-padding><span class="h2 text-semibold">Information</span></div>
-                <md-card layout="row">
+     </div>
 
-                    <md-card-content flex="90" layout="column">
-                        <div layout="row" layout-wrap>
-                            <div class="trans-box">
-                                <div>Sales</div>
-                                <span class="font-14 chrome-weight">{{order.sales_name}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Blind</div>
-                                <span class="font-14 chrome-weight">{{order.is_blind == '1'? 'Yes' : 'No'}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Account Manager</div>
-                                <span class="font-14 chrome-weight">{{order.name}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Main Contact</div>
-                                <span class="font-14 chrome-weight">{{order.client_first_name}} &nbsp; {{ order.client_last_name}}</span>
-                            </div>
-                            <div class="trans-box">
-                                <div>Price Grid</div>
-                                <span class="font-14 chrome-weight">{{order.price_grid_name}}</span>
-                            </div>
-                        </div>
+
+    <md-content>
+        <div layout="row" layout-wrap="nowrap" class="p-20">
+            <div flex-xs flex-gt-xs="25" layout="column">
+                <md-card class="custom-fullbox-shadow text-center">
+                    <md-card-header layout-align="space-between center">
+                        <md-card-header-text>
+                            <span class="md-title f-24 ">ALL Locations</span>
+                        </md-card-header-text>
+                    </md-card-header>
+
+                    <md-card-content class="custom-desc-box">
+                        <h3 class="title">100/200</h3>
+                        <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white ">Export CSV</a>
                     </md-card-content>
                 </md-card>
             </div>
-            <div layout="row" flex="100" class="m-b-20">
-                <div flex="70">
-                    <md-card class="m-b-20" >
-                        <md-card-title>
-                            <md-card-title-text class="text-left">
-                                Distributed
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-content  layout="column" layout-padding>
-                            <div layout="row" layout-wrap layout-align="center center" flex="60" class="p-t-30">
-                                <div layout="row">
-                                    <div layout="column">
-                                        <span class="h2 semibold f-52">{{ order.total_shipped_qnty}}</span>
-                                        <span class="m-r-15">Product shipped</span>
-                                    </div>
-                                </div>
-                                <div layout="row">
-                                    <span class="h2 semibold f-52 mr-top m-r-15"> / </span>
-                                </div>
-                                <div layout="row">
-                                    <div layout="column">
-                                        <span class="h2 semibold f-52">{{total_unit}}</span>
-                                        <span class="m-l-20">Total</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </md-card-content>
-                        <md-divider ></md-divider>
-                        <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding>
-                            <a>&nbsp;</a>
-                        </div>
-                    </md-card>
-                </div>
-                <div flex="30">
-                    <md-card class="m-b-20 m-l-20" >
-                        <md-card-title>
-                            <md-card-title-text class="text-left">
-                                Number Of Locations
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-content  layout="column" layout-padding>
-                            <div layout="row" layout-wrap layout-align="center center" flex="60">
-                                <span class="h2 semibold f-52">{{ order.dist_location}}</span><br/>
-                            </div>
-                            <div class="text-center"> <span class="font-18">Location</span></div>
-                        </md-card-content>
-                        <md-divider ></md-divider>
-                        <div layout="row" layout-wrap class="text-right" layout-align="end end" layout-padding ng-show="allow_access==1">
-                            <a ng-click="openInsertPopup('client/views/forms/distribution_form.html',$event,'client_distaddress')">Add New</a>
-                        </div>
-                    </md-card>
+
+            <div flex-xs flex-gt-xs="50" layout="column" class="pd30-LR layout-align-center-center">
+                <div class="distri-box">
+                    <a href="#" class="box-mang dist-next-prev left"><i class="fa fa-angle-left" role="button"></i></a>
+                    <div flex-xs flex-gt-xs="50" layout="column" class="layout-align-center-center">
+                        <md-card class="custom-fullbox-shadow text-center active">
+                            <md-card-header layout-align="space-between center">
+                                <md-card-header-text>
+                                    <span class="md-title ">Disrbution Location Name</span>
+                                    <span class="sub-title">Address: 11 E Hubbard St Chicago IL 60611</span>
+                                </md-card-header-text>
+                            </md-card-header>
+
+                            <md-card-content class="custom-desc-box">
+                                <h3 class="title f-24">Total: 123</h3>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+
+                    <div flex-xs flex-gt-xs="50" layout="column" class="layout-align-center-center">
+                        <md-card class="custom-fullbox-shadow text-center">
+                            <md-card-header layout-align="space-between center">
+                                <md-card-header-text>
+                                    <span class="md-title ">Disrbution Location Name</span>
+                                    <span class="sub-title">Address: 11 E Hubbard St Chicago IL 60611</span>
+                                </md-card-header-text>
+                            </md-card-header>
+
+                            <md-card-content class="custom-desc-box">
+                                <h3 class="title f-24">Total: 123</h3>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                    <a href="#" class="box-mang dist-next-prev right"><i class="fa fa-angle-right" role="button"></i></a>
                 </div>
             </div>
-            <md-content flex="100" class="trans">
-                <md-tabs md-dynamic-height md-border-bottom>
-                    <md-tab label="Products">
-                        <md-content class="trans m-t-20">
-                            <div class="simple-table-container md-whiteframe-4dp m-b-20">
-                                <div class="table-title " layout="row" layout-align="space-between center">
-                                    <div class="table-title-text h2 text-semibold " Flex="55" >
-                                        Products
-                                    </div>
-                                    <div flex="45" class="text-right">
-                                    </div>
-                                </div>
-                                <div class="ms-responsive-table-wrapper table-disrtri">
-                                    <table class="dataTable row-border hover" datatable="ng"  dt-options="vm.dtOptions"  >
-                                        <thead>
-                                        <th>Product Name</th>
-                                        <th>Total Allocated</th>
-                                        <th></th>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="distProduct in products" class="cursor-p" ng-if="distProduct.total > 0">
-                                                <td>{{ distProduct.name}}</td>
-                                                <td ng-if="distProduct.distributed == null">0/{{distProduct.total}}</td>
-                                                <td ng-if="distProduct.distributed != null">{{distProduct.distributed}}/{{distProduct.total}}</td>
-                                                <td class="text-right"> 
-                                                    <md-button  class="bg-grey dark-bg right-m-0" ng-if="distProduct.distributed==0 || distProduct.distributed == null" ng-click="vm.createDistribution($event,'add',distProduct)">
-                                                        Distribute
-                                                    </md-button>
-                                                    <md-button  class="button_blue dark-bg right-m-0" ng-if="distProduct.distributed>0" ng-click="vm.createDistribution($event,'edit',distProduct)">
-                                                        Edit
-                                                    </md-button>
-                                                </td>
-                                            </tr>
-                                        </tbody> 
-                                    </table>
-                                    <div class="p-23 border-t-grey">
-                                    </div>
-                                </div>
+
+            <div flex-xs flex-gt-xs="25" layout="column" class="layout-padding pull-right layout-align-center-center">
+                <div class="">
+                    <md-button  class="pull-right full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns" ng-click="vm.openaddDistributionDialog($event)">
+                    ADD EXSTING LOCATION
+                    </md-button>
+                    <md-button  class="full-width-box stokkup-custom-btn1 stokkup-blue-btn orderscreen-infobtns pull-right " >
+                    ADD NEW LOCATION
+                    </md-button>
+                </div>
+            </div>
+
+        </div>
+    </md-content>
+
+    <md-content class="product-select">
+        <div layout="row" layout-wrap="nowrap" class="p-20">
+            <div layout="column" flex="50" class="box-zerospace m-b-10">
+                <md-card class="m-0" flex="100">
+                    <md-card-content class="recap">
+                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                            <div layout="column" flex="35">
+                                <strong>Product Name:</strong> Women's Basic Polo - 532089
                             </div>
-                        </md-content>
-                    </md-tab>
-                    <md-tab label="Locations">
-                        <md-content class="trans m-t-20">
-                            <div class="simple-table-container md-whiteframe-4dp m-b-20">
-                                <div class="table-title " layout="row" layout-align="space-between center">
-                                    <div class="table-title-text h2 text-semibold " Flex="55" >
-                                        Locations
-                                    </div>
-                                    <div flex="45" class="text-right">
-                                        <md-button  class="bg-grey dark-bg right-m-0 " ng-click="openInsertPopup('client/views/forms/distribution_form.html',$event,'client_distaddress')" ng-show="allow_access==1">
-                                            ADD NEW LOCATION
-                                        </md-button>
-                                    </div>
-                                </div>
-                                <div class="ms-responsive-table-wrapper table-disrtri">
-                                    <table class="dataTable row-border hover" datatable="ng" dt-options="vm.dtOptions" >
-                                        <thead>
-                                        <th>Location Name</th>
-                                        <th>ATTN</th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
-                                        <th>Shipping Type</th>
-                                        <th>Shipping Method</th>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="distlocation in distribution_address">
-                                                <td>{{ distlocation.description}}</td>
-                                                <td>{{ distlocation.attn}}  
-                                                <td>{{ distlocation.full_address}}</td>
-                                                <td>{{ distlocation.phone}}</td>
-                                                <td> 
-                                                   <md-select ng-model="distlocation.shipping_type_id" placeholder="Shipping Type" class="mt-2 mb-0" name="shipping_type_id" ng-change="updateOrderShippingType('shipping_type_id',distlocation.shipping_type_id,distlocation.order_adress_id)">
-                                                        <md-option value="1" ng-selected="distlocation.shipping_type_id == 1">UPS</md-option>
-                                                        <md-option value="2" ng-selected="distlocation.shipping_type_id == 2">FEDEX</md-option>
-                                                        <md-option value="3" ng-selected="distlocation.shipping_type_id == 3">Local Messenger</md-option>
-                                                        <md-option value="4" ng-selected="distlocation.shipping_type_id == 4">Local Pickup</md-option>
-                                                        <md-option value="5" ng-selected="distlocation.shipping_type_id == 5">Freight</md-option>
-                                                        <md-option value="6" ng-selected="distlocation.shipping_type_id == 6">Other</md-option>
-                                                    </md-select>
-                                                </td>
-                                                 <td>
-                                                    <div ng-repeat="control in controls">
-                                                        <md-select ng-model="distlocation.shipping_method_id" placeholder="Shipping Method" class="mt-2 mb-0" name="shipping_method_id" ng-change="updateOrderShippingType('shipping_method_id',distlocation.shipping_method_id,distlocation.order_adress_id)">
-                                                            <md-option ng-selected="distlocation.shipping_method_id==method.method_value" ng-repeat="method in distlocation.method_arr" ng-value="method.method_value">{{method.method_name}}</md-option>
-                                                        </md-select>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody> 
-                                    </table>
-                                    <div class="p-23 border-t-grey">
-                                    </div>
-                                </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Size:</strong> S
                             </div>
-                        </md-content>
-                    </md-tab>
-                </md-tabs>
-            </md-content>
+
+                            <div layout="column" flex="20">
+                                <strong>Color:</strong> White
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Remaning:</strong> 10
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Distributed: </strong> 123
+                            </div>
+                        </md-checkbox>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+            <div layout="column" flex="50" class="box-zerospace m-b-10">
+                <md-card class="m-0" flex="100">
+                    <md-card-content class="recap">
+                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                            <div layout="column" flex="35">
+                                <strong>Product Name:</strong> Women's Basic Polo - 532089
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Size:</strong> S
+                            </div>
+
+                            <div layout="column" flex="20">
+                                <strong>Color:</strong> White
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Remaning:</strong> 10
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Distributed: </strong> 123
+                            </div>
+                        </md-checkbox>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+            <div layout="column" flex="50" class="box-zerospace m-b-10">
+                <md-card class="m-0" flex="100">
+                    <md-card-content class="recap">
+                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                            <div layout="column" flex="35">
+                                <strong>Product Name:</strong> Women's Basic Polo - 532089
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Size:</strong> S
+                            </div>
+
+                            <div layout="column" flex="20">
+                                <strong>Color:</strong> White
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Remaning:</strong> 10
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Distributed: </strong> 123
+                            </div>
+                        </md-checkbox>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+            <div layout="column" flex="50" class="box-zerospace m-b-10">
+                <md-card class="m-0" flex="100">
+                    <md-card-content class="recap">
+                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                            <div layout="column" flex="35">
+                                <strong>Product Name:</strong> Women's Basic Polo - 532089
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Size:</strong> S
+                            </div>
+
+                            <div layout="column" flex="20">
+                                <strong>Color:</strong> White
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Remaning:</strong> 10
+                            </div>
+
+                            <div layout="column" flex="15">
+                                <strong>Distributed: </strong> 123
+                            </div>
+                        </md-checkbox>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+        </div>
+    </md-content>
+
+    <div class="ms-responsive-table-wrapper distri-record white-bg">
+        <div>
+            <table class="simple hover simple-tbl1">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Size</th>
+                        <th>Color</th>
+                        <th>QTY</th>
+                        <th>Location Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gilden 5000</td>
+                        <td>M</td>
+                        <td>Blue</td>
+                        <td>
+                            <md-input-container class="m-0">
+                                <input value="123">
+                            </md-input-container>
+                        </td>
+                        <td>Location</td>
+                    </tr>
+
+                    <tr>
+                        <td>Gilden 5000</td>
+                        <td>M</td>
+                        <td>Blue</td>
+                        <td>
+                            <md-input-container class="m-0">
+                                <input value="123">
+                            </md-input-container>
+                        </td>
+                        <td>Location</td>
+                    </tr>
+
+                    <tr>
+                        <td>Gilden 5000</td>
+                        <td>M</td>
+                        <td>Blue</td>
+                        <td>
+                            <md-input-container class="m-0">
+                                <input value="123">
+                            </md-input-container>
+                        </td>
+                        <td>Location</td>
+                    </tr>
+
+                    <tr>
+                        <td>Gilden 5000</td>
+                        <td>M</td>
+                        <td>Blue</td>
+                        <td>
+                            <md-input-container class="m-0">
+                                <input value="123">
+                            </md-input-container>
+                        </td>
+                        <td>Location</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
         </div>
     </div>
+
+    <div layout="row" layout-wrap="nowrap" class="layout-align-center-center shipping-select">
+        <md-input-container class="m-15-LR">
+          <label>Shipping Type</label>
+          <md-select ng-model="shipping_type">
+            <md-option value="1">One</md-option>
+            <md-option value="2">Two</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="m-15-LR">
+          <label>Shipping Meathod</label>
+          <md-select ng-model="shipping_Meathod">
+            <md-option value="1">One</md-option>
+            <md-option value="2">Two</md-option>
+          </md-select>
+        </md-input-container>
+
+    </div>
+
 </div>

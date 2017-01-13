@@ -25,7 +25,7 @@
 
 
 .mdslider md-slider {
-  margin-top: -14px; 
+  margin-top: -14px;
 }
 
 .mdsliderHeight {
@@ -33,7 +33,7 @@
 }
 
 .table3 td, .table4 td {
-  height:56px; 
+  height:56px;
 }
 
 .marginLeft-58 {
@@ -198,12 +198,12 @@ hr {
 }
 
 hr .style1 {
-  height:1px; 
-  border:none; 
-  color:#000; 
-  background-color:#000; 
-  width:60%; 
-  text-align:center; 
+  height:1px;
+  border:none;
+  color:#000;
+  background-color:#000;
+  width:60%;
+  text-align:center;
   margin: 0 auto;
   border: 0 !important;
 }
@@ -368,7 +368,7 @@ hr .style1 {
 
 .float-right {
   float: right;
-  
+
 }
 
 #directToGarment.simple thead tr th, #chargesList.simple thead tr th {
@@ -607,7 +607,7 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .tbl-typ2 td { border: 1px solid #ccc;}
 table.simple.tbl-typ3  thead tr th:first-child, table.simple.tbl-typ3 thead tr th, table.simple.tbl-typ3 tbody tr td:first-child, table.simple.tbl-typ3 tbody tr td { min-width:1px; padding:15px 5px; white-space: normal; vertical-align: top; }
 table.simple.tbl-typ3 tbody tr td, table.simple.tbl-typ3 tbody tr td:first-child { vertical-align: middle;}
-table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;} 
+table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .align-M { justify-content:center;}
 .align-R { justify-content:flex-end;}
 .align-self-C { align-self: center;}
@@ -669,7 +669,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     position: relative;
     vertical-align: middle;
 }
-/*****************************/	
+/*****************************/
 .loaderouter{
     position:fixed;
     width:100%;
@@ -720,7 +720,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .loader:after {
     left: 1.5em;
 }
-.fs22 { font-size: 22px;} 
+.fs22 { font-size: 22px;}
 @-webkit-keyframes load1 {
     0%,
     80%,
@@ -924,8 +924,8 @@ md-button.on {
     width:100%;
     border: dashed 3px #797979;
 }
-    
-#chooseFile, .dragDropLabel {    
+
+#chooseFile, .dragDropLabel {
     vertical-align: middle;
     display: block;
     width: 40%;
@@ -937,7 +937,7 @@ md-button.on {
     color: #797979;
     margin-bottom: 10px;
 }
-    
+
 .button-wrapper {
     display: table-cell;
     vertical-align: middle;
@@ -1095,7 +1095,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
   border : 2px solid #FFFFFF;
 }
 .activeAddress {
-  background-color: rgba(0,0,0,0.1); 
+  background-color: rgba(0,0,0,0.1);
 }
 .tbl-scroll-cntnr {
   position: relative;
@@ -1113,7 +1113,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 
 #screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th {
   width: 80px !important;
-} 
+}
 /**
  * An element with .dndPlaceholder class will be
  * added to the dnd-list while the user is dragging
@@ -1190,7 +1190,7 @@ span.k-picker-wrap.k-state-border-down {
 }
 
  md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
-      padding-left: 0; 
+      padding-left: 0;
       -moz-transition:all ease-in-out 0.2s;
       -webkit-transition:all ease-in-out 0.2s;
       -ms-transition:all ease-in-out 0.2s;
@@ -1222,8 +1222,8 @@ margin-top:30px;
     padding: 10px;
 }
 .shad-btm {
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 
-  0px 4px 5px 0px rgba(0, 0, 0, 0.14), 
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+  0px 4px 5px 0px rgba(0, 0, 0, 0.14),
   0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 .font-title {
@@ -1313,9 +1313,87 @@ margin-top:30px;
   overflow-y: auto;
 }
 
+/*  By HR */
 .mrg0 { margin: 0; padding: 0; }
+.f-24 { font-size: 24px !important; }
+.pd30-LR { padding: 0 30px;  }
+.m-b-10 { margin-bottom: 10px; }
+
 .remaining-text { border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0; }
 .size-color label{ font-size: 14px; font-weight: bold; padding: 0; }
 .allocate-btn {
   padding: 7px 0;
+}
+
+.ship-order-screen md-card-content.custom-desc-box .h5{ padding-top: 15px; }
+.ship-order-screen .shp-code p { font-size: 16px; font-weight: bold; margin: 0 }
+.ship-order-screen .date-input span.k-widget.k-datepicker { width: 100%; }
+.ship-order-screen .stokkup-main-tableview .table-title {     padding: 10px 55px; border-bottom: none; min-height: 60px; }
+.ship-order-screen .stokkup-main-tableview .table-title .table-title-text {     color: #252932; font-size: 20px; font-weight: 300; }
+.ship-order-screen .stokkup-main-tableview .table-title .table-title-text a{
+ font-weight: 400;
+}
+.ship-order-screen .status-chk .md-label span {     font-size: 14px; font-weight: bold; margin: 0; }
+
+
+.location { position: relative; padding: 20px 0;}
+.location .md-title { font-size: 14px; }
+.location .stokkup-blue-btn{ position: absolute; right: 25px; top: 25px; }
+
+.ship-order-screen .md-title{ font-size: 16px; font-weight: bold;  }
+.ship_order_btn { width: 100%; text-align: right}
+
+md-dialog.ship-order-popup.task-dialog md-dialog-content md-input-container label:not(.md-no-float):not(.md-container-ignore) { padding-left: 3px;  }
+md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-container .md-input,
+md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-container md-select .md-select-value { padding-left: 3px;  }
+
+.box-mang { font-size: 50px;  }
+.pad20-R { padding-right: 20px;  }
+
+.md-title mark { color: rgb(71,115,214); background: transparent;  }
+
+.ship-order-screen md-checkbox.remaining-text { border: 0; margin: 0; padding: 0  }
+.ship-order-screen md-checkbox.remaining-text .md-label { display: flex; width: 100%; margin-left:50px; }
+
+.ship-order-screen .box-zerospace.layout-column:nth-of-type(even) { padding-left: 10px  }
+.ship-order-screen .box-zerospace.layout-column:nth-of-type(odd) { padding-right: 10px  }
+.total-btn { display: inline-block; width: 100%; text-align: center;  }
+.total-btn a { min-width: 225px; height: 41px; display: inline-block;  }
+
+.mark-select md-checkbox .md-container { left: auto; right: 0; top: 20px; }
+.units input { font-size: 16px; font-weight: bold  }
+
+.boxes md-card-header { position: relative;  }
+.boxes .delete-box{ font-size: 20px; font-weight: bold; position: absolute; right: 20px; top: 22px; }
+.boxes md-menu { position: relative;; left: -15px;  }
+.boxes .delete-box a { color: rgba(110,117,132,1);  }
+
+.distrbution-company h3.title{ margin-top: 0; font-weight: bold; font-size: 20px;  }
+.distrbution-company a.stokkup-blue-btn { display: inline-block;  }
+.dist-next-prev { position: absolute; top: 50%; margin-top: -35px;  }
+.dist-next-prev.left { left: -25px  }
+.dist-next-prev.right { right: -30px  }
+.distri-box { width: 100%; float: left; display: flex; position: relative;  height: 100%  }
+.distri-box md-card.md-default-theme { width: 96%; display: flex;  height: 100% }
+.distri-box .active { background: rgba(92,97,111,.8);  }
+.distri-box .active .md-title,
+.distri-box .active .sub-title,
+.distri-box .active  h3.title{ color: #fff;  }
+
+.product-select md-checkbox .md-ink-ripple{ display: none;  }
+.product-select md-checkbox .md-label { margin-left: 0 !important;  }
+.product-select md-card md-card-content { padding: 0;  }
+.product-select md-checkbox { padding: 7px 16px !important;  }
+.product-select md-checkbox.md-checked { background: rgba(92,97,111,.8);   }
+.product-select md-checkbox.md-checked .md-label { color: #fff  }
+.distri-record table.simple tbody tr:first-child td { padding-top: 10px;  }
+.distri-record table.simple thead th { padding: 10px 8px;  font-weight: bold; font-size: 14px; }
+.distri-record table.simple tbody td{ padding: 10px 8px;  }
+.shipping-select { margin-top: 50px;   }
+.shipping-select md-select  { font-size: 16px; font-weight: bold; min-width: 300px;  }
+
+
+@media (max-width: 1200px) {
+    .location .stokkup-blue-btn { font-size: 12px; padding: 0 20px; }
+    .ship-order-screen .shp-code p { font-size: 13px; }
 }

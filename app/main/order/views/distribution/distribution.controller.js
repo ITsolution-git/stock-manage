@@ -19,6 +19,9 @@
             $scope.allow_access = 1;
         }
 
+        $scope.shipping_type;
+        $scope.shipping_Meatho;
+
         // change display number to order Id for fetching the order data
         var order_data = {};
         order_data.cond ={company_id :sessionService.get('company_id'),display_number:$stateParams.id};
@@ -26,7 +29,7 @@
 
         $http.post('api/public/common/GetTableRecords',order_data).success(function(result) {
 
-            if(result.data.success == '1') 
+            if(result.data.success == '1')
             {
                 $scope.vendorRecord =result.data.records;
                 $scope.order_id = result.data.records[0].id;
@@ -34,7 +37,7 @@
                 $scope.orderDetail();
                 $scope.designDetail();
                 $scope.getDistProductAddress();
-            } 
+            }
             else
             {
                 $state.go('app.order');
@@ -46,21 +49,21 @@
 
         $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
 
-            if(result.data.success == '1') 
+            if(result.data.success == '1')
             {
                 $scope.states_all  = result.data.records;
-            } 
+            }
         });
 
-          
+
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
-            
+
             var combine_array_id = {};
             combine_array_id.id = $scope.order_id;
             combine_array_id.company_id = sessionService.get('company_id');
             $scope.order_id = $scope.order_id;
-            
+
 
             $http.post('api/public/order/orderDetail',combine_array_id).success(function(result, status, headers, config) {
                 if(result.data.success == '1') {
@@ -80,7 +83,7 @@
             combine_array_id.company_id = sessionService.get('company_id');
 
             $http.post('api/public/order/designListing',combine_array_id).success(function(result, status, headers, config) {
-            
+
                 if(result.data.success == '1') {
                    $scope.designs = result.data.records.all_design;
                    $scope.total_unit = result.data.records.total_unit;
@@ -92,7 +95,7 @@
 
                 if($scope.total_unit == undefined)
                 {
-                    $scope.total_unit = 0;            
+                    $scope.total_unit = 0;
                 }
             });
         }
@@ -104,7 +107,7 @@
             $scope.controls = [];
 
             $http.post('api/public/distribution/getDistProductAddress',combine_array_id).success(function(result, status, headers, config) {
-            
+
                 if(result.success == '1') {
                     $scope.controls = [{}];
                    $scope.products = result.products;
@@ -124,7 +127,22 @@
 
         var vm = this;
         vm.openaddAddressDialog = openaddAddressDialog;
+        vm.openaddDistributionDialog = openaddDistributionDialog;
         vm.openAddProductDialog = openAddProductDialog;
+
+        var vm = this;
+
+        function openaddDistributionDialog(ev)
+        {
+            $mdDialog.show({
+                controllerAs: $scope,
+                templateUrl: 'app/main/order/dialogs/distribution/distribution.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+            });
+        }
+
         function openaddAddressDialog(ev, order)
         {
             $mdDialog.show({
