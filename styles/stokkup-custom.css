@@ -25,7 +25,7 @@
 
 
 .mdslider md-slider {
-  margin-top: -14px; 
+  margin-top: -14px;
 }
 
 .mdsliderHeight {
@@ -33,7 +33,7 @@
 }
 
 .table3 td, .table4 td {
-  height:56px; 
+  height:56px;
 }
 
 .marginLeft-58 {
@@ -198,12 +198,12 @@ hr {
 }
 
 hr .style1 {
-  height:1px; 
-  border:none; 
-  color:#000; 
-  background-color:#000; 
-  width:60%; 
-  text-align:center; 
+  height:1px;
+  border:none;
+  color:#000;
+  background-color:#000;
+  width:60%;
+  text-align:center;
   margin: 0 auto;
   border: 0 !important;
 }
@@ -279,7 +279,7 @@ hr .style1 {
 }
 
 .createPriceGridLink {
-  top : 43px;
+  top : 23px;
   right: 40px;
   font-family: 'Helvetica';
     font-style: normal;
@@ -368,7 +368,7 @@ hr .style1 {
 
 .float-right {
   float: right;
-  
+
 }
 
 #directToGarment.simple thead tr th, #chargesList.simple thead tr th {
@@ -588,7 +588,7 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .mrg10-T { margin-top: 10px;}
 .mrg10-TB { margin-bottom:10px; margin-top:10px; }
 .mrg10-B { margin-bottom:10px;}
-.pd10 { padding: 10px;}
+.pd10 { padding: 10px !important;}
 .pd10-LR { padding-right:10px; padding-left:10px; }
 .pd10-R { padding-right:10px; }
 .mrg5-B { margin-bottom:5px; }
@@ -607,7 +607,7 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .tbl-typ2 td { border: 1px solid #ccc;}
 table.simple.tbl-typ3  thead tr th:first-child, table.simple.tbl-typ3 thead tr th, table.simple.tbl-typ3 tbody tr td:first-child, table.simple.tbl-typ3 tbody tr td { min-width:1px; padding:15px 5px; white-space: normal; vertical-align: top; }
 table.simple.tbl-typ3 tbody tr td, table.simple.tbl-typ3 tbody tr td:first-child { vertical-align: middle;}
-table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;} 
+table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .align-M { justify-content:center;}
 .align-R { justify-content:flex-end;}
 .align-self-C { align-self: center;}
@@ -669,7 +669,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
     position: relative;
     vertical-align: middle;
 }
-/*****************************/	
+/*****************************/
 .loaderouter{
     position:fixed;
     width:100%;
@@ -720,7 +720,7 @@ table.simple.tbl-typ3 td { border-top:0px; border-left:0px; border-right: 0px;}
 .loader:after {
     left: 1.5em;
 }
-.fs22 { font-size: 22px;} 
+.fs22 { font-size: 22px;}
 @-webkit-keyframes load1 {
     0%,
     80%,
@@ -924,8 +924,8 @@ md-button.on {
     width:100%;
     border: dashed 3px #797979;
 }
-    
-#chooseFile, .dragDropLabel {    
+
+#chooseFile, .dragDropLabel {
     vertical-align: middle;
     display: block;
     width: 40%;
@@ -937,7 +937,7 @@ md-button.on {
     color: #797979;
     margin-bottom: 10px;
 }
-    
+
 .button-wrapper {
     display: table-cell;
     vertical-align: middle;
@@ -1095,7 +1095,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
   border : 2px solid #FFFFFF;
 }
 .activeAddress {
-  background-color: rgba(0,0,0,0.1); 
+  background-color: rgba(0,0,0,0.1);
 }
 .tbl-scroll-cntnr {
   position: relative;
@@ -1113,7 +1113,7 @@ button.dark-bg.md-focused, button.bg-grey.md-focused {
 
 #screenPrimary.simple thead tr th, #screenSecondary.simple thead tr th {
   width: 80px !important;
-} 
+}
 /**
  * An element with .dndPlaceholder class will be
  * added to the dnd-list while the user is dragging
@@ -1190,7 +1190,7 @@ span.k-picker-wrap.k-state-border-down {
 }
 
  md-dialog.task-dialog md-dialog-content md-input-container.md-input-focused label:not(.md-no-float):not(.md-container-ignore) {
-      padding-left: 0; 
+      padding-left: 0;
       -moz-transition:all ease-in-out 0.2s;
       -webkit-transition:all ease-in-out 0.2s;
       -ms-transition:all ease-in-out 0.2s;
@@ -1222,8 +1222,8 @@ margin-top:30px;
     padding: 10px;
 }
 .shad-btm {
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 
-  0px 4px 5px 0px rgba(0, 0, 0, 0.14), 
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2),
+  0px 4px 5px 0px rgba(0, 0, 0, 0.14),
   0px 1px 10px 0px rgba(0, 0, 0, 0.12);
 }
 .font-title {
@@ -1319,3 +1319,7 @@ margin-top:30px;
 .allocate-btn {
   padding: 7px 0;
 }
+
+.search-block md-input-container label { padding-left: 25px !important;  }
+.simple-table-container .table-title { position: relative;  }
+.dashboard-page .table-title .table-title-text {  padding-left: 25px ;  }
