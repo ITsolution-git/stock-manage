@@ -718,12 +718,42 @@ class Order extends Model {
         return $addDetailData;
     }
 
-    public function reOrder($data)
+    public function getDesignProductQty($design_id)
     {
-        /*$result = DB::select("INSERT INTO orders (display_number,affiliate_id,client_id,contact_main_id,price_id,account_manager_id,sales_id,name,
-                            approval_id,invoice_note,garment_link,created_date,updated_date,date_start,approved_date,date_shipped,shipping_by,
-                            in_hands_by,fully_shipped,due_date,separations_charge,rush_charge,shipping_charge,item_ship_charge,setup_charge,
-                            distribution_charge,digitize_charge,artwork_charge,discount,screen_charge,press_setup_charge,order_line_total,order_total,
-                            order_charges_total,tax_rate,tax,grand_total,total_payments,balance_due,total_affiliate,total_not_assign,) select 2, c1, c2, ... from your_table where id = 1");*/
+        $whereConditions = ['dp.design_id' => $design_id,'dp.is_delete' => '1','pd.is_delete' => '1'];
+        $listArray = [DB::raw('SUM(pd.qnty) as total_qty')];
+        $qntyData = DB::table('purchase_detail as pd')
+                         ->leftJoin('design_product as dp','dp.id','=','pd.design_product_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        if($qntyData[0]->total_qty == '')
+        {
+            return '0';
+        }
+        else
+        {
+            return $qntyData[0]->total_qty;
+        }
+    }
+    public function getDesignProductCost($design_id)
+    {
+        $whereConditions = ['dp.design_id' => $design_id,'dp.is_delete' => '1','pd.is_delete' => '1'];
+        $listArray = [DB::raw('SUM(pd.price) as total_price')];
+        $costData = DB::table('purchase_detail as pd')
+                         ->leftJoin('design_product as dp','dp.id','=','pd.design_product_id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
+        if($costData[0]->total_price == '')
+        {
+            return '0';
+        }
+        else
+        {
+            return $costData[0]->total_price;
+        }
     }
 }

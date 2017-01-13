@@ -601,7 +601,7 @@ class OrderController extends Controller {
         $email_array = explode(",",$email);
         $subject = $post['subject'];
 
-
+        //echo "<pre>"; print_r($email_array); echo "</pre>"; die();
         if(!isset($post['mailMessage'])){
           $post['mailMessage'] = '';
         }
@@ -669,7 +669,7 @@ class OrderController extends Controller {
             {
 //                 $message->from('pdave@codal.com','Piyush Dave');
                 $message->replyTo($fromemail,$name);
-                $message->to($email)->subject($subject);
+                $message->to(trim($email))->subject($subject);
                 $message->attach($file_path);
             });                
         }
@@ -2233,7 +2233,7 @@ class OrderController extends Controller {
             return response()->json(["data" => $data_record]);
         }
 
-
+        
         if($result['main']['qid'] == 0) {
           
           $result_quickbook = app('App\Http\Controllers\QuickBookController')->createCustomer($result['main'],$result['contact']);
@@ -2604,6 +2604,7 @@ class OrderController extends Controller {
 
 
 
+
 /** 
  * @SWG\Definition(
  *      definition="allClientAddre3ss",
@@ -2649,6 +2650,7 @@ class OrderController extends Controller {
  *  @SWG\Response(response="default", description="Get All Client Address"),
  * )
  */
+
      public function GetAllClientsAddress(){
        $post = Input::all();
        
@@ -2733,6 +2735,7 @@ class OrderController extends Controller {
         
         return response()->json(['data'=>$data]);
     }
+
 
     public function reOrder()
     {
@@ -2825,7 +2828,8 @@ class OrderController extends Controller {
                 }
             }
         }
-        $data = array("success"=>1,"message"=>"Order Created Successfully");
+        $data = array("success"=>1,"message"=>"Order created successfully. Please wait we are redirecting to you...","display_number"=>$order_data[0]->display_number);
         return response()->json(['data'=>$data]);
     }
 }
+

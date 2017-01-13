@@ -1246,10 +1246,22 @@ public function create_dir($dir_path) {
     }
     public function findTotal() {
         $post = Input::all();
-       
+        //echo "<pre>"; print_r($post); echo "</pre>"; die();
         $total = 0;
         $total_qnty = 0;
-        
+        $summary_price = 0;
+        $summary_total = 0;
+        foreach($post['allProducts'] as $data_color) 
+        {
+            foreach($data_color['sizes'] as $key => $data_size) 
+            {
+                if(isset($data_size['qnty'])) 
+                {
+                    $summary_price += $data_size['customerPrice'] * $data_size['qnty'];
+                    $summary_total += $data_size['qnty'];
+                }
+            }
+        }
         foreach($post['productData'] as $key => $data) {
              if(isset($data['qnty'])) {
                 $total += $data['customerPrice'] * $data['qnty'];
@@ -1258,7 +1270,7 @@ public function create_dir($dir_path) {
              
         }
         
-        $data = array("success"=>1,"message"=>'Data',"total"=>$total,"total_qnty"=>$total_qnty);
+        $data = array("success"=>1,"message"=>'Data',"total"=>$total,"total_qnty"=>$total_qnty,'summary_price'=>$summary_price,'summary_total'=>$summary_total);
         return response()->json(["data" => $data]);
         
     }
