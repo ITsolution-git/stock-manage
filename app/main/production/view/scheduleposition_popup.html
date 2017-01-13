@@ -82,95 +82,95 @@
 	        	<div class="full-row pull-left m-t-20">
 	        		<md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
 	                <!---Screen Sets Tab-->
-	                    <md-tab label="screen sets" ng-click="getTab('wait')">
-	                       	<div flex=40 class="pull-left">
-	                       		<div class="full-row">
-									<!-- <div layout="column" class="pull-left box-35 shipcustomfield" ng-show="params.PositionDetail[0].image_1 != ''">
-	                       				<div style="height: 100px; width: 100px;">
-                           				    <img ng-src="{{params.PositionDetail[0].image_1}}" alt="No Image" class="popup-image" >
-				                        </div>
-	                       			</div> -->
-	                       			<div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container>
-						                    <input placeholder="Screen Set Name" name="screen_set" ng-model="params.PositionDetail[0].screen_set" disabled="">
-						                </md-input-container>
-	                                </div>
-	                       			<div layout="column" flex=50 class="pull-left  shipcustomfield">
-	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Screen Count"  name="screen_total" ng-model="params.PositionDetail[0].screen_total" disabled="">
-						                </md-input-container>
-	                                </div>
-
-	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
-	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Number of Colors" name="color_stitch_count" ng-model="params.PositionDetail[0].color_stitch_count" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'position_id\',params.PositionDetail[0].position_id)' }">
-						                </md-input-container>
-	                                </div>
-
-	                                <div layout="column" flex=40 class="pull-left shipcustomfield">
-	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Width(inches)"  name="screen_width" ng-model="params.PositionDetail[0].screen_width" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
-						                </md-input-container>
-	                                </div>
-
-	                                <div layout="column" flex=40 class="pull-right shipcustomfield">
-	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Height(inches)" name="screen_height" ng-model="params.PositionDetail[0].screen_height" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
-						                </md-input-container>
-	                                </div>
-
-	<!-- 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Screen Resolution"  name="screen_resolution" ng-model="params.PositionDetail[0].screen_resolution">
-						                </md-input-container>
-	                                </div>
-
-	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Screen Size" name="screen_size">
-						                </md-input-container>
-	                                </div>
-	-->
-	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
-	                                    <md-input-container class="zero-padding">
-						                    <input placeholder="Notes" name="note" ng-model="params.PositionDetail[0].note" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'id\',params.PositionDetail[0].position_id)' }">
-						                </md-input-container>
-	                                </div>
-
-	                       		</div>
-	                       	</div>
-
-	                       	<div flex=60 class="pull-left pl-10 full-row">
-	                       	<h4 class="stokkup-title-h4 text-uppercase m-t-20 m-b-20">screen set screens</h4>
-		                       	<div class="full-row">
-	                            	<div class="ms-responsive-table-wrapper">
-							            <div>
-							                <table class="dataTable row-border">
-							                    <thead>
-							                    	<tr>
-							                    		<th>Color Name</th>
-							                    		<th>Pantone Color</th>
-							                    		<th>LPI</th>
-							                    		<th>Mesh</th>
-							                    		<th>Ink Type</th>
-							                    	</tr>
-							                    </thead>
-							                    <tbody>
-
-							                        <tr ng-repeat="color in params.PositionDetail">
-							                            <td>{{color.color_name}}</td>
-							                            <td>{{color.thread_color}}</td>
-							                            <td>{{color.line_per_inch}}</td>
-							                            <td>{{color.mesh_thread_count}}</td>
-							                            <td>{{color.inq}}</td>
-							                        </tr>
-							                    </tbody>
-							                </table>
-							            </div>
-							        </div>
-	                            </div>
-	                       	</div>                
-	                    </md-tab>
+	                    <md-tab label="screen sets" ng-click="getTab('wait')">{
+	                    	                       	<div flex=40 class="pull-left">
+	                    	                       		<div class="full-row">
+	                    									<!-- <div layout="column" class="pull-left box-35 shipcustomfield" ng-show="params.PositionDetail[0].image_1 != ''">
+	                    	                       				<div style="height: 100px; width: 100px;">
+	                                               				    <img ng-src="{{params.PositionDetail[0].image_1}}" alt="No Image" class="popup-image" >
+	                    				                        </div>
+	                    	                       			</div> -->
+	                    	                       			<div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                    	                                    <md-input-container>
+	                    						                    <input placeholder="Screen Set Name" name="screen_set" ng-model="params.PositionDetail[0].screen_set" disabled="">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    	                       			<div layout="column" flex=50 class="pull-left  shipcustomfield">
+	                    	                                    <md-input-container class="zero-padding">
+	                    						                    <input placeholder="Screen Count"  name="screen_total" ng-model="params.PositionDetail[0].screen_total" disabled="">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    
+	                    	                                <div layout="column" flex=50 class="pull-right shipcustomfield">
+	                    	                                    <md-input-container class="zero-padding">
+	                    						                    <input placeholder="Number of Colors" name="color_stitch_count" ng-model="params.PositionDetail[0].color_stitch_count" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'position_id\',params.PositionDetail[0].position_id)' }">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    
+	                    	                                <div layout="column" flex=40 class="pull-left shipcustomfield">
+	                    	                                    <md-input-container class="zero-padding">
+	                    						                    <input placeholder="Width(inches)"  name="screen_width" ng-model="params.PositionDetail[0].screen_width" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    
+	                    	                                <div layout="column" flex=40 class="pull-right shipcustomfield">
+	                    	                                    <md-input-container class="zero-padding">
+	                    						                    <input placeholder="Height(inches)" name="screen_height" ng-model="params.PositionDetail[0].screen_height" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'artjob_screensets\',\'positions\',params.PositionDetail[0].position_id)' }">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    
+	                    	<!-- 	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                    	                                    <md-input-container class="zero-padding">
+	                    						                    <input placeholder="Screen Resolution"  name="screen_resolution" ng-model="params.PositionDetail[0].screen_resolution">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    
+	                    	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                    	                                    <md-input-container class="zero-padding">
+	                    						                    <input placeholder="Screen Size" name="screen_size">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    	-->
+	                    	                                <div layout="column" flex=100 class="full-row pull-left mrg10-R shipcustomfield">
+	                    	                                    <md-input-container class="zero-padding">
+	                    						                    <input placeholder="Notes" name="note" ng-model="params.PositionDetail[0].note" ui-event="{ change : 'UpdateTableData($event.target.name,$event.target.value,\'order_design_position\',\'id\',params.PositionDetail[0].position_id)' }">
+	                    						                </md-input-container>
+	                    	                                </div>
+	                    
+	                    	                       		</div>
+	                    	                       	</div>
+	                    
+	                    	                       	<div flex=60 class="pull-left pl-10 full-row">
+	                    	                       	<h4 class="stokkup-title-h4 text-uppercase m-t-20 m-b-20">screen set screens</h4>
+	                    		                       	<div class="full-row">
+	                    	                            	<div class="ms-responsive-table-wrapper">
+	                    							            <div>
+	                    							                <table class="dataTable row-border">
+	                    							                    <thead>
+	                    							                    	<tr>
+	                    							                    		<th>Color Name</th>
+	                    							                    		<th>Pantone Color</th>
+	                    							                    		<th>LPI</th>
+	                    							                    		<th>Mesh</th>
+	                    							                    		<th>Ink Type</th>
+	                    							                    	</tr>
+	                    							                    </thead>
+	                    							                    <tbody>
+	                    
+	                    							                        <tr ng-repeat="color in params.PositionDetail">
+	                    							                            <td>{{color.color_name}}</td>
+	                    							                            <td>{{color.thread_color}}</td>
+	                    							                            <td>{{color.line_per_inch}}</td>
+	                    							                            <td>{{color.mesh_thread_count}}</td>
+	                    							                            <td>{{color.inq}}</td>
+	                    							                        </tr>
+	                    							                    </tbody>
+	                    							                </table>
+	                    							            </div>
+	                    							        </div>
+	                    	                            </div>
+	                    	                       	</div>                
+	                    	                    }</md-tab>
 		                <md-tab label="garment info" ng-click="getTab('progress')">
 		                    <div  ng-repeat="garment in params.GarmentDetail.receive">
 		                    	<div class="full-row pull-left pl-30 pr-30 m-t-20">

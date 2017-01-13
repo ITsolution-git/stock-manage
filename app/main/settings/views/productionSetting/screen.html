@@ -1,0 +1,29 @@
+<div class="client-profile-page">
+    <div class="header header-bg-custom"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
+            <h1 class="inner-page-heading">Production Screen Setting</h1>
+        </div>
+    </div>
+    <div class="full-row pull-left">
+            <div ng-cloak>
+                <md-content class="stokkup-custom-tabs">
+                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                        <!-----------------Company Info Tab-------------------->
+                        <md-tab label="Machine Setting">
+                            <div ng-include src="'app/main/settings/views/productionSetting/machine_tab.html'"></div>
+                        </md-tab>
+                        <md-tab label="Shift Setting" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-show="role_slug != 'AT' && role_slug != 'SU' " ng-include src="'app/main/settings/views/productionSetting/shift_tab.html'"></div>
+                        </md-tab>
+                        <!-- <md-tab label="IPH" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-show="role_slug != 'AT' && role_slug != 'SU' " ng-include src="'app/main/settings/views/iph/iph.html'"></div>
+                        </md-tab>
+                        <md-tab label="Order Size Factor" ng-if="role_slug != 'AT' && role_slug != 'SU' ">
+                            <div ng-show="role_slug != 'AT' && role_slug != 'SU' " ng-include src="'app/main/settings/views/orderSize/orderSize.html'"></div>
+                        </md-tab> -->
+                    </md-tabs>
+                </md-content>
+        </div>
+    </div>
+</div>
+ 
