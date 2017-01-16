@@ -385,9 +385,11 @@ class DistributionController extends Controller {
             }
             else
             {
-                $rderProducts = $this->distribution->getProductByOrder($post['order_id']);
+                $orderProducts = $this->distribution->getProductByOrder($post['order_id']);
                 $addr->addressTotalProducts = $this->distribution->getTotalDistributedOrderAddress($addr->id,$post['order_id']);
             }
+
+            
             $distribution_address[$addr->id] = $addr;
         }
 

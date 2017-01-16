@@ -113,11 +113,11 @@
                         <td>{{product.size}}</td>
                         <td>{{product.color_name}}</td>
                         <td>
-                            <md-input-container class="m-0">
-                                <input aria-label="true" ng-model="product.distributed_qnty">
+                            <md-input-container class="m-0" ng-init="product.distributed_qnty = product.distributed_qnty == null ? '0' : product.distributed_qnty">
+                                <input aria-label="true" ng-model="product.distributed_qnty" ui-event="{ change : 'allocateDistQty(product)' }">
                             </md-input-container>
                         </td>
-                        <td>{{location}}}</td>
+                        <td>{{location}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -135,8 +135,8 @@
 
         <md-input-container class="m-15-LR">
           <label>Shipping Meathod</label>
-          <md-select ng-model="distributionData[address_id].shipping_method" ng-change="updateShippingMethod(distributionData[address_id].shipping_method)">
-            <md-option ng-selected="distributionData[address_id].shipping_method == smethod.id" value="{{smethod.id}}" ng-repeat="smethod in shippingMethod">{{smethod.method_name}}</md-option>
+          <md-select ng-model="distributionData[address_id].shipping_method_id" ng-change="updateShippingMethod(distributionData[address_id].shipping_method_id)">
+            <md-option ng-selected="distributionData[address_id].shipping_method_id == smethod.id" value="{{smethod.id}}" ng-repeat="smethod in shippingMethod">{{smethod.method_name}}</md-option>
           </md-select>
         </md-input-container>
 

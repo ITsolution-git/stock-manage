@@ -78,6 +78,11 @@
                 if(result.data.success == '1') {
                     $scope.controls = [{}];
                     $scope.distributionData = result.data.distributionData;
+
+                    if($scope.address_id > 0)
+                    {
+                        $scope.getProductByAddress($scope.address_id);
+                    }
                 }
                 else {
                     $scope.distributionData = [];
@@ -202,6 +207,36 @@
 
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
+            });
+        }
+        $scope.allocateDistQty = function(productArr)
+        {
+            if($scope.address_id == 0)
+            {
+                var data = {"status": "error", "message": "Please select address"}
+                notifyService.notify(data.status, data.message);
+                return false;
+            }
+
+            //$("#ajax_loader").show();
+
+            var combine_array = {};
+            combine_array.product = productArr;
+            combine_array.address_id = $scope.address_id;
+            combine_array.order_id = $scope.order_id;
+            combine_array.company_id = sessionService.get('company_id');
+
+            $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
+                
+                if(result.data.success == '1') {
+                    $scope.getDistributionDetail();
+                }
+                else
+                {
+                    var data = {"status": "error", "message": result.data.message}
+                    notifyService.notify(data.status, data.message);
+                }
+                $("#ajax_loader").hide();
             });
         }
     }

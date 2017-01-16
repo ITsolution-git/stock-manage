@@ -75,7 +75,24 @@ class Distribution extends Model {
 
 	public function getProductByAddress($address_id,$order_id)
 	{
-		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id',DB::raw('SUM(pd.qnty) as qnty_purchased'),'c.name as color_name','p.name as product_name'];
+		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id',DB::raw('SUM(pd.qnty) as qnty_purchased'),'c.name as color_name','p.name as product_name','p.id as product_id'];
+
+		$result = DB::table('purchase_detail as pd')
+					->leftJoin('products as p', 'pd.product_id', '=', 'p.id')
+					->leftJoin('design_product as dp', 'pd.design_product_id', '=', 'dp.id')
+					->leftJoin('order_design as od', 'dp.design_id', '=', 'od.id')
+					->leftJoin('color as c', 'pd.color_id', '=', 'c.id')
+					->leftJoin('product_address_size_mapping as pas','pd.id','=','pas.purchase_detail_id')
+					->leftJoin('product_address_mapping as pam','pas.product_address_id','=','pam.id')
+					->select($listArr)
+					->where('od.order_id','=',$order_id)
+					->where('pam.address_id','=',$address_id)
+					->GroupBy('pd.id')
+					->get();
+
+		return $result;
+
+		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id',DB::raw('SUM(pd.qnty) as qnty_purchased'),'c.name as color_name','p.name as product_name','p.id as product_id'];
 
 		$result = DB::table('purchase_detail as pd')
 					->leftJoin('products as p', 'pd.product_id', '=', 'p.id')
@@ -93,7 +110,7 @@ class Distribution extends Model {
 
 	public function getProductByOrder($order_id)
 	{
-		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id',DB::raw('SUM(pd.qnty) as qnty_purchased'),'c.name as color_name','p.name as product_name'];
+		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id',DB::raw('SUM(pd.qnty) as qnty_purchased'),'c.name as color_name','p.name as product_name','p.id as product_id'];
 
 		$result = DB::table('purchase_detail as pd')
 					->leftJoin('products as p', 'pd.product_id', '=', 'p.id')
@@ -171,7 +188,7 @@ class Distribution extends Model {
 					->leftJoin('shipping as s','oa.order_id','=','s.order_id')
 					->leftJoin('client_distaddress as cd','oa.address_id','=','cd.id')
 					->leftJoin('state as st','st.id','=','cd.state')
-					->select('cd.*','oa.id as order_adress_id','s.shipping_type_id','s.shipping_method','st.name','s.id as shipping_id')
+					->select('cd.*','oa.id as order_adress_id','oa.shipping_type_id','oa.shipping_method_id','st.name','s.id as shipping_id')
 					->where('oa.order_id','=',$order_id)
 					->GroupBy('cd.id')
 					->skip(0)
