@@ -198,9 +198,9 @@ class Distribution extends Model {
 		return $result;
     }
 
-    public function getTotalDistributedOrderAddress($order_id,$address_id)
+    public function getTotalDistributedOrderAddress($address_id,$order_id)
 	{
-		$total_distributed = DB::table('product_address_mapping as pam','s.id','=','pam.shipping_id')
+		$total_distributed = DB::table('product_address_mapping as pam')
                             ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
                             ->select(DB::raw('SUM(pas.distributed_qnty) as distributed'))
                             ->where('pam.order_id','=',$order_id)

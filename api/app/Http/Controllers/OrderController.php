@@ -1744,6 +1744,12 @@ class OrderController extends Controller {
 
         }
 
+        if(isset($post['action']))
+        {
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+            return response()->json(['data'=>$data]);
+        }
+
         
 
         $orderdata = $this->common->GetTableRecords('orders',array('id'=>$post['cond']['id']));

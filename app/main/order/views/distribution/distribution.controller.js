@@ -95,6 +95,11 @@
 
         $scope.getProductByAddress = function(address_id)
         {
+            angular.forEach($scope.distributionData, function(value, key){
+                if(value.id != address_id)
+                value.is_selected = 0;
+            });
+
             $scope.address_id = address_id;
             $scope.addressProducts = $scope.distributionData[$scope.address_id].products;
             $scope.distributionData[$scope.address_id].is_selected = 1;
@@ -109,21 +114,23 @@
         }
 
         var vm = this;
-        vm.openaddAddressDialog = openaddAddressDialog;
+        vm.openaddExistingLocatioDilog = openaddExistingLocatioDilog;
 
         var vm = this;
 
-        function openaddAddressDialog(ev, order)
+        function openaddExistingLocatioDilog(ev)
         {
+            console.log('here');
             $mdDialog.show({
-                controller: 'AddAddressController',
+                controller: 'ExistingLocationController',
                 controllerAs: 'vm',
-                templateUrl: 'app/main/order/dialogs/addAddress/addAddress.html',
+                templateUrl: 'app/main/order/dialogs/distribution/existinglocation.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
                 locals: {
-                    Orders: $scope.order,
+                    order_id: $scope.order_id,
+                    client_id: $scope.order.client_id,
                     event: ev
                 },
                 onRemoving : $scope.returnFunction
@@ -238,6 +245,12 @@
                 }
                 $("#ajax_loader").hide();
             });
+        }
+
+        $scope.openInsertPopup = function(path,ev,table)
+        {
+            var insert_params = {client_id:$scope.order.client_id,order_id:$scope.order_id};
+            sessionService.openAddPopup($scope,path,insert_params,table);
         }
     }
 })();
