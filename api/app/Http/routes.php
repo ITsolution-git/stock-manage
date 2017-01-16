@@ -633,6 +633,13 @@ Route::post('product/addProduct',[
    'flag' => 'false',
    'uses' => 'ProductController@addProduct'
 ]);
+Route::post('product/addProductCustom',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'add',
+   'flag' => 'false',
+   'uses' => 'ProductController@addProductCustom'
+]);
 
 Route::post('product/designProduct',[
    'middleware' => 'check',
