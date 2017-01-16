@@ -20,7 +20,7 @@
                           <br/>
                           <span>Due Date: 2/15/2017</span>
                           <br/>
-                          <span>ERT: 1.56</span>
+                          <span>ERT: 1.56</span><span> C: 12</span>
                           <br/>
                           <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
                           <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span>

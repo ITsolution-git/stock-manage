@@ -375,7 +375,8 @@
                                   //mock data
                                   "completed":1,
                                   "screen_icon":1,
-                                  "garment":1},
+                                  "garment":1,
+                                  "color": 14,},
                             {
                                   "shift_name":"Shift 1",
                                   "machine_name":"Kenne",
@@ -393,7 +394,8 @@
                                   //mock data
                                   "completed":1,
                                   "screen_icon":2,
-                                  "garment":0},
+                                  "garment":0,
+                                  "color": 11,},
                               {
                                   "shift_name":"Shift 1",
                                   "machine_name":"Kenne",
@@ -411,7 +413,8 @@
                                   //mock data
                                   "completed":0,
                                   "screen_icon":3,
-                                  "garment":1}];
+                                  "garment":1,
+                                  "color": 10,}];
          $scope.$on('day-bag.drag', function (e, el) {
            el.removeClass('ex-moved');
          });

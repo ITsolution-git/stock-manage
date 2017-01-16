@@ -92,7 +92,6 @@
                                                             <h4 class="text-center shift-name">No shift as no alloc</h4>
                                                             <div dragula='"day-bag"' class="full-row pull-left p-5 shift-container">
                                                                 <div class="shift-card" ng-repeat="positions in shift.shift_data" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
-
                                                                       <positions-card ng-model="positions"></positions-card>
                                                                 </div>
                                                             </div>
@@ -129,7 +128,7 @@
                                                     <div class="slot-content">
                                                         <div ng-repeat="shift in [{'shift_name':'Shift 1'},{'shift_name':'Shift 2'},{'shift_name':'Shift 3'}]">
                                                             <h4 class="text-center">{{shift.shift_name}}</h4>
-                                                            <div dragula='"week-bag"' class="full-row pull-left p-5 shift-container">
+                                                            <div dragula='"day-bag"' class="full-row pull-left p-5 shift-container">
                                                                 <div class="shift-post-card" ng-repeat="positions in shift.shift_data" ng-click="GetSchedulePositionDetail(positions.position_id)">
                                                                     <div class="pull-left right-search-box">{{positions.name}} - #{{positions.display_number}} - {{positions.position_name}}</div>
                                                                     <div class="box-30">
@@ -220,7 +219,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <table class="scheduled-table">
+                                    <table class="scheduled-table">
                                         <tr>
                                             <td ng-repeat="scheduleweek in SchedualweekData">
                                                 <div class="slot">
@@ -246,7 +245,7 @@
                                                     <div class="slot-content">
                                                         <div ng-repeat="shift in scheduleweek.date_data">
                                                             <h4 class="text-center shift-name">{{shift.shift_name}}</h4>
-                                                            <div dragula='"day-bag"' class="full-row pull-left p-5 shift-container">
+                                                            <div dragula='"week-bag"' class="full-row pull-left p-5 shift-container">
                                                                 <div class="shift-card" ng-repeat="positions in shift.shift_data" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
                                                                     <div ng-show="positions.rush_job==1" class="position-rush-stripe"><span>rush</span></div>
                                                                     <div class="pull-left position-text">
@@ -270,7 +269,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    </table> -->
+                                    </table>
                                 </div>
                             </div>
 
@@ -345,7 +344,7 @@
                                           </div>
                                       </div>
                                   </div>
-                                    <!-- <table class="scheduled-table">
+                                    <table class="scheduled-table">
                                         <tr>
                                             <td ng-repeat="schedulemachine in SchedualmachineData.shifts">
                                                 <div class="slot">
@@ -378,7 +377,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    </table> -->
+                                    </table>
                                 </div>
                                 <!-- <div class="white-bg pull-left full-row schedule-main" ng-show="getmachine_data==0">
                                     <div class="prod-board-details">
