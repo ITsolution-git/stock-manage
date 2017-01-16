@@ -694,11 +694,8 @@ Route::post('product/downloadCSV',[
    'uses' => 'ProductController@downloadCSV'
 ]);
 
-Route::post('product/downloadCustomProductCSV',[
-   'middleware' => 'check',
-   'role' => 'ALL',
-   'uses' => 'ProductController@downloadCustomProductCSV'
-]);
+
+Route::post('product/downloadCustomProductCSV', 'ProductController@downloadCustomProductCSV');
 
 
 Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
