@@ -88,7 +88,8 @@
                                 </md-input-container>
                             </div>
                             <span class="pull-left">
-                                <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn mr-20" ng-click="qbClientSetup()" >Client Sync to Quickbook</md-button>
+                                <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn mr-20" ng-click="qbClientSetup()" ng-if="qbsync == 0">Client Sync to Quickbook</md-button>
+                                <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn mr-20" disabled ng-if="qbsync == 1">Client Sync to Quickbook Processing ...</md-button>
                                  <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn" ng-click="qbUpdateInovice()" >Invoice Payments Sync to Quickbook
                                 </md-button>
                             </span>
