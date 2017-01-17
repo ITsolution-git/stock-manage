@@ -820,8 +820,16 @@ public function create_dir($dir_path) {
             $client_data = $this->common->GetTableRecords('client',array('client_id' => $order_data[0]->client_id));
             if($client_data[0]->tax_rate > 0)
             {
-                $tax = $order_total * $client_data[0]->tax_rate/100;
-                $tax_rate = $client_data[0]->tax_rate;
+                if($client_data[0]->tax_exempt == 1) {
+
+                    $tax = 0;
+                    $tax_rate = 0;
+                } else {
+
+                    $tax = $order_total * $client_data[0]->tax_rate/100;
+                    $tax_rate = $client_data[0]->tax_rate;
+                }
+                
             }
             else
             {
