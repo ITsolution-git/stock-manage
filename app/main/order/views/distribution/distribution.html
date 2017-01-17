@@ -65,10 +65,10 @@
 
     <md-content class="product-select">
         <div layout="row" layout-wrap="nowrap" class="p-20">
-            <div layout="column" flex="50" class="box-zerospace m-b-10" ng-repeat="product in orderProducts">
+            <div layout="column" flex="50" class="box-zerospace m-b-10" ng-repeat="(key,product) in orderProducts">
                 <md-card class="m-0" flex="100">
                     <md-card-content class="recap">
-                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row" ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row" ng-click="toggle(product.id, selectedSizes, key)">
                             <div layout="column" flex="35">
                                 <strong>Product Name:</strong> {{product.product_name}}
                             </div>

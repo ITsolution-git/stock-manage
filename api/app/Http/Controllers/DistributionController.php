@@ -405,4 +405,17 @@ class DistributionController extends Controller {
         }
         return false;
     }
+
+    public function getSizeBySelect()
+    {
+        $post = Input::all();
+        $products = $this->distribution->getSingleDistributedArr($post);
+        if(empty($products)) {
+            $success = 0;
+        } else {
+            $success = 1;
+        }
+        $response = array('success'=>$success,'message'=>GET_RECORDS,'products'=>$products);
+        return response()->json(["data" => $response]);
+    }
 }

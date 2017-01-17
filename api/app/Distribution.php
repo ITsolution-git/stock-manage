@@ -242,5 +242,29 @@ class Distribution extends Model {
 
 		return $result[0]->distributed_qnty;
 	}
+
+	public function getSingleDistributedArr($data)
+	{
+		$listArr = ['pd.id','pd.size',DB::raw('SUM(pas.distributed_qnty) as distributed_qnty'),'pd.remaining_qnty','pas.product_address_id','qnty as qnty_purchased','c.name as color_name','p.name as product_name','p.id as product_id'];
+
+		$result = DB::table('purchase_detail as pd')
+					->leftJoin('products as p', 'pd.product_id', '=', 'p.id')
+					->leftJoin('design_product as dp', 'pd.design_product_id', '=', 'dp.id')
+					->leftJoin('order_design as od', 'dp.design_id', '=', 'od.id')
+					->leftJoin('color as c', 'pd.color_id', '=', 'c.id')
+					->leftJoin('product_address_size_mapping as pas','pd.id','=','pas.purchase_detail_id')
+					->leftJoin('product_address_mapping as pam','pas.product_address_id','=','pam.id')
+					->select($listArr)
+					->where('pas.purchase_detail_id','=',$data['id']);
+					if(isset($data['address_id']))
+					{
+						$result = $result->where('pam.address_id','=',$data['address_id']);
+					}
+					$result = $result->where('pam.order_id','=',$data['order_id'])
+					->GroupBy('pam.id')
+					->get();
+
+		return $result;
+	}
 }	
 ?>

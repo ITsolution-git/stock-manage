@@ -848,6 +848,13 @@ Route::post('distribution/getProductByAddress',[
    'flag' => 'false',
    'uses' => 'DistributionController@getProductByAddress'
 ]);
+Route::post('distribution/getSizeBySelect',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'get',
+   'flag' => 'false',
+   'uses' => 'DistributionController@getSizeBySelect'
+]);
 
 Route::get('qbo/oauth','QuickBookController@qboOauth');
 Route::get('qbo/success','QuickBookController@qboSuccess');

@@ -22,6 +22,8 @@
         $scope.shippingType = [];
         $scope.shippingMethod = [];
         $scope.addressProducts = [];
+        $scope.selectedSizes = [];
+        $scope.product = [];
         $scope.location = '';
         $scope.address_id = 0;
         $scope.page = 1;
@@ -104,8 +106,8 @@
             });
 
             $scope.address_id = address_id;
-            $scope.addressProducts = $scope.distributionData[$scope.address_id].products;
             $scope.distributionData[$scope.address_id].is_selected = 1;
+            //$scope.addressProducts = $scope.distributionData[$scope.address_id].products;
             $scope.location = $scope.distributionData[$scope.address_id].description;
             $scope.shippingType = $scope.distributionData[$scope.address_id].shippingType;
             $scope.shippingMethod = $scope.distributionData[$scope.address_id].shippingMethod;
@@ -238,7 +240,8 @@
             $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
                 
                 if(result.data.success == '1') {
-                    $scope.getDistributionDetail();
+                    $scope.orderProducts[key].distributed_qnty = result.data.distributed_qnty;
+                    $scope.orderProducts[key].remaining_qnty = result.data.remaining_qnty;
                 }
                 else
                 {
@@ -274,5 +277,39 @@
                 }
             }
         }
+        $scope.toggle = function (item, list, key) {
+
+            var idx = list.indexOf(item);
+
+            if (idx > -1) {
+                $scope.selectedSizes.splice(idx, 1);
+                if($scope.selectedSizes.length > 0)
+                {
+                    $scope.addressProducts.splice($scope.selectedSizes[key],1);
+                }
+                else
+                {
+                    $scope.addressProducts = [];       
+                }
+            }
+            else {
+                $scope.selectedSizes.push(item);
+
+                var combine_array = {};
+                if($scope.address_id > 0)
+                {
+                    combine_array.address_id = $scope.address_id;    
+                }
+                combine_array.order_id = $scope.order_id;
+                combine_array.id = item;
+
+                $http.post('api/public/distribution/getSizeBySelect',combine_array).success(function(result, status, headers, config) {
+                    
+                    if(result.data.success == '1') {
+                        $scope.addressProducts.push(result,data.products);
+                    }
+                });
+            }
+        };
     }
 })();
