@@ -335,22 +335,17 @@ class DistributionController extends Controller {
 
         $undistributed_qty = $total_order_qty - $total_shipped_qnty;
 
-        $post['page']['page']=1;
-
         $post['range'] = 2;
-        $post['start'] = ($post['page']['page'] - 1) * $post['range'];
+        $post['start'] = ($post['page'] - 1) * $post['range'];
         $post['limit'] = $post['range'];
-        
-        if(!isset($post['sorts']['sortOrder'])) {
-             $post['sorts']['sortOrder']='desc';
-        }
-        if(!isset($post['sorts']['sortBy'])) {
-            $post['sorts']['sortBy'] = 'o.id';
-        }
 
-        $distributionData = $this->distribution->getOrderDistributionAddress($post['order_id']);
+        $distributionData = $this->distribution->getOrderDistributionAddress($post);
 
-        foreach ($distributionData as $addr) {
+        $size =ceil($distributionData['count']/2);
+
+        $pagination = array('count' => $post['range'],'page' => $post['page'],'pages' => 7,'size' => $size);
+
+        foreach ($distributionData['addressData'] as $addr) {
             
             $total_remaining_qnty = 0;
 
@@ -366,7 +361,7 @@ class DistributionController extends Controller {
             $addr->is_selected = 0;
             $addr->shippingType = $this->common->GetTableRecords('shipping_type',array(),array());
 
-            if($addr->shipping_type_id == 1 || $addr->shipping_type_id == 2)
+            if($addr->shipping_type_id == 1 || $addr->shipping_type_id == 3)
             {
                 $addr->shippingMethod = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => $addr->shipping_type_id),array());
             }
@@ -375,32 +370,39 @@ class DistributionController extends Controller {
                 $addr->shippingMethod = array();
             }
 
-            $addr->products = $this->distribution->getProductByAddress($addr->id,$post['order_id']);
+            $orderProducts = $this->distribution->getProductByOrder($post['order_id']);
+            $allocatedProducts = $this->distribution->getProductByOrder($post['order_id']);
 
-            if(empty($addr->products))
-            {
-                $addr->products = $this->distribution->getProductByOrder($post['order_id']);
-                $orderProducts = $addr->products;
-                $addr->addressTotalProducts = 0;
-            }
-            else
-            {
-                $orderProducts = $this->distribution->getProductByOrder($post['order_id']);
-                $addr->addressTotalProducts = $this->distribution->getTotalDistributedOrderAddress($addr->id,$post['order_id']);
+            foreach ($allocatedProducts as $ap) {
+                
+                $ap->distributed_qnty = $this->distribution->getSingleDistributedSize(array('id'=>$ap->id,'order_id'=>$post['order_id'],'address_id'=>$addr->id));
+                $ap->old_distributed_qnty = $ap->distributed_qnty;
             }
 
-            
+            $addr->addressTotalProducts = $this->distribution->getTotalDistributedOrderAddress($addr->id,$post['order_id']);
+            $addr->products = $allocatedProducts;
+
             $distribution_address[$addr->id] = $addr;
         }
 
         if(!empty($shippingData))
         {
-            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts);
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts,'pagination' => $pagination);
         }
         else
         {
-            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts);
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts,'pagination' => $pagination);
         }
         return response()->json(["data" => $response]);
+    }
+
+    public function checkProductArray($products, $field, $value)
+    {
+        foreach($products as $key => $product)
+        {
+            if ( $product->$field === $value )
+            return $product;
+        }
+        return false;
     }
 }

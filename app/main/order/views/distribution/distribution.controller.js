@@ -24,6 +24,7 @@
         $scope.addressProducts = [];
         $scope.location = '';
         $scope.address_id = 0;
+        $scope.page = 1;
 
         // change display number to order Id for fetching the order data
         var order_data = {};
@@ -71,6 +72,7 @@
 
             var combine_array_id = {};
             combine_array_id.order_id = $scope.order_id;
+            combine_array_id.page = $scope.page;
             $scope.controls = [];
 
             $http.post('api/public/distribution/getDistributionDetail',combine_array_id).success(function(result, status, headers, config) {
@@ -90,6 +92,7 @@
                 $scope.total_order_qty = result.data.total_order_qty;
                 $scope.total_shipped_qnty = result.data.total_shipped_qnty;
                 $scope.orderProducts = result.data.orderProducts;
+                $scope.pagination = result.data.pagination;
             });
         }
 
@@ -151,7 +154,7 @@
                 }
                 else
                 {
-                    $scope.shippingMethod
+                    $scope.shippingMethod = [];
                 }
             });
         }
@@ -161,16 +164,8 @@
             var stype_main_data = {};
             var condition_obj = {};
 
-            if($scope.distributionData[$scope.address_id].shipping_id > 0)
-            {
-                stype_main_data.table ='shipping';
-                condition_obj['id'] =  $scope.distributionData[$scope.address_id].shipping_id;
-            }
-            else
-            {
-                stype_main_data.table ='order_shipping_address_mapping';
-                condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
-            }
+            stype_main_data.table ='order_shipping_address_mapping';
+            condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
 
             $scope.name_filed = 'shipping_type_id';
             var obj = {};
@@ -192,18 +187,10 @@
             var smethod_main_data = {};
             var condition_obj = {};
 
-            if($scope.distributionData[$scope.address_id].shipping_id > 0)
-            {
-                smethod_main_data.table ='shipping';
-                condition_obj['id'] =  $scope.distributionData[$scope.address_id].shipping_id;
-            }
-            else
-            {
-                smethod_main_data.table ='order_shipping_address_mapping';
-                condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
-            }
+            smethod_main_data.table ='order_shipping_address_mapping';
+            condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
 
-            $scope.name_filed = 'shipping_method';
+            $scope.name_filed = 'shipping_method_id';
             var obj = {};
             obj[$scope.name_filed] =  id;
             smethod_main_data.data = angular.copy(obj);
@@ -216,12 +203,27 @@
                 notifyService.notify(data.status, data.message);
             });
         }
-        $scope.allocateDistQty = function(productArr)
+        $scope.allocateDistQty = function(key,productArr)
         {
             if($scope.address_id == 0)
             {
                 var data = {"status": "error", "message": "Please select address"}
                 notifyService.notify(data.status, data.message);
+                return false;
+            }
+            if(productArr.distributed_qnty == '')
+            {
+                notifyService.notify('error', 'Please enter valid quantity');
+                $scope.addressProducts[key].distributed_qnty = productArr.old_distributed_qnty;
+                return false;
+            }
+
+            var remaining_qnty = parseInt(productArr.remaining_qnty) + parseInt(productArr.old_distributed_qnty);
+
+            if(parseInt(productArr.distributed_qnty) > parseInt(remaining_qnty))
+            {
+                $scope.addressProducts[key].distributed_qnty = productArr.old_distributed_qnty;
+                notifyService.notify('error', 'You cannot allocate more than '+remaining_qnty+' quantity');
                 return false;
             }
 
@@ -251,6 +253,26 @@
         {
             var insert_params = {client_id:$scope.order.client_id,order_id:$scope.order_id};
             sessionService.openAddPopup($scope,path,insert_params,table);
+        }
+
+        $scope.getPage = function(param)
+        {
+            if(param == 'forward')
+            {
+                if($scope.pagination.page < $scope.pagination.size)
+                {
+                    $scope.page = $scope.page + 1;
+                    $scope.getDistributionDetail();
+                }
+            }
+            else
+            {
+                if($scope.page > 1)
+                {
+                    $scope.page = $scope.page - 1;
+                    $scope.getDistributionDetail();
+                }
+            }
         }
     }
 })();

@@ -30,7 +30,7 @@
 
             <div flex-xs flex-gt-xs="50" layout="column" class="pd30-LR layout-align-center-center">
                 <div class="distri-box">
-                    <a href="#" class="box-mang dist-next-prev left"><i class="fa fa-angle-left" role="button"></i></a>
+                    <a href="#" class="box-mang dist-next-prev left" ng-click="getPage('backward')"><i class="fa fa-angle-left" role="button"></i></a>
                     <div ng-repeat="dist in distributionData" flex-xs flex-gt-xs="50" layout="column" class="layout-align-center-center" ng-click="getProductByAddress(dist.id)">
                         <md-card class="custom-fullbox-shadow text-center" ng-class="{'active': dist.is_selected>0}">
                             <md-card-header layout-align="space-between center">
@@ -45,7 +45,7 @@
                             </md-card-content>
                         </md-card>
                     </div>
-                    <a href="#" class="box-mang dist-next-prev right"><i class="fa fa-angle-right" role="button"></i></a>
+                    <a href="#" class="box-mang dist-next-prev right" ng-click="getPage('forward')"><i class="fa fa-angle-right" role="button"></i></a>
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
             <div layout="column" flex="50" class="box-zerospace m-b-10" ng-repeat="product in orderProducts">
                 <md-card class="m-0" flex="100">
                     <md-card-content class="recap">
-                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row">
+                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row" ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
                             <div layout="column" flex="35">
                                 <strong>Product Name:</strong> {{product.product_name}}
                             </div>
@@ -108,13 +108,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="product in addressProducts">
+                    <tr ng-repeat="(key,product) in addressProducts">
                         <td>{{product.product_name}}</td>
                         <td>{{product.size}}</td>
                         <td>{{product.color_name}}</td>
                         <td>
                             <md-input-container class="m-0" ng-init="product.distributed_qnty = product.distributed_qnty == null ? '0' : product.distributed_qnty">
-                                <input aria-label="true" ng-model="product.distributed_qnty" ui-event="{ change : 'allocateDistQty(product)' }">
+                                <input aria-label="true" ng-model="product.distributed_qnty" ui-event="{ change : 'allocateDistQty(key,product)' }">
                             </md-input-container>
                         </td>
                         <td>{{location}}</td>
@@ -134,7 +134,7 @@
         </md-input-container>
 
         <md-input-container class="m-15-LR">
-          <label>Shipping Meathod</label>
+          <label>Shipping Method</label>
           <md-select ng-model="distributionData[address_id].shipping_method_id" ng-change="updateShippingMethod(distributionData[address_id].shipping_method_id)">
             <md-option ng-selected="distributionData[address_id].shipping_method_id == smethod.id" value="{{smethod.id}}" ng-repeat="smethod in shippingMethod">{{smethod.method_name}}</md-option>
           </md-select>

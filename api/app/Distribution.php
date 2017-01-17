@@ -110,7 +110,7 @@ class Distribution extends Model {
 
 	public function getProductByOrder($order_id)
 	{
-		$listArr = ['pd.id','pd.size','pas.distributed_qnty','pd.remaining_qnty','pas.product_address_id',DB::raw('SUM(pd.qnty) as qnty_purchased'),'c.name as color_name','p.name as product_name','p.id as product_id'];
+		$listArr = ['pd.id','pd.size',DB::raw('SUM(pas.distributed_qnty) as distributed_qnty'),'pd.remaining_qnty','pas.product_address_id','qnty as qnty_purchased','c.name as color_name','p.name as product_name','p.id as product_id'];
 
 		$result = DB::table('purchase_detail as pd')
 					->leftJoin('products as p', 'pd.product_id', '=', 'p.id')
@@ -182,20 +182,27 @@ class Distribution extends Model {
        return $total_distributed[0]->distributed;
 	}
 
-	public function getOrderDistributionAddress($order_id)
+	public function getOrderDistributionAddress($data)
     {
+    	$listArray = [DB::raw('SQL_CALC_FOUND_ROWS cd.*,oa.id as order_adress_id,oa.shipping_type_id,oa.shipping_method_id,st.name,s.id as shipping_id')];
+
     	$result = DB::table('order_shipping_address_mapping as oa')
 					->leftJoin('shipping as s','oa.order_id','=','s.order_id')
 					->leftJoin('client_distaddress as cd','oa.address_id','=','cd.id')
 					->leftJoin('state as st','st.id','=','cd.state')
-					->select('cd.*','oa.id as order_adress_id','oa.shipping_type_id','oa.shipping_method_id','st.name','s.id as shipping_id')
-					->where('oa.order_id','=',$order_id)
+					->select($listArray)
+					->where('oa.order_id','=',$data['order_id'])
 					->GroupBy('cd.id')
-					->skip(0)
-                    ->take(2)
+					->skip($data['start'])
+                    ->take($data['range'])
 					->get();
 
-		return $result;
+		$count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+
+		$returnData['addressData'] = $result;
+        $returnData['count'] = $count[0]->Totalcount;
+
+        return $returnData;
     }
 
     public function getTotalDistributedOrderAddress($address_id,$order_id)
@@ -213,6 +220,27 @@ class Distribution extends Model {
         }
                 
        	return $total_distributed[0]->distributed;
+	}
+
+	public function getSingleDistributedSize($data)
+	{
+		$listArr = [DB::raw('SUM(pas.distributed_qnty) as distributed_qnty')];
+
+		$result = DB::table('purchase_detail as pd')
+					->leftJoin('product_address_size_mapping as pas','pd.id','=','pas.purchase_detail_id')
+					->leftJoin('product_address_mapping as pam','pas.product_address_id','=','pam.id')
+					->select($listArr)
+					->where('pas.purchase_detail_id','=',$data['id'])
+					->where('pam.address_id','=',$data['address_id'])
+					->where('pam.order_id','=',$data['order_id'])
+					->get();
+
+		if($result[0]->distributed_qnty == '')
+		{
+			$result[0]->distributed_qnty = 0;	
+		}
+
+		return $result[0]->distributed_qnty;
 	}
 }	
 ?>
