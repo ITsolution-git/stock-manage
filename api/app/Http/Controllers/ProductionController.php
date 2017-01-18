@@ -228,6 +228,23 @@ class ProductionController extends Controller {
 
         return response()->json(['data'=>$data]);
     }
-    
+    public function UpdateMachineRecords()  // Machine add/edit call from setting/Production screen 
+    {
+    	$post = Input::all();
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die();
+    	if(!empty($post['company_id']) && !empty($post['action']) && !empty($post['machineData']))
+	    {
+	    	
+	    	$PositionDetail= $this->production->UpdateMachineRecords($post,$post['action']);
+    		$data = array("success"=>'1',"message"=>"Opration successfully performed.");
+	    }
+	    else
+	    {
+	    	$data = array("success"=>'0',"message"=>MISSING_PARAMS);
+	    }
+
+        return response()->json(['data'=>$data]);
+    	
+    }
 
 }

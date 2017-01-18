@@ -54,6 +54,7 @@
         {   
             $scope.params = params;
             $scope.params.company_id = $scope.company_id;
+            $scope.params.machine_type = 0; // 0 ScreenPrint
             $scope.paramsObj = paramsObj;
 
             var company_data = {};
@@ -81,95 +82,118 @@
                 
             });
         }
-        $scope.addMachine = function(ev, settings)
-        {
-            $mdDialog.show({
-                //controller: 'AddEmployeeDialogController',
-                controller: function($scope,params){
-                    
-                    $scope.machine = {
-                        'machine_type':'',
-                        'machine_name':'',
-                        'color_count':'',
-                        'screen_width':'',
-                        'screen_height':'',
-                    }
-                    $scope.addMachine = function (machine) 
-                    {
-                        var InserArray = {}; // INSERT RECORD ARRAY
-
-                        InserArray.data = machine;
-                        InserArray.data.company_id = sessionService.get('company_id');
-                        InserArray.table ='machine';            
-
-                        // INSERT API CALL
-                        $http.post('api/public/common/InsertRecords',InserArray).success(function(Response) 
-                        {   
-                            if(Response.data.success=='1')
-                            {
-                                notifyService.notify('success',Response.data.message);
-                                $scope.closeDialog();
-                            }
-                            else
-                            {
-                                notifyService.notify('error',Response.data.message);
-                            }  
-                        });
-                    } 
-                    $scope.closeDialog = function() 
-                    {
-                        $mdDialog.hide();
-                    } 
-
-                },
-                templateUrl: 'app/main/settings/dialogs/machine/addmachine.html',
-                parent: angular.element($document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true,
-                locals: {
-                    params:$scope,
-                    event: ev
-                },
-                onRemoving : $scope.reloadCallback
-            });
-        }
-        $scope.editMachine = function (ev,id)
+        
+        $scope.Machine = function (ev,id,action)
         {
                 $mdDialog.show({
                 controller: function($scope,params){
-                    $("#ajax_loader").show();
-
+                   
                     $scope.params = params;
-
+                    $scope.machine_id = id;
+                    $scope.company_id = params.company_id;
                     $scope.allow_access = params.allow_access;
                     $scope.states_all = params.states_all;
-
-                    var companyData = {};
-                    companyData.table ='machine';
-                    companyData.cond = {id:id};
-                    // GET CLIENT TABLE CALL
-                    $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
-                    {   
-                        if(result.data.success=='1')
-                        {  
-                            $scope.machine = result.data.records[0];
-                        }
-                        else
+                    $scope.removeOS = [];
+                    $scope.removeIPH = [];
+                    $scope.alliphData = [];
+                    $scope.allfactorData = [];
+                    $scope.action = action;
+                    
+                    $scope.addIPHData = function()
+                    {
+                        $scope.alliphData.push({value:'',pos_no:''});
+                    }
+                    $scope.addOSData = function()
+                    {
+                        $scope.allfactorData.push({order_size:'',factor:''});
+                    }
+                    $scope.remove_IPH = function(index,id)
+                    {
+                        $scope.alliphData.splice(index,1);
+                        if(!angular.isUndefined(id))
                         {
-                            notifyService.notify( "error", result.data.message);
+                            $scope.removeIPH.push(id);
                         }
-                        $("#ajax_loader").hide();
-                    });
-                    $scope.addMachine = function(machine){
-                            
-                        var UpdateArray = {};
-                        UpdateArray.table ='machine';
-                        UpdateArray.data = machine;
-                        UpdateArray.cond = {id: machine.id};
-                        delete UpdateArray.data.id;
+                    }
+                    $scope.remove_OS = function(index,id)
+                    {
+                        $scope.allfactorData.splice(index,1);
+                        if(!angular.isUndefined(id))
+                        {
+                            $scope.removeOS.push(id);
+                        }
+                    }
+    
 
-                        $("#ajax_loader").show();
-                        $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    $scope.alliphDataAll =  function() {
+
+                            var allData = {};
+                            allData.table ='iph';
+                            allData.sort ='pos_no';
+                            allData.sortcond ='asc';
+                            allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id'),machine_id:$scope.machine_id}
+
+                            $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+                            {   
+                                if(result.data.success=='1')
+                                {   
+                                    $scope.alliphData = result.data.records;
+                                }   
+                            });
+                    } 
+                    $scope.allOrderSizeFactor =  function() 
+                    {
+                            var allData = {};
+                            allData.table ='order_size_factor';
+                            allData.sort ='order_size';
+                            allData.sortcond ='asc';
+                            allData.cond ={is_delete:1,status:1,company_id:sessionService.get('company_id'),machine_id:$scope.machine_id}
+
+                            $http.post('api/public/common/GetTableRecords',allData).success(function(result)
+                            {   
+                                if(result.data.success=='1')
+                                {   
+                                    $scope.allfactorData = result.data.records;
+                                } 
+                            });
+                    }  
+                    if(action=='edit')
+                    {
+                        var companyData = {};
+                        companyData.table ='machine';
+                        companyData.cond = {id:id};
+                        // GET CLIENT TABLE CALL
+                        $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+                        {   
+                            if(result.data.success=='1')
+                            {  
+                                $scope.machine = result.data.records[0];
+                            }
+                            else
+                            {
+                                notifyService.notify( "error", result.data.message);
+                            }
+                            $("#ajax_loader").hide();
+                        });
+                        $scope.alliphDataAll();
+                        $scope.allOrderSizeFactor();
+                    }                       
+
+
+                    $scope.UpdateMachineData = function(machine,alliphData,allfactorData){
+                            
+                        var MachineArray = {};
+                        MachineArray.machine_id=$scope.machine_id;
+                        MachineArray.company_id=$scope.company_id;
+                        MachineArray.machineData=machine;
+                        MachineArray.allfactorData=allfactorData;
+                        MachineArray.alliphData=alliphData;
+                        MachineArray.removeOS=$scope.removeOS;
+                        MachineArray.removeIPH=$scope.removeIPH;
+                        MachineArray.action=$scope.action;
+
+                        //$("#ajax_loader").show();
+                        $http.post('api/public/production/UpdateMachineRecords',MachineArray).success(function(result) {
                             if(result.data.success=='1')
                             {
                                 notifyService.notify('success', result.data.message);
@@ -189,7 +213,7 @@
                     } 
 
                 },
-                templateUrl: 'app/main/settings/dialogs/machine/addmachine.html',
+                templateUrl: 'app/main/settings/dialogs/machine/editmachine.html',
                 parent: angular.element($document.body),
                 targetEvent: ev,
                 clickOutsideToClose: true,
@@ -215,7 +239,7 @@
                     if(result.data.success=='1')
                     {
                         notifyService.notify('success', result.data.message);
-                        $scope.reloadCallback();
+                        //$scope.reloadCallback();
                     }
                     else
                     {
@@ -245,6 +269,73 @@
                 $("#ajax_loader").hide();
             });
         }
+
+
+        $scope.GetShiftList= function()
+        {
+            var shiftData = {};
+            shiftData.table ='labor';
+            shiftData.cond = {company_id:$scope.company_id,is_delete:1};
+            // GET CLIENT TABLE CALL
+            $http.post('api/public/common/GetTableRecords',shiftData).success(function(result) 
+            {   
+                if(result.data.success=='1')
+                {  
+                    $scope.shift_data = result.data.records;
+                }
+                else
+                {
+                    notifyService.notify( "error", result.data.message);
+                }
+                $("#ajax_loader").hide();
+            });
+        }
+        $scope.openaddLaborDialog= function(ev,labor_id)
+        {
+            $mdDialog.show({
+                controller: 'AddLaborController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/settings/dialogs/labor/addlabor.html',
+                parent: angular.element($document.body),
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                locals: {
+                    labor_id: labor_id,
+                    event: ev
+                 },
+                 onRemoving : $scope.GetShiftList
+            });
+        }
+        $scope.GetShiftList();
+
+         $scope.delete_labor = function (ev,id)
+        {
+            var UpdateArray = {};
+            UpdateArray.table ='labor';
+            UpdateArray.data = {is_delete:0};
+            UpdateArray.cond = {id: id};
+            
+            var permission = confirm(AllConstant.deleteMessage);
+            if (permission == true) 
+            {
+                $("#ajax_loader").show();
+                $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
+                    if(result.data.success=='1')
+                    {
+                        notifyService.notify('success', "Record Deleted Successfully.");
+                        $scope.reloadCallback();
+                    }
+                    else
+                    {
+                        notifyService.notify('error', result.data.message);
+                    }
+                    $("#ajax_loader").hide();
+                });
+            }
+        }
+
+
+        
     
     }
     

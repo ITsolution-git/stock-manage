@@ -32,12 +32,19 @@ class Machine extends Model {
         $machinedata = DB::table('machine')
                         ->select(DB::raw('SQL_CALC_FOUND_ROWS *'))
                         ->where('is_delete','=','1')
-                        ->where('company_id','=',$post['company_id']);
+                        ->where('company_id','=',$post['company_id'])
+                        ->where('machine_type','=',$post['machine_type']);
                         if($search != '')          
                         {
                             $machinedata = $machinedata->Where(function($query) use($search)
                             {
                                 $query->orWhere('machine_name', 'LIKE', '%'.$search.'%');
+                                $query->orWhere('screen_width', 'LIKE', '%'.$search.'%');
+                                $query->orWhere('screen_height', 'LIKE', '%'.$search.'%');
+                                $query->orWhere('color_count', 'LIKE', '%'.$search.'%');
+                                $query->orWhere('setup_time', 'LIKE', '%'.$search.'%');
+                                $query->orWhere('run_rate', 'LIKE', '%'.$search.'%');
+                                $query->orWhere('machine_type_text', 'LIKE', '%'.$search.'%');
                             });
                         }
                         $machinedata = $machinedata->orderBy($post['sorts']['sortBy'], $post['sorts']['sortOrder'])

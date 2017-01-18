@@ -8,7 +8,7 @@
             <div class="table-title-text" flex=20>Machine</div>
             <div class="pull-right right-search-box">
                 <div class="client-modal-title pull-right">
-                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="addMachine($event)">ADD MACHINE</span>
+                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="Machine($event,'','add')">ADD MACHINE</span>
                 </div>
                 <div class="search-block pull-right">
                 <md-input-container class="md-block" flex-gt-sm>
@@ -26,8 +26,7 @@
                     <tbody >
                         <tr ng-repeat="machine in rows">
                             <td>{{machine.machine_name}}</td>
-                            <td ng-if="machine.machine_type == '0'">Screenprint</td>
-                            <td ng-if="machine.machine_type == '1'">Embroidery</td>
+                            <td>{{machine.machine_type_text}}</td>
                             <td>{{machine.run_rate}}</td>
                             <td class="">{{machine.color_count}}</td>
                             <td class="">{{machine.screen_width}}" x {{machine.screen_height}}"</td>
@@ -41,7 +40,7 @@
                                     </md-button>
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
-                                            <md-button ng-click="editMachine($event,machine.id)">
+                                            <md-button ng-click="Machine($event,machine.id,'edit')">
                                                 Edit Machine
                                             </md-button>
                                         </md-menu-item>

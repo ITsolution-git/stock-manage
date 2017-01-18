@@ -454,4 +454,119 @@ class Production extends Model {
         return array('setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time,'getOrderImpression'=>$getOrderImpression,'imps'=>$imps_adjusted);
         //$getIPH = $this->getIPH($position_id);
     }
+
+    public function UpdateMachineRecords($post,$action)
+    {
+        if($action=='add')
+        {
+            $machine_id = $this->common->InsertRecords('machine',
+                                array('machine_name'=>$post['machineData']['machine_name'],
+                                  'screen_width'=>$post['machineData']['screen_width'],
+                                  'machine_type_text'=>$post['machineData']['machine_type_text'],
+                                  'screen_height'=>$post['machineData']['screen_height'],
+                                  'color_count'=>$post['machineData']['color_count'],
+                                  'setup_time'=>$post['machineData']['setup_time'],
+                                  'run_rate'=>$post['machineData']['run_rate'],
+                                  'machine_type'=>0,
+                                  'company_id'=>$post['company_id']
+                                  ));
+            if(!empty($post['allfactorData']))
+            {
+                foreach ($post['allfactorData'] as $key => $allfactorData) 
+                {
+                    $this->common->InsertRecords('order_size_factor',
+                            array('order_size'=>$allfactorData['order_size'],
+                                  'factor'=>$allfactorData['factor'],
+                                  'machine_id'=>$machine_id,
+                                  'company_id'=>$post['company_id']
+                                  ));
+                }
+            }
+            if(!empty($post['alliphData']))
+            {
+                foreach ($post['alliphData'] as $key => $alliphData) 
+                {
+                    $this->common->InsertRecords('iph',
+                            array('pos_no'=>$alliphData['pos_no'],
+                                  'value'=>$alliphData['value'],
+                                  'machine_id'=>$machine_id,
+                                  'company_id'=>$post['company_id']
+                                  ));
+                }
+            }
+        }
+        else if ($action=='edit')
+        {
+            $this->common->UpdateTableRecords('machine',array('id'=>$post['machine_id'],'company_id'=>$post['company_id']),
+                            array('machine_name'=>$post['machineData']['machine_name'],
+                                  'machine_type_text'=>$post['machineData']['machine_type_text'],
+                                  'screen_width'=>$post['machineData']['screen_width'],
+                                  'screen_height'=>$post['machineData']['screen_height'],
+                                  'color_count'=>$post['machineData']['color_count'],
+                                  'setup_time'=>$post['machineData']['setup_time'],
+                                  'run_rate'=>$post['machineData']['run_rate']
+                                  )
+                            );
+
+            if(!empty($post['removeOS']))
+            {
+                DB::table('order_size_factor')->whereIn('id', $post['removeOS'])->delete();
+            }
+            if(!empty($post['removeIPH']))
+            {
+                DB::table('iph')->whereIn('id', $post['removeIPH'])->delete();
+            }
+
+            if(!empty($post['alliphData']))
+            {
+                foreach ($post['alliphData'] as $key => $alliphData) 
+                {
+                    if(empty($alliphData['id']))  // IF THERE IS NEW DATA ENTER
+                    {
+                        $this->common->InsertRecords('iph',
+                            array('pos_no'=>$alliphData['pos_no'],
+                                  'value'=>$alliphData['value'],
+                                  'machine_id'=>$post['machine_id'],
+                                  'company_id'=>$post['company_id']
+                                  ));
+                    }
+                    else // UPDATE DATA
+                    {
+                        $this->common->UpdateTableRecords('iph',array('id'=>$alliphData['id'],'company_id'=>$post['company_id']),
+                            array('value'=>$alliphData['value'],
+                                  'pos_no'=>$alliphData['pos_no']
+                                  )
+                            );
+                    }
+                 }
+            }
+             if(!empty($post['allfactorData']))
+            {
+                foreach ($post['allfactorData'] as $key => $allfactorData) 
+                {
+                    if(empty($allfactorData['id']))  // IF THERE IS NEW DATA ENTER
+                    {
+                        $this->common->InsertRecords('order_size_factor',
+                            array('order_size'=>$allfactorData['order_size'],
+                                  'factor'=>$allfactorData['factor'],
+                                  'machine_id'=>$post['machine_id'],
+                                  'company_id'=>$post['company_id']
+                                  ));
+                    }
+                    else // UPDATE DATA
+                    {
+                        $this->common->UpdateTableRecords('order_size_factor',array('id'=>$allfactorData['id'],'company_id'=>$post['company_id']),
+                            array('order_size'=>$allfactorData['order_size'],
+                                  'factor'=>$allfactorData['factor']
+                                  )
+                            );
+                    }
+                }
+            }
+        }
+        else
+        {
+            return 'error';
+        }
+    }
  }

@@ -115,7 +115,7 @@
                         return sessionService.AccessService('AT,SU','false');
                     }
                 },
-                url  : '/labor',
+                url  : '/shift_setting',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/labor/labor.html',
@@ -403,7 +403,7 @@
             weight     : 6
         });
         msNavigationServiceProvider.saveItem('fuse.settings.labor', {
-            title      : 'Labor Settings',
+            title      : '',
             state      : 'app.settings.labor',
             stateParams: {'id': 7},
             class      : 'navigation-dashboards project-dashboard',
