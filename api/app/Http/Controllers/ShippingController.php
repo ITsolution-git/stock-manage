@@ -329,6 +329,7 @@ class ShippingController extends Controller {
     public function createPDF()
     {
         $post = Input::all();
+       
 
         $company_detail = json_decode($_POST['company_detail']);
         $company_id = $company_detail[0]->id;
@@ -337,11 +338,12 @@ class ShippingController extends Controller {
 
         $shipping['company_detail'] = $this->common->getCompanyDetail($company_id);
 
+
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
 
         if(!empty($shipping['shipping']->is_blind))
         {
-            $shipping['company_detail'][0]->photo = $this->common->checkImageExist($company_id.'/client/'.$shipping['shipping']->client_id."/",$shipping['shipping']->b_w_logo);
+            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->bw_photo;
         }
         else
         {
