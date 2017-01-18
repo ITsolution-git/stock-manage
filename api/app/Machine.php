@@ -51,11 +51,14 @@ class Machine extends Model {
                         ->skip($post['start'])
                         ->take($post['range'])
                         ->get();
-       
+        
         $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
         $returnData = array();
 
         foreach ($machinedata as $machine) {
+
+            $machine->run_rate = $machine->run_rate*100;
+            $machine->setup_time = $machine->setup_time*60;
             if($machine->operation_status == 1) {
                 $machine->operation_status = true;
             }

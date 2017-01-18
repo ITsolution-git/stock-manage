@@ -246,7 +246,7 @@
         $scope.JobSchedualPopup = function (position_id)
         {
             $("#ajax_loader").hide();
-            var companyData = {company_id:$scope.company_id,position_id:position_id};
+            var companyData = {company_id:$scope.company_id,position_id:position_id,production_type:0};
 
             $http.post('api/public/production/GetShiftMachine',companyData).success(function(result) 
             {
@@ -393,10 +393,10 @@
 
 
 
-        $scope.GetSchedulePositionDetail = function(position_id)
+        $scope.GetSchedulePositionDetail = function(position_id,machine_id)
         {
             $("#ajax_loader").show();
-            var companyData = {company_id:$scope.company_id,position_id:position_id};
+            var companyData = {company_id:$scope.company_id,position_id:position_id,machine_id:machine_id};
 
             $http.post('api/public/production/GetSchedulePositionDetail',companyData).success(function(result) 
             {

@@ -31,7 +31,7 @@
                         <tr ng-repeat="labor in shift_data">
                             <td class="">{{labor.shift_name}}</td>
                             <td class="">{{labor.total_shift_hours}}</td>
-                            <td class="">{{labor.apply_days}}</td>
+                            <td class="">{{labor.display_days}}</td>
                             <td class=""> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">

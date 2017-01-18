@@ -39,8 +39,9 @@ class ProductionController extends Controller {
 	    	$Position_scheduleData[0]->rush_job = ($Position_scheduleData[0]->rush_job=='1')?true:false;
 
 
-	    	$machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0));  // GET MACHINE FROM COMPANU
-	    	$shift_data   = $this->common->GetTableRecords('company_shift',array('company_id'=>$post['company_id'],'is_delete'=>1)); // GET COMPANY SHIFT
+	    	
+            $machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0,'machine_type'=>$post['production_type']));  // GET MACHINE FROM COMPANU
+            $shift_data   = $this->common->GetTableRecords('labor',array('company_id'=>$post['company_id'],'is_delete'=>1,'shift_type'=>$post['production_type'])); // GET COMPANY SHIFT
 	    	
 
 	    	$data = array("success"=>1,"message"=>GET_RECORDS,"machine_data"=>$machine_data,'shift_data'=>$shift_data,'Position_scheduleData'=>$Position_scheduleData);
@@ -196,11 +197,11 @@ class ProductionController extends Controller {
     public function GetSchedulePositionDetail() // POPUP OF POSITION
     {
     	$post = Input::all();
-    	if(!empty($post['company_id']) && !empty($post['position_id']))
+    	if(!empty($post['company_id']) && !empty($post['position_id']) && !empty($post['machine_id']))
 	    {
 	    	$PositionDetail= $this->production->GetPositionDetails($post['position_id'],$post['company_id']);
 	    	$GarmentDetail= $this->production->GetGarmentDetail($post['position_id'],$post['company_id']);
-	    	$GetRuntimeData= $this->production->GetRuntimeData($post['position_id'],$post['company_id']);
+	    	$GetRuntimeData= $this->production->GetRuntimeData($post['position_id'],$post['company_id'],$post['machine_id']);
 			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail,'GetRuntimeData'=>$GetRuntimeData);
 	    }
 	    else

@@ -100,6 +100,7 @@
             } else {
 
                 laborData.company_id = sessionService.get('company_id'); 
+                laborData.shift_type = 0; 
                 var combine_array_id = {};
                 combine_array_id.laborData = laborData;
 
