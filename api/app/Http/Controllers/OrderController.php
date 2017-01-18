@@ -775,6 +775,7 @@ class OrderController extends Controller {
 
        
         $client_data = $this->client->GetclientDetail($post['orderData']['client']['client_id']);
+        
 
         $dataMisc['cond']['company_id'] = $post['company_id'];
         
@@ -796,6 +797,7 @@ class OrderController extends Controller {
          $post['orderdata']['login_id'] = $post['login_id'];
          $post['orderdata']['company_id'] = $post['company_id'];
          $post['orderdata']['client_id'] = $post['orderData']['client']['client_id'];
+         $post['orderdata']['is_blind'] = $client_data['main']['is_blind'];
          $post['orderdata']['created_date'] = date('Y-m-d');
          $post['orderdata']['updated_date'] = date('Y-m-d');
          $post['orderdata']['account_manager_id'] = $client_data['main']['account_manager'];
