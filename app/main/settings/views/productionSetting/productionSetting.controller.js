@@ -169,7 +169,7 @@
                             {  
                                 $scope.machine = result.data.records[0];
                                 $scope.machine.run_rate = $scope.machine.run_rate*100;
-                                $scope.machine.setup_time = $scope.machine.setup_time*60;
+                                $scope.machine.setup_time = Math.round($scope.machine.setup_time*60);
                             }
                             else
                             {
@@ -273,13 +273,12 @@
         }
 
 
-        $scope.GetShiftList= function()
+        $scope.GetShiftList= function() 
         {
             var shiftData = {};
-            shiftData.table ='labor';
-            shiftData.cond = {company_id:$scope.company_id,is_delete:1,shift_type:0};
+            shiftData = {company_id:$scope.company_id,is_delete:1,shift_type:0};
             // GET CLIENT TABLE CALL
-            $http.post('api/public/common/GetTableRecords',shiftData).success(function(result) 
+            $http.post('api/public/production/productionShift',shiftData).success(function(result) 
             {   
                 if(result.data.success=='1')
                 {  

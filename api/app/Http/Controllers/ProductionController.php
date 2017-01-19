@@ -247,5 +247,20 @@ class ProductionController extends Controller {
         return response()->json(['data'=>$data]);
     	
     }
+    public function productionShift()
+    {
+    	$post = Input::all();
+    	if(!empty($post['company_id']))
+	    {
+	    	$PositionDetail= $this->production->productionShift($post);
+    		$data = array("success"=>'1',"message"=>GET_RECORDS,'records'=>$PositionDetail);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>'0',"message"=>MISSING_PARAMS);
+	    }
+
+        return response()->json(['data'=>$data]);
+    }
 
 }

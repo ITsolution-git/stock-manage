@@ -590,4 +590,17 @@ class Production extends Model {
             return 'error';
         }
     }
+
+    public function productionShift($post)
+    {
+        $result = DB::table('labor as l')
+                    ->select( DB::raw('SQL_CALC_FOUND_ROWS l.*'), 
+                              DB::raw('(SELECT GROUP_CONCAT(SUBSTR(d.name,1,2)) FROM days d where FIND_IN_SET(d.id,l.apply_days)) as display_days'))
+                    ->where('l.is_delete','=','1')
+                    ->where('l.company_id','=',$post['company_id'])
+                    ->where('l.shift_type','=',$post['shift_type'])
+                 ->get();
+        return $result;
+        
+    }
  }
