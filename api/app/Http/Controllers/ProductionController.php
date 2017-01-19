@@ -201,8 +201,7 @@ class ProductionController extends Controller {
 	    {
 	    	$PositionDetail= $this->production->GetPositionDetails($post['position_id'],$post['company_id']);
 	    	$GarmentDetail= $this->production->GetGarmentDetail($post['position_id'],$post['company_id']);
-	    	$GetRuntimeData= $this->production->GetRuntimeData($post['position_id'],$post['company_id'],$post['machine_id']);
-			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail,'GetRuntimeData'=>$GetRuntimeData);
+			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail);
 	    }
 	    else
 	    {
@@ -217,9 +216,20 @@ class ProductionController extends Controller {
     	$post = Input::all();
     	if(!empty($post['company_id']) && !empty($post['id']))
 	    {
-	    	//$post['rush_job']
+	    	
+	    	$GetRuntimeData= $this->production->GetRuntimeData($post['position_id'],$post['company_id'],$post['machine_id']);
+
+	    	$setup_time = $GetRuntimeData['setup_time'];
+	    	$run_speed = $GetRuntimeData['run_speed'];
+	    	$run_time = $GetRuntimeData['run_time'];
+	    	$total_time = $GetRuntimeData['total_time'];
+	    	$getOrderImpression = $GetRuntimeData['getOrderImpression'];
+			$imps = $GetRuntimeData['imps'];
+	    
 	    	$post['run_date'] = date('Y-m-d',strtotime($post['run_date']));
-	    	$machine_data = $this->common->UpdateTableRecords('position_schedule',array('id'=>$post['id']),array('machine_id'=>$post['machine_id'],'shift_id'=>$post['shift_id'],'run_date'=>$post['run_date'],'rush_job'=>$post['rush_job']));  
+	    	$machine_data = $this->common->UpdateTableRecords('position_schedule',array('id'=>$post['id']),array('machine_id'=>$post['machine_id'],'shift_id'=>$post['shift_id'],'run_date'=>$post['run_date'],'rush_job'=>$post['rush_job'],'setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time,'impressions'=>$getOrderImpression,'imps'=>$imps));  
+
+
 	    	$data = array("success"=>'success',"message"=>UPDATE_RECORD);
 	    }
 	    else
