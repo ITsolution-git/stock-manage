@@ -546,8 +546,7 @@ class InvoiceController extends Controller {
     {
         $post = Input::all();
         $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1,$post['order_id']);
-
-
+        
         /*PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
         PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');
