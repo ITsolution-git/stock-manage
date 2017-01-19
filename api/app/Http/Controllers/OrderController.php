@@ -803,7 +803,12 @@ class OrderController extends Controller {
          $post['orderdata']['account_manager_id'] = $client_data['main']['account_manager'];
          $post['orderdata']['sales_id'] = $client_data['sales']['salesperson'];
          $post['orderdata']['price_id'] = $client_data['sales']['salespricegrid'];
-         $post['orderdata']['tax_rate'] = $client_data['tax']['tax_rate'];
+         
+         $post['orderdata']['tax_rate'] = 0;
+         if($client_data['tax']['tax_exempt'] == 0) {
+            $post['orderdata']['tax_rate'] = $client_data['tax']['tax_rate'];
+         }
+         
          $post['orderdata']['contact_main_id'] = $client_data['contact']['id'];
          
           $order_id = $this->common->InsertRecords('orders',$post['orderdata']);
