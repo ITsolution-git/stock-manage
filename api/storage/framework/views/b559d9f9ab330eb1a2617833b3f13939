@@ -78,7 +78,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                                     <td height="5">&nbsp;</td>
                                   </tr>
                                   <tr>
-                                    <td><?php if(!empty($client_data)){?><?php echo e($client_data[0]->first_name); ?> <?php echo e($client_data[0]->last_name); ?><?php } ?><br><?php foreach($addresses['result'] as $address): ?><?php if($address->address_billing == '1') {?><?php echo e($address->address); ?><br><?php echo e($address->street); ?><br><?php echo e($address->city); ?><br><?php echo e($address->state_name); ?><br><?php echo e($address->postal_code); ?><?php } ?><?php endforeach; ?>
+                                    <td><?php echo e($order_data[0]->client_company); ?><br/><?php if(!empty($client_data)){?><?php echo e($client_data[0]->first_name); ?> <?php echo e($client_data[0]->last_name); ?><?php } ?><br><?php foreach($addresses['result'] as $address): ?><?php if($address->address_billing == '1') {?><?php echo e($address->address); ?><br><?php echo e($address->street); ?><br><?php echo e($address->city); ?><br><?php echo e($address->state_name); ?><br><?php echo e($address->postal_code); ?><?php } ?><?php endforeach; ?>
                                     </td>
                                   </tr>
                                 </table>
@@ -168,14 +168,11 @@ table, caption, tbody, tfoot, thead, tr, th, td {
                           <?php if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} ?>
                           <tr style="background-color:<?php echo $color_bg?>;">
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo e($product->id); ?> - <?php echo e($product->product_name); ?></td>
-                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo e($product->color_name); ?></td>
-                              <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php foreach ($product->sizeData as $colorData)
+                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php $lenColor = count($product->sizeData);  $color_count = 1;foreach ($product->sizeData as $color_all_name => $colorDataNew) { ?><?php echo e($color_all_name); ?> <?php if ($color_count != $lenColor) { ?>/ <?php }?><?php $color_count++;}?></td>
+                              <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php $lenSize = count($product->sizeData);  $sizeAll_count = 1; foreach ($product->sizeData as $colorData)
                               {
-                               foreach ($colorData as $size)
-                               {
-                              ?>
-                                <?php echo e($size->size); ?>:(<?php echo number_format($size->qnty); ?>)&nbsp;
-                                <?php } }?>
+                               foreach ($colorData as $size){?><?php echo e($size->size); ?>:(<?php echo number_format($size->qnty); ?>)&nbsp;
+                                <?php  }?><?php if ($sizeAll_count != $lenSize){?>/ <?php }?><?php $sizeAll_count++;}?>
                               </td>
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo number_format($product->total_qnty) ?></td>
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px;line-height:20px;">$<?php echo number_format($product->total_line_charge,2) ?></td>
