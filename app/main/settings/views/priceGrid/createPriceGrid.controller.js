@@ -44,7 +44,7 @@
 
 
 
-                      if($scope.role_slug=='CA' || $scope.role_slug=='AM')
+                      if($scope.role_slug=='CA' || $scope.role_slug=='AM' || $scope.role_slug=='FM')
                         {
                             $scope.allow_access = 1; // OTHER ROLES CAN NOT ALLOW TO EDIT, CAN VIEW ONLY
                         }
