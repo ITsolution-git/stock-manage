@@ -400,6 +400,78 @@ class Product extends Model {
 }
 
 
+    public function addProductCustom($post) {
+         if(!isset($post['warehouse']))
+            {
+                $post['warehouse'] = '';
+            }
+/*        if(isset($post['is_supply'])) {
+            $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
+        }
+        else
+        {
+            $insert_array = array('design_id'=>$post['id'],'product_id'=>$post['product_id'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
+        }*/
+        $insert_array = array('design_id' => $post['id'],'product_id'=>$post['product_id'],'is_supply' => $post['is_supply'],'warehouse'=>$post['warehouse'],'date_added' => date('Y-m-d h:i:sa'));
+        if($post['action'] == 'Add') {
+            $design_product_id = DB::table('design_product')->insertGetId($insert_array);
+        }
+        else
+        {
+            $insert_design = DB::table('design_product')
+                            ->where('design_id', $post['id'])
+                            ->where('product_id', $post['product_id'])
+                            ->where('is_delete', '1')
+                            ->update($insert_array);
+            //$design_product_id = $post['design_product_id'];
+            $result_design = DB::table('design_product')
+                            ->where('design_id', $post['id'])
+                            ->where('product_id', $post['product_id'])
+                            ->where('is_delete', '1')
+                            ->get();
+            $design_product_id = $result_design[0]->id;
+        }
+       
+        $delete = DB::table('purchase_detail')->where('design_product_id','=',$design_product_id)->delete();
+        foreach($post['productData'] as $row) {
+            $sku = 0;
+            if(isset($row['sku'])) {
+                $sku = $row['sku'];
+            }
+            if(!isset($row['qnty']))
+            {
+                $row['qnty'] = 0;
+            }
+            
+            if(isset($row['customerPrice'])) {
+                $price = $row['customerPrice'];
+            }
+            
+            if(isset($row['customer_price'])) {
+                $price = $row['customer_price'];
+            }
+            
+            if($row['qnty'] > 0) {
+                  $insert_purchase_array = array('design_id'=>$post['id'],
+                'design_product_id'=>$design_product_id,
+                'product_id'=>$post['product_id'],
+                'size'=>$row['sizeName'],
+                'sku'=>$sku,
+                'price'=>$price,
+                'qnty'=>$row['qnty'],
+                'color_id'=>$row['color_id'],
+                'date'=>$post['created_date']);
+            $result = DB::table('purchase_detail')->insert($insert_purchase_array);
+            
+            }
+            
+              
+        }
+        return true;
+    }
+
+
+
 /**
 * Order Detail           
 * @access public designDetail

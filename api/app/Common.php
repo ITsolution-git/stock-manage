@@ -387,7 +387,7 @@ class Common extends Model {
                          ->leftJoin('state as st', 'st.id', '=', 's.prime_address_state')
                          ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','s.first_name','s.last_name',
                                     's.prime_address1','s.prime_address_city','st.code as prime_address_state','s.prime_address_country','s.prime_address_zip','s.prime_phone_main as phone',
-                                    's.url','s.photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip','cd.url')
+                                    's.url','s.photo','s.bw_photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip','cd.url')
                          ->where('usr.id','=',$company_id)
                          ->where('usr.is_delete','=','1')
                          ->where('s.is_delete','=','1')

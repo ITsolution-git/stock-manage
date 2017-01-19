@@ -262,9 +262,10 @@ class InvoiceController extends Controller {
         $retutn_arr['company_data'][0]->url = (!empty($retutn_arr['company_data'][0]->url) && preg_match('/http/',$retutn_arr['company_data'][0]->url) == false) ? "http://".$retutn_arr['company_data'][0]->url:$retutn_arr['company_data'][0]->url;
 
 
-        if(!empty($order_data_all['order'][0]->client_blind))
+        if(!empty($order_data_all['order'][0]->order_blind))
         {
-            $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/client/'.$order_data_all['order'][0]->client_id."/",$order_data_all['order'][0]->b_w_logo);
+            $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/staff/'.$staff[0]->id."/",$retutn_arr['company_data'][0]->bw_photo);
+          //  $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/client/'.$order_data_all['order'][0]->client_id."/",$order_data_all['order'][0]->b_w_logo);
         }
         else
         {
@@ -545,6 +546,7 @@ class InvoiceController extends Controller {
     {
         $post = Input::all();
         $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1,$post['order_id']);
+
 
         /*PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
