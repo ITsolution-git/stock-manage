@@ -1,7 +1,7 @@
-<md-dialog class="task-dialog addEmployeeDialog" >
-    <form name="employeeform" class="md-inline-form" novalidate>
-        <div class="client-profile-page">
-            <md-toolbar class="md-accent md-hue-2">
+<md-dialog >
+
+
+<md-toolbar class="md-accent md-hue-2">
                 <div class="md-toolbar-tools" layout="row" layout-align="space-between">
                     <span class="title">Add Machine</span>
                     <md-button  ng-click="closeDialog()">
@@ -9,79 +9,52 @@
                     </md-button>
                 </div>
             </md-toolbar>
-            <div ng-cloak>
-                <md-card-content layout="column" class="box-shadow-0">
-                    <div layout="row" layout-wrap>
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-200">
-                            <label>Machine Type</label>
-                            <md-select aria-label='Machine Type' required name="machine_type" ng-model="machine.machine_type">
-                                <md-option value="">Select Machine Type</md-option>
-                                <md-option value="0">Screen Print</md-option>
-                                <md-option value="1">Embroidery</md-option>
-                            </md-select>
-                            <div ng-messages="employeeform.machine_type.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
-                        </md-input-container>
-                         <!-- <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                            <input placeholder="Run Rate *" required name="run_rate"  ng-model="machine.run_rate" valid-number>
-                            <div ng-messages="employeeform.run_rate.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
-                        </md-input-container> -->
+<div class="inner-full-box"  ng-class="params.PositionDetail[0].rush_job==1 ?'rush-box':''">
+    <div flex=100 class="pull-left full-row">
+        <div flex=40 class="pull-left white-bg p-25 full-row">
+        <div class="scorecard">
 
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                            <input placeholder="Run Rate"   ng-model="machine.run_rate" valid-number>
-                        </md-input-container>
 
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                            <input placeholder="Machine Name *" required name="machine_name"  ng-model="machine.machine_name">
-                            <div ng-messages="employeeform.machine_name.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25 width-400">
-                            <input placeholder="Color/Head Count *" required name="color_count"  ng-model="machine.color_count">
-                            <div ng-messages="employeeform.color_count.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Max Screen Width *" required name="screen_width"  ng-model="machine.screen_width">
-                            <div ng-messages="employeeform.screen_width.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
-                            <input placeholder="Max Screen Height *" required name="screen_height"  ng-model="machine.screen_height">
-                            <div ng-messages="employeeform.screen_height.$error" role="alert" multiple>
-                                <div ng-message="required">
-                                    <span>This field is required</span>
-                                </div>
-                            </div>
-                        </md-input-container>
-                    </div>
-                </md-card-content>
+            <div class="card-details text-capitalize">
+                <div class="pull-left full-row mb-20">
+                    <span class="pull-left">Machine Assigned To:</span>
+                    <span class="pull-right text-right">{{params.PositionDetail[0].machine_name}}</span>
+                </div>
+                <div class="pull-left full-row mb-20">
+                    <span class="pull-left">Impressions</span>
+                    <span class="pull-right text-right">{{params.GetRuntimeData.getOrderImpression}}</span>
+                </div>
+                <div class="pull-left full-row mb-20">
+                    <span class="pull-left">Setup Time:</span>
+                    <span class="pull-right text-right">{{params.GetRuntimeData.setup_time}}</span>
+                </div>
+                <div class="pull-left full-row mb-20">
+                    <span class="pull-left">Run Speed:</span>
+                    <span class="pull-right text-right">{{params.GetRuntimeData.run_speed}}</span>
+                </div>
+                <div class="pull-left full-row mb-20">
+                    <span class="pull-left">Run Time:</span>
+                    <span class="pull-right text-right">{{params.GetRuntimeData.run_time}}</span>
+                </div>
+                <div class="pull-left full-row mb-20">
+                    <span class="pull-left">Total Time:</span>
+                    <span class="pull-right text-right">{{params.GetRuntimeData.total_time}}</span>
+                </div>
+
             </div>
         </div>
-        <table>
-            <tr>
-                <td class="p-16 td-500">
-                    <md-button class="bg-blue float-right"  ng-disabled="employeeform.$invalid || employeeform.$pristine" ng-click="addMachine(machine)">
-                        SAVE
-                    </md-button>
-                </td>  
-            </tr>
-        </table>
-    </form>
+        </div>
+        <div flex=60 class="pull-left full-row">
+                <div class="full-row pull-left">
+                    <md-tabs md-dynamic-height md-border-bottom class="client-profile-tab">
+                    <!---Screen Sets Tab-->
+                        <md-tab label="Iph" ng-click="getTab('wait')"></md-tab>
+                        <md-tab label="Factor" ng-click="getTab('progress')"></md-tab>
+                    </md-tabs>
+                </div>  
+            </div>
+    </div>
+</div>
+
+
 </md-dialog>

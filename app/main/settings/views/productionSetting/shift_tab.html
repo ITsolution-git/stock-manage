@@ -1,10 +1,10 @@
 <div class="content order-list-page puchase-order-page stockkup-content-table-container">
     <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
         <div class="table-title " layout="row" layout-align="space-between center">
-            <div class="table-title-text" flex=20>Labor</div>
+            <div class="table-title-text" flex=20>Shifts</div>
             <div class="pull-right right-search-box">
                 <div class="client-modal-title pull-right">
-                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="vm.openaddLaborDialog($event,0)">ADD NEW SHIFT</span>
+                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="openaddLaborDialog($event,0)">ADD NEW SHIFT</span>
                 </div>
                 <div class="search-block pull-right">
                 <md-input-container class="md-block" flex-gt-sm>
@@ -17,37 +17,21 @@
 
         </div>
 
-
-        <div class="table-title " layout="row" layout-align="space-between center">
-            
-
-            <div class="table-title-text" flex="15">Week begins on:</div>
-
-                 <div class="div-1000" id="custChkboxes1" flex="85">
-                        <div class="customChkbox md-raised" ng-repeat="item in items">
-                             <input type="radio" name="days" ng-click="filterLabor(item.id)" id="{{item.id}}test"/>
-                            <label for="{{item.id}}test" class="form-control">{{item.name}}</label>
-                        </div>
-
-                        <div class="customChkbox md-raised">
-                            <input type="radio" name="days" ng-click="filterLabor(0)" id="ALL" checked/>
-                            <label for="ALL" class="form-control">ALL</label>
-                        </div>
-
-                </div>
-        </div>
-
-
         <div class="ms-responsive-table-wrapper" ng-show="success==1">
-            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+            <div>
                  <table class="dataTable row-border">
-
-                    <thead tasty-thead></thead>
+                   
                     <tbody >
-                        <tr ng-repeat="labor in rows">
+                    <tr>
+                            <th align="left">Shift Name</th>
+                            <th align="left">Shift hours</th>
+                            <th align="left">Shift Days</th>
+                            <th align="left">Action </th>
+                    </tr>
+                        <tr ng-repeat="labor in shift_data">
                             <td class="">{{labor.shift_name}}</td>
-                            <td class="">{{labor.display_days}}</td>
                             <td class="">{{labor.total_shift_hours}}</td>
+                            <td class="">{{labor.display_days}}</td>
                             <td class=""> 
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
@@ -55,7 +39,7 @@
                                     </md-button>
                                     <md-menu-content width="4"> 
                                         <md-menu-item>
-                                            <md-button ng-click="vm.openaddLaborDialog($event,labor.id)">
+                                            <md-button ng-click="openaddLaborDialog($event,labor.id)">
                                                 Edit Shift
                                             </md-button>
                                         </md-menu-item>
@@ -70,7 +54,7 @@
                         </tr>
                     </tbody> 
                 </table>
-                <div tasty-pagination class="tasty-page"></div>
+                
             </div>
         </div>
         <div  class="ms-responsive-table-wrapper" ng-show="success==0">

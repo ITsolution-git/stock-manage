@@ -115,7 +115,7 @@
                         return sessionService.AccessService('AT,SU','false');
                     }
                 },
-                url  : '/labor',
+                url  : '/shift_setting',
                 views: {
                     'content@app': {
                         templateUrl: 'app/main/settings/views/labor/labor.html',
@@ -320,6 +320,23 @@
                         controller : 'emailTemplateInfoController as vm'
                     }
                 }
+            }).state('app.settings.productionScreen', {
+                resolve: {
+                    checksession : function (sessionService,$state)
+                    {
+                        setTimeout(function(){ 
+                           $(".settings-block").removeClass("collapsed");
+                        }, 2000);
+                        return sessionService.AccessService('CA,AM','true');
+                    }
+                },
+                url  : '/productionScreen',
+                views: {
+                    'content@app': {
+                        templateUrl: 'app/main/settings/views/productionSetting/screen.html',
+                        controller : 'productionSettingScreen as vm'
+                    }
+                }
             });
         // Navigation
        /* msNavigationServiceProvider.saveItem('fuse', {
@@ -386,7 +403,7 @@
             weight     : 6
         });
         msNavigationServiceProvider.saveItem('fuse.settings.labor', {
-            title      : 'Labor Settings',
+            title      : '',
             state      : 'app.settings.labor',
             stateParams: {'id': 7},
             class      : 'navigation-dashboards project-dashboard',
@@ -443,13 +460,15 @@
             weight     : 14
         });
         
-        /*
-        msNavigationServiceProvider.saveItem('fuse.settings.support', {
-            title      : 'Support',
-            state      : 'app.settings.support',
-            stateParams: {'id': 8},
-            weight     : 8
+       
+        msNavigationServiceProvider.saveItem('fuse.settings.productionScreen', {
+            title      : 'Production Screen',
+            state      : 'app.settings.productionScreen',
+            stateParams: {'id': 15},
+            class      : 'navigation-dashboards project-dashboard',
+            weight     : 15
         });
+        /*
         msNavigationServiceProvider.saveItem('fuse.settings.billing', {
             title      : 'Billing',
             state      : 'app.settings.billing',

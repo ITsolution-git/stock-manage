@@ -109,12 +109,11 @@ class LaborController extends Controller {
         $post['laborData']['apply_days'] = implode(',', $post['laborData']['days_array']);
         unset($post['laborData']['days_array']);
 
-       $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['laborData']);
-            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+        $this->common->UpdateTableRecords($post['table'],$post['cond'],$post['laborData']);
+       
+        $data = array("success"=>1,"message"=>UPDATE_RECORD);
             return response()->json(['data'=>$data]);
 
-       $data = array("success"=>1,"message"=>INSERT_RECORD);
-       return response()->json(['data'=>$data]);
 
     }
 
@@ -125,6 +124,7 @@ class LaborController extends Controller {
         $post['laborData']['apply_days'] = implode(',', $post['laborData']['days_array']);
         unset($post['laborData']['days_array']);
       
+        //echo "<pre>"; print_r($post); echo "</pre>"; die();
         $labor_id = $this->common->InsertRecords('labor',$post['laborData']);
 
        $data = array("success"=>1,"message"=>INSERT_RECORD,"id"=>$labor_id);
