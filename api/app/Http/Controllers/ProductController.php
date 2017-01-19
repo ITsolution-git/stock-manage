@@ -818,7 +818,7 @@ public function create_dir($dir_path) {
         else
         {
             $client_data = $this->common->GetTableRecords('client',array('client_id' => $order_data[0]->client_id));
-            if($client_data[0]->tax_rate > 0)
+            if($client_data[0]->tax_rate > 0 || $client_data[0]->tax_exempt == 1)
             {
                 if($client_data[0]->tax_exempt == 1) {
 
