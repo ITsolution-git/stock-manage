@@ -882,10 +882,12 @@ Route::post('production/GetProductionList','ProductionController@GetProductionLi
 Route::post('production/GetShiftMachine','ProductionController@GetShiftMachine');
 Route::post('production/GetPositionDetails','ProductionController@GetPositionDetails');
 Route::post('production/GetFilterData','ProductionController@GetFilterData');
-
 Route::post('production/SchedualBoardData','ProductionController@SchedualBoardData');
 Route::post('production/SchedualBoardweekData','ProductionController@SchedualBoardweekData');
 Route::post('production/SchedualBoardMachineData','ProductionController@SchedualBoardMachineData');
 Route::post('production/GetSchedulePositionDetail','ProductionController@GetSchedulePositionDetail');
 Route::post('production/SaveSchedulePosition','ProductionController@SaveSchedulePosition');
 Route::get('production/GetRuntimeData/{position_id}/{company_id}','ProductionController@GetRuntimeData');
+Route::post('production/UpdateMachineRecords','ProductionController@UpdateMachineRecords');
+Route::post('production/productionShift','ProductionController@productionShift');
+
