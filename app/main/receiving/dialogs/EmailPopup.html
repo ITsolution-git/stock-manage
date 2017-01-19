@@ -1,4 +1,4 @@
-<md-dialog class="task-dialog order-dialog" aria-label="New order">
+<md-dialog class="task-dialog addAffiliateDialog" aria-label="New order">
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
@@ -15,7 +15,18 @@
                     <input placeholder="Client Billing Email(Use comma separate for multiple.)" ng-model="mail">
                 </md-input-container>
             </div>
+
+
+            <div layout="column"  flex="100" class="box-zerospace p-0 pt-15">
+                <md-input-container class="md-block">
+                    <textarea ui-tinymce="tinymceOptions" ng-model="email_text"></textarea>
+                </md-input-container>
+                </div>
+
+
         </md-dialog-content>
+
+
         <md-dialog-actions layout="row" layout-align="end center">
             <md-button class="md-accent md-raised " ng-click="printPdf('0','')">Create PDF</md-button>
             <md-button class="md-accent md-raised " ng-click="printPdf('1',mail)">Send to client</md-button>

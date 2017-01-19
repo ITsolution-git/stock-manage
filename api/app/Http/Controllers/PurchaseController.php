@@ -426,6 +426,12 @@ class PurchaseController extends Controller {
         
         $pdf_array= json_decode($_POST['purchase']);
         
+         if(!isset($pdf_array->mailMessage)){
+          $pdf_array->mailMessage = '';
+        }
+
+
+        
         if(count($pdf_array)>0)
         {
             $order_total='';
@@ -462,7 +468,7 @@ class PurchaseController extends Controller {
                     $login_name = $pdf_array->login_name;
                     foreach ($email_array as $email)
                     {
-                        Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email,$login_email,$login_name)
+                        Mail::send('emails.purchasepo', ['email'=>'','mailMessage'=>$pdf_array->mailMessage], function($message) use ($pdf_data,$filename,$email,$login_email,$login_name)
                         {
                             $message->to(trim($email));
                             $message->replyTo($login_email,$login_name);
