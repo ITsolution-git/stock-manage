@@ -438,6 +438,7 @@ class PurchaseController extends Controller {
                 $order_total = $this->purchase->getOrdarTotal($pdf_array->po_id,$pdf_array->company_id);
                 $email_array = explode(",",$pdf_array->email);
                 $pass_array = array('company'=>$pdf_data['0'],'po_data'=>$pdf_data,'order_total'=>$order_total,'positions'=>$positions_data);
+               
                 
                 $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 

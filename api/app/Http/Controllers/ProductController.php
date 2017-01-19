@@ -371,6 +371,48 @@ public function create_dir($dir_path) {
             return response()->json(["data" => $data]);
         }
     }
+
+
+    public function addProductCustom() {
+        $post = Input::all();
+        $post['created_date']=date('Y-m-d');
+        /*$record_data = $this->common->UpdateTableRecords('purchase_detail',array('design_id' => $post['id']),array('is_delete' => '0'));
+        $record_update = $this->common->UpdateTableRecords('design_product',array('design_id' => $post['id']),array('is_delete' => '0'));*/
+        $result = $this->product->addProductCustom($post);
+        $order_data = $this->order->getOrderByDesign($post['id']);
+        if($post['is_supply'] == 1)
+        {
+            $client_supplied_data = $this->common->GetTableRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
+            if(empty($client_supplied_data))
+            {
+                $this->common->InsertRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
+            }
+        }
+        else
+        {
+            $this->common->DeleteTableRecords('client_product_supplied',array('client_id' => $order_data[0]->client_id,'product_id' => $post['product_id']));
+        }
+        $return = 1;
+        $return = $this->orderCalculation($post['id']);
+        if($post['action'] == 'Edit') {
+            $message = 'Product updated successfully';
+        }
+        else{
+            $message = 'Product added successfully';
+        }
+        if(is_array($return))
+        {
+            $data = array("success"=>0,"message"=>$message,"status"=>$return['status']);
+            return response()->json(["data" => $data]);
+        }
+        else
+        {
+            $data = array("success"=>1,"message"=>$message,"status"=>$return['status']);
+            return response()->json(["data" => $data]);
+        }
+    }
+
+    
     public function orderCalculation($design_id)
     {
         $order_data = $this->order->getOrderByDesign($design_id);
@@ -778,8 +820,16 @@ public function create_dir($dir_path) {
             $client_data = $this->common->GetTableRecords('client',array('client_id' => $order_data[0]->client_id));
             if($client_data[0]->tax_rate > 0)
             {
-                $tax = $order_total * $client_data[0]->tax_rate/100;
-                $tax_rate = $client_data[0]->tax_rate;
+                if($client_data[0]->tax_exempt == 1) {
+
+                    $tax = 0;
+                    $tax_rate = 0;
+                } else {
+
+                    $tax = $order_total * $client_data[0]->tax_rate/100;
+                    $tax_rate = $client_data[0]->tax_rate;
+                }
+                
             }
             else
             {

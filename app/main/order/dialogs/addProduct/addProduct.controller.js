@@ -201,7 +201,7 @@
             }
             else
             {
-             $http.post('api/public/product/addProduct',combine_array_id).success(function(result) 
+             $http.post('api/public/product/addProductCustom',combine_array_id).success(function(result) 
                 {
                     if(result.data.success == 0)
                     {
