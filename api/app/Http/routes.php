@@ -98,7 +98,7 @@ Route::post('admin/price',[
 
 Route::post('admin/priceGridDuplicate',[
    'middleware' => 'check',
-   'role' => array('AM','CA'),
+   'role' => array('AM','CA','FM'),
    'special_role' => array('SM'),
    'special_action' => 'add',
    'action' => 'add',
@@ -108,7 +108,7 @@ Route::post('admin/priceGridDuplicate',[
 
 Route::post('admin/priceEdit',[
    'middleware' => 'check',
-   'role' => array('AM','CA'),
+   'role' => array('AM','CA','FM'),
    'special_role' => array('SM'),
    'special_action' => 'edit',
    'action' => 'edit',
@@ -134,7 +134,7 @@ Route::post('admin/priceEdit/{id}',[
 
 Route::post('admin/priceGridPrimaryDuplicate',[
    'middleware' => 'check',
-   'role' => array('AM','CA'),
+   'role' => array('AM','CA','FM'),
    'action' => 'add',
    'special_role' => array('SM'),
    'special_action' => 'add',
