@@ -329,6 +329,8 @@ class ShippingController extends Controller {
     public function createPDF()
     {
         $post = Input::all();
+
+
        
 
         $company_detail = json_decode($_POST['company_detail']);
@@ -341,14 +343,26 @@ class ShippingController extends Controller {
 
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
 
-        if(!empty($shipping['shipping']->is_blind))
-        {
-            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->bw_photo;
+
+
+        if($post['print_type'] == 'label') {
+
+            $shipping['company_detail'][0]->photo = $this->common->checkImageExist($company_id.'/client/'.$shipping['shipping']->client_id."/",$shipping['shipping']->b_w_logo);
+            
+        } else {
+
+             if(!empty($shipping['shipping']->is_blind))
+                {
+                    $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->bw_photo;
+                }
+                else
+                {
+                    $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
+                }
+
         }
-        else
-        {
-            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
-        }
+
+       
 
         if($shipping['shipping']->in_hands_by != '0000-00-00') {
             $shipping['shipping']->in_hands_by = date("m/d/Y", strtotime($shipping['shipping']->in_hands_by));
