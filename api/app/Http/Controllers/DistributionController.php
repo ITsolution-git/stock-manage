@@ -371,16 +371,20 @@ class DistributionController extends Controller {
             }
 
             $orderProducts = $this->distribution->getProductByOrder($post['order_id']);
-            $allocatedProducts = $this->distribution->getProductByOrder($post['order_id']);
+            foreach ($orderProducts as $op) {
+                $op->selected = false;
+                $op->old_distributed_qnty = $this->distribution->getSingleDistributedSize(array('id'=>$op->id,'order_id'=>$post['order_id'],'address_id'=>$addr->id));
+            }
+            /*$allocatedProducts = $this->distribution->getProductByOrder($post['order_id']);
 
             foreach ($allocatedProducts as $ap) {
                 
                 $ap->distributed_qnty = $this->distribution->getSingleDistributedSize(array('id'=>$ap->id,'order_id'=>$post['order_id'],'address_id'=>$addr->id));
                 $ap->old_distributed_qnty = $ap->distributed_qnty;
-            }
+            }*/
 
             $addr->addressTotalProducts = $this->distribution->getTotalDistributedOrderAddress($addr->id,$post['order_id']);
-            $addr->products = $allocatedProducts;
+           // $addr->products = $allocatedProducts;
 
             $distribution_address[$addr->id] = $addr;
         }
@@ -412,6 +416,8 @@ class DistributionController extends Controller {
         $products = $this->distribution->getSingleDistributedArr($post);
         if(empty($products)) {
             $success = 0;
+            $products = $post['product'];
+            $products['distributed_qnty'] = 0;
         } else {
             $success = 1;
         }

@@ -27,6 +27,7 @@
         $scope.location = '';
         $scope.address_id = 0;
         $scope.page = 1;
+        $scope.all_address_selcted = '1';
 
         // change display number to order Id for fetching the order data
         var order_data = {};
@@ -100,17 +101,24 @@
 
         $scope.getProductByAddress = function(address_id)
         {
+            $scope.all_address_selcted = 0;
             angular.forEach($scope.distributionData, function(value, key){
                 if(value.id != address_id)
                 value.is_selected = 0;
             });
 
+            angular.forEach($scope.orderProducts, function(value, key){
+                value.selected = false;
+            });
+
             $scope.address_id = address_id;
             $scope.distributionData[$scope.address_id].is_selected = 1;
-            //$scope.addressProducts = $scope.distributionData[$scope.address_id].products;
+            $scope.addressProducts = [];
             $scope.location = $scope.distributionData[$scope.address_id].description;
             $scope.shippingType = $scope.distributionData[$scope.address_id].shippingType;
             $scope.shippingMethod = $scope.distributionData[$scope.address_id].shippingMethod;
+
+            $scope.selectedSizes = [];
         }
 
         $scope.returnFunction = function()
@@ -209,9 +217,7 @@
         {
             if($scope.address_id == 0)
             {
-                var data = {"status": "error", "message": "Please select address"}
-                notifyService.notify(data.status, data.message);
-                return false;
+                $scope.address_id = productArr.address_id;
             }
             if(productArr.distributed_qnty == '')
             {
@@ -240,8 +246,14 @@
             $http.post('api/public/shipping/addProductToShip',combine_array).success(function(result, status, headers, config) {
                 
                 if(result.data.success == '1') {
-                    $scope.orderProducts[key].distributed_qnty = result.data.distributed_qnty;
-                    $scope.orderProducts[key].remaining_qnty = result.data.remaining_qnty;
+
+                    angular.forEach($scope.orderProducts, function(value, key){
+                        if(productArr.id === value.id) {
+                            value.distributed_qnty = result.data.distributed_qnty;
+                            value.remaining_qnty = result.data.remaining_qnty;
+                        }
+                    });
+                    $scope.getDistributionDetail();
                 }
                 else
                 {
@@ -277,7 +289,7 @@
                 }
             }
         }
-        $scope.toggle = function (item, list, key) {
+        $scope.toggle = function (item, list, key, product) {
 
             var idx = list.indexOf(item);
 
@@ -285,11 +297,17 @@
                 $scope.selectedSizes.splice(idx, 1);
                 if($scope.selectedSizes.length > 0)
                 {
-                    $scope.addressProducts.splice($scope.selectedSizes[key],1);
+                    for(var i = 0; i < $scope.addressProducts.length; i++) {
+                        var obj = $scope.addressProducts[i];
+
+                        if(item === $scope.addressProducts[i].id) {
+                            $scope.addressProducts.splice(i, 1);
+                        }
+                    }
                 }
                 else
                 {
-                    $scope.addressProducts = [];       
+                    $scope.addressProducts = [];
                 }
             }
             else {
@@ -302,14 +320,51 @@
                 }
                 combine_array.order_id = $scope.order_id;
                 combine_array.id = item;
+                combine_array.product = product;
 
                 $http.post('api/public/distribution/getSizeBySelect',combine_array).success(function(result, status, headers, config) {
                     
                     if(result.data.success == '1') {
-                        $scope.addressProducts.push(result,data.products);
+                        if(result.data.products.length == 1)
+                        {
+                            $scope.addressProducts.push(result.data.products[0]);
+                        }
+                        else
+                        {
+                            angular.forEach(result.data.products, function(value, key){
+                                value.old_distributed_qnty = value.distributed_qnty;
+                                $scope.addressProducts.push(value);
+                            });
+                        }
+                        $scope.addressProducts.sort();
+                    }
+                    else
+                    {
+                        if($scope.address_id > 0)
+                        {
+                            $scope.addressProducts.push(result.data.products);
+                            $scope.addressProducts.sort();
+                        }
                     }
                 });
             }
         };
+        $scope.getAllLocation = function()
+        {
+            $scope.all_address_selcted = 1;
+            $scope.addressProducts = [];
+            $scope.location == '';
+            $scope.address_id = '0';
+
+            angular.forEach($scope.distributionData, function(value, key){
+                value.is_selected = 0;
+            });
+
+            angular.forEach($scope.orderProducts, function(value, key){
+                value.selected = false;
+            });
+
+            $state.reload();
+        }
     }
 })();

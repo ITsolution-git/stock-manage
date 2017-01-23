@@ -1397,3 +1397,7 @@ md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-c
     .location .stokkup-blue-btn { font-size: 12px; padding: 0 20px; }
     .ship-order-screen .shp-code p { font-size: 13px; }
 }
+.distribution_scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}

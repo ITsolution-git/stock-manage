@@ -677,13 +677,12 @@ class ShippingController extends Controller {
         }
         $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['product']['id']),array('remaining_qnty' => $remaining_qnty - $post['product']['distributed_qnty']));
 
-        $distributed_qnty = $this->distribution->getSingleDistributedSize(array('id'=>$post['product']['id'],'order_id'=>$post['order_id'],'address_id'=>$post['address_id']));
-        $remaining_qnty = $remaining_qnty - $post['product']['distributed_qnty'];
-
         $success=1;
         $message=UPDATE_RECORD;
+
+        $distributed_qnty = $this->distribution->getSingleSizeDistributed(array('order_id' => $post['order_id'],'id' => $post['product']['id']));
         
-        $response = array("success"=>$success,"message"=>$message,"distributed_qnty"=>$distributed_qnty,"remaining_qnty"=>$remaining_qnty);
+        $response = array("success"=>$success,"message"=>$message,"distributed_qnty"=>$distributed_qnty,"remaining_qnty"=>$remaining_qnty - $post['product']['distributed_qnty']);
         return response()->json(['data'=>$response]);
     }
 

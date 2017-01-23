@@ -14,7 +14,7 @@
     <md-content>
         <div layout="row" layout-wrap="nowrap" class="p-20">
             <div flex-xs flex-gt-xs="25" layout="column">
-                <md-card class="custom-fullbox-shadow text-center">
+                <md-card class="custom-fullbox-shadow text-center cursor-p" ng-class="{'active': all_address_selcted!='0'}" ng-click="getAllLocation()">
                     <md-card-header layout-align="space-between center">
                         <md-card-header-text>
                             <span class="md-title f-24 ">ALL Locations</span>
@@ -32,7 +32,7 @@
                 <div class="distri-box">
                     <a href="#" class="box-mang dist-next-prev left" ng-click="getPage('backward')"><i class="fa fa-angle-left" role="button"></i></a>
                     <div ng-repeat="dist in distributionData" flex-xs flex-gt-xs="50" layout="column" class="layout-align-center-center" ng-click="getProductByAddress(dist.id)">
-                        <md-card class="custom-fullbox-shadow text-center" ng-class="{'active': dist.is_selected>0}">
+                        <md-card class="custom-fullbox-shadow text-center cursor-p" ng-class="{'active': dist.is_selected>0}">
                             <md-card-header layout-align="space-between center">
                                 <md-card-header-text>
                                     <span class="md-title ">{{dist.description}}</span>
@@ -64,11 +64,11 @@
     </md-content>
 
     <md-content class="product-select">
-        <div layout="row" layout-wrap="nowrap" class="p-20">
+        <div layout="row" layout-wrap="nowrap" class="p-20 distribution_scroll scrollable" ms-scroll>
             <div layout="column" flex="50" class="box-zerospace m-b-10" ng-repeat="(key,product) in orderProducts">
                 <md-card class="m-0" flex="100">
                     <md-card-content class="recap">
-                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row" ng-click="toggle(product.id, selectedSizes, key)">
+                        <md-checkbox aria-label="Checkbox 1" class="remaining-text"  flex="100" layout="row" ng-click="toggle(product.id, selectedSizes, key, product)" ng-model="product.selected">
                             <div layout="column" flex="35">
                                 <strong>Product Name:</strong> {{product.product_name}}
                             </div>
@@ -95,7 +95,7 @@
         </div>
     </md-content>
 
-    <div class="ms-responsive-table-wrapper distri-record white-bg" ng-if="addressProducts.length > 0">
+    <div class="ms-responsive-table-wrapper distri-record white-bg shipping-select" ng-if="addressProducts.length > 0">
         <div>
             <table class="simple hover simple-tbl1">
                 <thead>
@@ -117,7 +117,8 @@
                                 <input aria-label="true" ng-model="product.distributed_qnty" ui-event="{ change : 'allocateDistQty(key,product)' }">
                             </md-input-container>
                         </td>
-                        <td>{{location}}</td>
+                        <td ng-if="location == ''">{{product.description}}</td>
+                        <td ng-if="location != ''">{{location}}</td>
                     </tr>
                 </tbody>
             </table>
