@@ -82,7 +82,7 @@
               if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} 
               ?>
               <tr style="background-color:<?php echo $color_bg; ?>;" >
-                  <td height="20" class="align-center line-height border-b" >&nbsp;<?php echo (!empty($value->product_name))?$value->product_name:''; ?></td>
+                  <td height="20" class="align-center line-height border-b" >&nbsp;<?php echo (!empty($value->product_name))?$value->product_name:''; ?><?php if($value->is_supply == 1){?><span style="color: #ff0000;font-size: 12px;font-weight: 600;">(Supplied)</span><?php }?></td>
                   <td height="20" class="align-center line-height border-b">&nbsp;<?php echo (!empty($value->size))?$value->size:''; ?></td>
                   <td height="20" class="align-center line-height border-b">&nbsp;<?php echo (!empty($value->product_color))?$value->product_color:''; ?></td>
                   <td height="20" class="align-center  line-height border-b" >&nbsp;&nbsp;<?php echo (!empty($value->qnty_ordered))?$value->qnty_ordered:0; ?></td>

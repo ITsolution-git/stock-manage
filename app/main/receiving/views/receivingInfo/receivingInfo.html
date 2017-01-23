@@ -86,6 +86,14 @@
                                 <div>Color</div>
                                 <span class="chrome-weight font-14">{{key_color}}</span>
                             </div>
+
+                            <div class="trans-box">
+                                <div ng-if="line_item.product.is_supply == 1" class="global-labels f-red">Supplied</div>
+                                <div ng-if="line_item.product.is_supply == 0"></div>
+                                <span class="chrome-weight font-14"></span>
+                            </div>
+
+
                             <div class="trans-box">
                                     <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn text-white" ng-click="ReceiveProductsAll(line_item.product.product_id)"  aria-label="Save">Receive All</button>
                             </div>
