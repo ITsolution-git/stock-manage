@@ -514,7 +514,7 @@ class ShippingController extends Controller {
             $shipping['other_data'] = $other_data;
             $shipping['color_all_data'] = $color_all_data;
         }
-        
+       
         if($post['print_type'] == 'manifest')
         {
             PDF::AddPage('P','A4');

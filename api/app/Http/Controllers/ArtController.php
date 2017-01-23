@@ -477,6 +477,7 @@ class ArtController extends Controller {
         {
             $options = !empty($screenArray->options)?$screenArray->options:array();
             $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
+            
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
 
             $email_text = $screenArray->email_text;

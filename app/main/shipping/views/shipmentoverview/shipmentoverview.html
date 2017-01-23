@@ -101,7 +101,8 @@
                         <tbody> 
                             <tr ng-repeat="item in shippingItems">
                                 <!-- <td>{{ item.misc_value}}</td> -->
-                                <td>{{ item.name}}</td>
+                                <td ng-if="item.brand_name != ''">{{ item.brand_name}} - {{ item.name}}</td>
+                                <td ng-if="item.brand_name == ''">{{ item.name}}</td>
                                 <td>{{ item.product_id}}</td>
                                 <td ng-bind-html="item.description"></td>
                             </tr>                    
