@@ -5,7 +5,7 @@
             .module('app.order')
             .controller('SearchProductViewController', SearchProductViewController);
     /** @ngInject */
-    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,size_group_id,warehouse,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
+    function SearchProductViewController(product_id,product_image,description,vendor_name,operation,product_name,colorName,design_id,design_product_id,size_group_id,warehouse,brand_name,$mdDialog,$document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$scope,$stateParams,$http,sessionService,notifyService)
     {
         $("#ajax_loader").show();
 
@@ -38,6 +38,7 @@
         $scope.warehouse = warehouse;
 
         $scope.product_name = product_name;
+        $scope.brand_name = brand_name;
         $scope.product_image_display = product_image;
         $scope.product_image_display_main = product_image_main;
         $scope.description = description;

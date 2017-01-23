@@ -92,7 +92,7 @@
         foreach($po_data as $key=>$value)
         { if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} ?>
         <tr style="background-color:<?php echo $color_bg; ?>;" >
-            <td height="20" class="align-left line-height border-b">&nbsp;<?php echo (!empty($value->product_name))?$value->product_name:''; ?></td>
+            <td height="20" class="align-left line-height border-b"><?php echo (!empty($value->brand_name))?$value->brand_name.' - ':''; ?><?php echo (!empty($value->product_name))?$value->product_name:''; ?></td>
             <td height="20" class="align-left line-height border-b">&nbsp;<?php echo (!empty($value->product_color))?$value->product_color:''; ?></td>
             <td height="20" class="align-left line-height border-b">&nbsp;<?php echo (!empty($value->size))?$value->size:''; ?></td>
             <td height="20" class="align-left line-height border-b">&nbsp;&nbsp;<?php echo (!empty($value->qnty_ordered))?$value->qnty_ordered:0; ?></td>

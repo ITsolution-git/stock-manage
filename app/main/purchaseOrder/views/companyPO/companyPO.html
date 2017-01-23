@@ -106,7 +106,8 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="line_item in poline" >
-                        <td>{{ line_item.product_name}}</td>
+                        <td ng-if="line_item.brand_name != ''">{{line_item.brand_name}} - {{ line_item.product_name}}</td>
+                        <td ng-if="line_item.brand_name == ''">{{ line_item.product_name}}</td>
                         <td>{{ line_item.sku}}</td>
                         <td>{{ line_item.size}}</td>
                         <td>{{ line_item.product_color}}</td>
