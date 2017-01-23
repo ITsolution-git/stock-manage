@@ -348,8 +348,12 @@
                         <div layout="row" layout-align="space-between center">
                             <div layout="column" >
                             <h4 class="stokkup-title-h4">Product Name</h4>
-                            <div class="mt-5 mb-25" ng-if="product.supplied > 0"><span class="global-labels">{{product.product_name}}</span></div>
-                            <div class="mt-5 mb-25" ng-if="product.supplied == '0'"><span class="global-labels">{{product.product_name}}</span></div>
+                           <!--  <div class="mt-5 mb-25" ng-if="product.supplied > 0"><span class="global-labels">{{product.brand_name}} - {{product.product_name}}</span></div>
+                            <div class="mt-5 mb-25" ng-if="product.supplied == '0'"><span class="global-labels">{{product.brand_name}} - {{product.product_name}}</span></div> -->
+
+                            <div class="mt-5 mb-25" ng-if="product.brand_name != ''"><span class="global-labels">{{product.brand_name}} - {{product.product_name}}</span></div>
+
+                            <div class="mt-5 mb-25" ng-if="product.brand_name == ''"><span class="global-labels">{{product.product_name}}</span></div>
 
                             </div>
                             <div layout="column" >

@@ -437,7 +437,7 @@ class PurchaseController extends Controller {
             $order_total='';
             $pdf_data = $this->purchase->GetPoLinedata($pdf_array->po_id,$pdf_array->company_id);
             $positions_data = $this->purchase->GetPOpositions($pdf_array->po_id,$pdf_array->company_id);
-           // echo "<pre>"; print_r($pdf_array); echo "</pre>"; die();
+            
             
             if(count($pdf_data)>0)
             {

@@ -116,7 +116,8 @@
                                         <span class="global-labels">Design</span>
                                         <span class="p-b-10  m-b-20">{{row.design_name}}</span>
                                         <span class="global-labels">Product</span>
-                                        <span class="p-b-10  m-b-20">{{row.product_name}}</span>
+                                        <span class="p-b-10  m-b-20" ng-if="row.brand_name != ''">{{row.brand_name}} - {{row.product_name}}</span>
+                                        <span class="p-b-10  m-b-20" ng-if="row.brand_name == ''">{{row.product_name}}</span>
                                     </div> 
                                     <div layout="column" flex=65>
                                         <div flex=100 class="m-b-10">

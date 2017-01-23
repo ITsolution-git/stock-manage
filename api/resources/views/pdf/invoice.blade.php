@@ -167,7 +167,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 
                           <?php if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";} ?>
                           <tr style="background-color:<?php echo $color_bg?>;">
-                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$product->id}} - {{$product->product_name}} <?php if($product->is_supply == 1){?><span style="color: #ff0000;font-size: 12px;font-weight: 600;">(Supplied)</span><?php }?></td>
+                              <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo (!empty($product->brand_name))?$product->brand_name.' - ':''; ?>{{$product->product_name}} <?php if($product->is_supply == 1){?><span style="color: #ff0000;font-size: 12px;font-weight: 600;">(Supplied)</span><?php }?></td>
                               <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php $lenColor = count($product->sizeData);  $color_count = 1;foreach ($product->sizeData as $color_all_name => $colorDataNew) { ?>{{$color_all_name}} <?php if ($color_count != $lenColor) { ?><br /><?php }?><?php $color_count++;}?></td>
                               <td height="20" style="font-weight:bold; border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php $lenSize = count($product->sizeData);  $sizeAll_count = 1; foreach ($product->sizeData as $colorData)
                               {
