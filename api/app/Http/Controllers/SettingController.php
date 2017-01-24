@@ -471,10 +471,11 @@ class SettingController extends Controller {
 
         if(!empty($category_all_data))
         {
-            $this->common->truncateTable('category');
-            $this->common->truncateTable('product_brand_category');
+            //$this->common->truncateTable('category');
+            //$this->common->truncateTable('product_brand_category');
 
             foreach ($category_all_data as $category) {
+              print_r($category);exit;
                 $category_name = $category->name;
                 $this->common->InsertRecords('category',array('id' => $category->categoryID,'category_name' => $category->name, 'category_image' => $category->image));
             }

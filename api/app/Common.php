@@ -306,7 +306,7 @@ class Common extends Model {
         {
             foreach ($cond as $key => $value) 
             {
-                if(!empty($value))
+                if(!empty($value) || $value == '0')
                     $result =$result ->where($key,'=',$value);
             }
         }

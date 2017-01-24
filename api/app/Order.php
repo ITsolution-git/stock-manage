@@ -390,7 +390,12 @@ class Order extends Model {
                          ->where($whereConditions)
                          ->get();
 
-        return $qntyData;
+        if($qntyData[0]->total == '')
+        {
+            $qntyData[0]->total = 0;
+        }
+
+        return $qntyData[0]->total;
     }
     public function getShippedByOrder($data)
     {
@@ -401,6 +406,11 @@ class Order extends Model {
                          ->select($listArray)
                          ->where($whereConditions)
                          ->get();
+
+        if($qntyData[0]->total == '')
+        {
+            $qntyData[0]->total = 0;
+        }
 
         return $qntyData[0]->total;
     }

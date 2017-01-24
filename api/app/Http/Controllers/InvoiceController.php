@@ -505,6 +505,7 @@ class InvoiceController extends Controller {
                
           
             $design->positions = array_chunk($pos_array['order_design_position'], 2);
+            $design->positions_data = $pos_array['order_design_position'];
 
             $productData = $this->product->designProduct($data);
             

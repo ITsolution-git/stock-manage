@@ -15,6 +15,7 @@ use App\Product;
 use App\Client;
 use App\Company;
 use App\Affiliate;
+use App\Distribution;
 use DB;
 use App;
 use Request;
@@ -25,7 +26,7 @@ use PDF;
 
 class OrderController extends Controller { 
 
-    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company)
+    public function __construct(Order $order,Common $common,Purchase $purchase,Product $product,Client $client,Affiliate $affiliate,Api $api,Company $company,Distribution $distribution)
     {
         parent::__construct();
         $this->order = $order;
@@ -36,6 +37,7 @@ class OrderController extends Controller {
         $this->affiliate = $affiliate;
         $this->api = $api;
         $this->company = $company;
+        $this->distribution = $distribution;
     }
 
 /** 
@@ -1716,28 +1718,20 @@ class OrderController extends Controller {
      public function editOrder()
     {
         $post = Input::all();
-
-
         $newAddressarray = array_column($post['addressModel'], 'id');
-        
         $oldAddressarray = array_column($post['addressModelOld'], 'id');
-        
 
         $addArrayDifference = array_diff($newAddressarray,$oldAddressarray);
         $removeArrayDifference = array_diff($oldAddressarray,$newAddressarray);
 
-
         if(sizeof($addArrayDifference > 0)) {
 
             foreach($addArrayDifference as $address){
-                
+                $add_arr = array();
 
-                      $add_arr = array();
-                       $add_arr['data'] = array('order_id' => $post['cond']['id'],'address_id' => $address);
-                       $add_id = $this->common->InsertRecords('order_shipping_address_mapping',$add_arr);
-
-                }
-
+                $add_arr['data'] = array('order_id' => $post['cond']['id'],'address_id' => $address);
+                $add_id = $this->common->InsertRecords('order_shipping_address_mapping',$add_arr);
+            }
         }
 
 
@@ -1745,10 +1739,41 @@ class OrderController extends Controller {
 
             foreach($removeArrayDifference as $removeAddress){
                
-               $deleteResult = $this->common->DeleteTableRecords('order_shipping_address_mapping',array('order_id'=>$post['cond']['id'], 'address_id'=>$removeAddress));
+                $delete = 0;
+                $productAddressData = $this->distribution->getProductAddressIdsByOrder($post['cond']['id'],$removeAddress);
+                if($productAddressData[0]->ids == '')
+                {
+                    $delete = 1;
+                }
+                else
+                {
+                    $productAddressIds = explode(",",$productAddressData[0]->ids);
+                    $productAddressSizeData = $this->distribution->getProductAddressSizeIds($productAddressIds);
 
+                    if(empty($productAddressSizeData))
+                    {
+                        $delete = 1;
+                    }
                 }
 
+                if($delete)
+                {
+                    $deleteResult = $this->common->DeleteTableRecords('order_shipping_address_mapping',array('order_id'=>$post['cond']['id'], 'address_id'=>$removeAddress));
+                }
+                else
+                {
+                    $address_data = $this->common->GetTableRecords('client_distaddress',array('id' => $removeAddress));
+                    $data = array("success"=>0,"message"=>$address_data[0]->description." assign to distribution you can't delete it");
+                    return response()->json(['data'=>$data]);
+                }
+            }
+
+        }
+
+        if(isset($post['action']))
+        {
+            $data = array("success"=>1,"message"=>UPDATE_RECORD);
+            return response()->json(['data'=>$data]);
         }
 
         
