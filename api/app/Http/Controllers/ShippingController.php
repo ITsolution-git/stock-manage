@@ -346,7 +346,7 @@ class ShippingController extends Controller {
 
 
 
-        if($post['print_type'] == 'label') {
+      /*  if($post['print_type'] == 'label') {
 
             $shipping['company_detail'][0]->photo = $this->common->checkImageExist($company_id.'/client/'.$shipping['shipping']->client_id."/",$shipping['shipping']->b_w_logo);
             
@@ -361,6 +361,16 @@ class ShippingController extends Controller {
                     $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
                 }
 
+        }*/
+
+       
+
+        if(!empty($shipping['shipping']->is_blind)){
+           
+            $shipping['company_detail'][0]->photo = $this->common->checkImageExist($company_id.'/client/'.$shipping['shipping']->client_id."/",$shipping['shipping']->b_w_logo);
+        } else {
+             
+            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->bw_photo;
         }
 
        
@@ -515,7 +525,7 @@ class ShippingController extends Controller {
             $shipping['other_data'] = $other_data;
             $shipping['color_all_data'] = $color_all_data;
         }
-        
+       
         if($post['print_type'] == 'manifest')
         {
             PDF::AddPage('P','A4');

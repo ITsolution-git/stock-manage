@@ -393,7 +393,7 @@ class Art extends Model {
 	public function getArtApprovalProducts($order_id,$company_id)
 	{
 		$query = DB::table('orders as or')
-					->select('or.name as order_name','or.company_id','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','p.name as product_name','pdtl.product_id','pdtl.size','pdtl.qnty','col.name as product_color','pdtl.price',
+					->select('or.name as order_name','or.company_id','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','p.name as product_name','p.brand_name','pdtl.product_id','pdtl.size','pdtl.qnty','col.name as product_color','pdtl.price',
 					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"))
 					->join('order_design as od','od.order_id','=','or.id')
 					->leftjoin('design_product as dp','dp.design_id','=','od.id')
@@ -410,6 +410,7 @@ class Art extends Model {
 				foreach ($query as $key=>$value) 
 				{
 					$product[$value->product_id]['product_name']= $value->product_name;
+					$product[$value->product_id]['brand_name']= $value->brand_name;
 					$product[$value->product_id]['product_color'] = $value->product_color;
 					$product[$value->product_id]['product_id'] = $value->product_id;
 					$product[$value->product_id]['summary'][$value->size]= $value->qnty;

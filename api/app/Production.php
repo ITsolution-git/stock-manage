@@ -254,19 +254,20 @@ class Production extends Model {
         return $ret_array;
     }
 
-    public function SchedualBoardData($company_id,$run_date)
+    public function SchedualBoardData($company_id,$run_date,$machine_type)
     {
 
         $result = DB::table('position_schedule as ps')
-                    ->select('cs.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1')
-                    ->leftjoin('labor as cs','cs.id','=','ps.shift_id')
+                    ->select('lb.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
+                    ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
                     ->leftJoin('order_design as od','od.id','=','odp.design_id')
                     ->leftJoin('orders as ord','ord.id','=','od.order_id')
                     ->where('od.company_id','=',$company_id)
                     ->where('ps.run_date','=',$run_date)
+                    ->where('ps.production_type','=',$machine_type)
                     ->where('od.is_delete','=','1')
                     ->where('odp.is_delete','=','1')
                     ->orderBy('ord.id','desc')
@@ -277,25 +278,42 @@ class Production extends Model {
         foreach($result as $key=>$value)
         {
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
-            $ret_array[$value->machine_id]['machine_name'] = $value->machine_name;
-            $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_name']=$value->shift_name;
-            $ret_array[$value->machine_id]['machine_data'][$value->shift_id]['shift_data'][$value->position_id]=$value;
+
+            if(!empty($value->machine_id) && !empty($value->shift_id))
+            {
+                $ret_array['assign'][$value->machine_id][$value->shift_id][$value->position_id]=$value;
+            }
+            else
+            {
+                $ret_array['unassign'][$value->position_id] = $value;
+            }
+            
+            
         }            
         return $ret_array;
     }
-    public function SchedualBoardweekData($company_id,$start_date,$end_date)
+    public function SchedualBoardweekData($company_id,$start_date,$end_date,$machine_type)
     {
         //echo $start_date."=".$end_date; die();
         $result = DB::table('position_schedule as ps')
-                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
-                    ->leftjoin('labor as cs','cs.id','=','ps.shift_id')
+                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
                     ->leftJoin('order_design as od','od.id','=','odp.design_id')
                     ->leftJoin('orders as ord','ord.id','=','od.order_id')
-                    ->where('od.company_id','=',$company_id)
-                    ->whereBetween('ps.run_date', [$start_date, $end_date])
+                    ->where('od.company_id','=',$company_id);
+                    
+                    $result = $result->Where(function($query) use($start_date,$end_date)
+                        {
+                            $query->whereBetween('ps.run_date', [$start_date, $end_date])
+                                  ->orWhere('ps.run_date', '=', '0000-00-00')
+                                  ->orWhere('ps.run_date', '=', '');
+                        });
+
+
+                    $result=$result->where('ps.production_type','=',$machine_type)
                     ->where('od.is_delete','=','1')
                     ->where('odp.is_delete','=','1')
                     ->orderBy('ps.run_date','asc')
@@ -307,19 +325,28 @@ class Production extends Model {
         foreach($result as $key=>$value)
         {
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
-            $ret_array[$value->run_date]['date'] = date('l - m/d/Y',strtotime($value->run_date));
-            $ret_array[$value->run_date]['date_data'][$value->shift_id]['shift_name']=$value->shift_name;
-            $ret_array[$value->run_date]['date_data'][$value->shift_id]['shift_data'][$value->position_id]=$value;
+
+            if($value->run_date!='0000-00-00')
+            {
+                $ret_array['assign'][$value->run_date][$value->shift_id][$value->position_id]=$value;
+            }
+            else
+            {
+                $ret_array['unassign'][$value->position_id] = $value;
+            }
+
+
+            
         }            
         return $ret_array;
     }
 
-    public function SchedualBoardMachineData($company_id,$run_date,$machine_id)
+    public function SchedualBoardMachineData($company_id,$run_date,$machine_id,$machine_type)
     {
-        $where = (!empty($machine_id))?array('ps.machine_id'=>$machine_id):array();
+        
         $result = DB::table('position_schedule as ps')
-                    ->select('cs.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
-                    ->leftjoin('labor as cs','cs.id','=','ps.shift_id')
+                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
@@ -327,9 +354,18 @@ class Production extends Model {
                     ->leftJoin('orders as ord','ord.id','=','od.order_id')
                     ->where('od.company_id','=',$company_id)
                     ->where('ps.run_date','=',$run_date)
-                    ->where('od.is_delete','=','1')
-                    ->where($where)
-                    ->where('odp.is_delete','=','1')
+                    ->where('ps.production_type','=',$machine_type)
+                    ->where('od.is_delete','=','1');
+                    if(!empty($machine_id))               
+                    {
+                        $result = $result->Where(function($query) use($machine_id)
+                        {
+                            $query->Where('ps.machine_id', '=', $machine_id)
+                                  ->orWhere('ps.machine_id', '=', '0');
+                        });
+                    }
+
+                    $result =$result->where('odp.is_delete','=','1')
                     ->orderBy('ord.id','desc')
                     ->orderBy('odp.id','desc')
                     ->get();
@@ -338,9 +374,20 @@ class Production extends Model {
         foreach($result as $key=>$value)
         {
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
+
+            if(!empty($value->machine_id))
+            {
+                $ret_array['assign']['shift_all'][]=$value;
+                $ret_array['assign'][$value->shift_id][$value->position_id]=$value;
+            }
+            else
+            {
+                $ret_array['unassign'][$value->position_id] = $value;
+            }
+
+
             $ret_array['shift_all'][]=$value;
-            $ret_array['shifts'][$value->shift_id]['shift_name']=$value->shift_name;
-            $ret_array['shifts'][$value->shift_id]['shift_data'][$value->position_id]=$value;
+            $ret_array[$value->shift_id][$value->position_id]=$value;
         }            
         return $ret_array;
     }
@@ -411,8 +458,6 @@ class Production extends Model {
     public function GetRuntimeData($position_id,$company_id,$machine_id=0)
     {
         $per_screen = 0.16; // 10 MINUTES
-        $iph_value=1; // DEFAULT VALUE
-        $getRunspeed = 1;
         $machineData = $this->common->GetTableRecords('machine',array('company_id'=>$company_id,'id'=>$machine_id));
 
         if(!empty($machineData))
@@ -426,7 +471,7 @@ class Production extends Model {
         $getPositioncolors = $this->getPositioncolors($position_id);
         
         $factor = $this->getfactor($getOrderImpression,$company_id,$machine_id);
-
+        
         if($getPositioncolors>0)
         {
             $iph = $this->common->GetTableRecords('iph',array('pos_no'=>$getPositioncolors,'company_id'=>$company_id,'machine_id'=>$machine_id));
@@ -435,6 +480,11 @@ class Production extends Model {
                 $iph_value = $iph[0]->value;
             }
         }
+
+        $factor = (empty($factor))?1:$factor;
+        $iph_value = (empty($iph_value))?1:$iph_value;
+        $getRunspeed = (empty($getRunspeed))?1:$getRunspeed;
+
         $imps_adjusted = $iph_value * $factor * $getRunspeed;
         //$hrs_imps   = 1/$imps_adjusted;
         $hrs_imps= number_format((float)1/$imps_adjusted, 3, '.', '');
@@ -465,6 +515,13 @@ class Production extends Model {
 
     public function UpdateMachineRecords($post,$action)
     {
+        $post['machineData']['machine_type_text'] = (empty($post['machineData']['machine_type_text']))?'':$post['machineData']['machine_type_text'];
+        $post['machineData']['screen_width'] = (empty($post['machineData']['screen_width']))?'':$post['machineData']['screen_width'];
+        $post['machineData']['screen_height'] = (empty($post['machineData']['screen_height']))?'':$post['machineData']['screen_height'];
+        $post['machineData']['color_count'] = (empty($post['machineData']['color_count']))?'':$post['machineData']['color_count'];
+        $post['machineData']['setup_time'] = (empty($post['machineData']['setup_time']))?0:$post['machineData']['setup_time'];
+        $post['machineData']['run_rate'] = (empty($post['machineData']['run_rate']))?0:$post['machineData']['run_rate'];
+
         if(!empty($post['machineData']['setup_time']))
         {
             $post['machineData']['setup_time'] = $post['machineData']['setup_time']/60;

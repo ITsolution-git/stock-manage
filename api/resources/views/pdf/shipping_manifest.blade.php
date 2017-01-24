@@ -114,7 +114,7 @@
                         {
                         ?>
                             <tr>
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo (!empty($items->brand_name))?$items->brand_name.' - ':''; ?>{{$items->name}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->color_name}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">
                                     @foreach ($items->sizes as $sizedata)
@@ -129,7 +129,7 @@
                         {
                         ?>
                             <tr style="background-color:#b7c2e0;">
-                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->name}}</td>
+                                <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;"><?php echo (!empty($items->brand_name))?$items->brand_name.' - ':''; ?>{{$items->name}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">{{$items->color_name}}</td>
                                 <td height="20" style="border:1px solid #000; text-align:left; font-size:9px; line-height:20px;">
                                     @foreach ($items->sizes as $sizedata)

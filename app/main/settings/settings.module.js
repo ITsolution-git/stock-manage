@@ -395,7 +395,7 @@
             weight     : 5
         });
         msNavigationServiceProvider.saveItem('fuse.settings.machine', {
-            title      : 'Machine Settings',
+            title      : '',
             state      : 'app.settings.machine',
             stateParams: {'id': 6},
             class      : 'navigation-dashboards project-dashboard',

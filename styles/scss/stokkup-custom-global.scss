@@ -102,7 +102,7 @@ $sidenav-lineheight:40px;
 	-ms-transition:all ease-in-out 0.2s;
 	-o-transition:all ease-in-out 0.2s;
 	transition:all ease-in-out 0.2s;
-}	
+}
 input::-moz-placeholder, textarea::-moz-placeholder {
 	opacity:1;
 	color:$popup-header-bg;
@@ -299,7 +299,7 @@ md-menu-content{
 	width:204px;
 	max-width:204px;
 	min-width:204px;
-	@extend .no-box-shadows;	
+	@extend .no-box-shadows;
 	.navigation-header{
 		@extend #toolbar, .no-box-shadows;
 		padding:$zero;
@@ -326,7 +326,7 @@ md-menu-content{
 			}
 			a{
 				color:$sidenav-color;
-				line-height:$sidenav-lineheight;		
+				line-height:$sidenav-lineheight;
 				height:auto;
 				font-family:$stokkupfamily1;
 				font-size:$font-size-text;
@@ -591,7 +591,7 @@ md-dialog{
 			border:$zero;
 			.md-button{
 				@extend .border-radius-half;
-				
+
 				&.md-accent[disabled]{
 					@include dialogfooterbtn(#9f9f9f);
 					border:solid 1px #9f9f9f;
@@ -697,7 +697,7 @@ md-dialog{
 		.md-input{
 			font-size:$font-size-text;
 			color:$stokkup-table-footer-txtcolor;
-		
+
 			&:focus{
 				border:1px solid #e0e1e3 !important;
 			}
@@ -834,7 +834,7 @@ table.dataTable thead.stokkup-space1 th{padding-top:10px;}
 	max-height:41px;
 	&:hover, &:focus{
 		background-color:$blue-shade3;
-	}	
+	}
 }
 .stokkup-blue-btn{
 	background-color:$blue-shade-btn !important;
@@ -899,7 +899,7 @@ table.table-white-bg{
 			background-color:$white-color;
 			border-bottom:solid 1px $box-border-color;
 			padding:30px 8px 10px;
-			line-height:$datatable-heading-size;		
+			line-height:$datatable-heading-size;
 			&:first-child{
 				padding-left:$thirty;
 			}
@@ -983,7 +983,7 @@ table.table-white-bg tbody tr:first-child td{
 .fig-desc-text{
 	font-weight:$font-weight-600;
 	font-size:$font-size-text;
-	
+
 }
 .box-zerospace{
 	width:$full-width;
@@ -1389,7 +1389,7 @@ md-card-content{
 .affiliate-box{
 	width:$full-width;
 	@extend .white-bg;
-	border:solid 1px $gray-shade3;	
+	border:solid 1px $gray-shade3;
 	h4{
 		width:$full-width;
 		font-size:16px;
@@ -1770,7 +1770,7 @@ md-dialog.task-dialog md-dialog-content.email-dialog{
 	color:$app-green !important;
 }
 #select_container_5 md-select-menu md-content md-option#select_option_3 .md-text{
-	color:$red-highlight !important;	
+	color:$red-highlight !important;
 }
 .approve-box md-select.approvelabel md-select-value .md-text{
 	color:$app-green;
@@ -2066,7 +2066,7 @@ ul.misc-left-pane{
 .editable-click, a.editable-click{
 	border-bottom:solid 1px $blue-shade3 !important;
 	@extend .ease-animations;
-	
+
 }
 a.editable-click:hover, a.editable-click:focus{
 	border-bottom:solid 1px $stokkup-table-footer-txtcolor !important;
