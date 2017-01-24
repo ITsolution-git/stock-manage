@@ -478,7 +478,7 @@
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
             schedule_data.run_date =run_date;
-            schedule_data.production_type = 0;
+            schedule_data.production_type = '0';
 
             $http.post('api/public/production/SchedualBoardData',schedule_data).success(function(result)
             {
@@ -516,7 +516,7 @@
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
             schedule_data.run_date =run_date;
-            schedule_data.production_type = 0;
+            schedule_data.production_type = '0';
 
             $http.post('api/public/production/SchedualBoardweekData',schedule_data).success(function(result)
             {
@@ -559,7 +559,7 @@
             schedule_data.company_id = $scope.company_id;
             schedule_data.run_date = run_date;
             schedule_data.machine_id = machine_id;
-            schedule_data.production_type = 0;
+            schedule_data.production_type = '0';
 
             $http.post('api/public/production/SchedualBoardMachineData',schedule_data).success(function(result)
             {
