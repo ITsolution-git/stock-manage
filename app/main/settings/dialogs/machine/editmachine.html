@@ -10,17 +10,31 @@
 <div class="inner-full-box">
     <div flex=100 class="pull-left full-row">
         <div flex=30 class="pull-left white-bg p-25 full-row">
+        <form name="machine_form" class="md-inline-form" novalidate>
         <div class="scorecard">
             <div class="card-details text-capitalize">
                 <div class="pull-left full-row">
                         <md-input-container class="md-block first-box">
-                            <input placeholder="Machine Name *" required=""  ng-model="machine.machine_name">
+                            <input placeholder="Machine Name *" name="machine_name" required  ng-model="machine.machine_name">
+                            <div ng-messages="machine_form.machine_name.$error" role="alert" multiple>
+                                <div ng-message="required" class="red-alert-msge">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>
                         </md-input-container>
+                          
+
                     </div>
                 <div class="pull-left full-row">
                         <md-input-container class="md-block first-box">
-                            <input ng-model="machine.setup_time" placeholder="Setup Time(in minutes)"  valid-number> 
+                            <input ng-model="machine.setup_time" name="setup_time" required placeholder="Setup Time(in minutes) *"  valid-number> 
+                            <div ng-messages="machine_form.setup_time.$error" role="alert" multiple>
+                                <div ng-message="required" class="red-alert-msge">
+                                    <span>This field is required</span>
+                                </div>
+                            </div> 
                         </md-input-container>
+                        
                     </div>
                 <div class="pull-left full-row">
                         <md-input-container class="md-block first-box">
@@ -29,8 +43,14 @@
                     </div>
                 <div class="pull-left full-row">
                         <md-input-container class="md-block first-box">
-                            <input placeholder="Run Rate(in %)" ng-model="machine.run_rate" valid-number>
+                            <input placeholder="Run Rate(in %) *" name="run_rate" ng-model="machine.run_rate" required valid-number>
+                             <div ng-messages="machine_form.run_rate.$error" role="alert" multiple>
+                                <div ng-message="required" class="red-alert-msge">
+                                    <span>This field is required</span>
+                                </div>
+                            </div> 
                         </md-input-container>
+                        
                     </div>
                 <div class="pull-left full-row">
                         <md-input-container class="md-block first-box">
@@ -39,21 +59,34 @@
                     </div>
                 <div class="pull-left full-row">
                         <md-input-container class="md-block first-box">
-                            <input placeholder="Max Screen Width" ng-model="machine.screen_width" valid-number>
+                            <input placeholder="Max Screen Width *" name="screen_width" ng-model="machine.screen_width" required valid-number>
+                             <div ng-messages="machine_form.screen_width.$error" role="alert" multiple>
+                                <div ng-message="required" class="red-alert-msge">
+                                    <span>This field is required</span>
+                                </div>
+                            </div>  
                         </md-input-container>
+                       
                     </div>
                 <div class="pull-left full-row">
                         <md-input-container class="md-block first-box">
-                            <input placeholder="Max Screen Height" ng-model="machine.screen_height" valid-number>
+                            <input placeholder="Max Screen Height *" name="screen_height" ng-model="machine.screen_height" required valid-number>
+                            <div ng-messages="machine_form.screen_height.$error" role="alert" multiple>
+                                <div ng-message="required" class="red-alert-msge">
+                                    <span>This field is required</span>
+                                </div>
+                            </div> 
                         </md-input-container>
+                         
                     </div>
                 <div class="pull-left full-row">
-                        <md-button  ng-show="allow_access==1" class="bg-blue float-right" id="affiliateSaveBtn" ng-disabled="affiliateform.$invalid || affiliateform.$pristine" ng-click="UpdateMachineData(machine,alliphData,allfactorData)">
+                        <md-button  ng-show="allow_access==1" class="bg-blue float-right" id="affiliateSaveBtn" ng-disabled="machine_form.$invalid || machine_form.$pristine" ng-click="UpdateMachineData(machine,alliphData,allfactorData)">
                                 SAVE
                         </md-button>
                     </div>
             </div>
         </div>
+        </form>
         </div>
         <div flex=70 class="pull-left full-row">
                 <div class="full-row pull-left">
@@ -73,12 +106,12 @@
                                         <tr ng-repeat="(key,iph) in alliphData">
                                             <td class="">
                                                 <md-input-container  class="md-icon-float md-default-theme md-input-invalid">
-                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.pos_no"  >
+                                                <input valid-number type="text" required class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.pos_no"  >
                                                 </md-input-container>
                                             </td>
                                             <td class="">
                                                 <md-input-container class="md-icon-float md-default-theme md-input-invalid">
-                                                <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.value" >
+                                                <input valid-number type="text" required class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="iph.value" >
                                                 </md-input-container>
                                                 
                                             </td>
@@ -105,12 +138,12 @@
                                         <tr ng-repeat="(key,factorData) in allfactorData">
                                             <td class="">
                                                 <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                                    <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.order_size">
+                                                    <input valid-number type="text" required class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.order_size">
                                                 </md-input-container>
                                             </td>
                                             <td class="">
                                                 <md-input-container flex="100" class="md-icon-float flex-100 md-default-theme md-input-invalid">
-                                                    <input valid-number type="text" required="" class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.factor" >
+                                                    <input valid-number type="text" required class="ng-pristine md-input ng-empty ng-invalid ng-invalid-required ng-touched" aria-label="Color" aria-invalid="false" ng-model="factorData.factor" >
                                                 </md-input-container>
                                             </td>
                                             

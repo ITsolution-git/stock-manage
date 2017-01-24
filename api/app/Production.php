@@ -458,8 +458,6 @@ class Production extends Model {
     public function GetRuntimeData($position_id,$company_id,$machine_id=0)
     {
         $per_screen = 0.16; // 10 MINUTES
-        $iph_value=1; // DEFAULT VALUE
-        $getRunspeed = 1;
         $machineData = $this->common->GetTableRecords('machine',array('company_id'=>$company_id,'id'=>$machine_id));
 
         if(!empty($machineData))
@@ -473,7 +471,7 @@ class Production extends Model {
         $getPositioncolors = $this->getPositioncolors($position_id);
         
         $factor = $this->getfactor($getOrderImpression,$company_id,$machine_id);
-
+        
         if($getPositioncolors>0)
         {
             $iph = $this->common->GetTableRecords('iph',array('pos_no'=>$getPositioncolors,'company_id'=>$company_id,'machine_id'=>$machine_id));
@@ -482,6 +480,11 @@ class Production extends Model {
                 $iph_value = $iph[0]->value;
             }
         }
+
+        $factor = (empty($factor))?1:$factor;
+        $iph_value = (empty($iph_value))?1:$iph_value;
+        $getRunspeed = (empty($getRunspeed))?1:$getRunspeed;
+
         $imps_adjusted = $iph_value * $factor * $getRunspeed;
         //$hrs_imps   = 1/$imps_adjusted;
         $hrs_imps= number_format((float)1/$imps_adjusted, 3, '.', '');
@@ -512,6 +515,13 @@ class Production extends Model {
 
     public function UpdateMachineRecords($post,$action)
     {
+        $post['machineData']['machine_type_text'] = (empty($post['machineData']['machine_type_text']))?'':$post['machineData']['machine_type_text'];
+        $post['machineData']['screen_width'] = (empty($post['machineData']['screen_width']))?'':$post['machineData']['screen_width'];
+        $post['machineData']['screen_height'] = (empty($post['machineData']['screen_height']))?'':$post['machineData']['screen_height'];
+        $post['machineData']['color_count'] = (empty($post['machineData']['color_count']))?'':$post['machineData']['color_count'];
+        $post['machineData']['setup_time'] = (empty($post['machineData']['setup_time']))?0:$post['machineData']['setup_time'];
+        $post['machineData']['run_rate'] = (empty($post['machineData']['run_rate']))?0:$post['machineData']['run_rate'];
+
         if(!empty($post['machineData']['setup_time']))
         {
             $post['machineData']['setup_time'] = $post['machineData']['setup_time']/60;
