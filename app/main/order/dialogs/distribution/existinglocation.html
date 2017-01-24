@@ -1,0 +1,20 @@
+<md-dialog class="task-dialog" aria-label="New order">
+    <form name="orderInfoForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Add Existing Location</span>
+                 <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll class="m-t-20">
+            <div layout="column" >
+               <div ng-dropdown-multiselect="" options="allAddressData" selected-model="addressModel" class="cheak-box-class client-address" extra-settings="addressChecksettings" translation-texts="addresscustomTexts"></div>
+            </div>
+        </md-dialog-content>
+        <md-dialog-actions layout="row" layout-align="end center">
+            <md-button ng-click="saveOrderInfo(order_data)" class="md-accent md-raised dialog-submit-global" ng-disabled="orderInfoForm.$invalid">Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog> 

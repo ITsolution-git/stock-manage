@@ -597,9 +597,13 @@
             });
         }
 
-        $scope.SchedualBoardData($scope.run_date); // DAY TAB DATA
-        $scope.SchedualBoardweekData($scope.run_date); // WEEKLY TAB DATA
-        $scope.SchedualBoardMachineData($scope.run_date); // MACHINE TAB DATA
+        $scope.RefreshBoard = function()
+        {
+          $scope.SchedualBoardData($scope.run_date); // DAY TAB DATA
+          $scope.SchedualBoardweekData($scope.run_date); // WEEKLY TAB DATA
+          $scope.SchedualBoardMachineData($scope.run_date); // MACHINE TAB DATA
+        }
+        $scope.RefreshBoard();
 
 
     }

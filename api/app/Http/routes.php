@@ -810,6 +810,13 @@ Route::post('affiliate/affiliateCalculation',[
 ]);
 
 //DISTRIBUTION ROUTERS
+Route::post('distribution/getDistributionDetail',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'get',
+   'flag' => 'false',
+   'uses' => 'DistributionController@getDistributionDetail'
+]);
 Route::post('distribution/getDistProductAddress',[
    'middleware' => 'check',
    'role' => array('AT','SU'),
@@ -844,6 +851,13 @@ Route::post('distribution/getProductByAddress',[
    'action' => 'get',
    'flag' => 'false',
    'uses' => 'DistributionController@getProductByAddress'
+]);
+Route::post('distribution/getSizeBySelect',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'get',
+   'flag' => 'false',
+   'uses' => 'DistributionController@getSizeBySelect'
 ]);
 
 Route::get('qbo/oauth','QuickBookController@qboOauth');
