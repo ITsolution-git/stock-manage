@@ -122,7 +122,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="position in design.positions.order_design_position">
+                            <tr ng-repeat="position in design.positions_data">
                                 <td height="72">{{position.position_name}}</td>
                                 <td>{{position.placement_type_name}}</td>
                                 <td class="text-center">{{position.qnty}}</td>
@@ -147,10 +147,10 @@
                         </thead>
                         <tbody> 
                             <tr ng-repeat="product in design.products">
-                                <td ng-if="product.brand_name == ''">{{product.product_name}}</td>
-                                <td ng-if="product.brand_name != ''">{{product.brand_name}} - {{product.product_name}}</td>
-                                <td class="text-center">{{product.color_name}}</td>
-                                <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
+                                <td ng-if="product.brand_name == ''">{{product.product_name}}<label ng-if="product.is_supply == 1"><span class="global-labels f-red"> (Supplied)</span></label></td>
+                                <td ng-if="product.brand_name != ''">{{product.brand_name}} - {{product.product_name}}<label ng-if="product.is_supply == 1"><span class="global-labels f-red"> (Supplied)</span></label></td>
+                                <td class="text-center"><label ng-repeat="(color_name,color_data) in product.sizeData">{{color_name}} </br></label></td>
+                                <td class="text-center"><label ng-repeat="sizeData in product.sizeData"><label ng-repeat="size in sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></br></label></td>
                                 <td class="text-center">{{product.total_qnty}}</td>
                                 <td class="text-center">{{product.total_price | currency : $ : 2}}</td>
                             </tr>
