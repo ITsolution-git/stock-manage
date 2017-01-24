@@ -2,7 +2,10 @@
     <div class="simple-table-container stokkup-main-tableview">
         <div class="table-title  layout-align-space-between-center layout-row bottom-shadow" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-70">
-              Distrubution for ABX <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:order.display_number})">#{{order.display_number}}</a> for Company: <a class="cursor-p" title="Go to Order" ui-sref="app.client.profile({id:order.client_display_number})">{{order.client_company}}</a>
+              Distrubution for {{order.order_name}} <a class="cursor-p" title="Go to Order" ui-sref="app.order.order-info({id:order.display_number})">#{{order.display_number}}</a> for Company: <a class="cursor-p" title="Go to Order" ui-sref="app.client.profile({id:order.client_display_number})">{{order.client_company}}</a>
+            </div>
+            <div class="table-title-text flex-30 pd15-L num-style1">
+              Selected Locations: {{order.dist_location}}
             </div>
             <div class="pull-right right-search-box">
                 <a class="pull-right common-header-links" ui-sref="app.order.order-info({id:order.display_number})">BACK TO ORDER INFO</a>
