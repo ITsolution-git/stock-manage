@@ -1,4 +1,4 @@
-.mdslider md-slider {
+/*.mdslider md-slider {
   margin-top: -14px; }
 
   .mdsliderHeight {
@@ -26,4 +26,265 @@
 .paddingbottom-0 {
 	padding: 0;
 }
+*/
 
+.unscheduled-lot{
+	float:left;
+	margin:1px;
+}
+.scheduled-table{
+	max-width:80%;
+	overflow-x:auto;
+	display:table-row;
+	float:left;
+}
+.scheduled-table tr td{
+	width: 25%;
+	padding:0px;
+	float:none;
+	display:table-cell;
+}
+.slot{
+	width: 214px;
+	margin:0px;
+	min-height:100px;
+	background-color:#e8e9ea;
+}
+.slot .slot-header{
+	font-size:11px;
+	min-height: 160px;
+}
+.slot .machine-slot-header{
+	min-height:100px;
+}
+
+.slot .slot-header>div{
+	background-color: #f4f4f5;
+}
+.slot .slot-header .slot-name{
+	font-size:12px;
+}
+.slot .slot-header .shift-box{
+	width:30.5%;
+	height:30px;
+	float:left;
+	margin:0;
+}
+.slot .slot-header .shift-box h6{
+	margin:0px;
+	font-size:12px;
+	font-weight:bold;
+}
+
+.slot .slot-header .shift-box span{
+	font-size:11px;
+	line-height:12px;
+}
+
+
+.slot .slot-header .machine-capacity-box {
+	width:60%;
+	margin:0px 20%;
+	padding: 10px;
+	float:left;
+}
+.slot .slot-header .machine-capacity-box h6{
+	margin:0px;
+	font-size:20px;
+	line-height:20px;
+}
+
+.slot .slot-header .machine-capacity-box span{
+	font-size:11px;
+	line-height:12px;
+}
+
+
+.slot .slot-header .shift-box.middle{
+	margin:0 8px;
+}
+
+.slot .slot-content{
+	width:100%;
+	height:400px;
+	overflow-y:auto;
+	border-right:solid 1px #efefef;
+	background-color: #fff;
+}
+.slot .slot-content h4{
+	padding:0px;
+	margin:2px 0px 4px;
+	width:100%;
+	text-align:center;
+}
+.slot .slot-content .shift-container{
+	min-height: 20px;
+	box-shadow:1px 1px #e8e9ea;
+}
+.slot .slot-content .shift-container .shift-card{
+	width:100%;
+	height:75px;
+  background-color: #e8e9ea;
+	border:solid 1px #e0e1e3;
+	margin:0 0 10px 0;
+	position: relative;
+}
+.slot .slot-content .shift-container .shift-card.rush-card{
+	/*background-color: #de0000;*/
+}
+.slot .slot-content .shift-container .shift-card .position-text{
+	width:60%;
+	margin-left:14px;
+	float:left;
+	font-size:9px;
+	position: relative;
+	md-icon{
+		&.icon-filter-variant{
+			float:right;
+			margin-right:10px;
+			line-height:40px;
+		}
+	}
+}
+
+.slot .slot-content .shift-container .shift-card .position-text .position-title{
+	font-size:12px;
+}
+.slot .slot-content .shift-container .shift-card .position-text .position-status{
+	font-size:9px;
+	color: #169bd5;
+}
+.slot .slot-content .shift-container .shift-card .position-text .small{
+	font-size:16px !important;
+	position: absolute;
+	right:5px;
+}
+.slot .slot-content .shift-container .shift-card .position-rush-stripe{
+	width:12px;
+	background-color: #de0000;
+  position: absolute;
+  display: flex;
+  align-items: center;
+	height: 100%;
+}
+.slot .slot-content .shift-container .shift-card .position-rush-stripe span{
+	font-size: 9px;
+  color: #fff;
+  line-height: 10px;
+  text-transform: uppercase;
+  transform: rotate(-90deg);
+  width: 100%;
+  text-align: center;
+}
+
+
+.slot .slot-content .shift-container .shift-card .position-image{
+	width:30%;
+	float: right;
+	height: 100%;
+}
+.slot .slot-content .shift-container .shift-card .position-image img{
+	height: 100%;
+	width: auto;
+}
+
+/*Drag and Drop(Drangula) specific css*/
+shift-container div,
+.gu-mirror {
+  margin: 10px;
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 0.4s ease-in-out;
+}
+.gu-mirror.shift-card{
+	width:100%;
+	height:70px;
+  background-color: #e8e9ea;
+	border:solid 1px #e0e1e3;
+	margin:0 0 10px 0;
+	position: relative;
+}
+.gu-mirror.shift-card.rush-card{
+	/*background-color: #de0000;*/
+}
+.gu-mirror.shift-card .position-text{
+	width:60%;
+	margin-left:14px;
+	float:left;
+	font-size:9px;
+	position: relative;
+	md-icon{
+		&.icon-filter-variant{
+			float:right;
+			margin-right:10px;
+			line-height:40px;
+		}
+	}
+}
+
+.gu-mirror.shift-card .position-text .position-title{
+	font-size:12px;
+}
+.gu-mirror.shift-card .position-text .position-status{
+	font-size:9px;
+	color: #169bd5;
+}
+.gu-mirror.shift-card .position-text .small{
+	font-size:16px !important;
+	position: absolute;
+	right:5px;
+}
+.gu-mirror.shift-card .position-rush-stripe{
+	width:12px;
+	background-color: #de0000;
+  position: absolute;
+  display: flex;
+  align-items: center;
+	height: 100%;
+}
+.gu-mirror.shift-card .position-rush-stripe span{
+	font-size: 9px;
+  color: #fff;
+  line-height: 10px;
+  text-transform: uppercase;
+  transform: rotate(-90deg);
+  width: 100%;
+  text-align: center;
+}
+
+
+.gu-mirror.shift-card .position-image{
+	width:30%;
+	float: right;
+	height: 100%;
+}
+.gu-mirror.shift-card .position-image img{
+	height: 100%;
+	width: auto;
+}
+
+
+
+
+.shift-container div {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+.gu-mirror {
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+.shift-container .ex-moved {
+  background-color: #e74c3c;
+}
+.shift-container.ex-over {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.handle {
+  padding: 0 5px;
+  margin-right: 5px;
+  background-color: rgba(0, 0, 0, 0.4);
+  cursor: move;
+}

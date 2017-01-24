@@ -890,4 +890,5 @@ Route::post('production/SaveSchedulePosition','ProductionController@SaveSchedule
 Route::get('production/GetRuntimeData/{position_id}/{company_id}','ProductionController@GetRuntimeData');
 Route::post('production/UpdateMachineRecords','ProductionController@UpdateMachineRecords');
 Route::post('production/productionShift','ProductionController@productionShift');
-
+Route::post('production/ChagneDragDrop','ProductionController@ChagneDragDrop');
+Route::post('production/ChagneDragDropweek','ProductionController@ChagneDragDropweek');
