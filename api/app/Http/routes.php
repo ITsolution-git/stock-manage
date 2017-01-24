@@ -98,7 +98,7 @@ Route::post('admin/price',[
 
 Route::post('admin/priceGridDuplicate',[
    'middleware' => 'check',
-   'role' => array('AM','CA'),
+   'role' => array('AM','CA','FM'),
    'special_role' => array('SM'),
    'special_action' => 'add',
    'action' => 'add',
@@ -108,7 +108,7 @@ Route::post('admin/priceGridDuplicate',[
 
 Route::post('admin/priceEdit',[
    'middleware' => 'check',
-   'role' => array('AM','CA'),
+   'role' => array('AM','CA','FM'),
    'special_role' => array('SM'),
    'special_action' => 'edit',
    'action' => 'edit',
@@ -134,7 +134,7 @@ Route::post('admin/priceEdit/{id}',[
 
 Route::post('admin/priceGridPrimaryDuplicate',[
    'middleware' => 'check',
-   'role' => array('AM','CA'),
+   'role' => array('AM','CA','FM'),
    'action' => 'add',
    'special_role' => array('SM'),
    'special_action' => 'add',
@@ -633,6 +633,13 @@ Route::post('product/addProduct',[
    'flag' => 'false',
    'uses' => 'ProductController@addProduct'
 ]);
+Route::post('product/addProductCustom',[
+   'middleware' => 'check',
+   'role' => array('AT','SU'),
+   'action' => 'add',
+   'flag' => 'false',
+   'uses' => 'ProductController@addProductCustom'
+]);
 
 Route::post('product/designProduct',[
    'middleware' => 'check',
@@ -687,11 +694,8 @@ Route::post('product/downloadCSV',[
    'uses' => 'ProductController@downloadCSV'
 ]);
 
-Route::post('product/downloadCustomProductCSV',[
-   'middleware' => 'check',
-   'role' => 'ALL',
-   'uses' => 'ProductController@downloadCustomProductCSV'
-]);
+
+Route::post('product/downloadCustomProductCSV', 'ProductController@downloadCustomProductCSV');
 
 
 Route::post('product/checkSnsAuth', 'ProductController@checkSnsAuth');
@@ -892,10 +896,12 @@ Route::post('production/GetProductionList','ProductionController@GetProductionLi
 Route::post('production/GetShiftMachine','ProductionController@GetShiftMachine');
 Route::post('production/GetPositionDetails','ProductionController@GetPositionDetails');
 Route::post('production/GetFilterData','ProductionController@GetFilterData');
-
 Route::post('production/SchedualBoardData','ProductionController@SchedualBoardData');
 Route::post('production/SchedualBoardweekData','ProductionController@SchedualBoardweekData');
 Route::post('production/SchedualBoardMachineData','ProductionController@SchedualBoardMachineData');
 Route::post('production/GetSchedulePositionDetail','ProductionController@GetSchedulePositionDetail');
 Route::post('production/SaveSchedulePosition','ProductionController@SaveSchedulePosition');
 Route::get('production/GetRuntimeData/{position_id}/{company_id}','ProductionController@GetRuntimeData');
+Route::post('production/UpdateMachineRecords','ProductionController@UpdateMachineRecords');
+Route::post('production/productionShift','ProductionController@productionShift');
+

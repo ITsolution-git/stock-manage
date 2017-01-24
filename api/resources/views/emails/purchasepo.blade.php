@@ -1,1 +1,4 @@
-Please find attachment of Purchase Order.
+Hi,
+
+{!! $mailMessage !!}
+

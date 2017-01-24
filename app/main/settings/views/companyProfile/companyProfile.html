@@ -6,7 +6,7 @@
                 <div class="info-order" flex="100" ng-class="{'disable-click': role_slug != 'CA'}">
                     <form name="copmpany_profile">
                     <md-card layout="row">
-                        <md-card-content flex="70" layout="column"  ng-class="{'disable-click': role_slug != 'CA'}">
+                        <md-card-content flex="40" layout="column"  ng-class="{'disable-click': role_slug != 'CA'}">
                             
                             <md-input-container class="md-block first-box settings-margin-0 margin-top-25">
                                 <input placeholder="Company Name" name="name" ng-model="company.name" required ui-event="{ change : 'UpdateTableProfile($event.target.name,$event.target.value,\'users\',\'id\',company.id,\'company\',\'\',\'required_field\')' }" >
@@ -88,7 +88,8 @@
                                 </md-input-container>
                             </div>
                             <span class="pull-left">
-                                <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn mr-20" ng-click="qbClientSetup()" >Client Sync to Quickbook</md-button>
+                                <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn mr-20" ng-click="qbClientSetup()" ng-if="qbsync == 0">Client Sync to Quickbook</md-button>
+                                <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn mr-20" disabled ng-if="qbsync == 1">Client Sync to Quickbook Processing ...</md-button>
                                  <md-button class="md-button stokkup-custom-btn1 stokkup-blue-btn" ng-click="qbUpdateInovice()" >Invoice Payments Sync to Quickbook
                                 </md-button>
                             </span>
@@ -110,12 +111,39 @@
                                             padding: 0 12px !important;
                                             text-indent: -100%;" type="file" multiple="" accept="image/*" base-sixty-four-input ng-model="logo_image" ng-change="ImagePopup('photo','staff','staff',company.company_url_photo,'id',company.staff_id,company.photo,'image_drag',logo_image)" style="">
                                 <div class='button-wrapper' style='height:200px'>
+                                    <label class="text-center dragDropLabel">COLOR LOGO</label>
                                     <label class="text-center dragDropLabel">Drag & Drop your File here</label>
                                 <!-- <input class="" type="button" value="submit"  /> -->
                                     <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
                                 </div>
                             </div>
                         </md-card-content> 
+
+                        <md-card-content flex="30" layout="column" class="m-r-10">
+                            <md-card-content flex="50" layout="column" class="max-height-350 m-b-30 company-pro-img-block"  ng-click="ImagePopup('bw_photo','staff','staff',company.company_bw_url_photo,'id',company.staff_id,company.bw_photo,'image',company.bw_photo)">
+                                <img ng-if="company.company_bw_url_photo==''" ng-src="{{NoImage}}" alt="No Image" class="company-pro-image" >
+                                <img ng-if="company.company_bw_url_photo" ng-src="{{company.company_bw_url_photo}}" alt="Image" class="company-pro-image" >
+                            </md-card-content>
+                            <div class="container" style="position: relative;">
+                                <input style="height: 100%;
+                                            left: 0;
+                                            position: absolute;
+                                            top: 0;
+                                            width: 100%;
+                                            z-index: 10;
+                                            cursor: pointer;
+                                            opacity: 0;
+                                            padding: 0 12px !important;
+                                            text-indent: -100%;" type="file" multiple="" accept="image/*" base-sixty-four-input ng-model="logo_image" ng-change="ImagePopup('bw_photo','staff','staff',company.company_bw_url_photo,'id',company.staff_id,company.bw_photo,'image_drag',logo_image)" style="">
+                                <div class='button-wrapper' style='height:200px'>
+                                    <label class="text-center dragDropLabel">BLACK AND WHITE LOGO</label>
+                                    <label class="text-center dragDropLabel">Drag & Drop your File here</label>
+                                <!-- <input class="" type="button" value="submit"  /> -->
+                                    <md-button id="chooseFile" class="md-raised">CHOOSE FILE</md-button>
+                                </div>
+                            </div>
+                        </md-card-content>
+
                     </md-card>
                     </form>
                 </div>   

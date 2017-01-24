@@ -15,6 +15,7 @@
         $scope.NoImage = AllConstant.NoImage;
         $scope.valid_phone = AllConstant.VALID_PHONE;
         $scope.currentyear = AllConstant.currentyear;
+        $scope.qbsync = 0;
 
     
     $scope.company_id =sessionService.get("company_id");
@@ -497,25 +498,32 @@ $scope.addData = function(tableName){
 
            $scope.qbClientSetup = function(){
 
-                $("#ajax_loader").show();
-                var companyId = {};
 
-                companyId ={company_id :sessionService.get('company_id')};
+                var permission = confirm("Are you sure want to Client Sync to Quickbook? it will take more time.");
+                if (permission == true) {
 
-                $http.post('api/public/common/AddEditClient',companyId).success(function(result) {
-                    $("#ajax_loader").hide();
-                            if(result != '0')
-                            {
-                                notifyService.notify('success',"Client Sync successfully");   
-                            }
-                            else
-                            {
-                                notifyService.notify('error',"Please connect to quickbook first");
-                            }
+                    $scope.qbsync = 1;
 
-                           
+                    var companyId = {};
 
-                           });
+                    companyId ={company_id :sessionService.get('company_id')};
+
+                    $http.post('api/public/common/AddEditClient',companyId).success(function(result) {
+                            $scope.qbsync = 0;
+                       
+                                if(result != '0')
+                                {
+                                    notifyService.notify('success',"Client Sync successfully");   
+                                }
+                                else
+                                {
+                                    notifyService.notify('error',"Please connect to quickbook first");
+                                }
+
+                               
+
+                               });
+                }
             }
 
             $scope.qbUpdateInovice = function(){

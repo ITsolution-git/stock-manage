@@ -148,7 +148,7 @@
         }
 
 
-        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,size_group_id,warehouse)
+        $scope.openSearchProductViewDialog = function(ev,product_id,product_image,description,vendor_name,operation,product_name,colorName,size_group_id,warehouse,brand_name)
         {
           
             var check_data = {};
@@ -182,6 +182,7 @@
                             design_product_id:0,
                             size_group_id:size_group_id,
                             warehouse:warehouse,
+                            brand_name:brand_name,
                             event: ev
                         },
                         onRemoving : $scope.reloadPage

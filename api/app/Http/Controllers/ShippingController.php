@@ -28,6 +28,7 @@ class ShippingController extends Controller {
         $this->common = $common;
         $this->api = $api;
         $this->company = $company;
+        $this->order = $order;
     }
 
     /**
@@ -330,6 +331,9 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
+
+       
+
         $company_detail = json_decode($_POST['company_detail']);
         $company_id = $company_detail[0]->id;
 
@@ -337,16 +341,29 @@ class ShippingController extends Controller {
 
         $shipping['company_detail'] = $this->common->getCompanyDetail($company_id);
 
+
         $staff = $this->common->GetTableRecords('staff',array('user_id' => $company_id),array());
 
-        if(!empty($shipping['shipping']->is_blind))
-        {
+
+
+        if($post['print_type'] == 'label') {
+
             $shipping['company_detail'][0]->photo = $this->common->checkImageExist($company_id.'/client/'.$shipping['shipping']->client_id."/",$shipping['shipping']->b_w_logo);
+            
+        } else {
+
+             if(!empty($shipping['shipping']->is_blind))
+                {
+                    $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->bw_photo;
+                }
+                else
+                {
+                    $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
+                }
+
         }
-        else
-        {
-            $shipping['company_detail'][0]->photo = UPLOAD_PATH.$company_id."/staff/".$staff[0]->id."/".$shipping['company_detail'][0]->photo;
-        }
+
+       
 
         if($shipping['shipping']->in_hands_by != '0000-00-00') {
             $shipping['shipping']->in_hands_by = date("m/d/Y", strtotime($shipping['shipping']->in_hands_by));
@@ -622,13 +639,15 @@ class ShippingController extends Controller {
     {
         $post = Input::all();
 
-        $remaining_qnty = $post['product']['remaining_qnty'] + $post['product']['old_distributed_qnty'];
+        $purchase_detail = $this->common->GetTableRecords('purchase_detail',array('id' => $post['product']['id']),array());
 
-        /*if($post['product']['distributed_qnty'] > $remaining_qnty)
+        $remaining_qnty = $purchase_detail[0]->remaining_qnty + $post['product']['old_distributed_qnty'];
+
+        if($post['product']['distributed_qnty'] > $remaining_qnty)
         {
             $response = array('success'=>0,'message'=>'You cannot allocate more than '.$remaining_qnty.' quantity');
             return response()->json(['data'=>$response]);
-        }*/
+        }
 
         $shipping_data = $this->common->GetTableRecords('product_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
         $order_address_data = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $post['order_id'],'address_id' => $post['address_id']),array());
@@ -673,16 +692,33 @@ class ShippingController extends Controller {
             $display_number = $this->common->getDisplayNumber('shipping',$post['company_id'],'company_id','id');
             $shipping_id = $this->common->InsertRecords('shipping',array('order_id' => $post['order_id'],'address_id' => $post['address_id'],'display_number' => $display_number,'company_id' => $post['company_id'],'shipping_type_id' => $shipping_type_id,'shipping_method' => $shipping_method_id));
             $product_address_id = $this->common->InsertRecords('product_address_mapping',array('order_id' => $post['order_id'],'product_id' => $post['product']['product_id'],'address_id' => $post['address_id'],'shipping_id' => $shipping_id));
+            
             $this->common->InsertRecords('product_address_size_mapping',array('product_address_id' => $product_address_id,'purchase_detail_id' => $post['product']['id'],'distributed_qnty' =>$post['product']['distributed_qnty']));
         }
-        $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['product']['id']),array('remaining_qnty' => $remaining_qnty - $post['product']['distributed_qnty']));
+        
+        $distributed_qnty = $this->distribution->getSingleSizeDistributed(array('order_id' => $post['order_id'],'id' => $post['product']['id']));
+
+        if($distributed_qnty > 0)
+        {
+            $remaining_qnty = $post['product']['qnty_purchased'] - $distributed_qnty;
+        }
+        else
+        {
+            $remaining_qnty = $post['product']['qnty_purchased'];
+        }
+
+        $this->common->UpdateTableRecords('purchase_detail',array('id' => $post['product']['id']),array('remaining_qnty' => $remaining_qnty));
+
+        $this->common->DeleteTableRecords('product_address_size_mapping',array('distributed_qnty' => '0'));
+
+        $total_order_qty = $this->order->getTotalQntyByOrder(array('id'=>$post['order_id']));
+        $total_shipped_qnty = $this->order->getShippedByOrder(array('id'=>$post['order_id']));
+        $addressTotalProducts = $this->distribution->getTotalDistributedOrderAddress($post['address_id'],$post['order_id']);
 
         $success=1;
         $message=UPDATE_RECORD;
-
-        $distributed_qnty = $this->distribution->getSingleSizeDistributed(array('order_id' => $post['order_id'],'id' => $post['product']['id']));
         
-        $response = array("success"=>$success,"message"=>$message,"distributed_qnty"=>$distributed_qnty,"remaining_qnty"=>$remaining_qnty - $post['product']['distributed_qnty']);
+        $response = array("success"=>$success,"message"=>$message,"distributed_qnty"=>$distributed_qnty,"remaining_qnty"=>$remaining_qnty,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'addressTotalProducts'=>$addressTotalProducts);
         return response()->json(['data'=>$response]);
     }
 

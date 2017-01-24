@@ -279,7 +279,7 @@ hr .style1 {
 }
 
 .createPriceGridLink {
-  top : 43px;
+  top : 23px;
   right: 40px;
   font-family: 'Helvetica';
     font-style: normal;
@@ -588,7 +588,7 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .mrg10-T { margin-top: 10px;}
 .mrg10-TB { margin-bottom:10px; margin-top:10px; }
 .mrg10-B { margin-bottom:10px;}
-.pd10 { padding: 10px;}
+.pd10 { padding: 10px !important;}
 .pd10-LR { padding-right:10px; padding-left:10px; }
 .pd10-R { padding-right:10px; }
 .mrg5-B { margin-bottom:5px; }
@@ -1324,7 +1324,6 @@ margin-top:30px;
 .allocate-btn {
   padding: 7px 0;
 }
-
 .ship-order-screen md-card-content.custom-desc-box .h5{ padding-top: 15px; }
 .ship-order-screen .shp-code p { font-size: 16px; font-weight: bold; margin: 0 }
 .ship-order-screen .date-input span.k-widget.k-datepicker { width: 100%; }
@@ -1392,7 +1391,6 @@ md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-c
 .shipping-select { margin-top: 50px;   }
 .shipping-select md-select  { font-size: 16px; font-weight: bold; min-width: 300px;  }
 
-
 @media (max-width: 1200px) {
     .location .stokkup-blue-btn { font-size: 12px; padding: 0 20px; }
     .ship-order-screen .shp-code p { font-size: 13px; }
@@ -1401,3 +1399,6 @@ md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-c
   max-height: 400px;
   overflow-y: auto;
 }
+.search-block md-input-container label { padding-left: 25px !important;  }
+.simple-table-container .table-title { position: relative;  }
+.dashboard-page .table-title .table-title-text {  padding-left: 25px ;  }

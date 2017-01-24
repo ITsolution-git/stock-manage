@@ -110,7 +110,7 @@ class Distribution extends Model {
 
 	public function getProductByOrder($order_id)
 	{
-		$listArr = ['pd.id','pd.size',DB::raw('SUM(pas.distributed_qnty) as distributed_qnty'),'pd.remaining_qnty','pas.product_address_id','qnty as qnty_purchased','c.name as color_name','p.name as product_name','p.id as product_id','cd.description'];
+		$listArr = ['pd.id','pd.size',DB::raw('SUM(pas.distributed_qnty) as distributed_qnty'),'pd.remaining_qnty','pas.product_address_id','qnty as qnty_purchased','c.name as color_name','p.name as product_name','p.id as product_id','cd.description','pam.address_id'];
 
 		$result = DB::table('purchase_detail as pd')
 					->leftJoin('products as p', 'pd.product_id', '=', 'p.id')
@@ -291,6 +291,25 @@ class Distribution extends Model {
         }
                 
        	return $total_distributed[0]->distributed;
+	}
+
+	public function getProductAddressIdsByOrder($order_id,$address_id)
+	{
+		$sql = DB::table('product_address_mapping')
+                        ->select(DB::raw('GROUP_CONCAT(id) as ids'))
+                        ->where('order_id','=',$order_id)
+                        ->where('address_id','=',$address_id)
+                        ->get();
+
+        return $sql;
+	}
+	public function getProductAddressSizeIds($productAddressIds)
+	{
+		$sql = DB::table('product_address_size_mapping')
+                        ->whereIn('product_address_id',$productAddressIds)
+                        ->get();
+
+        return $sql;
 	}
 }	
 ?>

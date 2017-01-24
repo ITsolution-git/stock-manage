@@ -420,6 +420,9 @@ class DistributionController extends Controller {
             $products['distributed_qnty'] = 0;
         } else {
             $success = 1;
+            foreach ($products as $product) {
+                $product->old_distributed_qnty = $product->distributed_qnty;
+            }
         }
         $response = array('success'=>$success,'message'=>GET_RECORDS,'products'=>$products);
         return response()->json(["data" => $response]);

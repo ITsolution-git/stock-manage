@@ -126,7 +126,7 @@ class Shipping extends Model {
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
 
         $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number','o.display_number',
-                        's.boxing_type','o.date_shipped as shipping_by','o.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.name','st.code','s.shipping_method','o.shipping_status','o.login_id','c.is_blind','c.b_w_logo',
+                        's.boxing_type','o.date_shipped as shipping_by','o.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.name','st.code','s.shipping_method','o.shipping_status','o.login_id','o.is_blind','c.b_w_logo',
                         'o.date_shipped','o.in_hands_by','o.custom_po','s.shipping_note','s.display_number as shipping_display_number','c.display_number as client_display_number'];
        
         $shippingData = DB::table('shipping as s')

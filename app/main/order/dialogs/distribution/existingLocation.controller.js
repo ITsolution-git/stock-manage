@@ -82,9 +82,18 @@
             order_data.cond ={id:order_id}
         
             $http.post('api/public/order/editOrder',order_data).success(function(result) {
-                 $mdDialog.hide();
-                 var data = {"status": "success", "message": "Data Updated Successfully."}
-                 notifyService.notify(data.status, data.message);
+
+                if(result.data.success == '1')
+                {
+                    var data = {"status": "success", "message": "Data Updated Successfully."}
+                    notifyService.notify(data.status, data.message);
+                    $mdDialog.hide();
+                }
+                else
+                {
+                    var data = {"status": "error", "message": result.data.message}
+                    notifyService.notify(data.status, data.message);
+                }
             });
         }
     }

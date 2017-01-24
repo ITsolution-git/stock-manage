@@ -112,7 +112,7 @@
             });
 
             $scope.address_id = address_id;
-            $scope.distributionData[$scope.address_id].is_selected = 1;
+            $scope.distributionData[address_id].is_selected = 1;
             $scope.addressProducts = [];
             $scope.location = $scope.distributionData[$scope.address_id].description;
             $scope.shippingType = $scope.distributionData[$scope.address_id].shippingType;
@@ -133,7 +133,6 @@
 
         function openaddExistingLocatioDilog(ev)
         {
-            console.log('here');
             $mdDialog.show({
                 controller: 'ExistingLocationController',
                 controllerAs: 'vm',
@@ -215,10 +214,6 @@
         }
         $scope.allocateDistQty = function(key,productArr)
         {
-            if($scope.address_id == 0)
-            {
-                $scope.address_id = productArr.address_id;
-            }
             if(productArr.distributed_qnty == '')
             {
                 notifyService.notify('error', 'Please enter valid quantity');
@@ -226,20 +221,27 @@
                 return false;
             }
 
-            var remaining_qnty = parseInt(productArr.remaining_qnty) + parseInt(productArr.old_distributed_qnty);
+            /*var remaining_qnty = parseInt(productArr.remaining_qnty) + parseInt(productArr.old_distributed_qnty);
 
             if(parseInt(productArr.distributed_qnty) > parseInt(remaining_qnty))
             {
                 $scope.addressProducts[key].distributed_qnty = productArr.old_distributed_qnty;
                 notifyService.notify('error', 'You cannot allocate more than '+remaining_qnty+' quantity');
                 return false;
-            }
+            }*/
 
             //$("#ajax_loader").show();
 
             var combine_array = {};
             combine_array.product = productArr;
-            combine_array.address_id = $scope.address_id;
+            if(productArr.address_id)
+            {
+                combine_array.address_id = productArr.address_id;
+            }
+            else
+            {
+                combine_array.address_id = $scope.address_id;
+            }
             combine_array.order_id = $scope.order_id;
             combine_array.company_id = sessionService.get('company_id');
 
@@ -248,15 +250,18 @@
                 if(result.data.success == '1') {
 
                     angular.forEach($scope.orderProducts, function(value, key){
-                        if(productArr.id === value.id) {
+                        if(productArr.id == value.id) {
                             value.distributed_qnty = result.data.distributed_qnty;
                             value.remaining_qnty = result.data.remaining_qnty;
                         }
                     });
-                    $scope.getDistributionDetail();
+                    $scope.total_order_qty = result.data.total_order_qty;
+                    $scope.total_shipped_qnty = result.data.total_shipped_qnty;
+                    $scope.distributionData[combine_array.address_id].addressTotalProducts =  result.data.addressTotalProducts;
                 }
                 else
                 {
+                    $scope.addressProducts[key].distributed_qnty = productArr.old_distributed_qnty;
                     var data = {"status": "error", "message": result.data.message}
                     notifyService.notify(data.status, data.message);
                 }
@@ -332,7 +337,6 @@
                         else
                         {
                             angular.forEach(result.data.products, function(value, key){
-                                value.old_distributed_qnty = value.distributed_qnty;
                                 $scope.addressProducts.push(value);
                             });
                         }

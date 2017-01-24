@@ -149,7 +149,7 @@ class Purchase extends Model {
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftjoin('invoice as inv','inv.order_id','=','ord.id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','cl.billing_email','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.id as order_id','ord.custom_po','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total','cl.is_blind','cl.b_w_logo','cl.client_id',
+					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.bw_photo','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','cl.display_number','p.name as product_name','p.brand_name','cl.billing_email','cl.client_company','po.vendor_instruction','po.vendor_charge','ord.id as order_id','ord.custom_po','ord.display_number as ord_display','ord.name as order_name','c.name as product_color','pd.sku','pd.size','pd.qnty','po.display_number as po_display','po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total','ord.is_blind','cl.b_w_logo','cl.client_id',
 						DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
 						DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),
                         DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),
@@ -179,7 +179,8 @@ class Purchase extends Model {
 
 	            if(!empty($value->is_blind))
 				{
-					$result[$key]->companyphoto= $this->common->checkImageExist($company_id.'/client/'.$value->client_id."/",$value->b_w_logo);
+
+					$result[$key]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->bw_photo);
 				}
 				else
 				{
@@ -326,7 +327,9 @@ class Purchase extends Model {
 					->JOIN('purchase_order_line as pol','pol.po_id','=','po.po_id')
 					->JOIN('purchase_detail as pd','pol.purchase_detail','=','pd.id')
 					->JOIN('order_design as od','od.id','=','pd.design_id')
+					->leftJoin('design_product as dp', 'pd.design_product_id', '=', 'dp.id')
 					->JOIN('orders as ord','od.order_id','=','ord.id')
+					->leftJoin('users as users','ord.account_manager_id','=', 'users.id')
 					->JOIN('users as usr','usr.id','=','ord.company_id')
 					->JOIN('staff as stf','stf.user_id','=','usr.id')
 					->JOIN('client as cl','ord.client_id', '=', 'cl.client_id')
@@ -334,7 +337,7 @@ class Purchase extends Model {
 					->leftJoin('color as c','c.id','=','pd.color_id')
 					->leftJoin('vendors as v','v.id','=','po.vendor_id')
 					->leftJoin('vendor_contacts as vc','v.id','=',DB::raw("vc.vendor_id AND vc.is_main = '1' "))
-					->select('stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.name as product_name','p.id as product_id','cl.client_company','cl.display_number','cl.billing_email','cl.is_blind','cl.b_w_logo','cl.client_id','po.vendor_instruction','po.vendor_charge','ord.display_number as ord_display','po.display_number as po_display','ord.name as order_name','ord.custom_po','c.name as product_color','pd.sku','pd.size','pd.qnty',
+					->select('users.name as account_manager','dp.is_supply','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.bw_photo','stf.id as staff_id','stf.prime_address1','usr.name as companyname','vc.first_name','vc.last_name','v.name_company','v.url','p.brand_name','p.name as product_name','p.id as product_id','cl.client_company','cl.display_number','cl.billing_email','ord.is_blind','cl.b_w_logo','cl.client_id','po.vendor_instruction','po.vendor_charge','ord.display_number as ord_display','po.display_number as po_display','ord.name as order_name','ord.custom_po','c.name as product_color','pd.sku','pd.size','pd.qnty',
 						DB::raw('(select count(*) from purchase_notes where po_id=po.po_id) as total_note'),'po.po_id',
 						'po.po_id','po.order_id','po.vendor_id','po.vendor_contact_id','po.po_type','po.shipt_block','po.vendor_charge','po.order_total',DB::raw('DATE_FORMAT(ord.date_shipped, "%m/%d/%Y") as date_shipped'),
                       DB::raw('DATE_FORMAT(po.hand_date, "%m/%d/%Y") as hand_date'),DB::raw('DATE_FORMAT(po.arrival_date, "%m/%d/%Y") as arrival_date'),
@@ -364,7 +367,7 @@ class Purchase extends Model {
 
 	        	if(!empty($value->is_blind))
 				{
-					$result[0]->companyphoto= $this->common->checkImageExist($company_id.'/client/'.$value->client_id."/",$value->b_w_logo);
+					$result[0]->companyphoto= $this->common->checkImageExist($company_id.'/staff/'.$value->staff_id."/",$value->bw_photo);
 				}
 				else
 				{

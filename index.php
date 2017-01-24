@@ -281,6 +281,7 @@
     <script src="app/main/settings/dialogs/ups/ups-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.controller.js"></script>
     <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
+    <script src="app/main/settings/views/productionSetting/productionSetting.controller.js"></script>
 
     <!-- Finishing -->
     <script src="app/main/finishing/finishing.module.js"></script>

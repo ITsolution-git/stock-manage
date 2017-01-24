@@ -1,8 +1,15 @@
-    <div class="content order-info-page m-b-20">
-        <div class="simple-table-container md-whiteframe-4dp">
-            <div class="table-title paddingbottom-0" layout="row" layout-align="space-between center">
-                <div class="search-block" flex=10>
-                    <div class="title" layout-padding><span class="basicInfoStyle">COMPANY</span></div>
+<div class="content dashboard-page stockkup-content-table-container stockkup-content-table-container">
+    <div class="header header-bg-custom m-b-20"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
+            <h1 class="inner-page-heading"> Company List</h1>
+        </div>
+    </div>
+
+    <div class="content m-b-20">
+        <div class="simple-table-container">
+            <div class="table-title pd10" layout="row" layout-align="space-between center">
+                <div class="table-title-text" flex=20>
+                    COMPANY
                 </div>
                 <div class="search-block" flex=40>
                     <md-input-container class="md-block" flex-gt-sm>
@@ -13,73 +20,74 @@
                     <a class="link-back cursor-p createPriceGridLink" ng-click="addCompany($event)">ADD NEW COMPANY</a>
                 </div>
             </div>
-        <div class="ms-responsive-table-wrapper" ng-show="success==1">
-            <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
-                 <table class="dataTable row-border hover">
-                    <!-- <thead>
-                        <tr>
-                            <th class="secondary-text ">
-                                <div class="table-header">
-                                    <span class="column-title">Name</span>
-                                </div>
-                            </th>
-                             <th class="secondary-text ">
-                                <div class="table-header">
-                                    <span class="column-title">Email</span>
-                                </div>
-                            </th>
-                            <th class="secondary-text">
-                                <div class="table-header">
-                                    <span class="column-title">Action</span>
-                                </div>
-                            </th>
-                        </tr>
-                    </thead> -->
-                    <thead tasty-thead></thead>
-                   <tbody >
-                        <tr  ng-repeat="user in rows">
-                            <td class="">{{user.display_number}}</td>
-                            <td class="">{{user.name}}</td>
-                            <td class="">{{user.email}}</td>
-                             <td class="">{{user.created_date}}</td>
-                            <td class=""> 
-                                <md-menu>
-                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
-                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
-                                    </md-button>
-                                    <md-menu-content width="4"> 
-                                        <md-menu-item>
-                                            <md-button ng-click="edit_company($event,user.id)">
-                                                Edit Company
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="resetUserPasswordDialog($event,user.id)">
-                                                Reset Password
-                                            </md-button>
-                                        </md-menu-item>
-                                        <md-menu-item>
-                                            <md-button ng-click="removeCompany($event,user.id)">
-                                                Remove Company
-                                            </md-button>
-                                        </md-menu-item>
-                                    </md-menu-content>
-                                </md-menu>
-                            </td>
-                        </tr>
-                    </tbody> 
-                </table>
-            <div tasty-pagination class="tasty-page" ></div>
-        </div>         
-    </div>
-    <div  class="ms-responsive-table-wrapper" ng-show="success==0">
-       <table class="simple">
-            <thead>
-                <tr>
-                    <th>No Records Found</th>
-                </tr>
-            </thead>
-        </table>
+            <div class="ms-responsive-table-wrapper" ng-show="success==1">
+                <div tasty-table bind-resource-callback="getResource" bind-init="init"  bind-filters="filterBy" bind-reload="reloadCallback" >
+                     <table class="dataTable row-border hover">
+                        <!-- <thead>
+                            <tr>
+                                <th class="secondary-text ">
+                                    <div class="table-header">
+                                        <span class="column-title">Name</span>
+                                    </div>
+                                </th>
+                                 <th class="secondary-text ">
+                                    <div class="table-header">
+                                        <span class="column-title">Email</span>
+                                    </div>
+                                </th>
+                                <th class="secondary-text">
+                                    <div class="table-header">
+                                        <span class="column-title">Action</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead> -->
+                        <thead tasty-thead></thead>
+                       <tbody >
+                            <tr  ng-repeat="user in rows">
+                                <td class="">{{user.display_number}}</td>
+                                <td class="">{{user.name}}</td>
+                                <td class="">{{user.email}}</td>
+                                 <td class="">{{user.created_date}}</td>
+                                <td class="">
+                                    <md-menu>
+                                        <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                            <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                        </md-button>
+                                        <md-menu-content width="4">
+                                            <md-menu-item>
+                                                <md-button ng-click="edit_company($event,user.id)">
+                                                    Edit Company
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button ng-click="resetUserPasswordDialog($event,user.id)">
+                                                    Reset Password
+                                                </md-button>
+                                            </md-menu-item>
+                                            <md-menu-item>
+                                                <md-button ng-click="removeCompany($event,user.id)">
+                                                    Remove Company
+                                                </md-button>
+                                            </md-menu-item>
+                                        </md-menu-content>
+                                    </md-menu>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                <div tasty-pagination class="tasty-page" ></div>
+            </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="simple">
+                <thead>
+                    <tr>
+                        <th>No Records Found</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 </div>
 </div>

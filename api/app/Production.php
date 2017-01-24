@@ -34,7 +34,7 @@ class Production extends Model {
             $inhandDate_filter = $post['filter']['inhandDate'];
         }
         $production_data = DB::table('orders as ord')
-                        ->select(DB::raw('SQL_CALC_FOUND_ROWS ord.name as order_name,ord.display_number as order_display, ord.id as order_id,cl.client_company ,ord.in_hands_by,mt.value,odp.id,ass.id as screenset,ass.screen_active,ass.approval,mt1.value as production_type,odp.image_1,ps.run_date,odp.mark_as_complete'))
+                        ->select(DB::raw('SQL_CALC_FOUND_ROWS ord.name as order_name,ord.display_number as order_display, ord.id as order_id,cl.client_company ,ord.in_hands_by,mt.value,odp.id,ass.id as screenset,ass.screen_active,ass.approval,mt1.value as production_type,odp.image_1,ps.run_date,ps.machine_id,odp.mark_as_complete,ps.run_time,ps.setup_time,ps.run_speed,ps.total_time,ps.impressions,ps.imps'))
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
                         ->leftjoin('order_design as od','ord.id','=','od.order_id')
                         ->leftjoin('order_design_position as odp','odp.design_id','=','od.id')
@@ -105,9 +105,6 @@ class Production extends Model {
                 $value->run_date =($value->run_date=='0000-00-00' || $value->run_date=='')?'':date('m/d/Y',strtotime($value->run_date)) ;
                 $value->image_1= file_exists(FILEUPLOAD.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1)?UPLOAD_PATH.$post['company_id'].'/order_design_position/'.$value->id.'/'.$value->image_1:'';
                 $value->garment = $this->CheckWarehouseQuantity($value->id);
-                $calculation = $this->GetRuntimeData($value->id,$post['company_id']);
-                $value->imps = $calculation['imps'];
-                $value->run_speed = $calculation['run_speed'];
                 $value->screen_count = $this->getPositioncolors($value->id);
                
                 //echo "<pre>"; print_r($calculation); echo "</pre>"; die();
@@ -155,12 +152,12 @@ class Production extends Model {
     {
 
        $positionInfo = DB::table('order_design_position as odp')
-                        ->select('ord.display_number as order_id','ord.name as order_name','cs.shift_name','odp.mark_as_complete','odp.image_1','odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','mt2.value as production_type','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','ass.approval','ass.screen_active','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ass.screen_date, "%m/%d/%Y") as screen_date'),DB::raw('DATE_FORMAT(ass.production_date, "%m/%d/%Y") as production_date'),DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'ps.rush_job','mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
+                        ->select('ord.display_number as order_id','ord.name as order_name','cs.shift_name','odp.mark_as_complete','odp.image_1','odp.id as position_id','cl.client_company','mt.value as position_name','mt1.value as inq','col.name as color_name','mt2.value as production_type','acol.thread_color','acol.mesh_thread_count','acol.squeegee','ass.screen_set','ass.screen_height','ass.line_per_inch','ass.screen_width','ass.frame_size','ass.approval','ass.screen_active','odp.note','odp.color_stitch_count','ass.screen_resolution','ass.screen_count','ass.screen_location',DB::raw('DATE_FORMAT(ass.screen_date, "%m/%d/%Y") as screen_date'),DB::raw('DATE_FORMAT(ass.production_date, "%m/%d/%Y") as production_date'),DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'ps.run_time','ps.setup_time','ps.run_speed','ps.total_time','ps.impressions','ps.rush_job','mc.machine_name',DB::raw('DATE_FORMAT(ord.in_hands_by, "%m/%d/%Y") as in_hands_by'),DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),DB::raw('DATE_FORMAT(ord.created_date, "%m/%d/%Y") as created_date'),'mc.machine_type','mc.screen_width as machine_width','mc.screen_height as machine_height',DB::raw("(odp.color_stitch_count+odp.foil_qnty) as screen_total"))
                         ->leftjoin('order_design as od','odp.design_id','=','od.id')
                         ->leftjoin('orders as ord','ord.id','=','od.order_id')
                         ->Join('client as cl', 'cl.client_id', '=', 'ord.client_id')
                         ->leftjoin('position_schedule as ps','ps.position_id','=','odp.id')
-                        ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
+                        ->leftjoin('labor as cs','cs.id','=','ps.shift_id')
                         ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                         ->leftjoin('artjob_screensets as ass','ass.positions','=','odp.id')
                         ->leftjoin('artjob_screencolors as acol','ass.id','=','acol.screen_id')
@@ -262,7 +259,7 @@ class Production extends Model {
 
         $result = DB::table('position_schedule as ps')
                     ->select('cs.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1')
-                    ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
+                    ->leftjoin('labor as cs','cs.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
@@ -291,7 +288,7 @@ class Production extends Model {
         //echo $start_date."=".$end_date; die();
         $result = DB::table('position_schedule as ps')
                     ->select('cs.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
-                    ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
+                    ->leftjoin('labor as cs','cs.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
@@ -322,7 +319,7 @@ class Production extends Model {
         $where = (!empty($machine_id))?array('ps.machine_id'=>$machine_id):array();
         $result = DB::table('position_schedule as ps')
                     ->select('cs.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
-                    ->leftjoin('company_shift as cs','cs.id','=','ps.shift_id')
+                    ->leftjoin('labor as cs','cs.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
@@ -348,12 +345,11 @@ class Production extends Model {
         return $ret_array;
     }
 
-    public function getRunspeed($position_id)
+    public function getRunspeed($machine_id)
     {
-        $result = DB::table('order_design_position as odp')
-                    ->select('od.run_rate')
-                    ->leftJoin('order_design as od','od.id','=','odp.design_id')
-                    ->where('odp.id','=',$position_id)
+        $result = DB::table('machine')
+                    ->select('*')
+                    ->where('id','=',$machine_id)
                     ->get();
         $ret = 1;    
         if(!empty($result[0]->run_rate))
@@ -395,10 +391,11 @@ class Production extends Model {
         return $ret;
     }
 
-    public function getfactor($orderSize,$company_id)
+    public function getfactor($orderSize,$company_id,$machine_id)
     {
         $result = DB::table('order_size_factor')
                     ->where('company_id','=',$company_id)
+                    ->where('machine_id','=',$machine_id)
                     ->orderBy('order_size','ASC')
                     ->get();
         $ret = 1;                
@@ -411,19 +408,28 @@ class Production extends Model {
         }
         return $ret;
     }
-    public function GetRuntimeData($position_id,$company_id)
+    public function GetRuntimeData($position_id,$company_id,$machine_id=0)
     {
-        $per_screen = 0.17; // 10 MINUTES
+        $per_screen = 0.16; // 10 MINUTES
         $iph_value=1; // DEFAULT VALUE
-        $getRunspeed = $this->getRunspeed($position_id);
+        $getRunspeed = 1;
+        $machineData = $this->common->GetTableRecords('machine',array('company_id'=>$company_id,'id'=>$machine_id));
+
+        if(!empty($machineData))
+        {
+            $getRunspeed = $machineData[0]->run_rate;
+            $per_screen = $machineData[0]->setup_time;
+        }    
+
+    
         $getOrderImpression = $this->getOrderImpression($position_id);
         $getPositioncolors = $this->getPositioncolors($position_id);
         
-        $factor = $this->getfactor($getOrderImpression,$company_id);
+        $factor = $this->getfactor($getOrderImpression,$company_id,$machine_id);
 
         if($getPositioncolors>0)
         {
-            $iph = $this->common->GetTableRecords('iph',array('pos_no'=>$getPositioncolors,'company_id'=>$company_id));
+            $iph = $this->common->GetTableRecords('iph',array('pos_no'=>$getPositioncolors,'company_id'=>$company_id,'machine_id'=>$machine_id));
             if(isset($iph[0]->value))
             {
                 $iph_value = $iph[0]->value;
@@ -431,14 +437,14 @@ class Production extends Model {
         }
         $imps_adjusted = $iph_value * $factor * $getRunspeed;
         //$hrs_imps   = 1/$imps_adjusted;
-        $hrs_imps= number_format((float)1/$imps_adjusted, 4, '.', '');
-        $setup_time = $per_screen* $getPositioncolors;
+        $hrs_imps= number_format((float)1/$imps_adjusted, 3, '.', '');
+        $setup_time = number_format((float)$per_screen* $getPositioncolors, 3, '.', '');
         $run_speed = $imps_adjusted;
-        $run_time = number_format((float)$getOrderImpression/$run_speed, 2, '.', '');
-        $total_time = $setup_time+$run_time;
+        $run_time = number_format((float)$getOrderImpression/$run_speed, 3, '.', '');
+        $total_time = number_format((float)$setup_time+$run_time, 3, '.', '');
 
 
-        /*echo "<br> Runspeed at ->".$getRunspeed*100;
+        /*echo "<br> Runspeed at ->".$getRunspeed;
         echo "<br> Order Size  ->".$getOrderImpression;
         echo "<br> Per screen  ->".$per_screen;
         echo "<br> Colors      ->".$getPositioncolors;
@@ -451,7 +457,147 @@ class Production extends Model {
         echo "<br> Run Time->".$run_time;
         echo "<br> Total Time->".$total_time;*/
         
+        //die();
         return array('setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time,'getOrderImpression'=>$getOrderImpression,'imps'=>$imps_adjusted);
+
         //$getIPH = $this->getIPH($position_id);
+    }
+
+    public function UpdateMachineRecords($post,$action)
+    {
+        if(!empty($post['machineData']['setup_time']))
+        {
+            $post['machineData']['setup_time'] = $post['machineData']['setup_time']/60;
+        }
+        if(!empty($post['machineData']['run_rate']))
+        {
+            $post['machineData']['run_rate'] = $post['machineData']['run_rate']/100;
+        }
+        //echo "<pre>"; print_r($post); echo "</pre>"; die();
+        if($action=='add')
+        {
+
+            $machine_id = $this->common->InsertRecords('machine',
+                                array('machine_name'=>$post['machineData']['machine_name'],
+                                  'screen_width'=>$post['machineData']['screen_width'],
+                                  'machine_type_text'=>$post['machineData']['machine_type_text'],
+                                  'screen_height'=>$post['machineData']['screen_height'],
+                                  'color_count'=>$post['machineData']['color_count'],
+                                  'setup_time'=>$post['machineData']['setup_time'],
+                                  'run_rate'=>$post['machineData']['run_rate'],
+                                  'machine_type'=>0,
+                                  'company_id'=>$post['company_id']
+                                  ));
+            if(!empty($post['allfactorData']))
+            {
+                foreach ($post['allfactorData'] as $key => $allfactorData) 
+                {
+                    $this->common->InsertRecords('order_size_factor',
+                            array('order_size'=>$allfactorData['order_size'],
+                                  'factor'=>$allfactorData['factor'],
+                                  'machine_id'=>$machine_id,
+                                  'company_id'=>$post['company_id']
+                                  ));
+                }
+            }
+            if(!empty($post['alliphData']))
+            {
+                foreach ($post['alliphData'] as $key => $alliphData) 
+                {
+                    $this->common->InsertRecords('iph',
+                            array('pos_no'=>$alliphData['pos_no'],
+                                  'value'=>$alliphData['value'],
+                                  'machine_id'=>$machine_id,
+                                  'company_id'=>$post['company_id']
+                                  ));
+                }
+            }
+        }
+        else if ($action=='edit')
+        {
+            $this->common->UpdateTableRecords('machine',array('id'=>$post['machine_id'],'company_id'=>$post['company_id']),
+                            array('machine_name'=>$post['machineData']['machine_name'],
+                                  'machine_type_text'=>$post['machineData']['machine_type_text'],
+                                  'screen_width'=>$post['machineData']['screen_width'],
+                                  'screen_height'=>$post['machineData']['screen_height'],
+                                  'color_count'=>$post['machineData']['color_count'],
+                                  'setup_time'=>$post['machineData']['setup_time'],
+                                  'run_rate'=>$post['machineData']['run_rate']
+                                  )
+                            );
+
+            if(!empty($post['removeOS']))
+            {
+                DB::table('order_size_factor')->whereIn('id', $post['removeOS'])->delete();
+            }
+            if(!empty($post['removeIPH']))
+            {
+                DB::table('iph')->whereIn('id', $post['removeIPH'])->delete();
+            }
+
+            if(!empty($post['alliphData']))
+            {
+                foreach ($post['alliphData'] as $key => $alliphData) 
+                {
+                    if(empty($alliphData['id']))  // IF THERE IS NEW DATA ENTER
+                    {
+                        $this->common->InsertRecords('iph',
+                            array('pos_no'=>$alliphData['pos_no'],
+                                  'value'=>$alliphData['value'],
+                                  'machine_id'=>$post['machine_id'],
+                                  'company_id'=>$post['company_id']
+                                  ));
+                    }
+                    else // UPDATE DATA
+                    {
+                        $this->common->UpdateTableRecords('iph',array('id'=>$alliphData['id'],'company_id'=>$post['company_id']),
+                            array('value'=>$alliphData['value'],
+                                  'pos_no'=>$alliphData['pos_no']
+                                  )
+                            );
+                    }
+                 }
+            }
+             if(!empty($post['allfactorData']))
+            {
+                foreach ($post['allfactorData'] as $key => $allfactorData) 
+                {
+                    if(empty($allfactorData['id']))  // IF THERE IS NEW DATA ENTER
+                    {
+                        $this->common->InsertRecords('order_size_factor',
+                            array('order_size'=>$allfactorData['order_size'],
+                                  'factor'=>$allfactorData['factor'],
+                                  'machine_id'=>$post['machine_id'],
+                                  'company_id'=>$post['company_id']
+                                  ));
+                    }
+                    else // UPDATE DATA
+                    {
+                        $this->common->UpdateTableRecords('order_size_factor',array('id'=>$allfactorData['id'],'company_id'=>$post['company_id']),
+                            array('order_size'=>$allfactorData['order_size'],
+                                  'factor'=>$allfactorData['factor']
+                                  )
+                            );
+                    }
+                }
+            }
+        }
+        else
+        {
+            return 'error';
+        }
+    }
+
+    public function productionShift($post)
+    {
+        $result = DB::table('labor as l')
+                    ->select( DB::raw('SQL_CALC_FOUND_ROWS l.*'), 
+                              DB::raw('(SELECT GROUP_CONCAT(SUBSTR(d.name,1,2)) FROM days d where FIND_IN_SET(d.id,l.apply_days)) as display_days'))
+                    ->where('l.is_delete','=','1')
+                    ->where('l.company_id','=',$post['company_id'])
+                    ->where('l.shift_type','=',$post['shift_type'])
+                 ->get();
+        return $result;
+        
     }
  }

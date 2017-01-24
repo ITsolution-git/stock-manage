@@ -383,7 +383,33 @@
                     {
                         $mdDialog.hide();
                     }
-                    $scope.printPdf = function (flag,email)
+
+                      var companyData = {};
+                    companyData.table ='email_template';
+                    companyData.cond = {slug:'purchase_order',company_id: $scope.company_id};
+                    $scope.tinymceOptions = {
+                         plugins: [
+                        'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+                        'searchreplace wordcount visualblocks visualchars code fullscreen',
+                        'insertdatetime media nonbreaking save table contextmenu directionality',
+                        'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+                      ],
+                      toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                      toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+                      image_advtab: true,
+                      };
+
+                    // GET CLIENT TABLE CALL
+                    $http.post('api/public/common/GetTableRecords',companyData).success(function(result) 
+                    {   
+                        if(result.data.success=='1')
+                        {   
+                            $scope.email_text = result.data.records[0].description;
+                        }
+                    });
+
+
+                    $scope.printPdf = function (flag,email,mailMessage)
                     {
                         if(flag=='1')
                         {
@@ -393,8 +419,10 @@
                                 return false;
                             }
                         }
+
+
                         $mdDialog.hide();
-                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email,login_name:params.login_name,login_email:params.login_email };
+                        var pass_array = {company_id:$scope.company_id,po_id:params.display_number,flag:flag,email:email,mailMessage:$scope.email_text,login_name:params.login_name,login_email:params.login_email };
                         var target;
                         var form = document.createElement("form");
                         form.action = 'api/public/purchase/purchasePDF';

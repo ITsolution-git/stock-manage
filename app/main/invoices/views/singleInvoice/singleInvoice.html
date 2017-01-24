@@ -147,7 +147,8 @@
                         </thead>
                         <tbody> 
                             <tr ng-repeat="product in design.products">
-                                <td>{{product.product_name}}</td>
+                                <td ng-if="product.brand_name == ''">{{product.product_name}}</td>
+                                <td ng-if="product.brand_name != ''">{{product.brand_name}} - {{product.product_name}}</td>
                                 <td class="text-center">{{product.color_name}}</td>
                                 <td class="text-center"><label ng-repeat="size in product.sizeData">{{size.size}}:({{size.qnty}})&nbsp;</label></td>
                                 <td class="text-center">{{product.total_qnty}}</td>
@@ -201,7 +202,8 @@
                             <div ng-repeat="product in design.products">
                                 <div  layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding global-heading-style"><b>Product :</b></div>
-                                    <span class="ng-binding global-text-style">{{product.product_name}}</span>
+                                    <span class="ng-binding global-text-style" ng-if="product.brand_name != ''">{{product.brand_name}} - {{product.product_name}}</span>
+                                    <span class="ng-binding global-text-style" ng-if="product.brand_name == ''">{{product.product_name}}</span>
                                 </div>
                                 <div ng-repeat="oitem in product.order_items" ng-if="oitem.selected > 0" layout-align="space-between center" layout="row" class="card-box ng-scope layout-align-space-between-center layout-row">
                                     <div class="ng-binding global-text-style">{{oitem.item}}</div>
