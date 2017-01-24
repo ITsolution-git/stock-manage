@@ -16,7 +16,7 @@
             },
             template: `<div ng-show="positions.rush_job==1" class="position-rush-stripe"><span>rush</span></div>
                       <div class="pull-left position-text">
-                          <span class="position-title">{{positions.name}} - company</span>
+                          <span class="position-title">{{positions.name}}-{{positions.position_name}}</span>
                           <br/>
                           <span>Due Date: 2/15/2017</span>
                           <br/>

@@ -35,8 +35,8 @@
                                     <div class="unscheduled-lot">
                                         <div class="slot">
                                             <div class="p-5 full-row pull-left slot-header">
-                                                <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">unscheduled</span>
-
+                                                <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">Unscheduled</span>
+<!-- 
                                                 <div class="full-row pull-left mt-10 p-5 mb-5">
                                                     <span class="pull-left text-capitalize full-row" flex=65>total unscheduled:</span>
                                                     <span class="global-labels text-right pull-right full-row" flex=35>37</span>
@@ -44,13 +44,13 @@
                                                 <div class="full-row pull-left p-5">
                                                     <span class="pull-left text-capitalize full-row" flex=65>average machine hours</span>
                                                     <span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">9</span></span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="slot-content">
                                                 <div>
-                                                    <h4 class="text-center shift-name">No shift as no alloc</h4>
-                                                    <div dragula='"day-bag"' class="full-row pull-left p-5 shift-container">
-                                                        <div class="shift-card" ng-repeat="positions in positionsArray" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
+                                                    <h4 class="text-center shift-name"></h4>
+                                                    <div dragula='"day-bag"' id='0-0' class="full-row pull-left p-5 shift-container">
+                                                        <div class="shift-card" id='{{positions.id}}' ng-repeat="positions in SchedualDataUnassign" ng-class="positions.rush_job==1?'rush-card':''">
                                                               <positions-card ng-model="positions"></positions-card>
                                                         </div>
                                                     </div>
@@ -61,11 +61,11 @@
                                     </div>
                                     <table class="scheduled-table">
                                         <tr>
-                                            <td ng-repeat="schedule in SchedualData">
+                                            <td ng-repeat="(machine_key,machine_day) in machine_all">
                                                 <div class="slot">
                                                     <div class="p-5 full-row pull-left slot-header">
-                                                        <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">Mac name</span>
-                                                        <div class="shift-box text-center p-3">
+                                                        <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">{{machine_day.machine_name}}</span>
+                                                        <!-- <div class="shift-box text-center p-3">
                                                             <span class="mb-10">1st Shift</span>
                                                             <h6>10%</h6>
                                                         </div>
@@ -84,13 +84,13 @@
                                                         <div class="full-row pull-left p-5">
                                                             <span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
                                                             <span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="slot-content">
-                                                        <div ng-repeat="shift in schedule.machine_data">
-                                                            <h4 class="text-center shift-name">No shift as no alloc</h4>
-                                                            <div dragula='"day-bag"' class="full-row pull-left p-5 shift-container">
-                                                                <div class="shift-card" ng-repeat="positions in shift.shift_data" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
+                                                        <div ng-repeat="(shift_key,shift) in shift_all">
+                                                            <h4 class="text-center shift-name">{{shift.shift_name}}</h4>
+                                                            <div dragula='"day-bag"' id="{{shift.id}}-{{machine_day.id}}" class="full-row pull-left p-5 shift-container">
+                                                                <div id="{{positions.id}}" class="shift-card" ng-repeat="positions in SchedualData[machine_day.id][shift.id]" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id,machine_day.id)">
                                                                       <positions-card ng-model="positions"></positions-card>
                                                                 </div>
                                                             </div>
@@ -99,7 +99,7 @@
                                                 </div>
                                             </td>
 
-                                            <td ng-repeat="machine in machine_all">
+<!--                                             <td ng-repeat="machine in machine_all">
                                                 <div class="slot">
                                                     <div class="p-5 full-row pull-left slot-header">
                                                         <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">{{machine.machine_name}}</span>
@@ -138,7 +138,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                     </table>
                                 </div>
@@ -182,35 +182,22 @@
                                             <div class="p-5 full-row pull-left slot-header">
                                                 <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">unscheduled</span>
 
-                                  <div class="full-row pull-left mt-10 p-5 mb-5">
+<!-- 
+                                                <div class="full-row pull-left mt-10 p-5 mb-5">
                                                     <span class="pull-left text-capitalize full-row" flex=65>total unscheduled:</span>
                                                     <span class="global-labels text-right pull-right full-row" flex=35>37</span>
                                                 </div>
                                                 <div class="full-row pull-left p-5">
                                                     <span class="pull-left text-capitalize full-row" flex=65>average daily hours</span>
                                                     <span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">9</span></span>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="slot-content">
                                                 <div>
-                                                    <h4 class="text-center shift-name">No shift as no alloc</h4>
-                                                    <div dragula='"week-bag"' class="full-row pull-left p-5 shift-container">
-                                                        <div class="shift-card" ng-repeat="positions in positionsArray" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
-                                                            <div ng-show="positions.rush_job==1" class="position-rush-stripe"><span>rush</span></div>
-                                                            <div class="pull-left position-text">
-                                                                <span class="position-title">{{positions.name}} - company</span>
-                                                                <br/>
-                                                                <span>Due Date: 2/15/2017</span>
-                                                                <br/>
-                                                                <span>ERT: 1.56</span>
-                                                                <br/>
-                                                                <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
-                                                                <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span>
-                                                                <span class="garment-logo stokkup-title-h4 small" style="bottom:5px" ng-class="positions.garment==0?'':' disabled'">G</span>
-                                                            </div>
-                                                            <div class="position-image">
-                                                                <img ng-src="{{positions.image_1}}">
-                                                            </div>
+                                                    <h4 class="text-center shift-name"></h4>
+                                                    <div dragula='"week-bag"' id='0,0000-00-00' class="full-row pull-left p-5 shift-container">
+                                                        <div class="shift-card" id="{{positions.id}}" ng-repeat="positions in SchedualweekDataUnassign" ng-class="positions.rush_job==1?'rush-card':''" >
+                                                            <positions-card ng-model="positions"></positions-card>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -219,11 +206,11 @@
                                     </div>
                                     <table class="scheduled-table">
                                         <tr>
-                                            <td ng-repeat="scheduleweek in SchedualweekData">
+                                            <td ng-repeat="scheduleweek in weekArray">
                                                 <div class="slot">
                                                     <div class="p-5 full-row pull-left slot-header">
-                                                        <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">{{scheduleweek.date}}</span>
-                                                        <div class="shift-box text-center p-3">
+                                                        <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">{{scheduleweek}}</span>
+                                                        <!-- <div class="shift-box text-center p-3">
                                                             <span class="mb-10">1st Shift</span>
                                                             <h6>10%</h6>
                                                         </div>
@@ -238,28 +225,14 @@
                                                         <div class="full-row pull-left mt-10 p-5 mb-5">
                                                             <span class="pull-left text-capitalize full-row" flex=65>total daily capacity</span>
                                                             <span class="global-labels text-right pull-right full-row" flex=35>10%</span>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="slot-content">
-                                                        <div ng-repeat="shift in scheduleweek.date_data">
+                                                        <div ng-repeat="shift in shift_all">
                                                             <h4 class="text-center shift-name">{{shift.shift_name}}</h4>
-                                                            <div dragula='"week-bag"' class="full-row pull-left p-5 shift-container">
-                                                                <div class="shift-card" ng-repeat="positions in shift.shift_data" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
-                                                                    <div ng-show="positions.rush_job==1" class="position-rush-stripe"><span>rush</span></div>
-                                                                    <div class="pull-left position-text">
-                                                                        <span class="position-title">{{positions.name}} - company</span>
-                                                                        <br/>
-                                                                        <span>Due Date: 2/15/2017</span>
-                                                                        <br/>
-                                                                        <span>ERT: 1.56</span>
-                                                                        <br/>
-                                                                        <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
-                                                                        <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span>
-                                                                        <span class="garment-logo stokkup-title-h4 small" style="bottom:5px" ng-class="positions.garment==0?'':' disabled'">G</span>
-                                                                    </div>
-                                                                    <div class="position-image">
-                                                                        <img ng-src="{{positions.image_1}}">
-                                                                    </div>
+                                                            <div dragula='"week-bag"' id="{{shift.id}},{{scheduleweek}}" class="full-row pull-left p-5 shift-container">
+                                                                <div class="shift-card" id="{{positions.id}}" ng-repeat="positions in SchedualweekData[scheduleweek][shift.id]" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id,positions.machine_id)">
+                                                                    <positions-card ng-model="positions"></positions-card>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -285,7 +258,6 @@
                 <div>
                     <md-tab label="machine" ng-click="getTab('shipped')">
                         <div class="fixe-top-tabs">
-
                             <div class="inner-full-box mt-30">
                                 <div class="white-bg pull-left full-row schedule-main">
                                     <div class="prod-board-details">
@@ -320,7 +292,7 @@
                                       <div class="slot">
                                           <div class="p-5 full-row pull-left slot-header  machine-slot-header">
                                               <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">unscheduled</span>
-
+<!-- 
                                               <div class="full-row pull-left  p-5 mb-5">
                                                   <span class="pull-left text-capitalize full-row" flex=65>total unscheduled:</span>
                                                   <span class="global-labels text-right pull-right full-row" flex=35>37</span>
@@ -328,13 +300,14 @@
                                               <div class="full-row pull-left p-5">
                                                   <span class="pull-left text-capitalize full-row" flex=65>average daily hours</span>
                                                   <span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">9</span></span>
-                                              </div>
+                                              </div> -->
                                           </div>
                                           <div class="slot-content">
                                               <div>
-                                                  <h4 class="text-center shift-name">No shift as no alloc</h4>
-                                                  <div dragula='"machine-bag"' class="full-row pull-left p-5 shift-container">
-                                                      <div class="shift-card" ng-repeat="positions in positionsArray" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
+                                                  <h4 class="text-center shift-name"></h4>
+                                                  
+                                                  <div dragula='"machine-bag"' id="0-0" class="full-row pull-left p-5 shift-container">
+                                                  <div class="shift-card" ng-repeat="positions in SchedualmachineDataUnassign" id="{{positions.id}}" ng-class="positions.rush_job==1?'rush-card':''" >
                                                           <positions-card ng-model="positions"></positions-card>
                                                       </div>
                                                   </div>
@@ -345,18 +318,18 @@
                                   </div>
                                     <table class="scheduled-table">
                                         <tr>
-                                            <td ng-repeat="schedulemachine in SchedualmachineData.shifts">
+                                            <td ng-repeat="machineShift in shift_all">
                                                 <div class="slot">
                                                     <div class="p-5 full-row pull-left slot-header machine-slot-header">
-                                                        <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">{{schedulemachine.shift_name}}</span>
-                                                        <div class="machine-capacity-box text-center p-3 ">
+                                                        <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">{{machineShift.shift_name}}</span>
+                                                        <!-- <div class="machine-capacity-box text-center p-3 ">
                                                             <h6>23%</h6>
                                                               <span>Capacity</span>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="slot-content">
-                                                        <div dragula='"machine-bag"' class="full-row pull-left p-5 shift-container">
-                                                            <div class="shift-card" ng-repeat="positions in schedulemachine.shift_data" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id)">
+                                                        <div dragula='"machine-bag"' id="{{machineShift.id}}-{{machine_id}}" class="full-row pull-left p-5 shift-container">
+                                                            <div class="shift-card" id="{{positions.id}}" ng-repeat="positions in SchedualmachineData[machineShift.id]" ng-class="positions.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positions.position_id,positions.machine_id)">
                                                               <positions-card ng-model="positions"></positions-card>
                                                         </div>
                                                     </div>
@@ -366,12 +339,16 @@
                                                 <div class="slot">
                                                     <div class="p-5 full-row pull-left slot-header machine-slot-header">
                                                         <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">total daily capacity</span>
-                                                        <div class="machine-capacity-box text-center p-3 ">
+                                                       <!--  <div class="machine-capacity-box text-center p-3 ">
                                                             <h6>92%</h6>
                                                             <span>Capacity</span>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                     <div class="slot-content">
+                                                        <div class="full-row pull-left p-5 shift-container">
+                                                            <div class="shift-card" ng-repeat="positionsall in SchedualmachineData.shift_all" ng-class="positionsall.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positionsall.position_id,positionsall.machine_id)">
+                                                              <positions-card ng-model="positionsall"></positions-card>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>

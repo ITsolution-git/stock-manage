@@ -349,79 +349,52 @@
         };
 
     }
-    function ScheduleBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter)
+    function ScheduleBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter,dragulaService)
     {
 
         var vm = this;
         $scope.company_id = sessionService.get('company_id');
         $scope.run_date = AllConstant.currentdate;
-        $scope.run_date = new Date("2017-01-7");
+        $scope.production_type = '0'; // FOR SCREEN PRINT
         // CHECK THIS MODULE ALLOW OR NOT FOR ROLES
         $scope.role_slug = sessionService.get('role_slug');
 //roy sample postion data for unscheduled
-        $scope.positionsArray = [{ "shift_name":"Shift 1",
-                                  "machine_name":"Kenne",
-                                  "position_name":"Front",
-                                  "display_number":"175",
-                                  "name":"test thumbnail",
-                                  "id":"173",
-                                  "position_id":"723",
-                                  "machine_id":"7",
-                                  "shift_id":"3",
-                                  "run_date":"2017-01-06",
-                                  "rush_job":"1",
-                                  "is_active":"1",
-                                  "image_1":"http:\/\/159.203.166.240\/api\/public\/uploads\/100002\/order_design_position\/723\/order_design_position-logo-1483584749.jpeg",
-                                  //mock data
-                                  "completed":1,
-                                  "screen_icon":1,
-                                  "garment":1,
-                                  "color": 14,},
-                            {
-                                  "shift_name":"Shift 1",
-                                  "machine_name":"Kenne",
-                                  "position_name":"Front",
-                                  "display_number":"175",
-                                  "name":"test thumbnail",
-                                  "id":"173",
-                                  "position_id":"723",
-                                  "machine_id":"7",
-                                  "shift_id":"3",
-                                  "run_date":"2017-01-06",
-                                  "rush_job":"0",
-                                  "is_active":"1",
-                                  "image_1":"http:\/\/159.203.166.240\/api\/public\/uploads\/100002\/order_design_position\/723\/order_design_position-logo-1483584749.jpeg",
-                                  //mock data
-                                  "completed":1,
-                                  "screen_icon":2,
-                                  "garment":0,
-                                  "color": 11,},
-                              {
-                                  "shift_name":"Shift 1",
-                                  "machine_name":"Kenne",
-                                  "position_name":"Front",
-                                  "display_number":"175",
-                                  "name":"test thumbnail",
-                                  "id":"173",
-                                  "position_id":"723",
-                                  "machine_id":"7",
-                                  "shift_id":"3",
-                                  "run_date":"2017-01-06",
-                                  "rush_job":"1",
-                                  "is_active":"1",
-                                  "image_1":"http:\/\/159.203.166.240\/api\/public\/uploads\/100002\/order_design_position\/723\/order_design_position-logo-1483584749.jpeg",
-                                  //mock data
-                                  "completed":0,
-                                  "screen_icon":3,
-                                  "garment":1,
-                                  "color": 10,}];
+        $scope.positionsArray = [];
          $scope.$on('day-bag.drag', function (e, el) {
            el.removeClass('ex-moved');
          });
 
-         $scope.$on('day-bag.drop', function (e, el) {
-           el.addClass('ex-moved');
-           console.log(e, el);
+          $scope.$on('day-bag.drop', function (e, el, target, source) {
+          el.addClass('ex-moved');
+
+          var DragDropArray = {position:el[0].id,machine_shift:target[0].id};
+          $http.post('api/public/production/ChagneDragDrop',DragDropArray).success(function(result)
+          {});
+
+         });
+
+          $scope.$on('week-bag.drop', function (e, el, target, source) {
+          el.addClass('ex-moved');
+
+          var DragDropArray = {position:el[0].id,day_shift:target[0].id};
+          $http.post('api/public/production/ChagneDragDropweek',DragDropArray).success(function(result)
+          {});
+
+         });
+
+         $scope.$on('machine-bag.drop', function (e, el, target, source) 
+         {
+            el.addClass('ex-moved');
+            if($scope.machine_id==0)
+            {
+              notifyService.notify('error',"Please select Machine first to change.");
+            }
+            else
+            {
+              var DragDropArray = {position:el[0].id,machine_shift:target[0].id};
+              $http.post('api/public/production/ChagneDragDrop',DragDropArray).success(function(result)
+              {});
+            }
          });
 
          $scope.$on('day-bag.over', function (e, el, container) {
@@ -443,12 +416,22 @@
 
         var companyData = {};
         companyData.table ='machine';
-        companyData.cond = {company_id:$scope.company_id,is_delete:1};
+        companyData.cond = {company_id:$scope.company_id,is_delete:1,machine_type:$scope.production_type};
         $http.post('api/public/common/GetTableRecords',companyData).success(function(result)
         {
             if(result.data.success=='1')
             {
                $scope.machine_all = result.data.records;
+            }
+        });
+        var companyData = {};
+        companyData.table ='labor';
+        companyData.cond = {company_id:$scope.company_id,is_delete:1,shift_type:$scope.production_type};
+        $http.post('api/public/common/GetTableRecords',companyData).success(function(result)
+        {
+            if(result.data.success=='1')
+            {
+               $scope.shift_all = result.data.records;
             }
         });
 
@@ -490,17 +473,20 @@
 
         $scope.SchedualBoardData = function(run_date)
         {
+            //console.log(run_date);
             $("#ajax_loader").show();
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
             schedule_data.run_date =run_date;
+            schedule_data.production_type = $scope.production_type;
 
             $http.post('api/public/production/SchedualBoardData',schedule_data).success(function(result)
             {
                 if(result.data.success=='1')
                 {
                     $scope.get_data = 1;
-                    $scope.SchedualData = result.data.SchedualBoardData;
+                    $scope.SchedualData=result.data.SchedualBoardData.assign;
+                    $scope.SchedualDataUnassign=result.data.SchedualBoardData.unassign;
                     $scope.current_date = result.data.current_date;
                     $scope.prev_date = result.data.prev_date;
                     $scope.next_date = result.data.next_date;
@@ -509,10 +495,12 @@
                 else if(result.data.success=='2')
                 {
                     $scope.get_data = 0;
+                    $scope.SchedualData=result.data.SchedualBoardData.assign;
+                    $scope.SchedualDataUnassign=result.data.SchedualBoardData.unassign;
                     $scope.current_date = result.data.current_date;
                     $scope.prev_date = result.data.prev_date;
                     $scope.next_date = result.data.next_date;
-                    notifyService.notify('error',result.data.message);
+                    //notifyService.notify('error',result.data.message);
                 }
                 else
                 {
@@ -528,13 +516,16 @@
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
             schedule_data.run_date =run_date;
+            schedule_data.production_type = $scope.production_type;
 
             $http.post('api/public/production/SchedualBoardweekData',schedule_data).success(function(result)
             {
                 if(result.data.success=='1')
                 {
                     $scope.getweek_data = 1;
-                    $scope.SchedualweekData = result.data.SchedualBoardweekData;
+                    $scope.weekArray = result.data.weekArray;
+                    $scope.SchedualweekData = result.data.SchedualBoardweekData.assign;
+                    $scope.SchedualweekDataUnassign = result.data.SchedualBoardweekData.unassign;
                     $scope.currentweek_date = result.data.current_date;
                     $scope.prevweek_date = result.data.prev_date;
                     $scope.nextweek_date = result.data.next_date;
@@ -542,6 +533,9 @@
                 else if(result.data.success=='2')
                 {
                     $scope.getweek_data = 0;
+                    $scope.weekArray = result.data.weekArray;
+                    $scope.SchedualweekData = result.data.SchedualBoardweekData.assign;
+                    $scope.SchedualweekDataUnassign = result.data.SchedualBoardweekData.unassign;
                     $scope.currentweek_date = result.data.current_date;
                     $scope.prevweek_date = result.data.prev_date;
                     $scope.nextweek_date = result.data.next_date;
@@ -565,6 +559,7 @@
             schedule_data.company_id = $scope.company_id;
             schedule_data.run_date = run_date;
             schedule_data.machine_id = machine_id;
+            schedule_data.production_type = $scope.production_type;
 
             $http.post('api/public/production/SchedualBoardMachineData',schedule_data).success(function(result)
             {
@@ -578,7 +573,8 @@
                  if(result.data.success=='1')
                 {
                     $scope.getmachine_data = 1;
-                    $scope.SchedualmachineData = result.data.SchedualBoardMachineData;
+                    $scope.SchedualmachineData = result.data.SchedualBoardMachineData.assign;
+                    $scope.SchedualmachineDataUnassign = result.data.SchedualBoardMachineData.unassign;
                     $scope.currentmachine_date = result.data.current_date;
                     $scope.prevmachine_date = result.data.prev_date;
                     $scope.nextmachine_date = result.data.next_date;
@@ -586,6 +582,7 @@
                 else if(result.data.success=='2')
                 {
                     $scope.getmachine_data = 0;
+                    $scope.SchedualmachineData = [];
                     $scope.currentmachine_date = result.data.current_date;
                     $scope.prevmachine_date = result.data.prev_date;
                     $scope.nextmachine_date = result.data.next_date;
