@@ -18,9 +18,9 @@
                       <div class="pull-left position-text">
                           <span class="position-title">{{positions.name}}-{{positions.position_name}}</span>
                           <br/>
-                          <span>Due Date: 2/15/2017</span>
+                          <span>Due Date: {{positions.due_date}}</span>
                           <br/>
-                          <span>ERT: 1.56</span><span> C: 12</span>
+                          <span>ERT: {{positions.run_time}}</span><span> C: {{positions.position_colors}}</span>
                           <br/>
                           <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
                           <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span>

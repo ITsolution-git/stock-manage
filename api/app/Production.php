@@ -258,8 +258,9 @@ class Production extends Model {
     {
 
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1')
+                    ->select('lb.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
+                    ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
@@ -277,7 +278,17 @@ class Production extends Model {
         $ret_array = array();            
         foreach($result as $key=>$value)
         {
+            array_walk_recursive($value, function(&$item) {
+                $item = str_replace(array('00/00/0000'),array('-'), $item);
+            });
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
+            $value->position_colors = $this->getPositioncolors($value->position_id);
+
+            if($value->approval==1){$value->screen_icon = '2';} 
+            elseif($value->screen_active=='1'){$value->screen_icon='1';} 
+            else{$value->screen_icon='0';}
+            $value->garment = $this->CheckWarehouseQuantity($value->position_id);
+
 
             if(!empty($value->machine_id) && !empty($value->shift_id))
             {
@@ -296,9 +307,10 @@ class Production extends Model {
     {
         //echo $start_date."=".$end_date; die();
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
+                    ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
                     ->leftJoin('order_design as od','od.id','=','odp.design_id')
@@ -324,8 +336,15 @@ class Production extends Model {
         $ret_array = array();            
         foreach($result as $key=>$value)
         {
+            array_walk_recursive($value, function(&$item) {
+                $item = str_replace(array('00/00/0000'),array('-'), $item);
+            });
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
-
+            $value->position_colors = $this->getPositioncolors($value->position_id);
+            if($value->approval==1){$value->screen_icon = '2';} 
+            elseif($value->screen_active=='1'){$value->screen_icon='1';} 
+            else{$value->screen_icon='0';}
+            $value->garment = $this->CheckWarehouseQuantity($value->position_id);
             if($value->run_date!='0000-00-00')
             {
                 $ret_array['assign'][$value->run_date][$value->shift_id][$value->position_id]=$value;
@@ -345,9 +364,10 @@ class Production extends Model {
     {
         
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*')
+                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
+                    ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
                     ->leftjoin('order_design_position as odp','ps.position_id','=','odp.id')
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
                     ->leftJoin('order_design as od','od.id','=','odp.design_id')
@@ -373,8 +393,15 @@ class Production extends Model {
         $ret_array = array();            
         foreach($result as $key=>$value)
         {
+            array_walk_recursive($value, function(&$item) {
+                $item = str_replace(array('00/00/0000'),array('-'), $item);
+            });
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
-
+            $value->position_colors = $this->getPositioncolors($value->position_id);
+            if($value->approval==1){$value->screen_icon = '2';} 
+            elseif($value->screen_active=='1'){$value->screen_icon='1';} 
+            else{$value->screen_icon='0';}
+            $value->garment = $this->CheckWarehouseQuantity($value->position_id);
             if(!empty($value->machine_id))
             {
                 $ret_array['assign']['shift_all'][]=$value;
