@@ -539,7 +539,7 @@
                     $scope.currentweek_date = result.data.current_date;
                     $scope.prevweek_date = result.data.prev_date;
                     $scope.nextweek_date = result.data.next_date;
-                    notifyService.notify('error',result.data.message);
+                    //notifyService.notify('error',result.data.message);
                 }
                 else
                 {
@@ -586,7 +586,7 @@
                     $scope.currentmachine_date = result.data.current_date;
                     $scope.prevmachine_date = result.data.prev_date;
                     $scope.nextmachine_date = result.data.next_date;
-                    notifyService.notify('error',result.data.message);
+                    //notifyService.notify('error',result.data.message);
                 }
                 else
                 {
