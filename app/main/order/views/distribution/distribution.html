@@ -117,7 +117,7 @@
                         <td>{{product.color_name}}</td>
                         <td>
                             <md-input-container class="m-0" ng-init="product.distributed_qnty = product.distributed_qnty == null ? '0' : product.distributed_qnty">
-                                <input aria-label="true" ng-model="product.distributed_qnty" ui-event="{ change : 'allocateDistQty(key,product)' }">
+                                <input aria-label="true" ng-model="product.distributed_qnty" ui-event="{ change : 'allocateDistQty(key,product)' }" valid-phone>
                             </md-input-container>
                         </td>
                         <td ng-if="location == ''">{{product.description}}</td>
