@@ -10,8 +10,15 @@
     function InformationController(order_id,client_id,$filter,$scope,$stateParams, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService,$log)
     {
 
-$scope.client_id = client_id;
-$scope.order_id = order_id;
+        $scope.client_id = client_id;
+        $scope.order_id = order_id;
+        
+        function myCustomPropertyForTheObjectCompany()
+        {
+            $scope.addressModel = [];
+        }
+
+
         $scope.orderDetailInfo = function(order_id){
 
             var combine_array_id = {};
@@ -72,10 +79,7 @@ $scope.allOrderAddress = function (order_id) {
                     if(client_id != $scope.client_id) {
 
                        $scope.addressChecksettings = {externalIdProp: myCustomPropertyForTheObjectCompany()}
-                        function myCustomPropertyForTheObjectCompany(){
-                            $scope.addressModel = [];
-                        }
-
+                       
 
                           for (var i = 0; i < $scope.addressModel.length; i++) {              
                              $scope.addressModel[i].id = null;

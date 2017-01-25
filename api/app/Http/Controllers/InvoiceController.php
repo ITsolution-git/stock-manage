@@ -262,9 +262,10 @@ class InvoiceController extends Controller {
         $retutn_arr['company_data'][0]->url = (!empty($retutn_arr['company_data'][0]->url) && preg_match('/http/',$retutn_arr['company_data'][0]->url) == false) ? "http://".$retutn_arr['company_data'][0]->url:$retutn_arr['company_data'][0]->url;
 
 
-        if(!empty($order_data_all['order'][0]->client_blind))
+        if(!empty($order_data_all['order'][0]->order_blind))
         {
-            $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/client/'.$order_data_all['order'][0]->client_id."/",$order_data_all['order'][0]->b_w_logo);
+            $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/staff/'.$staff[0]->id."/",$retutn_arr['company_data'][0]->bw_photo);
+          //  $retutn_arr['company_data'][0]->photo= $this->common->checkImageExist($company_id.'/client/'.$order_data_all['order'][0]->client_id."/",$order_data_all['order'][0]->b_w_logo);
         }
         else
         {
@@ -504,6 +505,7 @@ class InvoiceController extends Controller {
                
           
             $design->positions = array_chunk($pos_array['order_design_position'], 2);
+            $design->positions_data = $pos_array['order_design_position'];
 
             $productData = $this->product->designProduct($data);
             
@@ -545,7 +547,7 @@ class InvoiceController extends Controller {
     {
         $post = Input::all();
         $data = $this->getInvoiceDetail($post['invoice_id'],$post['company_id'],1,$post['order_id']);
-
+        
         /*PDF::AddPage('P','A4');
         PDF::writeHTML(view('pdf.invoice',$data)->render());
         PDF::Output('order_invoice_'.$post['invoice_id'].'.pdf');

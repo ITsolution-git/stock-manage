@@ -85,7 +85,7 @@
               if($count%2==0){$color_bg="#b7c2e0";} else {$color_bg="";}
         ?>
         <tr style="background-color:<?php echo $color_bg; ?>;" >
-            <td class="align-left line-height border-b" >&nbsp;&nbsp;{{$value['product_name']}}</td>
+            <td class="align-left line-height border-b" ><?php echo (!empty($value['brand_name']))?$value['brand_name'].' - ':''; ?> {{$value['product_name']}}</td>
             <td class="align-left line-height border-b">&nbsp;&nbsp;{{$value['product_color']}}</td>
             <td class="align-left line-height border-b">
               <?php foreach ($value['summary'] as $key_col=>$val_col) { ?>

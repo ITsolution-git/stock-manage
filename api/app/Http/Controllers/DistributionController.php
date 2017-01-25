@@ -322,4 +322,109 @@ class DistributionController extends Controller {
 
         $this->distribution->getProductByAddress($post);
     }
+
+    public function getDistributionDetail()
+    {
+        $post = Input::all();
+
+        $distribution_address = array();
+        $orderProducts = array();
+
+        $total_order_qty = $this->order->getTotalQntyByOrder(array('id'=>$post['order_id']));
+        $total_shipped_qnty = $this->order->getShippedByOrder(array('id'=>$post['order_id']));
+
+        $undistributed_qty = $total_order_qty - $total_shipped_qnty;
+
+        $post['range'] = 2;
+        $post['start'] = ($post['page'] - 1) * $post['range'];
+        $post['limit'] = $post['range'];
+
+        $distributionData = $this->distribution->getOrderDistributionAddress($post);
+
+        $size =ceil($distributionData['count']/2);
+
+        $pagination = array('count' => $post['range'],'page' => $post['page'],'pages' => 7,'size' => $size);
+
+        foreach ($distributionData['addressData'] as $addr) {
+            
+            $total_remaining_qnty = 0;
+
+            $addr->full_address  = !empty($addr->address2)?$addr->address2." ":'';
+            $addr->full_address .= !empty($addr->address)?$addr->address:'' ; 
+            $addr->full_address .= !empty($addr->address_line2)?", ".$addr->address_line2:'' ; 
+            $addr->full_address .= !empty($addr->suite)?", ".$addr->suite:'' ; 
+            $addr->full_address .= !empty($addr->city)?", ".$addr->city:''; 
+            $addr->full_address .= !empty($addr->name)?", ".$addr->name:'';
+            $addr->full_address .= !empty($addr->zipcode)?", ".$addr->zipcode:'';
+            $addr->full_address .= ' USA';
+
+            $addr->is_selected = 0;
+            $addr->shippingType = $this->common->GetTableRecords('shipping_type',array(),array());
+
+            if($addr->shipping_type_id == 1 || $addr->shipping_type_id == 3)
+            {
+                $addr->shippingMethod = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => $addr->shipping_type_id),array());
+            }
+            else
+            {
+                $addr->shippingMethod = array();
+            }
+
+            $orderProducts = $this->distribution->getProductByOrder($post['order_id']);
+            foreach ($orderProducts as $op) {
+                $op->selected = false;
+                $op->old_distributed_qnty = $this->distribution->getSingleDistributedSize(array('id'=>$op->id,'order_id'=>$post['order_id'],'address_id'=>$addr->id));
+            }
+            /*$allocatedProducts = $this->distribution->getProductByOrder($post['order_id']);
+
+            foreach ($allocatedProducts as $ap) {
+                
+                $ap->distributed_qnty = $this->distribution->getSingleDistributedSize(array('id'=>$ap->id,'order_id'=>$post['order_id'],'address_id'=>$addr->id));
+                $ap->old_distributed_qnty = $ap->distributed_qnty;
+            }*/
+
+            $addr->addressTotalProducts = $this->distribution->getTotalDistributedOrderAddress($addr->id,$post['order_id']);
+           // $addr->products = $allocatedProducts;
+
+            $distribution_address[$addr->id] = $addr;
+        }
+
+        if(!empty($shippingData))
+        {
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts,'pagination' => $pagination);
+        }
+        else
+        {
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'total_shipped_qnty'=>$total_shipped_qnty,'distributionData'=>$distribution_address,'orderProducts'=>$orderProducts,'pagination' => $pagination);
+        }
+        return response()->json(["data" => $response]);
+    }
+
+    public function checkProductArray($products, $field, $value)
+    {
+        foreach($products as $key => $product)
+        {
+            if ( $product->$field === $value )
+            return $product;
+        }
+        return false;
+    }
+
+    public function getSizeBySelect()
+    {
+        $post = Input::all();
+        $products = $this->distribution->getSingleDistributedArr($post);
+        if(empty($products)) {
+            $success = 0;
+            $products = $post['product'];
+            $products['distributed_qnty'] = 0;
+        } else {
+            $success = 1;
+            foreach ($products as $product) {
+                $product->old_distributed_qnty = $product->distributed_qnty;
+            }
+        }
+        $response = array('success'=>$success,'message'=>GET_RECORDS,'products'=>$products);
+        return response()->json(["data" => $response]);
+    }
 }

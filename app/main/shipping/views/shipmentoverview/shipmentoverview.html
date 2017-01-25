@@ -353,6 +353,31 @@
                             <div class="h5 text-semibold">Size:</div>
                             <span>M: 10 L:39 XL: 128</span>
 
+                            <div class="box-zerospace mt-30">
+                                <h4 class="stokkup-title-h4 m-b-20">Products Allocated to {{shipping.description}}</h4>
+                                <div class="ms-responsive-table-wrapper tbl-scroll-cntnr white-bg m-b-30" ms-scroll>
+                                    <table class="simple hover simple-tbl1">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th class="secondary-text" width="20%">Size Group</th> -->
+                                                <th class="secondary-text" width="20%">Product Name</th>
+                                                <th class="secondary-text" width="40%">Product Number</th>
+                                                <th class="secondary-text" width="20%">Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody> 
+                                            <tr ng-repeat="item in shippingItems">
+                                                <!-- <td>{{ item.misc_value}}</td> -->
+                                                <td ng-if="item.brand_name != ''">{{ item.brand_name}} - {{ item.name}}</td>
+                                                <td ng-if="item.brand_name == ''">{{ item.name}}</td>
+                                                <td>{{ item.product_id}}</td>
+                                                <td ng-bind-html="item.description"></td>
+                                            </tr>                    
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                             <div class="h5 text-semibold">Color(s):</div>
                             <span>Blue</span>
 
@@ -391,16 +416,10 @@
                                 </div>
 
                             </div>
-
                         </md-card-content>
-
-
                     </md-card>
                 </div>
             </div>
         </md-content>
-
-
     </div>
-
 </div><!--ship-order-screen ends here -->

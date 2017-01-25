@@ -393,14 +393,17 @@ class PurchaseController extends Controller {
                 $login_name = $pdf_array->login_name;
                 if(!empty($pdf_array->flag) && $pdf_array->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
-
-                    Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
+                    foreach ($email_array as $email)
                     {
-                        $message->to($email_array);
-                        $message->replyTo($login_email,$login_name);
-                        $message->subject('Receive order, for the Order '.$pdf_data['po_data']->order_name);
-                        $message->attach($filename);
-                    });
+
+                        Mail::send('emails.receivepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email,$login_email,$login_name)
+                        {
+                            $message->to(trim($email));
+                            $message->replyTo($login_email,$login_name);
+                            $message->subject('Receive order, for the Order '.$pdf_data['po_data']->order_name);
+                            $message->attach($filename);
+                        });
+                    }
                 }
 
                 return Response::download($filename);
@@ -423,18 +426,25 @@ class PurchaseController extends Controller {
         
         $pdf_array= json_decode($_POST['purchase']);
         
+         if(!isset($pdf_array->mailMessage)){
+          $pdf_array->mailMessage = '';
+        }
+
+
+        
         if(count($pdf_array)>0)
         {
             $order_total='';
             $pdf_data = $this->purchase->GetPoLinedata($pdf_array->po_id,$pdf_array->company_id);
             $positions_data = $this->purchase->GetPOpositions($pdf_array->po_id,$pdf_array->company_id);
-           // echo "<pre>"; print_r($pdf_array); echo "</pre>"; die();
+            
             
             if(count($pdf_data)>0)
             {
                 $order_total = $this->purchase->getOrdarTotal($pdf_array->po_id,$pdf_array->company_id);
                 $email_array = explode(",",$pdf_array->email);
                 $pass_array = array('company'=>$pdf_data['0'],'po_data'=>$pdf_data,'order_total'=>$order_total,'positions'=>$positions_data);
+               
                 
                 $file_path =  FILEUPLOAD.$pdf_array->company_id."/purchase/".$pdf_array->po_id;
                 if (!file_exists($file_path)) { mkdir($file_path, 0777, true); } 
@@ -456,16 +466,19 @@ class PurchaseController extends Controller {
                     
                     $login_email = $pdf_array->login_email;
                     $login_name = $pdf_array->login_name;
-                    Mail::send('emails.purchasepo', ['email'=>''], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
+                    foreach ($email_array as $email)
                     {
-                        $message->to($email_array);
-                        $message->replyTo($login_email,$login_name);
-                        $message->subject('Purchase order, for the Order '.$pdf_data['0']->order_name);
-                        $message->attach($filename);
-                    });
+                        Mail::send('emails.purchasepo', ['email'=>'','mailMessage'=>$pdf_array->mailMessage], function($message) use ($pdf_data,$filename,$email,$login_email,$login_name)
+                        {
+                            $message->to(trim($email));
+                            $message->replyTo($login_email,$login_name);
+                            $message->subject('Purchase order, for the Order '.$pdf_data['0']->order_name);
+                            $message->attach($filename);
+                        });
+                    }
                 }
 
-                //return Response::download($filename);
+                return Response::download($filename);
             }
             else
             {

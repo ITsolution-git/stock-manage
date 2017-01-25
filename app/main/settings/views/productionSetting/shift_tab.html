@@ -1,0 +1,63 @@
+<div class="content order-list-page puchase-order-page stockkup-content-table-container">
+    <div class="simple-table-container md-whiteframe-4dp stokkup-main-tableview">
+        <div class="table-title " layout="row" layout-align="space-between center">
+            <div class="table-title-text" flex=20>Shifts</div>
+            <div class="pull-right right-search-box">
+                <div class="client-modal-title pull-right">
+                    <span class="cursor-p stokkup-btn-style1 pull-left" ng-show="allow_access==1" ng-click="openaddLaborDialog($event,0)">ADD NEW SHIFT</span>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="ms-responsive-table-wrapper" ng-show="success==1">
+            <div>
+                 <table class="dataTable row-border">
+                   
+                    <tbody >
+                    <tr>
+                            <th align="left">Shift Name</th>
+                            <th align="left">Shift hours</th>
+                            <th align="left">Shift Days</th>
+                            <th align="left">Action </th>
+                    </tr>
+                        <tr ng-repeat="labor in shift_data">
+                            <td class="">{{labor.shift_name}}</td>
+                            <td class="">{{labor.total_shift_hours}}</td>
+                            <td class="">{{labor.display_days}}</td>
+                            <td class=""> 
+                                <md-menu>
+                                    <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+                                        <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
+                                    </md-button>
+                                    <md-menu-content width="4"> 
+                                        <md-menu-item>
+                                            <md-button ng-click="openaddLaborDialog($event,labor.id)">
+                                                Edit Shift
+                                            </md-button>
+                                        </md-menu-item>
+                                        <md-menu-item  ng-show="allow_access==1">
+                                            <md-button ng-click="delete_labor($event,labor.id)">
+                                                Delete Shift
+                                            </md-button>
+                                        </md-menu-item>                                      
+                                    </md-menu-content>
+                                </md-menu>
+                            </td>
+                        </tr>
+                    </tbody> 
+                </table>
+                
+            </div>
+        </div>
+        <div  class="ms-responsive-table-wrapper" ng-show="success==0">
+           <table class="dataTable row-border">
+                <thead>
+                    <tr>
+                        <th>No Records Found</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>

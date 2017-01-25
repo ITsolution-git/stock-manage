@@ -6,6 +6,8 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+        <script src="scripts/drangula/angular-dragula.js"></script>
+        <link rel="stylesheet" href="scripts/drangula/dragula.css" />
 
         <!-- <meta property="og:site_name" content="app.stokkup.com"/>
         <meta property="og:description" content="Stokkup" />
@@ -44,6 +46,8 @@
         <link rel="stylesheet" href="styles/stokkup-custom.css">
         <link rel="stylesheet" href="styles/stokkup-custom-global.css">
         <link rel="stylesheet" href="styles/codepen.min.css">
+
+        <link rel="stylesheet" href="styles/custom.css">
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
 
         <script src="https://maps.googleapis.com/maps/api/js?components=country:USA&key=AIzaSyBvpANF446OIBFdLaqozAf-lheEZ__oVVg&libraries=places"
@@ -214,6 +218,7 @@
     <script src="app/main/order/dialogs/position/position-dialog.controller.js"></script>
     <script src="app/main/order/views/notes/notes.controller.js"></script>
     <script src="app/main/order/dialogs/editOrderNote/editOrderNote.controller.js"></script>
+    <script src="app/main/order/dialogs/distribution/existingLocation.controller.js"></script>
 
 
     <!-- CLIENT FILES START -->
@@ -243,6 +248,7 @@
     <!--Production-->
     <script src="app/main/production/production.module.js"></script>
     <script src="app/main/production/production.controller.js"></script>
+    <script src="app/main/production/production.directive.js"></script>
 
     <!-- Settings -->
     <script src="app/main/settings/settings.module.js"></script>
@@ -280,6 +286,7 @@
     <script src="app/main/settings/dialogs/ups/ups-dialog.controller.js"></script>
     <script src="app/main/settings/dialogs/deletePriceGrid/deletePriceGrid-dialog.controller.js"></script>
     <script src="app/main/settings/views/integrations/integrations.controller.js"></script>
+    <script src="app/main/settings/views/productionSetting/productionSetting.controller.js"></script>
 
     <!-- Finishing -->
     <script src="app/main/finishing/finishing.module.js"></script>

@@ -8,6 +8,11 @@
 /** @ngInject */
     function OrderDialogController($scope, $mdDialog, $document, $mdSidenav, DTOptionsBuilder, DTColumnBuilder,$resource,$http,notifyService,$state,sessionService)
     {
+
+
+        function myCustomPropertyForTheObjectSale(){
+                    $scope.addressModel = [];
+                }
         var companyData = {};
             companyData.company_id =sessionService.get('company_id');
 
@@ -147,9 +152,7 @@
 
               $scope.addressChecksettings = {externalIdProp: myCustomPropertyForTheObjectSale()}
 
-                function myCustomPropertyForTheObjectSale(){
-                    $scope.addressModel = [];
-                }
+               
 
 
                 for (var i = 0; i < $scope.addressModel.length; i++) {              

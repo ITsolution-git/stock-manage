@@ -30,7 +30,7 @@
                         <label class="selectbox-label">Sales</label>
                         <md-select ng-model="order_data.sales_id" flex="100">
                             <md-option ng-selected="staff.id==order_data.sales_id" ng-repeat="staff in staffList" value="{{staff.id}}">
-                                {{staff.sales_name}}
+                                {{staff.name}}
                             </md-option>
                         </md-select>
                     </md-input-container>
@@ -119,11 +119,18 @@
             </div>
 
 
-                <!-- <div class="margin-top-25">
-                    <span class="grey-color">
-                        Start Date
-                    </span>
-                </div> -->
+             <div layout="column" layout-wrap="nowrap">
+                    <md-input-container layout="row">
+                    <label class="selectbox-label">Blind</label>
+                     <md-select  ng-model="order_data.is_blind" flex="100">
+                        <md-option value="0">No</md-option>
+                        <md-option value="1">Yes</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+
+
+              
                 <div layout="column" layout-wrap="nowrap">
                     <md-input-container class="md-block date-input">
                             <input placeholder="Start Date"kendo-date-picker ng-model="order_data.date_start" k-ng-model="dateObject" />
@@ -141,24 +148,7 @@
                 </div> 
 
             </div>
-                <!-- <div class="margin-top-25">
-                    <span class="grey-color">
-                        Shipped Date
-                    </span>
-                </div>
-                <div class="date-input">
-                     
-                </div>
-
-
-                <div class="margin-top-25">
-                    <span class="grey-color">
-                        In Hands By
-                    </span>
-                </div>
-                <div class="date-input">
-                      
-                </div> -->
+               
 
             
         </md-dialog-content>

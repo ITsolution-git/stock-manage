@@ -149,11 +149,23 @@ class Common extends Model {
     }
     public function getStaffList($company_id) // SALES EMPLOYEE LIST
     {
-        $staffData = DB::table('sales')
+        /*$staffData = DB::table('sales')
                          ->select('*','sales_name as label',DB::raw('DATE_FORMAT(sales_created_date, "%m/%d/%Y") as sales_created_date'))
                          ->where('sales_delete','=','1')
                          ->where('company_id','=',$company_id)
                          ->get();
+        return $staffData;*/
+
+
+        $whereConditions = ['users.status' => '1','users.is_delete' => '1','roles.slug' => 'SM','users.parent_id' => $company_id];
+        $listArray = ['users.id','users.name'];
+
+        $staffData = DB::table('users as users')
+                         ->Join('roles as roles', 'users.role_id', '=', 'roles.id')
+                         ->select($listArray)
+                         ->where($whereConditions)
+                         ->get();
+
         return $staffData;
     }
 
@@ -294,7 +306,7 @@ class Common extends Model {
         {
             foreach ($cond as $key => $value) 
             {
-                if(!empty($value))
+                if(!empty($value) || $value == '0')
                     $result =$result ->where($key,'=',$value);
             }
         }
@@ -387,7 +399,7 @@ class Common extends Model {
                          ->leftJoin('state as st', 'st.id', '=', 's.prime_address_state')
                          ->select('usr.name','usr.user_name','usr.email','usr.password','usr.remember_token','usr.status','usr.id','usr.role_id','s.first_name','s.last_name',
                                     's.prime_address1','s.prime_address_city','st.code as prime_address_state','s.prime_address_country','s.prime_address_zip','s.prime_phone_main as phone',
-                                    's.url','s.photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip','cd.url')
+                                    's.url','s.photo','s.bw_photo','s.oversize_value','cd.company_logo','cd.address','cd.city','cd.state','cd.country','cd.zip','cd.url')
                          ->where('usr.id','=',$company_id)
                          ->where('usr.is_delete','=','1')
                          ->where('s.is_delete','=','1')

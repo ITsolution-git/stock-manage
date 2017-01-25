@@ -31,11 +31,12 @@ class Order extends Model {
         $whereConditions = ['order.is_delete' => '1','order.company_id' => $post['company_id'],'order.parent_order_id' => '0'];
 
         $listArray = [DB::raw('SQL_CALC_FOUND_ROWS order.client_id,order.id,order.display_number,order.name,order.created_date,order.approved_date,order.date_shipped,
-                      order.status,order.approval_id,client.client_company,misc_type.value as approval,sales.sales_name,users.name as account_manager,order.login_id')];
+                      order.status,order.approval_id,client.client_company,misc_type.value as approval,user.name as sales_name,users.name as account_manager,order.login_id')];
 
         $orderData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
+                        // ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
+                         ->leftJoin('users as user','user.id','=',"order.sales_id")
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
                          ->leftJoin('misc_type as misc_type','order.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                          ->select($listArray)
@@ -46,7 +47,7 @@ class Order extends Model {
                           $orderData = $orderData->Where(function($query) use($search)
                           {
                               $query->orWhere('order.name', 'LIKE', '%'.$search.'%')
-                                    ->orWhere('sales.sales_name', 'LIKE', '%'.$search.'%')
+                                    ->orWhere('user.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('order.display_number', 'LIKE', '%'.$search.'%')
                                     ->orWhere('users.name', 'LIKE', '%'.$search.'%')
                                     ->orWhere('misc_type.value', 'LIKE', '%'.$search.'%')
@@ -94,13 +95,12 @@ class Order extends Model {
       
         $whereConditions = ['order.is_delete' => "1",'order.id' => $data['id'],'order.company_id' => $data['company_id']];
         
-        $listArray = ['order.*','order.name as order_name','client.client_company','client.is_blind as client_blind','misc_type.value as approval','sales.sales_name','client.display_number as client_display_number',
-                      'users.name','cc.first_name as client_first_name','i.id as invoice_id','client.b_w_logo',
-                      'cc.last_name as client_last_name','price_grid.name as price_grid_name','a.approval as art_approval'];
+        $listArray = ['order.*','order.name as order_name','client.client_company','client.is_blind as client_blind','misc_type.value as approval','user.name as sales_name','client.display_number as client_display_number','users.name','cc.first_name as client_first_name','i.id as invoice_id','client.b_w_logo','cc.last_name as client_last_name','price_grid.name as price_grid_name','a.approval as art_approval','order.is_blind as order_blind'];
 
         $orderDetailData = DB::table('orders as order')
                          ->Join('client as client', 'order.client_id', '=', 'client.client_id')
-                         ->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
+                         //->leftJoin('sales as sales','order.sales_id','=', 'sales.id')
+                         ->leftJoin('users as user','user.id','=',"order.sales_id")
                          ->leftJoin('users as users','order.account_manager_id','=', 'users.id')
                          ->leftJoin('invoice as i','order.id','=', 'i.order_id')
                          ->leftJoin('art as a','order.id','=', 'a.order_id')

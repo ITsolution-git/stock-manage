@@ -76,7 +76,7 @@
                         <div layout="row" layout-wrap>
                             <div class="trans-box">
                                 <div>Product</div>
-                                <span class="chrome-weight font-14">{{line_item.product.product_name}}</span>
+                                <span class="chrome-weight font-14">{{line_item.product.brand_name}} - {{line_item.product.product_name}}</span>
                             </div>
                             <div class="trans-box">
                                 <div>SKU</div>
@@ -86,6 +86,14 @@
                                 <div>Color</div>
                                 <span class="chrome-weight font-14">{{key_color}}</span>
                             </div>
+
+                            <div class="trans-box">
+                                <div ng-if="line_item.product.is_supply == 1" class="global-labels f-red">Supplied</div>
+                                <div ng-if="line_item.product.is_supply == 0"></div>
+                                <span class="chrome-weight font-14"></span>
+                            </div>
+
+
                             <div class="trans-box">
                                     <button type="button" class="stokkup-custom-btn1 stokkup-blue-btn text-white" ng-click="ReceiveProductsAll(line_item.product.product_id)"  aria-label="Save">Receive All</button>
                             </div>

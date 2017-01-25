@@ -3,7 +3,7 @@
     <form name="orderForm" class="md-inline-form" novalidate>
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between">
-                <span class="title">{{product_name}}</span>
+                <span class="title">{{brand_name}} - {{product_name}}</span>
                 <md-button  ng-click="vm.closeDialog()" class="close-stokkup-dialog">
                     <span>CLOSE</span>
                 </md-button>
@@ -113,12 +113,12 @@
                             <div class="mrg20-T">
                                 <span>{{AllProductDetail[colorName].colorName}} Quantity :- {{AllProductDetail[colorName].total_qnty}}</span>
                                 <br>
-                                <span ng-show="!is_supply">{{AllProductDetail[colorName].colorName}} COST :- {{AllProductDetail[colorName].total}}$</span>
+                                <span ng-show="!is_supply">{{AllProductDetail[colorName].colorName}} Cost :- {{AllProductDetail[colorName].total}}$</span>
                                 <br><br>
                                 
-                                <span>TOTAL Quantity :- {{total_all}}</span>
+                                <span>Total Quantity :- {{total_all}}</span>
                                 <br>
-                                <span ng-show="!is_supply">TOTAL COST :- {{total_price}}$</span>
+                                <span ng-show="!is_supply">Total COST :- {{total_price}}$</span>
                                 <md-checkbox  aria-label="Checkbox 1" ng-model="is_supply">
                                     These products are supplied garments
                                 </md-checkbox>

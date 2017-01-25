@@ -39,8 +39,9 @@ class ProductionController extends Controller {
 	    	$Position_scheduleData[0]->rush_job = ($Position_scheduleData[0]->rush_job=='1')?true:false;
 
 
-	    	$machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0));  // GET MACHINE FROM COMPANU
-	    	$shift_data   = $this->common->GetTableRecords('company_shift',array('company_id'=>$post['company_id'],'is_delete'=>1)); // GET COMPANY SHIFT
+	    	
+            $machine_data = $this->common->GetTableRecords('machine',array('company_id'=>$post['company_id'],'is_delete'=>1,'operation_status'=>0,'machine_type'=>$post['production_type']));  // GET MACHINE FROM COMPANU
+            $shift_data   = $this->common->GetTableRecords('labor',array('company_id'=>$post['company_id'],'is_delete'=>1,'shift_type'=>$post['production_type'])); // GET COMPANY SHIFT
 	    	
 
 	    	$data = array("success"=>1,"message"=>GET_RECORDS,"machine_data"=>$machine_data,'shift_data'=>$shift_data,'Position_scheduleData'=>$Position_scheduleData);
@@ -97,7 +98,7 @@ class ProductionController extends Controller {
     	if(!empty($post['company_id']))
 	    {
 	    	$run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
-	    	$SchedualBoardData = $this->production->SchedualBoardData($post['company_id'],$run_date);
+	    	$SchedualBoardData = $this->production->SchedualBoardData($post['company_id'],$run_date,$post['production_type']);
 
 	    	$prev_date = date('Y-m-d', strtotime('-1 day', strtotime($run_date)));
 	    	$next_date = date('Y-m-d', strtotime('+1 day', strtotime($run_date)));
@@ -137,10 +138,21 @@ class ProductionController extends Controller {
 	    	$month = date('F',strtotime($run_date));
 	    	$year = date('Y',strtotime($run_date));
 
-	    	$SchedualBoardweekData = $this->production->SchedualBoardweekData($post['company_id'],$week_start,$week_end);
+	    	$SchedualBoardweekData = $this->production->SchedualBoardweekData($post['company_id'],$week_start,$week_end,$post['production_type']);
 	    	$prev_date = date('Y-m-d', strtotime('-2 day', strtotime($week_start)));
 	    	$next_date = date('Y-m-d', strtotime('+2 day', strtotime($week_end)));
 	    	$current_date = $month." ".$start_day."-".$end_day.", ".$year;
+
+	    	 
+		    $weekArray = array();
+		    $current = strtotime($week_start);
+		    $last = strtotime($week_end);
+
+		    while( $current <= $last ) {
+
+		        $weekArray[] = date('Y-m-d', $current);
+		        $current = strtotime('+1 day', $current);
+		    }
 
 	    	if(count($SchedualBoardweekData)>0)
 	    	{
@@ -152,7 +164,7 @@ class ProductionController extends Controller {
 				$success=2;
 	    		$message =NO_RECORDS;
 	    	}
-	    	$data = array("success"=>$success,"message"=>$message,'SchedualBoardweekData'=>$SchedualBoardweekData,'prev_date'=>$prev_date,'next_date'=>$next_date,'current_date'=>$current_date);
+	    	$data = array("success"=>$success,"message"=>$message,'SchedualBoardweekData'=>$SchedualBoardweekData,'prev_date'=>$prev_date,'next_date'=>$next_date,'current_date'=>$current_date,'weekArray'=>$weekArray);
 	    }
 	    else
 	    {
@@ -169,7 +181,7 @@ class ProductionController extends Controller {
 	    {
 	    	$machine_id = (!empty($post['machine_id']))?$post['machine_id']:'';
 	    	$run_date = (!empty($post['run_date']))? date('Y-m-d',strtotime($post['run_date'])):date('Y-m-d');
-	    	$SchedualBoardMachineData = $this->production->SchedualBoardMachineData($post['company_id'],$run_date,$machine_id);
+	    	$SchedualBoardMachineData = $this->production->SchedualBoardMachineData($post['company_id'],$run_date,$machine_id,$post['production_type']);
 
 	    	$prev_date = date('Y-m-d', strtotime('-1 day', strtotime($run_date)));
 	    	$next_date = date('Y-m-d', strtotime('+1 day', strtotime($run_date)));
@@ -196,12 +208,11 @@ class ProductionController extends Controller {
     public function GetSchedulePositionDetail() // POPUP OF POSITION
     {
     	$post = Input::all();
-    	if(!empty($post['company_id']) && !empty($post['position_id']))
+    	if(!empty($post['company_id']) && !empty($post['position_id']) && !empty($post['machine_id']))
 	    {
 	    	$PositionDetail= $this->production->GetPositionDetails($post['position_id'],$post['company_id']);
 	    	$GarmentDetail= $this->production->GetGarmentDetail($post['position_id'],$post['company_id']);
-	    	$GetRuntimeData= $this->production->GetRuntimeData($post['position_id'],$post['company_id']);
-			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail,'GetRuntimeData'=>$GetRuntimeData);
+			$data = array("success"=>1,"message"=>GET_RECORDS,"PositionDetail"=>$PositionDetail,'GarmentDetail'=>$GarmentDetail);
 	    }
 	    else
 	    {
@@ -216,9 +227,20 @@ class ProductionController extends Controller {
     	$post = Input::all();
     	if(!empty($post['company_id']) && !empty($post['id']))
 	    {
-	    	//$post['rush_job']
+	    	
+	    	$GetRuntimeData= $this->production->GetRuntimeData($post['position_id'],$post['company_id'],$post['machine_id']);
+	    	$post['run_date'] = empty($post['run_date'])? '0000-00-00' : $post['run_date'];
+	    	$setup_time = $GetRuntimeData['setup_time'];
+	    	$run_speed = $GetRuntimeData['run_speed'];
+	    	$run_time = $GetRuntimeData['run_time'];
+	    	$total_time = $GetRuntimeData['total_time'];
+	    	$getOrderImpression = $GetRuntimeData['getOrderImpression'];
+			$imps = $GetRuntimeData['imps'];
+	    
 	    	$post['run_date'] = date('Y-m-d',strtotime($post['run_date']));
-	    	$machine_data = $this->common->UpdateTableRecords('position_schedule',array('id'=>$post['id']),array('machine_id'=>$post['machine_id'],'shift_id'=>$post['shift_id'],'run_date'=>$post['run_date'],'rush_job'=>$post['rush_job']));  
+	    	$machine_data = $this->common->UpdateTableRecords('position_schedule',array('id'=>$post['id']),array('machine_id'=>$post['machine_id'],'shift_id'=>$post['shift_id'],'run_date'=>$post['run_date'],'rush_job'=>$post['rush_job'],'setup_time'=>$setup_time,'run_speed'=>$run_speed,'run_time'=>$run_time,'total_time'=>$total_time,'impressions'=>$getOrderImpression,'imps'=>$imps));  
+
+
 	    	$data = array("success"=>'success',"message"=>UPDATE_RECORD);
 	    }
 	    else
@@ -228,6 +250,69 @@ class ProductionController extends Controller {
 
         return response()->json(['data'=>$data]);
     }
-    
+    public function UpdateMachineRecords()  // Machine add/edit call from setting/Production screen 
+    {
+    	$post = Input::all();
+    	//echo "<pre>"; print_r($post); echo "</pre>"; die();
+    	if(!empty($post['company_id']) && !empty($post['action']) && !empty($post['machineData']))
+	    {
+	    	
+	    	$PositionDetail= $this->production->UpdateMachineRecords($post,$post['action']);
+    		$data = array("success"=>'1',"message"=>"Opration successfully performed.");
+	    }
+	    else
+	    {
+	    	$data = array("success"=>'0',"message"=>MISSING_PARAMS);
+	    }
 
+        return response()->json(['data'=>$data]);
+    	
+    }
+    public function productionShift()
+    {
+    	$post = Input::all();
+    	if(!empty($post['company_id']))
+	    {
+	    	$PositionDetail= $this->production->productionShift($post);
+    		$data = array("success"=>'1',"message"=>GET_RECORDS,'records'=>$PositionDetail);
+	    }
+	    else
+	    {
+	    	$data = array("success"=>'0',"message"=>MISSING_PARAMS);
+	    }
+
+        return response()->json(['data'=>$data]);
+    }
+    public function ChagneDragDrop()
+    {
+    	$post = Input::all();
+    	if(!empty($post['position']))
+	    {
+	    	$mahcine_shift = explode("-", $post['machine_shift']);
+	    	$shift = $mahcine_shift[0];
+	    	$machine = $mahcine_shift[1];
+	    	$this->common->UpdateTableRecords('position_schedule',
+	    		array('id'=>$post['position']),
+	    		array('machine_id'=>$machine,'shift_id'=>$shift)
+	    		);
+	    }
+
+    }
+    public function ChagneDragDropweek()
+    {
+    	$post = Input::all();
+    	if(!empty($post['position']))
+	    {
+	    	$day_shift = explode(",", $post['day_shift']);
+	    	$shift = $day_shift[0];
+	    	$run_date = $day_shift[1];
+	    	$this->common->UpdateTableRecords('position_schedule',
+	    		array('id'=>$post['position']),
+	    		array('run_date'=>$run_date,'shift_id'=>$shift)
+	    		);
+	    }
+
+    }
+
+    
 }

@@ -126,7 +126,7 @@ class Shipping extends Model {
         $whereShippingConditions = ['s.id' => $data['shipping_id']];
 
         $listArray = ['s.id as shipping_id','mt.value as job_status','o.id as order_id','o.name','cd.id as client_distribution_id','o.client_id','c.client_company','o.approval_id','misc_type.value as approval','s.cost_to_ship','s.tracking_number','o.display_number',
-                        's.boxing_type','o.date_shipped as shipping_by','o.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.name','st.code','s.shipping_method','o.shipping_status','o.login_id','c.is_blind','c.b_w_logo',
+                        's.boxing_type','o.date_shipped as shipping_by','o.in_hands_by','s.shipping_type_id','s.date_shipped','s.fully_shipped','s.shipping_note','s.cost_to_ship','cd.*','o.f_approval','s.sku','st.name','st.code','s.shipping_method','o.shipping_status','o.login_id','o.is_blind','c.b_w_logo',
                         'o.date_shipped','o.in_hands_by','o.custom_po','s.shipping_note','s.display_number as shipping_display_number','c.display_number as client_display_number'];
        
         $shippingData = DB::table('shipping as s')
@@ -158,7 +158,7 @@ class Shipping extends Model {
         $shippingData[0]->distributed = $total_distributed[0]->distributed;
 
         $whereItemConditions = ['pam.shipping_id' => $data['shipping_id']];
-        $listItemsArray = ['pam.shipping_id','pd.id','pd.size','pd.qnty','pd.shipped_qnty','pd.boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
+        $listItemsArray = ['pam.shipping_id','pd.id','pd.size','pd.qnty','pd.shipped_qnty','pd.boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','p.brand_name','mt.value as size_group_name','c.name as color_name'];
 
         if(isset($data['overview']))
         {
@@ -169,7 +169,7 @@ class Shipping extends Model {
             $GroupBy = 'pd.id';
         }
 
-        $shippingItems = DB::select("SELECT mt.value as misc_value,p.name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total, 
+        $shippingItems = DB::select("SELECT mt.value as misc_value,p.name,p.brand_name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total, 
                                     pas.distributed_qnty as qnty,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id ,pd.boxed_qnty,
                                     pd.remaining_to_box,pd.max_pack,pd.hoody,pam.shipping_id,pd.design_product_id
                                 FROM product_address_mapping as pam 
@@ -194,7 +194,7 @@ class Shipping extends Model {
     public function getBoxItems($box_id)
     {
         $whereItemConditions = ['bi.box_id' => $box_id];
-        $listItemsArray = ['sb.md','sb.id as box_id','sb.box_setting_id','sb.spoil','sb.actual','sb.re_allocate_to','bi.id as box_item_id','bi.item_id','pd.id','pd.size','sb.box_qnty as boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','mt.value as size_group_name','c.name as color_name'];
+        $listItemsArray = ['sb.md','sb.id as box_id','sb.box_setting_id','sb.spoil','sb.actual','sb.re_allocate_to','bi.id as box_item_id','bi.item_id','pd.id','pd.size','sb.box_qnty as boxed_qnty','pd.remaining_to_box','pd.max_pack','pd.hoody','p.name as product_name','p.brand_name','mt.value as size_group_name','c.name as color_name'];
 
         $shippingBoxItems = DB::table('box_product_mapping as bi')
                         ->leftJoin('shipping_box as sb','bi.box_id','=','sb.id')
@@ -230,7 +230,7 @@ class Shipping extends Model {
         $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pol.qnty_purchased','pd.remaining_qnty'];
         $where = ['po.order_id' => $order_id];
 
-        $result = DB::select("SELECT mt.value as misc_value,p.name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id 
+        $result = DB::select("SELECT mt.value as misc_value,p.name,p.brand_name,p.id as product_id,c.name as color_name,p.description,pd.id,pd.size,pol.qnty_purchased - pol.short as total,pd.remaining_qnty,pd.distributed_qnty,pas.product_address_id 
                                 FROM purchase_order as po 
                                 LEFT JOIN purchase_order_line as pol ON po.po_id = pol.po_id 
                                 LEFT JOIN purchase_detail as pd ON pol.purchase_detail = pd.id 
@@ -294,7 +294,7 @@ class Shipping extends Model {
     {
         $whereBoxConditions = ['sb.shipping_id' => $data['shipping_id']];
 
-        $listItemsArray = ['sb.id','sb.box_qnty','sb.tracking_number','sb.box_setting_id',DB::raw('COUNT(bi.id) as number_of_box'),'sb.box_qnty as boxed_qnty','c.name as color_name','p.description as product_desc','pd.size','sb.md','sb.spoil','sb.actual','mt.value as size_group_name','p.name as product_name'];
+        $listItemsArray = ['sb.id','sb.box_qnty','sb.tracking_number','sb.box_setting_id',DB::raw('COUNT(bi.id) as number_of_box'),'sb.box_qnty as boxed_qnty','c.name as color_name','p.description as product_desc','pd.size','sb.md','sb.spoil','sb.actual','mt.value as size_group_name','p.name as product_name','p.brand_name'];
 
         $shippingBoxes = DB::table('shipping_box as sb')
                         ->leftJoin('box_product_mapping as bi','bi.box_id','=','sb.id')
@@ -344,7 +344,7 @@ class Shipping extends Model {
 
     public function getshippedProductsByOrder($order_id)
     {
-        $listArr = ['mt.value as misc_value','p.name','c.name as color_name','p.description','pd.id','pd.size','pas.distributed_qnty','pas.product_address_id'];
+        $listArr = ['mt.value as misc_value','p.name','p.brand_name','c.name as color_name','p.description','pd.id','pd.size','pas.distributed_qnty','pas.product_address_id'];
         $where = ['pam.order_id' => $order_id];
 
         $result = DB::table('product_address_mapping as pam')

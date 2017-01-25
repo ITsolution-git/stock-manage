@@ -477,6 +477,7 @@ class ArtController extends Controller {
         {
             $options = !empty($screenArray->options)?$screenArray->options:array();
             $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
+            
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
 
             $email_text = $screenArray->email_text;
@@ -506,14 +507,16 @@ class ArtController extends Controller {
 
                 if(!empty($screenArray->flag) && $screenArray->flag=='1' && count($email_array)>0) // CHECK EMAIL ARRAY AND SEND MAIL CONDITION 
                 {
-
-                    Mail::send('emails.artapproval', ['email_text'=>$email_text], function($message) use ($pdf_data,$filename,$email_array,$login_email,$login_name)
+                    foreach ($email_array as $email)
                     {
-                        $message->to($email_array);
-                        $message->replyTo($login_email,$login_name);
-                        $message->subject('Art Approval for the order '.$pdf_data[0][0][0]->order_name);
-                        $message->attach($filename);
-                    });
+                        Mail::send('emails.artapproval', ['email_text'=>$email_text], function($message) use ($pdf_data,$filename,$email,$login_email,$login_name)
+                        {
+                            $message->to(trim($email));
+                            $message->replyTo($login_email,$login_name);
+                            $message->subject('Art Approval for the order '.$pdf_data[0][0][0]->order_name);
+                            $message->attach($filename);
+                        });
+                    }
                 }
                 return Response::download($filename);
             }

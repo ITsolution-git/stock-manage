@@ -279,7 +279,7 @@ hr .style1 {
 }
 
 .createPriceGridLink {
-  top : 43px;
+  top : 23px;
   right: 40px;
   font-family: 'Helvetica';
     font-style: normal;
@@ -588,7 +588,7 @@ md-input-container.mrg0-TB, .mrg0-TB { margin-top: 0px; margin-bottom: 0px;}
 .mrg10-T { margin-top: 10px;}
 .mrg10-TB { margin-bottom:10px; margin-top:10px; }
 .mrg10-B { margin-bottom:10px;}
-.pd10 { padding: 10px;}
+.pd10 { padding: 10px !important;}
 .pd10-LR { padding-right:10px; padding-left:10px; }
 .pd10-R { padding-right:10px; }
 .mrg5-B { margin-bottom:5px; }
@@ -1313,11 +1313,12 @@ margin-top:30px;
   overflow-y: auto;
 }
 
-
-
 .mrg0 { margin: 0; padding: 0; }
 .m-t-0 { margin-top: 0 !important   }
 .p-t-0 { padding-top: 0 !important;  }
+.f-24 { font-size: 24px !important; }
+.pd30-LR { padding: 0 30px;  }
+.m-b-10 { margin-bottom: 10px; }
 
 .remaining-text { border-bottom: 1px solid rgba(0, 0, 0, 0.12); padding: 10px 0; }
 .size-color label{ font-size: 14px; font-weight: bold; padding: 0; }
@@ -1369,9 +1370,38 @@ md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-c
 .boxes md-menu { position: relative;; left: -15px;  }
 .boxes .delete-box a { color: rgba(110,117,132,1);  }
 
+.distrbution-company h3.title{ margin-top: 0; font-weight: bold; font-size: 20px;  }
+.distrbution-company a.stokkup-blue-btn { display: inline-block;  }
+.dist-next-prev { position: absolute; top: 50%; margin-top: -35px;  }
+.dist-next-prev.left { left: -25px  }
+.dist-next-prev.right { right: -30px  }
+.distri-box { width: 100%; float: left; display: flex; position: relative;  height: 100%  }
+.distri-box md-card.md-default-theme { width: 96%; display: flex;  height: 100% }
+.distri-box .active { background: rgba(92,97,111,.8);  }
+.distri-box .active .md-title,
+.distri-box .active .sub-title,
+.distri-box .active  h3.title{ color: #fff;  }
 
+.product-select md-checkbox .md-ink-ripple{ display: none;  }
+.product-select md-checkbox .md-label { margin-left: 0 !important;  }
+.product-select md-card md-card-content { padding: 0;  }
+.product-select md-checkbox { padding: 7px 16px !important;  }
+.product-select md-checkbox.md-checked { background: rgba(92,97,111,.8);   }
+.product-select md-checkbox.md-checked .md-label { color: #fff  }
+.distri-record table.simple tbody tr:first-child td { padding-top: 10px;  }
+.distri-record table.simple thead th { padding: 10px 8px;  font-weight: bold; font-size: 14px; }
+.distri-record table.simple tbody td{ padding: 10px 8px;  }
+.shipping-select { margin-top: 50px;   }
+.shipping-select md-select  { font-size: 16px; font-weight: bold; min-width: 300px;  }
 
 @media (max-width: 1200px) {
     .location .stokkup-blue-btn { font-size: 12px; padding: 0 20px; }
     .ship-order-screen .shp-code p { font-size: 13px; }
 }
+.distribution_scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.search-block md-input-container label { padding-left: 25px !important;  }
+.simple-table-container .table-title { position: relative;  }
+.dashboard-page .table-title .table-title-text {  padding-left: 25px ;  }

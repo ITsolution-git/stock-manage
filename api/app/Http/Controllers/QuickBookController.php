@@ -892,9 +892,9 @@ class QuickBookController extends Controller
             $qb_invoice_id =  $this->getId($resp);
              $this->common->UpdateTableRecords('invoice',array('id' => $invoice_id),array('qb_id' => $qb_invoice_id));
 
-             if($quickbook_id > 0) {
+             //if($quickbook_id > 0) {
                      $this->common->UpdateTableRecords('payment_history',array('order_id' => $orderId),array('qb_id' => $qb_invoice_id,'qb_flag' => 0));
-             }
+            // }
 
            
             return 1; 

@@ -1,6 +1,13 @@
-<div class="content client-list-page">
-    <div class="simple-table-container md-whiteframe-4dp">
-        <div class="table-title " layout="row" layout-align="space-between center">
+<div class="content dashboard-page stockkup-content-table-container stockkup-content-table-container">
+    <div class="header header-bg-custom m-b-20"  layout="column">
+        <div class="header-content" layout="row" layout-align="start" layout-wrap flex>
+            <h1 class="inner-page-heading">Company List</h1>
+        </div>
+    </div>
+
+<div class="content m--b-20">
+    <div class="simple-table-container">
+        <div class="table-title pd10" layout="row" layout-align="space-between center">
             <div class="table-title-text" flex=20>
                 sizes
             </div>
@@ -11,7 +18,7 @@
                 </md-input-container>
             </div>
 
-               
+
           <!--   <div class="client-modal-title " flex=50>
                 <span class="cursor-p" ng-click="vm.openClientDialog($event)">ADD NEW CLIENT</span>
             </div> -->
@@ -48,12 +55,12 @@
                     <tbody >
                         <tr  ng-repeat="size in rows">
                             <td class="">{{size.name}}</td>
-                            <td class=""> 
+                            <td class="">
                                 <md-menu>
                                     <md-button aria-label="Account Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                         <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                                     </md-button>
-                                    <md-menu-content width="4"> 
+                                    <md-menu-content width="4">
                                         <md-menu-item>
                                             <md-button ng-click="Editsize($event,size.id)">
                                                 Edit size
@@ -68,7 +75,7 @@
                                 </md-menu>
                             </td>
                         </tr>
-                    </tbody> 
+                    </tbody>
                 </table>
                 <div tasty-pagination class="tasty-page"></div>
             </div>

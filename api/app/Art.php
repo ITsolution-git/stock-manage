@@ -393,7 +393,7 @@ class Art extends Model {
 	public function getArtApprovalProducts($order_id,$company_id)
 	{
 		$query = DB::table('orders as or')
-					->select('or.name as order_name','or.company_id','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','p.name as product_name','pdtl.product_id','pdtl.size','pdtl.qnty','col.name as product_color','pdtl.price',
+					->select('or.name as order_name','or.company_id','or.date_shipped','or.in_hands_by','or.id as order_id','or.custom_po','p.name as product_name','p.brand_name','pdtl.product_id','pdtl.size','pdtl.qnty','col.name as product_color','pdtl.price',
 					DB::raw("(SELECT SUM(qnty) FROM purchase_detail WHERE product_id =p.id and design_id=od.id) as total_product"))
 					->join('order_design as od','od.order_id','=','or.id')
 					->leftjoin('design_product as dp','dp.design_id','=','od.id')
@@ -410,6 +410,7 @@ class Art extends Model {
 				foreach ($query as $key=>$value) 
 				{
 					$product[$value->product_id]['product_name']= $value->product_name;
+					$product[$value->product_id]['brand_name']= $value->brand_name;
 					$product[$value->product_id]['product_color'] = $value->product_color;
 					$product[$value->product_id]['product_id'] = $value->product_id;
 					$product[$value->product_id]['summary'][$value->size]= $value->qnty;
@@ -424,7 +425,7 @@ class Art extends Model {
 	public function getArtApprovalPDFdata($order_id,$company_id)
 	{
 		$query = DB::table('artjob_screensets as ass')
-				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','cl.is_blind','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.line_per_inch','ass.frame_size','ass.screen_width','ass.screen_location','acol.*','col.name as color_name','col.color_code','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','cl.blind_text','cl.b_w_logo','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','mt1.slug as placement_type','mt2.value as position_name','ca.street','ca.city','st.code as state_name','ca.postal_code')
+				->select('or.name as order_name','or.custom_po','inv.payment_due_date','or.date_shipped','or.company_id','or.is_blind','or.in_hands_by','or.id as order_id','or.created_date','cc.first_name','cc.last_name','cl.client_id','cl.client_company','ass.screen_set','ass.id as screen_id','stf.first_name as f_name','stf.last_name as l_name','stf.prime_address_city','stf.prime_address_street','stf.prime_address_state','stf.prime_address_zip','stf.prime_phone_main','stf.photo as companyphoto','stf.bw_photo','stf.id as staff_id','stf.prime_address1','art.mokup_image','odp.image_1','ass.screen_height','ass.positions','ass.line_per_inch','ass.frame_size','ass.screen_width','ass.screen_location','acol.*','col.name as color_name','col.color_code','cl.client_company','usr.name as companyname','usr1.name as account_manager','cl.billing_email','cl.blind_text','cl.b_w_logo','od.design_name','an.note_title','an.note','an.id as note_id','an.screenset_id as notscreen','mt.value as inq','ca.address','mt1.slug as placement_type','mt2.value as position_name','ca.street','ca.city','st.code as state_name','ca.postal_code')
 				->leftjoin('art_notes as an','an.screenset_id','=',DB::raw("ass.id AND is_deleted = '1' AND artapproval_display='1'"))
 				->join('orders as or','ass.order_id','=','or.id')
 				->leftJoin('users as usr','usr.id','=','or.company_id')
@@ -460,7 +461,7 @@ class Art extends Model {
 				
 				if(!empty($value->is_blind))
 				{
-					$value->companyphoto= $this->common->checkImageExist($value->company_id.'/client/'.$value->client_id."/",$value->b_w_logo);
+					$value->companyphoto= $this->common->checkImageExist($value->company_id.'/staff/'.$value->staff_id."/",$value->bw_photo);
 				}
 				else
 				{
