@@ -52,7 +52,7 @@
 }
 .slot .slot-header{
 	font-size:11px;
-	min-height: 160px;
+	min-height: 110px;
 }
 .slot .machine-slot-header{
 	min-height:100px;
@@ -287,4 +287,8 @@ shift-container div,
   margin-right: 5px;
   background-color: rgba(0, 0, 0, 0.4);
   cursor: move;
+}
+.mr5
+{
+	margin-right: 5px !important;
 }

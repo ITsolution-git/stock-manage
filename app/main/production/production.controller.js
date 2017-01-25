@@ -486,6 +486,7 @@
                 {
                     $scope.get_data = 1;
                     $scope.SchedualData=result.data.SchedualBoardData.assign;
+                    $scope.count_day=result.data.SchedualBoardData.count_day;
                     $scope.SchedualDataUnassign=result.data.SchedualBoardData.unassign;
                     $scope.current_date = result.data.current_date;
                     $scope.prev_date = result.data.prev_date;
@@ -497,6 +498,7 @@
                     $scope.get_data = 0;
                     $scope.SchedualData=result.data.SchedualBoardData.assign;
                     $scope.SchedualDataUnassign=result.data.SchedualBoardData.unassign;
+                    $scope.count_day=result.data.SchedualBoardData.count_day;
                     $scope.current_date = result.data.current_date;
                     $scope.prev_date = result.data.prev_date;
                     $scope.next_date = result.data.next_date;
@@ -526,6 +528,7 @@
                     $scope.weekArray = result.data.weekArray;
                     $scope.SchedualweekData = result.data.SchedualBoardweekData.assign;
                     $scope.SchedualweekDataUnassign = result.data.SchedualBoardweekData.unassign;
+                    $scope.count_week=result.data.SchedualBoardweekData.count_week;
                     $scope.currentweek_date = result.data.current_date;
                     $scope.prevweek_date = result.data.prev_date;
                     $scope.nextweek_date = result.data.next_date;
@@ -536,6 +539,7 @@
                     $scope.weekArray = result.data.weekArray;
                     $scope.SchedualweekData = result.data.SchedualBoardweekData.assign;
                     $scope.SchedualweekDataUnassign = result.data.SchedualBoardweekData.unassign;
+                    $scope.count_week=result.data.SchedualBoardweekData.count_week;
                     $scope.currentweek_date = result.data.current_date;
                     $scope.prevweek_date = result.data.prev_date;
                     $scope.nextweek_date = result.data.next_date;
@@ -575,6 +579,7 @@
                     $scope.getmachine_data = 1;
                     $scope.SchedualmachineData = result.data.SchedualBoardMachineData.assign;
                     $scope.SchedualmachineDataUnassign = result.data.SchedualBoardMachineData.unassign;
+                    $scope.count_machine=result.data.SchedualBoardMachineData.count_machine;
                     $scope.currentmachine_date = result.data.current_date;
                     $scope.prevmachine_date = result.data.prev_date;
                     $scope.nextmachine_date = result.data.next_date;
@@ -584,6 +589,7 @@
                     $scope.getmachine_data = 0;
                     $scope.SchedualmachineData = [];
                     $scope.currentmachine_date = result.data.current_date;
+                    $scope.count_machine=result.data.SchedualBoardMachineData.count_machine;
                     $scope.prevmachine_date = result.data.prev_date;
                     $scope.nextmachine_date = result.data.next_date;
                     //notifyService.notify('error',result.data.message);
