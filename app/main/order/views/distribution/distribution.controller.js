@@ -50,6 +50,21 @@
             }
         });
 
+        var state_data = {};
+        state_data.table ='state';
+
+        $http.post('api/public/common/GetTableRecords',state_data).success(function(result) {
+
+            if(result.data.success == '1')
+            {
+                $scope.states_all =result.data.records;
+            }
+            else
+            {
+                $scope.states_all = [];
+            }
+        });
+
 
         $scope.orderDetail = function(){
             $("#ajax_loader").show();
