@@ -16,11 +16,9 @@
                                 <div class="white-bg pull-left full-row schedule-main">
                                     <div class="prod-board-details">
                                         <div flex=20 class="full-row pull-left text-center p-20">
-                                            <i class="icon icon-sync s40 cursor-p" title="Refresh Board" ng-click="RefreshBoard()"></i>
                                         </div>
                                         <div flex=60 class="full-row pull-left text-center p-20">
                                             <div class="date-slider mt-5">
-
                                                 <a href="#"><i ng-click="SchedualBoardData(prev_date)" class="fa fa-angle-left"></i></a>
                                                 <span class="curr-seleceted-date">{{current_date}}</span>
                                                 <a href="#"><i ng-click="SchedualBoardData(next_date)" class="fa fa-angle-right"></i></a>
@@ -30,7 +28,6 @@
                                             <md-input-container class="md-block date-input scheduleboarddate">
                                                 <input kendo-date-picker aria-label="true" placeholder="" ui-event="{ change : 'SchedualBoardData($event.target.value)' }" k-ng-model="dateObject1">
                                             </md-input-container>
-
                                         </div>
                                     </div>
                                 </div>
@@ -164,7 +161,6 @@
                                 <div class="white-bg pull-left full-row schedule-main">
                                     <div class="prod-board-details">
                                         <div flex=20 class="full-row pull-left text-center p-20">
-                                            <i class="icon icon-sync s40 cursor-p" title="Refresh Board" ng-click="RefreshBoard()"></i>
                                         </div>
                                         <div flex=60 class="full-row pull-left text-center p-20">
                                             <div class="date-slider mt-5">
@@ -265,7 +261,7 @@
                             <div class="inner-full-box mt-30">
                                 <div class="white-bg pull-left full-row schedule-main">
                                     <div class="prod-board-details">
-                                        <div flex=15 class="full-row pull-left text-center pl-10">
+                                        <div flex=20 class="full-row pull-left text-center pl-10">
                                             <div class="date-slider mt-5">
                                                 <md-select aria-label="true" ng-model="machine_id" name="machine_id" ng-change='SchedualBoardMachineData(machineDate,machine_id)'>
                                                     <md-option value="0">
@@ -277,17 +273,14 @@
                                                 </md-select>
                                             </div>
                                         </div>
-                                        <div flex=10 class="full-row pull-left text-center pl-10">
-                                            <i class="icon icon-sync s40 cursor-p" title="Refresh Board" ng-click="RefreshBoard()"></i>
-                                        </div>
-                                        <div flex=50 class="full-row pull-left text-center pt-20">
+                                        <div flex=60 class="full-row pull-left text-center pt-20">
                                             <div class="date-slider mt-5">
                                                 <a href="#"><i ng-click="SchedualBoardMachineData(prevmachine_date,machine_id)" class="fa fa-angle-left"></i></a>
                                                 <span class="curr-seleceted-date">{{currentmachine_date}}</span>
                                                 <a href="#"><i ng-click="SchedualBoardMachineData(nextmachine_date,machine_id)" class="fa fa-angle-right"></i></a>
                                             </div>
                                         </div>
-                                        <div flex=25 class="pull-right">
+                                        <div flex=20 class="pull-right">
                                             <md-input-container class="md-block date-input scheduleboarddate">
                                                 <input kendo-date-picker placeholder="" aria-label="true" ui-event="{ change : 'SchedualBoardMachineData($event.target.value,machine_id)' }" k-ng-model="dateObject3">
                                             </md-input-container>
