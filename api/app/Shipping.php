@@ -18,36 +18,22 @@ class Shipping extends Model {
             $search = $post['filter']['name'];
         }
 
-        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.login_id,o.display_number,o.name,o.shipping_status,c.client_company,misc_type.value as approval,o.approval_id')];
+        $listArray = [DB::raw('SQL_CALC_FOUND_ROWS o.id,o.login_id,o.display_number,o.name,o.shipping_status,c.client_company,misc_type.value as approval,o.approval_id,SUM(pd.qnty) as total')];
 
 
         $shippingData = DB::table('orders as o')
-                        ->leftJoin('client as c', 'o.client_id', '=', 'c.client_id')
-                        ->leftJoin('purchase_order as po', 'po.order_id', '=', 'o.id')
-                        ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                        ->leftJoin('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
+                        ->Join('client as c', 'o.client_id', '=', 'c.client_id')
+                        ->Join('order_design as od', 'o.id', '=', 'od.order_id')
+                        ->Join('design_product as dp','od.id','=','dp.design_id')
+                        ->Join('purchase_detail as pd','dp.id','=','pd.design_product_id')
+                        ->Join('misc_type as misc_type','o.approval_id','=',DB::raw("misc_type.id AND misc_type.company_id = ".$post['company_id']))
                         ->select($listArray)
-                        ->where('o.is_complete','=','1')
-                        ->where('po.is_active','=','1')
                         ->where('o.company_id','=',$post['company_id']);
 
                         if(isset($post['filter']['status'])) {
                             $shippingData = $shippingData->where('o.shipping_status','=',$post['filter']['status']);
                         }
                         
-                        //if($post['type'] == 'wait')
-                        //{
-                            $shippingData = $shippingData->where('pol.qnty_purchased','>',0);
-                            //$shippingData = $shippingData->Where('o.shipping_status', '=', 1);
-                        //}
-                        /*elseif($post['type'] == 'progress')
-                        {
-                            $shippingData = $shippingData->where('o.shipping_status','=',2);
-                        }
-                        else
-                        {
-                            $shippingData = $shippingData->where('o.shipping_status','=',3);
-                        }*/
                         if($search != '')
                         {
                             $shippingData = $shippingData->Where(function($query) use($search)
@@ -69,18 +55,6 @@ class Shipping extends Model {
         {
             foreach ($shippingData as $shipping)
             {
-                $total_assigned = DB::table('purchase_order as po')
-                                    ->leftJoin('purchase_order_line as pol','pol.po_id','=','po.po_id')
-                                    ->select(DB::raw('SUM(pol.qnty_purchased - pol.short) as total'))
-                                    ->where('po.order_id','=',$shipping->id)
-                                    ->get();
-                
-                if($total_assigned[0]->total > 0)
-                {
-                    $shipping->total = $total_assigned[0]->total;
-                    $shipping->distributed = 0;
-                }
-
                 $total_distributed = DB::table('shipping as s')
                                     ->leftJoin('product_address_mapping as pam','s.id','=','pam.shipping_id')
                                     ->leftJoin('product_address_size_mapping as pas','pam.id','=','pas.product_address_id')
@@ -92,16 +66,6 @@ class Shipping extends Model {
 
                 if($shipping->distributed == '0' || $shipping->distributed == '')
                 {
-                    $purchase_detail = DB::select("SELECT pol.purchase_detail, pol.qnty_purchased - pol.short as total FROM purchase_order as po 
-                                        LEFT JOIN purchase_order_line as pol ON pol.po_id = po.po_id WHERE po.order_id = '".$shipping->id."' ");
-                
-                    foreach($purchase_detail as $row)
-                    {
-                        $value = DB::table('purchase_detail')
-                                ->where('id','=',$row->purchase_detail)
-                                ->update(array('remaining_qnty'=>$row->total));
-                    }
-
                     $shipping->distributed = 0;
                 }
             }
@@ -379,7 +343,8 @@ class Shipping extends Model {
     {
         $result = DB::table('shipping as s')
                     ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
-                    ->select('cd.description','s.*')
+                    ->leftJoin('order_shipping_address_mapping as om','s.address_id','=','om.address_id')
+                    ->select('cd.description','s.*','om.shipping_type_id','om.shipping_method_id')
                     ->where('s.order_id','=',$order_id)
                     ->GroupBy('s.address_id')
                     ->get();

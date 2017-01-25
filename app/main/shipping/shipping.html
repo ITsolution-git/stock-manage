@@ -13,7 +13,7 @@
                 </div>
                 <div class="search-block pull-right">
                     <md-input-container class="md-block">
-                        <md-select area-label="true" ng-model="status" flex="100" ng-change="getStatus(status)">
+                        <md-select aria-label="true" ng-model="status" flex="100" ng-change="getStatus(status)">
                             <md-option value="">All Status</md-option>
                             <md-option value="1">Not Shipped</md-option>
                             <md-option value="2">Partially Shipped</md-option>
@@ -38,7 +38,7 @@
                                 <md-option ng-selected="wait.approval_id==misc_approval.id" slug="{{misc_approval.slug}}" ng-repeat="misc_approval in miscData.approval" value={{misc_approval.id}}>{{misc_approval.value}}</md-option>
                             </md-select>
                             </td> -->
-                            <td>{{shipping.distributed}}/{{shipping.total}}</td>
+                            <td>{{shipping.distributed | currency : '' : 0}}/{{shipping.total | currency : '' : 0}}</td>
                             <td ng-if="shipping.shipping_status == '1'">Not Shipped</td>
                             <td ng-if="shipping.shipping_status == '2'">Partially Shipped</td>
                             <td ng-if="shipping.shipping_status == '3'">Completed</td>

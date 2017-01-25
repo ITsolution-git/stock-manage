@@ -60,6 +60,51 @@
             });
         }
 
+        $scope.updateShippingType = function(id,key)
+        {
+            var stype_main_data = {};
+            var condition_obj = {};
+
+            stype_main_data.table ='order_shipping_address_mapping';
+            condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
+
+            $scope.name_filed = 'shipping_type_id';
+            var obj = {};
+            obj[$scope.name_filed] =  id;
+            stype_main_data.data = angular.copy(obj);
+            
+            stype_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',stype_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+                $scope.getShippingMethod(id);
+            });
+        }
+
+        $scope.updateShippingMethod = function(id,key)
+        {
+            var smethod_main_data = {};
+            var condition_obj = {};
+
+            smethod_main_data.table ='order_shipping_address_mapping';
+            condition_obj['id'] =  $scope.distributionData[$scope.address_id].order_adress_id;
+
+            $scope.name_filed = 'shipping_method_id';
+            var obj = {};
+            obj[$scope.name_filed] =  id;
+            smethod_main_data.data = angular.copy(obj);
+            
+            smethod_main_data.cond = angular.copy(condition_obj);
+
+            $http.post('api/public/common/UpdateTableRecords',smethod_main_data).success(function(result) {
+
+                var data = {"status": "success", "message": "Data Updated Successfully."}
+                notifyService.notify(data.status, data.message);
+            });
+        }
+
         var vm = this;
         vm.openaddDesignDialog = openaddDesignDialog;
 

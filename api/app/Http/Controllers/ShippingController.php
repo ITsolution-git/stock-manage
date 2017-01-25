@@ -1298,6 +1298,14 @@ class ShippingController extends Controller {
             
             $productData = $this->shipping->getShippingProducts($shipping->id);
             $shipping->shippingType = $this->common->GetTableRecords('shipping_type',array(),array());
+            if($shipping->shipping_type_id == 1 || $shipping->shipping_type_id == 3)
+            {
+                $shipping->shippingMethod = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => $addr->shipping_type_id),array());
+            }
+            else
+            {
+                $shipping->shippingMethod = array();
+            }
             $shipping->productData = $productData['productData'];
             $shipping->total_qnty = $productData['total_qnty'];
             $shipping->count = $count;

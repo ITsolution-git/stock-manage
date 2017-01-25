@@ -9,14 +9,14 @@
     </div>
 
     <md-card class="m-0 location">
-        <md-card-header layout-align="space-between center">
+        <md-card-header layout-align="space-between center" class="pad-7">
             <md-card-header-text>
-                <span class="md-title text-center"><a class="cursor-p" title="Location">#{{no_of_locations}} Distribution Locations</a> | {{total_order_qty}} Units</span>
+                <span class="md-title text-center"><a class="cursor-p" title="Location" ui-sref="app.order.distribution({id:display_number})">#{{no_of_locations}} Distribution Locations</a> | {{total_order_qty}} Units</span>
             </md-card-header-text>
         </md-card-header>
-        <md-card-header layout-align="space-between center">
+        <md-card-header layout-align="space-between center" class="pad-7" ng-if="undistributed_qty > 0">
             <md-card-header-text>
-                <span class="md-title text-center">You have {{undistributed_qty}} QTY undistributed <a class="cursor-p" title="Location">Click Here</a> to Fix That </span>
+                <span class="md-title text-center">You have {{undistributed_qty}} QTY undistributed <a class="cursor-p" title="Location">Click Here</a ui-sref="app.order.distribution({id:display_number})"> to Fix That </span>
             </md-card-header-text>
         </md-card-header>
     </md-card>
@@ -24,9 +24,9 @@
 
     <md-content class="">
         <div layout="row" layout-wrap="nowrap" class="p-30">
-            <div flex-xs flex-gt-xs="33" layout="column" ng-repeat="address in assignAddresses">
+            <div flex-xs flex-gt-xs="33" layout="column" ng-repeat="(key,address) in assignAddresses">
                 <md-card class="custom-fullbox-shadow">
-                    <md-card-header layout-align="space-between center">
+                    <md-card-header layout-align="space-between center" class="pad-7">
                         <md-card-header-text>
                             <span class="md-title">{{address.description}}</span>
                         </md-card-header-text>
@@ -53,36 +53,44 @@
                                 <p class="text-right">Total Qty: {{address.total_qnty}}</p>
                             </div>
                         </div>
-                        <div ng-repeat="product in address.productData">
-                            <div class="h5 text-semibold first">Product Name:</div>
-                            <span>{{product.product_name}}</span>
+                        <div class="pad10-T"></div>
+                        <div layout="row" layout-wrap="nowrap" class="shipment_scroll scrollable" ms-scroll>
+                            <div ng-repeat="product in address.productData">
+                                <div class="h5 text-semibold first">Product Name:</div>
+                                <span>{{product.product_name}}</span>
 
-                            <div ng-repeat="(key,color_data) in product.sizeData">
+                                <div ng-repeat="(key,color_data) in product.sizeData">
 
-                                <div class="h5 text-semibold">Color: {{key}}</div>
-                                <span class="h5 text-semibold">Size: </span><span ng-repeat="size_data in color_data"> {{size_data.size}}:{{size_data.qnty}} </span>
+                                    <div class="h5 text-semibold">Color: {{key}}</div>
+                                    <span class="h5 text-semibold">Size: </span><span ng-repeat="size_data in color_data"> {{size_data.size}}:{{size_data.qnty}} </span>
+                                </div>
                             </div>
                         </div>
-
                         <!--<div class="h5 text-semibold">Method:</div>-->
-                        <md-input-container class="md-block date-input md-input-has-value">
-                            <label>Method:</label>
-                            <md-select ng-model="address.shipping_type_id">
+                        <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                            <label>Shipping Type:</label>
+                            <md-select ng-model="address.shipping_type_id" ng-change="updateShippingType(address.shipping_type_id,key)">
                                 <md-option ng-repeat="stype in address.shippingType" value="{{stype.id}}">{{stype.name}}</md-option>
                             </md-select>
                         </md-input-container>
+                        <md-input-container class="mrg10 md-block date-input md-input-has-value" ng-if="address.shippingMethod.length > 0">
+                            <label>Shipping Method:</label>
+                            <md-select ng-model="address.shipping_method_id" ng-change="updateShippingMethod(address.shipping_method_id,key)">
+                                <md-option ng-repeat="smethod in address.shippingMethod" value="{{smethod.id}}">{{smethod.name}}</md-option>
+                            </md-select>
+                        </md-input-container>
 
-                        <md-input-container class="md-block date-input md-input-has-value">
-                            <input placeholder="Date Shipping:"kendo-date-picker  />
+                        <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:" kendo-date-picker  />
                         </md-input-container>
 
                         <!--<div class="h5 text-semibold">SKU:</div>-->
-                        <md-input-container flex="100" class="md-block margin-0 m-b-20">
+                        <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20">
                             <input placeholder="SKU" name="SKU">
                         </md-input-container>
 
                         <!--<div class="h5 text-semibold">Notes:</div>-->
-                        <md-input-container flex="100" class="md-block margin-0 m-b-20 md-icon-float">
+                        <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20 md-icon-float">
                             <input placeholder="Notes" name="Notes">
                         </md-input-container>
 

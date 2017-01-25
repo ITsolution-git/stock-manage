@@ -1171,6 +1171,9 @@ ul[dnd-list] .dndPlaceholder {
 .pad-0 {
   padding: 0;
 }
+.pad-7 {
+  padding: 7px !important;
+}
 .border-col {
   border-collapse: collapse;
 }
@@ -1338,7 +1341,7 @@ margin-top:30px;
 .ship-order-screen .status-chk .md-label span {     font-size: 14px; font-weight: bold; margin: 0; }
 
 
-.location { position: relative; padding: 20px 0;}
+.location { position: relative; padding: 0 0;}
 .location .md-title { font-size: 14px; }
 .location .stokkup-blue-btn{ position: absolute; right: 25px; top: 25px; }
 
@@ -1400,6 +1403,11 @@ md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-c
 }
 .distribution_scroll {
   max-height: 400px;
+  overflow-y: auto;
+}
+.shipment_scroll {
+  max-height: 250px;
+  min-height: 250px;
   overflow-y: auto;
 }
 .search-block md-input-container label { padding-left: 25px !important;  }
