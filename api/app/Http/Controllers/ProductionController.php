@@ -306,6 +306,7 @@ class ProductionController extends Controller {
 	    	$day_shift = explode(",", $post['day_shift']);
 	    	$shift = $day_shift[0];
 	    	$run_date = $day_shift[1];
+	    	$run_date=date('Y-m-d',strtotime($run_date));
 	    	$this->common->UpdateTableRecords('position_schedule',
 	    		array('id'=>$post['position']),
 	    		array('run_date'=>$run_date,'shift_id'=>$shift)
