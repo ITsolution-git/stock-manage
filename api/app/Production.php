@@ -334,7 +334,8 @@ class Production extends Model {
                     ->orderBy('odp.id','desc')
                     ->get();
 
-        $ret_array = array();            
+        $ret_array = array();    
+        $count_week=0;        
         foreach($result as $key=>$value)
         {
             array_walk_recursive($value, function(&$item) {
@@ -352,12 +353,14 @@ class Production extends Model {
             }
             else
             {
+                $count_week++;
                 $ret_array['unassign'][$value->position_id] = $value;
             }
 
 
             
-        }            
+        } 
+        $ret_array['count_week'] = $count_week;           
         return $ret_array;
     }
 
@@ -392,7 +395,7 @@ class Production extends Model {
                     ->get();
 
         $ret_array = array(); 
-        $count_day = 0;           
+        $count_machine = 0;           
         foreach($result as $key=>$value)
         {
             array_walk_recursive($value, function(&$item) {
@@ -411,14 +414,14 @@ class Production extends Model {
             }
             else
             {
-                $count_day++;
+                $count_machine++;
                 $ret_array['unassign'][$value->position_id] = $value;
             }
 
             $ret_array['shift_all'][]=$value;
             $ret_array[$value->shift_id][$value->position_id]=$value;
         }            
-        $ret_array['count_day'] = $count_day;
+        $ret_array['count_machine'] = $count_machine;
         return $ret_array;
     }
 
