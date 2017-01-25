@@ -150,7 +150,7 @@ class ProductionController extends Controller {
 
 		    while( $current <= $last ) {
 
-		        $weekArray[] = date('Y-m-d', $current);
+		        $weekArray[] = date('m/d/Y', $current);
 		        $current = strtotime('+1 day', $current);
 		    }
 

@@ -258,7 +258,7 @@ class Production extends Model {
     {
 
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
+                    ->select('lb.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1','odp.mark_as_complete',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
@@ -275,7 +275,8 @@ class Production extends Model {
                     ->orderBy('odp.id','desc')
                     ->get();
 
-        $ret_array = array();            
+        $ret_array = array();    
+        $count_day=0;        
         foreach($result as $key=>$value)
         {
             array_walk_recursive($value, function(&$item) {
@@ -296,18 +297,18 @@ class Production extends Model {
             }
             else
             {
+                $count_day++;
                 $ret_array['unassign'][$value->position_id] = $value;
             }
-            
-            
-        }            
+        }    
+        $ret_array['count_day'] = $count_day;        
         return $ret_array;
     }
     public function SchedualBoardweekData($company_id,$start_date,$end_date,$machine_type)
     {
         //echo $start_date."=".$end_date; die();
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
+                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','odp.mark_as_complete','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
@@ -345,7 +346,7 @@ class Production extends Model {
             elseif($value->screen_active=='1'){$value->screen_icon='1';} 
             else{$value->screen_icon='0';}
             $value->garment = $this->CheckWarehouseQuantity($value->position_id);
-            if($value->run_date!='0000-00-00')
+            if($value->run_date!='-')
             {
                 $ret_array['assign'][$value->run_date][$value->shift_id][$value->position_id]=$value;
             }
@@ -364,7 +365,7 @@ class Production extends Model {
     {
         
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
+                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','odp.mark_as_complete','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
@@ -390,7 +391,8 @@ class Production extends Model {
                     ->orderBy('odp.id','desc')
                     ->get();
 
-        $ret_array = array();            
+        $ret_array = array(); 
+        $count_day = 0;           
         foreach($result as $key=>$value)
         {
             array_walk_recursive($value, function(&$item) {
@@ -409,13 +411,14 @@ class Production extends Model {
             }
             else
             {
+                $count_day++;
                 $ret_array['unassign'][$value->position_id] = $value;
             }
-
 
             $ret_array['shift_all'][]=$value;
             $ret_array[$value->shift_id][$value->position_id]=$value;
         }            
+        $ret_array['count_day'] = $count_day;
         return $ret_array;
     }
 

@@ -486,6 +486,7 @@
                 {
                     $scope.get_data = 1;
                     $scope.SchedualData=result.data.SchedualBoardData.assign;
+                    $scope.count_day=result.data.SchedualBoardData.count_day;
                     $scope.SchedualDataUnassign=result.data.SchedualBoardData.unassign;
                     $scope.current_date = result.data.current_date;
                     $scope.prev_date = result.data.prev_date;
@@ -497,6 +498,7 @@
                     $scope.get_data = 0;
                     $scope.SchedualData=result.data.SchedualBoardData.assign;
                     $scope.SchedualDataUnassign=result.data.SchedualBoardData.unassign;
+                    $scope.count_day=result.data.SchedualBoardData.count_day;
                     $scope.current_date = result.data.current_date;
                     $scope.prev_date = result.data.prev_date;
                     $scope.next_date = result.data.next_date;
