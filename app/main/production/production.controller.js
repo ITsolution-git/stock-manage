@@ -373,7 +373,7 @@ function ScheduleBoardController($document, $window, $timeout, $mdDialog, $state
             {
                 $scope.dayTabDate = $scope.run_date;
             }
-
+            //console.log("dragDayDate-"+$scope.dayTabDate);
             var DragDropArray = {position:el[0].id,machine_shift:target[0].id,run_date:$scope.dayTabDate};
             $http.post('api/public/production/ChagneDragDrop',DragDropArray).success(function(result)
             {$scope.SchedualBoardData($scope.dayTabDate);});
@@ -396,9 +396,10 @@ function ScheduleBoardController($document, $window, $timeout, $mdDialog, $state
             }
             else
             {
-              var DragDropArray = {position:el[0].id,machine_shift:target[0].id,run_date:$scope.machineRundate};
+              //console.log("machineDragDate-"+$scope.machineDate); return false;
+              var DragDropArray = {position:el[0].id,machine_shift:target[0].id,run_date:$scope.machineDate};
               $http.post('api/public/production/ChagneDragDropMachine',DragDropArray).success(function(result)
-              {$scope.SchedualBoardMachineData($scope.machine_id);});
+              {$scope.SchedualBoardMachineData($scope.machineDate,$scope.machine_id);});
             }
         });
 
@@ -480,6 +481,7 @@ function ScheduleBoardController($document, $window, $timeout, $mdDialog, $state
         {
             //console.log(run_date);
             $scope.dayTabDate = run_date;
+            //console.log("daydate-"+$scope.dayTabDate);
             $("#ajax_loader").show();
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
@@ -522,6 +524,7 @@ function ScheduleBoardController($document, $window, $timeout, $mdDialog, $state
         {
             $("#ajax_loader").show();
             $scope.weekTabDate = run_date;
+            //console.log("weekdate-"+$scope.weekTabDate);
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
             schedule_data.run_date =run_date;
@@ -564,8 +567,8 @@ function ScheduleBoardController($document, $window, $timeout, $mdDialog, $state
         {
             //console.log(machine_id);
             $("#ajax_loader").show();
-            $scope.machineRundate = run_date;
             $scope.machineDate = run_date;
+            //console.log("machinedate-"+$scope.machineDate);
             $scope.machine_id = machine_id;
             var schedule_data = {};
             schedule_data.company_id = $scope.company_id;
