@@ -344,7 +344,7 @@ class Shipping extends Model {
         $result = DB::table('shipping as s')
                     ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
                     ->leftJoin('order_shipping_address_mapping as om','s.address_id','=','om.address_id')
-                    ->select('cd.description','s.*','om.shipping_type_id','om.shipping_method_id')
+                    ->select('cd.description','s.*','om.shipping_type_id','om.shipping_method_id','om.id as order_adress_id')
                     ->where('s.order_id','=',$order_id)
                     ->GroupBy('s.address_id')
                     ->get();

@@ -319,6 +319,7 @@
     <script src="app/main/shipping/shipping.module.js"></script>
     <script src="app/main/shipping/shipping.controller.js"></script>
     <script src="app/main/shipping/views/orderwaitship/orderwaitship.controller.js"></script>
+    <script src="app/main/shipping/dialogs/orderwaitship/editshipping.controller.js"></script>
     <script src="app/main/shipping/views/shipmentdetails/shipmentdetails.controller.js"></script>
     <script src="app/main/shipping/views/boxingdetail/boxingdetail.controller.js"></script>
     <script src="app/main/shipping/views/shipmentoverview/shipmentoverview.controller.js"></script>

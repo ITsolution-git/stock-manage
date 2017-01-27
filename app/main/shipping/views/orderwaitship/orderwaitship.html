@@ -35,7 +35,7 @@
                             <md-button aria-label="Company Contact Options" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
                                 <md-icon md-menu-origin md-font-icon="icon-dots-vertical"></md-icon>
                             </md-button>
-                            <md-menu-content width="4" ng-click="vm.openaddDesignDialog($event,address.id)">
+                            <md-menu-content width="4" ng-click="vm.openaddDesignDialog($event,address)">
                                 <md-menu-item>
                                     <md-button>
                                         Edit
@@ -69,35 +69,40 @@
                         <!--<div class="h5 text-semibold">Method:</div>-->
                         <md-input-container class="mrg10 md-block date-input md-input-has-value">
                             <label>Shipping Type:</label>
-                            <md-select ng-model="address.shipping_type_id" ng-change="updateShippingType(address.shipping_type_id,key)">
+                            <md-select ng-model="address.shipping_type_id" ng-change="updateShippingType(address.shipping_type_id,address.order_adress_id,key)">
                                 <md-option ng-repeat="stype in address.shippingType" value="{{stype.id}}">{{stype.name}}</md-option>
                             </md-select>
                         </md-input-container>
-                        <md-input-container class="mrg10 md-block date-input md-input-has-value" ng-if="address.shippingMethod.length > 0">
+                        <md-input-container class="mrg10 md-block date-input md-input-has-value">
                             <label>Shipping Method:</label>
-                            <md-select ng-model="address.shipping_method_id" ng-change="updateShippingMethod(address.shipping_method_id,key)">
-                                <md-option ng-repeat="smethod in address.shippingMethod" value="{{smethod.id}}">{{smethod.name}}</md-option>
+                            <md-select ng-model="address.shipping_method_id" ng-change="updateShippingMethod(address.shipping_method_id,address.order_adress_id)">
+                                <md-option ng-repeat="smethod in address.shippingMethod" value="{{smethod.id}}">{{smethod.method_name}}</md-option>
                             </md-select>
                         </md-input-container>
 
                         <md-input-container class="mrg10 md-block date-input md-input-has-value">
-                            <input placeholder="Date Shipping:" kendo-date-picker  />
+                            <input placeholder="Date Shipping:" kendo-date-picker  ng-model="address.date_shipped" k-ng-model="dateObject{{address.count}}" ui-event="{change : 'updateShippingAll(\'date_shipped\',address.date_shipped,address.id)'}" onkeydown="return false;"/>
                         </md-input-container>
 
                         <!--<div class="h5 text-semibold">SKU:</div>-->
                         <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20">
-                            <input placeholder="SKU" name="SKU">
+                            <input placeholder="SKU" name="SKU" ui-event="{change : 'updateShippingAll(\'sku\',address.sku,address.id)'}" ng-model="address.sku">
                         </md-input-container>
 
                         <!--<div class="h5 text-semibold">Notes:</div>-->
                         <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20 md-icon-float">
-                            <input placeholder="Notes" name="Notes">
+                            <input placeholder="Notes" name="Notes" ui-event="{change : 'updateShippingAll(\'shipping_note\',address.shipping_note,address.id)'}" ng-model="address.shipping_note">
                         </md-input-container>
 
-                        <div flex=100 class="p-t-30 md-block status-chk">
-                            <md-checkbox ng-if="address.shipping_status == '1'" aria-label="Checkbox 1">Status: Pedning</md-checkbox>
-                            <md-checkbox ng-if="address.shipping_status == '2'" aria-label="Checkbox 1">Status: Boxing</md-checkbox>
-                            <md-checkbox ng-if="address.shipping_status == '3'" aria-label="Checkbox 1">Status: Shipped</md-checkbox>
+                        <!-- <div class="h5 text-semibold">Total Shipping Cost:</div> -->
+                        <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Total Shipping Cost" name="Total Shipping Cost" ng-model="address.cost_to_ship" onfocus="this.blur()">
+                        </md-input-container>
+
+                        <div flex=100 class="md-block status-chk">
+                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '1'" ng-click="toggle(address.id, selectedSizes, key)" aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '2'" ng-click="toggle(address.id, selectedSizes, key)" aria-label="Checkbox 1">Status: Boxing</md-checkbox>
+                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '3'" ng-click="toggle(address.id, selectedSizes, key)" aria-label="Checkbox 1">Status: Shipped</md-checkbox>
                         </div>
 
                     </md-card-content>
@@ -109,9 +114,9 @@
             
 
             <div class="pull-right ship_order_btn">
-                <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right">Next</a>
+                <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right" ng-click="next()">Next</a>
 
-                <a href="javascript:;" class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right">Select All</a>
+                <a class="stokkup-custom-btn1 stokkup-blue-btn text-white m-r-30 m-b-20 m-t-20 pull-right" ng-click="selectAll()">Select All</a>
 
             </div>
 

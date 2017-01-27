@@ -1,0 +1,45 @@
+<md-dialog class="task-dialog designadd-dialog ship-order-popup" aria-label="New order">
+    <form name="orderForm" class="md-inline-form" novalidate>
+        <md-toolbar class="md-accent md-hue-2">
+            <div class="md-toolbar-tools" layout="row" layout-align="space-between">
+                <span class="title">Edit Ship Order</span>
+                <md-button  ng-click="cancel()" class="close-stokkup-dialog">
+                    <span>close</span>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content ms-scroll>
+            <div layout="column" layout-wrap="nowrap" class="design-add-modal " layout-padding>
+               <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                    <label>Shipping Type:</label>
+                    <md-select ng-model="address.shipping_type_id" ng-change="updateShippingType(address.shipping_type_id,address.order_adress_id,key)">
+                        <md-option ng-repeat="stype in address.shippingType" value="{{stype.id}}">{{stype.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                    <label>Shipping Method:</label>
+                    <md-select ng-model="address.shipping_method_id" ng-change="updateShippingMethod(address.shipping_method_id,address.order_adress_id)">
+                        <md-option ng-repeat="smethod in address.shippingMethod" value="{{smethod.id}}">{{smethod.method_name}}</md-option>
+                    </md-select>
+                </md-input-container>
+
+                <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                    <input placeholder="Date Shipping:" kendo-date-picker  ng-model="address.date_shipped" k-ng-model="dateObject{{address.count}}" ui-event="{change : 'updateShippingAll(\'date_shipped\',address.date_shipped,address.id)'}" onkeydown="return false;"/>
+                </md-input-container>
+
+                <!--<div class="h5 text-semibold">SKU:</div>-->
+                <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20">
+                    <input placeholder="SKU" name="SKU" ui-event="{change : 'updateShippingAll(\'sku\',address.sku,address.id)'}" ng-model="address.sku">
+                </md-input-container>
+
+                <!--<div class="h5 text-semibold">Notes:</div>-->
+                <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20 md-icon-float">
+                    <input placeholder="Notes" name="Notes" ui-event="{change : 'updateShippingAll(\'shipping_note\',address.shipping_note,address.id)'}" ng-model="address.shipping_note">
+                </md-input-container>
+            </div>
+        </md-dialog-content>
+        <!-- <md-dialog-actions layout="row" layout-align="end center">
+            <md-button class="md-accent md-raised" ng-click="updateShipping()">Save</md-button>
+        </md-dialog-actions> -->
+    </form>
+</md-dialog>

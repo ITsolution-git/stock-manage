@@ -1300,15 +1300,26 @@ class ShippingController extends Controller {
             $shipping->shippingType = $this->common->GetTableRecords('shipping_type',array(),array());
             if($shipping->shipping_type_id == 1 || $shipping->shipping_type_id == 3)
             {
-                $shipping->shippingMethod = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => $addr->shipping_type_id),array());
+                $shipping->shippingMethod = $this->common->GetTableRecords('shipping_method',array('shipping_type_id' => $shipping->shipping_type_id),array());
             }
             else
             {
                 $shipping->shippingMethod = array();
             }
+
+            if($shipping->date_shipped != '0000-00-00' && $shipping->date_shipped != '')
+            {
+                $shipping->date_shipped = date("n/d/Y", strtotime($shipping->date_shipped));
+            }
+            else
+            {
+                $shipping->date_shipped = '';
+            }
+
             $shipping->productData = $productData['productData'];
             $shipping->total_qnty = $productData['total_qnty'];
             $shipping->count = $count;
+            $shipping->selected = false;
             $count++;
         }
 

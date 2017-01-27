@@ -133,17 +133,17 @@
               
                 <div layout="column" layout-wrap="nowrap">
                     <md-input-container class="md-block date-input">
-                            <input placeholder="Start Date"kendo-date-picker ng-model="order_data.date_start" k-ng-model="dateObject" />
+                            <input placeholder="Start Date"kendo-date-picker ng-model="order_data.date_start" k-ng-model="dateObject" onkeydown="return false;"/>
                     </md-input-container>
                    
                 <!-- <div class="date-input">
                      
                 </div> -->
                 <md-input-container class="md-block date-input">
-                        <input placeholder="Shipping Date"kendo-date-picker ng-model="order_data.date_shipped" k-ng-model="dateObject1" />
+                        <input placeholder="Shipping Date"kendo-date-picker ng-model="order_data.date_shipped" k-ng-model="dateObject1" onkeydown="return false;"/>
                 </md-input-container>
                 <md-input-container class="md-block date-input m-b-30">
-                        <input placeholder="In Hands By" kendo-date-picker  ng-model="order_data.in_hands_by" k-ng-model="dateObject2">
+                        <input placeholder="In Hands By" kendo-date-picker  ng-model="order_data.in_hands_by" k-ng-model="dateObject2" onkeydown="return false;">
                 </md-input-container>
                 </div> 
 
