@@ -364,26 +364,24 @@
            el.removeClass('ex-moved');
          });
 
-          $scope.$on('day-bag.drop', function (e, el, target, source) {
-          el.addClass('ex-moved');
+        $scope.$on('day-bag.drop', function (e, el, target, source) 
+        {
+            el.addClass('ex-moved');
+            var DragDropArray = {position:el[0].id,machine_shift:target[0].id,run_date:$scope.dayTabDate};
+            $http.post('api/public/production/ChagneDragDrop',DragDropArray).success(function(result)
+            {});
+        });
 
-          var DragDropArray = {position:el[0].id,machine_shift:target[0].id};
-          $http.post('api/public/production/ChagneDragDrop',DragDropArray).success(function(result)
-          {});
+        $scope.$on('week-bag.drop', function (e, el, target, source) 
+        {
+            el.addClass('ex-moved');
+            var DragDropArray = {position:el[0].id,day_shift:target[0].id};
+            $http.post('api/public/production/ChagneDragDropweek',DragDropArray).success(function(result)
+            {});
+        });
 
-         });
-
-          $scope.$on('week-bag.drop', function (e, el, target, source) {
-          el.addClass('ex-moved');
-
-          var DragDropArray = {position:el[0].id,day_shift:target[0].id};
-          $http.post('api/public/production/ChagneDragDropweek',DragDropArray).success(function(result)
-          {});
-
-         });
-
-         $scope.$on('machine-bag.drop', function (e, el, target, source) 
-         {
+        $scope.$on('machine-bag.drop', function (e, el, target, source) 
+        {
             el.addClass('ex-moved');
             if($scope.machine_id==0)
             {
@@ -391,11 +389,11 @@
             }
             else
             {
-              var DragDropArray = {position:el[0].id,machine_shift:target[0].id};
-              $http.post('api/public/production/ChagneDragDrop',DragDropArray).success(function(result)
+              var DragDropArray = {position:el[0].id,machine_shift:target[0].id,run_date:$scope.machineRundate};
+              $http.post('api/public/production/ChagneDragDropMachine',DragDropArray).success(function(result)
               {});
             }
-         });
+        });
 
          $scope.$on('day-bag.over', function (e, el, container) {
            container.addClass('ex-over');
@@ -474,6 +472,7 @@
         $scope.SchedualBoardData = function(run_date)
         {
             //console.log(run_date);
+            $scope.dayTabDate = run_date;
             $("#ajax_loader").show();
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
@@ -557,6 +556,7 @@
         {
             //console.log(machine_id);
             $("#ajax_loader").show();
+            $scope.machineRundate = run_date;
             $scope.machineDate = run_date;
             $scope.machine_id = machine_id;
             var schedule_data = {};

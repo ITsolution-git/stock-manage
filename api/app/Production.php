@@ -258,7 +258,7 @@ class Production extends Model {
     {
 
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*','odp.id as position_id','odp.image_1','odp.mark_as_complete',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
+                    ->select('lb.shift_name','mc.machine_name','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),'odp.id as position_id','odp.image_1','odp.mark_as_complete',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
@@ -266,9 +266,16 @@ class Production extends Model {
                     ->leftjoin('misc_type as mt','mt.id','=','odp.position_id')
                     ->leftJoin('order_design as od','od.id','=','odp.design_id')
                     ->leftJoin('orders as ord','ord.id','=','od.order_id')
-                    ->where('od.company_id','=',$company_id)
-                    ->where('ps.run_date','=',$run_date)
-                    ->where('ps.production_type','=',$machine_type)
+                    ->where('od.company_id','=',$company_id);
+
+                    $result = $result->Where(function($query) use($run_date)
+                        {
+                            $query->where('ps.run_date','=',$run_date)
+                                  ->orWhere('ps.run_date', '=', '0000-00-00')
+                                  ->orWhere('ps.run_date', '=', '');
+                        });
+
+                    $result = $result->where('ps.production_type','=',$machine_type)
                     ->where('od.is_delete','=','1')
                     ->where('odp.is_delete','=','1')
                     ->orderBy('ord.id','desc')
@@ -276,11 +283,12 @@ class Production extends Model {
                     ->get();
 
         $ret_array = array();    
-        $count_day=0;        
+        $count_day=0; 
+
         foreach($result as $key=>$value)
         {
             array_walk_recursive($value, function(&$item) {
-                $item = str_replace(array('00/00/0000'),array('-'), $item);
+                $item = str_replace(array('00/00/0000'),array(''), $item);
             });
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
             $value->position_colors = $this->getPositioncolors($value->position_id);
@@ -291,7 +299,7 @@ class Production extends Model {
             $value->garment = $this->CheckWarehouseQuantity($value->position_id);
 
 
-            if(!empty($value->machine_id) && !empty($value->shift_id))
+            if(!empty($value->machine_id) && !empty($value->shift_id) && !empty($value->run_date))
             {
                 $ret_array['assign'][$value->machine_id][$value->shift_id][$value->position_id]=$value;
             }
@@ -368,7 +376,7 @@ class Production extends Model {
     {
         
         $result = DB::table('position_schedule as ps')
-                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','odp.mark_as_complete','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
+                    ->select('lb.shift_name','mc.machine_name','odp.id as position_id','odp.image_1','odp.mark_as_complete','mt.value as position_name','ord.display_number','ord.name','ps.*',DB::raw('DATE_FORMAT(ps.run_date, "%m/%d/%Y") as run_date'),DB::raw('DATE_FORMAT(ord.due_date, "%m/%d/%Y") as due_date'),'ass.approval','ass.screen_active')
                     ->leftjoin('labor as lb','lb.id','=','ps.shift_id')
                     ->leftjoin('machine as mc','mc.id','=','ps.machine_id')
                     ->leftjoin('artjob_screensets as ass','ass.positions','=','ps.position_id')
@@ -377,9 +385,17 @@ class Production extends Model {
                     ->leftJoin('order_design as od','od.id','=','odp.design_id')
                     ->leftJoin('orders as ord','ord.id','=','od.order_id')
                     ->where('od.company_id','=',$company_id)
-                    ->where('ps.run_date','=',$run_date)
                     ->where('ps.production_type','=',$machine_type)
                     ->where('od.is_delete','=','1');
+
+                    $result = $result->Where(function($query) use($run_date)
+                        {
+                            $query->where('ps.run_date','=',$run_date)
+                                  ->orWhere('ps.run_date', '=', '0000-00-00')
+                                  ->orWhere('ps.run_date', '=', '');
+                        });
+                    
+
                     if(!empty($machine_id))               
                     {
                         $result = $result->Where(function($query) use($machine_id)
@@ -399,7 +415,7 @@ class Production extends Model {
         foreach($result as $key=>$value)
         {
             array_walk_recursive($value, function(&$item) {
-                $item = str_replace(array('00/00/0000'),array('-'), $item);
+                $item = str_replace(array('00/00/0000'),array(''), $item);
             });
             $value->image_1= $this->common->checkImageExist($company_id.'/order_design_position/'.$value->position_id."/",$value->image_1);
             $value->position_colors = $this->getPositioncolors($value->position_id);
@@ -407,7 +423,7 @@ class Production extends Model {
             elseif($value->screen_active=='1'){$value->screen_icon='1';} 
             else{$value->screen_icon='0';}
             $value->garment = $this->CheckWarehouseQuantity($value->position_id);
-            if(!empty($value->machine_id))
+            if(!empty($value->machine_id) && !empty($value->shift_id) && !empty($value->run_date))
             {
                 $ret_array['assign']['shift_all'][]=$value;
                 $ret_array['assign'][$value->shift_id][$value->position_id]=$value;

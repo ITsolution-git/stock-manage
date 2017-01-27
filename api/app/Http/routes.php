@@ -906,3 +906,4 @@ Route::post('production/UpdateMachineRecords','ProductionController@UpdateMachin
 Route::post('production/productionShift','ProductionController@productionShift');
 Route::post('production/ChagneDragDrop','ProductionController@ChagneDragDrop');
 Route::post('production/ChagneDragDropweek','ProductionController@ChagneDragDropweek');
+Route::post('production/ChagneDragDropMachine','ProductionController@ChagneDragDropMachine');
