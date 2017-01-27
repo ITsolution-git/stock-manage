@@ -79,6 +79,10 @@
                     $scope.po_id = $scope.po_data.po_id;
                     $scope.poline = result.data.records.receive;
                     $scope.order_total = result.data.order_total[0];
+                    $scope.total_all_order = result.data.records.total_all_order;
+                    $scope.total_all_rec_qnty = result.data.records.total_all_rec_qnty;
+                    $scope.total_all_short = result.data.records.total_all_short;
+                    $scope.total_all_remains = result.data.records.total_all_remains;
                     if($scope.po_data.complete=='0')
                     {
                         notifyService.notify('error','Receive order is not created yet.');
@@ -290,13 +294,12 @@
             });
         }
 
-        $scope.ReceiveProductsAll = function(product_id)
+        $scope.ReceiveProductsAll = function()
         {
             $("#ajax_loader").show();
             var pass_array = {};
             pass_array.company_id = $scope.company_id;
             pass_array.po_id = $scope.display_number;
-            pass_array.product_id = product_id;
             $http.post('api/public/purchase/getAllReceiveProducts',pass_array).success(function(result) {
                 if(result.data.success=='1')
                 {
