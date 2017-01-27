@@ -23,7 +23,8 @@
                 {
                     $scope.allCompany =result.data.records;
                     $scope.email =sessionService.get('email');
-                    $scope.subject = approval+': '+display_number+' from '+sessionService.get('company_name');
+                    //$scope.subject = approval+': '+display_number+' from '+sessionService.get('company_name');
+                    $scope.subject = 'Order #'+display_number+' from '+sessionService.get('company_name');
                 } 
                 else
                 {
