@@ -349,7 +349,9 @@
         };
 
     }
-    function ScheduleBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter,dragulaService)
+
+
+function ScheduleBoardController($document, $window, $timeout, $mdDialog, $stateParams,$resource,sessionService,$scope,$http,notifyService,AllConstant,$filter,dragulaService)
     {
 
         var vm = this;
@@ -367,9 +369,14 @@
         $scope.$on('day-bag.drop', function (e, el, target, source) 
         {
             el.addClass('ex-moved');
+            if ( angular.isUndefined($scope.dayTabDate) )
+            {
+                $scope.dayTabDate = $scope.run_date;
+            }
+
             var DragDropArray = {position:el[0].id,machine_shift:target[0].id,run_date:$scope.dayTabDate};
             $http.post('api/public/production/ChagneDragDrop',DragDropArray).success(function(result)
-            {});
+            {$scope.SchedualBoardData($scope.dayTabDate);});
         });
 
         $scope.$on('week-bag.drop', function (e, el, target, source) 
@@ -377,7 +384,7 @@
             el.addClass('ex-moved');
             var DragDropArray = {position:el[0].id,day_shift:target[0].id};
             $http.post('api/public/production/ChagneDragDropweek',DragDropArray).success(function(result)
-            {});
+            {$scope.SchedualBoardweekData($scope.weekTabDate);});
         });
 
         $scope.$on('machine-bag.drop', function (e, el, target, source) 
@@ -391,7 +398,7 @@
             {
               var DragDropArray = {position:el[0].id,machine_shift:target[0].id,run_date:$scope.machineRundate};
               $http.post('api/public/production/ChagneDragDropMachine',DragDropArray).success(function(result)
-              {});
+              {$scope.SchedualBoardMachineData($scope.machine_id);});
             }
         });
 
@@ -514,6 +521,7 @@
         $scope.SchedualBoardweekData = function(run_date)
         {
             $("#ajax_loader").show();
+            $scope.weekTabDate = run_date;
             var schedule_data = {};
             schedule_data.company_id =$scope.company_id;
             schedule_data.run_date =run_date;
@@ -605,9 +613,9 @@
 
         $scope.RefreshBoard = function()
         {
-          $scope.SchedualBoardData($scope.run_date); // DAY TAB DATA
-          $scope.SchedualBoardweekData($scope.run_date); // WEEKLY TAB DATA
-          $scope.SchedualBoardMachineData($scope.run_date); // MACHINE TAB DATA
+          //$scope.SchedualBoardData($scope.run_date); // DAY TAB DATA
+          //$scope.SchedualBoardweekData($scope.run_date); // WEEKLY TAB DATA
+          //$scope.SchedualBoardMachineData($scope.run_date); // MACHINE TAB DATA
         }
         $scope.RefreshBoard();
 
