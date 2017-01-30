@@ -1,103 +1,115 @@
-<div class="order-info-page m-r-15 m-l-20 m-b-20 company-po-page">
-    <div class="simple-table-container md-whiteframe-4dp m-t-20 m-b-20 m-r-15 pd15" >
-        <table class="tbl-typ2">
-            <tr>
-                <td>
-                    <div class="header-typ1">Boxing Details for Shipment #{{shipping.display_number}}</div>
-                    <div layout="row" class="pd10">
-                        <div flex="30" layout="column" class="pd10-R bdr1-R">
-                            <div class="header-typ3">Box ID <span class="pull-right">Total Box Count : {{total_box_qnty}}</span></div>
-                            <div class="order-container" ms-scroll class="tbl-scroll-cntnr">
-                                <div class="card-box cursor-p hover-grey pd10" layout="row" ng-repeat="box in shippingBoxes" ng-class="{activeAddress: box.id==shipping_box_id}" ng-click="select_box(box.id)">
-                                    <div layout="column" flex="90">
-                                        <div layout="row" flex="100" class="mrg5-B">
-                                            <div layout="column" flex="50" class="mrg10-R">
-                                                <div>Box ID</div>
-                                                <div class="gray-text">{{ box.count }}</div>
-                                            </div>
-                                            <div layout="column" flex="50">
-                                                <div>Number of Box</div>
-                                                <div class="gray-text">{{ box.number_of_box }}</div>
-                                            </div>
-                                        </div>
-                                        <div layout="row" flex="100" class="mrg5-B">
-                                            <div layout="column" flex="50" class="mrg10-R">
-                                                <div>Units Packaged</div>
-                                                <div class="gray-text">{{ box.boxed_qnty }}</div>
-                                            </div>
-                                            <div layout="column" flex="50">
-                                                <div>Tracking Number</div>
-                                                <div class="gray-text">{{ box.tracking_number }}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div layout="column" flex="10" class="align-M text-right" ng-click="delete_box(box.id)">
-                                        <span class="icon icon-close f-red font-18"></span>
-                                    </div>
+<div class="ship-order-screen">
+
+    <div class="simple-table-container stokkup-main-tableview m-b-20">
+        <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
+            <div class="table-title-text flex-100">
+                Box Management Screen for Order <a class="cursor-p" ui-sref="app.order.order-info({id:display_number})" title="Go to Order">#117</a> for <a class="cursor-p" ui-sref="app.client.profile({id:order.client_display_number})" title="Go to Order">Company Name</a>
+            </div>
+            <div class="pull-right ship_order_btn">
+                <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="selectAll()">Export All Locations and Boxes</a>
+            </div>
+        </div>
+    </div>
+
+    <md-card class="m-0 location">
+        <md-card-header layout-align="space-between center" class="pad-7">
+            <md-card-header-text>
+                <span class="md-title text-center"><a class="cursor-p" title="Location" ui-sref="app.order.distribution({id:display_number})">#15 Distribution Locations</a> | Total 1239 in the order</span>
+            </md-card-header-text>
+        </md-card-header>
+    </md-card>
+
+    <md-content class="">
+        <div layout="row" layout-wrap="nowrap" class="p-30 pos-rel">
+            <a class="box-mang dist-next-prev box-left-arrow" ng-click="getPage('backward')"><i class="fa fa-angle-left" role="button"></i></a>
+            <div class="cursor-p" flex-xs flex-gt-xs="33" layout="column" ng-repeat="(key,address) in assignAddresses">
+                <md-card class="custom-fullbox-shadow">
+                    <md-card-header layout-align="space-between center" class="pad-7">
+                        <md-card-header-text>
+                            <span class="md-title">{{address.description}}</span>
+                        </md-card-header-text>
+                    </md-card-header>
+                    <md-card-content class="custom-desc-box">
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Shipment # {{address.count}}/{{no_of_locations}}</p>
+                            </div>
+                            <div layout-align="space-between" class="shp-code" layout="column" flex="50">
+                                <p class="text-right">Total Qty: {{address.total_qnty}}</p>
+                            </div>
+                        </div>
+                        <div class="pad10-T"></div>
+                        <div layout="row" layout-wrap="nowrap" class="shipment_scroll scrollable" ms-scroll>
+                            <div ng-repeat="product in address.productData">
+                                <div class="h5 text-semibold first">Product Name:</div>
+                                <span>{{product.product_name}}</span>
+
+                                <div ng-repeat="(key,color_data) in product.sizeData">
+
+                                    <div class="h5 text-semibold">Color: {{key}}</div>
+                                    <span class="h5 text-semibold">Size: </span><span ng-repeat="size_data in color_data"> {{size_data.size}}:{{size_data.qnty}} </span>
                                 </div>
                             </div>
                         </div>
-                        <div flex="70" layout="column" class="mrg10-L">
-                            <div class="header-typ3">Box Details</div>
-                            <div class="ms-responsive-table-wrapper" ms-scroll class="tbl-scroll-cntnr">
-                                <table class="simple hover simple-tbl1 tbl-typ3">
-                                    <thead>
-                                        <tr>
-                                            <th class="secondary-text" width="10%">Box Item ID</th>
-                                            <!-- <th class="secondary-text" width="10%">Size Group</th> -->
-                                            <th class="secondary-text" width="10%">Product</th>
-                                            <th class="secondary-text" width="10%">Product Color</th>
-                                            <th class="secondary-text" width="10%">Size</th>
-                                            <th class="secondary-text" width="10%">Boxed Qnty</th>
-                                            <th class="secondary-text" width="10%">MD</th>
-                                            <th class="secondary-text" width="10%">Spoil</th>
-                                            <th class="secondary-text" width="10%">Actual</th>
-                                            <th class="secondary-text" width="20%">Box Type</th>
-                                            <th class="secondary-text" width="20%">Re-Allocate</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody> 
-                                        <tr ng-repeat="item in box_items" class="cursor-p">
-                                            <td>{{ item.count}}</td>
-                                            <!-- <td>{{ item.size_group_name}}</td> -->
-                                            <td>{{ item.product_name}}</td>
-                                            <td>{{ item.color_name}}</td>
-                                            <td>{{ item.size}}</td>
-                                            <td>{{ item.boxed_qnty}}</td>
-                                            <td>
-                                                <md-input-container flex="100" class="mrg0-TB" aria-label="MD" >
-                                                    <input name="md" aria-label="md" ng-model="item.md" ui-event="{ change : 'update_box_qty(item)'}" only-number>
-                                                </md-input-container>
-                                            </td>
-                                            <td>
-                                                <md-input-container flex="100" class="mrg0-TB" aria-label="Spoil">
-                                                    <input name="spoil" aria-label="spoil" ng-model="item.spoil" ui-event="{ change : 'update_box_qty(item)'}" only-number>
-                                                </md-input-container>
-                                            </td>
-                                            <td>{{ item.actual}}</td>
-                                            <td>
-                                                <md-select aria-label="box_setting_id" ng-model="box_setting_id" class="mrg6-TB" ng-change="changeBoxType(item.box_id,box_setting_id)">
-                                                    <md-option ng-selected="type.id == item.box_setting_id" ng-repeat="type in boxType" value="{{type.id}}">{{type.box_type}}</md-option>
-                                                </md-select>
-                                            </td>
-                                            <td>
-                                                <md-select aria-label="shipping_box_id" ng-model="shipping_box_id" class="mrg6-TB" ng-change="reAllocate(shipping_box_id,item.box_item_id)">
-                                                    <md-option ng-repeat="sbox in shippingBoxes" value="{{sbox.id}}">{{sbox.count}}</md-option>
-                                                </md-select>
-                                            </td>
-                                        </tr>                    
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <md-dialog-actions layout-align="end center" layout="row" class="layout-align-end-center layout-row">
-        <button aria-label="Back" class="md-primary md-hue-1 md-accent md-button md-ink-ripple" type="button" ui-sref="app.shipping.shipmentdetails({id:shipping.display_number})"><span class="ng-scope">Back</span></button>
-        <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save &amp; Print Labels" ui-sref="app.shipping.shipmentoverview({id:shipping.display_number})"><span class="ng-scope">Save &amp; Print Labels</span></button>
-        <!-- <button type="button" class="md-accent md-raised md-button md-ink-ripple" aria-label="Save"><span class="ng-scope">Save</span></button> -->
-    </md-dialog-actions>
+                        <!--<div class="h5 text-semibold">Method:</div>-->
+                        <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                            <label>Shipping Type:</label>
+                            <md-select ng-model="address.shipping_type_id" ng-change="updateShippingType(address.shipping_type_id,address.order_adress_id,key)">
+                                <md-option ng-repeat="stype in address.shippingType" value="{{stype.id}}">{{stype.name}}</md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                            <label>Shipping Method:</label>
+                            <md-select ng-model="address.shipping_method_id" ng-change="updateShippingMethod(address.shipping_method_id,address.order_adress_id)">
+                                <md-option ng-repeat="smethod in address.shippingMethod" value="{{smethod.id}}">{{smethod.method_name}}</md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                            <input placeholder="Date Shipping:" kendo-date-picker  ng-model="address.date_shipped" k-ng-model="dateObject{{address.count}}" ui-event="{change : 'updateShippingAll(\'date_shipped\',address.date_shipped,address.id)'}" onkeydown="return false;"/>
+                        </md-input-container>
+
+                        <!--<div class="h5 text-semibold">SKU:</div>-->
+                        <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20">
+                            <input placeholder="SKU" name="SKU" ui-event="{change : 'updateShippingAll(\'sku\',address.sku,address.id)'}" ng-model="address.sku">
+                        </md-input-container>
+
+                        <!--<div class="h5 text-semibold">Notes:</div>-->
+                        <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Notes" name="Notes" ui-event="{change : 'updateShippingAll(\'shipping_note\',address.shipping_note,address.id)'}" ng-model="address.shipping_note">
+                        </md-input-container>
+
+                        <!-- <div class="h5 text-semibold">Total Shipping Cost:</div> -->
+                        <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20 md-icon-float">
+                            <input placeholder="Total Shipping Cost" name="Total Shipping Cost" ng-model="address.cost_to_ship" onfocus="this.blur()">
+                        </md-input-container>
+                    </md-card-content>
+                </md-card>
+            </div>
+            <a class="box-mang dist-next-prev box-right-arrow" ng-click="getPage('forward')"><i class="fa fa-angle-right" role="button"></i></a>
+        </div>
+        <md-card class="m-0 location">
+            <md-card-header layout-align="space-between center" class="pad-7">
+                <md-card-header-text>
+                    <span class="md-title text-center"><a title="Location">Distribution Location Info</span>
+                </md-card-header-text>
+            </md-card-header>
+        </md-card>
+        <div flex-xs flex-gt-xs="25" layout="column" class="layout-padding pull-left layout-align-center-center">
+            <div class="">
+                <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                    <label>Shipping Type:</label>
+                    <md-select ng-model="address.shipping_type_id" ng-change="updateShippingType(address.shipping_type_id,address.order_adress_id,key)">
+                        <md-option ng-repeat="stype in address.shippingType" value="{{stype.id}}">{{stype.name}}</md-option>
+                    </md-select>
+                </md-input-container>
+                <md-input-container class="mrg10 md-block date-input md-input-has-value">
+                    <label>Shipping Method:</label>
+                    <md-select ng-model="address.shipping_method_id" ng-change="updateShippingMethod(address.shipping_method_id,address.order_adress_id)">
+                        <md-option ng-repeat="smethod in address.shippingMethod" value="{{smethod.id}}">{{smethod.method_name}}</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+        </div>
+    </md-content>
 </div>

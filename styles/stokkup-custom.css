@@ -1413,3 +1413,6 @@ md-dialog.ship-order-popup.task-dialog md-dialog-content .layout-wrap md-input-c
 .search-block md-input-container label { padding-left: 25px !important;  }
 .simple-table-container .table-title { position: relative;  }
 .dashboard-page .table-title .table-title-text {  padding-left: 25px ;  }
+.pos-rel { position: relative; }
+.box-left-arrow { left:10px; right:auto }
+.box-right-arrow { right:6px; left:auto }

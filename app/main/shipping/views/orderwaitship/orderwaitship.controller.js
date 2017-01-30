@@ -9,7 +9,6 @@
     /** @ngInject */
     function orderWaitController($document,$window,$timeout,$mdDialog,$stateParams,sessionService,$http,$scope,$state,notifyService,AllConstant)
     {
-
         var vm = this;
         var originatorEv;
         vm.openMenu = function ($mdOpenMenu, ev) {
@@ -217,13 +216,12 @@
             sessionService.openAddPopup($scope,path,insert_params,table);
         }
 
-        $scope.toggle = function (item, list, key, product) {
+        $scope.toggle = function (item, list, key, flag) {
 
             var idx = list.indexOf(item);
-            console.log(idx);
 
-            if (idx > -1) {
-                $scope.selectedSizes.splice(item, 1);
+            if (flag == true) {
+                $scope.selectedSizes.splice(idx, 1);
                 $scope.all_selected = 0;
                 var UpdateArray = {};        // INSERT RECORD ARRAY
                 UpdateArray.data = {'selected':'0'};
@@ -261,7 +259,7 @@
             console.log($scope.selectedSizes);
             if($scope.all_selected != '0' || $scope.selectedSizes.length > 0)
             {
-
+                $state.go('app.shipping.boxingdetail',{id: $scope.display_number});
             }
             else
             {

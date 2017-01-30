@@ -100,9 +100,9 @@
                         </md-input-container>
 
                         <div flex=100 class="md-block status-chk">
-                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '1'" ng-click="toggle(address.id, selectedSizes, key)" aria-label="Checkbox 1">Status: Pedning</md-checkbox>
-                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '2'" ng-click="toggle(address.id, selectedSizes, key)" aria-label="Checkbox 1">Status: Boxing</md-checkbox>
-                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '3'" ng-click="toggle(address.id, selectedSizes, key)" aria-label="Checkbox 1">Status: Shipped</md-checkbox>
+                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '1'" ng-click="toggle(address.id, selectedSizes, key,address.selected)" aria-label="Checkbox 1">Status: Pedning</md-checkbox>
+                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '2'" ng-click="toggle(address.id, selectedSizes, key,address.selected)" aria-label="Checkbox 1">Status: Boxing</md-checkbox>
+                            <md-checkbox ng-model="address.selected" ng-if="address.shipping_status == '3'" ng-click="toggle(address.id, selectedSizes, key,address.selected)" aria-label="Checkbox 1">Status: Shipped</md-checkbox>
                         </div>
 
                     </md-card-content>
