@@ -166,7 +166,8 @@
                            
                                 <img ng-if="product.vendor_id > '1' && product.color_front_image !='' && product.color_front_image != null " ng-src="{{custom_product_base_path}}{{product.color_id}}/{{product.color_front_image}}" class="popup-image" ng-click="openAddProductDialog($event,'AddProductController','app/main/order/dialogs/addProduct/addProduct.html',product.id,'Add',0,0,product.vendor_id,0,product.name,product.description,product.vendor_name)">
 
-                                <md-tooltip md-direction="bottom">{{product.brand_name}} - {{product.name}}</md-tooltip>
+                                <md-tooltip md-direction="bottom" ng-if="product.brand_name != ''">{{product.brand_name}} - {{product.name}}</md-tooltip>
+                                <md-tooltip md-direction="bottom" ng-if="product.brand_name == ''">{{product.name}}</md-tooltip>
 
 
                             </div>

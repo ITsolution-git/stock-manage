@@ -150,7 +150,7 @@ class ProductionController extends Controller {
 
 		    while( $current <= $last ) {
 
-		        $weekArray[] = date('Y-m-d', $current);
+		        $weekArray[] = date('m/d/Y', $current);
 		        $current = strtotime('+1 day', $current);
 		    }
 
@@ -291,12 +291,12 @@ class ProductionController extends Controller {
 	    	$mahcine_shift = explode("-", $post['machine_shift']);
 	    	$shift = $mahcine_shift[0];
 	    	$machine = $mahcine_shift[1];
+	    	$run_date = date('Y-m-d',strtotime($post['run_date']));
 	    	$this->common->UpdateTableRecords('position_schedule',
 	    		array('id'=>$post['position']),
-	    		array('machine_id'=>$machine,'shift_id'=>$shift)
+	    		array('machine_id'=>$machine,'shift_id'=>$shift,'run_date'=>$run_date)
 	    		);
 	    }
-
     }
     public function ChagneDragDropweek()
     {
@@ -306,12 +306,27 @@ class ProductionController extends Controller {
 	    	$day_shift = explode(",", $post['day_shift']);
 	    	$shift = $day_shift[0];
 	    	$run_date = $day_shift[1];
+	    	$run_date=date('Y-m-d',strtotime($run_date));
 	    	$this->common->UpdateTableRecords('position_schedule',
 	    		array('id'=>$post['position']),
 	    		array('run_date'=>$run_date,'shift_id'=>$shift)
 	    		);
 	    }
-
+    }
+    public function ChagneDragDropMachine()
+    {
+    	$post = Input::all();
+    	if(!empty($post['position']))
+	    {
+	    	$mahcine_shift = explode("-", $post['machine_shift']);
+	    	$shift = $mahcine_shift[0];
+	    	$machine = $mahcine_shift[1];
+	    	$run_date = date('Y-m-d',strtotime($post['run_date']));
+	    	$this->common->UpdateTableRecords('position_schedule',
+	    		array('id'=>$post['position']),
+	    		array('machine_id'=>$machine,'shift_id'=>$shift,'run_date'=>$run_date)
+	    		);
+	    }
     }
 
     

@@ -52,6 +52,21 @@
                                 <div>Customer PO</div>
                                 <span class="font-14 chrome-weight">{{order.custom_po}}</span>
                             </div>
+
+                            <div class="trans-box">
+                                <div>Start Date</div>
+                                <span class="font-14 chrome-weight">{{order.date_start}}</span>
+                            </div>
+
+                            <div class="trans-box">
+                                <div>Shipping Date</div>
+                                <span class="font-14 chrome-weight">{{order.date_shipped}}</span>
+                            </div>
+
+                            <div class="trans-box">
+                                <div>In HandsBy</div>
+                                <span class="font-14 chrome-weight">{{order.in_hands_by}}</span>
+                            </div>
                             <div class="pull-right order-popup-menu1">
                                 <md-button aria-label="Main Contact Options" class="md-icon-button" ng-click="vm.openinformationDialog($event,order.id,order.client_id)"><md-icon md-menu-origin md-font-icon="icon-dots-vertical" ng-show="allow_access==1"></md-icon>
                                 </md-button>

@@ -22,7 +22,7 @@
                           <br/>
                           <span>ERT: {{positions.run_time}}</span><span> C: {{positions.position_colors}}</span>
                           <br/>
-                          <span class="position-status">{{positions.completed==1?'Completed':'Pending'}}</span>
+                          <span class="position-status">{{positions.mark_as_complete==1?'Completed':'Pending'}}</span>
                           <span class="stokkup-title-h4 small" style="bottom:20px" ng-class="positions.screen_icon==2?'garment-logo':(positions.screen_icon==1?'garment-logo-orange':'garment-logo disabled')">S</span>
                           <span class="garment-logo stokkup-title-h4 small" style="bottom:5px" ng-class="positions.garment==0?'':' disabled'">G</span>
                       </div>

@@ -188,6 +188,7 @@ class PurchaseController extends Controller {
             $this->purchase->Update_Ordertotal($po_id,$company_id);
             $poline = $this->purchase->GetPoLinedata($po_id,$company_id);
 
+
             if(count($poline)>0)
             {
                 
@@ -319,6 +320,7 @@ class PurchaseController extends Controller {
         {
             //$this->purchase->Update_Ordertotal($po_id);
             $result = $this->purchase->GetPoReceived($po_id,$company_id);
+           
             if(count($result)>0)
             {
                 $order_total = $this->purchase->getOrdarTotal($po_id);
@@ -497,9 +499,9 @@ class PurchaseController extends Controller {
     {
         $post = Input::all();
         
-        if(!empty($post['company_id']) && !empty($post['po_id']) && !empty($post['product_id']))
+        if(!empty($post['company_id']) && !empty($post['po_id']))
         {
-           $this->purchase->getAllReceiveProducts($post['company_id'],$post['po_id'],$post['product_id']); 
+           $this->purchase->getAllReceiveProducts($post['company_id'],$post['po_id']); 
            $response = array('success' => 1);
         }
         else

@@ -263,6 +263,22 @@ class OrderController extends Controller {
             $result['order'][0]->sns_shipping_name = 'Will Call / PickUp';
         }
 
+        if($result['order'][0]->in_hands_by != '0000-00-00' && $result['order'][0]->in_hands_by != '') {
+            $result['order'][0]->in_hands_by = date("n/d/Y", strtotime($result['order'][0]->in_hands_by));
+         } else {
+            $result['order'][0]->in_hands_by = '';
+         }
+         if($result['order'][0]->date_shipped != '0000-00-00' && $result['order'][0]->date_shipped != '') {
+            $result['order'][0]->date_shipped = date("n/d/Y", strtotime($result['order'][0]->date_shipped));
+         }else{
+            $result['order'][0]->date_shipped = '';
+         }
+         if($result['order'][0]->date_start != '0000-00-00' && $result['order'][0]->date_start != '') {
+            $result['order'][0]->date_start = date("n/d/Y", strtotime($result['order'][0]->date_start));
+         } else {
+            $result['order'][0]->date_start = '';
+         }
+
         $finishing_count = $this->order->getFinishingCount($result['order'][0]->id);
         $total_shipped_qnty = $this->order->getShippedByOrder($data);
         $locations = $this->common->GetTableRecords('order_shipping_address_mapping',array('order_id' => $result['order'][0]->id),array());

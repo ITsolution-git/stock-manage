@@ -10,7 +10,7 @@
 
                 <!---Order Waiting to Ship Tab-->
                 <div>
-                    <md-tab label="day" ng-click="getTab('wait')">
+                    <md-tab md-on-select="SchedualBoardData(run_date)" label="day" ng-click="getTab('wait')">
                         <div class="fixe-top-tabs">
                             <div class="inner-full-box mt-10">
                                 <div class="white-bg pull-left full-row schedule-main">
@@ -38,8 +38,8 @@
                                                 <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">Unscheduled</span>
 
                                                 <div class="full-row pull-left mt-10 p-5 mb-5">
-                                                    <span class="pull-left text-capitalize full-row" flex=65>total unscheduled:</span>
-                                                    <span class="global-labels text-right pull-right full-row" flex=35>37</span>
+                                                    <span class="pull-left text-capitalize full-row" flex=65>Total Unscheduled:</span>
+                                                    <span class="global-labels text-right pull-right full-row" flex=35>{{count_day}}</span>
                                                 </div>
                                                 <div class="full-row pull-left p-5">
                                                     <span class="pull-left text-capitalize full-row" flex=65>average machine hours</span>
@@ -65,26 +65,17 @@
                                                 <div class="slot">
                                                     <div class="p-5 full-row pull-left slot-header">
                                                         <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">{{machine_day.machine_name}}</span>
-                                                        <div class="shift-box text-center p-3">
-                                                            <span class="mb-10">1st Shift</span>
+                                                       
+                                                        <div class="shift-box text-center p-3 mr5" ng-repeat="(shift_key,shift) in shift_all">
+                                                            <span class="mb-10">{{shift.shift_name}}</span>
                                                             <h6>10%</h6>
                                                         </div>
-                                                        <div class="shift-box middle text-center p-3">
-                                                            <span>2nd Shift</span>
-                                                            <h6>60%</h6>
-                                                        </div>
-                                                        <div class="shift-box text-center p-3">
-                                                            <span>3rd Shift</span>
-                                                            <h6>23%</h6>
-                                                        </div>
+                                                       
                                                         <div class="full-row pull-left mt-10 p-5 mb-5">
                                                             <span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
                                                             <span class="global-labels text-right pull-right full-row" flex=35>10%</span>
                                                         </div>
-                                                        <div class="full-row pull-left p-5">
-                                                            <span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-                                                            <span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-                                                        </div>
+                                                        
                                                     </div>
                                                     <div class="slot-content">
                                                         <div ng-repeat="(shift_key,shift) in shift_all">
@@ -119,10 +110,7 @@
                                                             <span class="pull-left text-capitalize full-row" flex=65>total machine capacity</span>
                                                             <span class="global-labels text-right pull-right full-row" flex=35>10%</span>
                                                         </div>
-                                                        <div class="full-row pull-left p-5">
-                                                            <span class="pull-left text-capitalize full-row" flex=65>total machine dollars</span>
-                                                            <span class="global-labels text-right pull-right full-row" flex=35><span class="ld-sign">$</span>3249.59</span>
-                                                        </div>
+                                                        
                                                     </div>
                                                     <div class="slot-content">
                                                         <div ng-repeat="shift in [{'shift_name':'Shift 1'},{'shift_name':'Shift 2'},{'shift_name':'Shift 3'}]">
@@ -155,7 +143,7 @@
                 </div>
                 <!---Order In Progress Tab-->
                 <div>
-                    <md-tab label="week" ng-click="getTab('progress')">
+                    <md-tab md-on-select="SchedualBoardweekData(dayTabDate)" label="week" ng-click="getTab('progress')">
                         <div class="fixe-top-tabs">
                             <div class="inner-full-box mt-30">
                                 <div class="white-bg pull-left full-row schedule-main">
@@ -180,12 +168,12 @@
                                     <div class="unscheduled-lot">
                                         <div class="slot">
                                             <div class="p-5 full-row pull-left slot-header">
-                                                <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">unscheduled</span>
+                                                <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">Unscheduled</span>
 
 
                                                 <div class="full-row pull-left mt-10 p-5 mb-5">
-                                                    <span class="pull-left text-capitalize full-row" flex=65>total unscheduled:</span>
-                                                    <span class="global-labels text-right pull-right full-row" flex=35>37</span>
+                                                    <span class="pull-left text-capitalize full-row" flex=65>Total Unscheduled:</span>
+                                                    <span class="global-labels text-right pull-right full-row" flex=35>{{count_week}}</span>
                                                 </div>
                                                 <div class="full-row pull-left p-5">
                                                     <span class="pull-left text-capitalize full-row" flex=65>average daily hours</span>
@@ -256,7 +244,7 @@
                 </div>
                 <!---Shipped Orders Tab-->
                 <div>
-                    <md-tab label="machine" ng-click="getTab('shipped')">
+                    <md-tab md-on-select="SchedualBoardMachineData(dayTabDate,0)" label="machine" ng-click="getTab('shipped')">
                         <div class="fixe-top-tabs">
                             <div class="inner-full-box mt-30">
                                 <div class="white-bg pull-left full-row schedule-main">
@@ -291,11 +279,11 @@
                                   <div class="unscheduled-lot">
                                       <div class="slot">
                                           <div class="p-5 full-row pull-left slot-header  machine-slot-header">
-                                              <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">unscheduled</span>
+                                              <span class="slot-name text-center text-capitalize full-row mb-10 pull-left">Unscheduled</span>
 
                                               <div class="full-row pull-left  p-5 mb-5">
-                                                  <span class="pull-left text-capitalize full-row" flex=65>total unscheduled:</span>
-                                                  <span class="global-labels text-right pull-right full-row" flex=35>37</span>
+                                                  <span class="pull-left text-capitalize full-row" flex=65>Total Unscheduled:</span>
+                                                  <span class="global-labels text-right pull-right full-row" flex=35>{{count_machine}}</span>
                                               </div>
                                               <div class="full-row pull-left p-5">
                                                   <span class="pull-left text-capitalize full-row" flex=65>average daily hours</span>
@@ -345,10 +333,10 @@
                                                         </div>
                                                     </div>
                                                     <div class="slot-content">
-                                                        <div class="full-row pull-left p-5 shift-container">
-                                                            <div class="shift-card" ng-repeat="positionsall in SchedualmachineData.shift_all" ng-class="positionsall.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positionsall.position_id,positionsall.machine_id)">
+                                                        <!-- <div class="full-row pull-left p-5 shift-container"> 
+                                                             <div class="shift-card" ng-repeat="positionsall in SchedualmachineData.shift_all" ng-class="positionsall.rush_job==1?'rush-card':''" ng-click="GetSchedulePositionDetail(positionsall.position_id,positionsall.machine_id)">
                                                               <positions-card ng-model="positionsall"></positions-card>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </td>

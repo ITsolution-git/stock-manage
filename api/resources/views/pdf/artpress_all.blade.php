@@ -21,7 +21,7 @@
       <tr>
           <td align="left" width="20%"><img src="{{$company->companyphoto}}" title="Culture Studio" height="100"  alt="Culture Studio"></td>
           <td align="left" width="40%" class="font-bold">
-             Order Id: #{{$company->order_id}}<br>
+             Order Id: #{{$company->order_display_number}}<br>
              Job Name: {{$company->order_name}}<br>
              Client: {{$company->client_company}}
           </td>
@@ -111,7 +111,7 @@
   ?>
   <table cellspacing="5" cellpadding="5">
      <tr>
-      <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?> -
+      <td colspan="2" class="font-bold"><?php echo (!empty($value_main[0][0]->design_display_number))?$value_main[0][0]->design_display_number:''; ?> - <?php echo (!empty($value_main[0][0]->position_name))?$value_main[0][0]->position_name:''; ?> -
       <?php echo (!empty($value_main[0][0]->screen_width))?$value_main[0][0]->screen_width:'-'; ?>"W X <?php echo (!empty($value_main[0][0]->screen_height))?$value_main[0][0]->screen_height:'-'; ?>"H </td>
       
     </tr> 

@@ -585,7 +585,7 @@ class ArtController extends Controller {
             $pdf_product = $this->art->getArtApprovalProducts($screenArray->order_id,$screenArray->company_id);
             $pdf_data = $this->art->getArtApprovalPDFdata($screenArray->order_id,$screenArray->company_id);
 
-            //echo "<pre>"; print_r($options); echo "</pre>"; die;
+            //echo "<pre>"; print_r($pdf_data); echo "</pre>"; die;
             if(!empty($pdf_data[0][0]))
             {
                 $pdf = $this->tdpdf;

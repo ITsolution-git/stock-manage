@@ -382,11 +382,15 @@ class Purchase extends Model {
           	}
           	//echo "<pre>"; print_r($ret_array); echo "</pre>"; die;
           	$total_invoice = 0;
+          	$total_all_order = 0;
+          	$total_all_rec_qnty = 0;
+          	$total_all_short = 0;
           	foreach ($ret_array['receive'] as $key => $value_color) 
           	{
           		$total_order = 0;
           		$rec_qnty = 0;
           		$short = 0;
+
           		foreach ($value_color as $key_color => $value_data) 
           		{
 	          		foreach ($value_data['data'] as $key_ret_array => $value_ret_array) 
@@ -409,11 +413,19 @@ class Purchase extends Model {
 	          			$total_invoice += $value_ret_array->line_total;
 	          			//$value['data'][$key_ret_array]['']
 	          		}
+
+
+	          		
+
+
 	          	
 	          		$ret_array['receive'][$key][$key_color]['data'] = array_values($ret_array['receive'][$key][$key_color]['data']);
 	          		$ret_array['receive'][$key][$key_color]['summary']['total_product'] = $total_order;
 	          		$ret_array['receive'][$key][$key_color]['summary']['total_received'] = $rec_qnty;
 	          		$ret_array['receive'][$key][$key_color]['summary']['total_defective'] = $short;
+
+	          		
+
 	          		if($total_order>$rec_qnty)
 	          		{
 	          			$ret_array['receive'][$key][$key_color]['summary']['total_remains'] = $total_order -$rec_qnty." Short";
@@ -425,10 +437,30 @@ class Purchase extends Model {
           		
           			$ret_array['po_data']->total_invoice = $total_invoice;
           	}
+          	$total_all_order += $total_order;
+      		$total_all_rec_qnty += $rec_qnty;
+      		$total_all_short += $short;
           }
 
 
 	    }
+	    $ret_array['total_all_order'] = $total_all_order;
+	    $ret_array['total_all_rec_qnty'] = $total_all_rec_qnty;
+	    $ret_array['total_all_short'] = $total_all_short;
+
+
+	    if($ret_array['total_all_order']>$ret_array['total_all_rec_qnty'])
+  		{
+  			$ret_array['total_all_remains']  = $ret_array['total_all_order'] - $ret_array['total_all_rec_qnty']." Short";
+  			
+  		}
+  		else
+  		{
+  			$ret_array['total_all_remains'] = $ret_array['total_all_rec_qnty'] - $ret_array['total_all_order']." Over";
+  		}
+
+
+	    
 		return $ret_array;
 	}
 
@@ -725,7 +757,7 @@ class Purchase extends Model {
 
 		return $result;
     }
-    public function getAllReceiveProducts($company_id,$po_id,$product_id)
+    public function getAllReceiveProducts($company_id,$po_id)
     {
     	$result =  DB::table('purchase_order as po')
 		  ->Join('purchase_order_line as pol','pol.po_id','=','po.po_id')
@@ -733,7 +765,7 @@ class Purchase extends Model {
 		  ->select('pol.qnty_ordered','pol.id')
 		  ->where('po.display_number','=',$po_id)
 		  ->where('po.company_id','=',$company_id)
-		  ->where('pd.product_id','=',$product_id)
+		  //->where('pd.product_id','=',$product_id)
 		  ->get();
 
 		foreach ($result as $key => $value) 
