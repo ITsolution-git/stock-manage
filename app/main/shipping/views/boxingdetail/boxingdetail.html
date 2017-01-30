@@ -95,21 +95,5 @@
                 </md-card-header-text>
             </md-card-header>
         </md-card>
-        <div flex-xs flex-gt-xs="25" layout="column" class="layout-padding pull-left layout-align-center-center">
-            <div class="">
-                <md-input-container class="mrg10 md-block date-input md-input-has-value">
-                    <label>Shipping Type:</label>
-                    <md-select ng-model="address.shipping_type_id" ng-change="updateShippingType(address.shipping_type_id,address.order_adress_id,key)">
-                        <md-option ng-repeat="stype in address.shippingType" value="{{stype.id}}">{{stype.name}}</md-option>
-                    </md-select>
-                </md-input-container>
-                <md-input-container class="mrg10 md-block date-input md-input-has-value">
-                    <label>Shipping Method:</label>
-                    <md-select ng-model="address.shipping_method_id" ng-change="updateShippingMethod(address.shipping_method_id,address.order_adress_id)">
-                        <md-option ng-repeat="smethod in address.shippingMethod" value="{{smethod.id}}">{{smethod.method_name}}</md-option>
-                    </md-select>
-                </md-input-container>
-            </div>
-        </div>
     </md-content>
 </div>
