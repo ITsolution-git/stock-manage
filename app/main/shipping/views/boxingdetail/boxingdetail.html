@@ -83,6 +83,16 @@
                         <md-input-container flex="100" class="mrg10 md-block margin-0 m-b-20 md-icon-float">
                             <input placeholder="Total Shipping Cost" name="Total Shipping Cost" ng-model="address.cost_to_ship" onfocus="this.blur()">
                         </md-input-container>
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>TOTAL NUMBER of BOXES:{{address.total_box}}</p>
+                            </div>
+                        </div>
+                        <div layout="row" flex="100">
+                            <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
+                                <p>Total Number Shipped:{{address.total_shipped_box}}/{{address.total_box}}</p>
+                            </div>
+                        </div>
                     </md-card-content>
                 </md-card>
             </div>

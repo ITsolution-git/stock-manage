@@ -1316,6 +1316,12 @@ class ShippingController extends Controller {
                 $shipping->date_shipped = '';
             }
 
+            $total_box = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $shipping->id),array());
+            $shipping->total_box = count($total_box);
+
+            $total_shipped_box = $this->common->GetTableRecords('shipping_box',array('shipping_id' => $shipping->id,'is_shipped' => '1'),array());
+            $shipping->total_shipped_box = count($total_shipped_box);
+
             $shipping->productData = $productData['productData'];
             $shipping->total_qnty = $productData['total_qnty'];
             $shipping->count = $count;
