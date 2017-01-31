@@ -19,10 +19,11 @@
         </md-card-header>
     </md-card>
 
-    <md-content class="">
+    <md-content class="location-card-list">
         <div layout="row" layout-wrap="nowrap" class="p-30 pos-rel">
             <a class="box-mang dist-next-prev box-left-arrow" ng-click="getPage('backward')"><i class="fa fa-angle-left" role="button"></i></a>
-            <div class="cursor-p" flex-xs flex-gt-xs="33" layout="column" ng-repeat="(key,address) in assignAddresses">
+            <div class="cursor-p location-card" flex-xs flex-gt-xs="33" layout="column" ng-repeat="(key,address) in assignAddresses | limitTo:3:3*(pagination.page-1)"" ng-click="selectLocation(key, address)" ng-class="currentLocation==address?'active':''">
+
                 <md-card class="custom-fullbox-shadow">
                     <md-card-header layout-align="space-between center" class="pad-7">
                         <md-card-header-text>
@@ -32,7 +33,7 @@
                     <md-card-content class="custom-desc-box">
                         <div layout="row" flex="100">
                             <div layout-align="space-between left" class="shp-code" layout="column" flex="50">
-                                <p>Shipment # {{address.count}}/{{no_of_locations}}</p>
+                                <p>Shipment # {{address.count}}/{{  }}</p>
                             </div>
                             <div layout-align="space-between" class="shp-code" layout="column" flex="50">
                                 <p class="text-right">Total Qty: {{address.total_qnty}}</p>
@@ -88,12 +89,171 @@
             </div>
             <a class="box-mang dist-next-prev box-right-arrow" ng-click="getPage('forward')"><i class="fa fa-angle-right" role="button"></i></a>
         </div>
-        <md-card class="m-0 location">
+        <md-card class="m-0  dist-location-info">
             <md-card-header layout-align="space-between center" class="pad-7">
                 <md-card-header-text>
-                    <span class="md-title text-center"><a title="Location">Distribution Location Info</span>
+                    <span class="md-title text-center"><a title="Location">Distribution Location Info</a></span>
                 </md-card-header-text>
             </md-card-header>
+
+            <md-card-content class="custom-desc-box" ng-if="currentLocation.shippingMethod">
+                <div class="pad10-T"></div>
+                <div layout="row" flex="100" class="location-info-header">
+                    <div layout="column" flex="60">
+                        <div layout="row" flex="100">
+                            <md-input-container flex="30" class="mrg10 md-block date-input md-input-has-value">
+                                <label>Box Type:</label>
+                                <md-select  ng-model="currentLocation.boxSize">
+                                    <md-option ng-repeat="box in boxSizeData" value="{{box.id}}">{{box.name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="70" class="mrg10 md-block date-input md-input-has-value">
+                                <p>Estimated Shipping Cost of all boxes: $120.00</p>
+                            </md-input-container>
+                        </div>
+                        <div layout="row" flex="100">
+                            <md-input-container flex="30" class="mrg10 md-block date-input md-input-has-value">
+                                <label>Shipping Method:</label>
+                                <md-select ng-model="currentLocation.shipping_method_id" >
+                                    <md-option ng-repeat="smethod in currentLocation.shippingMethod" value="{{smethod.id}}">{{smethod.method_name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+
+                            <md-input-container flex="30" class="mrg10 md-block date-input md-input-has-value">
+                                <label>Shipping Type:</label>
+                                <md-select ng-model="currentLocation.shipping_type_id">
+                                    <md-option ng-repeat="stype in currentLocation.shippingType" value="{{stype.id}}">{{stype.name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                            <md-input-container flex="40" class="mrg10 md-block date-input md-input-has-value">
+                                <p>Estiamted Delivery Date : 2/15/2017</p>
+                            </md-input-container>
+                        </div>
+                    </div>
+                    <div layout="column" flex="20">
+
+                        <!-- <div class="h5 text-semibold">Address Line3:</div> -->
+                        <md-input-container flex="100" class="md-block margin-0">
+                            <input placeholder="Address Line3" >
+                        </md-input-container>
+
+                        <!-- <div class="h5 text-semibold">Address Line3:</div> -->
+                        <md-input-container flex="100" class="md-block margin-0 ">
+                            <input placeholder="Ref Line1" >
+                        </md-input-container>
+                        <!-- <div class="h5 text-semibold">Address Line3:</div> -->
+                        <md-input-container flex="100" class="md-block margin-0">
+                            <input placeholder="Ref Line2">
+                        </md-input-container>
+                    </div>
+                    <div layout="column" flex="20">
+
+                        <div class="ship_order_btn m-t-20">
+                            <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="boxSeparateSize()">Box All with Separate Sizes and Color</a>
+                        </div>
+                        <div class="ship_order_btn m-t-10">
+                            <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="boxLeastAsPossible()">Box All with Least Boxes as possible</a>
+                        </div>
+                    </div>
+                    <hr/>
+                </div>
+                <div class="location-info-boxes" layout="row" flex="100" ng-if="currentBox.num">
+                    <div layout="column" flex="10" class="box-list">
+                        <md-list>
+                            <md-list-item class="md-list-item-text box-item-header ">
+                                <div class="text-center full-row">
+                                    Boxes
+                                </div>
+                            </md-list-item>
+                            <md-list-item ng-repeat="box in boxesData" class="md-list-item-text box-item " md-ink-ripple="#4773d6" ng-class="currentBox==box?'active':''" ng-click="selectBox(box)">
+                                <div class="text-center full-row">
+                                    {{box.num}}
+                                </div>
+                            </md-list-item>
+                            <md-list-item class="md-list-item-text box-item ">
+                                <div class="text-center full-row">
+                                    <md-button class="md-raised md-primary m-0"> Add New Box </md-button>
+                                </div>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+
+                    <div layout="column" flex="90" class="box-content ml-15"  >
+                        <table class="dataTable row-border hover">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Color</th>
+                                    <th>Size</th>
+                                    <th>QTY</th>
+                                    <th>Missing / Damaged</th>
+                                    <th>Spoiled</th>
+                                    <th>Actual</th>
+                                    <th>Button to Reallocate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tshirt 5000</td>
+                                    <td>Blue</td>
+                                    <td>M</td>
+                                    <td>100</td>
+                                    <td>5</td>
+                                    <td>5</td>
+                                    <td>90</td>
+                                    <td><a> Click Here </a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="dataTable row-border hover box-specific-info">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Box Specific Info</th>
+                                    <th>TOTAL BOX QTY: 72/72</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="box-type">
+                                        <md-input-container  class="md-block date-input md-input-has-value">
+                                            <md-select  ng-model="currentLocation.boxSize">
+                                                <md-option ng-repeat="box in boxSizeData" value="{{box.id}}">{{box.name}}</md-option>
+                                            </md-select>
+                                        </md-input-container>
+                                    </td>
+                                    <td>
+                                        <span>Estimated Total Weight: 123.23 pounds</span>
+                                        <span>Estimated Shipping for this box  $120.00</span>
+                                    </td>
+                                    <td><a> Delete Box </a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="location-info-button-group" layout="row" flex="100">
+                    <div class="m-r-10 m-t-10">
+                        <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="boxLeastAsPossible()">Print Distribnution Manifest</a>
+                    </div>
+                    <div class="m-r-10  m-t-10">
+                        <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="boxLeastAsPossible()">Packing Slip</a>
+                    </div>
+                    <div class="m-r-10  m-t-10">
+                        <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="boxLeastAsPossible()">Carton Label</a>
+                    </div>
+                    <div class="m-r-10  m-t-10">
+                        <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="boxLeastAsPossible()">Print Shipping Labels </a>
+                    </div>
+                    <div class="m-r-10  m-t-10">
+                        <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="boxLeastAsPossible()">Mark as Shipped</a>
+                    </div>
+                </div>
+            </md-card-content>
+
+
+
         </md-card>
     </md-content>
 </div>
