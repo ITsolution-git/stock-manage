@@ -29,7 +29,7 @@
 
         $scope.box_items = [];
         $scope.shipping_box_id = 0;
-
+        $scope.page = 1;
         $scope.address_id = 0;
         $scope.shipping_id = 0;
         $scope.productSearch = '';
@@ -57,6 +57,8 @@
         {
             var combine_array = {};
             combine_array.order_id = $scope.order_id;
+            combine_array.type = 'box';
+            combine_array.page = $scope.page;
             $("#ajax_loader").show();
 
             $http.post('api/public/shipping/getShippingOrdersDetail',combine_array).success(function(result, status, headers, config) {
@@ -71,6 +73,7 @@
                 }
                 $scope.total_order_qty = result.data.total_order_qty;
                 $scope.undistributed_qty = result.data.undistributed_qty;
+                $scope.pagination = result.data.pagination;
                 $("#ajax_loader").hide();
             });
         }
@@ -162,6 +165,26 @@
                 var data = {"status": "success", "message": "Data Updated Successfully."}
                 notifyService.notify(data.status, data.message);
             });
+        }
+
+        $scope.getPage = function(param)
+        {
+            if(param == 'forward')
+            {
+                if($scope.pagination.page < $scope.pagination.size)
+                {
+                    $scope.page = $scope.page + 1;
+                    $scope.shipOrder();
+                }
+            }
+            else
+            {
+                if($scope.page > 1)
+                {
+                    $scope.page = $scope.page - 1;
+                    $scope.shipOrder();
+                }
+            }
         }
 
         var vm = this;

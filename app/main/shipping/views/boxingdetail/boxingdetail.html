@@ -3,7 +3,7 @@
     <div class="simple-table-container stokkup-main-tableview m-b-20">
         <div class="table-title  layout-align-space-between-center layout-row" layout="row" layout-align="space-between center">
             <div class="table-title-text flex-100">
-                Box Management Screen for Order <a class="cursor-p" ui-sref="app.order.order-info({id:display_number})" title="Go to Order">#117</a> for <a class="cursor-p" ui-sref="app.client.profile({id:order.client_display_number})" title="Go to Order">Company Name</a>
+                Box Management Screen for Order <a class="cursor-p" ui-sref="app.order.order-info({id:display_number})" title="Go to Order">#{{display_number}}</a> for <a class="cursor-p" ui-sref="app.client.profile({id:order.client_display_number})" title="Go to Order">{{order.client_company}}</a>
             </div>
             <div class="pull-right ship_order_btn">
                 <a class="stokkup-custom-btn1 stokkup-blue-btn text-white pull-right" ng-click="selectAll()">Export All Locations and Boxes</a>
@@ -14,7 +14,7 @@
     <md-card class="m-0 location">
         <md-card-header layout-align="space-between center" class="pad-7">
             <md-card-header-text>
-                <span class="md-title text-center"><a class="cursor-p" title="Location" ui-sref="app.order.distribution({id:display_number})">#15 Distribution Locations</a> | Total 1239 in the order</span>
+                <span class="md-title text-center"><a class="cursor-p" title="Location" ui-sref="app.order.distribution({id:display_number})">#{{no_of_locations}} Distribution Locations</a> | Total {{total_order_qty}} in the order</span>
             </md-card-header-text>
         </md-card-header>
     </md-card>
@@ -23,7 +23,7 @@
         <div layout="row" layout-wrap="nowrap" class="p-30 pos-rel">
             <a class="box-mang dist-next-prev box-left-arrow" ng-click="getPage('backward')"><i class="fa fa-angle-left" role="button"></i></a>
             <div class="cursor-p" flex-xs flex-gt-xs="33" layout="column" ng-repeat="(key,address) in assignAddresses">
-                <md-card class="custom-fullbox-shadow">
+                <md-card class="custom-fullbox-shadow" ng-class="{'active': address.is_selected>0}">
                     <md-card-header layout-align="space-between center" class="pad-7">
                         <md-card-header-text>
                             <span class="md-title">{{address.description}}</span>

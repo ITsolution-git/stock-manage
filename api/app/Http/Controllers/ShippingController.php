@@ -1290,11 +1290,27 @@ class ShippingController extends Controller {
     public function getShippingOrdersDetail()
     {
         $post = Input::all();
+        $pagination = array();
 
-        $shippingData = $this->shipping->getShippingOrdersDetail($post['order_id']);
+        if(!isset($post['type'])) {
+            $this->shipping->updateShipping($post['order_id']);
+            $shippingData = $this->shipping->getShippingOrdersDetail($post);
+        }
+        else
+        {
+            $post['range'] = 3;
+            $post['start'] = ($post['page'] - 1) * $post['range'];
+            $post['limit'] = $post['range'];
+
+            $shippingData = $this->shipping->getShippingOrdersDetail($post);
+
+            $size =ceil($shippingData['count']/3);
+
+            $pagination = array('count' => $post['range'],'page' => $post['page'],'pages' => 7,'size' => $size);
+        }
 
         $count = 1;
-        foreach ($shippingData as $shipping) {
+        foreach ($shippingData['shippingData'] as $shipping) {
             
             $productData = $this->shipping->getShippingProducts($shipping->id);
             $shipping->shippingType = $this->common->GetTableRecords('shipping_type',array(),array());
@@ -1334,13 +1350,13 @@ class ShippingController extends Controller {
 
         $undistributed_qty = $total_order_qty - $total_shipped_qnty;
 
-        if(!empty($shippingData))
+        if(!empty($shippingData['shippingData']))
         {
-            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'undistributed_qty'=>$undistributed_qty,'shippingData'=>$shippingData);
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'undistributed_qty'=>$undistributed_qty,'shippingData'=>$shippingData['shippingData'],'pagination' => $pagination);
         }
         else
         {
-            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'undistributed_qty'=>$undistributed_qty,'shippingData'=>$shippingData);
+            $response = array('success'=>1,'message'=>GET_RECORDS,'total_order_qty'=>$total_order_qty,'undistributed_qty'=>$undistributed_qty,'shippingData'=>$shippingData['shippingData'],'pagination' => $pagination);
         }
         return response()->json(["data" => $response]);
     }

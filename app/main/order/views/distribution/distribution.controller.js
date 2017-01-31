@@ -297,6 +297,7 @@
                 if($scope.pagination.page < $scope.pagination.size)
                 {
                     $scope.page = $scope.page + 1;
+                    $scope.address_id = 0;
                     $scope.getDistributionDetail();
                 }
             }
@@ -305,6 +306,7 @@
                 if($scope.page > 1)
                 {
                     $scope.page = $scope.page - 1;
+                    $scope.address_id = 0;
                     $scope.getDistributionDetail();
                 }
             }

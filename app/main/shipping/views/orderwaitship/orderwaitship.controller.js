@@ -249,6 +249,7 @@
             var UpdateArray = {};        // INSERT RECORD ARRAY
             UpdateArray.data = {'selected':'1'};
             UpdateArray.table ='shipping';
+            UpdateArray.cond = {'order_id':$scope.order_id};
             $http.post('api/public/common/UpdateTableRecords',UpdateArray).success(function(result) {
                 $scope.all_selected = 1;
             });
@@ -256,7 +257,6 @@
 
         $scope.next = function()
         {
-            console.log($scope.selectedSizes);
             if($scope.all_selected != '0' || $scope.selectedSizes.length > 0)
             {
                 $state.go('app.shipping.boxingdetail',{id: $scope.display_number});

@@ -339,17 +339,43 @@ class Shipping extends Model {
         return $result;
     }
 
-    public function getShippingOrdersDetail($order_id)
+    public function getShippingOrdersDetail($data)
     {
+        if(isset($data['type']))
+        {
+            $listArray = [DB::raw('SQL_CALC_FOUND_ROWS cd.description,s.*,om.shipping_type_id,om.shipping_method_id,om.id as order_adress_id')];
+        }
+        else
+        {
+            $listArray = ['cd.description','s.*','om.shipping_type_id','om.shipping_method_id','om.id as order_adress_id'];
+        }
+
         $result = DB::table('shipping as s')
                     ->leftJoin('client_distaddress as cd','s.address_id','=','cd.id')
                     ->leftJoin('order_shipping_address_mapping as om','s.address_id','=','om.address_id')
-                    ->select('cd.description','s.*','om.shipping_type_id','om.shipping_method_id','om.id as order_adress_id')
-                    ->where('s.order_id','=',$order_id)
-                    ->GroupBy('s.address_id')
-                    ->get();
+                    ->select($listArray)
+                    ->where('s.order_id','=',$data['order_id']);
+                    if(isset($data['type']))
+                    {
+                        $result = $result->where('selected','=','1');
+                    }
+                    $result = $result->GroupBy('s.address_id');
+                    if(isset($data['type']))
+                    {
+                        $result = $result->skip($data['start'])
+                        ->take($data['range']);
+                    }
+                    $result = $result->get();
 
-        return $result;
+        if(isset($data['type']))
+        {
+            $count  = DB::select( DB::raw("SELECT FOUND_ROWS() AS Totalcount;") );
+            $returnData['count'] = $count[0]->Totalcount;
+        }
+
+        $returnData['shippingData'] = $result;
+
+        return $returnData;
     }
 
     public function getShippingProducts($shipping_id)
@@ -390,5 +416,14 @@ class Shipping extends Model {
         $returnData['total_qnty'] = $total_qnty;
 
         return $returnData;
+    }
+
+    public function updateShipping($order_id)
+    {
+        $result = DB::table('shipping')
+                ->where('order_id','=',$order_id)
+                ->update(array('selected'=>'0'));
+
+        return $result;
     }
 }
