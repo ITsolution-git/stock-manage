@@ -292,3 +292,61 @@ shift-container div,
 {
 	margin-right: 5px !important;
 }
+
+
+/* Box detail custom css */ /* Added by Roy */
+.location-card-list .location-card{
+}
+.location-card-list .location-card.active md-card{
+	background-color: rgba(210,210,210,.4);
+}
+.dist-location-info md-card-header span{
+	border: 1px solid;
+}
+.dist-location-info .location-info-header .stokkup-custom-btn1{
+	padding: 5px !important;
+	line-height: 20px;
+	max-height: 50px;
+}
+
+.dist-location-info .location-info-header{
+	border-bottom: 1px solid;
+}
+.dist-location-info .location-info-boxes .box-item{
+	font-size: 16px;
+}
+.dist-location-info .location-info-boxes md-list-item{
+	min-height: 30px !important;
+}
+.dist-location-info .location-info-boxes .md-list-item-inner{
+	height: 25px !important;
+	min-height: 25px !important;
+}
+.dist-location-info .location-info-boxes .box-item-header{
+	font-size: 18px;
+	border: 1px solid;
+}
+.dist-location-info .location-info-boxes .box-item.active{
+	background-color: #989898;
+	border-right: 5px solid #4773d6;
+}
+.dist-location-info .location-info-boxes .box-content td, .dist-location-info .location-info-boxes .box-content th{
+	text-align: center !important;
+	padding: 5px;
+}
+.dist-location-info .location-info-boxes .box-content{
+	position: relative;
+}
+
+.dist-location-info .location-info-boxes .box-content .box-specific-info{
+	position: absolute;
+	bottom: 5px;
+}
+
+.dist-location-info .location-info-boxes .box-content .box-specific-info .box-type{
+	width: 200px;
+}
+
+.dist-location-info .location-info-boxes .box-content .box-specific-info md-input-container{
+	margin: 0px;
+}

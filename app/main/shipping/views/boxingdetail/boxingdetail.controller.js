@@ -52,6 +52,65 @@
         }
 
         $scope.assignedItems = [];
+        
+        //*-----------------------------------*
+        //Added by Roy
+
+        $scope.pagination = { page:0, size:0 };
+
+        $scope.boxSizeData = [  {id:1, name:"Large"},
+                                {id:2, name:"Medium"},
+                                {id:3, name:"Small"},
+                        ];
+        $scope.currentLocation = {};   //selected Location
+        $scope.currentBox = {};        //select box of currentlocation
+        //boxes
+        $scope.boxesData = [{num:1},
+                            {num:2},
+                            {num:3},
+                            {num:4},
+                            {num:5},
+                            {num:6},
+                            {num:7},
+                            {num:8},
+                            {num:9},
+                            {num:10},
+                            {num:11},
+                            {num:12}];
+
+        $scope.getPage = function(param)
+        {
+            if(param == 'forward')
+            {
+                if($scope.pagination.page < $scope.pagination.size)
+                {
+                    $scope.pagination.page = $scope.pagination.page + 1;
+                }
+            }
+            else
+            {
+                if($scope.pagination.page > 1)
+                {
+                    $scope.pagination.page = $scope.pagination.page - 1;
+                }
+            }
+        }
+        $scope.selectLocation = function(key, address){ //when select one of location card
+            $scope.currentLocation = address;
+        }
+
+        $scope.boxSeparateSize = function(){ //select Box All with Separate Sizes and Color
+            $scope.currentBox = $scope.boxesData[0];
+        }
+        $scope.boxLeastAsPossible = function(){ //select Box All with Least Boxes as possible
+            $scope.currentBox = $scope.boxesData[0];
+        }
+        $scope.selectBox = function(box){ //when select one of location card
+            $scope.currentBox = box;
+        }
+
+        
+        //*-----------------------------------*
 
         $scope.shipOrder = function()
         {
@@ -65,6 +124,31 @@
                 if(result.data.success == '1') {
                     $scope.assignAddresses = result.data.shippingData;
                     $scope.no_of_locations = result.data.shippingData.length;
+                    
+                    //Add mockup to test scroll
+                    var temp;
+                    temp = angular.copy(result.data.shippingData[0]);
+                    $scope.assignAddresses.push(temp);
+                    temp = angular.copy(result.data.shippingData[1]);
+                    $scope.assignAddresses.push(temp);
+                    temp = angular.copy(result.data.shippingData[2]);
+                    $scope.assignAddresses.push(temp);
+                    temp = angular.copy(result.data.shippingData[2]);
+                    $scope.assignAddresses.push(temp);
+                    temp = angular.copy(result.data.shippingData[1]);
+                    $scope.assignAddresses.push(temp);
+                    temp = angular.copy(result.data.shippingData[2]);
+                    $scope.assignAddresses.push(temp);
+                    temp = angular.copy(result.data.shippingData[0]);
+                    $scope.assignAddresses.push(temp);
+                    temp = angular.copy(result.data.shippingData[1]);
+                    $scope.assignAddresses.push(temp);
+                    $scope.no_of_locations = result.data.shippingData.length + 8;
+                    //Remove up to here 
+
+                    $scope.pagination.page = 1;
+                    $scope.pagination.size =  Math.ceil($scope.assignAddresses.length / 3);
+
                 }
                 else
                 {
