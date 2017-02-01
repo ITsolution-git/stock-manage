@@ -175,9 +175,12 @@
                                     Boxes
                                 </div>
                             </md-list-item>
-                            <md-list-item ng-repeat="box in boxesData" class="md-list-item-text box-item " md-ink-ripple="#4773d6" ng-class="currentBox==box?'active':''" ng-click="selectBox(box)">
-                                <div class="text-center full-row">
+                            <md-list-item ng-repeat="box in boxesData" class="md-list-item-text box-item " md-ink-ripple="#4773d6" ng-class="currentBox==box?'active':''">
+                                <div class="text-center full-row" ng-click="selectBox(box)">
                                     {{box.num}}
+                                </div>
+                                <div class="box-close-btn" ng-click="closeBox(box)">
+                                    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
                                 </div>
                             </md-list-item>
                             <md-list-item class="md-list-item-text box-item ">

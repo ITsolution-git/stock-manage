@@ -315,8 +315,14 @@ shift-container div,
 .dist-location-info .location-info-boxes .box-item{
 	font-size: 16px;
 }
+.dist-location-info .location-info-boxes .box-item .box-close-btn{
+	float: right;
+}
+.dist-location-info .location-info-boxes .box-item .box-close-btn:hover i{
+	color: rgb(71,115,214);	
+}
 .dist-location-info .location-info-boxes md-list-item{
-	min-height: 30px !important;
+	min-height: 40px !important;
 }
 .dist-location-info .location-info-boxes .md-list-item-inner{
 	height: 25px !important;
@@ -329,6 +335,9 @@ shift-container div,
 .dist-location-info .location-info-boxes .box-item.active{
 	background-color: #989898;
 	border-right: 5px solid #4773d6;
+}
+.dist-location-info .location-info-boxes .box-item.active{
+	padding-right: 11px;
 }
 .dist-location-info .location-info-boxes .box-content td, .dist-location-info .location-info-boxes .box-content th{
 	text-align: center !important;

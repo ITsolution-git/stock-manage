@@ -108,7 +108,8 @@
         $scope.selectBox = function(box){ //when select one of location card
             $scope.currentBox = box;
         }
-
+        $scope.closeBox = function(box){
+        }
         
         //*-----------------------------------*
 
